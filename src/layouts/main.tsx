@@ -64,32 +64,48 @@ const Layout = (props: LayoutProps) => {
           ); /* Disable blue highlight on touch on touch devices */
           color: #212121;
         }
-        input,
-        textarea {
-          transition: all 0.3s;
+        a {
+          color: inherit;
+          text-decoration: none;
         }
         button {
-          cursor: pointer;
+          background: transparent;
           font-size: inherit;
           color: inherit;
+          cursor: pointer;
           outline: none;
           border: none;
-          background: transparent;
+        }
+        button:focus {
+          box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+            0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+            0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+        }
+        input {
+          padding: 0.8em;
+          margin: 0.5em 0;
+          transition: border 0.3s;
+          background: #ffffff;
+          border: 1px solid ${CSSConstants.borderColor};
+        }
+        input,
+        textarea {
+          font-size: 0.8rem;
+        }
+        input:focus {
+          outline: none;
+          border: 1px solid ${CSSConstants.primaryColor};
+        }
+        input::placeholder {
+          text-align: center;
+        }
+        input::-ms-input-placeholder {
+          text-align: center;
         }
         table {
           border-collapse: collapse;
         }
-        a {
-          text-decoration: none;
-          color: inherit;
-        }
         @media only screen and (max-width: 1000px) {
-          html,
-          body {
-            font-size: 14px;
-          }
-        }
-        @media only screen and (max-width: 800px) {
           html,
           body {
             font-size: 14px;

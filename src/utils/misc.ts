@@ -32,11 +32,18 @@ const getProductImageUrl = relativePath => {
   return BASE_URL + relativePath;
 };
 
+const returnEmptyStringIfFalse = val => {
+  if (val === 0) return 0;
+  else if (!val) return "";
+  else return val;
+};
+
 export {
   formatPrice,
   capitalizeFirstLetter,
   valueToPercentage,
   percentageToValue,
   getProductUrl,
-  getProductImageUrl
+  getProductImageUrl,
+  returnEmptyStringIfFalse
 };

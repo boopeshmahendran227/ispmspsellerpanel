@@ -20,6 +20,13 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
+            <Link activeClassName="active" href="/">
+              <a>
+                <span>Catalog</span>
+              </a>
+            </Link>
+          </li>
+          <li>
             <Link activeClassName="active" href="/order">
               <a>
                 <i className="fas fa-shopping-cart" aria-hidden={true}></i>

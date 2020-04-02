@@ -2,7 +2,7 @@ import Chroma from "chroma-js";
 
 const constants = {
   borderColor: "#ccc",
-  primaryColor: "#e53935",
+  primaryColor: "#3949AB",
   secondaryColor: "#444",
   warningColor: "#FFB100",
   dangerColor: "#ff0000",
