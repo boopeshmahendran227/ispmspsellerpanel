@@ -1,8 +1,10 @@
 import toast from "./toast";
+import quote from "./quote";
 import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
-  toast
+  toast,
+  quote
 });
 export default rootReducer;
 

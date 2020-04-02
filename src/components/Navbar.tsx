@@ -6,7 +6,7 @@ const Navbar = () => {
     <nav>
       <div className="logoContainer">
         <Link href="/">
-          <a>Istakapaza</a>
+          <a>Istakapaza Sellers</a>
         </Link>
       </div>
       <div className="navigation">
@@ -14,6 +14,7 @@ const Navbar = () => {
           <li>
             <Link activeClassName="active" href="/">
               <a>
+                <i className="fas fa-home" aria-hidden={true}></i>
                 <span>Home</span>
               </a>
             </Link>
@@ -21,6 +22,7 @@ const Navbar = () => {
           <li>
             <Link activeClassName="active" href="/order">
               <a>
+                <i className="fas fa-shopping-cart" aria-hidden={true}></i>
                 <span>Orders</span>
               </a>
             </Link>
@@ -28,6 +30,7 @@ const Navbar = () => {
           <li>
             <Link activeClassName="active" href="/quote">
               <a>
+                <i className="fas fa-clipboard-list" aria-hidden="true"></i>
                 <span>Quotes</span>
               </a>
             </Link>
@@ -40,6 +43,7 @@ const Navbar = () => {
             display: flex;
             align-items: center;
             margin: 0 1.5em;
+            font-size: 1.3rem;
           }
           .logoContainer a {
             padding: 1em 0;
@@ -62,33 +66,18 @@ const Navbar = () => {
           nav {
             display: flex;
             align-items: center;
-            //background: linear-gradient(90deg, #7436FF, #1967FF);
             background: ${CSSConstants.primaryColor};
             color: white;
             box-shadow: 0 3px 6px #00000029;
             flex-wrap: wrap;
           }
           a {
-            display: inline-flex;
-            align-items: center;
-            position: relative;
-          }
-          a span {
             display: inline-block;
-            padding: 1.3em 0.6em 1.3em 2.3em;
-          }
-          .icon {
-            position: absolute;
-            left: 0.5em;
-            top: 50%;
-            transform: translateY(-50%);
-          }
-          .hoverIcon {
-            opacity: 0;
+            padding: 1em;
             transition: all 0.3s;
           }
-          a.active .hoverIcon {
-            opacity: 1;
+          a i {
+            margin: 0.3em;
           }
           a.active {
             background: white;

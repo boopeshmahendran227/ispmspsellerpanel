@@ -1,1 +1,6 @@
-export default function*() {}
+import QuoteSaga from "./quote";
+import { all, fork } from "redux-saga/effects";
+
+export default function* rootSaga() {
+  yield all([fork(QuoteSaga)]);
+}
