@@ -1,0 +1,40 @@
+{
+  "name": "sellerpanel",
+  "version": "1.0.0",
+  "description": "Seller panel for marketplace",
+  "main": "index.js",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.13.0",
+    "chroma-js": "^2.1.0",
+    "classnames": "^2.2.6",
+    "hoist-non-react-statics": "^3.3.2",
+    "next": "^9.3.4",
+    "next-redux-saga": "^4.1.2",
+    "next-redux-wrapper": "^5.0.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "react-transition-group": "^4.3.0",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-saga": "^1.1.3",
+    "uuid": "^7.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^13.9.8",
+    "@types/react": "^16.9.31",
+    "typescript": "^3.8.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@ssh.dev.azure.com:v3/MindBlownApps/Marketplace/sellerPanel"
+  },
+  "author": "CyberMind Works",
+  "license": "ISC"
+}
