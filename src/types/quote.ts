@@ -20,6 +20,7 @@ interface ProductDetailQuoteInterface {
 }
 
 export interface QuoteInterface {
+  customerId: string;
   sellerName: string;
   sellerId: number;
   productDetails: ProductDetailQuoteInterface[];

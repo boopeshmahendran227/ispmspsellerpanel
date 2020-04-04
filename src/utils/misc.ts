@@ -1,10 +1,10 @@
 const BASE_URL = "http://mpldev.cdn.istakapaza.com/";
 
 const formatPrice = (price: number) => {
-  return price.toLocaleString("en-IN");
+  return "₹" + price.toLocaleString("en-IN");
 };
 
-const capitalizeFirstLetter = str => {
+const capitalizeFirstLetter = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
@@ -28,11 +28,11 @@ const getProductUrl = (name, id) => {
   return `/p/${slug}/${id}`;
 };
 
-const getProductImageUrl = relativePath => {
+const getProductImageUrl = (relativePath) => {
   return BASE_URL + relativePath;
 };
 
-const returnEmptyStringIfFalse = val => {
+const returnEmptyStringIfFalse = (val) => {
   if (val === 0) return 0;
   else if (!val) return "";
   else return val;
@@ -45,5 +45,5 @@ export {
   percentageToValue,
   getProductUrl,
   getProductImageUrl,
-  returnEmptyStringIfFalse
+  returnEmptyStringIfFalse,
 };

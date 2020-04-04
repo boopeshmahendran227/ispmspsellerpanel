@@ -3,8 +3,7 @@ import RelativeImg from "../../src/components/RelativeImg";
 import SortableTable from "../../src/components/SortableTable";
 import Rating from "../../src/components/Rating";
 import moment from "moment";
-import { getProductUrl, formatPrice } from "../../src/utils/misc";
-import Link from "next/link";
+import { formatPrice } from "../../src/utils/misc";
 import QuoteActions from "../../src/actions/quote";
 import WithReduxDataLoader from "../../src/components/WithReduxDataLoader";
 import { connect } from "react-redux";
@@ -38,34 +37,34 @@ const Quotes = (props: QuotesProps) => {
       <SortableTable
         initialSortData={{
           index: 2,
-          isAsc: false
+          isAsc: false,
         }}
         headers={[
           {
             name: "Customer Name",
-            valueFunc: quote => quote.customerId
+            valueFunc: (quote: QuoteInterface) => quote.customerId,
           },
           {
             name: "Product Details",
-            valueFunc: quote => null
+            valueFunc: (quote: QuoteInterface) => null,
           },
           {
             name: "Created",
-            valueFunc: quote => quote.createdDateTime
+            valueFunc: (quote: QuoteInterface) => quote.createdDateTime,
           },
           {
             name: "Quote Total",
-            valueFunc: getQuoteTotal
-          }
+            valueFunc: getQuoteTotal,
+          },
         ]}
         data={quotes}
-        emptyMsg="Sorry! We couldn't find any quotes. Please add one."
-        body={quotes =>
-          quotes.map(quote => (
+        emptyMsg="There are no quotes requested"
+        body={(quotes) =>
+          quotes.map((quote) => (
             <tr key={quote.id}>
               <td>Boopesh</td>
               <td>
-                {quote.productDetails.map(productDetail => (
+                {quote.productDetails.map((productDetail) => (
                   <div key={productDetail.id} className="productContainer">
                     <div className="infoContainer">
                       <div className="imageContainer">
@@ -76,31 +75,21 @@ const Quotes = (props: QuotesProps) => {
                         ></RelativeImg>
                       </div>
                       <div className="contentContainer">
-                        <Link
-                          href="/p/[...params]"
-                          as={getProductUrl(
-                            productDetail.productDetails.name,
-                            productDetail.productId
-                          )}
-                        >
-                          <>
-                            <a className="name">
-                              {productDetail.productDetails.name}
-                            </a>
-                            <div>
-                              {productDetail.productDetails.attributeValueIds
-                                .map(attributeValueId => attributeValueId.value)
-                                .join(" ")}
-                            </div>
-                          </>
-                        </Link>
+                        <a className="name">
+                          {productDetail.productDetails.name}
+                        </a>
+                        <div>
+                          {productDetail.productDetails.attributeValueIds
+                            .map((attributeValueId) => attributeValueId.value)
+                            .join(" ")}
+                        </div>
                         <Rating
                           value={productDetail.productDetails.averageRating}
                         />
                       </div>
                     </div>
                     <div>
-                      <span className="infoHeader">Quote Price: </span>₹
+                      <span className="infoHeader">Quote Price: </span>
                       {formatPrice(productDetail.price)}
                     </div>
                     <div>
@@ -116,7 +105,7 @@ const Quotes = (props: QuotesProps) => {
                   .local()
                   .format("MMMM Do YYYY, hh:mm A")}
               </td>
-              <td>₹{formatPrice(getQuoteTotal(quote))}</td>
+              <td>{formatPrice(getQuoteTotal(quote))}</td>
             </tr>
           ))
         }
@@ -170,11 +159,11 @@ const Quotes = (props: QuotesProps) => {
 
 const mapStateToProps = (state: RootState): StateProps => ({
   quotes: getQuotes(state),
-  getQuotesLoadingState: state.quote.quote
+  getQuotesLoadingState: state.quote.quote,
 });
 
 const mapDispatchToProps: DispatchProps = {
-  getQuotes: QuoteActions.getQuotes
+  getQuotes: QuoteActions.getQuotes,
 };
 
 const mapPropsToLoadData = (props: QuotesProps) => {
@@ -182,8 +171,8 @@ const mapPropsToLoadData = (props: QuotesProps) => {
     {
       data: props.quotes,
       fetch: props.getQuotes,
-      loadingState: props.getQuotesLoadingState
-    }
+      loadingState: props.getQuotesLoadingState,
+    },
   ];
 };
 

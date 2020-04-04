@@ -1,10 +1,12 @@
 import toast from "./toast";
 import quote from "./quote";
+import order from "./order";
 import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
   toast,
-  quote
+  quote,
+  order,
 });
 export default rootReducer;
 

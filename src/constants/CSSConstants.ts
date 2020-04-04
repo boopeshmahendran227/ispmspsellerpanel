@@ -2,7 +2,7 @@ import Chroma from "chroma-js";
 
 const constants = {
   borderColor: "#ccc",
-  primaryColor: "#3949AB",
+  primaryColor: "#E74B3C",
   secondaryColor: "#444",
   warningColor: "#FFB100",
   dangerColor: "#ff0000",
@@ -13,16 +13,12 @@ const constants = {
   hoverColor: "", // This is set down
   hoverTextColor: "", // This is set down
   lightPrimaryColor: "", // This is set down
-  borderStyle: "" // This is set down
+  borderStyle: "", // This is set down
 };
 
-constants.lightPrimaryColor = Chroma(constants.primaryColor)
-  .brighten(3)
-  .css();
+constants.lightPrimaryColor = Chroma(constants.primaryColor).brighten(3).css();
 constants.borderStyle = `1px solid ${constants.borderColor}`;
 constants.hoverTextColor = constants.primaryColor;
-constants.hoverColor = Chroma(constants.primaryColor)
-  .brighten(3)
-  .css();
+constants.hoverColor = Chroma(constants.primaryColor).brighten(3).css();
 
 export default constants;
