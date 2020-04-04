@@ -29,7 +29,7 @@ const ProductCard = (props: ProductCardProps) => {
       </div>
       <style jsx>{`
         .container {
-          margin: 1em 0;
+          margin: 0.5em 0;
           display: flex;
           text-align: initial;
         }

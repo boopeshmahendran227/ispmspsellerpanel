@@ -19,6 +19,6 @@ const constants = {
 constants.lightPrimaryColor = Chroma(constants.primaryColor).brighten(3).css();
 constants.borderStyle = `1px solid ${constants.borderColor}`;
 constants.hoverTextColor = constants.primaryColor;
-constants.hoverColor = Chroma(constants.primaryColor).brighten(2).css();
+constants.hoverColor = Chroma(constants.primaryColor).brighten(3).css();
 
 export default constants;

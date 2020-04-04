@@ -31,7 +31,7 @@ const Orders = (props: QuotesProps) => {
       <header>Orders ({orders.length})</header>
       <SortableTable
         initialSortData={{
-          index: 5,
+          index: 6,
           isAsc: true,
         }}
         headers={[
@@ -53,6 +53,13 @@ const Orders = (props: QuotesProps) => {
               order.items
                 .map((item) => item.discountedPrice)
                 .reduce((acc, price) => acc + price, 0),
+          },
+          {
+            name: "Total Quantity",
+            valueFunc: (order: OrderInterface) =>
+              order.items
+                .map((item) => item.qty)
+                .reduce((acc, qty) => acc + qty, 0),
           },
           {
             name: "Status",
@@ -86,14 +93,14 @@ const Orders = (props: QuotesProps) => {
                         }
                       />
                       <div className="infoGrid">
-                        <span className="header">Order Status:</span>
-                        <span className="value">
-                          {orderItem.orderItemStatus}
-                        </span>
                         <span className="header">Product Id: </span>
                         <span className="value">{orderItem.productId}</span>
                         <span className="header">Sku Id: </span>
                         <span className="value">{orderItem.skuId}</span>
+                        <span className="header">Order Status:</span>
+                        <span className="value">
+                          {orderItem.orderItemStatus}
+                        </span>
                         <span className="header">Discounted Price: </span>
                         <span className="value">
                           {formatPrice(orderItem.discountedPrice)}
@@ -119,6 +126,11 @@ const Orders = (props: QuotesProps) => {
                       .reduce((acc, price) => acc + price, 0)
                   )}
                 </td>
+                <td>
+                  {order.items
+                    .map((item) => item.qty)
+                    .reduce((acc, qty) => acc + qty, 0)}
+                </td>
                 <td>{order.orderStatus}</td>
                 <td>
                   {moment
@@ -137,7 +149,7 @@ const Orders = (props: QuotesProps) => {
       <style jsx>{`
         .container {
           padding: 2em;
-          max-width: 1300px;
+          max-width: 1200px;
           margin: 1em auto;
           background: white;
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
@@ -150,20 +162,20 @@ const Orders = (props: QuotesProps) => {
         }
         .productContainer {
           text-align: initial;
-          margin: 1em 0;
+          margin: 1.2em 0;
         }
         .infoGrid {
-          margin: 0.2em;
+          margin: 0.1em;
           display: grid;
-          grid-template-columns: auto auto;
+          grid-template-columns: repeat(4, auto);
           grid-gap: 0.1em;
         }
         .infoGrid .header {
           font-weight: 700;
         }
         tr:hover {
-          background-color: ${CSSConstants.hoverColor};
-          color: ${CSSConstants.hoverTextColor};
+          background-color: ${CSSConstants.hoverColor} !important;
+          cursor: pointer;
         }
         @media (max-width: 800px) {
           .container {
