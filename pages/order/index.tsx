@@ -1,5 +1,4 @@
 import { OrderInterface, OrderItemInterface } from "../../src/types/order";
-import RelativeImg from "../../src/components/RelativeImg";
 import SortableTable from "../../src/components/SortableTable";
 import moment from "moment";
 import { formatPrice } from "../../src/utils/misc";
@@ -9,6 +8,9 @@ import { connect } from "react-redux";
 import { RootState } from "../../src/reducers";
 import { getOrders } from "../../src/selectors/order";
 import { RequestReducerState } from "../../src/reducers/utils";
+import CSSConstants from "../../src/constants/CSSConstants";
+import Link from "next/link";
+import ProductCard from "../../src/components/ProductCard";
 
 interface StateProps {
   orders: OrderInterface[];
@@ -69,74 +71,64 @@ const Orders = (props: QuotesProps) => {
         emptyMsg="There are no orders"
         body={(orders: OrderInterface[]) =>
           orders.map((order) => (
-            <tr key={order.id}>
-              <td>{order.id}</td>
-              <td>Boopesh</td>
-              <td>
-                {order.items.map((orderItem, index) => (
-                  <div key={orderItem.id} className="productContainer">
-                    <div className="infoContainer">
-                      <div className="count">{index + 1}.</div>
-                      <div className="imageContainer">
-                        <RelativeImg
-                          src={orderItem.productSnapshot.images[0]}
-                        ></RelativeImg>
-                      </div>
-                      <div className="contentContainer">
-                        <a className="name">
-                          {orderItem.productSnapshot.productName}
-                        </a>
-                        <div>
-                          {orderItem.productSnapshot.attributeValues
-                            .map(
-                              (attributeValue) =>
-                                `${attributeValue.attributeName}: ${attributeValue.value}`
-                            )
-                            .join(" ")}
-                        </div>
+            <Link key={order.id} href="/order/[id]" as={`/order/${order.id}`}>
+              <tr>
+                <td>{order.id}</td>
+                <td>Boopesh</td>
+                <td>
+                  {order.items.map((orderItem, index) => (
+                    <div key={orderItem.id} className="productContainer">
+                      <ProductCard
+                        name={orderItem.productSnapshot.productName}
+                        image={orderItem.productSnapshot.images[0]}
+                        attributeValues={
+                          orderItem.productSnapshot.attributeValues
+                        }
+                      />
+                      <div className="infoGrid">
+                        <span className="header">Order Status:</span>
+                        <span className="value">
+                          {orderItem.orderItemStatus}
+                        </span>
+                        <span className="header">Product Id: </span>
+                        <span className="value">{orderItem.productId}</span>
+                        <span className="header">Sku Id: </span>
+                        <span className="value">{orderItem.skuId}</span>
+                        <span className="header">Discounted Price: </span>
+                        <span className="value">
+                          {formatPrice(orderItem.discountedPrice)}
+                        </span>
+                        <span className="header">Discount: </span>
+                        <span className="value">
+                          {formatPrice(orderItem.totalDiscount)}
+                        </span>
+                        <span className="header">Quantity:</span>
+                        <span className="value">{orderItem.qty}</span>
+                        <span className="header">Tax:</span>
+                        <span className="value">
+                          {formatPrice(orderItem.tax)}
+                        </span>
                       </div>
                     </div>
-                    <div className="infoGrid">
-                      <span className="header">Order Status:</span>
-                      <span className="value">{orderItem.orderItemStatus}</span>
-                      <span className="header">Product Id: </span>
-                      <span className="value">{orderItem.productId}</span>
-                      <span className="header">Sku Id: </span>
-                      <span className="value">{orderItem.skuId}</span>
-                      <span className="header">Discounted Price: </span>
-                      <span className="value">
-                        {formatPrice(orderItem.discountedPrice)}
-                      </span>
-                      <span className="header">Discount: </span>
-                      <span className="value">
-                        {formatPrice(orderItem.totalDiscount)}
-                      </span>
-                      <span className="header">Quantity:</span>
-                      <span className="value">{orderItem.qty}</span>
-                      <span className="header">Tax:</span>
-                      <span className="value">
-                        {formatPrice(orderItem.tax)}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </td>
-              <td></td>
-              <td>
-                {formatPrice(
-                  order.items
-                    .map((item) => item.discountedPrice)
-                    .reduce((acc, price) => acc + price, 0)
-                )}
-              </td>
-              <td>{order.orderStatus}</td>
-              <td>
-                {moment
-                  .utc(order.createdDateTime)
-                  .local()
-                  .format("MMMM Do YYYY, hh:mm A")}
-              </td>
-            </tr>
+                  ))}
+                </td>
+                <td></td>
+                <td>
+                  {formatPrice(
+                    order.items
+                      .map((item) => item.discountedPrice)
+                      .reduce((acc, price) => acc + price, 0)
+                  )}
+                </td>
+                <td>{order.orderStatus}</td>
+                <td>
+                  {moment
+                    .utc(order.createdDateTime)
+                    .local()
+                    .format("MMMM Do YYYY, hh:mm A")}
+                </td>
+              </tr>
+            </Link>
           ))
         }
       />
@@ -158,18 +150,8 @@ const Orders = (props: QuotesProps) => {
           text-align: initial;
           margin: 1em 0;
         }
-        .count {
-          font-weight: 700;
-        }
-        .infoContainer {
-          display: flex;
-        }
-        .count,
         .infoGrid {
-          margin: 0.3em 0.5em;
-        }
-        .infoGrid {
-          margin: 0.3em 1.6em;
+          margin: 0.2em;
           display: grid;
           grid-template-columns: auto auto;
           grid-gap: 0.1em;
@@ -177,18 +159,9 @@ const Orders = (props: QuotesProps) => {
         .infoGrid .header {
           font-weight: 700;
         }
-        .name {
-          font-weight: 700;
-          font-size: 1rem;
-        }
-        .imageContainer {
-          width: 7rem;
-          text-align: center;
-          padding: 0.5em;
-          padding-left: 0;
-        }
-        .contentContainer {
-          padding-top: 1em;
+        tr:hover {
+          background-color: ${CSSConstants.hoverColor};
+          color: ${CSSConstants.hoverTextColor};
         }
         @media (max-width: 800px) {
           .container {

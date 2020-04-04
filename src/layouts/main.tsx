@@ -11,6 +11,7 @@ const Layout = (props: LayoutProps) => {
   return (
     <div>
       <Head>
+        <title>Istakapaza Sellers</title>
         <link
           href="https://fonts.googleapis.com/css?family=Lato:400,500,700&display=swap"
           rel="stylesheet"
@@ -24,7 +25,7 @@ const Layout = (props: LayoutProps) => {
         r=o.createElement('script');r.async=1;
         r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
         a.appendChild(r);
-    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`,
           }}
         />
       </Head>
@@ -66,7 +67,6 @@ const Layout = (props: LayoutProps) => {
         }
         a {
           color: inherit;
-          text-decoration: none;
         }
         button {
           background: transparent;

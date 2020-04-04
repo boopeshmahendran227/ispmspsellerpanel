@@ -1,11 +1,5 @@
 import { GET_ORDERS_REQUEST } from "../constants/ActionTypes";
-
-interface ProductAttributeValue {
-  attributeId: number;
-  valueId: number;
-  attributeName: string;
-  value: string;
-}
+import { ProductAttributeValue } from "./product";
 
 export interface OrderItemInterface {
   id: number;

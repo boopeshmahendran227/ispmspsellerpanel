@@ -82,6 +82,7 @@ const Navbar = () => {
             display: inline-block;
             padding: 1em;
             transition: all 0.3s;
+            text-decoration: none;
           }
           a i {
             margin: 0.3em;

@@ -1,7 +1,5 @@
 import { QuoteInterface } from "../../src/types/quote";
-import RelativeImg from "../../src/components/RelativeImg";
 import SortableTable from "../../src/components/SortableTable";
-import Rating from "../../src/components/Rating";
 import moment from "moment";
 import { formatPrice } from "../../src/utils/misc";
 import QuoteActions from "../../src/actions/quote";
@@ -10,6 +8,7 @@ import { connect } from "react-redux";
 import { RootState } from "../../src/reducers";
 import { getQuotes } from "../../src/selectors/quote";
 import { RequestReducerState } from "../../src/reducers/utils";
+import ProductCard from "../../src/components/ProductCard";
 
 interface StateProps {
   quotes: QuoteInterface[];
@@ -66,28 +65,13 @@ const Quotes = (props: QuotesProps) => {
               <td>
                 {quote.productDetails.map((productDetail) => (
                   <div key={productDetail.id} className="productContainer">
-                    <div className="infoContainer">
-                      <div className="imageContainer">
-                        <RelativeImg
-                          src={
-                            productDetail.productDetails.imageRelativePaths[0]
-                          }
-                        ></RelativeImg>
-                      </div>
-                      <div className="contentContainer">
-                        <a className="name">
-                          {productDetail.productDetails.name}
-                        </a>
-                        <div>
-                          {productDetail.productDetails.attributeValueIds
-                            .map((attributeValueId) => attributeValueId.value)
-                            .join(" ")}
-                        </div>
-                        <Rating
-                          value={productDetail.productDetails.averageRating}
-                        />
-                      </div>
-                    </div>
+                    <ProductCard
+                      name={productDetail.productDetails.name}
+                      image={productDetail.productDetails.imageRelativePaths[0]}
+                      attributeValues={
+                        productDetail.productDetails.attributeValueIds
+                      }
+                    />
                     <div>
                       <span className="infoHeader">Quote Price: </span>
                       {formatPrice(productDetail.price)}
@@ -127,22 +111,6 @@ const Quotes = (props: QuotesProps) => {
         .productContainer {
           text-align: initial;
           margin: 1em 0;
-        }
-        .infoContainer {
-          display: flex;
-        }
-        .name {
-          font-weight: 500;
-          font-size: 1rem;
-        }
-        .imageContainer {
-          width: 7rem;
-          text-align: center;
-          padding: 0.5em;
-          padding-left: 0;
-        }
-        .contentContainer {
-          padding-top: 1em;
         }
         .infoHeader {
           font-weight: 500;
