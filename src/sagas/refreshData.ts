@@ -6,6 +6,7 @@ function* refreshOrder() {
   while (true) {
     yield take([CHANGE_ORDER_ITEM_STATUS_SUCCESS]);
     yield put(OrderActions.getCurrentOrder());
+    yield put(OrderActions.getOrders());
   }
 }
 
