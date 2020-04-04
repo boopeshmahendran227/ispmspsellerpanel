@@ -3,6 +3,9 @@
  */
 const axios = require("axios");
 const parseCookies = require("nookies").parseCookies;
+const NProgress = require("nprogress");
+
+NProgress.configure({ showSpinner: false });
 
 const BASE_URL = "http://api.mpl.istakapaza.com/v1";
 // const BASE_URL = "http://192.168.0.103:5000/v1";
@@ -15,16 +18,25 @@ module.exports = (url, options) => {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
+  if (process.browser) {
+    NProgress.start();
+  }
+
   const combinedOptions = Object.assign({}, options, { headers });
   return axios({
     url: BASE_URL + url,
-    ...combinedOptions
+    ...combinedOptions,
   })
-    .then(res => {
+    .then((res) => {
       return res.data;
     })
-    .catch(err => {
+    .catch((err) => {
       // todo
       throw err;
+    })
+    .finally(() => {
+      if (process.browser) {
+        NProgress.done();
+      }
     });
 };

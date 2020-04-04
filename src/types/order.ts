@@ -1,5 +1,16 @@
-import { GET_ORDERS_REQUEST } from "../constants/ActionTypes";
+import {
+  GET_ORDERS_REQUEST,
+  CHANGE_ORDER_ITEM_STATUS_REQUEST,
+  GET_CURRENT_ORDER_DETAIL_REQUEST,
+} from "../constants/ActionTypes";
 import { ProductAttributeValue } from "./product";
+
+export enum OrderStatus {
+  PaymentSuccess = "PaymentSuccess",
+  Shipping = "Shipping",
+  ShippingCompleted = "ShippingCompleted",
+  Cancel = "Cancel",
+}
 
 export interface OrderItemInterface {
   id: number;
@@ -72,4 +83,17 @@ interface GetOrderAction {
   type: typeof GET_ORDERS_REQUEST;
 }
 
-export type OrderActionType = GetOrderAction;
+interface ChangeOrderItemStatusAction {
+  type: typeof CHANGE_ORDER_ITEM_STATUS_REQUEST;
+  orderItemId: number;
+  orderItemStatus: string;
+}
+
+interface GetCurrentOrderAction {
+  type: typeof GET_CURRENT_ORDER_DETAIL_REQUEST;
+}
+
+export type OrderActionType =
+  | GetOrderAction
+  | GetCurrentOrderAction
+  | ChangeOrderItemStatusAction;

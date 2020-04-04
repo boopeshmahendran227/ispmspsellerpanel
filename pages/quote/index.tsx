@@ -48,12 +48,16 @@ const Quotes = (props: QuotesProps) => {
             valueFunc: (quote: QuoteInterface) => null,
           },
           {
+            name: "Quote Total",
+            valueFunc: getQuoteTotal,
+          },
+          {
             name: "Created",
             valueFunc: (quote: QuoteInterface) => quote.createdDateTime,
           },
           {
-            name: "Quote Total",
-            valueFunc: getQuoteTotal,
+            name: "Action",
+            valueFunc: (quote: QuoteInterface) => null,
           },
         ]}
         data={quotes}
@@ -83,13 +87,16 @@ const Quotes = (props: QuotesProps) => {
                   </div>
                 ))}
               </td>
+              <td>{formatPrice(getQuoteTotal(quote))}</td>
               <td>
                 {moment
                   .utc(quote.createdDateTime)
                   .local()
                   .format("MMMM Do YYYY, hh:mm A")}
               </td>
-              <td>{formatPrice(getQuoteTotal(quote))}</td>
+              <td>
+                <a>Delete</a>
+              </td>
             </tr>
           ))
         }

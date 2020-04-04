@@ -31,7 +31,7 @@ const Orders = (props: QuotesProps) => {
       <header>Orders ({orders.length})</header>
       <SortableTable
         initialSortData={{
-          index: 6,
+          index: 5,
           isAsc: true,
         }}
         headers={[
@@ -48,10 +48,6 @@ const Orders = (props: QuotesProps) => {
             valueFunc: (order: OrderItemInterface) => null,
           },
           {
-            name: "Shipping Address",
-            valueFunc: (order: OrderInterface) => null,
-          },
-          {
             name: "Price",
             valueFunc: (order: OrderInterface) =>
               order.items
@@ -65,6 +61,10 @@ const Orders = (props: QuotesProps) => {
           {
             name: "Created",
             valueFunc: (order: OrderInterface) => order.createdDateTime,
+          },
+          {
+            name: "Action",
+            valueFunc: (order: OrderInterface) => null,
           },
         ]}
         data={orders}
@@ -112,7 +112,6 @@ const Orders = (props: QuotesProps) => {
                     </div>
                   ))}
                 </td>
-                <td></td>
                 <td>
                   {formatPrice(
                     order.items
@@ -126,6 +125,9 @@ const Orders = (props: QuotesProps) => {
                     .utc(order.createdDateTime)
                     .local()
                     .format("MMMM Do YYYY, hh:mm A")}
+                </td>
+                <td>
+                  <a>View</a>
                 </td>
               </tr>
             </Link>

@@ -24,7 +24,7 @@ const ProductCard = (props: ProductCardProps) => {
         <RelativeImg src={props.image}></RelativeImg>
       </div>
       <div className="contentContainer">
-        <a className="name">{props.name}</a>
+        <span className="name">{props.name}</span>
         <div>{attributeValueStr}</div>
       </div>
       <style jsx>{`

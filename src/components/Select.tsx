@@ -13,7 +13,7 @@ interface SelectProps {
 const Select = (props: SelectProps) => {
   // Convert null to empty string
   const value = returnEmptyStringIfFalse(props.value);
-  const onChange = e => {
+  const onChange = (e) => {
     let value = e.target.value;
     if (value === "") {
       value = null;
@@ -24,7 +24,7 @@ const Select = (props: SelectProps) => {
 
   return (
     <div className="container">
-      <img src="/static/icons/dropdownDownArrow.svg" className="icon" alt="" />
+      <i className="icon fas fa-caret-down"></i>
       <select
         name={props.name}
         value={value}
@@ -40,7 +40,7 @@ const Select = (props: SelectProps) => {
         }
         select {
           appearance: none;
-          border: 1px solid ${CSSConstants.primaryButtonColor};
+          border: 1px solid ${CSSConstants.primaryColor};
           border-radius: 0.4em;
           font-size: inherit;
           padding: 0.3em 2em 0.3em 0.6em;
@@ -49,7 +49,8 @@ const Select = (props: SelectProps) => {
         }
         .icon {
           position: absolute;
-          right: 0.3em;
+          display: inline-block;
+          right: 0.5em;
           top: 50%;
           transform: translateY(-50%);
           height: 0.9rem;
@@ -61,7 +62,7 @@ const Select = (props: SelectProps) => {
 };
 
 Select.defaultProps = {
-  disabled: false
+  disabled: false,
 };
 
 export default Select;

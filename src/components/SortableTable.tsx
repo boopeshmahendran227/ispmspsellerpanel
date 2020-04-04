@@ -32,7 +32,7 @@ const SortableTable = (props: SortableTableProps) => {
   );
   const [isAsc, setIsAsc] = useState(props.initialSortData.isAsc);
 
-  const handleHeaderClick = index => {
+  const handleHeaderClick = (index) => {
     if (index === activeHeaderIndex) {
       setIsAsc(!isAsc);
     } else {
@@ -79,7 +79,7 @@ const SortableTable = (props: SortableTableProps) => {
             {props.headers.map((header, index) => {
               const classes = classNames({
                 active: index === activeHeaderIndex,
-                isAsc: isAsc
+                isAsc: isAsc,
               });
               return (
                 <th
@@ -146,6 +146,11 @@ const SortableTable = (props: SortableTableProps) => {
         }
         .sortableTable th.active.isAsc .icon {
           transform: translateY(-50%) rotate(180deg);
+        }
+        .sortableTable :global(a) {
+          cursor: pointer;
+          color: ${CSSConstants.primaryColor};
+          text-decoration: underline;
         }
       `}</style>
     </div>

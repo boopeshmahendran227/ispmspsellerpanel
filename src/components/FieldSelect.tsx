@@ -18,7 +18,7 @@ const FieldSelect = (props: FieldSelectProps) => {
         <div
           className={classNames({
             container: true,
-            error: Boolean(form.touched[props.name] && form.errors[props.name])
+            error: Boolean(form.touched[props.name] && form.errors[props.name]),
           })}
         >
           <label htmlFor={props.id}>{props.placeholder}:</label>
@@ -37,7 +37,7 @@ const FieldSelect = (props: FieldSelectProps) => {
               margin: 0.3em 0;
             }
             .container.error {
-              color: ${CSSConstants.dangerButtonColor};
+              color: ${CSSConstants.dangerColor};
             }
             label {
               font-weight: bold;

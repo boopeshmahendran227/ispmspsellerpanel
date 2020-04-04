@@ -7,10 +7,25 @@ import SortableTable from "../../src/components/SortableTable";
 import { formatPrice } from "../../src/utils/misc";
 import ProductCard from "../../src/components/ProductCard";
 import Link from "next/link";
+import ChangeStatusModal from "../../src/components/ChangeStatusModal";
+import { useState } from "react";
+import { RequestReducerState } from "../../src/reducers/utils";
+import { RootState } from "../../src/reducers";
+import { getCurrentOrder } from "../../src/selectors/order";
+import OrderActions from "../../src/actions/order";
+import { connect } from "react-redux";
+import WithReduxDataLoader from "../../src/components/WithReduxDataLoader";
 
-interface OrderProps {
+interface StateProps {
   order: OrderDetailInterface;
+  getCurrentOrderLoadingState: RequestReducerState;
 }
+
+interface DispatchProps {
+  getCurrentOrder: () => void;
+}
+
+type OrderProps = StateProps & DispatchProps;
 
 const formatAddress = (address: AddressInterface) => {
   return `${address.addressLine1} , ${address.addressLine2}, ${address.city} - ${address.zipCode}, ${address.state}`;
@@ -18,9 +33,21 @@ const formatAddress = (address: AddressInterface) => {
 
 const Order = (props: OrderProps) => {
   const { order } = props;
+  const [currentOrderItem, setCurrentOrderItem] = useState(order.items[0]);
+  const [changeStatusModalOpen, setChangeStatusModalOpen] = useState(false);
+
+  const handleChangeStatus = (orderItem: OrderItemInterface) => {
+    setCurrentOrderItem(orderItem);
+    setChangeStatusModalOpen(true);
+  };
 
   return (
     <div className="card">
+      <ChangeStatusModal
+        orderItem={currentOrderItem}
+        open={changeStatusModalOpen}
+        onClose={() => setChangeStatusModalOpen(false)}
+      />
       <Link href="/order">
         <a className="backBtn">
           <i className="icon fas fa-chevron-left"></i> Back to Orders
@@ -137,9 +164,14 @@ const Order = (props: OrderProps) => {
                     <td>{formatPrice(orderItem.discountedPrice)}</td>
                     <td>{formatPrice(orderItem.totalDiscount)}</td>
                     <td>{formatPrice(orderItem.tax)}</td>
-                    <td>{order.orderStatus}</td>
+                    <td>{orderItem.orderItemStatus}</td>
                     <td>
-                      <a className="changeStatusLink">Change Status</a>
+                      <a
+                        className="changeStatusLink"
+                        onClick={() => handleChangeStatus(orderItem)}
+                      >
+                        Change Status
+                      </a>
                     </td>
                   </tr>
                 ))
@@ -211,15 +243,26 @@ const Order = (props: OrderProps) => {
   );
 };
 
-Order.getInitialProps = async (context) => {
-  const { id } = context.query;
-  const order = await api(`/order/${id}`, {
-    context: context,
-  });
+const mapStateToProps = (state: RootState): StateProps => ({
+  order: getCurrentOrder(state),
+  getCurrentOrderLoadingState: state.order.currentOrder,
+});
 
-  return {
-    order,
-  };
+const mapDispatchToProps: DispatchProps = {
+  getCurrentOrder: OrderActions.getCurrentOrder,
 };
 
-export default Order;
+const mapPropsToLoadData = (props: OrderProps) => {
+  return [
+    {
+      data: props.order,
+      fetch: props.getCurrentOrder,
+      loadingState: props.getCurrentOrderLoadingState,
+    },
+  ];
+};
+
+export default connect<StateProps, DispatchProps>(
+  mapStateToProps,
+  mapDispatchToProps
+)(WithReduxDataLoader(mapPropsToLoadData)(Order));
