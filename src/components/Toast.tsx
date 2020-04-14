@@ -8,33 +8,41 @@ interface ToastProps {
   remove: () => void;
 }
 
-const Toast = (props: ToastProps) => {
-  let header = "";
-  let currentColor = "#44c38e";
-
-  switch (props.data.type) {
+const getToastHeader = (type: ToastType, header: string) => {
+  switch (type) {
     case ToastType.success:
-      header = "Success";
-      currentColor = "#44c38e";
-      break;
+      return "Success";
     case ToastType.error:
-      header = "Failed";
-      currentColor = "#e54d2a";
-      break;
+      return "Failed";
     case ToastType.info:
-      header = "Info";
-      currentColor = "#007AFF";
-      break;
+      return "Info";
     case ToastType.notification:
-      header = "Notification";
-      break;
+      return header;
   }
+  return "Info";
+};
+
+const getToastColor = (type: ToastType) => {
+  switch (type) {
+    case ToastType.success:
+      return "#44c38e";
+    case ToastType.error:
+      return "#e54d2a";
+    case ToastType.info:
+      return "#007AFF";
+    case ToastType.notification:
+      return "#007AFF";
+  }
+  return "#44c38e";
+};
+
+const Toast = (props: ToastProps) => {
+  const header = getToastHeader(props.data.type, props.data.header);
+  const currentColor = getToastColor(props.data.type);
 
   useEffect(() => {
     // Close after duration
-    let closeTimeout = null;
-
-    closeTimeout = setTimeout(() => {
+    const closeTimeout = setTimeout(() => {
       props.remove();
     }, props.data.duration);
     return () => clearTimeout(closeTimeout);
@@ -53,6 +61,9 @@ const Toast = (props: ToastProps) => {
           <i className="fas fa-exclamation-triangle" aria-hidden="true"></i>
         )}
         {props.data.type === ToastType.info && (
+          <i className="fa fa-info-circle" aria-hidden="true"></i>
+        )}
+        {props.data.type === ToastType.notification && (
           <i className="fa fa-info-circle" aria-hidden="true"></i>
         )}
       </div>
@@ -75,10 +86,10 @@ const Toast = (props: ToastProps) => {
         }
         .iconContainer {
           padding: 0.7em;
+          display: flex;
+          align-items: center;
           background: ${currentColor};
-          color: ${Chroma(currentColor)
-            .brighten(1)
-            .css()};
+          color: ${Chroma(currentColor).brighten(1).css()};
         }
         header {
           font-weight: bold;

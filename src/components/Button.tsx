@@ -5,7 +5,7 @@ export enum ButtonType {
   default = "default",
   primary = "primary",
   success = "success",
-  danger = "danger"
+  danger = "danger",
 }
 
 interface ButtonProps {
@@ -19,21 +19,24 @@ interface ButtonProps {
   disabled: boolean;
 }
 
+const getCurrentColor = (type: ButtonType) => {
+  switch (type) {
+    case ButtonType.primary:
+      return CSSConstants.primaryColor;
+  }
+  return "#eee";
+};
+
 const Button = (props: ButtonProps) => {
   const classes = classNames({
     [props.type]: true,
     [props.className]: true,
     outlined: props.outlined,
     fullWidth: props.fullWidth,
-    ripple: true
+    ripple: true,
   });
 
-  let currentColor = "#eee";
-  switch (props.type) {
-    case ButtonType.primary:
-      currentColor = CSSConstants.primaryColor;
-      break;
-  }
+  const currentColor = getCurrentColor(props.type);
 
   return (
     <button
@@ -118,7 +121,7 @@ Button.defaultProps = {
   className: "",
   isSubmitButton: false,
   disabled: false,
-  outlined: false
+  outlined: false,
 };
 
 export default Button;

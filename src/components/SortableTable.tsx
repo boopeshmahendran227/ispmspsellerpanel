@@ -51,14 +51,14 @@ const SortableTable = (props: SortableTableProps) => {
 
     const copy = props.data.slice(0);
     copy.sort((a, b) => {
-      let aVal = valueFunc(a);
-      let bVal = valueFunc(b);
-      if (isString(aVal)) {
-        aVal = aVal.toLowerCase();
-      }
-      if (isString(bVal)) {
-        bVal = bVal.toLowerCase();
-      }
+      const convertToLowerCase = (val) => {
+        if (isString(val)) return val.toLowerCase();
+        return val;
+      };
+
+      const aVal = convertToLowerCase(valueFunc(a));
+      const bVal = convertToLowerCase(valueFunc(b));
+
       if (aVal < bVal) return isAsc ? -1 : 1;
       else if (aVal > bVal) return isAsc ? 1 : -1;
       else return 0;

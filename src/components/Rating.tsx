@@ -4,19 +4,22 @@ interface RatingProps {
   value: number;
 }
 
+const getColor = (value: number) => {
+  if (value >= 2.5 && value <= 3.5) {
+    return CSSConstants.warningColor;
+  } else if (value < 2.5) {
+    return CSSConstants.dangerColor;
+  }
+  return CSSConstants.successColor;
+};
+
 const Rating = (props: RatingProps) => {
   // Rating can be null
   if (!props.value) {
     return null;
   }
 
-  let color = CSSConstants.successColor;
-
-  if (props.value >= 2.5 && props.value <= 3.5) {
-    color = CSSConstants.warningColor;
-  } else if (props.value < 2.5) {
-    color = CSSConstants.dangerColor;
-  }
+  const color = getColor(props.value);
 
   return (
     <div className="rating">
