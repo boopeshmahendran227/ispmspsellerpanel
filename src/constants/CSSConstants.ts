@@ -3,6 +3,7 @@ import Chroma from "chroma-js";
 const constants = {
   backgroundColor: "#F0F3F4",
   foregroundColor: "#FFFFFF",
+  disabledColor: "#999",
   borderColor: "#ccc",
   primaryColor: "#2980b9",
   secondaryColor: "#444",
@@ -21,6 +22,6 @@ const constants = {
 constants.lightPrimaryColor = Chroma(constants.primaryColor).brighten(1).css();
 constants.borderStyle = `1px solid ${constants.borderColor}`;
 constants.hoverTextColor = constants.primaryColor;
-constants.hoverColor = Chroma(constants.primaryColor).brighten(3).css();
+constants.hoverColor = Chroma(constants.primaryColor).brighten(3.2).css();
 
 export default constants;

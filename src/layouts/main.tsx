@@ -2,6 +2,7 @@ import * as React from "react";
 import CSSConstants from "../constants/CSSConstants";
 import SideNavBar from "../components/SideNavBar";
 import Head from "next/head";
+import TopNavBar from "../components/TopNavBar";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -34,7 +35,10 @@ const Layout = (props: LayoutProps) => {
         <div className="sideNavBarContainer">
           <SideNavBar />
         </div>
-        <div className="bodyContainer">{props.children}</div>
+        <div className="bodyContainer">
+          <TopNavBar />
+          {props.children}
+        </div>
       </main>
       <div className="portalRoot"></div>
       <style jsx>{`

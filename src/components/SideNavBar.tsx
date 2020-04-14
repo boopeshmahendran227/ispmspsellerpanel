@@ -1,5 +1,6 @@
 import Link from "./Link";
 import CSSConstants from "../constants/CSSConstants";
+import Chroma from "chroma-js";
 
 const SideNavBar = () => {
   return (
@@ -51,6 +52,14 @@ const SideNavBar = () => {
               </a>
             </Link>
           </li>
+          <li>
+            <Link activeClassName="active" href="/customers">
+              <a>
+                <i className="fas fa-cog" aria-hidden="true"></i>
+                <span>Settings</span>
+              </a>
+            </Link>
+          </li>
         </ul>
       </div>
       <style jsx>
@@ -90,11 +99,17 @@ const SideNavBar = () => {
             text-decoration: none;
           }
           a i {
+            width: 1.3rem;
             margin: 0.3em;
           }
           a.active {
             background: ${CSSConstants.lightPrimaryColor};
             border-left: 2px solid white;
+          }
+          a:hover {
+            background: ${Chroma(CSSConstants.primaryColor)
+              .brighten(0.4)
+              .css()};
           }
         `}
       </style>

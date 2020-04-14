@@ -47,6 +47,9 @@ export default function* () {
       const notification: NotificationItemInterface = yield take(
         notificationChannel
       );
+      if (Audio) {
+        new Audio("/notification.mp3").play();
+      }
       yield put(
         ToastActions.addToast({
           type: ToastType.notification,

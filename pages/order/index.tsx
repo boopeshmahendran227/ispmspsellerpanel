@@ -148,9 +148,9 @@ const Orders = (props: QuotesProps) => {
       />
       <style jsx>{`
         .container {
-          max-width: 1100px;
           padding: 1em 0;
           margin: 1em auto;
+          font-size: 0.95rem;
           background: ${CSSConstants.foregroundColor};
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
             0 1px 2px rgba(0, 0, 0, 0.24);
