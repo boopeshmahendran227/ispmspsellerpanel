@@ -1,7 +1,7 @@
 import {
   GET_QUOTES_REQUEST,
   GET_QUOTES_SUCCESS,
-  GET_QUOTES_FAILURE
+  GET_QUOTES_FAILURE,
 } from "../constants/ActionTypes";
 import { takeEvery, all, call, put } from "redux-saga/effects";
 import api from "../api";
@@ -10,8 +10,8 @@ function* getQuotes() {
   try {
     const data = yield call(api, "/quote", {
       params: {
-        sellerId: 2
-      }
+        sellerId: "2",
+      },
     });
     yield put({ type: GET_QUOTES_SUCCESS, data: data });
   } catch (err) {
@@ -23,6 +23,6 @@ function* watchGetQuotes() {
   yield takeEvery(GET_QUOTES_REQUEST, getQuotes);
 }
 
-export default function*() {
+export default function* () {
   yield all([watchGetQuotes()]);
 }

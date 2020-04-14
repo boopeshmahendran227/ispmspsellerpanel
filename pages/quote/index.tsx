@@ -35,7 +35,7 @@ const Quotes = (props: QuotesProps) => {
       <header>Quotes ({quotes.length})</header>
       <SortableTable
         initialSortData={{
-          index: 2,
+          index: 3,
           isAsc: false,
         }}
         headers={[

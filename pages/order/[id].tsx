@@ -1,6 +1,5 @@
-import api from "../../src/api";
 import moment from "moment";
-import { OrderDetailInterface, AddressInterface } from "../../src/types/order";
+import { AddressInterface } from "../../src/types/order";
 import CSSConstants from "../../src/constants/CSSConstants";
 import { OrderItemInterface } from "../../src/types/order";
 import SortableTable from "../../src/components/SortableTable";
@@ -9,31 +8,19 @@ import ProductCard from "../../src/components/ProductCard";
 import Link from "next/link";
 import ChangeStatusModal from "../../src/components/ChangeStatusModal";
 import { useState } from "react";
-import { RequestReducerState } from "../../src/reducers/utils";
-import { RootState } from "../../src/reducers";
-import { getCurrentOrder } from "../../src/selectors/order";
-import OrderActions from "../../src/actions/order";
-import { connect } from "react-redux";
-import WithReduxDataLoader from "../../src/components/WithReduxDataLoader";
-
-interface StateProps {
-  order: OrderDetailInterface;
-  getCurrentOrderLoadingState: RequestReducerState;
-}
-
-interface DispatchProps {
-  getCurrentOrder: () => void;
-}
-
-type OrderProps = StateProps & DispatchProps;
+import useSWR from "swr";
+import { useRouter } from "next/router";
+import Loader from "../../src/components/Loader";
+import api from "../../src/api";
 
 const formatAddress = (address: AddressInterface) => {
   return `${address.addressLine1} , ${address.addressLine2}, ${address.city} - ${address.zipCode}, ${address.state}`;
 };
 
-const Order = (props: OrderProps) => {
-  const { order } = props;
-  const [currentOrderItem, setCurrentOrderItem] = useState(order.items[0]);
+const Order = () => {
+  const router = useRouter();
+  const { data: order } = useSWR(`/order/${router.query.id}`, api);
+  const [currentOrderItem, setCurrentOrderItem] = useState(null);
   const [changeStatusModalOpen, setChangeStatusModalOpen] = useState(false);
 
   const handleChangeStatus = (orderItem: OrderItemInterface) => {
@@ -41,9 +28,14 @@ const Order = (props: OrderProps) => {
     setChangeStatusModalOpen(true);
   };
 
+  if (!order) {
+    return <Loader />;
+  }
+
   return (
     <div className="card">
       <ChangeStatusModal
+        order={order}
         orderItem={currentOrderItem}
         open={changeStatusModalOpen}
         onClose={() => setChangeStatusModalOpen(false)}
@@ -243,26 +235,4 @@ const Order = (props: OrderProps) => {
   );
 };
 
-const mapStateToProps = (state: RootState): StateProps => ({
-  order: getCurrentOrder(state),
-  getCurrentOrderLoadingState: state.order.currentOrder,
-});
-
-const mapDispatchToProps: DispatchProps = {
-  getCurrentOrder: OrderActions.getCurrentOrder,
-};
-
-const mapPropsToLoadData = (props: OrderProps) => {
-  return [
-    {
-      data: props.order,
-      fetch: props.getCurrentOrder,
-      loadingState: props.getCurrentOrderLoadingState,
-    },
-  ];
-};
-
-export default connect<StateProps, DispatchProps>(
-  mapStateToProps,
-  mapDispatchToProps
-)(WithReduxDataLoader(mapPropsToLoadData)(Order));
+export default Order;

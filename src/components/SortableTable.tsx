@@ -100,7 +100,7 @@ const SortableTable = (props: SortableTableProps) => {
         .sortableTableContainer {
           margin-top: 1em;
           margin-bottom: 2em;
-          overflow-x: auto;
+          overflow: auto;
           box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
         }
         .sortableTable {

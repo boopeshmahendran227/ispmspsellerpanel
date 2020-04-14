@@ -21,6 +21,7 @@ interface DispatchProps {
 interface OwnProps {
   open: boolean;
   onClose: () => void;
+  order: OrderInterface;
   orderItem: OrderItemInterface;
 }
 
@@ -29,8 +30,16 @@ type ChangeStatusModalProps = StateProps & DispatchProps & OwnProps;
 const ChangeStatusModal = (props: ChangeStatusModalProps) => {
   const { open, onClose, orderItem } = props;
 
+  if (!orderItem) {
+    return null;
+  }
+
   const onSubmit = (values) => {
-    props.changeOrderItemStatus(props.orderItem.id, values.orderItemStatus);
+    props.changeOrderItemStatus(
+      props.order.id,
+      props.orderItem.id,
+      values.orderItemStatus
+    );
     props.onClose();
   };
 

@@ -22,7 +22,7 @@ interface ProductDetailQuoteInterface {
 export interface QuoteInterface {
   customerId: string;
   sellerName: string;
-  sellerId: number;
+  sellerId: string;
   productDetails: ProductDetailQuoteInterface[];
   message: string;
   createdDateTime: string;

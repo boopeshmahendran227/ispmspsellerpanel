@@ -1,11 +1,12 @@
 import { CHANGE_ORDER_ITEM_STATUS_SUCCESS } from "../constants/ActionTypes";
-import { take, all, put } from "redux-saga/effects";
+import { take, all, put, call } from "redux-saga/effects";
 import OrderActions from "../actions/order";
+import { mutate } from "swr";
 
 function* refreshOrder() {
   while (true) {
-    yield take([CHANGE_ORDER_ITEM_STATUS_SUCCESS]);
-    yield put(OrderActions.getCurrentOrder());
+    const action = yield take([CHANGE_ORDER_ITEM_STATUS_SUCCESS]);
+    yield call(mutate, `/order/${action.orderId}`);
     yield put(OrderActions.getOrders());
   }
 }

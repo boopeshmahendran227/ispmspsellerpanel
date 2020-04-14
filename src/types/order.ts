@@ -1,22 +1,29 @@
 import {
   GET_ORDERS_REQUEST,
   CHANGE_ORDER_ITEM_STATUS_REQUEST,
-  GET_CURRENT_ORDER_DETAIL_REQUEST,
 } from "../constants/ActionTypes";
 import { ProductAttributeValue } from "./product";
 
 export enum OrderStatus {
+  Created = "Created",
   PaymentSuccess = "PaymentSuccess",
+  PaymentFail = "PaymentFail",
+  SellerApprovalPending = "SellerApprovalPending",
+  AdminApprovalPending = "AdminApprovalPending",
   Shipping = "Shipping",
   ShippingCompleted = "ShippingCompleted",
+  CancelRequested = "CancelRequested",
   Cancel = "Cancel",
+  CancelCompleted = "CancelCompleted",
+  Return = "Return",
+  ReturnComplete = "ReturnComplete",
 }
 
 export interface OrderItemInterface {
   id: number;
   productId: number;
   skuId: string;
-  sellerId: number;
+  sellerId: string;
   actualPrice: number;
   discountedPrice: number;
   productSnapshot: {
@@ -85,15 +92,9 @@ interface GetOrderAction {
 
 interface ChangeOrderItemStatusAction {
   type: typeof CHANGE_ORDER_ITEM_STATUS_REQUEST;
+  orderId: number;
   orderItemId: number;
   orderItemStatus: string;
 }
 
-interface GetCurrentOrderAction {
-  type: typeof GET_CURRENT_ORDER_DETAIL_REQUEST;
-}
-
-export type OrderActionType =
-  | GetOrderAction
-  | GetCurrentOrderAction
-  | ChangeOrderItemStatusAction;
+export type OrderActionType = GetOrderAction | ChangeOrderItemStatusAction;

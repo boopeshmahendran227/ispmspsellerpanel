@@ -53,7 +53,7 @@ const Navbar = () => {
             font-size: 1.3rem;
           }
           .logoContainer a {
-            padding: 1em 0;
+            padding: 0.8em 0;
           }
           .logo {
             height: 1.8rem;
