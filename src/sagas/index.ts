@@ -3,9 +3,13 @@ import ProductSaga from "./product";
 import OrderSaga from "./order";
 import RefreshDataSaga from "./refreshData";
 import ToastSaga from "./toast";
-import { all, fork } from "redux-saga/effects";
+import RealTimeNotificationSaga from "./realTimeNotification";
+import { all, fork, spawn } from "redux-saga/effects";
 
 export default function* rootSaga() {
+  if (process.browser) {
+    yield spawn(RealTimeNotificationSaga);
+  }
   yield all([
     fork(QuoteSaga),
     fork(ProductSaga),
