@@ -1,6 +1,6 @@
 import * as React from "react";
 import CSSConstants from "../constants/CSSConstants";
-import Navbar from "../components/Navbar";
+import SideNavBar from "../components/SideNavBar";
 import Head from "next/head";
 
 interface LayoutProps {
@@ -30,19 +30,24 @@ const Layout = (props: LayoutProps) => {
           }}
         />
       </Head>
-      <div className="bodyContainer">
-        <Navbar />
-        <div className="childrenContainer">{props.children}</div>
-      </div>
+      <main>
+        <div className="sideNavBarContainer">
+          <SideNavBar />
+        </div>
+        <div className="bodyContainer">{props.children}</div>
+      </main>
       <div className="portalRoot"></div>
       <style jsx>{`
-        .bodyContainer {
-          display: flex;
-          flex-direction: column;
-          min-height: 100vh;
+        .sideNavBarContainer {
+          position: fixed;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 250px;
+          z-index: 1;
         }
-        .childrenContainer {
-          flex: 1;
+        .bodyContainer {
+          margin-left: 250px;
         }
       `}</style>
       <style jsx global>{`
@@ -56,7 +61,7 @@ const Layout = (props: LayoutProps) => {
           padding: 0;
           margin: 0;
           font-size: 16px;
-          background: #f2f3f6;
+          background: ${CSSConstants.backgroundColor};
           font-family: "Lato", sans-serif;
           -webkit-tap-highlight-color: rgba(
             255,
