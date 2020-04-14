@@ -11,7 +11,6 @@ import { useState } from "react";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import Loader from "../../src/components/Loader";
-import api from "../../src/api";
 
 const formatAddress = (address: AddressInterface) => {
   return `${address.addressLine1} , ${address.addressLine2}, ${address.city} - ${address.zipCode}, ${address.state}`;
@@ -19,7 +18,7 @@ const formatAddress = (address: AddressInterface) => {
 
 const Order = () => {
   const router = useRouter();
-  const { data: order } = useSWR(`/order/${router.query.id}`, api);
+  const { data: order } = useSWR(`/order/${router.query.id}`);
   const [currentOrderItem, setCurrentOrderItem] = useState(null);
   const [changeStatusModalOpen, setChangeStatusModalOpen] = useState(false);
 

@@ -1,56 +1,59 @@
-import * as React from "react";
 import Loader from "./Loader";
 import hoistNonReactStatics from "hoist-non-react-statics";
 import ErrorMsg from "./ErrorMsg";
+import useSWR from "swr";
 
 // Gets the display name of a JSX component for dev tools
-const getDisplayName = Component =>
+const getDisplayName = (Component) =>
   Component.displayName || Component.name || "Component";
 
-const WithLoader = (mapPropsToLoadData, text = "Loading...") => {
+interface LoaderConfigInterface {
+  width: string;
+  height: string;
+}
+
+const WithLoader = (
+  mapPropsToLoadData,
+  loaderConfig: LoaderConfigInterface = null
+) => {
   return (WrappedComponent: any) => {
-    class withLoader extends React.Component<any> {
-      static displayName = `WithLoader(${getDisplayName(WrappedComponent)})`;
+    const withLoader = (props) => {
+      const loadDataList = mapPropsToLoadData(props);
 
-      static async getInitialProps(ctx) {
-        const componentProps =
-          WrappedComponent.getInitialProps &&
-          (await WrappedComponent.getInitialProps(ctx));
+      useSWR("ReduxData" + getDisplayName(WrappedComponent), () => {
+        loadDataList.forEach((loadData) => loadData.fetch());
+      });
 
-        return { ...componentProps };
+      if (
+        loadDataList.some((loadData) => {
+          // if loading has failed, show error
+          return (
+            loadData.loadingState.isFetching === false &&
+            loadData.loadingState.didSucceed === false
+          );
+        })
+      ) {
+        return <ErrorMsg />;
+      } else if (
+        loadDataList.some((loadData) => {
+          // if the data is not there, show the loader
+          return !loadData.data;
+        })
+      ) {
+        return <Loader {...loaderConfig} />;
       }
-      componentDidMount() {
-        const loadDataList = mapPropsToLoadData(this.props);
-        loadDataList.forEach(loadData => {
-          if (!loadData.data) {
-            loadData.fetch();
-          }
-        });
-      }
+      return <WrappedComponent {...props} />;
+    };
 
-      render() {
-        const loadDataList = mapPropsToLoadData(this.props);
-        if (
-          loadDataList.some(loadData => {
-            // if loading has failed, show error
-            return (
-              loadData.loadingState.isFetching === false &&
-              loadData.loadingState.didSucceed === false
-            );
-          })
-        ) {
-          return <ErrorMsg />;
-        } else if (
-          loadDataList.some(loadData => {
-            // if the data is not there, show the loader
-            return !loadData.data;
-          })
-        ) {
-          return <Loader />;
-        }
-        return <WrappedComponent {...this.props} />;
-      }
-    }
+    withLoader.getInitialProps = async (ctx) => {
+      const componentProps =
+        WrappedComponent.getInitialProps &&
+        (await WrappedComponent.getInitialProps(ctx));
+
+      return { ...componentProps };
+    };
+
+    withLoader.displayName = `WithLoader(${getDisplayName(WrappedComponent)})`;
 
     hoistNonReactStatics(withLoader, WrappedComponent);
 

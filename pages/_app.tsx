@@ -6,6 +6,8 @@ import withReduxSaga from "next-redux-saga";
 import withToastProvider from "../src/components/WithToastProvider";
 import { initializeStore } from "../src/store";
 import Router from "next/router";
+import { SWRConfig } from "swr";
+import api from "../src/api";
 
 // Add all third-party CSS here
 import "@fortawesome/fontawesome-free/css/all.css";
@@ -24,11 +26,18 @@ Router.events.on("routeChangeError", () => NProgress.done());
 function MyApp(props) {
   const { store, Component, pageProps } = props;
   return (
-    <Provider store={store}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </Provider>
+    <SWRConfig
+      value={{
+        refreshInterval: 10000,
+        fetcher: api,
+      }}
+    >
+      <Provider store={store}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </Provider>
+    </SWRConfig>
   );
 }
 
