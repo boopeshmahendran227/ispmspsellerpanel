@@ -1,18 +1,39 @@
 import CSSConstants from "../constants/CSSConstants";
-import { OrderItemInterface } from "../types/order";
+import { OrderItemInterface, OrderStatus } from "../types/order";
 import Button, { ButtonType } from "./Button";
 import ProductCard from "./ProductCard";
 import Link from "next/link";
+import Loader from "./Loader";
 
 interface OrderItemCancelRequestProps {
   orderItem: OrderItemInterface;
+  changeOrderItemStatus: (
+    orderId: number,
+    orderItemId: number,
+    orderItemStatus: string
+  ) => void;
+  inLoadingState: boolean;
 }
 
 const OrderItemCancelRequest = (props: OrderItemCancelRequestProps) => {
   const { orderItem } = props;
 
+  const handleApproveClick = () => {
+    props.changeOrderItemStatus(
+      orderItem.order.id,
+      orderItem.id,
+      OrderStatus.CancelCompleted
+    );
+  };
+
   return (
     <div className="card">
+      {props.inLoadingState && (
+        <div className="loadingOverlay">
+          <Loader width="2rem" height="2rem" />
+          <div>Processing..</div>
+        </div>
+      )}
       <Link href="/order/[id]" as={`/order/${orderItem.order.id}`}>
         <header>
           <a>Order Item #{orderItem.id}</a>
@@ -34,7 +55,9 @@ const OrderItemCancelRequest = (props: OrderItemCancelRequestProps) => {
         qty={orderItem.qty}
       />
       <div className="buttonContainer">
-        <Button type={ButtonType.success}>Approve</Button>
+        <Button onClick={handleApproveClick} type={ButtonType.success}>
+          Approve
+        </Button>
         <Button type={ButtonType.danger}>Reject</Button>
       </div>
       <style jsx>{`
@@ -43,6 +66,21 @@ const OrderItemCancelRequest = (props: OrderItemCancelRequestProps) => {
           box-shadow: 0 0 20px #00000014;
           padding: 0.5em;
           margin: 1em 0;
+          position: relative;
+        }
+        .loadingOverlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+          opacity: 0.7;
+          background: white;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
         }
         header {
           font-size: 1.2rem;

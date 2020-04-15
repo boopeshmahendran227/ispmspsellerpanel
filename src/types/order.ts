@@ -1,6 +1,8 @@
 import {
   GET_ORDERS_REQUEST,
   CHANGE_ORDER_ITEM_STATUS_REQUEST,
+  CHANGE_ORDER_ITEM_STATUS_SUCCESS,
+  CHANGE_ORDER_ITEM_STATUS_FAILURE,
 } from "../constants/ActionTypes";
 import { ProductAttributeValue } from "./product";
 
@@ -98,4 +100,20 @@ interface ChangeOrderItemStatusAction {
   orderItemStatus: string;
 }
 
-export type OrderActionType = GetOrderAction | ChangeOrderItemStatusAction;
+interface ChangeOrderItemStatusSuccessAction {
+  type: typeof CHANGE_ORDER_ITEM_STATUS_SUCCESS;
+  orderId: number;
+  orderItemId: number;
+}
+
+interface ChangeOrderItemStatusFailureAction {
+  type: typeof CHANGE_ORDER_ITEM_STATUS_FAILURE;
+  orderId: number;
+  orderItemId: number;
+}
+
+export type OrderActionType =
+  | GetOrderAction
+  | ChangeOrderItemStatusAction
+  | ChangeOrderItemStatusSuccessAction
+  | ChangeOrderItemStatusFailureAction;

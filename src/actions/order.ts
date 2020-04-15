@@ -1,6 +1,8 @@
 import {
   GET_ORDERS_REQUEST,
   CHANGE_ORDER_ITEM_STATUS_REQUEST,
+  CHANGE_ORDER_ITEM_STATUS_SUCCESS,
+  CHANGE_ORDER_ITEM_STATUS_FAILURE,
 } from "../constants/ActionTypes";
 import { OrderActionType } from "../types/order";
 
@@ -23,7 +25,31 @@ const changeOrderItemStatus = (
   };
 };
 
+const changeOrderItemStatusSuccess = (
+  orderId: number,
+  orderItemId: number
+): OrderActionType => {
+  return {
+    type: CHANGE_ORDER_ITEM_STATUS_SUCCESS,
+    orderId,
+    orderItemId,
+  };
+};
+
+const changeOrderItemStatusFailure = (
+  orderId: number,
+  orderItemId: number
+): OrderActionType => {
+  return {
+    type: CHANGE_ORDER_ITEM_STATUS_FAILURE,
+    orderId,
+    orderItemId,
+  };
+};
+
 export default {
   getOrders,
   changeOrderItemStatus,
+  changeOrderItemStatusSuccess,
+  changeOrderItemStatusFailure,
 };

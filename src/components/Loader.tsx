@@ -14,9 +14,9 @@ const Loader = (props: LoaderProps) => {
           display: flex;
           justify-content: center;
           align-items: center;
-          min-height: 100px;
           width: ${props.width};
           height: ${props.height};
+          overflow: hidden;
         }
         .loader {
           width: 2rem;
@@ -28,7 +28,7 @@ const Loader = (props: LoaderProps) => {
 
 Loader.defaultProps = {
   width: "100%",
-  height: "200px"
+  height: "200px",
 };
 
 export default Loader;

@@ -33,4 +33,13 @@ const getCancelRequestedOrderItems = createSelector(
   }
 );
 
-export { getOrders, getCancelRequestedOrderItems };
+const getCurrentlyProcessingOrderItemIds = createSelector(
+  (state: RootState) => state.order,
+  (order): number[] => order.currentlyProcessingOrderItemIds
+);
+
+export {
+  getOrders,
+  getCancelRequestedOrderItems,
+  getCurrentlyProcessingOrderItemIds,
+};

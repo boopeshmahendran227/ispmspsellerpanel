@@ -2,12 +2,11 @@ import {
   GET_ORDERS_REQUEST,
   GET_ORDERS_SUCCESS,
   GET_ORDERS_FAILURE,
-  CHANGE_ORDER_ITEM_STATUS_SUCCESS,
-  CHANGE_ORDER_ITEM_STATUS_FAILURE,
   CHANGE_ORDER_ITEM_STATUS_REQUEST,
 } from "../constants/ActionTypes";
 import { takeEvery, all, call, put } from "redux-saga/effects";
 import api from "../api";
+import OrderActions from "../actions/order";
 
 function* getOrders() {
   try {
@@ -31,12 +30,19 @@ function* changeOrderItemStatus(action) {
         orderItemStatus: action.orderItemStatus,
       },
     });
-    yield put({
-      type: CHANGE_ORDER_ITEM_STATUS_SUCCESS,
-      orderId: action.orderId,
-    });
+    yield put(
+      OrderActions.changeOrderItemStatusSuccess(
+        action.orderId,
+        action.orderItemId
+      )
+    );
   } catch (err) {
-    yield put({ type: CHANGE_ORDER_ITEM_STATUS_FAILURE });
+    yield put(
+      OrderActions.changeOrderItemStatusFailure(
+        action.orderId,
+        action.orderItemId
+      )
+    );
   }
 }
 

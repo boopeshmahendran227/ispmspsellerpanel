@@ -13,7 +13,7 @@ export const toasts = {
     msg: "Order Item Status successfully changed",
   },
   [CHANGE_ORDER_ITEM_STATUS_FAILURE]: {
-    type: ToastType.success,
+    type: ToastType.error,
     msg: "Order Item Status updation failed. Please try again",
   },
 };
