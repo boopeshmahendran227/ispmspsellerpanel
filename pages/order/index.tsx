@@ -105,16 +105,8 @@ const Orders = (props: QuotesProps) => {
                         <span className="value">
                           {formatPrice(orderItem.discountedPrice)}
                         </span>
-                        <span className="header">Discount: </span>
-                        <span className="value">
-                          {formatPrice(orderItem.totalDiscount)}
-                        </span>
                         <span className="header">Quantity:</span>
                         <span className="value">{orderItem.qty}</span>
-                        <span className="header">Tax:</span>
-                        <span className="value">
-                          {formatPrice(orderItem.tax)}
-                        </span>
                       </div>
                     </div>
                   ))}
@@ -167,7 +159,7 @@ const Orders = (props: QuotesProps) => {
         .infoGrid {
           margin: 0.1em;
           display: grid;
-          grid-template-columns: repeat(4, auto);
+          grid-template-columns: repeat(2, auto);
           grid-gap: 0.1em;
         }
         .infoGrid .header {
