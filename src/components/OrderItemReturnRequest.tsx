@@ -5,7 +5,7 @@ import ProductCard from "./ProductCard";
 import Link from "next/link";
 import Loader from "./Loader";
 
-interface OrderItemCancelRequestProps {
+interface OrderItemReturnRequestProps {
   orderItem: OrderItemInterface;
   changeOrderItemStatus: (
     orderId: number,
@@ -15,14 +15,14 @@ interface OrderItemCancelRequestProps {
   inLoadingState: boolean;
 }
 
-const OrderItemCancelRequest = (props: OrderItemCancelRequestProps) => {
+const OrderItemReturnRequest = (props: OrderItemReturnRequestProps) => {
   const { orderItem } = props;
 
   const handleApproveClick = () => {
     props.changeOrderItemStatus(
       orderItem.order.id,
       orderItem.id,
-      OrderStatus.CancelCompleted
+      OrderStatus.ReturnComplete
     );
   };
 
@@ -36,12 +36,12 @@ const OrderItemCancelRequest = (props: OrderItemCancelRequestProps) => {
       )}
       <Link href="/order/[id]" as={`/order/${orderItem.order.id}`}>
         <header>
-          <a>Cancellation Requested for Order Item #{orderItem.id}</a>
+          <a>Return Requested for Order Item #{orderItem.id}</a>
         </header>
       </Link>
       <div className="body">
-        Customer #{orderItem.order.customerId} has requested cancellation of
-        Order Item #{orderItem.id}
+        Customer #{orderItem.order.customerId} has requested return of Order
+        Item #{orderItem.id}
       </div>
       <div>
         <Link href="/order/[id]" as={`/order/${orderItem.order.id}`}>
@@ -98,4 +98,4 @@ const OrderItemCancelRequest = (props: OrderItemCancelRequestProps) => {
   );
 };
 
-export default OrderItemCancelRequest;
+export default OrderItemReturnRequest;

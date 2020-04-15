@@ -21,14 +21,6 @@ const SideNavBar = () => {
             </Link>
           </li>
           <li>
-            <Link activeClassName="active" href="/catalog">
-              <a>
-                <i className="fas fa-warehouse" aria-hidden={true}></i>
-                <span>Catalog</span>
-              </a>
-            </Link>
-          </li>
-          <li>
             <Link activeClassName="active" href="/order">
               <a>
                 <i className="fas fa-shopping-cart" aria-hidden={true}></i>
@@ -41,6 +33,14 @@ const SideNavBar = () => {
               <a>
                 <i className="fas fa-clipboard-list" aria-hidden="true"></i>
                 <span>Quotes</span>
+              </a>
+            </Link>
+          </li>
+          <li>
+            <Link activeClassName="active" href="/catalog">
+              <a>
+                <i className="fas fa-warehouse" aria-hidden={true}></i>
+                <span>Catalog</span>
               </a>
             </Link>
           </li>

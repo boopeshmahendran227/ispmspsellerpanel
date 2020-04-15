@@ -33,6 +33,27 @@ const getCancelRequestedOrderItems = createSelector(
   }
 );
 
+const getReturnRequestedOrderItems = createSelector(
+  getOrders,
+  (orders: OrderInterface[]): OrderItemInterface[] => {
+    if (!orders) {
+      return null;
+    }
+
+    return _.chain(orders)
+      .map((order) =>
+        order.items
+          .filter(
+            (orderItem: OrderItemInterface) =>
+              orderItem.orderItemStatus === OrderStatus.Return
+          )
+          .map((orderItem) => ({ ...orderItem, order }))
+      )
+      .flatten()
+      .value();
+  }
+);
+
 const getCurrentlyProcessingOrderItemIds = createSelector(
   (state: RootState) => state.order,
   (order): number[] => order.currentlyProcessingOrderItemIds
@@ -42,4 +63,5 @@ export {
   getOrders,
   getCancelRequestedOrderItems,
   getCurrentlyProcessingOrderItemIds,
+  getReturnRequestedOrderItems,
 };

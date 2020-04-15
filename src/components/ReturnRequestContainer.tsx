@@ -4,18 +4,18 @@ import WithReduxDataLoader from "../../src/components/WithReduxDataLoader";
 import { connect } from "react-redux";
 import { RootState } from "../../src/reducers";
 import {
-  getCancelRequestedOrderItems,
+  getReturnRequestedOrderItems,
   getOrders,
   getCurrentlyProcessingOrderItemIds,
 } from "../../src/selectors/order";
 import { RequestReducerState } from "../../src/reducers/utils";
-import OrderItemCancelRequest from "./OrderItemCancelRequest";
+import OrderItemReturnRequest from "./OrderItemReturnRequest";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import EmptyMsg from "./EmptyMsg";
 
 interface StateProps {
   orders: OrderInterface[];
-  cancelRequestedOrderItems: OrderItemInterface[];
+  returnRequestedOrderItems: OrderItemInterface[];
   getOrdersLoadingState: RequestReducerState;
   currentlyProcessingOrderItemIds: number[];
 }
@@ -29,27 +29,27 @@ interface DispatchProps {
   ) => void;
 }
 
-type CancellationRequestContainerProps = StateProps & DispatchProps;
+type ReturnlationRequestContainerProps = StateProps & DispatchProps;
 
-const CancellationRequestContainer = (
-  props: CancellationRequestContainerProps
+const ReturnlationRequestContainer = (
+  props: ReturnlationRequestContainerProps
 ) => {
-  const { cancelRequestedOrderItems } = props;
+  const { returnRequestedOrderItems } = props;
 
-  if (cancelRequestedOrderItems.length === 0) {
-    return <EmptyMsg msg="No Cancellation Requests currently" />;
+  if (returnRequestedOrderItems.length === 0) {
+    return <EmptyMsg msg="No Return Requests currently" />;
   }
 
   return (
     <div className="container">
       <TransitionGroup component={null}>
-        {cancelRequestedOrderItems.map((orderItem) => (
+        {returnRequestedOrderItems.map((orderItem) => (
           <CSSTransition
             timeout={500}
-            classNames="orderItemCancelRequest"
+            classNames="orderItemReturnRequest"
             key={orderItem.id}
           >
-            <OrderItemCancelRequest
+            <OrderItemReturnRequest
               orderItem={orderItem}
               changeOrderItemStatus={props.changeOrderItemStatus}
               inLoadingState={props.currentlyProcessingOrderItemIds.includes(
@@ -66,10 +66,10 @@ const CancellationRequestContainer = (
         header {
           font-size: 1.3rem;
         }
-        :global(.orderItemCancelRequest-exit) {
+        :global(.orderItemReturnRequest-exit) {
           opacity: 1;
         }
-        :global(.orderItemCancelRequest-exit-active) {
+        :global(.orderItemReturnRequest-exit-active) {
           opacity: 0;
           transition: all 0.5s cubic-bezier(0, 0, 0.31, 1);
         }
@@ -80,7 +80,7 @@ const CancellationRequestContainer = (
 
 const mapStateToProps = (state: RootState): StateProps => ({
   orders: getOrders(state),
-  cancelRequestedOrderItems: getCancelRequestedOrderItems(state),
+  returnRequestedOrderItems: getReturnRequestedOrderItems(state),
   getOrdersLoadingState: state.order.order,
   currentlyProcessingOrderItemIds: getCurrentlyProcessingOrderItemIds(state),
 });
@@ -90,7 +90,7 @@ const mapDispatchToProps: DispatchProps = {
   changeOrderItemStatus: OrderActions.changeOrderItemStatus,
 };
 
-const mapPropsToLoadData = (props: CancellationRequestContainerProps) => {
+const mapPropsToLoadData = (props: ReturnlationRequestContainerProps) => {
   return [
     {
       data: props.orders,
@@ -103,4 +103,4 @@ const mapPropsToLoadData = (props: CancellationRequestContainerProps) => {
 export default connect<StateProps, DispatchProps>(
   mapStateToProps,
   mapDispatchToProps
-)(WithReduxDataLoader(mapPropsToLoadData)(CancellationRequestContainer));
+)(WithReduxDataLoader(mapPropsToLoadData)(ReturnlationRequestContainer));

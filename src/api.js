@@ -21,7 +21,7 @@ module.exports = (url, options) => {
   const headers = {};
 
   if (process.browser) {
-    NProgress.start();
+    // NProgress.start();
   }
 
   const refreshAuthLogic = (failedRequest) => {
@@ -91,7 +91,7 @@ module.exports = (url, options) => {
     })
     .finally(() => {
       if (process.browser) {
-        NProgress.done();
+        // NProgress.done();
       }
     });
 };

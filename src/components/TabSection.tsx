@@ -8,7 +8,7 @@ interface TabSectionProps {
   contentList: React.ReactNode[];
 }
 
-const HEADING_WIDTH = "170px";
+const HEADING_WIDTH = "200px";
 
 const TabSection = (props: TabSectionProps) => {
   const [activeIndex, setActiveIndex] = useState(0);

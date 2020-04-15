@@ -1,5 +1,7 @@
 import MetricCard from "../src/components/MetricCard";
 import CancellationRequestContainer from "../src/components/CancellationRequestContainer";
+import TabSection from "../src/components/TabSection";
+import ReturnRequestContainer from "../src/components/ReturnRequestContainer";
 
 const Index = () => (
   <div>
@@ -13,7 +15,13 @@ const Index = () => (
       <MetricCard title="Quotes (today)" value={40} />
     </div>
     <div>
-      <CancellationRequestContainer />
+      <TabSection
+        headingList={["Cancellation Requests", "Return Requests"]}
+        contentList={[
+          <CancellationRequestContainer />,
+          <ReturnRequestContainer />,
+        ]}
+      />
     </div>
   </div>
 );
