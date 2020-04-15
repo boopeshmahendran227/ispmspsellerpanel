@@ -7,4 +7,9 @@ const getNotifications = createSelector(
   (notification): NotificationItemInterface[] => notification.notification.data
 );
 
-export { getNotifications };
+const getUnreadNotificationCount = createSelector(
+  (state: RootState) => state.notification,
+  (notification): number => notification.unreadNotificationCount
+);
+
+export { getNotifications, getUnreadNotificationCount };

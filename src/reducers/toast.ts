@@ -12,13 +12,14 @@ const toastReducer = (state: ToastDataInterface[] = [], action) => {
         ...state,
         {
           id,
+          header: toast.header,
           type: toast.type,
           msg: toast.msg,
-          duration: toast.duration || 4000
-        }
+          duration: toast.duration || 4000,
+        },
       ];
     case REMOVE_TOAST:
-      return state.filter(toast => toast.id !== action.id);
+      return state.filter((toast) => toast.id !== action.id);
   }
 
   return state;

@@ -50,6 +50,7 @@ export default function* () {
       if (Audio) {
         new Audio("/notification.mp3").play();
       }
+      yield put(NotificationActions.incrementUnreadNotificationCount());
       yield put(
         ToastActions.addToast({
           type: ToastType.notification,

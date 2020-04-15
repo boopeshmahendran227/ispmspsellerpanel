@@ -30,8 +30,8 @@ const Notifications = (props: NotificationsProps) => {
           (Boolean(!notifications.length) && (
             <EmptyMsg msg="No Notifications" />
           ))}
-        {notifications.map((notification) => (
-          <NotificationCard key={notification.id} notification={notification} />
+        {notifications.map((notification, index) => (
+          <NotificationCard key={index} notification={notification} />
         ))}
       </div>
       <style jsx>{`

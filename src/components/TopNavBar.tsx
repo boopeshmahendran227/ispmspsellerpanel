@@ -2,8 +2,23 @@ import CSSConstants from "../constants/CSSConstants";
 import moment from "moment";
 import { useState, useEffect } from "react";
 import NotificationBar from "./NotificationBar";
+import { connect } from "react-redux";
+import { RootState } from "../reducers";
+import { getUnreadNotificationCount } from "../selectors/notification";
+import NotificationActions from "../actions/notification";
+import classNames from "classnames";
 
-const TopNavBar = () => {
+interface StateProps {
+  unreadNotificationCount: number;
+}
+
+interface DispatchProps {
+  clearUnreadNotificationCount: () => void;
+}
+
+type TopNavBarProps = StateProps & DispatchProps;
+
+const TopNavBar = (props: TopNavBarProps) => {
   const [time, setTime] = useState(moment());
   const [notificationBarOpen, setNotificationBarOpen] = useState(false);
 
@@ -15,14 +30,29 @@ const TopNavBar = () => {
   });
 
   const handleNotificationClick = () => {
+    props.clearUnreadNotificationCount();
     setNotificationBarOpen(true);
   };
+
+  const classes = classNames({
+    notificationLink: true,
+    animate: props.unreadNotificationCount > 0,
+  });
 
   return (
     <div className="container">
       <header>Boopesh's Dashboard</header>
-      <a className="notificationLink" onClick={handleNotificationClick}>
+      <a
+        className={classes}
+        key={props.unreadNotificationCount}
+        onClick={handleNotificationClick}
+      >
         <i className="fas fa-bell"></i>
+        {Boolean(props.unreadNotificationCount) && (
+          <span className="notificationCount">
+            {props.unreadNotificationCount}
+          </span>
+        )}
       </a>
       <div className="timeContainer">
         <i className="far fa-clock" aria-hidden={true}></i>
@@ -49,9 +79,25 @@ const TopNavBar = () => {
           padding: 0.3em;
         }
         .notificationLink {
-          font-size: 1.2rem;
-          padding: 0.5em;
+          font-size: 1.3rem;
           margin: 0 0.8em;
+          position: relative;
+        }
+        .notificationCount {
+          position: absolute;
+          top: 0;
+          right: 0;
+          border-radius: 100%;
+          background-color: ${CSSConstants.dangerColor};
+          color: ${CSSConstants.backgroundColor};
+          transform: translate(30%, -30%);
+          width: 1.1rem;
+          height: 1.1rem;
+          line-height: 1.1rem;
+          font-size: 0.7rem;
+          text-align: center;
+        }
+        .notificationLink.animate i {
           animation: ring 1.5s ease;
         }
         @keyframes ring {
@@ -85,4 +131,16 @@ const TopNavBar = () => {
   );
 };
 
-export default TopNavBar;
+const mapStateToProps = (state: RootState): StateProps => ({
+  unreadNotificationCount: getUnreadNotificationCount(state),
+});
+
+const mapDispatchToProps: DispatchProps = {
+  clearUnreadNotificationCount:
+    NotificationActions.clearUnreadNotificationCount,
+};
+
+export default connect<StateProps, DispatchProps>(
+  mapStateToProps,
+  mapDispatchToProps
+)(TopNavBar);
