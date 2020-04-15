@@ -44,6 +44,7 @@ export interface OrderItemInterface {
     }
   ];
   orderItemStatus: string;
+  order?: OrderInterface;
 }
 
 export interface AddressInterface {

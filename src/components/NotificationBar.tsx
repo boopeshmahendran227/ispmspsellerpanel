@@ -90,7 +90,7 @@ const NotificationBar = (props: NotificationBarProps) => {
           transition: transform 0.33s cubic-bezier(0, 0, 0.3, 1);
         }
         header {
-          padding: 0.3em;
+          padding: 0.7em;
           position: sticky;
           top: 0;
           background: ${CSSConstants.foregroundColor};

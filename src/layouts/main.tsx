@@ -77,6 +77,7 @@ const Layout = (props: LayoutProps) => {
         }
         a {
           color: inherit;
+          cursor: pointer;
         }
         button {
           background: transparent;

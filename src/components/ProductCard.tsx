@@ -5,6 +5,7 @@ interface ProductCardProps {
   name: string;
   image: string;
   attributeValues: ProductAttributeValue[];
+  qty?: number;
 }
 
 const ProductCard = (props: ProductCardProps) => {
@@ -26,6 +27,7 @@ const ProductCard = (props: ProductCardProps) => {
       <div className="contentContainer">
         <span className="name">{props.name}</span>
         <div>{attributeValueStr}</div>
+        {Boolean(props.qty) && <div>Quantity: {props.qty}</div>}
       </div>
       <style jsx>{`
         .container {

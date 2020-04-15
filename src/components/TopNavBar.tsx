@@ -84,6 +84,7 @@ const TopNavBar = (props: TopNavBarProps) => {
           font-size: 1.3rem;
           margin: 0 0.8em;
           position: relative;
+          cursor: pointer;
         }
         .notificationCount {
           position: absolute;

@@ -23,6 +23,10 @@ const getCurrentColor = (type: ButtonType) => {
   switch (type) {
     case ButtonType.primary:
       return CSSConstants.primaryColor;
+    case ButtonType.success:
+      return CSSConstants.successColor;
+    case ButtonType.danger:
+      return CSSConstants.dangerColor;
   }
   return "#eee";
 };

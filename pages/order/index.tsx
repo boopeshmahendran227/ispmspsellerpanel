@@ -26,7 +26,7 @@ interface DispatchProps {
   getOrders: () => void;
 }
 
-type QuotesProps = StateProps & DispatchProps;
+type OrdersProps = StateProps & DispatchProps;
 
 const getTableHeaders = () => {
   return [
@@ -122,6 +122,25 @@ const renderTableBody = (orders: OrderInterface[]) => {
         <td>
           <a>View</a>
         </td>
+        <style jsx>{`
+          .productContainer {
+            text-align: initial;
+            margin: 1.2em 0;
+          }
+          .infoGrid {
+            margin: 0.1em;
+            display: grid;
+            grid-template-columns: repeat(2, auto);
+            grid-gap: 0.1em;
+          }
+          .infoGrid .header {
+            font-weight: 700;
+          }
+          tr:hover {
+            background-color: ${CSSConstants.hoverColor} !important;
+            cursor: pointer;
+          }
+        `}</style>
       </tr>
     </Link>
   ));
@@ -141,7 +160,7 @@ const getCancelledOrders = (orders: OrderInterface[]) => {
   );
 };
 
-const Orders = (props: QuotesProps) => {
+const Orders = (props: OrdersProps) => {
   const { orders } = props;
 
   const openOrders = getOpenOrders(orders);
@@ -197,28 +216,6 @@ const Orders = (props: QuotesProps) => {
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
             0 1px 2px rgba(0, 0, 0, 0.24);
         }
-        header {
-          font-weight: 500;
-          font-size: 1.2rem;
-          padding: 0.5em;
-        }
-        .productContainer {
-          text-align: initial;
-          margin: 1.2em 0;
-        }
-        .infoGrid {
-          margin: 0.1em;
-          display: grid;
-          grid-template-columns: repeat(2, auto);
-          grid-gap: 0.1em;
-        }
-        .infoGrid .header {
-          font-weight: 700;
-        }
-        tr:hover {
-          background-color: ${CSSConstants.hoverColor} !important;
-          cursor: pointer;
-        }
         @media (max-width: 800px) {
           .container {
             padding: 0;
@@ -238,7 +235,7 @@ const mapDispatchToProps: DispatchProps = {
   getOrders: OrderActions.getOrders,
 };
 
-const mapPropsToLoadData = (props: QuotesProps) => {
+const mapPropsToLoadData = (props: OrdersProps) => {
   return [
     {
       data: props.orders,
