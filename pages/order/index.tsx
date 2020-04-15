@@ -1,4 +1,8 @@
-import { OrderInterface, OrderItemInterface } from "../../src/types/order";
+import {
+  OrderInterface,
+  OrderItemInterface,
+  OrderStatus,
+} from "../../src/types/order";
 import SortableTable from "../../src/components/SortableTable";
 import moment from "moment";
 import { formatPrice } from "../../src/utils/misc";
@@ -11,6 +15,7 @@ import { RequestReducerState } from "../../src/reducers/utils";
 import CSSConstants from "../../src/constants/CSSConstants";
 import Link from "next/link";
 import ProductCard from "../../src/components/ProductCard";
+import TabSection from "../../src/components/TabSection";
 
 interface StateProps {
   orders: OrderInterface[];
@@ -23,120 +28,165 @@ interface DispatchProps {
 
 type QuotesProps = StateProps & DispatchProps;
 
+const getTableHeaders = () => {
+  return [
+    {
+      name: "Order Id",
+      valueFunc: (order: OrderInterface) => order.id,
+    },
+    {
+      name: "Customer Name",
+      valueFunc: (order: OrderInterface) => null,
+    },
+    {
+      name: "Products",
+      valueFunc: (order: OrderItemInterface) => null,
+    },
+    {
+      name: "Price",
+      valueFunc: (order: OrderInterface) =>
+        order.items
+          .map((item) => item.discountedPrice)
+          .reduce((acc, price) => acc + price, 0),
+    },
+    {
+      name: "Total Quantity",
+      valueFunc: (order: OrderInterface) =>
+        order.items.map((item) => item.qty).reduce((acc, qty) => acc + qty, 0),
+    },
+    {
+      name: "Status",
+      valueFunc: (order: OrderInterface) => order.orderStatus,
+    },
+    {
+      name: "Created",
+      valueFunc: (order: OrderInterface) => order.createdDateTime,
+    },
+    {
+      name: "Action",
+      valueFunc: (order: OrderInterface) => null,
+    },
+  ];
+};
+
+const renderTableBody = (orders: OrderInterface[]) => {
+  return orders.map((order) => (
+    <Link key={order.id} href="/order/[id]" as={`/order/${order.id}`}>
+      <tr>
+        <td>{order.id}</td>
+        <td>Boopesh</td>
+        <td>
+          {order.items.map((orderItem) => (
+            <div key={orderItem.id} className="productContainer">
+              <ProductCard
+                name={orderItem.productSnapshot.productName}
+                image={orderItem.productSnapshot.images[0]}
+                attributeValues={orderItem.productSnapshot.attributeValues}
+              />
+              <div className="infoGrid">
+                <span className="header">Product Id: </span>
+                <span className="value">{orderItem.productId}</span>
+                <span className="header">Sku Id: </span>
+                <span className="value">{orderItem.skuId}</span>
+                <span className="header">Order Status:</span>
+                <span className="value">{orderItem.orderItemStatus}</span>
+                <span className="header">Discounted Price: </span>
+                <span className="value">
+                  {formatPrice(orderItem.discountedPrice)}
+                </span>
+                <span className="header">Quantity:</span>
+                <span className="value">{orderItem.qty}</span>
+              </div>
+            </div>
+          ))}
+        </td>
+        <td>
+          {formatPrice(
+            order.items
+              .map((item) => item.discountedPrice)
+              .reduce((acc, price) => acc + price, 0)
+          )}
+        </td>
+        <td>
+          {order.items
+            .map((item) => item.qty)
+            .reduce((acc, qty) => acc + qty, 0)}
+        </td>
+        <td>{order.orderStatus}</td>
+        <td>
+          {moment
+            .utc(order.createdDateTime)
+            .local()
+            .format("MMMM Do YYYY, hh:mm A")}
+        </td>
+        <td>
+          <a>View</a>
+        </td>
+      </tr>
+    </Link>
+  ));
+};
+
+const getOpenOrders = (orders: OrderInterface[]) => {
+  return orders.filter(
+    (order) =>
+      order.orderStatus !== OrderStatus.CancelCompleted &&
+      order.orderStatus !== OrderStatus.ShippingCompleted
+  );
+};
+
+const getCancelledOrders = (orders: OrderInterface[]) => {
+  return orders.filter(
+    (order) => order.orderStatus === OrderStatus.CancelCompleted
+  );
+};
+
 const Orders = (props: QuotesProps) => {
   const { orders } = props;
 
+  const openOrders = getOpenOrders(orders);
+  const cancelledOrders = getCancelledOrders(orders);
+
   return (
     <div className="container">
-      <header>Orders ({orders.length})</header>
-      <SortableTable
-        initialSortData={{
-          index: 6,
-          isAsc: true,
-        }}
-        headers={[
-          {
-            name: "Order Id",
-            valueFunc: (order: OrderInterface) => order.id,
-          },
-          {
-            name: "Customer Name",
-            valueFunc: (order: OrderInterface) => null,
-          },
-          {
-            name: "Products",
-            valueFunc: (order: OrderItemInterface) => null,
-          },
-          {
-            name: "Price",
-            valueFunc: (order: OrderInterface) =>
-              order.items
-                .map((item) => item.discountedPrice)
-                .reduce((acc, price) => acc + price, 0),
-          },
-          {
-            name: "Total Quantity",
-            valueFunc: (order: OrderInterface) =>
-              order.items
-                .map((item) => item.qty)
-                .reduce((acc, qty) => acc + qty, 0),
-          },
-          {
-            name: "Status",
-            valueFunc: (order: OrderInterface) => order.orderStatus,
-          },
-          {
-            name: "Created",
-            valueFunc: (order: OrderInterface) => order.createdDateTime,
-          },
-          {
-            name: "Action",
-            valueFunc: (order: OrderInterface) => null,
-          },
+      <TabSection
+        headingList={[
+          `All Orders (${orders.length})`,
+          `Open Orders (${openOrders.length})`,
+          `Cancelled Orders (${cancelledOrders.length})`,
         ]}
-        data={orders}
-        emptyMsg="There are no orders"
-        body={(orders: OrderInterface[]) =>
-          orders.map((order) => (
-            <Link key={order.id} href="/order/[id]" as={`/order/${order.id}`}>
-              <tr>
-                <td>{order.id}</td>
-                <td>Boopesh</td>
-                <td>
-                  {order.items.map((orderItem, index) => (
-                    <div key={orderItem.id} className="productContainer">
-                      <ProductCard
-                        name={orderItem.productSnapshot.productName}
-                        image={orderItem.productSnapshot.images[0]}
-                        attributeValues={
-                          orderItem.productSnapshot.attributeValues
-                        }
-                      />
-                      <div className="infoGrid">
-                        <span className="header">Product Id: </span>
-                        <span className="value">{orderItem.productId}</span>
-                        <span className="header">Sku Id: </span>
-                        <span className="value">{orderItem.skuId}</span>
-                        <span className="header">Order Status:</span>
-                        <span className="value">
-                          {orderItem.orderItemStatus}
-                        </span>
-                        <span className="header">Discounted Price: </span>
-                        <span className="value">
-                          {formatPrice(orderItem.discountedPrice)}
-                        </span>
-                        <span className="header">Quantity:</span>
-                        <span className="value">{orderItem.qty}</span>
-                      </div>
-                    </div>
-                  ))}
-                </td>
-                <td>
-                  {formatPrice(
-                    order.items
-                      .map((item) => item.discountedPrice)
-                      .reduce((acc, price) => acc + price, 0)
-                  )}
-                </td>
-                <td>
-                  {order.items
-                    .map((item) => item.qty)
-                    .reduce((acc, qty) => acc + qty, 0)}
-                </td>
-                <td>{order.orderStatus}</td>
-                <td>
-                  {moment
-                    .utc(order.createdDateTime)
-                    .local()
-                    .format("MMMM Do YYYY, hh:mm A")}
-                </td>
-                <td>
-                  <a>View</a>
-                </td>
-              </tr>
-            </Link>
-          ))
-        }
+        contentList={[
+          <SortableTable
+            initialSortData={{
+              index: 6,
+              isAsc: true,
+            }}
+            headers={getTableHeaders()}
+            data={orders}
+            emptyMsg="There are no orders"
+            body={renderTableBody}
+          />,
+          <SortableTable
+            initialSortData={{
+              index: 6,
+              isAsc: true,
+            }}
+            headers={getTableHeaders()}
+            data={openOrders}
+            emptyMsg="There are no open orders"
+            body={renderTableBody}
+          />,
+          <SortableTable
+            initialSortData={{
+              index: 6,
+              isAsc: true,
+            }}
+            headers={getTableHeaders()}
+            data={cancelledOrders}
+            emptyMsg="There are no cancelled orders"
+            body={renderTableBody}
+          />,
+        ]}
       />
       <style jsx>{`
         .container {
