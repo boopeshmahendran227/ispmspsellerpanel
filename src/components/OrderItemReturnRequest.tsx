@@ -1,5 +1,5 @@
 import CSSConstants from "../constants/CSSConstants";
-import { OrderItemInterface, OrderStatus } from "../types/order";
+import { OrderItemInterface } from "../types/order";
 import Button, { ButtonType } from "./Button";
 import ProductCard from "./ProductCard";
 import Link from "next/link";
@@ -7,11 +7,8 @@ import Loader from "./Loader";
 
 interface OrderItemReturnRequestProps {
   orderItem: OrderItemInterface;
-  changeOrderItemStatus: (
-    orderId: number,
-    orderItemId: number,
-    orderItemStatus: string
-  ) => void;
+  approveReturnOrderItem: (orderId: number, orderItemId: number) => void;
+  rejectReturnOrderItem: (orderId: number, orderItemId: number) => void;
   inLoadingState: boolean;
 }
 
@@ -19,11 +16,11 @@ const OrderItemReturnRequest = (props: OrderItemReturnRequestProps) => {
   const { orderItem } = props;
 
   const handleApproveClick = () => {
-    props.changeOrderItemStatus(
-      orderItem.order.id,
-      orderItem.id,
-      OrderStatus.ReturnComplete
-    );
+    props.approveReturnOrderItem(orderItem.order.id, orderItem.id);
+  };
+
+  const handleRejectClick = () => {
+    props.rejectReturnOrderItem(orderItem.order.id, orderItem.id);
   };
 
   return (
@@ -58,7 +55,9 @@ const OrderItemReturnRequest = (props: OrderItemReturnRequestProps) => {
         <Button onClick={handleApproveClick} type={ButtonType.success}>
           Approve
         </Button>
-        <Button type={ButtonType.danger}>Reject</Button>
+        <Button onClick={handleRejectClick} type={ButtonType.danger}>
+          Reject
+        </Button>
       </div>
       <style jsx>{`
         .card {

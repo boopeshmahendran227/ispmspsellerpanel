@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { SHOW_SURE_MODAL, HIDE_SURE_MODAL } from "../constants/ActionTypes";
-import { SureModalData } from "../types/ui";
+import { SureModalData, UIActionType } from "../types/ui";
 
 const getSureModalData = (
   state: SureModalData = {
@@ -9,7 +9,7 @@ const getSureModalData = (
     open: false,
     onSure: () => null, // dummy function
   },
-  action
+  action: UIActionType
 ) => {
   switch (action.type) {
     case SHOW_SURE_MODAL:

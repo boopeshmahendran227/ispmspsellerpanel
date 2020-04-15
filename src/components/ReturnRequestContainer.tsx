@@ -22,18 +22,13 @@ interface StateProps {
 
 interface DispatchProps {
   getOrders: () => void;
-  changeOrderItemStatus: (
-    orderId: number,
-    orderItemId: number,
-    orderItemStatus: string
-  ) => void;
+  approveReturnOrderItem: (orderId: number, orderItemId: number) => void;
+  rejectReturnOrderItem: (orderId: number, orderItemId: number) => void;
 }
 
-type ReturnlationRequestContainerProps = StateProps & DispatchProps;
+type ReturnRequestContainerProps = StateProps & DispatchProps;
 
-const ReturnlationRequestContainer = (
-  props: ReturnlationRequestContainerProps
-) => {
+const ReturnRequestContainer = (props: ReturnRequestContainerProps) => {
   const { returnRequestedOrderItems } = props;
 
   if (returnRequestedOrderItems.length === 0) {
@@ -51,7 +46,8 @@ const ReturnlationRequestContainer = (
           >
             <OrderItemReturnRequest
               orderItem={orderItem}
-              changeOrderItemStatus={props.changeOrderItemStatus}
+              approveReturnOrderItem={props.approveReturnOrderItem}
+              rejectReturnOrderItem={props.rejectReturnOrderItem}
               inLoadingState={props.currentlyProcessingOrderItemIds.includes(
                 orderItem.id
               )}
@@ -87,10 +83,11 @@ const mapStateToProps = (state: RootState): StateProps => ({
 
 const mapDispatchToProps: DispatchProps = {
   getOrders: OrderActions.getOrders,
-  changeOrderItemStatus: OrderActions.changeOrderItemStatus,
+  approveReturnOrderItem: OrderActions.approveReturnOrderItem,
+  rejectReturnOrderItem: OrderActions.rejectReturnOrderItem,
 };
 
-const mapPropsToLoadData = (props: ReturnlationRequestContainerProps) => {
+const mapPropsToLoadData = (props: ReturnRequestContainerProps) => {
   return [
     {
       data: props.orders,
@@ -103,4 +100,4 @@ const mapPropsToLoadData = (props: ReturnlationRequestContainerProps) => {
 export default connect<StateProps, DispatchProps>(
   mapStateToProps,
   mapDispatchToProps
-)(WithReduxDataLoader(mapPropsToLoadData)(ReturnlationRequestContainer));
+)(WithReduxDataLoader(mapPropsToLoadData)(ReturnRequestContainer));

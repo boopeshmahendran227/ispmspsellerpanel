@@ -1,5 +1,5 @@
 import CSSConstants from "../constants/CSSConstants";
-import { OrderItemInterface, OrderStatus } from "../types/order";
+import { OrderItemInterface } from "../types/order";
 import Button, { ButtonType } from "./Button";
 import ProductCard from "./ProductCard";
 import Link from "next/link";
