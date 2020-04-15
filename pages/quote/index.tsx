@@ -103,7 +103,7 @@ const Quotes = (props: QuotesProps) => {
       />
       <style jsx>{`
         .container {
-          padding: 2em;
+          padding: 1em 0;
           margin: 1em auto;
           background: white;
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),

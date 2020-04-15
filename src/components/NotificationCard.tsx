@@ -35,7 +35,7 @@ const NotificationCard = (props: NotificationCardProps) => {
           font-size: 1.9em;
         }
         header {
-          font-size: 1.3em;
+          font-size: 1.2rem;
           font-weight: bold;
           margin-bottom: 0.2em;
         }

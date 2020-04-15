@@ -1,9 +1,11 @@
 import CSSConstants from "../constants/CSSConstants";
 import moment from "moment";
 import { useState, useEffect } from "react";
+import NotificationBar from "./NotificationBar";
 
 const TopNavBar = () => {
   const [time, setTime] = useState(moment());
+  const [notificationBarOpen, setNotificationBarOpen] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -12,16 +14,24 @@ const TopNavBar = () => {
     return () => clearInterval(timer);
   });
 
+  const handleNotificationClick = () => {
+    setNotificationBarOpen(true);
+  };
+
   return (
     <div className="container">
       <header>Boopesh's Dashboard</header>
-      <div className="notificationContainer">
+      <a className="notificationLink" onClick={handleNotificationClick}>
         <i className="fas fa-bell"></i>
-      </div>
+      </a>
       <div className="timeContainer">
         <i className="far fa-clock" aria-hidden={true}></i>
         <span className="time">{time.format("MMM D, hh:mm a")}</span>
       </div>
+      <NotificationBar
+        open={notificationBarOpen}
+        onClose={() => setNotificationBarOpen(false)}
+      />
       <style jsx>{`
         .container {
           display: flex;
@@ -38,7 +48,7 @@ const TopNavBar = () => {
           display: inline-block;
           padding: 0.3em;
         }
-        .notificationContainer {
+        .notificationLink {
           font-size: 1.2rem;
           padding: 0.5em;
           margin: 0 0.8em;

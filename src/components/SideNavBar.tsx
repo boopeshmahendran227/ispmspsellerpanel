@@ -102,11 +102,11 @@ const SideNavBar = () => {
             width: 1.3rem;
             margin: 0.3em;
           }
-          a.active {
+          .navigation a.active {
             background: ${CSSConstants.lightPrimaryColor};
             border-left: 2px solid white;
           }
-          a:hover {
+          .navigation a:hover {
             background: ${Chroma(CSSConstants.primaryColor)
               .brighten(0.4)
               .css()};

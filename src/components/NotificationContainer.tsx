@@ -1,11 +1,11 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import NotificationActions from "../src/actions/notification";
-import { getNotifications } from "../src/selectors/notification";
-import WithReduxDataLoader from "../src/components/WithReduxDataLoader";
-import NotificationCard from "../src/components/NotificationCard";
-import { NotificationItemInterface } from "../src/types/notification";
-import EmptyMsg from "../src/components/EmptyMsg";
+import NotificationActions from "../actions/notification";
+import { getNotifications } from "../selectors/notification";
+import WithReduxDataLoader from "./WithReduxDataLoader";
+import NotificationCard from "./NotificationCard";
+import { NotificationItemInterface } from "../types/notification";
+import EmptyMsg from "./EmptyMsg";
 import _ from "lodash";
 
 interface StateProps {
@@ -36,8 +36,7 @@ const Notifications = (props: NotificationsProps) => {
       </div>
       <style jsx>{`
         .container {
-          max-width: 800px;
-          margin: auto;
+          padding: 0.5em;
         }
       `}</style>
     </div>
