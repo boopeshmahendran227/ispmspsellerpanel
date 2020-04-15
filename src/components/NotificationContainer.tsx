@@ -24,16 +24,11 @@ const Notifications = (props: NotificationsProps) => {
 
   return (
     <div className="container">
-      <div className="notificationsContainer">
-        <h1>Notifications</h1>
-        {!notifications ||
-          (Boolean(!notifications.length) && (
-            <EmptyMsg msg="No Notifications" />
-          ))}
-        {notifications.map((notification, index) => (
-          <NotificationCard key={index} notification={notification} />
-        ))}
-      </div>
+      {!notifications ||
+        (Boolean(!notifications.length) && <EmptyMsg msg="No Notifications" />)}
+      {notifications.map((notification, index) => (
+        <NotificationCard key={index} notification={notification} />
+      ))}
       <style jsx>{`
         .container {
           padding: 0.5em;

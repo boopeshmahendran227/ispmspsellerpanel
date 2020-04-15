@@ -44,7 +44,9 @@ const TopNavBar = (props: TopNavBarProps) => {
       <header>Boopesh's Dashboard</header>
       <a
         className={classes}
-        key={props.unreadNotificationCount}
+        key={
+          props.unreadNotificationCount
+        } /* Retrigger animation when count changes */
         onClick={handleNotificationClick}
       >
         <i className="fas fa-bell"></i>
@@ -89,7 +91,7 @@ const TopNavBar = (props: TopNavBarProps) => {
           right: 0;
           border-radius: 100%;
           background-color: ${CSSConstants.dangerColor};
-          color: ${CSSConstants.backgroundColor};
+          color: ${CSSConstants.foregroundColor};
           transform: translate(30%, -30%);
           width: 1.1rem;
           height: 1.1rem;

@@ -21,10 +21,13 @@ const NotificationBar = (props: NotificationBarProps) => {
   return (
     <section className={classes} onClick={props.onClose}>
       <div className="sideNavContainer" onClick={blockClicks}>
-        <a className="closeBtn" href="#0" onClick={props.onClose}>
-          <i className="fa fa-times" aria-hidden="true"></i>
-        </a>
         <div className="container">
+          <header>
+            <h2>Notifications</h2>
+            <a className="closeBtn" href="#0" onClick={props.onClose}>
+              <i className="fa fa-times" aria-hidden="true"></i>
+            </a>
+          </header>
           <NotificationContainer />
         </div>
       </div>
@@ -83,8 +86,14 @@ const NotificationBar = (props: NotificationBarProps) => {
         .sideNavContainer {
           transition: transform 0.13s cubic-bezier(0, 0, 0.3, 1);
         }
-        .sideNavContainer {
+        .sideNavBarVisible .sideNavContainer {
           transition: transform 0.33s cubic-bezier(0, 0, 0.3, 1);
+        }
+        header {
+          padding: 0.3em;
+          position: sticky;
+          top: 0;
+          background: ${CSSConstants.foregroundColor};
         }
       `}</style>
     </section>
