@@ -22,11 +22,8 @@ interface StateProps {
 
 interface DispatchProps {
   getOrders: () => void;
-  changeOrderItemStatus: (
-    orderId: number,
-    orderItemId: number,
-    orderItemStatus: string
-  ) => void;
+  approveCancelOrderItem: (orderId: number, orderItemId: number) => void;
+  rejectCancelOrderItem: (orderId: number, orderItemId: number) => void;
 }
 
 type CancellationRequestContainerProps = StateProps & DispatchProps;
@@ -51,7 +48,8 @@ const CancellationRequestContainer = (
           >
             <OrderItemCancelRequest
               orderItem={orderItem}
-              changeOrderItemStatus={props.changeOrderItemStatus}
+              approveCancelOrderItem={props.approveCancelOrderItem}
+              rejectCancelOrderItem={props.rejectCancelOrderItem}
               inLoadingState={props.currentlyProcessingOrderItemIds.includes(
                 orderItem.id
               )}
@@ -87,7 +85,8 @@ const mapStateToProps = (state: RootState): StateProps => ({
 
 const mapDispatchToProps: DispatchProps = {
   getOrders: OrderActions.getOrders,
-  changeOrderItemStatus: OrderActions.changeOrderItemStatus,
+  approveCancelOrderItem: OrderActions.approveCancelOrderItem,
+  rejectCancelOrderItem: OrderActions.rejectCancelOrderItem,
 };
 
 const mapPropsToLoadData = (props: CancellationRequestContainerProps) => {

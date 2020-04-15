@@ -10,7 +10,7 @@ const constants = {
   warningColor: "#FFB100",
   dangerColor: "#ff0000",
   successColor: "#378E3B",
-  outlineColor: "#CE0C14",
+  outlineColor: "", // This is set down
   primaryTextColor: "#212121",
   secondaryTextColor: "#777",
   hoverColor: "", // This is set down
@@ -23,5 +23,6 @@ constants.lightPrimaryColor = Chroma(constants.primaryColor).brighten(1).css();
 constants.borderStyle = `1px solid ${constants.borderColor}`;
 constants.hoverTextColor = constants.primaryColor;
 constants.hoverColor = Chroma(constants.primaryColor).brighten(3.2).css();
+constants.outlineColor = Chroma(constants.primaryColor).brighten(1.9).css();
 
 export default constants;

@@ -3,6 +3,8 @@ import {
   CHANGE_ORDER_ITEM_STATUS_REQUEST,
   CHANGE_ORDER_ITEM_STATUS_SUCCESS,
   CHANGE_ORDER_ITEM_STATUS_FAILURE,
+  APPROVE_CANCEL_ORDER_ITEM,
+  REJECT_CANCEL_ORDER_ITEM,
 } from "../constants/ActionTypes";
 import { ProductAttributeValue } from "./product";
 
@@ -112,8 +114,22 @@ interface ChangeOrderItemStatusFailureAction {
   orderItemId: number;
 }
 
+interface ApproveCancelOrderItemAction {
+  type: typeof APPROVE_CANCEL_ORDER_ITEM;
+  orderId: number;
+  orderItemId: number;
+}
+
+interface RejectCancelOrderItemAction {
+  type: typeof REJECT_CANCEL_ORDER_ITEM;
+  orderId: number;
+  orderItemId: number;
+}
+
 export type OrderActionType =
   | GetOrderAction
   | ChangeOrderItemStatusAction
   | ChangeOrderItemStatusSuccessAction
-  | ChangeOrderItemStatusFailureAction;
+  | ChangeOrderItemStatusFailureAction
+  | ApproveCancelOrderItemAction
+  | RejectCancelOrderItemAction;

@@ -7,11 +7,8 @@ import Loader from "./Loader";
 
 interface OrderItemCancelRequestProps {
   orderItem: OrderItemInterface;
-  changeOrderItemStatus: (
-    orderId: number,
-    orderItemId: number,
-    orderItemStatus: string
-  ) => void;
+  approveCancelOrderItem: (orderId: number, orderItemId: number) => void;
+  rejectCancelOrderItem: (orderId: number, orderItemId: number) => void;
   inLoadingState: boolean;
 }
 
@@ -19,11 +16,11 @@ const OrderItemCancelRequest = (props: OrderItemCancelRequestProps) => {
   const { orderItem } = props;
 
   const handleApproveClick = () => {
-    props.changeOrderItemStatus(
-      orderItem.order.id,
-      orderItem.id,
-      OrderStatus.CancelCompleted
-    );
+    props.approveCancelOrderItem(orderItem.order.id, orderItem.id);
+  };
+
+  const handleRejectClick = () => {
+    props.rejectCancelOrderItem(orderItem.order.id, orderItem.id);
   };
 
   return (
@@ -58,7 +55,9 @@ const OrderItemCancelRequest = (props: OrderItemCancelRequestProps) => {
         <Button onClick={handleApproveClick} type={ButtonType.success}>
           Approve
         </Button>
-        <Button type={ButtonType.danger}>Reject</Button>
+        <Button onClick={handleRejectClick} type={ButtonType.danger}>
+          Reject
+        </Button>
       </div>
       <style jsx>{`
         .card {

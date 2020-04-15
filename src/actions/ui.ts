@@ -1,8 +1,11 @@
 import { SHOW_SURE_MODAL, HIDE_SURE_MODAL } from "../constants/ActionTypes";
 
-const showSureModal = () => {
+const showSureModal = (header: string, body: string, onSure: () => void) => {
   return {
     type: SHOW_SURE_MODAL,
+    header,
+    body,
+    onSure,
   };
 };
 
