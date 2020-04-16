@@ -1,10 +1,11 @@
 import Modal from "./Modal";
-import Button, { ButtonType } from "./Button";
+import Button from "./Button";
 import { connect } from "react-redux";
 import { RootState } from "../reducers";
 import { getSureModalData } from "../selectors/ui";
 import UIActions from "../actions/ui";
 import { SureModalData } from "../types/ui";
+import CSSConstants from "../constants/CSSConstants";
 
 interface StateProps {
   data: SureModalData;
@@ -30,16 +31,11 @@ const SureModal = (props: SureModalProps) => {
     <Modal open={props.data.open} onClose={props.onClose}>
       <div className="container">
         <header>{props.data.header}</header>
-        <p>{props.data.body}</p>
+        <div className="body">{props.data.body}</div>
+        <div className="note">(Note: This action is irreversible)</div>
         <div className="buttonContainer">
-          <Button type={ButtonType.success} onClick={handleSureClicked}>
-            Yes, Sure
-          </Button>
-          <Button
-            type={ButtonType.success}
-            outlined={true}
-            onClick={handleCancelClicked}
-          >
+          <Button onClick={handleSureClicked}>Yes, Sure</Button>
+          <Button outlined={true} onClick={handleCancelClicked}>
             No, Close
           </Button>
         </div>
@@ -57,6 +53,10 @@ const SureModal = (props: SureModalProps) => {
         }
         .buttonContainer {
           text-align: right;
+        }
+        .note {
+          margin: 0.4em 0;
+          color: ${CSSConstants.dangerColor};
         }
       `}</style>
     </Modal>

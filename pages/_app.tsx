@@ -30,7 +30,7 @@ function MyApp(props) {
   return (
     <SWRConfig
       value={{
-        refreshInterval: 10000,
+        // refreshInterval: 10000,
         fetcher: api,
       }}
     >

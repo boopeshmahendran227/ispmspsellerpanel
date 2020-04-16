@@ -9,6 +9,7 @@ import {
   REJECT_RETURN_ORDER_ITEM,
   MARK_AS_SHIPPING_COMPLETE,
   MARK_AS_SHIPPING,
+  CANCEL_ORDER_ITEM,
 } from "../constants/ActionTypes";
 import { ProductAttributeValue } from "./product";
 
@@ -167,6 +168,12 @@ interface MarkAsShippingAction {
   orderItemId: number;
 }
 
+interface CancelOrderItemAction {
+  type: typeof CANCEL_ORDER_ITEM;
+  orderId: number;
+  orderItemId: number;
+}
+
 export type OrderActionType =
   | GetOrderAction
   | ChangeOrderItemStatusAction
@@ -177,4 +184,5 @@ export type OrderActionType =
   | ApproveReturnOrderItemAction
   | RejectReturnOrderItemAction
   | MarkAsShippingCompleteAction
-  | MarkAsShippingAction;
+  | MarkAsShippingAction
+  | CancelOrderItemAction;

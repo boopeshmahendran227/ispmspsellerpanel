@@ -9,6 +9,7 @@ import {
   REJECT_RETURN_ORDER_ITEM,
   MARK_AS_SHIPPING_COMPLETE,
   MARK_AS_SHIPPING,
+  CANCEL_ORDER_ITEM,
 } from "../constants/ActionTypes";
 import { OrderActionType } from "../types/order";
 
@@ -119,6 +120,17 @@ const markAsShipping = (
   };
 };
 
+const cancelOrderItem = (
+  orderId: number,
+  orderItemId: number
+): OrderActionType => {
+  return {
+    type: CANCEL_ORDER_ITEM,
+    orderId,
+    orderItemId,
+  };
+};
+
 export default {
   getOrders,
   changeOrderItemStatus,
@@ -130,4 +142,5 @@ export default {
   rejectReturnOrderItem,
   markAsShippingComplete,
   markAsShipping,
+  cancelOrderItem,
 };

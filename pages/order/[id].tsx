@@ -8,13 +8,24 @@ import OrderItem from "../../src/components/OrderItem";
 import { splitCamelCase, formatAddress } from "../../src/utils/misc";
 import { connect } from "react-redux";
 import OrderActions from "../../src/actions/order";
+import { RootState } from "../../src/reducers";
+import { getCurrentlyProcessingOrderItemIds } from "../../src/selectors/order";
+
+interface StateProps {
+  currentlyProcessingOrderItemIds: number[];
+}
 
 interface DispatchProps {
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
   markAsShipping: (orderId: number, orderItemId: number) => void;
+  approveCancelOrderItem: (orderId: number, orderItemId: number) => void;
+  rejectCancelOrderItem: (orderId: number, orderItemId: number) => void;
+  approveReturnOrderItem: (orderId: number, orderItemId: number) => void;
+  rejectReturnOrderItem: (orderId: number, orderItemId: number) => void;
+  cancelOrderItem: (orderId: number, orderItemId: number) => void;
 }
 
-type OrderProps = DispatchProps;
+type OrderProps = StateProps & DispatchProps;
 
 const Order = (props: OrderProps) => {
   const router = useRouter();
@@ -50,6 +61,14 @@ const Order = (props: OrderProps) => {
                 orderItem={orderItem}
                 markAsShipping={props.markAsShipping}
                 markAsShippingComplete={props.markAsShippingComplete}
+                approveCancelOrderItem={props.approveCancelOrderItem}
+                rejectCancelOrderItem={props.rejectCancelOrderItem}
+                approveReturnOrderItem={props.approveReturnOrderItem}
+                rejectReturnOrderItem={props.rejectReturnOrderItem}
+                inLoadingState={props.currentlyProcessingOrderItemIds.includes(
+                  orderItem.id
+                )}
+                cancelOrderItem={props.cancelOrderItem}
               />
             ))}
           </section>
@@ -137,9 +156,21 @@ const Order = (props: OrderProps) => {
   );
 };
 
+const mapStateToProps = (state: RootState): StateProps => ({
+  currentlyProcessingOrderItemIds: getCurrentlyProcessingOrderItemIds(state),
+});
+
 const mapDispatchToProps: DispatchProps = {
   markAsShippingComplete: OrderActions.markAsShippingComplete,
   markAsShipping: OrderActions.markAsShipping,
+  approveCancelOrderItem: OrderActions.approveCancelOrderItem,
+  rejectCancelOrderItem: OrderActions.rejectCancelOrderItem,
+  approveReturnOrderItem: OrderActions.approveReturnOrderItem,
+  rejectReturnOrderItem: OrderActions.rejectReturnOrderItem,
+  cancelOrderItem: OrderActions.cancelOrderItem,
 };
 
-export default connect<{}, DispatchProps>(null, mapDispatchToProps)(Order);
+export default connect<StateProps, DispatchProps>(
+  mapStateToProps,
+  mapDispatchToProps
+)(Order);
