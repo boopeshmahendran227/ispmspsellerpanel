@@ -6,8 +6,17 @@ import { useRouter } from "next/router";
 import Loader from "../../src/components/Loader";
 import OrderItem from "../../src/components/OrderItem";
 import { splitCamelCase, formatAddress } from "../../src/utils/misc";
+import { connect } from "react-redux";
+import OrderActions from "../../src/actions/order";
 
-const Order = () => {
+interface DispatchProps {
+  markAsShippingComplete: (orderId: number, orderItemId: number) => void;
+  markAsShipping: (orderId: number, orderItemId: number) => void;
+}
+
+type OrderProps = DispatchProps;
+
+const Order = (props: OrderProps) => {
   const router = useRouter();
   const { data: order } = useSWR(`/order/${router.query.id}`);
 
@@ -36,7 +45,12 @@ const Order = () => {
         <div className="col1">
           <section className="itemContainer">
             {order.items.map((orderItem) => (
-              <OrderItem orderItem={orderItem} />
+              <OrderItem
+                orderId={order.id}
+                orderItem={orderItem}
+                markAsShipping={props.markAsShipping}
+                markAsShippingComplete={props.markAsShippingComplete}
+              />
             ))}
           </section>
         </div>
@@ -77,7 +91,7 @@ const Order = () => {
           font-size: 1.6rem;
         }
         header {
-          margin: 1.4em 0;
+          margin-bottom: 2.3em;
         }
         .time {
           color: ${CSSConstants.secondaryTextColor};
@@ -123,4 +137,9 @@ const Order = () => {
   );
 };
 
-export default Order;
+const mapDispatchToProps: DispatchProps = {
+  markAsShippingComplete: OrderActions.markAsShippingComplete,
+  markAsShipping: OrderActions.markAsShipping,
+};
+
+export default connect<{}, DispatchProps>(null, mapDispatchToProps)(Order);

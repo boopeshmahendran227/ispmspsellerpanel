@@ -4,8 +4,13 @@ import {
   GET_ORDERS_FAILURE,
   CHANGE_ORDER_ITEM_STATUS_REQUEST,
   APPROVE_CANCEL_ORDER_ITEM,
+  REJECT_CANCEL_ORDER_ITEM,
+  APPROVE_RETURN_ORDER_ITEM,
+  REJECT_RETURN_ORDER_ITEM,
+  MARK_AS_SHIPPING_COMPLETE,
+  MARK_AS_SHIPPING,
 } from "../constants/ActionTypes";
-import { takeEvery, all, call, put } from "redux-saga/effects";
+import { takeEvery, all, call, put, take } from "redux-saga/effects";
 import api from "../api";
 import OrderActions from "../actions/order";
 import { OrderStatus } from "../types/order";
@@ -45,26 +50,6 @@ function* changeOrderItemStatus(action) {
   }
 }
 
-function* approveCancelOrderItem(action) {
-  yield put(
-    OrderActions.changeOrderItemStatus(
-      action.orderId,
-      action.orderItemId,
-      OrderStatus.CancelCompleted
-    )
-  );
-}
-
-function* rejectCancelOrderItem(action) {
-  // yield put(
-  //   OrderActions.changeOrderItemStatus(
-  //     action.orderId,
-  //     action.orderItemId,
-  //     OrderStatus.CancelCompleted
-  //   )
-  // );
-}
-
 function* watchGetOrders() {
   yield takeEvery(GET_ORDERS_REQUEST, getOrders);
 }
@@ -73,19 +58,32 @@ function* watchChangeOrderItemStatus() {
   yield takeEvery(CHANGE_ORDER_ITEM_STATUS_REQUEST, changeOrderItemStatus);
 }
 
-function* watchApproveCancelOrderitem() {
-  yield takeEvery(APPROVE_CANCEL_ORDER_ITEM, approveCancelOrderItem);
-}
+const status = {
+  [APPROVE_CANCEL_ORDER_ITEM]: OrderStatus.CancelCompleted,
+  [REJECT_CANCEL_ORDER_ITEM]: OrderStatus.CancelRejected,
+  [APPROVE_RETURN_ORDER_ITEM]: OrderStatus.ReturnCompleted,
+  [REJECT_RETURN_ORDER_ITEM]: OrderStatus.ReturnRejected,
+  [MARK_AS_SHIPPING]: OrderStatus.Shipping,
+  [MARK_AS_SHIPPING_COMPLETE]: OrderStatus.ShippingCompleted,
+};
 
-function* watchRejectCancelOrderItem() {
-  yield takeEvery(APPROVE_CANCEL_ORDER_ITEM, rejectCancelOrderItem);
+function* watchStatusChange() {
+  while (true) {
+    const action = yield take(Object.keys(status));
+    yield put(
+      OrderActions.changeOrderItemStatus(
+        action.orderId,
+        action.orderItemId,
+        status[action.type]
+      )
+    );
+  }
 }
 
 export default function* () {
   yield all([
     watchGetOrders(),
     watchChangeOrderItemStatus(),
-    watchApproveCancelOrderitem(),
-    watchRejectCancelOrderItem(),
+    watchStatusChange(),
   ]);
 }

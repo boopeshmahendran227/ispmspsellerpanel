@@ -7,6 +7,8 @@ import {
   REJECT_CANCEL_ORDER_ITEM,
   APPROVE_RETURN_ORDER_ITEM,
   REJECT_RETURN_ORDER_ITEM,
+  MARK_AS_SHIPPING_COMPLETE,
+  MARK_AS_SHIPPING,
 } from "../constants/ActionTypes";
 import { OrderActionType } from "../types/order";
 
@@ -95,6 +97,28 @@ const rejectReturnOrderItem = (
   };
 };
 
+const markAsShippingComplete = (
+  orderId: number,
+  orderItemId: number
+): OrderActionType => {
+  return {
+    type: MARK_AS_SHIPPING_COMPLETE,
+    orderId,
+    orderItemId,
+  };
+};
+
+const markAsShipping = (
+  orderId: number,
+  orderItemId: number
+): OrderActionType => {
+  return {
+    type: MARK_AS_SHIPPING,
+    orderId,
+    orderItemId,
+  };
+};
+
 export default {
   getOrders,
   changeOrderItemStatus,
@@ -104,4 +128,6 @@ export default {
   rejectCancelOrderItem,
   approveReturnOrderItem,
   rejectReturnOrderItem,
+  markAsShippingComplete,
+  markAsShipping,
 };

@@ -7,6 +7,8 @@ import {
   REJECT_CANCEL_ORDER_ITEM,
   APPROVE_RETURN_ORDER_ITEM,
   REJECT_RETURN_ORDER_ITEM,
+  MARK_AS_SHIPPING_COMPLETE,
+  MARK_AS_SHIPPING,
 } from "../constants/ActionTypes";
 import { ProductAttributeValue } from "./product";
 
@@ -20,8 +22,10 @@ export enum OrderStatus {
   ShippingCompleted = "ShippingCompleted",
   CancelRequested = "CancelRequested",
   CancelCompleted = "CancelCompleted",
+  CancelRejected = "CancelRejected",
   ReturnRequested = "ReturnRequested",
   ReturnCompleted = "ReturnCompleted",
+  ReturnRejected = "ReturnRejected",
   PartialCancelRequested = "PartialCancelRequested",
   PartialCancelCompleted = "PartialCancelCompleted",
   Completed = "Completed",
@@ -151,6 +155,18 @@ interface RejectReturnOrderItemAction {
   orderItemId: number;
 }
 
+interface MarkAsShippingCompleteAction {
+  type: typeof MARK_AS_SHIPPING_COMPLETE;
+  orderId: number;
+  orderItemId: number;
+}
+
+interface MarkAsShippingAction {
+  type: typeof MARK_AS_SHIPPING;
+  orderId: number;
+  orderItemId: number;
+}
+
 export type OrderActionType =
   | GetOrderAction
   | ChangeOrderItemStatusAction
@@ -159,4 +175,6 @@ export type OrderActionType =
   | ApproveCancelOrderItemAction
   | RejectCancelOrderItemAction
   | ApproveReturnOrderItemAction
-  | RejectReturnOrderItemAction;
+  | RejectReturnOrderItemAction
+  | MarkAsShippingCompleteAction
+  | MarkAsShippingAction;
