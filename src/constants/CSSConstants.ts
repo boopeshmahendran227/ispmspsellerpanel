@@ -1,7 +1,7 @@
 import Chroma from "chroma-js";
 
 const constants = {
-  backgroundColor: "#F0F3F4",
+  backgroundColor: "#F5F6F8",
   foregroundColor: "#FFFFFF",
   disabledColor: "#999",
   borderColor: "#ccc",
@@ -12,7 +12,7 @@ const constants = {
   successColor: "#378E3B",
   outlineColor: "", // This is set down
   primaryTextColor: "#212121",
-  secondaryTextColor: "#777",
+  secondaryTextColor: "#212b36",
   hoverColor: "", // This is set down
   hoverTextColor: "", // This is set down
   lightPrimaryColor: "", // This is set down

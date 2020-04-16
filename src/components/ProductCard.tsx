@@ -36,7 +36,7 @@ const ProductCard = (props: ProductCardProps) => {
           text-align: initial;
         }
         .imageContainer {
-          width: 6rem;
+          width: 7rem;
           text-align: center;
           padding: 0.5em;
           padding-left: 0;

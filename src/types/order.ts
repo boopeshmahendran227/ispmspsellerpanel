@@ -43,6 +43,9 @@ export interface OrderItemInterface {
     productName: string;
     images: string[];
     attributeValues: ProductAttributeValue[];
+    discountSplit: {
+      [key: string]: number;
+    };
   };
   totalDiscount: number;
   qty: number;
@@ -52,18 +55,19 @@ export interface OrderItemInterface {
   orderItemStatusHistories: [
     {
       id: number;
-      orderStatus: string;
+      orderStatus: OrderStatus;
       createdDateTime: string;
     }
   ];
-  orderItemStatus: string;
+  orderItemStatus: OrderStatus;
   order?: OrderInterface;
 }
 
 export interface AddressInterface {
-  id: string;
-  addressLine1: string;
-  addressLine2: string;
+  id?: string;
+  apartmentNumber: string;
+  street: string;
+  locality: string;
   city: string;
   state: string;
   country: string;
@@ -84,11 +88,11 @@ export interface OrderInterface {
       price: number;
     }
   ];
-  orderStatus: string;
+  orderStatus: OrderStatus;
   orderStatusHistories: [
     {
       id: number;
-      orderStatus: string;
+      orderStatus: OrderStatus;
       createdDateTime: string;
     }
   ];

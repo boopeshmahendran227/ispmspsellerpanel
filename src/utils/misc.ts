@@ -1,7 +1,9 @@
+import { AddressInterface } from "../types/order";
+
 const BASE_URL = "http://mpldev.cdn.istakapaza.com/";
 
 const formatPrice = (price: number) => {
-  return "₹" + price.toLocaleString("en-IN");
+  return "₹ " + price.toLocaleString("en-IN");
 };
 
 const capitalizeFirstLetter = (str) => {
@@ -38,6 +40,14 @@ const returnEmptyStringIfFalse = (val) => {
   else return val;
 };
 
+const splitCamelCase = (word: string) => {
+  return word.replace(/([a-z0-9])([A-Z])/g, "$1 $2");
+};
+
+const formatAddress = (address: AddressInterface) => {
+  return `${address.apartmentNumber}, ${address.street}, ${address.locality}, ${address.city} - ${address.zipCode}, ${address.state}`;
+};
+
 export {
   formatPrice,
   capitalizeFirstLetter,
@@ -46,4 +56,6 @@ export {
   getProductUrl,
   getProductImageUrl,
   returnEmptyStringIfFalse,
+  splitCamelCase,
+  formatAddress,
 };
