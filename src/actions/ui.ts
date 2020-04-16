@@ -1,4 +1,9 @@
-import { SHOW_SURE_MODAL, HIDE_SURE_MODAL } from "../constants/ActionTypes";
+import {
+  SHOW_SURE_MODAL,
+  HIDE_SURE_MODAL,
+  SHOW_LOADING_SCREEN,
+  HIDE_LOADING_SCREEN,
+} from "../constants/ActionTypes";
 import { UIActionType } from "../types/ui";
 
 const showSureModal = (
@@ -20,7 +25,21 @@ const hideSureModal = (): UIActionType => {
   };
 };
 
+const showLoadingScreen = (): UIActionType => {
+  return {
+    type: SHOW_LOADING_SCREEN,
+  };
+};
+
+const hideLoadingScreen = (): UIActionType => {
+  return {
+    type: HIDE_LOADING_SCREEN,
+  };
+};
+
 export default {
   showSureModal,
   hideSureModal,
+  showLoadingScreen,
+  hideLoadingScreen,
 };

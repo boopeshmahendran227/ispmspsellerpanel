@@ -45,7 +45,7 @@ const getReturnRequestedOrderItems = createSelector(
         order.items
           .filter(
             (orderItem: OrderItemInterface) =>
-              orderItem.orderItemStatus === OrderStatus.Return
+              orderItem.orderItemStatus === OrderStatus.ReturnRequested
           )
           .map((orderItem) => ({ ...orderItem, order }))
       )

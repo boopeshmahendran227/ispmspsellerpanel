@@ -24,7 +24,8 @@ function* changeOrderItemStatus(action) {
     yield call(api, "/order/item", {
       method: "PUT",
       data: {
-        orderItemId: action.orderItemId,
+        orderItemIds: [action.orderItemId],
+        reason: "test reason",
         orderItemStatus: action.orderItemStatus,
       },
     });

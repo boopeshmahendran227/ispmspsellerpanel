@@ -12,6 +12,7 @@ import api from "../src/api";
 // Add all third-party CSS here
 import "@fortawesome/fontawesome-free/css/all.css";
 import SureModal from "../src/components/SureModal";
+import LoadingScreen from "../src/components/LoadingScreen";
 
 NProgress.configure({ showSpinner: false });
 
@@ -35,6 +36,7 @@ function MyApp(props) {
     >
       <Provider store={store}>
         <SureModal />
+        <LoadingScreen />
         <Layout>
           <Component {...pageProps} />
         </Layout>

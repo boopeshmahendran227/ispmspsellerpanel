@@ -1,5 +1,10 @@
 import { combineReducers } from "redux";
-import { SHOW_SURE_MODAL, HIDE_SURE_MODAL } from "../constants/ActionTypes";
+import {
+  SHOW_SURE_MODAL,
+  HIDE_SURE_MODAL,
+  SHOW_LOADING_SCREEN,
+  HIDE_LOADING_SCREEN,
+} from "../constants/ActionTypes";
 import { SureModalData, UIActionType } from "../types/ui";
 
 const getSureModalData = (
@@ -30,6 +35,17 @@ const getSureModalData = (
   return state;
 };
 
+const getLoadingScreenOpen = (state: boolean = false, action) => {
+  switch (action.type) {
+    case SHOW_LOADING_SCREEN:
+      return true;
+    case HIDE_LOADING_SCREEN:
+      return false;
+  }
+  return state;
+};
+
 export default combineReducers({
   sureModalData: getSureModalData,
+  loadingScreenOpen: getLoadingScreenOpen,
 });

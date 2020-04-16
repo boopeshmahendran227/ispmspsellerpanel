@@ -19,10 +19,17 @@ export enum OrderStatus {
   Shipping = "Shipping",
   ShippingCompleted = "ShippingCompleted",
   CancelRequested = "CancelRequested",
-  Cancel = "Cancel",
   CancelCompleted = "CancelCompleted",
-  Return = "Return",
-  ReturnComplete = "ReturnComplete",
+  ReturnRequested = "ReturnRequested",
+  ReturnCompleted = "ReturnCompleted",
+  PartialCancelRequested = "PartialCancelRequested",
+  PartialCancelCompleted = "PartialCancelCompleted",
+  Completed = "Completed",
+  PaymentOnDelivery = "PaymentOnDelivery",
+  CancelAutoApproved = "CancelAutoApproved",
+  PartialReturnRequested = "PartialReturnRequested",
+  PartialReturnCompleted = "PartialReturnCompleted",
+  Abandoned = "Abandoned",
 }
 
 export interface OrderItemInterface {

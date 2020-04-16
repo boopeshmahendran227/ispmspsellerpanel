@@ -7,4 +7,9 @@ const getSureModalData = createSelector(
   (ui): SureModalData => ui.sureModalData
 );
 
-export { getSureModalData };
+const getLoadingScreenOpen = createSelector(
+  (state: RootState) => state.ui,
+  (ui): boolean => ui.loadingScreenOpen
+);
+
+export { getSureModalData, getLoadingScreenOpen };

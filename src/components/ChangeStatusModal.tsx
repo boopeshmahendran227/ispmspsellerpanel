@@ -34,13 +34,14 @@ const ChangeStatusModal = (props: ChangeStatusModalProps) => {
     return null;
   }
 
-  const onSubmit = (values) => {
+  const onSubmit = (values, { resetForm }) => {
     props.changeOrderItemStatus(
       props.order.id,
       props.orderItem.id,
       values.orderItemStatus
     );
     props.onClose();
+    resetForm();
   };
 
   return (
@@ -49,7 +50,6 @@ const ChangeStatusModal = (props: ChangeStatusModalProps) => {
         initialValues={{
           orderItemStatus: orderItem.orderItemStatus,
         }}
-        enableReinitialize={true}
         onSubmit={onSubmit}
       >
         {() => (
