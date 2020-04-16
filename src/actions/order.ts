@@ -22,13 +22,15 @@ const getOrders = (): OrderActionType => {
 const changeOrderItemStatus = (
   orderId: number,
   orderItemId: number,
-  orderItemStatus: string
+  orderItemStatus: string,
+  reason: string = ""
 ): OrderActionType => {
   return {
     type: CHANGE_ORDER_ITEM_STATUS_REQUEST,
     orderId,
     orderItemId,
     orderItemStatus,
+    reason,
   };
 };
 
@@ -122,12 +124,14 @@ const markAsShipping = (
 
 const cancelOrderItem = (
   orderId: number,
-  orderItemId: number
+  orderItemId: number,
+  reason: string = ""
 ): OrderActionType => {
   return {
     type: CANCEL_ORDER_ITEM,
     orderId,
     orderItemId,
+    reason,
   };
 };
 

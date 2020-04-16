@@ -30,13 +30,22 @@ const OrderItem = (props: OrderItemProps) => {
         return (
           <>
             <Button
+              type={ButtonType.success}
               onClick={() =>
                 props.markAsShipping(props.orderId, props.orderItem.id)
               }
             >
               Mark as shipping
             </Button>
-            <Button outlined={true}>Cancel Order</Button>
+            <Button
+              type={ButtonType.danger}
+              onClick={() =>
+                props.cancelOrderItem(props.orderId, props.orderItem.id)
+              }
+              outlined={true}
+            >
+              Cancel Order
+            </Button>
           </>
         );
       case OrderStatus.Shipping:
@@ -125,7 +134,7 @@ const OrderItem = (props: OrderItemProps) => {
       case OrderStatus.ReturnRequested:
         return "Return Requested";
     }
-    return orderItem.orderItemStatus;
+    return splitCamelCase(orderItem.orderItemStatus);
   };
 
   const getColor = () => {

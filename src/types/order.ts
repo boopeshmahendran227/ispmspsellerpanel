@@ -118,6 +118,7 @@ interface ChangeOrderItemStatusAction {
   orderId: number;
   orderItemId: number;
   orderItemStatus: string;
+  reason: string;
 }
 
 interface ChangeOrderItemStatusSuccessAction {
@@ -172,6 +173,7 @@ interface CancelOrderItemAction {
   type: typeof CANCEL_ORDER_ITEM;
   orderId: number;
   orderItemId: number;
+  reason: string;
 }
 
 export type OrderActionType =

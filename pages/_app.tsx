@@ -13,6 +13,7 @@ import api from "../src/api";
 import "@fortawesome/fontawesome-free/css/all.css";
 import SureModal from "../src/components/SureModal";
 import LoadingScreen from "../src/components/LoadingScreen";
+import ReasonModal from "../src/components/ReasonModal";
 
 NProgress.configure({ showSpinner: false });
 
@@ -35,6 +36,7 @@ function MyApp(props) {
       }}
     >
       <Provider store={store}>
+        <ReasonModal />
         <SureModal />
         <LoadingScreen />
         <Layout>

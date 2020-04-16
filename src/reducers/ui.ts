@@ -4,8 +4,10 @@ import {
   HIDE_SURE_MODAL,
   SHOW_LOADING_SCREEN,
   HIDE_LOADING_SCREEN,
+  SHOW_REASON_MODAL,
+  HIDE_REASON_MODAL,
 } from "../constants/ActionTypes";
-import { SureModalData, UIActionType } from "../types/ui";
+import { SureModalData, UIActionType, ReasonModalData } from "../types/ui";
 
 const getSureModalData = (
   state: SureModalData = {
@@ -45,7 +47,33 @@ const getLoadingScreenOpen = (state: boolean = false, action) => {
   return state;
 };
 
+const getReasonModalData = (
+  state: ReasonModalData = {
+    header: "Confirm",
+    open: false,
+    onSubmit: (reason: string) => null, // dummy function
+  },
+  action: UIActionType
+) => {
+  switch (action.type) {
+    case SHOW_REASON_MODAL:
+      return {
+        open: true,
+        header: action.header,
+        onSubmit: action.onSubmit,
+      };
+    case HIDE_REASON_MODAL:
+      return {
+        open: false,
+        header: "Confirm",
+        onSubmit: (reason: string) => null, // dummy function
+      };
+  }
+  return state;
+};
+
 export default combineReducers({
   sureModalData: getSureModalData,
+  reasonModalData: getReasonModalData,
   loadingScreenOpen: getLoadingScreenOpen,
 });

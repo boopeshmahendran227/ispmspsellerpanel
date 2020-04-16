@@ -31,6 +31,7 @@ function* changeOrderItemStatus(action) {
       method: "PUT",
       data: {
         orderItemIds: [action.orderItemId],
+        reason: action.reason,
         orderItemStatus: action.orderItemStatus,
       },
     });
@@ -75,7 +76,8 @@ function* watchStatusChange() {
       OrderActions.changeOrderItemStatus(
         action.orderId,
         action.orderItemId,
-        status[action.type]
+        status[action.type],
+        action.reason
       )
     );
   }

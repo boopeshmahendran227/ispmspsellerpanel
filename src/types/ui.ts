@@ -3,6 +3,8 @@ import {
   SHOW_SURE_MODAL,
   SHOW_LOADING_SCREEN,
   HIDE_LOADING_SCREEN,
+  SHOW_REASON_MODAL,
+  HIDE_REASON_MODAL,
 } from "../constants/ActionTypes";
 
 interface ShowSureModalAction {
@@ -14,6 +16,16 @@ interface ShowSureModalAction {
 
 interface HideSureModalAction {
   type: typeof HIDE_SURE_MODAL;
+}
+
+interface ShowReasonModalAction {
+  type: typeof SHOW_REASON_MODAL;
+  header: string;
+  onSubmit: (reason: string) => void;
+}
+
+interface HideReasonModalAction {
+  type: typeof HIDE_REASON_MODAL;
 }
 
 interface ShowLoadingScreenAction {
@@ -28,11 +40,19 @@ export type UIActionType =
   | ShowSureModalAction
   | HideSureModalAction
   | ShowLoadingScreenAction
-  | HideLoadingScreenAction;
+  | HideLoadingScreenAction
+  | ShowReasonModalAction
+  | HideReasonModalAction;
 
 export interface SureModalData {
   open: boolean;
   header: string;
   body: string;
   onSure: () => void;
+}
+
+export interface ReasonModalData {
+  open: boolean;
+  header: string;
+  onSubmit: (reason: string) => void;
 }
