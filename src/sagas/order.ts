@@ -12,11 +12,7 @@ import { OrderStatus } from "../types/order";
 
 function* getOrders() {
   try {
-    const data = yield call(api, "/order", {
-      params: {
-        sellerId: "1",
-      },
-    });
+    const data = yield call(api, "/order");
     yield put({ type: GET_ORDERS_SUCCESS, data: data });
   } catch (err) {
     yield put({ type: GET_ORDERS_FAILURE });
