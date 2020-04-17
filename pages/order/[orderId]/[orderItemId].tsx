@@ -1,15 +1,17 @@
 import moment from "moment";
-import CSSConstants from "../../src/constants/CSSConstants";
+import CSSConstants from "../../../src/constants/CSSConstants";
 import Link from "next/link";
 import useSWR from "swr";
 import { useRouter } from "next/router";
-import Loader from "../../src/components/Loader";
-import OrderItem from "../../src/components/OrderItem";
-import { splitCamelCase, formatAddress } from "../../src/utils/misc";
+import Loader from "../../../src/components/Loader";
+import OrderItemDetail from "../../../src/components/OrderItemDetail";
+import { formatAddress } from "../../../src/utils/misc";
 import { connect } from "react-redux";
-import OrderActions from "../../src/actions/order";
-import { RootState } from "../../src/reducers";
-import { getCurrentlyProcessingOrderItemIds } from "../../src/selectors/order";
+import OrderActions from "../../../src/actions/order";
+import { RootState } from "../../../src/reducers";
+import { getCurrentlyProcessingOrderItemIds } from "../../../src/selectors/order";
+import { transformOrderItem } from "../../../src/transformers/orderItem";
+import { getOrderText } from "../../../src/types/order";
 
 interface StateProps {
   currentlyProcessingOrderItemIds: number[];
@@ -29,11 +31,18 @@ type OrderProps = StateProps & DispatchProps;
 
 const Order = (props: OrderProps) => {
   const router = useRouter();
-  const { data: order } = useSWR(`/order/${router.query.id}`);
+  const { data: order } = useSWR(`/order/${router.query.orderId}`);
 
   if (!order) {
     return <Loader />;
   }
+
+  const orderItem = transformOrderItem(
+    order,
+    order.items.find(
+      (orderItem) => orderItem.id === Number(router.query.orderItemId)
+    )
+  );
 
   return (
     <div className="container">
@@ -43,34 +52,35 @@ const Order = (props: OrderProps) => {
         </a>
       </Link>
       <header>
-        <span className="id">#{order.id}</span>{" "}
+        <span className="id">
+          #{order.id}-{orderItem.id}
+        </span>{" "}
         <span className="time">
           {moment
             .utc(order.createdDateTime)
             .local()
             .format("MMMM Do YYYY h:mm a")}
         </span>{" "}
-        <span className="status">{splitCamelCase(order.orderStatus)}</span>
+        <span className="status">
+          {getOrderText(orderItem.orderItemStatus)}
+        </span>
       </header>
       <div className="flexContainer">
         <div className="col1">
           <section className="itemContainer">
-            {order.items.map((orderItem) => (
-              <OrderItem
-                orderId={order.id}
-                orderItem={orderItem}
-                markAsShipping={props.markAsShipping}
-                markAsShippingComplete={props.markAsShippingComplete}
-                approveCancelOrderItem={props.approveCancelOrderItem}
-                rejectCancelOrderItem={props.rejectCancelOrderItem}
-                approveReturnOrderItem={props.approveReturnOrderItem}
-                rejectReturnOrderItem={props.rejectReturnOrderItem}
-                inLoadingState={props.currentlyProcessingOrderItemIds.includes(
-                  orderItem.id
-                )}
-                cancelOrderItem={props.cancelOrderItem}
-              />
-            ))}
+            <OrderItemDetail
+              orderItem={orderItem}
+              markAsShipping={props.markAsShipping}
+              markAsShippingComplete={props.markAsShippingComplete}
+              approveCancelOrderItem={props.approveCancelOrderItem}
+              rejectCancelOrderItem={props.rejectCancelOrderItem}
+              approveReturnOrderItem={props.approveReturnOrderItem}
+              rejectReturnOrderItem={props.rejectReturnOrderItem}
+              inLoadingState={props.currentlyProcessingOrderItemIds.includes(
+                orderItem.id
+              )}
+              cancelOrderItem={props.cancelOrderItem}
+            />
           </section>
         </div>
         <div className="col2">

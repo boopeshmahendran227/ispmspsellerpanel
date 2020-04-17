@@ -12,6 +12,7 @@ import {
   CANCEL_ORDER_ITEM,
 } from "../constants/ActionTypes";
 import { ProductAttributeValue } from "./product";
+import { splitCamelCase } from "../utils/misc";
 
 export enum OrderStatus {
   Created = "Created",
@@ -53,6 +54,7 @@ export interface OrderItemInterface {
     };
   };
   totalDiscount: number;
+  finalPrice: number;
   qty: number;
   tax: number;
   bundleId: number;
@@ -65,7 +67,8 @@ export interface OrderItemInterface {
     }
   ];
   orderItemStatus: OrderStatus;
-  order?: OrderInterface;
+  createdDateTime: string;
+  order: OrderInterface;
 }
 
 export interface AddressInterface {
@@ -188,3 +191,22 @@ export type OrderActionType =
   | MarkAsShippingCompleteAction
   | MarkAsShippingAction
   | CancelOrderItemAction;
+
+export const getOrderText = (status: OrderStatus) => {
+  switch (status) {
+    case OrderStatus.PaymentSuccess:
+    case OrderStatus.PaymentOnDelivery:
+      return "Pending";
+    case OrderStatus.Shipping:
+      return "Shipping";
+    case OrderStatus.ShippingCompleted:
+      return "Delivered";
+    case OrderStatus.CancelRequested:
+      return "Cancel Requested";
+    case OrderStatus.CancelCompleted:
+      return "Cancelled";
+    case OrderStatus.ReturnRequested:
+      return "Return Requested";
+  }
+  return splitCamelCase(status);
+};

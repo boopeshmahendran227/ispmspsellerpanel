@@ -1,5 +1,5 @@
-import ProductCard from "../components/ProductCard";
-import { OrderItemInterface, OrderStatus } from "../types/order";
+import ProductCard from "./ProductCard";
+import { OrderItemInterface, OrderStatus, getOrderText } from "../types/order";
 import CSSConstants from "../constants/CSSConstants";
 import Button, { ButtonType } from "./Button";
 import { formatPrice, splitCamelCase } from "../utils/misc";
@@ -8,8 +8,7 @@ import { Fragment } from "react";
 import Loader from "./Loader";
 import moment from "moment";
 
-interface OrderItemProps {
-  orderId: number;
+interface OrderItemDetailProps {
   orderItem: OrderItemInterface;
   markAsShipping: (orderId: number, orderItemId: number) => void;
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
@@ -21,7 +20,7 @@ interface OrderItemProps {
   inLoadingState: boolean;
 }
 
-const OrderItem = (props: OrderItemProps) => {
+const OrderItemDetail = (props: OrderItemDetailProps) => {
   const { orderItem } = props;
 
   const getButtons = () => {
@@ -33,7 +32,10 @@ const OrderItem = (props: OrderItemProps) => {
             <Button
               type={ButtonType.success}
               onClick={() =>
-                props.markAsShipping(props.orderId, props.orderItem.id)
+                props.markAsShipping(
+                  props.orderItem.order.id,
+                  props.orderItem.id
+                )
               }
             >
               Mark as shipping
@@ -41,7 +43,10 @@ const OrderItem = (props: OrderItemProps) => {
             <Button
               type={ButtonType.danger}
               onClick={() =>
-                props.cancelOrderItem(props.orderId, props.orderItem.id)
+                props.cancelOrderItem(
+                  props.orderItem.order.id,
+                  props.orderItem.id
+                )
               }
               outlined={true}
             >
@@ -55,14 +60,20 @@ const OrderItem = (props: OrderItemProps) => {
             <Button
               type={ButtonType.success}
               onClick={() =>
-                props.markAsShippingComplete(props.orderId, props.orderItem.id)
+                props.markAsShippingComplete(
+                  props.orderItem.order.id,
+                  props.orderItem.id
+                )
               }
             >
               Mark as Delivered
             </Button>
             <Button
               onClick={() =>
-                props.cancelOrderItem(props.orderId, props.orderItem.id)
+                props.cancelOrderItem(
+                  props.orderItem.order.id,
+                  props.orderItem.id
+                )
               }
               type={ButtonType.danger}
               outlined={true}
@@ -76,7 +87,10 @@ const OrderItem = (props: OrderItemProps) => {
           <>
             <Button
               onClick={() =>
-                props.approveCancelOrderItem(props.orderId, props.orderItem.id)
+                props.approveCancelOrderItem(
+                  props.orderItem.order.id,
+                  props.orderItem.id
+                )
               }
               type={ButtonType.success}
             >
@@ -84,7 +98,10 @@ const OrderItem = (props: OrderItemProps) => {
             </Button>
             <Button
               onClick={() =>
-                props.rejectCancelOrderItem(props.orderId, props.orderItem.id)
+                props.rejectCancelOrderItem(
+                  props.orderItem.order.id,
+                  props.orderItem.id
+                )
               }
               outlined={true}
               type={ButtonType.danger}
@@ -98,7 +115,10 @@ const OrderItem = (props: OrderItemProps) => {
           <>
             <Button
               onClick={() =>
-                props.approveReturnOrderItem(props.orderId, props.orderItem.id)
+                props.approveReturnOrderItem(
+                  props.orderItem.order.id,
+                  props.orderItem.id
+                )
               }
               type={ButtonType.success}
             >
@@ -106,7 +126,10 @@ const OrderItem = (props: OrderItemProps) => {
             </Button>
             <Button
               onClick={() =>
-                props.rejectReturnOrderItem(props.orderId, props.orderItem.id)
+                props.rejectReturnOrderItem(
+                  props.orderItem.order.id,
+                  props.orderItem.id
+                )
               }
               type={ButtonType.danger}
               outlined={true}
@@ -117,25 +140,6 @@ const OrderItem = (props: OrderItemProps) => {
         );
     }
     return null;
-  };
-
-  const getOrderText = () => {
-    switch (orderItem.orderItemStatus) {
-      case OrderStatus.PaymentSuccess:
-      case OrderStatus.PaymentOnDelivery:
-        return "Pending";
-      case OrderStatus.Shipping:
-        return "Shipping";
-      case OrderStatus.ShippingCompleted:
-        return "Delivered";
-      case OrderStatus.CancelRequested:
-        return "Cancel Requested";
-      case OrderStatus.CancelCompleted:
-        return "Cancelled";
-      case OrderStatus.ReturnRequested:
-        return "Return Requested";
-    }
-    return splitCamelCase(orderItem.orderItemStatus);
   };
 
   const getColor = () => {
@@ -157,9 +161,7 @@ const OrderItem = (props: OrderItemProps) => {
 
   const buttons = getButtons();
   const color = getColor();
-  const orderText = getOrderText();
-  const finalPrice =
-    orderItem.actualPrice * orderItem.qty - orderItem.totalDiscount;
+  const orderText = getOrderText(orderItem.orderItemStatus);
 
   const latestStatus =
     orderItem.orderItemStatusHistories[
@@ -202,7 +204,7 @@ const OrderItem = (props: OrderItemProps) => {
             </Fragment>
           ))}
           <div className="key total">Total</div>
-          <div className="value total">{formatPrice(finalPrice)}</div>
+          <div className="value total">{formatPrice(orderItem.finalPrice)}</div>
         </div>
       </section>
       {Boolean(buttons) && <div className="buttonContainer">{buttons}</div>}
@@ -213,6 +215,7 @@ const OrderItem = (props: OrderItemProps) => {
           border-color: ${color};
           max-width: 800px;
           margin: auto;
+          margin-bottom: 1em;
           position: relative;
         }
         .productContainer {
@@ -286,4 +289,4 @@ const OrderItem = (props: OrderItemProps) => {
   );
 };
 
-export default OrderItem;
+export default OrderItemDetail;

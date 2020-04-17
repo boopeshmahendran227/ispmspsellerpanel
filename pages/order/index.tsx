@@ -1,82 +1,106 @@
 import {
   OrderInterface,
   OrderItemInterface,
-  OrderStatus,
+  getOrderText,
 } from "../../src/types/order";
-import SortableTable from "../../src/components/SortableTable";
-import moment from "moment";
-import { formatPrice } from "../../src/utils/misc";
 import OrderActions from "../../src/actions/order";
 import WithReduxDataLoader from "../../src/components/WithReduxDataLoader";
 import { connect } from "react-redux";
 import { RootState } from "../../src/reducers";
-import { getOrders } from "../../src/selectors/order";
+import {
+  getOrders,
+  getOpenOrderItems,
+  getOrderItems,
+  getCancelledOrderItems,
+  getCurrentlyProcessingOrderItemIds,
+} from "../../src/selectors/order";
 import { RequestReducerState } from "../../src/reducers/utils";
 import CSSConstants from "../../src/constants/CSSConstants";
+import TabSection from "../../src/components/TabSection";
 import Link from "next/link";
 import ProductCard from "../../src/components/ProductCard";
-import TabSection from "../../src/components/TabSection";
+import { formatPrice } from "../../src/utils/misc";
+import moment from "moment";
+import SortableTable from "../../src/components/SortableTable";
 
 interface StateProps {
   orders: OrderInterface[];
+  orderItems: OrderItemInterface[];
+  openOrderItems: OrderItemInterface[];
+  cancelledOrderItems: OrderItemInterface[];
   getOrdersLoadingState: RequestReducerState;
+  currentlyProcessingOrderItemIds: number[];
 }
 
 interface DispatchProps {
   getOrders: () => void;
+  markAsShippingComplete: (orderId: number, orderItemId: number) => void;
+  markAsShipping: (orderId: number, orderItemId: number) => void;
+  approveCancelOrderItem: (orderId: number, orderItemId: number) => void;
+  rejectCancelOrderItem: (orderId: number, orderItemId: number) => void;
+  approveReturnOrderItem: (orderId: number, orderItemId: number) => void;
+  rejectReturnOrderItem: (orderId: number, orderItemId: number) => void;
+  cancelOrderItem: (orderId: number, orderItemId: number) => void;
 }
 
 type OrdersProps = StateProps & DispatchProps;
 
-const getTableHeaders = () => {
-  return [
-    {
-      name: "Order Id",
-      valueFunc: (order: OrderInterface) => order.id,
-    },
-    {
-      name: "Customer Name",
-      valueFunc: (order: OrderInterface) => null,
-    },
-    {
-      name: "Products",
-      valueFunc: (order: OrderItemInterface) => null,
-    },
-    {
-      name: "Price",
-      valueFunc: (order: OrderInterface) =>
-        order.items
-          .map((item) => item.discountedPrice)
-          .reduce((acc, price) => acc + price, 0),
-    },
-    {
-      name: "Total Quantity",
-      valueFunc: (order: OrderInterface) =>
-        order.items.map((item) => item.qty).reduce((acc, qty) => acc + qty, 0),
-    },
-    {
-      name: "Status",
-      valueFunc: (order: OrderInterface) => order.orderStatus,
-    },
-    {
-      name: "Created",
-      valueFunc: (order: OrderInterface) => order.createdDateTime,
-    },
-    {
-      name: "Action",
-      valueFunc: (order: OrderInterface) => null,
-    },
-  ];
-};
+const Orders = (props: OrdersProps) => {
+  const { orderItems, openOrderItems, cancelledOrderItems } = props;
 
-const renderTableBody = (orders: OrderInterface[]) => {
-  return orders.map((order) => (
-    <Link key={order.id} href="/order/[id]" as={`/order/${order.id}`}>
-      <tr>
-        <td>{order.id}</td>
-        <td>Boopesh</td>
-        <td>
-          {order.items.map((orderItem) => (
+  const getTableHeaders = () => {
+    return [
+      {
+        name: "Order Id",
+        valueFunc: (orderItem: OrderItemInterface) => orderItem.id,
+      },
+      {
+        name: "OrderItem Id",
+        valueFunc: (orderItem: OrderItemInterface) => orderItem.id,
+      },
+      {
+        name: "Customer Name",
+        valueFunc: (orderItem: OrderItemInterface) => null,
+      },
+      {
+        name: "Product",
+        valueFunc: (orderItem: OrderItemInterface) => null,
+      },
+      {
+        name: "Price",
+        valueFunc: (orderItem: OrderItemInterface) => orderItem.discountedPrice,
+      },
+      {
+        name: "Qty",
+        valueFunc: (orderItem: OrderItemInterface) => orderItem.qty,
+      },
+      {
+        name: "Status",
+        valueFunc: (orderItem: OrderItemInterface) => orderItem.orderItemStatus,
+      },
+      {
+        name: "Created",
+        valueFunc: (orderItem: OrderItemInterface) => orderItem.createdDateTime,
+      },
+      {
+        name: "Action",
+        valueFunc: (orderItem: OrderItemInterface) => null,
+      },
+    ];
+  };
+
+  const renderTableBody = (orderItems: OrderItemInterface[]) => {
+    return orderItems.map((orderItem) => (
+      <Link
+        key={orderItem.id}
+        href="/order/[orderId]/[orderItemId]"
+        as={`/order/${orderItem.order.id}/${orderItem.id}`}
+      >
+        <tr>
+          <td>{orderItem.order.id}</td>
+          <td>{orderItem.id}</td>
+          <td>Boopesh</td>
+          <td>
             <div key={orderItem.id} className="productContainer">
               <ProductCard
                 name={orderItem.productSnapshot.productName}
@@ -88,91 +112,52 @@ const renderTableBody = (orders: OrderInterface[]) => {
                 <span className="value">{orderItem.productId}</span>
                 <span className="header">Sku Id: </span>
                 <span className="value">{orderItem.skuId}</span>
-                <span className="header">Order Status:</span>
-                <span className="value">{orderItem.orderItemStatus}</span>
-                <span className="header">Discounted Price: </span>
-                <span className="value">
-                  {formatPrice(orderItem.discountedPrice)}
-                </span>
-                <span className="header">Quantity:</span>
-                <span className="value">{orderItem.qty}</span>
               </div>
             </div>
-          ))}
-        </td>
-        <td>
-          {formatPrice(
-            order.items
-              .map((item) => item.discountedPrice)
-              .reduce((acc, price) => acc + price, 0)
-          )}
-        </td>
-        <td>
-          {order.items
-            .map((item) => item.qty)
-            .reduce((acc, qty) => acc + qty, 0)}
-        </td>
-        <td>{order.orderStatus}</td>
-        <td>
-          {moment
-            .utc(order.createdDateTime)
-            .local()
-            .format("MMMM Do YYYY, hh:mm A")}
-        </td>
-        <td>
-          <a>View</a>
-        </td>
-        <style jsx>{`
-          .productContainer {
-            text-align: initial;
-            margin: 1.2em 0;
-          }
-          .infoGrid {
-            margin: 0.1em;
-            display: grid;
-            grid-template-columns: repeat(2, auto);
-            grid-gap: 0.1em;
-          }
-          .infoGrid .header {
-            font-weight: 700;
-          }
-          tr:hover {
-            background-color: ${CSSConstants.hoverColor} !important;
-            cursor: pointer;
-          }
-        `}</style>
-      </tr>
-    </Link>
-  ));
-};
-
-const getOpenOrders = (orders: OrderInterface[]) => {
-  return orders.filter(
-    (order) =>
-      order.orderStatus !== OrderStatus.CancelCompleted &&
-      order.orderStatus !== OrderStatus.ShippingCompleted
-  );
-};
-
-const getCancelledOrders = (orders: OrderInterface[]) => {
-  return orders.filter(
-    (order) => order.orderStatus === OrderStatus.CancelCompleted
-  );
-};
-
-const Orders = (props: OrdersProps) => {
-  const { orders } = props;
-
-  const openOrders = getOpenOrders(orders);
-  const cancelledOrders = getCancelledOrders(orders);
+          </td>
+          <td>{formatPrice(orderItem.finalPrice)}</td>
+          <td>{orderItem.qty}</td>
+          <td>{getOrderText(orderItem.orderItemStatus)}</td>
+          <td>
+            {moment
+              .utc(orderItem.createdDateTime)
+              .local()
+              .format("MMMM Do YYYY, hh:mm A")}
+          </td>
+          <td>
+            <a>View Details</a>
+          </td>
+          <style jsx>{`
+            .productContainer {
+              text-align: initial;
+              margin: 1.2em 0;
+            }
+            .infoGrid {
+              margin: 0.1em;
+              display: grid;
+              grid-template-columns: repeat(2, auto);
+              grid-gap: 0.1em;
+            }
+            .infoGrid .header {
+              font-weight: 700;
+            }
+            tr:hover {
+              background-color: ${CSSConstants.hoverColor} !important;
+              cursor: pointer;
+            }
+          `}</style>
+        </tr>
+      </Link>
+    ));
+  };
 
   return (
     <div className="container">
       <TabSection
         headingList={[
-          `All Orders (${orders.length})`,
-          `Open Orders (${openOrders.length})`,
-          `Cancelled Orders (${cancelledOrders.length})`,
+          `All Orders (${orderItems.length})`,
+          `Open Orders (${openOrderItems.length})`,
+          `Cancelled Orders (${cancelledOrderItems.length})`,
         ]}
         contentList={[
           <SortableTable
@@ -181,7 +166,7 @@ const Orders = (props: OrdersProps) => {
               isAsc: true,
             }}
             headers={getTableHeaders()}
-            data={orders}
+            data={orderItems}
             emptyMsg="There are no orders"
             body={renderTableBody}
           />,
@@ -191,7 +176,7 @@ const Orders = (props: OrdersProps) => {
               isAsc: true,
             }}
             headers={getTableHeaders()}
-            data={openOrders}
+            data={openOrderItems}
             emptyMsg="There are no open orders"
             body={renderTableBody}
           />,
@@ -201,7 +186,7 @@ const Orders = (props: OrdersProps) => {
               isAsc: true,
             }}
             headers={getTableHeaders()}
-            data={cancelledOrders}
+            data={cancelledOrderItems}
             emptyMsg="There are no cancelled orders"
             body={renderTableBody}
           />,
@@ -211,7 +196,7 @@ const Orders = (props: OrdersProps) => {
         .container {
           padding: 1em 0;
           margin: 1em auto;
-          font-size: 0.95rem;
+          font-size: 0.9rem;
           background: ${CSSConstants.foregroundColor};
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
             0 1px 2px rgba(0, 0, 0, 0.24);
@@ -228,11 +213,22 @@ const Orders = (props: OrdersProps) => {
 
 const mapStateToProps = (state: RootState): StateProps => ({
   orders: getOrders(state),
+  orderItems: getOrderItems(state),
+  openOrderItems: getOpenOrderItems(state),
+  cancelledOrderItems: getCancelledOrderItems(state),
   getOrdersLoadingState: state.order.order,
+  currentlyProcessingOrderItemIds: getCurrentlyProcessingOrderItemIds(state),
 });
 
 const mapDispatchToProps: DispatchProps = {
   getOrders: OrderActions.getOrders,
+  markAsShippingComplete: OrderActions.markAsShippingComplete,
+  markAsShipping: OrderActions.markAsShipping,
+  approveCancelOrderItem: OrderActions.approveCancelOrderItem,
+  rejectCancelOrderItem: OrderActions.rejectCancelOrderItem,
+  approveReturnOrderItem: OrderActions.approveReturnOrderItem,
+  rejectReturnOrderItem: OrderActions.rejectReturnOrderItem,
+  cancelOrderItem: OrderActions.cancelOrderItem,
 };
 
 const mapPropsToLoadData = (props: OrdersProps) => {
