@@ -73,7 +73,7 @@ const Layout = (props: LayoutProps) => {
             255,
             0
           ); /* Disable blue highlight on touch on touch devices */
-          color: #212121;
+          color: ${CSSConstants.primaryTextColor};
         }
         a {
           color: inherit;

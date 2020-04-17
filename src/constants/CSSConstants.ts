@@ -11,8 +11,8 @@ const constants = {
   dangerColor: "#ff0000",
   successColor: "#378E3B",
   outlineColor: "", // This is set down
-  primaryTextColor: "#212121",
-  secondaryTextColor: "#212b36",
+  primaryTextColor: "#454f5b",
+  secondaryTextColor: "#6c757d",
   hoverColor: "", // This is set down
   hoverTextColor: "", // This is set down
   lightPrimaryColor: "", // This is set down
