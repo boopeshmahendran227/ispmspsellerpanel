@@ -9,15 +9,17 @@ interface ProductCardProps {
 }
 
 const ProductCard = (props: ProductCardProps) => {
-  const attributeValueStr = props.attributeValues
-    .map((attributeValue) => {
-      if (attributeValue.attributeName) {
-        return `${attributeValue.attributeName}: ${attributeValue.value}`;
-      } else {
-        return `${attributeValue.value}`;
-      }
-    })
-    .join(" ");
+  const attributeValues = props.attributeValues.map((attributeValue) => {
+    if (attributeValue.attributeName) {
+      return (
+        <div>
+          {attributeValue.attributeName}: {attributeValue.value}
+        </div>
+      );
+    } else {
+      return <div>{attributeValue.value}</div>;
+    }
+  });
 
   return (
     <section className="container">
@@ -26,7 +28,7 @@ const ProductCard = (props: ProductCardProps) => {
       </div>
       <div className="contentContainer">
         <span className="name">{props.name}</span>
-        <div>{attributeValueStr}</div>
+        <div>{attributeValues}</div>
         {Boolean(props.qty) && <div>Quantity: {props.qty}</div>}
       </div>
       <style jsx>{`
@@ -34,6 +36,7 @@ const ProductCard = (props: ProductCardProps) => {
           margin: 0.5em 0;
           display: flex;
           text-align: initial;
+          max-width: 300px;
         }
         .imageContainer {
           width: 7rem;

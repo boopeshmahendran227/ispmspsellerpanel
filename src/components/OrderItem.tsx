@@ -6,6 +6,7 @@ import { formatPrice, splitCamelCase } from "../utils/misc";
 import _ from "lodash";
 import { Fragment } from "react";
 import Loader from "./Loader";
+import moment from "moment";
 
 interface OrderItemProps {
   orderId: number;
@@ -160,6 +161,11 @@ const OrderItem = (props: OrderItemProps) => {
   const finalPrice =
     orderItem.actualPrice * orderItem.qty - orderItem.totalDiscount;
 
+  const latestStatus =
+    orderItem.orderItemStatusHistories[
+      orderItem.orderItemStatusHistories.length - 1
+    ];
+
   return (
     <div className="container">
       {props.inLoadingState && (
@@ -182,23 +188,23 @@ const OrderItem = (props: OrderItemProps) => {
             <div className="value">{orderItem.skuId}</div>
           </div>
         </div>
-        <div className="actualPrice">
-          {formatPrice(orderItem.actualPrice)} x {orderItem.qty}
-        </div>
-        <div className="totalPrice">
-          {formatPrice(orderItem.actualPrice * orderItem.qty)}
+        <div className="totalContainer">
+          <div>
+            {formatPrice(orderItem.actualPrice)} x {orderItem.qty}
+          </div>
+          <div className="value">
+            {formatPrice(orderItem.actualPrice * orderItem.qty)}
+          </div>
+          {_.map(orderItem.productSnapshot.discountSplit, (value, key) => (
+            <Fragment key={key}>
+              <div className="key">{splitCamelCase(key)}</div>
+              <div className="value">- {formatPrice(value)}</div>
+            </Fragment>
+          ))}
+          <div className="key total">Total</div>
+          <div className="value total">{formatPrice(finalPrice)}</div>
         </div>
       </section>
-      <div className="totalContainer">
-        {_.map(orderItem.productSnapshot.discountSplit, (value, key) => (
-          <Fragment key={key}>
-            <div className="key">{splitCamelCase(key)}</div>
-            <div className="value">{formatPrice(value)}</div>
-          </Fragment>
-        ))}
-        <div className="key total">Total</div>
-        <div className="value total">{formatPrice(finalPrice)}</div>
-      </div>
       {Boolean(buttons) && <div className="buttonContainer">{buttons}</div>}
       <style jsx>{`
         .container {
@@ -208,6 +214,9 @@ const OrderItem = (props: OrderItemProps) => {
           max-width: 800px;
           margin: auto;
           position: relative;
+        }
+        .productContainer {
+          padding: 0 0.5em;
         }
         .loadingOverlay {
           position: absolute;
@@ -224,24 +233,22 @@ const OrderItem = (props: OrderItemProps) => {
           justify-content: center;
         }
         .container::before {
-          content: "${orderText}";
-          text-transform: uppercase;
-          letter-spacing: 2px;
+          content: "${orderText} on 
+          ${moment
+            .utc(latestStatus.createdDateTime)
+            .local()
+            .format("MMM DD YYYY")}";
           color: ${color};
           position: absolute;
           top: 1em;
           right: 1em;
           font-size: 1.2rem;
         }
-        .status {
-          padding: 0.3em 0.8em;
-          font-size: 1.3rem;
-        }
         .grid {
-          display: flex;
-          padding: 0.4em 0.9em;
-          justify-content: space-around;
-          align-items: flex-end;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: 200px;
+          padding: 0.4em 0.8em;
         }
         .info {
           display: grid;
@@ -253,12 +260,15 @@ const OrderItem = (props: OrderItemProps) => {
         }
         .totalContainer {
           display: grid;
-          grid-template-columns: 200px 120px;
-          max-width: 320px;
-          margin-left: auto;
+          grid-template-columns: 150px 150px 120px;
+          align-self: end;
         }
-        .totalContainer .key,
+        .totalContainer .key {
+          grid-column: 2;
+          padding: 0.07em 0;
+        }
         .totalContainer .value {
+          grid-column: 3;
           padding: 0.07em 0;
         }
         .totalContainer .total {
