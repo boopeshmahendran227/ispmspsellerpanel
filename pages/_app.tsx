@@ -38,7 +38,6 @@ function MyApp(props) {
       <Provider store={store}>
         <ReasonModal />
         <SureModal />
-        <LoadingScreen />
         <Layout>
           <Component {...pageProps} />
         </Layout>

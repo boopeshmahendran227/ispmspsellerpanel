@@ -2,6 +2,7 @@ import {
   OrderInterface,
   OrderItemInterface,
   getOrderText,
+  OrderStatus,
 } from "../../src/types/order";
 import OrderActions from "../../src/actions/order";
 import WithReduxDataLoader from "../../src/components/WithReduxDataLoader";
@@ -13,6 +14,8 @@ import {
   getOrderItems,
   getCancelledOrderItems,
   getCurrentlyProcessingOrderItemIds,
+  getDeliveredOrderItems,
+  getReturnedOrderItems,
 } from "../../src/selectors/order";
 import { RequestReducerState } from "../../src/reducers/utils";
 import CSSConstants from "../../src/constants/CSSConstants";
@@ -22,11 +25,14 @@ import ProductCard from "../../src/components/ProductCard";
 import { formatPrice } from "../../src/utils/misc";
 import moment from "moment";
 import SortableTable from "../../src/components/SortableTable";
+import LoadingScreen from "../../src/components/LoadingScreen";
 
 interface StateProps {
   orders: OrderInterface[];
   orderItems: OrderItemInterface[];
   openOrderItems: OrderItemInterface[];
+  deliveredOrderItems: OrderItemInterface[];
+  returnedOrderItems: OrderItemInterface[];
   cancelledOrderItems: OrderItemInterface[];
   getOrdersLoadingState: RequestReducerState;
   currentlyProcessingOrderItemIds: number[];
@@ -46,8 +52,6 @@ interface DispatchProps {
 type OrdersProps = StateProps & DispatchProps;
 
 const Orders = (props: OrdersProps) => {
-  const { orderItems, openOrderItems, cancelledOrderItems } = props;
-
   const getTableHeaders = () => {
     return [
       {
@@ -55,11 +59,11 @@ const Orders = (props: OrdersProps) => {
         valueFunc: (orderItem: OrderItemInterface) => orderItem.id,
       },
       {
-        name: "OrderItem Id",
+        name: "Item Id",
         valueFunc: (orderItem: OrderItemInterface) => orderItem.id,
       },
       {
-        name: "Customer Name",
+        name: "Customer",
         valueFunc: (orderItem: OrderItemInterface) => null,
       },
       {
@@ -87,6 +91,134 @@ const Orders = (props: OrdersProps) => {
         valueFunc: (orderItem: OrderItemInterface) => null,
       },
     ];
+  };
+
+  const getActions = (orderItem: OrderItemInterface) => {
+    const handleClick = (e, action) => {
+      action(orderItem.order.id, orderItem.id);
+      e.preventDefault();
+    };
+
+    switch (orderItem.orderItemStatus) {
+      case OrderStatus.PaymentSuccess:
+      case OrderStatus.PaymentOnDelivery:
+        return (
+          <>
+            <a
+              className="actionLink success"
+              onClick={(e) => handleClick(e, props.markAsShipping)}
+            >
+              Mark as shipping
+            </a>
+            <a
+              className="actionLink danger"
+              onClick={(e) => handleClick(e, props.cancelOrderItem)}
+            >
+              Cancel Order
+            </a>
+            <style jsx>{`
+              .actionLink {
+                margin: 0.4em 0;
+                display: block;
+              }
+              a.actionLink.success {
+                color: ${CSSConstants.successColor};
+              }
+              a.actionLink.danger {
+                color: ${CSSConstants.dangerColor};
+              }
+            `}</style>
+          </>
+        );
+      case OrderStatus.Shipping:
+        return (
+          <>
+            <a
+              className="actionLink success"
+              onClick={(e) => handleClick(e, props.markAsShippingComplete)}
+            >
+              Mark as Delivered
+            </a>
+            <a
+              className="actionLink danger"
+              onClick={(e) => handleClick(e, props.cancelOrderItem)}
+            >
+              Cancel Order
+            </a>
+            <style jsx>{`
+              .actionLink {
+                margin: 0.4em 0;
+                display: block;
+              }
+              a.actionLink.success {
+                color: ${CSSConstants.successColor};
+              }
+              a.actionLink.danger {
+                color: ${CSSConstants.dangerColor};
+              }
+            `}</style>
+          </>
+        );
+      case OrderStatus.CancelRequested:
+        return (
+          <>
+            <a
+              className="actionLink success"
+              onClick={(e) => handleClick(e, props.approveCancelOrderItem)}
+            >
+              Approve Cancel Request
+            </a>
+            <a
+              className="actionLink danger"
+              onClick={(e) => handleClick(e, props.rejectCancelOrderItem)}
+            >
+              Reject Cancel Request
+            </a>
+            <style jsx>{`
+              .actionLink {
+                margin: 0.4em 0;
+                display: block;
+              }
+              a.actionLink.success {
+                color: ${CSSConstants.successColor};
+              }
+              a.actionLink.danger {
+                color: ${CSSConstants.dangerColor};
+              }
+            `}</style>
+          </>
+        );
+      case OrderStatus.ReturnRequested:
+        return (
+          <>
+            <a
+              className="actionLink success"
+              onClick={(e) => handleClick(e, props.approveReturnOrderItem)}
+            >
+              Approve Return Request
+            </a>
+            <a
+              className="actionLink danger"
+              onClick={(e) => handleClick(e, props.rejectReturnOrderItem)}
+            >
+              Reject Return Request
+            </a>
+            <style jsx>{`
+              .actionLink {
+                margin: 0.4em 0;
+                display: block;
+              }
+              a.actionLink.success {
+                color: ${CSSConstants.successColor};
+              }
+              a.actionLink.danger {
+                color: ${CSSConstants.dangerColor};
+              }
+            `}</style>
+          </>
+        );
+    }
+    return null;
   };
 
   const renderTableBody = (orderItems: OrderItemInterface[]) => {
@@ -126,6 +258,7 @@ const Orders = (props: OrdersProps) => {
           </td>
           <td>
             <a>View Details</a>
+            {getActions(orderItem)}
           </td>
           <style jsx>{`
             .productContainer {
@@ -151,19 +284,30 @@ const Orders = (props: OrdersProps) => {
     ));
   };
 
+  const {
+    orderItems,
+    openOrderItems,
+    cancelledOrderItems,
+    deliveredOrderItems,
+    returnedOrderItems,
+  } = props;
+
   return (
     <div className="container">
+      <LoadingScreen />
       <TabSection
         headingList={[
           `All Orders (${orderItems.length})`,
           `Open Orders (${openOrderItems.length})`,
+          `Delivered Orders (${deliveredOrderItems.length})`,
           `Cancelled Orders (${cancelledOrderItems.length})`,
+          `Returned Orders (${returnedOrderItems.length})`,
         ]}
         contentList={[
           <SortableTable
             initialSortData={{
-              index: 6,
-              isAsc: true,
+              index: 1,
+              isAsc: false,
             }}
             headers={getTableHeaders()}
             data={orderItems}
@@ -172,8 +316,8 @@ const Orders = (props: OrdersProps) => {
           />,
           <SortableTable
             initialSortData={{
-              index: 6,
-              isAsc: true,
+              index: 1,
+              isAsc: false,
             }}
             headers={getTableHeaders()}
             data={openOrderItems}
@@ -182,12 +326,32 @@ const Orders = (props: OrdersProps) => {
           />,
           <SortableTable
             initialSortData={{
-              index: 6,
-              isAsc: true,
+              index: 1,
+              isAsc: false,
+            }}
+            headers={getTableHeaders()}
+            data={deliveredOrderItems}
+            emptyMsg="There are no delivered orders"
+            body={renderTableBody}
+          />,
+          <SortableTable
+            initialSortData={{
+              index: 1,
+              isAsc: false,
             }}
             headers={getTableHeaders()}
             data={cancelledOrderItems}
             emptyMsg="There are no cancelled orders"
+            body={renderTableBody}
+          />,
+          <SortableTable
+            initialSortData={{
+              index: 1,
+              isAsc: false,
+            }}
+            headers={getTableHeaders()}
+            data={returnedOrderItems}
+            emptyMsg="There are no returned orders"
             body={renderTableBody}
           />,
         ]}
@@ -216,6 +380,8 @@ const mapStateToProps = (state: RootState): StateProps => ({
   orderItems: getOrderItems(state),
   openOrderItems: getOpenOrderItems(state),
   cancelledOrderItems: getCancelledOrderItems(state),
+  deliveredOrderItems: getDeliveredOrderItems(state),
+  returnedOrderItems: getReturnedOrderItems(state),
   getOrdersLoadingState: state.order.order,
   currentlyProcessingOrderItemIds: getCurrentlyProcessingOrderItemIds(state),
 });

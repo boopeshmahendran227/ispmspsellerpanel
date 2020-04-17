@@ -76,8 +76,37 @@ const getOpenOrderItems = createSelector(
 
     return orderItems.filter(
       (orderItem) =>
-        orderItem.orderItemStatus === OrderStatus.PaymentSuccess ||
-        orderItem.orderItemStatus === OrderStatus.PaymentOnDelivery
+        orderItem.orderItemStatus !== OrderStatus.CancelRejected &&
+        orderItem.orderItemStatus !== OrderStatus.CancelCompleted &&
+        orderItem.orderItemStatus !== OrderStatus.ShippingCompleted &&
+        orderItem.orderItemStatus !== OrderStatus.ReturnCompleted &&
+        orderItem.orderItemStatus !== OrderStatus.ReturnRejected
+    );
+  }
+);
+
+const getDeliveredOrderItems = createSelector(
+  getOrderItems,
+  (orderItems: OrderItemInterface[]): OrderItemInterface[] => {
+    if (!orderItems) {
+      return null;
+    }
+
+    return orderItems.filter(
+      (orderItem) => orderItem.orderItemStatus === OrderStatus.ShippingCompleted
+    );
+  }
+);
+
+const getReturnedOrderItems = createSelector(
+  getOrderItems,
+  (orderItems: OrderItemInterface[]): OrderItemInterface[] => {
+    if (!orderItems) {
+      return null;
+    }
+
+    return orderItems.filter(
+      (orderItem) => orderItem.orderItemStatus === OrderStatus.ReturnCompleted
     );
   }
 );
@@ -95,4 +124,6 @@ export {
   getReturnRequestedOrderItems,
   getCancelledOrderItems,
   getOpenOrderItems,
+  getDeliveredOrderItems,
+  getReturnedOrderItems,
 };
