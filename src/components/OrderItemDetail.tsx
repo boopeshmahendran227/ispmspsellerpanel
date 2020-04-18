@@ -174,6 +174,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
     switch (orderItem.orderItemStatus) {
       case OrderStatus.PaymentSuccess:
       case OrderStatus.PaymentOnDelivery:
+      case OrderStatus.PackageReadyForCollection:
         return CSSConstants.secondaryTextColor;
       case OrderStatus.Shipping:
       case OrderStatus.ShippingCompleted:
@@ -185,6 +186,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
       case OrderStatus.ReturnCompleted:
         return CSSConstants.warningColor;
     }
+    return CSSConstants.secondaryTextColor;
   };
 
   const buttons = getButtons();
@@ -204,7 +206,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
           <div>Processing..</div>
         </div>
       )}
-      <section className="grid">
+      <section className="itemContainer">
         <div className="productContainer">
           <ProductCard
             name={orderItem.productSnapshot.productName}
@@ -235,7 +237,9 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
           <div className="value total">{formatPrice(orderItem.finalPrice)}</div>
         </div>
       </section>
-      {Boolean(buttons) && <div className="buttonContainer">{buttons}</div>}
+      {Boolean(buttons) && (
+        <section className="buttonContainer">{buttons}</section>
+      )}
       <style jsx>{`
         .container {
           border: 1px solid ${CSSConstants.borderColor};
@@ -275,10 +279,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
           right: 1em;
           font-size: 1.2rem;
         }
-        .grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          grid-template-rows: 200px;
+        .itemContainer {
           padding: 0.4em 0.8em;
         }
         .info {
@@ -292,7 +293,9 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
         .totalContainer {
           display: grid;
           grid-template-columns: 150px 150px 120px;
-          align-self: end;
+          max-width: 420px;
+          margin-left: auto;
+          margin-top: -1.2rem;
         }
         .totalContainer .key {
           grid-column: 2;
