@@ -26,6 +26,7 @@ import { formatPrice } from "../../src/utils/misc";
 import moment from "moment";
 import SortableTable from "../../src/components/SortableTable";
 import LoadingScreen from "../../src/components/LoadingScreen";
+import Button, { ButtonType } from "../../src/components/Button";
 
 interface StateProps {
   orders: OrderInterface[];
@@ -87,13 +88,13 @@ const Orders = (props: OrdersProps) => {
         valueFunc: (orderItem: OrderItemInterface) => orderItem.createdDateTime,
       },
       {
-        name: "Action",
+        name: "Actions",
         valueFunc: (orderItem: OrderItemInterface) => null,
       },
     ];
   };
 
-  const getActions = (orderItem: OrderItemInterface) => {
+  const getButtons = (orderItem: OrderItemInterface) => {
     const handleClick = (e, action) => {
       action(orderItem.order.id, orderItem.id);
       e.preventDefault();
@@ -104,117 +105,91 @@ const Orders = (props: OrdersProps) => {
       case OrderStatus.PaymentOnDelivery:
         return (
           <>
-            <a
-              className="actionLink success"
+            <Button
+              type={ButtonType.success}
               onClick={(e) => handleClick(e, props.markAsShipping)}
             >
-              Mark as shipping
-            </a>
-            <a
-              className="actionLink danger"
+              Mark as Shipping
+            </Button>
+            <Button
+              type={ButtonType.danger}
               onClick={(e) => handleClick(e, props.cancelOrderItem)}
+              outlined={true}
             >
               Cancel Order
-            </a>
-            <style jsx>{`
-              .actionLink {
-                margin: 0.4em 0;
-                display: block;
-              }
-              a.actionLink.success {
-                color: ${CSSConstants.successColor};
-              }
-              a.actionLink.danger {
-                color: ${CSSConstants.dangerColor};
-              }
-            `}</style>
+            </Button>
+          </>
+        );
+      case OrderStatus.PackageReadyForCollection:
+        return (
+          <>
+            <Button
+              type={ButtonType.success}
+              onClick={(e) => handleClick(e, props.markAsShippingComplete)}
+            >
+              Mark as Delivered & Cash Received
+            </Button>
+            <Button
+              type={ButtonType.danger}
+              onClick={(e) => handleClick(e, props.cancelOrderItem)}
+              outlined={true}
+            >
+              Cancel Order
+            </Button>
           </>
         );
       case OrderStatus.Shipping:
         return (
           <>
-            <a
-              className="actionLink success"
+            <Button
+              type={ButtonType.success}
               onClick={(e) => handleClick(e, props.markAsShippingComplete)}
             >
               Mark as Delivered
-            </a>
-            <a
-              className="actionLink danger"
+            </Button>
+            <Button
               onClick={(e) => handleClick(e, props.cancelOrderItem)}
+              type={ButtonType.danger}
+              outlined={true}
             >
               Cancel Order
-            </a>
-            <style jsx>{`
-              .actionLink {
-                margin: 0.4em 0;
-                display: block;
-              }
-              a.actionLink.success {
-                color: ${CSSConstants.successColor};
-              }
-              a.actionLink.danger {
-                color: ${CSSConstants.dangerColor};
-              }
-            `}</style>
+            </Button>
           </>
         );
       case OrderStatus.CancelRequested:
         return (
           <>
-            <a
-              className="actionLink success"
+            <Button
               onClick={(e) => handleClick(e, props.approveCancelOrderItem)}
+              type={ButtonType.success}
             >
               Approve Cancel Request
-            </a>
-            <a
-              className="actionLink danger"
+            </Button>
+            <Button
               onClick={(e) => handleClick(e, props.rejectCancelOrderItem)}
+              outlined={true}
+              type={ButtonType.danger}
             >
               Reject Cancel Request
-            </a>
-            <style jsx>{`
-              .actionLink {
-                margin: 0.4em 0;
-                display: block;
-              }
-              a.actionLink.success {
-                color: ${CSSConstants.successColor};
-              }
-              a.actionLink.danger {
-                color: ${CSSConstants.dangerColor};
-              }
-            `}</style>
+            </Button>
           </>
         );
       case OrderStatus.ReturnRequested:
         return (
           <>
-            <a
-              className="actionLink success"
+            <Button
               onClick={(e) => handleClick(e, props.approveReturnOrderItem)}
+              type={ButtonType.success}
             >
               Approve Return Request
-            </a>
-            <a
-              className="actionLink danger"
+            </Button>
+            <Button
               onClick={(e) => handleClick(e, props.rejectReturnOrderItem)}
+              type={ButtonType.danger}
+              outlined={true}
             >
               Reject Return Request
-            </a>
-            <style jsx>{`
-              .actionLink {
-                margin: 0.4em 0;
-                display: block;
-              }
-              a.actionLink.success {
-                color: ${CSSConstants.successColor};
-              }
-              a.actionLink.danger {
-                color: ${CSSConstants.dangerColor};
-              }
-            `}</style>
+            </Button>
           </>
         );
     }
@@ -256,10 +231,7 @@ const Orders = (props: OrdersProps) => {
               .local()
               .format("MMMM Do YYYY, hh:mm A")}
           </td>
-          <td>
-            <a>View Details</a>
-            {getActions(orderItem)}
-          </td>
+          <td className="actions">{getButtons(orderItem)}</td>
           <style jsx>{`
             .productContainer {
               text-align: initial;
@@ -277,6 +249,9 @@ const Orders = (props: OrdersProps) => {
             tr:hover {
               background-color: ${CSSConstants.hoverColor} !important;
               cursor: pointer;
+            }
+            .actions {
+              font-size: 0.9rem;
             }
           `}</style>
         </tr>

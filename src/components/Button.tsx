@@ -53,7 +53,7 @@ const Button = (props: ButtonProps) => {
       <style jsx>{`
         button {
           padding: 0.5em 0.8em;
-          margin: 0.3em;
+          margin: 0.2em;
           font-weight: 500;
           background: ${currentColor};
           transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);

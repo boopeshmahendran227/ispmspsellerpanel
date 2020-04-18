@@ -41,7 +41,10 @@ const OrderItemCancelRequest = (props: OrderItemCancelRequestProps) => {
         Order Item #{orderItem.id}
       </div>
       <div>
-        <Link href="/order/[id]" as={`/order/${orderItem.order.id}`}>
+        <Link
+          href="/order/[orderId]/[orderItemId]"
+          as={`/order/${orderItem.order.id}/${orderItem.id}`}
+        >
           <a>View Order</a>
         </Link>
       </div>

@@ -35,6 +35,7 @@ export enum OrderStatus {
   CancelAutoApproved = "CancelAutoApproved",
   PartialReturnRequested = "PartialReturnRequested",
   PartialReturnCompleted = "PartialReturnCompleted",
+  PackageReadyForCollection = "PackageReadyForCollection",
   Abandoned = "Abandoned",
 }
 

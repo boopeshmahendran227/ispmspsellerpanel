@@ -38,7 +38,35 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
                 )
               }
             >
-              Mark as shipping
+              Mark as Shipping
+            </Button>
+            <Button
+              type={ButtonType.danger}
+              onClick={() =>
+                props.cancelOrderItem(
+                  props.orderItem.order.id,
+                  props.orderItem.id
+                )
+              }
+              outlined={true}
+            >
+              Cancel Order
+            </Button>
+          </>
+        );
+      case OrderStatus.PackageReadyForCollection:
+        return (
+          <>
+            <Button
+              type={ButtonType.success}
+              onClick={() =>
+                props.markAsShippingComplete(
+                  props.orderItem.order.id,
+                  props.orderItem.id
+                )
+              }
+            >
+              Mark as Delivered & Cash Received
             </Button>
             <Button
               type={ButtonType.danger}
