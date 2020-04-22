@@ -10,7 +10,7 @@ import { ToastType } from "../types/toast";
 function* createNotificationChannel() {
   return eventChannel((emit) => {
     const connection = new signalR.HubConnectionBuilder()
-      .withUrl("http://notify.mpl.istakapaza.com/chat", {
+      .withUrl("https://mplnotifydev.istakapaza.com/chat", {
         accessTokenFactory: () => parseCookies()["isp-jwt"],
       })
       .configureLogging(signalR.LogLevel.Information)

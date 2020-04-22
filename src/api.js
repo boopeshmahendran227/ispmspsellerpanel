@@ -8,7 +8,7 @@ const NProgress = require("nprogress");
 
 NProgress.configure({ showSpinner: false });
 
-const BASE_URL = "http://api.mpl.istakapaza.com/v1";
+const BASE_URL = "https://mplapidev.istakapaza.com/v1";
 // const BASE_URL = "http://192.168.0.103:5000/v1";
 
 const getAccessToken = (options) => {
@@ -54,7 +54,7 @@ module.exports = (url, options) => {
   // Instantiate the interceptor (you can chain it as it returns the axios instance)
 
   const combinedOptions = Object.assign({}, options, { headers });
-  createAuthRefreshInterceptor(axios, refreshAuthLogic);
+  // createAuthRefreshInterceptor(axios, refreshAuthLogic);
 
   // Use interceptor to inject the token to requests
   axios.interceptors.request.use((request) => {
@@ -67,7 +67,7 @@ module.exports = (url, options) => {
 
   return axios({
     url: url.includes("notification")
-      ? "http://notify.mpl.istakapaza.com/v1" + url
+      ? "https://mplnotifydev.istakapaza.com/v1" + url
       : BASE_URL + url, // Todo: refine this logic
     ...combinedOptions,
   })
