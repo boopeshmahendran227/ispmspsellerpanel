@@ -27,6 +27,7 @@ const MetricCard = (props: MetricCardProps) => {
           text-transform: capitalize;
           padding: 0.7em;
           font-weight: bold;
+          font-size: 1.2rem;
         }
         .content {
           padding: 0.5em;
