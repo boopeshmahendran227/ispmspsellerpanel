@@ -206,7 +206,7 @@ const Orders = (props: OrdersProps) => {
         <tr>
           <td>{orderItem.order.id}</td>
           <td>{orderItem.id}</td>
-          <td>Boopesh</td>
+          <td>{orderItem.order.customerId}</td>
           <td>
             <div key={orderItem.id} className="productContainer">
               <ProductCard
