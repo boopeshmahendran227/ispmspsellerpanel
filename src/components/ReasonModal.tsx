@@ -5,10 +5,10 @@ import { RootState } from "../reducers";
 import { getReasonModalData } from "../selectors/ui";
 import UIActions from "../actions/ui";
 import { ReasonModalData } from "../types/ui";
-import CSSConstants from "../constants/CSSConstants";
 import * as Yup from "yup";
-import { Formik, Form } from "formik";
-import FieldTextArea from "../components/FieldTextArea";
+import { Formik, Form, Field } from "formik";
+import RadioButton from "./RadioButton";
+import { splitCamelCase } from "../utils/misc";
 
 interface StateProps {
   data: ReasonModalData;
@@ -29,24 +29,43 @@ const ReasonModal = (props: ReasonModalProps) => {
   return (
     <Modal open={props.data.open} onClose={props.onClose}>
       <div className="container">
-        <header>Cancel Order</header>
+        <header>{props.data.header}</header>
+        <div className="subHeader">{props.data.subHeader}</div>
         <Formik
           initialValues={{
-            reason: "",
+            reason: props.data.reasons[0],
           }}
           onSubmit={handleSubmit}
           validationSchema={Yup.object().shape({
             reason: Yup.string().required("Reason is requied"),
           })}
+          enableReinitialize={true}
         >
           {() => (
             <Form>
-              <FieldTextArea
-                id="reason"
-                placeholder="Reason for cancellation"
-                name="reason"
-              />
-              <div className="note">(Note: This action is irreversible)</div>
+              <Field name="reason">
+                {({ field }) => (
+                  <div>
+                    {props.data.reasons.map((reason) => (
+                      <div>
+                        <RadioButton
+                          label={splitCamelCase(reason)}
+                          value={reason}
+                          checked={field.value === reason}
+                          onChange={(value) => {
+                            field.onChange({
+                              target: {
+                                name: "reason",
+                                value: reason,
+                              },
+                            });
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </Field>
               <div>
                 <Button isSubmitButton={true}>Submit</Button>
               </div>
@@ -61,13 +80,14 @@ const ReasonModal = (props: ReasonModalProps) => {
           font-size: 1.3rem;
           text-transform: uppercase;
         }
+        .subHeader {
+          font-weight: 500;
+          font-size: 1.1rem;
+          margin: 0.8em 0;
+        }
         .container {
           margin: 1em;
           min-width: 270px;
-        }
-        .note {
-          margin: 0.4em 0;
-          color: ${CSSConstants.dangerColor};
         }
       `}</style>
     </Modal>

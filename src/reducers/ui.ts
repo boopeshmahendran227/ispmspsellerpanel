@@ -50,7 +50,9 @@ const getLoadingScreenOpen = (state: boolean = false, action) => {
 const getReasonModalData = (
   state: ReasonModalData = {
     header: "Confirm",
+    subHeader: "Please provide a reason",
     open: false,
+    reasons: [],
     onSubmit: (reason: string) => null, // dummy function
   },
   action: UIActionType
@@ -60,12 +62,16 @@ const getReasonModalData = (
       return {
         open: true,
         header: action.header,
+        subHeader: action.subHeader,
+        reasons: action.reasons,
         onSubmit: action.onSubmit,
       };
     case HIDE_REASON_MODAL:
       return {
         open: false,
         header: "Confirm",
+        subHeader: "Please provide a reason",
+        reasons: [],
         onSubmit: (reason: string) => null, // dummy function
       };
   }

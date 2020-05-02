@@ -29,11 +29,15 @@ const hideSureModal = (): UIActionType => {
 
 const showReasonModal = (
   header: string,
+  subHeader: string,
+  reasons: string[],
   onSubmit: (reason: string) => void
 ): UIActionType => {
   return {
     type: SHOW_REASON_MODAL,
     header,
+    subHeader,
+    reasons,
     onSubmit,
   };
 };

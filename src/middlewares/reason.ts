@@ -5,11 +5,15 @@ const reason = (store) => (next) => (action) => {
   switch (action.type) {
     case CANCEL_ORDER_ITEM:
       store.dispatch(
-        UIActions.showReasonModal("Confirm Cancellation", (reason: string) =>
-          next({
-            ...action,
-            reason,
-          })
+        UIActions.showReasonModal(
+          "Confirm Cancellation",
+          "Please provide a cancellation reason",
+          ["OrderedByMistake", "NoLongerNeedIt"],
+          (reason: string) =>
+            next({
+              ...action,
+              reason,
+            })
         )
       );
       return;

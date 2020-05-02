@@ -31,7 +31,9 @@ function* changeOrderItemStatus(action) {
       method: "PUT",
       data: {
         orderItemIds: [action.orderItemId],
-        reason: action.reason,
+        ...(action.orderItemStatus === OrderStatus.CancelRequested && {
+          cancelReason: action.reason,
+        }),
         orderItemStatus: action.orderItemStatus,
       },
     });

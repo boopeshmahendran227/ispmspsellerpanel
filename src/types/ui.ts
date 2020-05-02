@@ -21,6 +21,8 @@ interface HideSureModalAction {
 interface ShowReasonModalAction {
   type: typeof SHOW_REASON_MODAL;
   header: string;
+  subHeader: string;
+  reasons: string[];
   onSubmit: (reason: string) => void;
 }
 
@@ -54,5 +56,7 @@ export interface SureModalData {
 export interface ReasonModalData {
   open: boolean;
   header: string;
+  subHeader: string;
+  reasons: string[];
   onSubmit: (reason: string) => void;
 }
