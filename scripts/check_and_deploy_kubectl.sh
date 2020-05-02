@@ -104,6 +104,7 @@ kubectl get serviceaccount ${KUBERNETES_SERVICE_ACCOUNT_NAME} --namespace ${CLUS
 echo -e "Namespace ${CLUSTER_NAMESPACE} authorizing with private image registry using patched ${KUBERNETES_SERVICE_ACCOUNT_NAME} serviceAccount"
 
 echo "=========================================================="
+echo "---- Environment is ${ENV} -------"	
 echo "CHECKING DEPLOYMENT.YML manifest"
 if [ -z "${DEPLOYMENT_FILE}" ]; then DEPLOYMENT_FILE=deployment.yml ; fi
 if [ ! -f ${DEPLOYMENT_FILE} ]; then
@@ -129,6 +130,9 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: %s
+        env:
+        - name: ENV
+          value: %s
 ---
 apiVersion: v1
 kind: Service
@@ -158,7 +162,7 @@ EOT
   application_name=$(echo ${IDS_PROJECT_NAME} | tr -cd '[:alnum:].-')
   printf "$deployment_content" \
    "${application_name}" "${application_name}" "${application_name}" "${application_name}" "${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}" "${PORT}" \
-   "${application_name}" "${application_name}" "${PORT}" "${application_name}" | tee ${DEPLOYMENT_FILE}
+   "${ENV}" "${application_name}" "${application_name}" "${PORT}" "${application_name}" | tee ${DEPLOYMENT_FILE}
 fi
 
 echo "=========================================================="

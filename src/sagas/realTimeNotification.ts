@@ -6,11 +6,12 @@ import ToastActions from "../actions/toast";
 import NotificationActions from "../actions/notification";
 import { NotificationItemInterface } from "../types/notification";
 import { ToastType } from "../types/toast";
+import { getApiUrl } from "../utils/url";
 
 function* createNotificationChannel() {
   return eventChannel((emit) => {
     const connection = new signalR.HubConnectionBuilder()
-      .withUrl("https://mplnotifydev.istakapaza.com/chat", {
+      .withUrl(getApiUrl("/chat"), {
         accessTokenFactory: () => parseCookies()["isp-jwt"],
       })
       .configureLogging(signalR.LogLevel.Information)

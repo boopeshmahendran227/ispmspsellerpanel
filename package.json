@@ -37,8 +37,8 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "dev": "next dev",
-    "build": "rm -rf .next && next build",
+    "dev": "ENV=local next dev",
+    "build": "rm -rf .next && ENV=prod next build",
     "start": "next start -p 80",
     "test": "jest --coverage",
     "test:watch": "jest --watch"
