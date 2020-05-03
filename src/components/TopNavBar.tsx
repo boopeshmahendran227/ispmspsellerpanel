@@ -7,6 +7,9 @@ import { RootState } from "../reducers";
 import { getUnreadNotificationCount } from "../selectors/notification";
 import NotificationActions from "../actions/notification";
 import classNames from "classnames";
+import api from "../api";
+import { destroyCookie } from "nookies";
+import { redirectToLogin } from "../utils/login";
 
 interface StateProps {
   unreadNotificationCount: number;
@@ -32,6 +35,15 @@ const TopNavBar = (props: TopNavBarProps) => {
   const handleNotificationClick = () => {
     props.clearUnreadNotificationCount();
     setNotificationBarOpen(true);
+  };
+
+  const handleLogout = () => {
+    api("/auth/logout").then(() => {
+      destroyCookie(null, "isp-jwt", {
+        path: ".istakapaza.com",
+      });
+      redirectToLogin();
+    });
   };
 
   const classes = classNames({
@@ -60,6 +72,12 @@ const TopNavBar = (props: TopNavBarProps) => {
         <i className="far fa-clock" aria-hidden={true}></i>
         <span className="time">{time.format("MMM D, hh:mm a")}</span>
       </div>
+      <div className="logoutContainer">
+        <a onClick={handleLogout}>
+          <i className="fas fa-sign-out-alt" aria-hidden={true}></i>
+          Logout
+        </a>
+      </div>
       <NotificationBar
         open={notificationBarOpen}
         onClose={() => setNotificationBarOpen(false)}
@@ -79,6 +97,9 @@ const TopNavBar = (props: TopNavBarProps) => {
         .time {
           display: inline-block;
           padding: 0.3em;
+        }
+        .logoutContainer {
+          margin: 0 0.5em;
         }
         .notificationLink {
           font-size: 1.3rem;

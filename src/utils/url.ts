@@ -20,7 +20,8 @@ const getApiUrl = (route) => {
   } else if (
     route.includes("/users/address") ||
     route.includes("preorder") ||
-    route.includes("/users/subscription")
+    route.includes("/users/subscription") ||
+    route.includes("/auth/logout")
   ) {
     return istakapazaApiUrl + route;
   }
