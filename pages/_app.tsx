@@ -8,12 +8,13 @@ import { initializeStore } from "../src/store";
 import Router from "next/router";
 import { SWRConfig } from "swr";
 import api from "../src/api";
-
-// Add all third-party CSS here
-import "@fortawesome/fontawesome-free/css/all.css";
 import SureModal from "../src/components/SureModal";
 import LoadingScreen from "../src/components/LoadingScreen";
 import ReasonModal from "../src/components/ReasonModal";
+
+// Add all third-party CSS here
+import "@fortawesome/fontawesome-free/css/all.css";
+import WithAuth from "../src/components/WithAuth";
 
 NProgress.configure({ showSpinner: false });
 
@@ -28,6 +29,9 @@ Router.events.on("routeChangeError", () => NProgress.done());
 
 function MyApp(props) {
   const { store, Component, pageProps } = props;
+
+  const AuthComponent = WithAuth(Component);
+
   return (
     <SWRConfig
       value={{
@@ -39,7 +43,7 @@ function MyApp(props) {
         <ReasonModal />
         <SureModal />
         <Layout>
-          <Component {...pageProps} />
+          <AuthComponent {...pageProps} />
         </Layout>
       </Provider>
     </SWRConfig>
