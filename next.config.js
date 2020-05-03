@@ -27,9 +27,9 @@ switch (process.env.ENV) {
     break;
   case "prod":
     publicRuntimeConfig = {
-      marketPlaceApiUrl: "https://mplapidev.istakapaza.com",
+      marketPlaceApiUrl: "https://mplapi.istakapaza.com",
       istakapazaApiUrl: "https://istakapaza.com",
-      notificationApiUrl: "https://mplnotifydev.istakapaza.com",
+      notificationApiUrl: "https://mplnotify.istakapaza.com",
       cdnUrl: "https://mpldev.cdn.istakapaza.com",
     };
     break;
