@@ -9,7 +9,7 @@ import { getShowrooms } from "../../src/selectors/showroomVisit";
 import WithReduxDataLoader from "../../src/components/WithReduxDataLoader";
 import ShowroomVisitCard from "../../src/components/ShowroomVisitCard";
 import moment from "moment";
-import DateRangePicker from "../../components/DateRangePicker";
+import DateRangePicker from "../../src/components/DateRangePicker";
 import ShowroomVisitActions from "../../src/actions/showroomVisit";
 import RadioButton from "../../src/components/RadioButton";
 import CSSConstants from "../../src/constants/CSSConstants";
