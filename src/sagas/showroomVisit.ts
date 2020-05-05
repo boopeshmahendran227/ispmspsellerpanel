@@ -19,7 +19,7 @@ function* getFilteredShowroomVisits() {
     const dateRangeFilter = yield select(getDateRangeFilterForShowroomVisit);
     const showroomFilter = yield select(getShowroomFilterForShowroomVisit);
 
-    const data = yield call(api, "/appointment/search", {
+    const data = yield call(api, "/showroom/seller", {
       queryParameters: {
         staffId: showroomFilter,
         startDate: moment(dateRangeFilter.startDate)

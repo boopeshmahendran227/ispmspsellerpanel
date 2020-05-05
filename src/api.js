@@ -32,7 +32,6 @@ module.exports = (route, options) => {
 
     // Temp fix. Todo: Remove this and add refresh logic
     console.log("refresh auth");
-    // destroyCookie(null, "isp-jwt");
     return Promise.resolve();
 
     // return axios({
@@ -60,7 +59,7 @@ module.exports = (route, options) => {
   // Instantiate the interceptor (you can chain it as it returns the axios instance)
 
   const combinedOptions = Object.assign({}, options, { headers });
-  createAuthRefreshInterceptor(axios, refreshAuthLogic);
+  // createAuthRefreshInterceptor(axios, refreshAuthLogic);
 
   // Use interceptor to inject the token to requests
   axios.interceptors.request.use((request) => {
