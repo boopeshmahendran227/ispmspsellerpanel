@@ -48,6 +48,13 @@ const formatAddress = (address: AddressInterface) => {
   return `${address.apartmentNumber}, ${address.street}, ${address.locality}, ${address.city} - ${address.zipCode}, ${address.state}`;
 };
 
+const convertTo12hour = (time: string) => {
+  const hour = Number(time.substr(0, 2));
+  const amPm = hour >= 12 ? "pm" : "am";
+
+  return (hour % 12 || 12) + ":" + time.substr(3, 2) + " " + amPm;
+};
+
 export {
   formatPrice,
   capitalizeFirstLetter,
@@ -58,4 +65,5 @@ export {
   returnEmptyStringIfFalse,
   splitCamelCase,
   formatAddress,
+  convertTo12hour,
 };

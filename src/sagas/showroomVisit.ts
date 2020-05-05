@@ -5,8 +5,10 @@ import {
   GET_SHOWROOMS_SUCCESS,
   GET_SHOWROOMS_FAILURE,
   GET_SHOWROOMS_REQUEST,
+  SET_DATE_FILTER_FOR_SHOWROOM_VISIT,
+  SET_SHOWROOM_FILTER_FOR_SHOWROOM_VISIT,
 } from "../constants/ActionTypes";
-import { takeEvery, call, put, select, all } from "redux-saga/effects";
+import { takeEvery, call, put, select, all, take } from "redux-saga/effects";
 import {
   getShowroomFilterForShowroomVisit,
   getDateFilterForShowroomVisit,
@@ -22,7 +24,7 @@ function* getFilteredShowroomVisits() {
     const data = yield call(api, "/showroom/seller", {
       params: {
         showroomId: showroomFilter,
-        date: moment(dateFilter).utc().format(),
+        date: moment(dateFilter).utc().format("YYYY-MM-DD"),
       },
     });
     yield put({ type: GET_FILTERED_SHOWROOM_VISITS_SUCCESS, data: data });
@@ -47,10 +49,24 @@ function* watchGetFilteredShowroomVisits() {
   );
 }
 
+function* watchFilters() {
+  while (true) {
+    yield take([
+      SET_DATE_FILTER_FOR_SHOWROOM_VISIT,
+      SET_SHOWROOM_FILTER_FOR_SHOWROOM_VISIT,
+    ]);
+    yield put({ type: GET_FILTERED_SHOWROOM_VISITS_REQUEST });
+  }
+}
+
 function* watchGetShowrooms() {
   yield takeEvery(GET_SHOWROOMS_REQUEST, getShowrooms);
 }
 
 export default function* () {
-  yield all([watchGetFilteredShowroomVisits(), watchGetShowrooms()]);
+  yield all([
+    watchGetFilteredShowroomVisits(),
+    watchGetShowrooms(),
+    watchFilters(),
+  ]);
 }

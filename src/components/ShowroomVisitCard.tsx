@@ -1,32 +1,34 @@
 import * as React from "react";
 import CSSConstants from "../constants/CSSConstants";
-import moment from "moment";
 import Chroma from "chroma-js";
+import { ShowroomVisitInterface } from "../types/showroomVisit";
+import { convertTo12hour } from "../utils/misc";
 
 interface ShowroomVisitCardProps {
-  showroomVisit: any;
+  showroomVisit: ShowroomVisitInterface;
 }
 
 const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
   const stateBackgroundColor = CSSConstants.primaryColor;
+  const { showroomVisit } = props;
 
   return (
     <section className="container">
       <div className="timing">
         <div className="startTime">
-          {moment(props.showroomVisit.startDateTime).format("hh:mm A")}
+          {convertTo12hour(showroomVisit.startTime)}
         </div>
         <hr />
-        <div className="endTime">
-          {moment(props.showroomVisit.endDateTime).format("hh:mm A")}
-        </div>
+        <div className="endTime">{convertTo12hour(showroomVisit.endTime)}</div>
       </div>
       <div className="card">
         <div className="info">
           <div className="customer">
-            {props.showroomVisit.customer
-              ? props.showroomVisit.customer.name
-              : "The Customer associated with this showroomvisit is deleted"}
+            <span className="customerName">
+              Customer{" "}
+              {showroomVisit.customerName || "#" + showroomVisit.customerId}
+            </span>{" "}
+            has booked a visit
           </div>
         </div>
       </div>
@@ -48,7 +50,7 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
           border-top-right-radius: 3em;
           border-bottom-right-radius: 3em;
         }
-        .customer {
+        .customerName {
           font-weight: bold;
         }
         .timing {

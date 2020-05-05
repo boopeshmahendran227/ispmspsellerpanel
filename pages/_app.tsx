@@ -17,6 +17,7 @@ import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 import "../public/css/react_dates_overrides.css";
 import WithAuth from "../src/components/WithAuth";
+import LoadingScreen from "../src/components/LoadingScreen";
 
 NProgress.configure({ showSpinner: false });
 
@@ -42,6 +43,7 @@ function MyApp(props) {
       }}
     >
       <Provider store={store}>
+        <LoadingScreen />
         <ReasonModal />
         <SureModal />
         <Layout>
