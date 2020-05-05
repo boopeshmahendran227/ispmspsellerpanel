@@ -15,11 +15,16 @@ import {
 } from "../selectors/showroomVisit";
 import api from "../api";
 import moment from "moment";
+import UIActions from "../actions/ui";
 
-function* getFilteredShowroomVisits() {
+function* getFilteredShowroomVisits(action) {
   try {
     const dateFilter = yield select(getDateFilterForShowroomVisit);
     const showroomFilter = yield select(getShowroomFilterForShowroomVisit);
+
+    if (action.showLoading) {
+      yield put(UIActions.showLoadingScreen());
+    }
 
     const data = yield call(api, "/showroom/seller", {
       params: {
@@ -27,6 +32,11 @@ function* getFilteredShowroomVisits() {
         date: moment(dateFilter).utc().format("YYYY-MM-DD"),
       },
     });
+
+    if (action.showLoading) {
+      yield put(UIActions.hideLoadingScreen());
+    }
+
     yield put({ type: GET_FILTERED_SHOWROOM_VISITS_SUCCESS, data: data });
   } catch (err) {
     yield put({ type: GET_FILTERED_SHOWROOM_VISITS_FAILURE });
@@ -55,7 +65,10 @@ function* watchFilters() {
       SET_DATE_FILTER_FOR_SHOWROOM_VISIT,
       SET_SHOWROOM_FILTER_FOR_SHOWROOM_VISIT,
     ]);
-    yield put({ type: GET_FILTERED_SHOWROOM_VISITS_REQUEST });
+    yield put({
+      type: GET_FILTERED_SHOWROOM_VISITS_REQUEST,
+      showLoading: true,
+    });
   }
 }
 
