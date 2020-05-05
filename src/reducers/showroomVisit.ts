@@ -11,8 +11,12 @@ import {
 } from "../constants/ActionTypes";
 import { getRequestReducer } from "./utils";
 import moment from "moment";
+import { ShowroomVisitActionType } from "../types/showroomVisit";
 
-const dateFilter = (state: moment.Moment = moment(), action) => {
+const dateFilter = (
+  state: moment.Moment = moment(),
+  action: ShowroomVisitActionType
+) => {
   switch (action.type) {
     case SET_DATE_FILTER_FOR_SHOWROOM_VISIT:
       return action.date;
@@ -21,7 +25,7 @@ const dateFilter = (state: moment.Moment = moment(), action) => {
   return state;
 };
 
-const showroomFilter = (state = null, action) => {
+const showroomFilter = (state = null, action: ShowroomVisitActionType) => {
   switch (action.type) {
     case SET_SHOWROOM_FILTER_FOR_SHOWROOM_VISIT:
       return action.showroomId;
