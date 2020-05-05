@@ -38,7 +38,6 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
           grid-template-columns: auto 1fr;
           grid-gap: 1.5em;
           margin: 1.2em 0;
-          cursor: pointer;
         }
         .card {
           padding: 1em 2em;

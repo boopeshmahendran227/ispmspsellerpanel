@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { RootState } from "../../src/reducers";
 import { RequestReducerState } from "../../src/reducers/utils";
 import { getTestdrives } from "../../src/selectors/testdrive";
+import TestDriveCard from "../../src/components/TestDriveCard";
 
 interface StateProps {
   testdrives: any[];
@@ -21,10 +22,15 @@ const Testdrives = (props: TestdrivesProps) => {
   return (
     <div className="container">
       <header>Test Drives ({testdrives.length})</header>
+      <div className="body">
+        {testdrives.map((testdrive) => (
+          <TestDriveCard testdrive={testdrive} />
+        ))}
+      </div>
       <style jsx>{`
         .container {
-          padding: 1em 0;
-          margin: 1em auto;
+          padding: 1em;
+          margin: 1em;
           background: white;
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
             0 1px 2px rgba(0, 0, 0, 0.24);

@@ -43,7 +43,7 @@ function MyApp(props) {
       }}
     >
       <Provider store={store}>
-        <LoadingScreen />
+        {/* <LoadingScreen /> */}
         <ReasonModal />
         <SureModal />
         <Layout>
