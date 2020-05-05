@@ -15,6 +15,7 @@ import ReasonModal from "../src/components/ReasonModal";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
+import "../public/css/react_dates_overrides.css";
 import WithAuth from "../src/components/WithAuth";
 
 NProgress.configure({ showSpinner: false });
