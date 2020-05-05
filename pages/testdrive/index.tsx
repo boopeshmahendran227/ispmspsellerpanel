@@ -5,9 +5,10 @@ import { RootState } from "../../src/reducers";
 import { RequestReducerState } from "../../src/reducers/utils";
 import { getTestdrives } from "../../src/selectors/testdrive";
 import TestDriveCard from "../../src/components/TestDriveCard";
+import { TestDriveInterface } from "../../src/types/testdrive";
 
 interface StateProps {
-  testdrives: any[];
+  testdrives: TestDriveInterface[];
   getTestdrivesLoadingState: RequestReducerState;
 }
 
@@ -39,13 +40,6 @@ const Testdrives = (props: TestdrivesProps) => {
           font-weight: 500;
           font-size: 1.2rem;
           padding: 0.5em;
-        }
-        .productContainer {
-          text-align: initial;
-          margin: 1em 0;
-        }
-        .infoHeader {
-          font-weight: 500;
         }
         @media (max-width: 800px) {
           .container {
