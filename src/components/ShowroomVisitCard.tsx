@@ -27,10 +27,12 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
             <span className="customerName">
               Customer{" "}
               {showroomVisit.customerName || "#" + showroomVisit.customerId}
-            </span>{" "}
+            </span>
+            <br />
             has booked a visit
           </div>
         </div>
+        <div className="state">Booked</div>
       </div>
       <style jsx>{`
         .container {
@@ -76,6 +78,13 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
           border-right: 2px dashed ${stateBackgroundColor};
           height: 2.3rem;
           margin: 3px auto;
+        }
+        .state {
+          padding: 0.3em 0.5em;
+          color: ${stateBackgroundColor};
+          font-weight: bold;
+          text-transform: uppercase;
+          margin-left: auto;
         }
       `}</style>
     </section>
