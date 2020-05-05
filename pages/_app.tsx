@@ -9,12 +9,15 @@ import Router from "next/router";
 import { SWRConfig } from "swr";
 import api from "../src/api";
 import SureModal from "../src/components/SureModal";
-import LoadingScreen from "../src/components/LoadingScreen";
 import ReasonModal from "../src/components/ReasonModal";
 
 // Add all third-party CSS here
 import "@fortawesome/fontawesome-free/css/all.css";
+import "react-dates/initialize";
+import "react-dates/lib/css/_datepicker.css";
+import "../public/css/react_dates_overrides.css";
 import WithAuth from "../src/components/WithAuth";
+import LoadingScreen from "../src/components/LoadingScreen";
 
 NProgress.configure({ showSpinner: false });
 
@@ -40,6 +43,7 @@ function MyApp(props) {
       }}
     >
       <Provider store={store}>
+        <LoadingScreen />
         <ReasonModal />
         <SureModal />
         <Layout>

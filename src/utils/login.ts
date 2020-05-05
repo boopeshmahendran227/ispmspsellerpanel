@@ -18,9 +18,6 @@ const isLoggedIn = () => {
     })
     .catch((err) => {
       if (err.response.status === 401) {
-        destroyCookie(null, "isp-jwt", {
-          path: ".istakapaza.com",
-        });
         return false;
       }
       return true;
