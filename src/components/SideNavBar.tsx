@@ -33,7 +33,7 @@ const SideNavBar = () => {
             </Link>
           </li>
           <li>
-            <Link activeClassName="active" href="/visits">
+            <Link activeClassName="active" href="/visit">
               <a>
                 <i className="fas fa-calendar-alt"></i>
                 <span>Showroom Visits</span>

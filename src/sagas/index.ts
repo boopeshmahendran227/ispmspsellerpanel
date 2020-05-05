@@ -6,6 +6,7 @@ import ToastSaga from "./toast";
 import RealTimeNotificationSaga from "./realTimeNotification";
 import NotificationSaga from "./notification";
 import LoaderSaga from "./loader";
+import ShowroomVisitSaga from "./showroomVisit";
 import { all, fork, spawn } from "redux-saga/effects";
 
 export default function* rootSaga() {
@@ -20,5 +21,6 @@ export default function* rootSaga() {
     fork(RefreshDataSaga),
     fork(NotificationSaga),
     fork(LoaderSaga),
+    fork(ShowroomVisitSaga),
   ]);
 }

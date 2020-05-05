@@ -8,25 +8,21 @@ import {
 } from "../constants/ActionTypes";
 import { takeEvery, call, put, select, all } from "redux-saga/effects";
 import {
-  getDateRangeFilterForShowroomVisit,
   getShowroomFilterForShowroomVisit,
+  getDateFilterForShowroomVisit,
 } from "../selectors/showroomVisit";
 import api from "../api";
 import moment from "moment";
 
 function* getFilteredShowroomVisits() {
   try {
-    const dateRangeFilter = yield select(getDateRangeFilterForShowroomVisit);
+    const dateFilter = yield select(getDateFilterForShowroomVisit);
     const showroomFilter = yield select(getShowroomFilterForShowroomVisit);
 
     const data = yield call(api, "/showroom/seller", {
-      queryParameters: {
-        staffId: showroomFilter,
-        startDate: moment(dateRangeFilter.startDate)
-          .startOf("day")
-          .utc()
-          .format(),
-        endDate: moment(dateRangeFilter.endDate).endOf("day").utc().format(),
+      params: {
+        showroomId: showroomFilter,
+        date: moment(dateFilter).utc().format(),
       },
     });
     yield put({ type: GET_FILTERED_SHOWROOM_VISITS_SUCCESS, data: data });
@@ -37,7 +33,7 @@ function* getFilteredShowroomVisits() {
 
 function* getShowrooms() {
   try {
-    const data = yield call(api, "/showrooms");
+    const data = yield call(api, "/showroom/short");
     yield put({ type: GET_SHOWROOMS_SUCCESS, data: data });
   } catch (err) {
     yield put({ type: GET_SHOWROOMS_FAILURE });

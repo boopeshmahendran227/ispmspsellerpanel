@@ -1,15 +1,16 @@
 import { createSelector } from "reselect";
 import { RootState } from "../reducers";
 import { ShowroomInterface } from "../../src/types/showroomVisit";
+import moment from "moment";
 
 const getShowrooms = createSelector(
   (state: RootState) => state.showroomVisit,
   (showroomVisit): ShowroomInterface[] => showroomVisit.showrooms.data
 );
 
-const getDateRangeFilterForShowroomVisit = createSelector(
+const getDateFilterForShowroomVisit = createSelector(
   (state: RootState) => state.showroomVisit,
-  (showroomVisit) => showroomVisit.filters.dateRange
+  (showroomVisit): moment.Moment => showroomVisit.filters.date
 );
 
 const getShowroomFilterForShowroomVisit = createSelector(
@@ -24,7 +25,7 @@ const getShowroomVisits = createSelector(
 
 export {
   getShowrooms,
-  getDateRangeFilterForShowroomVisit,
+  getDateFilterForShowroomVisit,
   getShowroomFilterForShowroomVisit,
   getShowroomVisits,
 };

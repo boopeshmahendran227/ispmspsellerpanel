@@ -3,29 +3,19 @@ import {
   GET_SHOWROOMS_REQUEST,
   GET_SHOWROOMS_SUCCESS,
   GET_SHOWROOMS_FAILURE,
-  SET_DATE_RANGE_FILTER_FOR_SHOWROOM_VISIT,
-  SET_SHOWROOM_FILTER_FOR_SHOWROOM_VISIT,
+  SET_DATE_FILTER_FOR_SHOWROOM_VISIT,
   GET_FILTERED_SHOWROOM_VISITS_REQUEST,
   GET_FILTERED_SHOWROOM_VISITS_SUCCESS,
   GET_FILTERED_SHOWROOM_VISITS_FAILURE,
+  SET_SHOWROOM_FILTER_FOR_SHOWROOM_VISIT,
 } from "../constants/ActionTypes";
 import { getRequestReducer } from "./utils";
 import moment from "moment";
-import { DateRangeFilterInterface } from "../types/showroomVisit";
 
-const dateRangeFilter = (
-  state: DateRangeFilterInterface = {
-    startDate: moment(),
-    endDate: moment(),
-  },
-  action
-) => {
+const dateFilter = (state: moment.Moment = moment(), action) => {
   switch (action.type) {
-    case SET_DATE_RANGE_FILTER_FOR_SHOWROOM_VISIT:
-      return {
-        startDate: action.startDate,
-        endDate: action.endDate,
-      };
+    case SET_DATE_FILTER_FOR_SHOWROOM_VISIT:
+      return action.date;
   }
 
   return state;
@@ -52,7 +42,7 @@ export default combineReducers({
     GET_FILTERED_SHOWROOM_VISITS_FAILURE,
   ]),
   filters: combineReducers({
-    dateRange: dateRangeFilter,
+    date: dateFilter,
     showroomId: showroomFilter,
   }),
 });

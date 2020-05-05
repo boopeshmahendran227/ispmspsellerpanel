@@ -36,8 +36,4 @@ const ActiveLink = ({ children, matchFunc, ...props }: ActiveLinkProps) => {
   return <Link {...props}>{React.cloneElement(child, { className })}</Link>;
 };
 
-ActiveLink.defaultProps = {
-  highLightRoutes: [],
-};
-
 export default ActiveLink;

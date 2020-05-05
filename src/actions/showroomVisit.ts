@@ -2,8 +2,9 @@ import {
   GET_SHOWROOMS_REQUEST,
   GET_FILTERED_SHOWROOM_VISITS_REQUEST,
   SET_SHOWROOM_FILTER_FOR_SHOWROOM_VISIT,
-  SET_DATE_RANGE_FILTER_FOR_SHOWROOM_VISIT,
+  SET_DATE_FILTER_FOR_SHOWROOM_VISIT,
 } from "../constants/ActionTypes";
+import moment from "moment";
 
 const getShowrooms = () => {
   return {
@@ -17,24 +18,23 @@ const getFilteredShowroomVisits = () => {
   };
 };
 
-const setDateRangeFilter = ({ startDate, endDate }) => {
+const setDateFilter = (date: moment.Moment) => {
   return {
-    type: SET_DATE_RANGE_FILTER_FOR_SHOWROOM_VISIT,
-    startDate,
-    endDate,
+    type: SET_DATE_FILTER_FOR_SHOWROOM_VISIT,
+    date,
   };
 };
 
-const setShowroomFilter = (staffId) => {
+const setShowroomFilter = (showroomId) => {
   return {
     type: SET_SHOWROOM_FILTER_FOR_SHOWROOM_VISIT,
-    staffId,
+    showroomId,
   };
 };
 
 export default {
   getShowrooms,
   getFilteredShowroomVisits,
-  setDateRangeFilter,
+  setDateFilter,
   setShowroomFilter,
 };
