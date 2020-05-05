@@ -27,9 +27,12 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
             <span className="customerName">
               Customer{" "}
               {showroomVisit.customerName || "#" + showroomVisit.customerId}
+            </span>{" "}
+            has booked
+            <br /> a visit for{" "}
+            <span className="showroomName">
+              {showroomVisit.showroomDetails.name}
             </span>
-            <br />
-            has booked a visit
           </div>
         </div>
         <div className="state">Booked</div>
@@ -51,7 +54,8 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
           border-top-right-radius: 3em;
           border-bottom-right-radius: 3em;
         }
-        .customerName {
+        .customerName,
+        .showroomName {
           font-weight: bold;
         }
         .timing {
@@ -74,8 +78,8 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
           padding: 0;
           background: none;
           border: none;
-          border-left: 2px dashed ${stateBackgroundColor};
-          border-right: 2px dashed ${stateBackgroundColor};
+          border-left: 1px dashed ${stateBackgroundColor};
+          border-right: 1px dashed ${stateBackgroundColor};
           height: 2.3rem;
           margin: 3px auto;
         }

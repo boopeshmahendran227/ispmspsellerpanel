@@ -1,5 +1,6 @@
 import { TestDriveInterface } from "../types/testdrive";
 import RelativeImg from "./RelativeImg";
+import moment from "moment";
 
 interface TestDriveCardProps {
   testdrive: TestDriveInterface;
@@ -22,6 +23,10 @@ const TestDriveCard = (props: TestDriveCardProps) => {
           Test drive requested for{" "}
           <span className="productName">
             {testdrive.productName} ({"#" + testdrive.productId})
+          </span>{" "}
+          on{" "}
+          <span className="date">
+            {moment(testdrive.requestedDate).format("MMM D, YYYY")}
           </span>
         </div>
       </div>
@@ -48,7 +53,8 @@ const TestDriveCard = (props: TestDriveCardProps) => {
           margin: 0.3em 0;
         }
         .customerName,
-        .productName {
+        .productName,
+        .date {
           font-weight: 700;
         }
       `}</style>

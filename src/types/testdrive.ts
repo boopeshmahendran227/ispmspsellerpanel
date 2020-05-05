@@ -11,7 +11,7 @@ export interface TestDriveInterface {
   productName: string;
   sellerId: string;
   skuId: string;
-  testDriveDate: string;
+  requestedDate: string;
 }
 
 export type TestDriveActionType = GetTestDrivesAction;
