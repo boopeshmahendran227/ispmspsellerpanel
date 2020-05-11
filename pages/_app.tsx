@@ -5,11 +5,13 @@ import withRedux from "next-redux-wrapper";
 import withReduxSaga from "next-redux-saga";
 import withToastProvider from "../src/components/WithToastProvider";
 import { initializeStore } from "../src/store";
-import Router from "next/router";
+import Router, { withRouter } from "next/router";
 import { SWRConfig } from "swr";
 import api from "../src/api";
 import SureModal from "../src/components/SureModal";
 import ReasonModal from "../src/components/ReasonModal";
+import SideNavBar from "../src/components/SideNavBar";
+import TopNavBar from "../src/components/TopNavBar";
 
 // Add all third-party CSS here
 import "@fortawesome/fontawesome-free/css/all.css";
@@ -31,23 +33,55 @@ Router.events.on("routeChangeComplete", () => {
 Router.events.on("routeChangeError", () => NProgress.done());
 
 function MyApp(props) {
-  const { store, Component, pageProps } = props;
+  const { store, Component, router, pageProps } = props;
 
   const AuthComponent = WithAuth(Component);
 
+  const swrConfigData = {
+    refreshInterval: 10000,
+    fetcher: api,
+  };
+
+  // We don't need navbar and redux for invoice page
+  if (["invoice"].some((str) => router.pathname.includes(str))) {
+    return (
+      <SWRConfig value={swrConfigData}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </SWRConfig>
+    );
+  }
+
   return (
-    <SWRConfig
-      value={{
-        refreshInterval: 10000,
-        fetcher: api,
-      }}
-    >
+    <SWRConfig value={swrConfigData}>
       <Provider store={store}>
         <LoadingScreen />
         <ReasonModal />
         <SureModal />
         <Layout>
-          <AuthComponent {...pageProps} />
+          <main>
+            <div className="sideNavBarContainer">
+              <SideNavBar />
+            </div>
+            <div className="bodyContainer">
+              <TopNavBar />
+              <AuthComponent {...pageProps} />
+            </div>
+            <style jsx>{`
+              .sideNavBarContainer {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 250px;
+                z-index: 1;
+              }
+              .bodyContainer {
+                margin-left: 250px;
+              }
+            `}</style>
+          </main>
         </Layout>
       </Provider>
     </SWRConfig>
@@ -65,5 +99,5 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
 };
 
 export default withRedux(initializeStore)(
-  withReduxSaga(withToastProvider(MyApp))
+  withReduxSaga(withToastProvider(withRouter(MyApp)))
 );

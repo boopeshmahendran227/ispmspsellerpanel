@@ -1,7 +1,5 @@
 import { AddressInterface } from "../types/order";
 
-const BASE_URL = "http://mpldev.cdn.istakapaza.com/";
-
 const formatPrice = (price: number) => {
   return "₹ " + price.toLocaleString("en-IN");
 };
@@ -25,15 +23,6 @@ const valueToPercentage = (value, total) => {
   return Math.round((numValue * 100.0) / numTotal);
 };
 
-const getProductUrl = (name, id) => {
-  const slug = name.split(" ").join("-");
-  return `/p/${slug}/${id}`;
-};
-
-const getProductImageUrl = (relativePath) => {
-  return BASE_URL + relativePath;
-};
-
 const returnEmptyStringIfFalse = (val) => {
   if (val === 0) return 0;
   else if (!val) return "";
@@ -48,6 +37,10 @@ const formatAddress = (address: AddressInterface) => {
   return `${address.apartmentNumber}, ${address.street}, ${address.locality}, ${address.city} - ${address.zipCode}, ${address.state}`;
 };
 
+const formatNumber = (num: number) => {
+  return num.toLocaleString("en-IN");
+};
+
 const convertTo12hour = (time: string) => {
   const hour = Number(time.substr(0, 2));
   const amPm = hour >= 12 ? "pm" : "am";
@@ -60,10 +53,9 @@ export {
   capitalizeFirstLetter,
   valueToPercentage,
   percentageToValue,
-  getProductUrl,
-  getProductImageUrl,
   returnEmptyStringIfFalse,
   splitCamelCase,
   formatAddress,
+  formatNumber,
   convertTo12hour,
 };

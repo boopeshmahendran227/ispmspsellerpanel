@@ -11,7 +11,8 @@ import OrderActions from "../../../src/actions/order";
 import { RootState } from "../../../src/reducers";
 import { getCurrentlyProcessingOrderItemIds } from "../../../src/selectors/order";
 import { transformOrderItem } from "../../../src/transformers/orderItem";
-import { getOrderText } from "../../../src/types/order";
+import { getOrderText, OrderDetailInterface } from "../../../src/types/order";
+import Error from "next/error";
 
 interface StateProps {
   currentlyProcessingOrderItemIds: number[];
@@ -31,7 +32,13 @@ type OrderProps = StateProps & DispatchProps;
 
 const Order = (props: OrderProps) => {
   const router = useRouter();
-  const { data: order } = useSWR(`/order/${router.query.orderId}`);
+  const swr = useSWR(`/order/${router.query.orderId}`);
+  const order: OrderDetailInterface = swr.data;
+  const error = swr.error;
+
+  if (error) {
+    return <Error title="Unexpected error occured" statusCode={500} />;
+  }
 
   if (!order) {
     return <Loader />;
