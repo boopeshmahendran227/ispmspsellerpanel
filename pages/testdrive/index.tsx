@@ -1,25 +1,21 @@
-import TestdriveActions from "../../src/actions/testdrive";
-import WithReduxDataLoader from "../../src/components/WithReduxDataLoader";
-import { connect } from "react-redux";
-import { RootState } from "../../src/reducers";
-import { RequestReducerState } from "../../src/reducers/utils";
-import { getTestdrives } from "../../src/selectors/testdrive";
 import TestDriveCard from "../../src/components/TestDriveCard";
 import { TestDriveInterface } from "../../src/types/testdrive";
+import Loader from "../../src/components/Loader";
+import Error from "next/error";
+import useSWR from "swr";
 
-interface StateProps {
-  testdrives: TestDriveInterface[];
-  getTestdrivesLoadingState: RequestReducerState;
-}
+const Testdrives = () => {
+  const swr = useSWR("/testdrive");
+  const testdrives: TestDriveInterface[] = swr.data;
+  const error = swr.error;
 
-interface DispatchProps {
-  getTestdrives: () => void;
-}
+  if (error) {
+    return <Error title="Unexpected error occured" statusCode={500} />;
+  }
+  if (!testdrives) {
+    return <Loader />;
+  }
 
-type TestdrivesProps = StateProps & DispatchProps;
-
-const Testdrives = (props: TestdrivesProps) => {
-  const { testdrives } = props;
   return (
     <div className="container">
       <header>Test Drives ({testdrives.length})</header>
@@ -51,26 +47,4 @@ const Testdrives = (props: TestdrivesProps) => {
   );
 };
 
-const mapStateToProps = (state: RootState): StateProps => ({
-  testdrives: getTestdrives(state),
-  getTestdrivesLoadingState: state.testdrive.testdrive,
-});
-
-const mapDispatchToProps: DispatchProps = {
-  getTestdrives: TestdriveActions.getTestDrives,
-};
-
-const mapPropsToLoadData = (props: TestdrivesProps) => {
-  return [
-    {
-      data: props.testdrives,
-      fetch: props.getTestdrives,
-      loadingState: props.getTestdrivesLoadingState,
-    },
-  ];
-};
-
-export default connect<StateProps, DispatchProps>(
-  mapStateToProps,
-  mapDispatchToProps
-)(WithReduxDataLoader(mapPropsToLoadData)(Testdrives));
+export default Testdrives;
