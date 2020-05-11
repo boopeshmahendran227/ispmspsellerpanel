@@ -269,7 +269,6 @@ const Orders = (props: OrdersProps) => {
 
   return (
     <div className="container">
-      <LoadingScreen />
       <TabSection
         headingList={[
           `All Orders (${orderItems.length})`,
