@@ -31,7 +31,10 @@ const OrderItemReturnRequest = (props: OrderItemReturnRequestProps) => {
           <div>Processing..</div>
         </div>
       )}
-      <Link href="/order/[id]" as={`/order/${orderItem.order.id}`}>
+      <Link
+        href="/order/[orderId]/[orderItemId]"
+        as={`/order/${orderItem.order.id}/${orderItem.id}`}
+      >
         <header>
           <a>Return Requested for Order Item #{orderItem.id}</a>
         </header>

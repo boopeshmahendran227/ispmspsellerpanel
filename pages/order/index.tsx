@@ -25,7 +25,6 @@ import ProductCard from "../../src/components/ProductCard";
 import { formatPrice } from "../../src/utils/misc";
 import moment from "moment";
 import SortableTable from "../../src/components/SortableTable";
-import LoadingScreen from "../../src/components/LoadingScreen";
 import Button, { ButtonType } from "../../src/components/Button";
 
 interface StateProps {

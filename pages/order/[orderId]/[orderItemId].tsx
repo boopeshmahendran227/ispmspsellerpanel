@@ -72,6 +72,14 @@ const Order = (props: OrderProps) => {
           {getOrderText(orderItem.orderItemStatus)}
         </span>
       </header>
+      <Link
+        href="/invoice/[orderId]/[orderItemId]"
+        as={`/invoice/${orderItem.order.id}/${orderItem.id}`}
+      >
+        <a className="invoiceLink">
+          <i className="fas fa-file-invoice"></i> View Invoice
+        </a>
+      </Link>
       <div className="flexContainer">
         <div className="col1">
           <section className="itemContainer">
@@ -127,7 +135,12 @@ const Order = (props: OrderProps) => {
           font-size: 1.6rem;
         }
         header {
-          margin-bottom: 2.3em;
+          margin-bottom: 1em;
+        }
+        .invoiceLink {
+          display: inline-block;
+          font-size: 1.1rem;
+          margin-bottom: 1.3em;
         }
         .time {
           color: ${CSSConstants.secondaryTextColor};
