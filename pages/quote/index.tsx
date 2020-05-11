@@ -40,7 +40,7 @@ const Quotes = (props: QuotesProps) => {
         }}
         headers={[
           {
-            name: "Customer Name",
+            name: "Customer",
             valueFunc: (quote: QuoteInterface) => quote.customerId,
           },
           {
@@ -63,9 +63,9 @@ const Quotes = (props: QuotesProps) => {
         data={quotes}
         emptyMsg="There are no quotes requested"
         body={(quotes) =>
-          quotes.map((quote) => (
+          quotes.map((quote: QuoteInterface) => (
             <tr key={quote.id}>
-              <td>Boopesh</td>
+              <td>{quote.customerId}</td>
               <td>
                 {quote.productDetails.map((productDetail) => (
                   <div key={productDetail.id} className="productContainer">
