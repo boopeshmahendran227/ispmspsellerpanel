@@ -222,15 +222,23 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
         </div>
         <div className="totalContainer">
           <div>
-            {formatPrice(orderItem.actualPrice)} x {orderItem.qty}
+            {formatPrice(orderItem.actualPriceWithoutTax)} x {orderItem.qty}
           </div>
           <div className="value">
-            {formatPrice(orderItem.actualPrice * orderItem.qty)}
+            {formatPrice(orderItem.actualPriceWithoutTax * orderItem.qty)}
           </div>
           {_.map(orderItem.productSnapshot.discountSplit, (value, key) => (
             <Fragment key={key}>
               <div className="key">{splitCamelCase(key)}</div>
               <div className="value">- {formatPrice(value)}</div>
+            </Fragment>
+          ))}
+          {orderItem.taxDetails.taxSplits.map((taxSplit, index) => (
+            <Fragment key={index}>
+              <div className="key">{taxSplit.taxName}:</div>
+              <div className="value">
+                + {formatPrice(taxSplit.taxAmountPaid * orderItem.qty)}
+              </div>
             </Fragment>
           ))}
           <div className="key total">Total</div>

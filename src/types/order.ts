@@ -45,6 +45,7 @@ export interface OrderItemInterface {
   skuId: string;
   sellerId: string;
   actualPrice: number;
+  actualPriceWithoutTax: number;
   discountedPrice: number;
   productSnapshot: {
     productName: string;
@@ -70,6 +71,25 @@ export interface OrderItemInterface {
   orderItemStatus: OrderStatus;
   createdDateTime: string;
   order: OrderInterface;
+  shipment: {
+    id: number;
+    providerName: string;
+    shipmentFee: number;
+  };
+  taxDetails: {
+    taxGroupId: number;
+    taxGroupName: string;
+    totalTaxPaid: number;
+    taxSplits: [
+      {
+        taxAmount: number;
+        taxAmountPaid: number;
+        taxId: number;
+        taxName: string;
+        taxPercentage: number;
+      }
+    ];
+  };
 }
 
 export interface AddressInterface {
