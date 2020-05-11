@@ -1,4 +1,3 @@
-import QuoteSaga from "./quote";
 import ProductSaga from "./product";
 import OrderSaga from "./order";
 import RefreshDataSaga from "./refreshData";
@@ -14,7 +13,6 @@ export default function* rootSaga() {
     yield spawn(RealTimeNotificationSaga);
   }
   yield all([
-    fork(QuoteSaga),
     fork(ProductSaga),
     fork(OrderSaga),
     fork(ToastSaga),

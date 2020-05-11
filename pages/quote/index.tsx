@@ -2,24 +2,10 @@ import { QuoteInterface } from "../../src/types/quote";
 import SortableTable from "../../src/components/SortableTable";
 import moment from "moment";
 import { formatPrice } from "../../src/utils/misc";
-import QuoteActions from "../../src/actions/quote";
-import WithReduxDataLoader from "../../src/components/WithReduxDataLoader";
-import { connect } from "react-redux";
-import { RootState } from "../../src/reducers";
-import { getQuotes } from "../../src/selectors/quote";
-import { RequestReducerState } from "../../src/reducers/utils";
 import ProductCard from "../../src/components/ProductCard";
-
-interface StateProps {
-  quotes: QuoteInterface[];
-  getQuotesLoadingState: RequestReducerState;
-}
-
-interface DispatchProps {
-  getQuotes: () => void;
-}
-
-type QuotesProps = StateProps & DispatchProps;
+import useSWR from "swr";
+import Loader from "../../src/components/Loader";
+import Error from "next/error";
 
 const getQuoteTotal = (quote: QuoteInterface) => {
   return quote.productDetails.reduce(
@@ -28,8 +14,18 @@ const getQuoteTotal = (quote: QuoteInterface) => {
   );
 };
 
-const Quotes = (props: QuotesProps) => {
-  const { quotes } = props;
+const Quotes = () => {
+  const swr = useSWR("/quote");
+  const quotes: QuoteInterface[] = swr.data;
+  const error = swr.error;
+
+  if (error) {
+    return <Error title="Unexpected error occured" statusCode={500} />;
+  }
+  if (!quotes) {
+    return <Loader />;
+  }
+
   return (
     <div className="container">
       <header>Quotes ({quotes.length})</header>
@@ -131,26 +127,4 @@ const Quotes = (props: QuotesProps) => {
   );
 };
 
-const mapStateToProps = (state: RootState): StateProps => ({
-  quotes: getQuotes(state),
-  getQuotesLoadingState: state.quote.quote,
-});
-
-const mapDispatchToProps: DispatchProps = {
-  getQuotes: QuoteActions.getQuotes,
-};
-
-const mapPropsToLoadData = (props: QuotesProps) => {
-  return [
-    {
-      data: props.quotes,
-      fetch: props.getQuotes,
-      loadingState: props.getQuotesLoadingState,
-    },
-  ];
-};
-
-export default connect<StateProps, DispatchProps>(
-  mapStateToProps,
-  mapDispatchToProps
-)(WithReduxDataLoader(mapPropsToLoadData)(Quotes));
+export default Quotes;
