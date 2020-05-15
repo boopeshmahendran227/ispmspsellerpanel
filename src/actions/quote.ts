@@ -1,9 +1,10 @@
 import {
   ACCEPT_QUOTE_REQUEST,
-  UPDATE_QUOTE_REQUEST,
   REJECT_QUOTE_REQUEST,
+  UPDATE_QUOTE,
+  SET_CURRENT_QUOTE,
 } from "../constants/ActionTypes";
-import { QuoteActionType } from "../types/quote";
+import { QuoteActionType, QuoteInterface } from "../types/quote";
 
 const acceptQuote = (quoteId: number): QuoteActionType => {
   return {
@@ -12,10 +13,10 @@ const acceptQuote = (quoteId: number): QuoteActionType => {
   };
 };
 
-const updateQuote = (quoteId: number): QuoteActionType => {
+const updateQuote = (quote: QuoteInterface): QuoteActionType => {
   return {
-    type: UPDATE_QUOTE_REQUEST,
-    quoteId,
+    type: UPDATE_QUOTE,
+    quote,
   };
 };
 
@@ -26,8 +27,16 @@ const rejectQuote = (quoteId: number): QuoteActionType => {
   };
 };
 
+const setCurrentQuote = (quote: QuoteInterface): QuoteActionType => {
+  return {
+    type: SET_CURRENT_QUOTE,
+    quote,
+  };
+};
+
 export default {
   acceptQuote,
   updateQuote,
   rejectQuote,
+  setCurrentQuote,
 };

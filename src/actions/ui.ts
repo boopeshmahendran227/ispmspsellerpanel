@@ -5,6 +5,8 @@ import {
   HIDE_LOADING_SCREEN,
   SHOW_REASON_MODAL,
   HIDE_REASON_MODAL,
+  SHOW_UPDATE_QUOTE_MODAL,
+  HIDE_UPDATE_QUOTE_MODAL,
 } from "../constants/ActionTypes";
 import { UIActionType } from "../types/ui";
 
@@ -60,6 +62,18 @@ const hideLoadingScreen = (): UIActionType => {
   };
 };
 
+const showUpdateQuoteModal = (): UIActionType => {
+  return {
+    type: SHOW_UPDATE_QUOTE_MODAL,
+  };
+};
+
+const hideUpdateQuoteModal = (): UIActionType => {
+  return {
+    type: HIDE_UPDATE_QUOTE_MODAL,
+  };
+};
+
 export default {
   showSureModal,
   hideSureModal,
@@ -67,4 +81,6 @@ export default {
   hideLoadingScreen,
   showReasonModal,
   hideReasonModal,
+  showUpdateQuoteModal,
+  hideUpdateQuoteModal,
 };

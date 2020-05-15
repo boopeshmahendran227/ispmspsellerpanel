@@ -6,6 +6,8 @@ import {
   HIDE_LOADING_SCREEN,
   SHOW_REASON_MODAL,
   HIDE_REASON_MODAL,
+  SHOW_UPDATE_QUOTE_MODAL,
+  HIDE_UPDATE_QUOTE_MODAL,
 } from "../constants/ActionTypes";
 import { SureModalData, UIActionType, ReasonModalData } from "../types/ui";
 
@@ -78,8 +80,22 @@ const getReasonModalData = (
   return state;
 };
 
+const getUpdateQuoteModalOpen = (
+  state: boolean = false,
+  action: UIActionType
+) => {
+  switch (action.type) {
+    case SHOW_UPDATE_QUOTE_MODAL:
+      return true;
+    case HIDE_UPDATE_QUOTE_MODAL:
+      return false;
+  }
+  return state;
+};
+
 export default combineReducers({
   sureModalData: getSureModalData,
   reasonModalData: getReasonModalData,
   loadingScreenOpen: getLoadingScreenOpen,
+  updateQuoteModalOpen: getUpdateQuoteModalOpen,
 });

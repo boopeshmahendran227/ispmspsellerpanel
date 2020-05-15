@@ -23,7 +23,7 @@ const QuoteProduct = (props: QuoteProductProps) => {
           <div className="metaInformation">
             {productDetail.productDetails.attributeValueIds.map(
               (attributeValue) => (
-                <div>
+                <div key={attributeValue.attributeId}>
                   {attributeValue.attributeName}: {attributeValue.value}
                 </div>
               )

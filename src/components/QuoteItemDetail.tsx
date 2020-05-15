@@ -10,7 +10,7 @@ import QuoteProduct from "./QuoteProduct";
 interface QuoteItemDetailProps {
   quote: QuoteInterface;
   acceptQuote: (quoteId: number) => void;
-  updateQuote: (quoteId: number) => void;
+  updateQuote: (quote: QuoteInterface) => void;
   rejectQuote: (quoteId: number) => void;
 }
 
@@ -19,7 +19,7 @@ const QuoteItemDetail = (props: QuoteItemDetailProps) => {
 
   const getButtons = (quote: QuoteInterface) => {
     const handleClick = (e, action) => {
-      action(quote.id);
+      action(quote);
       e.preventDefault();
     };
 

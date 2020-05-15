@@ -14,7 +14,7 @@ import QuoteActions from "../../src/actions/quote";
 interface DispatchProps {
   acceptQuote: (quoteId: number) => void;
   rejectQuote: (quoteId: number) => void;
-  updateQuote: (quoteId: number) => void;
+  updateQuote: (quote: QuoteInterface) => void;
 }
 
 type QuoteProps = DispatchProps;

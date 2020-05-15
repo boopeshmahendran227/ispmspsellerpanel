@@ -1,7 +1,8 @@
 import {
   ACCEPT_QUOTE_REQUEST,
   REJECT_QUOTE_REQUEST,
-  UPDATE_QUOTE_REQUEST,
+  SET_CURRENT_QUOTE,
+  UPDATE_QUOTE,
 } from "../constants/ActionTypes";
 
 export interface ProductDetailQuoteInterface {
@@ -53,14 +54,20 @@ interface RejectQuoteAction {
 }
 
 interface UpdateQuoteAction {
-  type: typeof UPDATE_QUOTE_REQUEST;
-  quoteId: number;
+  type: typeof UPDATE_QUOTE;
+  quote: QuoteInterface;
+}
+
+interface SetCurrentQuoteAction {
+  type: typeof SET_CURRENT_QUOTE;
+  quote: QuoteInterface;
 }
 
 export type QuoteActionType =
   | AcceptQuoteAction
   | RejectQuoteAction
-  | UpdateQuoteAction;
+  | UpdateQuoteAction
+  | SetCurrentQuoteAction;
 
 export enum QuoteStatus {
   Created = "Created",

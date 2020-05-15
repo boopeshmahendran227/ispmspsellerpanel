@@ -20,6 +20,7 @@ import "react-dates/lib/css/_datepicker.css";
 import "../public/css/react_dates_overrides.css";
 import WithAuth from "../src/components/WithAuth";
 import LoadingScreen from "../src/components/LoadingScreen";
+import UpdateQuoteModal from "../src/components/UpdateQuoteModal";
 
 NProgress.configure({ showSpinner: false });
 
@@ -57,6 +58,7 @@ function MyApp(props) {
     <SWRConfig value={swrConfigData}>
       <Provider store={store}>
         <LoadingScreen />
+        <UpdateQuoteModal />
         <ReasonModal />
         <SureModal />
         <Layout>

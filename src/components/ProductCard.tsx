@@ -12,12 +12,12 @@ const ProductCard = (props: ProductCardProps) => {
   const attributeValues = props.attributeValues.map((attributeValue) => {
     if (attributeValue.attributeName) {
       return (
-        <div>
+        <div key={attributeValue.attributeId}>
           {attributeValue.attributeName}: {attributeValue.value}
         </div>
       );
     } else {
-      return <div>{attributeValue.value}</div>;
+      return <div key={attributeValue.attributeId}>{attributeValue.value}</div>;
     }
   });
 

@@ -5,6 +5,8 @@ import {
   HIDE_LOADING_SCREEN,
   SHOW_REASON_MODAL,
   HIDE_REASON_MODAL,
+  SHOW_UPDATE_QUOTE_MODAL,
+  HIDE_UPDATE_QUOTE_MODAL,
 } from "../constants/ActionTypes";
 
 interface ShowSureModalAction {
@@ -38,13 +40,23 @@ interface HideLoadingScreenAction {
   type: typeof HIDE_LOADING_SCREEN;
 }
 
+interface ShowUpdateQuoteModalAction {
+  type: typeof SHOW_UPDATE_QUOTE_MODAL;
+}
+
+interface HideUpdateQuoteModalAction {
+  type: typeof HIDE_UPDATE_QUOTE_MODAL;
+}
+
 export type UIActionType =
   | ShowSureModalAction
   | HideSureModalAction
   | ShowLoadingScreenAction
   | HideLoadingScreenAction
   | ShowReasonModalAction
-  | HideReasonModalAction;
+  | HideReasonModalAction
+  | ShowUpdateQuoteModalAction
+  | HideUpdateQuoteModalAction;
 
 export interface SureModalData {
   open: boolean;
