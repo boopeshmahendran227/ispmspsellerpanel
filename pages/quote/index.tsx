@@ -108,7 +108,7 @@ const Quotes = (props: QuotesProps) => {
 
   const renderTableBody = (quotes: QuoteInterface[]) => {
     return quotes.map((quote) => (
-      <Link key={quote.id} href="/quote/[id]" as={`/qoute/${quote.id}`}>
+      <Link key={quote.id} href="/quote/[id]" as={`/quote/${quote.id}`}>
         <tr>
           <td>{quote.id}</td>
           <td>{quote.customerId}</td>
