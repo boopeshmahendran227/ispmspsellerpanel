@@ -1,4 +1,11 @@
-interface ProductDetailQuoteInterface {
+import { splitCamelCase } from "../utils/misc";
+import {
+  ACCEPT_QUOTE_REQUEST,
+  REJECT_QUOTE_REQUEST,
+  UPDATE_QUOTE_REQUEST,
+} from "../constants/ActionTypes";
+
+export interface ProductDetailQuoteInterface {
   id: number;
   productId: number;
   productDetails: {
@@ -25,6 +32,58 @@ export interface QuoteInterface {
   sellerName: string;
   sellerId: string;
   productDetails: ProductDetailQuoteInterface[];
-  message: string;
+  createdDateTime: string;
+  status: QuoteStatus;
+  statusHistories: QuoteStatusHistoryItem[];
+}
+
+export interface QuoteStatusHistoryItem {
+  quoteStatusId: QuoteStatus;
+  status: string;
   createdDateTime: string;
 }
+
+interface AcceptQuoteAction {
+  type: typeof ACCEPT_QUOTE_REQUEST;
+  quoteId: number;
+}
+
+interface RejectQuoteAction {
+  type: typeof REJECT_QUOTE_REQUEST;
+  quoteId: number;
+}
+
+interface UpdateQuoteAction {
+  type: typeof UPDATE_QUOTE_REQUEST;
+  quoteId: number;
+}
+
+export type QuoteActionType =
+  | AcceptQuoteAction
+  | RejectQuoteAction
+  | UpdateQuoteAction;
+
+export enum QuoteStatus {
+  Created = "Created",
+  Rejected = "Rejected",
+  SellerResponsePending = "SellerResponsePending",
+  SellerResponded = "SellerResponded",
+  Converted = "Converted",
+  Expired = "Expired",
+}
+
+export const getQuoteStatusText = (status: QuoteStatus) => {
+  switch (status) {
+    case QuoteStatus.SellerResponsePending:
+      return "Pending";
+    case QuoteStatus.SellerResponded:
+      return "Responded";
+    case QuoteStatus.Converted:
+      return "Converted";
+    case QuoteStatus.Rejected:
+      return "Rejected";
+    case QuoteStatus.Expired:
+      return "Expired";
+  }
+  return splitCamelCase(status);
+};

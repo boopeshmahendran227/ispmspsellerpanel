@@ -5,6 +5,7 @@ export enum ButtonType {
   default = "default",
   primary = "primary",
   success = "success",
+  warning = "warning",
   danger = "danger",
 }
 
@@ -25,6 +26,8 @@ const getCurrentColor = (type: ButtonType) => {
       return CSSConstants.primaryColor;
     case ButtonType.success:
       return CSSConstants.successColor;
+    case ButtonType.warning:
+      return CSSConstants.warningColor;
     case ButtonType.danger:
       return CSSConstants.dangerColor;
   }
@@ -68,7 +71,8 @@ const Button = (props: ButtonProps) => {
         }
         .primary,
         .danger,
-        .success {
+        .success,
+        .warning {
           color: white;
         }
         .fullWidth {
