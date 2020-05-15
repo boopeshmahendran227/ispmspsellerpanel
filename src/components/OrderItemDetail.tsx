@@ -215,7 +215,12 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
           <ProductCard
             name={orderItem.productSnapshot.productName}
             image={orderItem.productSnapshot.images[0]}
-            attributeValues={orderItem.productSnapshot.attributeValues}
+            metaInfo={orderItem.productSnapshot.attributeValues.map(
+              (attributeValue) => ({
+                key: attributeValue.attributeName,
+                value: attributeValue.value,
+              })
+            )}
           />
           <div className="info">
             <div className="key">Product Id: </div>

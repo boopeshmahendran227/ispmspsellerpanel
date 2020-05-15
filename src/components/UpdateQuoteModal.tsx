@@ -3,13 +3,13 @@ import Button from "./Button";
 import { connect } from "react-redux";
 import { RootState } from "../reducers";
 import UIActions from "../actions/ui";
-import CSSConstants from "../constants/CSSConstants";
 import { QuoteInterface } from "../types/quote";
 import { getCurrentQuote } from "../selectors/quote";
 import { getUpdateQuoteModalOpen } from "../selectors/ui";
 import ProductCard from "./ProductCard";
-import { Formik, Form } from "formik";
+import { Formik, Form, FieldArray } from "formik";
 import FieldInput from "../components/FieldInput";
+import { formatPrice } from "../utils/misc";
 
 interface StateProps {
   open: boolean;
@@ -33,34 +33,86 @@ const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
     props.onClose();
   };
 
+  if (!currentQuote) {
+    // Return empty modal
+    return (
+      <Modal open={props.open} onClose={props.onClose}>
+        <div></div>
+      </Modal>
+    );
+  }
+
   return (
     <Modal open={props.open} onClose={props.onClose}>
       <div className="container">
         <header>Update Quote</header>
-        <Formik initialValues={{}} onSubmit={onSubmit}>
-          {() => (
+        <Formik
+          initialValues={{
+            quoteItems: currentQuote.productDetails.map((productDetail) => ({
+              productId: productDetail.productId,
+              skuId: productDetail.skuId,
+              finalTotalPrice: productDetail.price,
+            })),
+          }}
+          onSubmit={onSubmit}
+          enableReinitialize={true}
+        >
+          {({ values }) => (
             <Form>
               <div className="quotesContainer">
-                {currentQuote.productDetails.map((productDetail) => (
-                  <>
-                    <ProductCard
-                      name={productDetail.productDetails.name}
-                      image={productDetail.productDetails.imageRelativePaths[0]}
-                      attributeValues={
-                        productDetail.productDetails.attributeValueIds
-                      }
-                    />
-                    <div>Product Id: {productDetail.productId}</div>
-                    <div>SKU Id: {productDetail.skuId}</div>
-                    <FieldInput
-                      id="addProductName"
-                      name="name"
-                      placeholder="Enter Updated Quote Value"
-                    />
-                  </>
-                ))}
+                <FieldArray
+                  name="quoteItems"
+                  render={() => (
+                    <div>
+                      {currentQuote.productDetails.map(
+                        (productDetail, index) => (
+                          <div>
+                            <ProductCard
+                              name={productDetail.productDetails.name}
+                              image={
+                                productDetail.productDetails
+                                  .imageRelativePaths[0]
+                              }
+                              metaInfo={[
+                                ...productDetail.productDetails.attributeValueIds.map(
+                                  (attributeValue) => ({
+                                    key: attributeValue.attributeName,
+                                    value: attributeValue.value,
+                                  })
+                                ),
+                                {
+                                  key: "Product Id",
+                                  value: productDetail.productId,
+                                },
+                                {
+                                  key: "Sku Id",
+                                  value: productDetail.skuId,
+                                },
+                                {
+                                  key: "Qty",
+                                  value: productDetail.qty,
+                                },
+                              ]}
+                            />
+                            <FieldInput
+                              name={`quoteItems[${index}].finalTotalPrice`}
+                              label="Enter Updated Quote Value"
+                              metaInfo={`(${formatPrice(
+                                values.quoteItems[index].finalTotalPrice /
+                                  productDetail.qty
+                              )} x ${productDetail.qty} =
+                            ${formatPrice(
+                              Number(values.quoteItems[index].finalTotalPrice)
+                            )})
+                              `}
+                            />
+                          </div>
+                        )
+                      )}
+                    </div>
+                  )}
+                />
               </div>
-              <div className="note">(Note: This action is irreversible)</div>
               <div className="buttonContainer">
                 <Button onClick={onSubmit} isSubmitButton={true}>
                   Update Quote and notify customer
@@ -82,14 +134,11 @@ const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
         }
         .container {
           margin: 1em;
-          min-width: 270px;
+          min-width: 450px;
         }
         .buttonContainer {
+          margin-top: 1em;
           text-align: right;
-        }
-        .note {
-          margin: 0.4em 0;
-          color: ${CSSConstants.dangerColor};
         }
       `}</style>
     </Modal>

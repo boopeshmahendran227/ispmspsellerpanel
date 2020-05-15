@@ -54,8 +54,18 @@ const OrderItemReturnRequest = (props: OrderItemReturnRequestProps) => {
       <ProductCard
         name={orderItem.productSnapshot.productName}
         image={orderItem.productSnapshot.images[0]}
-        attributeValues={orderItem.productSnapshot.attributeValues}
-        qty={orderItem.qty}
+        metaInfo={[
+          ...orderItem.productSnapshot.attributeValues.map(
+            (attributeValue) => ({
+              key: attributeValue.attributeName,
+              value: attributeValue.value,
+            })
+          ),
+          {
+            key: "qty",
+            value: orderItem.qty,
+          },
+        ]}
       />
       <div className="buttonContainer">
         <Button onClick={handleApproveClick} type={ButtonType.success}>

@@ -118,9 +118,12 @@ const Quotes = (props: QuotesProps) => {
                 <ProductCard
                   name={productDetail.productDetails.name}
                   image={productDetail.productDetails.imageRelativePaths[0]}
-                  attributeValues={
-                    productDetail.productDetails.attributeValueIds
-                  }
+                  metaInfo={productDetail.productDetails.attributeValueIds.map(
+                    (attributeValue) => ({
+                      key: attributeValue.attributeName,
+                      value: attributeValue.value,
+                    })
+                  )}
                 />
                 <div className="infoGrid">
                   <span className="header">Product Id: </span>
