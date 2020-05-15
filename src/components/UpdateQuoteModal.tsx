@@ -2,14 +2,15 @@ import Modal from "./Modal";
 import Button from "./Button";
 import { connect } from "react-redux";
 import { RootState } from "../reducers";
-import UIActions from "../actions/ui";
-import { QuoteInterface } from "../types/quote";
+import { QuoteInterface, QuoteItemUpdate } from "../types/quote";
 import { getCurrentQuote } from "../selectors/quote";
 import { getUpdateQuoteModalOpen } from "../selectors/ui";
 import ProductCard from "./ProductCard";
 import { Formik, Form, FieldArray } from "formik";
 import FieldInput from "../components/FieldInput";
 import { formatPrice } from "../utils/misc";
+import UIActions from "../actions/ui";
+import QuoteActions from "../actions/quote";
 
 interface StateProps {
   open: boolean;
@@ -17,6 +18,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
+  updateQuoteRequest: (quoteId: number, items: QuoteItemUpdate[]) => void;
   onClose: () => void;
 }
 
@@ -25,7 +27,8 @@ type UpdateQuoteModalProps = StateProps & DispatchProps;
 const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
   const { currentQuote } = props;
 
-  const onSubmit = () => {
+  const onSubmit = (values) => {
+    props.updateQuoteRequest(currentQuote.id, values.quoteItems);
     props.onClose();
   };
 
@@ -48,14 +51,15 @@ const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
         <header>Update Quote</header>
         <Formik
           initialValues={{
-            quoteItems: currentQuote.productDetails.map((productDetail) => ({
-              productId: productDetail.productId,
-              skuId: productDetail.skuId,
-              finalTotalPrice: productDetail.price,
-            })),
+            quoteItems: currentQuote.productDetails.map(
+              (productDetail): QuoteItemUpdate => ({
+                productId: productDetail.productId,
+                skuId: productDetail.skuId,
+                finalTotalPrice: productDetail.price,
+              })
+            ),
           }}
           onSubmit={onSubmit}
-          enableReinitialize={true}
         >
           {({ values }) => (
             <Form>
@@ -151,6 +155,7 @@ const mapStateToProps = (state: RootState): StateProps => ({
 });
 
 const mapDispatchToProps: DispatchProps = {
+  updateQuoteRequest: QuoteActions.updateQuoteRequest,
   onClose: UIActions.hideUpdateQuoteModal,
 };
 

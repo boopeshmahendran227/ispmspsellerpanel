@@ -3,6 +3,7 @@ import {
   REJECT_QUOTE_REQUEST,
   SET_CURRENT_QUOTE,
   UPDATE_QUOTE,
+  UPDATE_QUOTE_REQUEST,
 } from "../constants/ActionTypes";
 
 export interface ProductDetailQuoteInterface {
@@ -58,15 +59,28 @@ interface UpdateQuoteAction {
   quote: QuoteInterface;
 }
 
+interface UpdateQuoteRequestAction {
+  type: typeof UPDATE_QUOTE_REQUEST;
+  quoteId: number;
+  items: QuoteItemUpdate[];
+}
+
 interface SetCurrentQuoteAction {
   type: typeof SET_CURRENT_QUOTE;
   quote: QuoteInterface;
+}
+
+export interface QuoteItemUpdate {
+  productId: number;
+  skuId: string;
+  finalTotalPrice: number;
 }
 
 export type QuoteActionType =
   | AcceptQuoteAction
   | RejectQuoteAction
   | UpdateQuoteAction
+  | UpdateQuoteRequestAction
   | SetCurrentQuoteAction;
 
 export enum QuoteStatus {

@@ -36,7 +36,6 @@ const ProductCard = (props: ProductCardProps) => {
           margin: 0.5em 0;
           display: flex;
           text-align: initial;
-          max-width: 300px;
         }
         .imageContainer {
           width: 7rem;
@@ -56,7 +55,7 @@ const ProductCard = (props: ProductCardProps) => {
           color: ${CSSConstants.secondaryTextColor};
           font-size: 0.9rem;
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: repeat(2, 1fr);
           grid-row-gap: 0.1em;
         }
         .metaInfoContainer .key {
