@@ -1,7 +1,7 @@
 import {
   OrderInterface,
   OrderItemInterface,
-  getOrderText,
+  getOrderStatusText,
   OrderStatus,
 } from "../../src/types/order";
 import OrderActions from "../../src/actions/order";
@@ -207,7 +207,7 @@ const Orders = (props: OrdersProps) => {
           <td>{orderItem.id}</td>
           <td>{orderItem.order.customerId}</td>
           <td>
-            <div key={orderItem.id} className="productContainer">
+            <div className="productContainer">
               <ProductCard
                 name={orderItem.productSnapshot.productName}
                 image={orderItem.productSnapshot.images[0]}
@@ -223,7 +223,7 @@ const Orders = (props: OrdersProps) => {
           </td>
           <td>{formatPrice(orderItem.finalPrice)}</td>
           <td>{orderItem.qty}</td>
-          <td>{getOrderText(orderItem.orderItemStatus)}</td>
+          <td>{getOrderStatusText(orderItem.orderItemStatus)}</td>
           <td>
             {moment
               .utc(orderItem.createdDateTime)

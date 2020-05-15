@@ -11,7 +11,10 @@ import OrderActions from "../../../src/actions/order";
 import { RootState } from "../../../src/reducers";
 import { getCurrentlyProcessingOrderItemIds } from "../../../src/selectors/order";
 import { transformOrderItem } from "../../../src/transformers/orderItem";
-import { getOrderText, OrderDetailInterface } from "../../../src/types/order";
+import {
+  getOrderStatusText,
+  OrderDetailInterface,
+} from "../../../src/types/order";
 import Error from "next/error";
 
 interface StateProps {
@@ -69,7 +72,7 @@ const Order = (props: OrderProps) => {
             .format("MMMM Do YYYY h:mm a")}
         </span>{" "}
         <span className="status">
-          {getOrderText(orderItem.orderItemStatus)}
+          {getOrderStatusText(orderItem.orderItemStatus)}
         </span>
       </header>
       <Link

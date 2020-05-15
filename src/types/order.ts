@@ -214,7 +214,7 @@ export type OrderActionType =
   | MarkAsShippingAction
   | CancelOrderItemAction;
 
-export const getOrderText = (status: OrderStatus) => {
+export const getOrderStatusText = (status: OrderStatus) => {
   switch (status) {
     case OrderStatus.PaymentSuccess:
     case OrderStatus.PaymentOnDelivery:

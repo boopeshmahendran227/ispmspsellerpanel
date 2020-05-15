@@ -1,5 +1,9 @@
 import ProductCard from "./ProductCard";
-import { OrderItemInterface, OrderStatus, getOrderText } from "../types/order";
+import {
+  OrderItemInterface,
+  OrderStatus,
+  getOrderStatusText,
+} from "../types/order";
 import CSSConstants from "../constants/CSSConstants";
 import Button, { ButtonType } from "./Button";
 import { formatPrice, splitCamelCase } from "../utils/misc";
@@ -191,7 +195,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
 
   const buttons = getButtons();
   const color = getColor();
-  const orderText = getOrderText(orderItem.orderItemStatus);
+  const orderText = getOrderStatusText(orderItem.orderItemStatus);
 
   const latestStatus =
     orderItem.orderItemStatusHistories[
