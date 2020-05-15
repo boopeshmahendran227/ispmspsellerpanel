@@ -1,4 +1,3 @@
-import { splitCamelCase } from "../utils/misc";
 import {
   ACCEPT_QUOTE_REQUEST,
   REJECT_QUOTE_REQUEST,
@@ -71,19 +70,3 @@ export enum QuoteStatus {
   Converted = "Converted",
   Expired = "Expired",
 }
-
-export const getQuoteStatusText = (status: QuoteStatus) => {
-  switch (status) {
-    case QuoteStatus.SellerResponsePending:
-      return "Pending";
-    case QuoteStatus.SellerResponded:
-      return "Responded";
-    case QuoteStatus.Converted:
-      return "Converted";
-    case QuoteStatus.Rejected:
-      return "Rejected";
-    case QuoteStatus.Expired:
-      return "Expired";
-  }
-  return splitCamelCase(status);
-};
