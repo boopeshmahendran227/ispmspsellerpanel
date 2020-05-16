@@ -26,8 +26,6 @@ const ReasonModal = (props: ReasonModalProps) => {
     props.onSubmit(values.reason);
   };
 
-  const reasons = ["OrderedByMistake", "NoLongerNeedIt"];
-
   return (
     <Modal open={props.data.open} onClose={props.onCancel}>
       <div className="container">
@@ -48,7 +46,7 @@ const ReasonModal = (props: ReasonModalProps) => {
               <Field name="reason">
                 {({ field }) => (
                   <div>
-                    {reasons.map((reason) => (
+                    {props.data.reasons.map((reason) => (
                       <div>
                         <RadioButton
                           label={splitCamelCase(reason)}
