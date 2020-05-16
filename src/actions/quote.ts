@@ -1,5 +1,4 @@
 import {
-  ACCEPT_QUOTE_REQUEST,
   REJECT_QUOTE_REQUEST,
   UPDATE_QUOTE,
   SET_CURRENT_QUOTE,
@@ -10,13 +9,6 @@ import {
   QuoteInterface,
   QuoteItemUpdate,
 } from "../types/quote";
-
-const acceptQuote = (quoteId: number): QuoteActionType => {
-  return {
-    type: ACCEPT_QUOTE_REQUEST,
-    quoteId,
-  };
-};
 
 const updateQuote = (quote: QuoteInterface): QuoteActionType => {
   return {
@@ -51,7 +43,6 @@ const setCurrentQuote = (quote: QuoteInterface): QuoteActionType => {
 };
 
 export default {
-  acceptQuote,
   updateQuote,
   rejectQuote,
   setCurrentQuote,

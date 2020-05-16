@@ -16,7 +16,6 @@ import { formatPrice } from "../../src/utils/misc";
 import { getColor } from "../../src/utils/quote";
 
 interface DispatchProps {
-  acceptQuote: (quoteId: number) => void;
   updateQuote: (quote: QuoteInterface) => void;
   rejectQuote: (quoteId: number) => void;
 }
@@ -95,16 +94,10 @@ const Quotes = (props: QuotesProps) => {
         return (
           <>
             <Button
-              type={ButtonType.success}
-              onClick={(e) => handleClick(e, props.acceptQuote)}
-            >
-              Accept Quote
-            </Button>
-            <Button
               type={ButtonType.warning}
               onClick={(e) => handleClick(e, props.updateQuote)}
             >
-              Update Quote
+              Respond To Quote
             </Button>
             <Button
               type={ButtonType.danger}
@@ -166,7 +159,7 @@ const Quotes = (props: QuotesProps) => {
             {getTotalUpdatedPrice(quote) ? (
               formatPrice(getTotalUpdatedPrice(quote))
             ) : (
-              <span className="notUpdatedMsg">Not yet updated</span>
+              <span className="notRespondedMsg">Not yet Responded</span>
             )}
           </td>
           <td style={{ color: getColor(quote.status) }}>
@@ -191,7 +184,7 @@ const Quotes = (props: QuotesProps) => {
             .actions {
               font-size: 0.9rem;
             }
-            .notUpdatedMsg {
+            .notRespondedMsg {
               color: ${CSSConstants.warningColor};
               font-weight: bold;
             }
@@ -326,7 +319,6 @@ const Quotes = (props: QuotesProps) => {
 };
 
 const mapDispatchToProps: DispatchProps = {
-  acceptQuote: QuoteActions.acceptQuote,
   updateQuote: QuoteActions.updateQuote,
   rejectQuote: QuoteActions.rejectQuote,
 };

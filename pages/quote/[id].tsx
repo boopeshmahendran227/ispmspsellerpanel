@@ -12,7 +12,6 @@ import QuoteItemDetail from "../../src/components/QuoteItemDetail";
 import QuoteActions from "../../src/actions/quote";
 
 interface DispatchProps {
-  acceptQuote: (quoteId: number) => void;
   rejectQuote: (quoteId: number) => void;
   updateQuote: (quote: QuoteInterface) => void;
 }
@@ -62,7 +61,6 @@ const Quote = (props: QuoteProps) => {
           <section className="itemContainer">
             <QuoteItemDetail
               quote={quote}
-              acceptQuote={props.acceptQuote}
               rejectQuote={props.rejectQuote}
               updateQuote={props.updateQuote}
             />
@@ -142,7 +140,6 @@ const Quote = (props: QuoteProps) => {
 };
 
 const mapDispatchToProps: DispatchProps = {
-  acceptQuote: QuoteActions.acceptQuote,
   rejectQuote: QuoteActions.rejectQuote,
   updateQuote: QuoteActions.updateQuote,
 };
