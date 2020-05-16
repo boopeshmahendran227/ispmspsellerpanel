@@ -9,6 +9,8 @@ import {
   HIDE_UPDATE_QUOTE_MODAL,
   SURE_MODAL_SURE_CLICKED,
   SURE_MODAL_CANCEL_CLICKED,
+  REASON_MODAL_SUBMIT_CLICKED,
+  REASON_MODAL_CANCEL_CLICKED,
 } from "../constants/ActionTypes";
 import { UIActionType } from "../types/ui";
 
@@ -20,13 +22,13 @@ const showSureModal = (header: string, body: string): UIActionType => {
   };
 };
 
-const sureClicked = (): UIActionType => {
+const sureModalSureClicked = (): UIActionType => {
   return {
     type: SURE_MODAL_SURE_CLICKED,
   };
 };
 
-const cancelClicked = (): UIActionType => {
+const sureModalCancelClicked = (): UIActionType => {
   return {
     type: SURE_MODAL_CANCEL_CLICKED,
   };
@@ -41,21 +43,32 @@ const hideSureModal = (): UIActionType => {
 const showReasonModal = (
   header: string,
   subHeader: string,
-  reasons: string[],
-  onSubmit: (reason: string) => void
+  reasons: string[]
 ): UIActionType => {
   return {
     type: SHOW_REASON_MODAL,
     header,
     subHeader,
     reasons,
-    onSubmit,
   };
 };
 
 const hideReasonModal = (): UIActionType => {
   return {
     type: HIDE_REASON_MODAL,
+  };
+};
+
+const reasonModalSubmitClicked = (reason: string): UIActionType => {
+  return {
+    type: REASON_MODAL_SUBMIT_CLICKED,
+    reason,
+  };
+};
+
+const reasonModalCancelClicked = (): UIActionType => {
+  return {
+    type: REASON_MODAL_CANCEL_CLICKED,
   };
 };
 
@@ -86,8 +99,10 @@ const hideUpdateQuoteModal = (): UIActionType => {
 export default {
   showSureModal,
   hideSureModal,
-  sureClicked,
-  cancelClicked,
+  sureModalSureClicked,
+  sureModalCancelClicked,
+  reasonModalSubmitClicked,
+  reasonModalCancelClicked,
   showLoadingScreen,
   hideLoadingScreen,
   showReasonModal,

@@ -8,6 +8,7 @@ import LoaderSaga from "./loader";
 import ShowroomVisitSaga from "./showroomVisit";
 import QuoteSaga from "./quote";
 import SureConfirmationSaga from "./sureConfirmation";
+import ReasonSaga from "./reason";
 import { all, fork, spawn } from "redux-saga/effects";
 
 export default function* rootSaga() {
@@ -24,5 +25,6 @@ export default function* rootSaga() {
     fork(ShowroomVisitSaga),
     fork(QuoteSaga),
     fork(SureConfirmationSaga),
+    fork(ReasonSaga),
   ]);
 }

@@ -9,7 +9,6 @@ import QuoteProduct from "./QuoteProduct";
 
 interface QuoteItemDetailProps {
   quote: QuoteInterface;
-  acceptQuote: (quoteId: number) => void;
   updateQuote: (quote: QuoteInterface) => void;
   rejectQuote: (quoteId: number) => void;
 }
@@ -27,12 +26,6 @@ const QuoteItemDetail = (props: QuoteItemDetailProps) => {
       case QuoteStatus.SellerResponsePending:
         return (
           <>
-            <Button
-              type={ButtonType.success}
-              onClick={(e) => handleClick(e, props.acceptQuote)}
-            >
-              Accept Quote
-            </Button>
             <Button
               type={ButtonType.warning}
               onClick={(e) => handleClick(e, props.updateQuote)}

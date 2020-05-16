@@ -9,6 +9,8 @@ import {
   HIDE_UPDATE_QUOTE_MODAL,
   SURE_MODAL_SURE_CLICKED,
   SURE_MODAL_CANCEL_CLICKED,
+  REASON_MODAL_SUBMIT_CLICKED,
+  REASON_MODAL_CANCEL_CLICKED,
 } from "../constants/ActionTypes";
 
 interface ShowSureModalAction {
@@ -34,11 +36,19 @@ interface ShowReasonModalAction {
   header: string;
   subHeader: string;
   reasons: string[];
-  onSubmit: (reason: string) => void;
 }
 
 interface HideReasonModalAction {
   type: typeof HIDE_REASON_MODAL;
+}
+
+interface ReasonModalSubmitClicked {
+  type: typeof REASON_MODAL_SUBMIT_CLICKED;
+  reason: string;
+}
+
+interface ReasonModalCancelClicked {
+  type: typeof REASON_MODAL_CANCEL_CLICKED;
 }
 
 interface ShowLoadingScreenAction {
@@ -66,6 +76,8 @@ export type UIActionType =
   | HideLoadingScreenAction
   | ShowReasonModalAction
   | HideReasonModalAction
+  | ReasonModalSubmitClicked
+  | ReasonModalCancelClicked
   | ShowUpdateQuoteModalAction
   | HideUpdateQuoteModalAction;
 
@@ -80,5 +92,4 @@ export interface ReasonModalData {
   header: string;
   subHeader: string;
   reasons: string[];
-  onSubmit: (reason: string) => void;
 }

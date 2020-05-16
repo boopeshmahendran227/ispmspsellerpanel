@@ -15,22 +15,24 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  onClose: () => void;
+  onSubmit: (reason: string) => void;
+  onCancel: () => void;
 }
 
 type ReasonModalProps = StateProps & DispatchProps;
 
 const ReasonModal = (props: ReasonModalProps) => {
   const handleSubmit = (values) => {
-    props.data.onSubmit(values.reason);
-    props.onClose();
+    props.onSubmit(values.reason);
   };
 
+  const reasons = ["OrderedByMistake", "NoLongerNeedIt"];
+
   return (
-    <Modal open={props.data.open} onClose={props.onClose}>
+    <Modal open={props.data.open} onClose={props.onCancel}>
       <div className="container">
-        <header>{props.data.header}</header>
-        <div className="subHeader">{props.data.subHeader}</div>
+        <header>Confirm Cancellation</header>
+        <div className="subHeader">Please provide a cancellation reason</div>
         <Formik
           initialValues={{
             reason: props.data.reasons[0],
@@ -46,7 +48,7 @@ const ReasonModal = (props: ReasonModalProps) => {
               <Field name="reason">
                 {({ field }) => (
                   <div>
-                    {props.data.reasons.map((reason) => (
+                    {reasons.map((reason) => (
                       <div>
                         <RadioButton
                           label={splitCamelCase(reason)}
@@ -99,7 +101,8 @@ const mapStateToProps = (state: RootState): StateProps => ({
 });
 
 const mapDispatchToProps: DispatchProps = {
-  onClose: UIActions.hideReasonModal,
+  onSubmit: UIActions.reasonModalSubmitClicked,
+  onCancel: UIActions.reasonModalCancelClicked,
 };
 
 export default connect<StateProps, DispatchProps>(

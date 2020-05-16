@@ -48,11 +48,6 @@ export interface QuoteStatusHistoryItem {
   createdDateTime: string;
 }
 
-interface AcceptQuoteAction {
-  type: typeof ACCEPT_QUOTE_REQUEST;
-  quoteId: number;
-}
-
 interface RejectQuoteAction {
   type: typeof REJECT_QUOTE_REQUEST;
   quoteId: number;
@@ -81,7 +76,6 @@ export interface QuoteItemUpdate {
 }
 
 export type QuoteActionType =
-  | AcceptQuoteAction
   | RejectQuoteAction
   | UpdateQuoteAction
   | UpdateQuoteRequestAction

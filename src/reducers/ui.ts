@@ -52,7 +52,6 @@ const getReasonModalData = (
     subHeader: "Please provide a reason",
     open: false,
     reasons: [],
-    onSubmit: (reason: string) => null, // dummy function
   },
   action: UIActionType
 ) => {
@@ -63,7 +62,6 @@ const getReasonModalData = (
         header: action.header,
         subHeader: action.subHeader,
         reasons: action.reasons,
-        onSubmit: action.onSubmit,
       };
     case HIDE_REASON_MODAL:
       return {
@@ -71,7 +69,6 @@ const getReasonModalData = (
         header: "Confirm",
         subHeader: "Please provide a reason",
         reasons: [],
-        onSubmit: (reason: string) => null, // dummy function
       };
   }
   return state;

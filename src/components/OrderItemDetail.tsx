@@ -246,7 +246,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
           position: relative;
         }
         .productContainer {
-          padding: 0 0.5em;
+          padding: 0.5em;
         }
         .loadingOverlay {
           position: absolute;

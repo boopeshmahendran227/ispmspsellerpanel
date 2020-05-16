@@ -68,8 +68,8 @@ const mapStateToProps = (state: RootState): StateProps => ({
 });
 
 const mapDispatchToProps: DispatchProps = {
-  onSureClicked: UIActions.sureClicked,
-  onCancelClicked: UIActions.cancelClicked,
+  onSureClicked: UIActions.sureModalSureClicked,
+  onCancelClicked: UIActions.sureModalCancelClicked,
 };
 
 export default connect<StateProps, DispatchProps>(
