@@ -56,7 +56,6 @@ const QuoteProduct = (props: QuoteProductProps) => {
               )}{" "}
               x {productDetail.qty} ={" "}
               {formatPrice(productDetail.updatedQuote.totalDiscountedPrice)}
-              )}
             </div>
           ) : (
             <div className="notRespondedMsg">Not yet Responded</div>

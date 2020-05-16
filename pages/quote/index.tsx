@@ -65,7 +65,7 @@ const Quotes = (props: QuotesProps) => {
         valueFunc: (quote: QuoteInterface) => getTotalRequestedPrice(quote),
       },
       {
-        name: "Total Updated Price",
+        name: "Total Responded Price",
         valueFunc: (quote: QuoteInterface) => getTotalUpdatedPrice(quote),
       },
       {
@@ -94,7 +94,7 @@ const Quotes = (props: QuotesProps) => {
         return (
           <>
             <Button
-              type={ButtonType.warning}
+              type={ButtonType.success}
               onClick={(e) => handleClick(e, props.updateQuote)}
             >
               Respond To Quote
