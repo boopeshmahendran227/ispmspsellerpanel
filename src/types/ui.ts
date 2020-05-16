@@ -7,17 +7,26 @@ import {
   HIDE_REASON_MODAL,
   SHOW_UPDATE_QUOTE_MODAL,
   HIDE_UPDATE_QUOTE_MODAL,
+  SURE_MODAL_SURE_CLICKED,
+  SURE_MODAL_CANCEL_CLICKED,
 } from "../constants/ActionTypes";
 
 interface ShowSureModalAction {
   type: typeof SHOW_SURE_MODAL;
   header: string;
   body: string;
-  onSure: () => void;
 }
 
 interface HideSureModalAction {
   type: typeof HIDE_SURE_MODAL;
+}
+
+interface SureModalSureClickedAction {
+  type: typeof SURE_MODAL_SURE_CLICKED;
+}
+
+interface SureModalCancelClickedAction {
+  type: typeof SURE_MODAL_CANCEL_CLICKED;
 }
 
 interface ShowReasonModalAction {
@@ -51,6 +60,8 @@ interface HideUpdateQuoteModalAction {
 export type UIActionType =
   | ShowSureModalAction
   | HideSureModalAction
+  | SureModalSureClickedAction
+  | SureModalCancelClickedAction
   | ShowLoadingScreenAction
   | HideLoadingScreenAction
   | ShowReasonModalAction
@@ -62,7 +73,6 @@ export interface SureModalData {
   open: boolean;
   header: string;
   body: string;
-  onSure: () => void;
 }
 
 export interface ReasonModalData {

@@ -12,23 +12,23 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  onClose: () => void;
+  onSureClicked: () => void;
+  onCancelClicked: () => void;
 }
 
 type SureModalProps = StateProps & DispatchProps;
 
 const SureModal = (props: SureModalProps) => {
   const handleSureClicked = () => {
-    props.data.onSure();
-    props.onClose();
+    props.onSureClicked();
   };
 
   const handleCancelClicked = () => {
-    props.onClose();
+    props.onCancelClicked();
   };
 
   return (
-    <Modal open={props.data.open} onClose={props.onClose}>
+    <Modal open={props.data.open} onClose={props.onCancelClicked}>
       <div className="container">
         <header>{props.data.header}</header>
         <div className="body">{props.data.body}</div>
@@ -68,7 +68,8 @@ const mapStateToProps = (state: RootState): StateProps => ({
 });
 
 const mapDispatchToProps: DispatchProps = {
-  onClose: UIActions.hideSureModal,
+  onSureClicked: UIActions.sureClicked,
+  onCancelClicked: UIActions.cancelClicked,
 };
 
 export default connect<StateProps, DispatchProps>(

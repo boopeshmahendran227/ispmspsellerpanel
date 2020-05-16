@@ -7,19 +7,28 @@ import {
   HIDE_REASON_MODAL,
   SHOW_UPDATE_QUOTE_MODAL,
   HIDE_UPDATE_QUOTE_MODAL,
+  SURE_MODAL_SURE_CLICKED,
+  SURE_MODAL_CANCEL_CLICKED,
 } from "../constants/ActionTypes";
 import { UIActionType } from "../types/ui";
 
-const showSureModal = (
-  header: string,
-  body: string,
-  onSure: () => void
-): UIActionType => {
+const showSureModal = (header: string, body: string): UIActionType => {
   return {
     type: SHOW_SURE_MODAL,
     header,
     body,
-    onSure,
+  };
+};
+
+const sureClicked = (): UIActionType => {
+  return {
+    type: SURE_MODAL_SURE_CLICKED,
+  };
+};
+
+const cancelClicked = (): UIActionType => {
+  return {
+    type: SURE_MODAL_CANCEL_CLICKED,
   };
 };
 
@@ -77,6 +86,8 @@ const hideUpdateQuoteModal = (): UIActionType => {
 export default {
   showSureModal,
   hideSureModal,
+  sureClicked,
+  cancelClicked,
   showLoadingScreen,
   hideLoadingScreen,
   showReasonModal,
