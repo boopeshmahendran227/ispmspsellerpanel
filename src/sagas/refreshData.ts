@@ -1,4 +1,8 @@
-import { CHANGE_ORDER_ITEM_STATUS_SUCCESS } from "../constants/ActionTypes";
+import {
+  CHANGE_ORDER_ITEM_STATUS_SUCCESS,
+  UPDATE_QUOTE_SUCCESS,
+  REJECT_QUOTE_SUCCESS,
+} from "../constants/ActionTypes";
 import { take, all, put, call } from "redux-saga/effects";
 import OrderActions from "../actions/order";
 import { mutate } from "swr";
@@ -11,6 +15,13 @@ function* refreshOrder() {
   }
 }
 
+function* refreshQuote() {
+  while (true) {
+    yield take([UPDATE_QUOTE_SUCCESS, REJECT_QUOTE_SUCCESS]);
+    yield call(mutate, `/quote`);
+  }
+}
+
 export default function* () {
-  yield all([refreshOrder()]);
+  yield all([refreshOrder(), refreshQuote()]);
 }
