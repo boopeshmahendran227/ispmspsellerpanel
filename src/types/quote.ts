@@ -1,4 +1,11 @@
-interface ProductDetailQuoteInterface {
+import {
+  REJECT_QUOTE_REQUEST,
+  SET_CURRENT_QUOTE,
+  UPDATE_QUOTE,
+  UPDATE_QUOTE_REQUEST,
+} from "../constants/ActionTypes";
+
+export interface ProductDetailQuoteInterface {
   id: number;
   productId: number;
   productDetails: {
@@ -17,6 +24,10 @@ interface ProductDetailQuoteInterface {
   skuId: string;
   price: number;
   qty: number;
+  updatedQuote?: {
+    unitPrice: number;
+    totalDiscountedPrice: number;
+  };
 }
 
 export interface QuoteInterface {
@@ -25,6 +36,55 @@ export interface QuoteInterface {
   sellerName: string;
   sellerId: string;
   productDetails: ProductDetailQuoteInterface[];
-  message: string;
   createdDateTime: string;
+  status: QuoteStatus;
+  statusHistories: QuoteStatusHistoryItem[];
+}
+
+export interface QuoteStatusHistoryItem {
+  quoteStatusId: QuoteStatus;
+  status: string;
+  createdDateTime: string;
+}
+
+interface RejectQuoteAction {
+  type: typeof REJECT_QUOTE_REQUEST;
+  quoteId: number;
+}
+
+interface UpdateQuoteAction {
+  type: typeof UPDATE_QUOTE;
+  quote: QuoteInterface;
+}
+
+interface UpdateQuoteRequestAction {
+  type: typeof UPDATE_QUOTE_REQUEST;
+  quoteId: number;
+  items: QuoteItemUpdate[];
+}
+
+interface SetCurrentQuoteAction {
+  type: typeof SET_CURRENT_QUOTE;
+  quote: QuoteInterface;
+}
+
+export interface QuoteItemUpdate {
+  productId: number;
+  skuId: string;
+  finalTotalPrice: number;
+}
+
+export type QuoteActionType =
+  | RejectQuoteAction
+  | UpdateQuoteAction
+  | UpdateQuoteRequestAction
+  | SetCurrentQuoteAction;
+
+export enum QuoteStatus {
+  Created = "Created",
+  Rejected = "Rejected",
+  SellerResponsePending = "SellerResponsePending",
+  SellerResponded = "SellerResponded",
+  Converted = "Converted",
+  Expired = "Expired",
 }

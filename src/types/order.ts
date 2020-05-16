@@ -12,7 +12,6 @@ import {
   CANCEL_ORDER_ITEM,
 } from "../constants/ActionTypes";
 import { ProductAttributeValue } from "./product";
-import { splitCamelCase } from "../utils/misc";
 
 export enum OrderStatus {
   Created = "Created",
@@ -213,22 +212,3 @@ export type OrderActionType =
   | MarkAsShippingCompleteAction
   | MarkAsShippingAction
   | CancelOrderItemAction;
-
-export const getOrderStatusText = (status: OrderStatus) => {
-  switch (status) {
-    case OrderStatus.PaymentSuccess:
-    case OrderStatus.PaymentOnDelivery:
-      return "Pending";
-    case OrderStatus.Shipping:
-      return "Shipping";
-    case OrderStatus.ShippingCompleted:
-      return "Delivered";
-    case OrderStatus.CancelRequested:
-      return "Cancel Requested";
-    case OrderStatus.CancelCompleted:
-      return "Cancelled";
-    case OrderStatus.ReturnRequested:
-      return "Return Requested";
-  }
-  return splitCamelCase(status);
-};

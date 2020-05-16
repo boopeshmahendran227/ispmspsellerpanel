@@ -11,11 +11,9 @@ import OrderActions from "../../../src/actions/order";
 import { RootState } from "../../../src/reducers";
 import { getCurrentlyProcessingOrderItemIds } from "../../../src/selectors/order";
 import { transformOrderItem } from "../../../src/transformers/orderItem";
-import {
-  getOrderStatusText,
-  OrderDetailInterface,
-} from "../../../src/types/order";
+import { OrderDetailInterface } from "../../../src/types/order";
 import Error from "next/error";
+import { getOrderStatusText } from "../../../src/utils/order";
 
 interface StateProps {
   currentlyProcessingOrderItemIds: number[];

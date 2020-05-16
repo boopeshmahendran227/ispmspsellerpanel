@@ -6,6 +6,8 @@ import {
   HIDE_LOADING_SCREEN,
   SHOW_REASON_MODAL,
   HIDE_REASON_MODAL,
+  SHOW_UPDATE_QUOTE_MODAL,
+  HIDE_UPDATE_QUOTE_MODAL,
 } from "../constants/ActionTypes";
 import { SureModalData, UIActionType, ReasonModalData } from "../types/ui";
 
@@ -14,7 +16,6 @@ const getSureModalData = (
     header: "Confirm",
     body: "Are you sure you want to continue?",
     open: false,
-    onSure: () => null, // dummy function
   },
   action: UIActionType
 ) => {
@@ -24,14 +25,12 @@ const getSureModalData = (
         open: true,
         header: action.header,
         body: action.body,
-        onSure: action.onSure,
       };
     case HIDE_SURE_MODAL:
       return {
         open: false,
         header: "Confirm",
         body: "Are you sure you want to continue?",
-        onSure: () => null, // dummy function
       };
   }
   return state;
@@ -53,7 +52,6 @@ const getReasonModalData = (
     subHeader: "Please provide a reason",
     open: false,
     reasons: [],
-    onSubmit: (reason: string) => null, // dummy function
   },
   action: UIActionType
 ) => {
@@ -64,7 +62,6 @@ const getReasonModalData = (
         header: action.header,
         subHeader: action.subHeader,
         reasons: action.reasons,
-        onSubmit: action.onSubmit,
       };
     case HIDE_REASON_MODAL:
       return {
@@ -72,8 +69,20 @@ const getReasonModalData = (
         header: "Confirm",
         subHeader: "Please provide a reason",
         reasons: [],
-        onSubmit: (reason: string) => null, // dummy function
       };
+  }
+  return state;
+};
+
+const getUpdateQuoteModalOpen = (
+  state: boolean = false,
+  action: UIActionType
+) => {
+  switch (action.type) {
+    case SHOW_UPDATE_QUOTE_MODAL:
+      return true;
+    case HIDE_UPDATE_QUOTE_MODAL:
+      return false;
   }
   return state;
 };
@@ -82,4 +91,5 @@ export default combineReducers({
   sureModalData: getSureModalData,
   reasonModalData: getReasonModalData,
   loadingScreenOpen: getLoadingScreenOpen,
+  updateQuoteModalOpen: getUpdateQuoteModalOpen,
 });

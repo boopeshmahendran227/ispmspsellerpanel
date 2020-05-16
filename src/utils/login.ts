@@ -1,4 +1,3 @@
-import { destroyCookie } from "nookies";
 import { getIstakapazaApiUrl } from "./url";
 import api from "../api";
 

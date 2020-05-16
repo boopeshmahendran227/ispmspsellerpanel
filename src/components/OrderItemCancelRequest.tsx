@@ -54,8 +54,18 @@ const OrderItemCancelRequest = (props: OrderItemCancelRequestProps) => {
       <ProductCard
         name={orderItem.productSnapshot.productName}
         image={orderItem.productSnapshot.images[0]}
-        attributeValues={orderItem.productSnapshot.attributeValues}
-        qty={orderItem.qty}
+        metaInfo={[
+          {
+            key: "qty",
+            value: orderItem.qty,
+          },
+          ...orderItem.productSnapshot.attributeValues.map(
+            (attributeValue) => ({
+              key: attributeValue.attributeName,
+              value: attributeValue.value,
+            })
+          ),
+        ]}
       />
       <div className="buttonContainer">
         <Button onClick={handleApproveClick} type={ButtonType.success}>

@@ -1,7 +1,6 @@
 import {
   OrderInterface,
   OrderItemInterface,
-  getOrderStatusText,
   OrderStatus,
 } from "../../src/types/order";
 import OrderActions from "../../src/actions/order";
@@ -26,6 +25,7 @@ import { formatPrice } from "../../src/utils/misc";
 import moment from "moment";
 import SortableTable from "../../src/components/SortableTable";
 import Button, { ButtonType } from "../../src/components/Button";
+import { getColor, getOrderStatusText } from "../../src/utils/order";
 
 interface StateProps {
   orders: OrderInterface[];
@@ -211,19 +211,35 @@ const Orders = (props: OrdersProps) => {
               <ProductCard
                 name={orderItem.productSnapshot.productName}
                 image={orderItem.productSnapshot.images[0]}
-                attributeValues={orderItem.productSnapshot.attributeValues}
+                metaInfo={[
+                  ...orderItem.productSnapshot.attributeValues.map(
+                    (attributeValue) => ({
+                      key: attributeValue.attributeName,
+                      value: attributeValue.value,
+                    })
+                  ),
+                  {
+                    key: "Product Id",
+                    value: orderItem.productId,
+                  },
+                  {
+                    key: "Sku Id",
+                    value: orderItem.skuId,
+                  },
+                ]}
               />
-              <div className="infoGrid">
-                <span className="header">Product Id: </span>
-                <span className="value">{orderItem.productId}</span>
-                <span className="header">Sku Id: </span>
-                <span className="value">{orderItem.skuId}</span>
-              </div>
             </div>
           </td>
           <td>{formatPrice(orderItem.finalPrice)}</td>
           <td>{orderItem.qty}</td>
-          <td>{getOrderStatusText(orderItem.orderItemStatus)}</td>
+          <td
+            style={{
+              color: getColor(orderItem.orderItemStatus),
+            }}
+            className="status"
+          >
+            {getOrderStatusText(orderItem.orderItemStatus)}
+          </td>
           <td>
             {moment
               .utc(orderItem.createdDateTime)
@@ -235,15 +251,6 @@ const Orders = (props: OrdersProps) => {
             .productContainer {
               text-align: initial;
               margin: 1.2em 0;
-            }
-            .infoGrid {
-              margin: 0.1em;
-              display: grid;
-              grid-template-columns: repeat(2, auto);
-              grid-gap: 0.1em;
-            }
-            .infoGrid .header {
-              font-weight: 700;
             }
             tr:hover {
               background-color: ${CSSConstants.hoverColor} !important;

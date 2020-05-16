@@ -17,4 +17,14 @@ const getLoadingScreenOpen = createSelector(
   (ui): boolean => ui.loadingScreenOpen
 );
 
-export { getSureModalData, getLoadingScreenOpen, getReasonModalData };
+const getUpdateQuoteModalOpen = createSelector(
+  (state: RootState) => state.ui,
+  (ui): boolean => ui.updateQuoteModalOpen
+);
+
+export {
+  getSureModalData,
+  getLoadingScreenOpen,
+  getReasonModalData,
+  getUpdateQuoteModalOpen,
+};

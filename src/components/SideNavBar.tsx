@@ -33,6 +33,18 @@ const SideNavBar = () => {
             </Link>
           </li>
           <li>
+            <Link
+              activeClassName="active"
+              href="/quote"
+              matchFunc={(path) => path.includes("/quote")}
+            >
+              <a>
+                <i className="fas fa-clipboard-list" aria-hidden="true"></i>
+                <span>Quotes</span>
+              </a>
+            </Link>
+          </li>
+          <li>
             <Link activeClassName="active" href="/visit">
               <a>
                 <i className="fas fa-calendar-alt"></i>
@@ -45,14 +57,6 @@ const SideNavBar = () => {
               <a>
                 <i className="fa fa-motorcycle" aria-hidden="true"></i>
                 <span>Booked Test Rides</span>
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link activeClassName="active" href="/quote">
-              <a>
-                <i className="fas fa-clipboard-list" aria-hidden="true"></i>
-                <span>Quotes</span>
               </a>
             </Link>
           </li>

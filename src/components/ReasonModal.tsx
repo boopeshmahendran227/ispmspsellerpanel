@@ -15,19 +15,19 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  onClose: () => void;
+  onSubmit: (reason: string) => void;
+  onCancel: () => void;
 }
 
 type ReasonModalProps = StateProps & DispatchProps;
 
 const ReasonModal = (props: ReasonModalProps) => {
   const handleSubmit = (values) => {
-    props.data.onSubmit(values.reason);
-    props.onClose();
+    props.onSubmit(values.reason);
   };
 
   return (
-    <Modal open={props.data.open} onClose={props.onClose}>
+    <Modal open={props.data.open} onClose={props.onCancel}>
       <div className="container">
         <header>{props.data.header}</header>
         <div className="subHeader">{props.data.subHeader}</div>
@@ -99,7 +99,8 @@ const mapStateToProps = (state: RootState): StateProps => ({
 });
 
 const mapDispatchToProps: DispatchProps = {
-  onClose: UIActions.hideReasonModal,
+  onSubmit: UIActions.reasonModalSubmitClicked,
+  onCancel: UIActions.reasonModalCancelClicked,
 };
 
 export default connect<StateProps, DispatchProps>(
