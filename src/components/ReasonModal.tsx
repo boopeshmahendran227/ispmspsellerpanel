@@ -29,8 +29,8 @@ const ReasonModal = (props: ReasonModalProps) => {
   return (
     <Modal open={props.data.open} onClose={props.onCancel}>
       <div className="container">
-        <header>Confirm Cancellation</header>
-        <div className="subHeader">Please provide a cancellation reason</div>
+        <header>{props.data.header}</header>
+        <div className="subHeader">{props.data.subHeader}</div>
         <Formik
           initialValues={{
             reason: props.data.reasons[0],
