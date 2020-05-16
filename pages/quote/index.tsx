@@ -156,7 +156,7 @@ const Quotes = (props: QuotesProps) => {
           <td>{getTotalQty(quote)}</td>
           <td>{formatPrice(getTotalRequestedPrice(quote))}</td>
           <td>
-            {getTotalUpdatedPrice(quote) ? (
+            {quote.status !== QuoteStatus.SellerResponsePending ? (
               formatPrice(getTotalUpdatedPrice(quote))
             ) : (
               <span className="notRespondedMsg">Not yet Responded</span>

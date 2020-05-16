@@ -63,12 +63,18 @@ const QuoteProduct = (props: QuoteProductProps) => {
         }
         .requestedPrice,
         .respondedPrice {
-          font-size: 1.1rem;
+          font-size: 0.9rem;
           line-height: 1.4;
         }
         .requestedPrice .name,
         .respondedPrice .name {
-          color: ${CSSConstants.secondaryTextColor};
+          font-size: 1.1rem;
+        }
+        .requestedPrice .name {
+          color: ${CSSConstants.warningColor};
+        }
+        .respondedPrice .name {
+          color: ${CSSConstants.successColor};
         }
         @media (min-width: 800px) {
           .container {
