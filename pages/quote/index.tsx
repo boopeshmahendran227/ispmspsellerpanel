@@ -13,6 +13,7 @@ import moment from "moment";
 import Button, { ButtonType } from "../../src/components/Button";
 import QuoteActions from "../../src/actions/quote";
 import { formatPrice } from "../../src/utils/misc";
+import { getColor } from "../../src/utils/quote";
 
 interface DispatchProps {
   acceptQuote: (quoteId: number) => void;
@@ -168,7 +169,9 @@ const Quotes = (props: QuotesProps) => {
               <span className="notUpdatedMsg">Not yet updated</span>
             )}
           </td>
-          <td>{getQuoteStatusText(quote.status)}</td>
+          <td style={{ color: getColor(quote.status) }}>
+            {getQuoteStatusText(quote.status)}
+          </td>
           <td>
             {moment
               .utc(quote.createdDateTime)
