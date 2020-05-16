@@ -1,5 +1,6 @@
 import RelativeImg from "./RelativeImg";
 import CSSConstants from "../constants/CSSConstants";
+import { Fragment } from "react";
 
 interface MetaInfo {
   key: string;
@@ -23,11 +24,11 @@ const ProductCard = (props: ProductCardProps) => {
         <span className="name">{props.name}</span>
         <div className="metaInfoContainer">
           {Boolean(metaInfo) &&
-            metaInfo.map((obj) => (
-              <>
+            metaInfo.map((obj, index) => (
+              <Fragment key={index}>
                 <span className="key">{obj.key}: </span>
                 <span className="value">{obj.value}</span>
-              </>
+              </Fragment>
             ))}
         </div>
       </div>

@@ -126,7 +126,7 @@ const Quotes = (props: QuotesProps) => {
           <td>{quote.customerId}</td>
           <td>
             {quote.productDetails.map((productDetail) => (
-              <div className="productContainer">
+              <div key={productDetail.id} className="productContainer">
                 <ProductCard
                   name={productDetail.productDetails.name}
                   image={productDetail.productDetails.imageRelativePaths[0]}
