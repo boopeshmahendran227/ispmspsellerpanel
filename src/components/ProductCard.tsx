@@ -34,7 +34,6 @@ const ProductCard = (props: ProductCardProps) => {
       </div>
       <style jsx>{`
         .container {
-          margin: 0.5em 0;
           display: flex;
           text-align: initial;
         }
@@ -43,9 +42,6 @@ const ProductCard = (props: ProductCardProps) => {
           text-align: center;
           padding: 0.5em;
           padding-left: 0;
-        }
-        .contentContainer {
-          padding-top: 1em;
         }
         .name {
           font-weight: 700;
@@ -56,7 +52,7 @@ const ProductCard = (props: ProductCardProps) => {
           color: ${CSSConstants.secondaryTextColor};
           font-size: 0.9rem;
           display: grid;
-          grid-template-columns: repeat(2, 1fr);
+          grid-template-columns: 120px 1fr;
           grid-row-gap: 0.1em;
         }
         .metaInfoContainer .key {

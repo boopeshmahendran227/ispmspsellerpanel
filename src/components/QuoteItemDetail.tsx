@@ -63,7 +63,10 @@ const QuoteItemDetail = (props: QuoteItemDetailProps) => {
       <section className="itemContainer">
         <div className="productContainer">
           {quote.productDetails.map((productDetail) => (
-            <QuoteProduct productDetail={productDetail} />
+            <QuoteProduct
+              key={productDetail.id}
+              productDetail={productDetail}
+            />
           ))}
         </div>
       </section>
@@ -82,6 +85,7 @@ const QuoteItemDetail = (props: QuoteItemDetailProps) => {
         }
         .productContainer {
           padding: 0 0.5em;
+          padding-top: 3em;
         }
         .container::before {
           content: "${statusText} on 
@@ -97,14 +101,6 @@ const QuoteItemDetail = (props: QuoteItemDetailProps) => {
         }
         .itemContainer {
           padding: 0.4em 0.8em;
-        }
-        .info {
-          display: grid;
-          grid-template-columns: 100px 100px;
-          color: ${CSSConstants.secondaryTextColor};
-        }
-        .info .key {
-          font-weight: bold;
         }
         .buttonContainer {
           margin-top: 1em;

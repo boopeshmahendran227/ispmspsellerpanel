@@ -7,7 +7,7 @@ import Loader from "../../src/components/Loader";
 import { connect } from "react-redux";
 import Error from "next/error";
 import { QuoteInterface } from "../../src/types/quote";
-import { getQuoteStatusText } from "../../src/utils/quote";
+import { getQuoteStatusText, getColor } from "../../src/utils/quote";
 import QuoteItemDetail from "../../src/components/QuoteItemDetail";
 import QuoteActions from "../../src/actions/quote";
 
@@ -37,6 +37,8 @@ const Quote = (props: QuoteProps) => {
   const quote: QuoteInterface = quotes.find(
     (quote: QuoteInterface) => quote.id === Number(router.query.id)
   );
+
+  const color = getColor(quote.status);
 
   return (
     <div className="container">
@@ -94,11 +96,6 @@ const Quote = (props: QuoteProps) => {
         }
         header {
           margin-bottom: 1em;
-        }
-        .invoiceLink {
-          display: inline-block;
-          font-size: 1.1rem;
-          margin-bottom: 1.3em;
         }
         .time {
           color: ${CSSConstants.secondaryTextColor};

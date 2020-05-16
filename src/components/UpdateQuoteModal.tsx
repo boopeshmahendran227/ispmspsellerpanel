@@ -28,6 +28,7 @@ const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
   const { currentQuote } = props;
 
   const onSubmit = (values) => {
+    console.log(values);
     props.updateQuoteRequest(currentQuote.id, values.quoteItems);
     props.onClose();
   };
