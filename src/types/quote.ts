@@ -25,6 +25,10 @@ export interface ProductDetailQuoteInterface {
   skuId: string;
   price: number;
   qty: number;
+  updatedQuote: {
+    unitPrice: number;
+    totalDiscountedPrice: number;
+  };
 }
 
 export interface QuoteInterface {

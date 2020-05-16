@@ -12,6 +12,7 @@ import ProductCard from "../../src/components/ProductCard";
 import moment from "moment";
 import Button, { ButtonType } from "../../src/components/Button";
 import QuoteActions from "../../src/actions/quote";
+import { formatPrice } from "../../src/utils/misc";
 
 interface DispatchProps {
   acceptQuote: (quoteId: number) => void;
@@ -21,9 +22,16 @@ interface DispatchProps {
 
 type QuotesProps = DispatchProps;
 
-const getTotalPrice = (quote: QuoteInterface) =>
+const getTotalRequestedPrice = (quote: QuoteInterface) =>
   quote.productDetails.reduce(
     (acc, productDetail) => acc + productDetail.price,
+    0
+  );
+
+const getTotalUpdatedPrice = (quote: QuoteInterface) =>
+  quote.productDetails.reduce(
+    (acc, productDetail) =>
+      acc + (productDetail.updatedQuote?.totalDiscountedPrice || 0),
     0
   );
 
@@ -49,12 +57,16 @@ const Quotes = (props: QuotesProps) => {
         valueFunc: (quote: QuoteInterface) => null,
       },
       {
-        name: "Total Requested Price",
-        valueFunc: (quote: QuoteInterface) => getTotalPrice(quote),
-      },
-      {
         name: "Total Qty",
         valueFunc: (quote: QuoteInterface) => getTotalQty(quote),
+      },
+      {
+        name: "Total Requested Price",
+        valueFunc: (quote: QuoteInterface) => getTotalRequestedPrice(quote),
+      },
+      {
+        name: "Total Updated Price",
+        valueFunc: (quote: QuoteInterface) => getTotalUpdatedPrice(quote),
       },
       {
         name: "Status",
@@ -118,29 +130,44 @@ const Quotes = (props: QuotesProps) => {
                 <ProductCard
                   name={productDetail.productDetails.name}
                   image={productDetail.productDetails.imageRelativePaths[0]}
-                  metaInfo={productDetail.productDetails.attributeValueIds.map(
-                    (attributeValue) => ({
-                      key: attributeValue.attributeName,
-                      value: attributeValue.value,
-                    })
-                  )}
+                  metaInfo={[
+                    ...productDetail.productDetails.attributeValueIds.map(
+                      (attributeValue) => ({
+                        key: attributeValue.attributeName,
+                        value: attributeValue.value,
+                      })
+                    ),
+                    {
+                      key: "Product Id",
+                      value: productDetail.productId,
+                    },
+                    {
+                      key: "Sku Id",
+                      value: productDetail.skuId,
+                    },
+                    {
+                      key: "Requested Quote",
+                      value: `${formatPrice(
+                        productDetail.price / productDetail.qty
+                      )} x
+                      ${productDetail.qty} = ${formatPrice(
+                        productDetail.price
+                      )}`,
+                    },
+                  ]}
                 />
-                <div className="infoGrid">
-                  <span className="header">Product Id: </span>
-                  <span className="value">{productDetail.productId}</span>
-                  <span className="header">Sku Id: </span>
-                  <span className="value">{productDetail.skuId}</span>
-                  <span className="header">Requested Quote: </span>
-                  <span className="value">
-                    {productDetail.price / productDetail.qty} x{" "}
-                    {productDetail.qty} = {productDetail.price}
-                  </span>
-                </div>
               </div>
             ))}
           </td>
-          <td>{getTotalPrice(quote)}</td>
           <td>{getTotalQty(quote)}</td>
+          <td>{formatPrice(getTotalRequestedPrice(quote))}</td>
+          <td>
+            {getTotalUpdatedPrice(quote) ? (
+              formatPrice(getTotalUpdatedPrice(quote))
+            ) : (
+              <span className="notUpdatedMsg">Not yet updated</span>
+            )}
+          </td>
           <td>{getQuoteStatusText(quote.status)}</td>
           <td>
             {moment
@@ -148,20 +175,11 @@ const Quotes = (props: QuotesProps) => {
               .local()
               .format("MMMM Do YYYY, hh:mm A")}
           </td>
-          <td>{getButtons(quote)}</td>
+          <td className="actions">{getButtons(quote)}</td>
           <style jsx>{`
             .productContainer {
               text-align: initial;
               margin: 1.2em 0;
-            }
-            .infoGrid {
-              margin: 0.1em;
-              display: grid;
-              grid-template-columns: repeat(2, auto);
-              grid-gap: 0.1em;
-            }
-            .infoGrid .header {
-              font-weight: 700;
             }
             tr:hover {
               background-color: ${CSSConstants.hoverColor} !important;
@@ -169,6 +187,10 @@ const Quotes = (props: QuotesProps) => {
             }
             .actions {
               font-size: 0.9rem;
+            }
+            .notUpdatedMsg {
+              color: ${CSSConstants.warningColor};
+              font-weight: bold;
             }
           `}</style>
         </tr>

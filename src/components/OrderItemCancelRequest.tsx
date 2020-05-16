@@ -57,7 +57,7 @@ const OrderItemCancelRequest = (props: OrderItemCancelRequestProps) => {
         metaInfo={[
           {
             key: "qty",
-            value: orderItem.qty.toString(),
+            value: orderItem.qty,
           },
           ...orderItem.productSnapshot.attributeValues.map(
             (attributeValue) => ({

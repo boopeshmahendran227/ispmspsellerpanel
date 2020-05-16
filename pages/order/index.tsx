@@ -211,19 +211,23 @@ const Orders = (props: OrdersProps) => {
               <ProductCard
                 name={orderItem.productSnapshot.productName}
                 image={orderItem.productSnapshot.images[0]}
-                metaInfo={orderItem.productSnapshot.attributeValues.map(
-                  (attributeValue) => ({
-                    key: attributeValue.attributeName,
-                    value: attributeValue.value,
-                  })
-                )}
+                metaInfo={[
+                  ...orderItem.productSnapshot.attributeValues.map(
+                    (attributeValue) => ({
+                      key: attributeValue.attributeName,
+                      value: attributeValue.value,
+                    })
+                  ),
+                  {
+                    key: "Product Id",
+                    value: orderItem.productId,
+                  },
+                  {
+                    key: "Sku Id",
+                    value: orderItem.skuId,
+                  },
+                ]}
               />
-              <div className="infoGrid">
-                <span className="header">Product Id: </span>
-                <span className="value">{orderItem.productId}</span>
-                <span className="header">Sku Id: </span>
-                <span className="value">{orderItem.skuId}</span>
-              </div>
             </div>
           </td>
           <td>{formatPrice(orderItem.finalPrice)}</td>
@@ -240,15 +244,6 @@ const Orders = (props: OrdersProps) => {
             .productContainer {
               text-align: initial;
               margin: 1.2em 0;
-            }
-            .infoGrid {
-              margin: 0.1em;
-              display: grid;
-              grid-template-columns: repeat(2, auto);
-              grid-gap: 0.1em;
-            }
-            .infoGrid .header {
-              font-weight: 700;
             }
             tr:hover {
               background-color: ${CSSConstants.hoverColor} !important;
