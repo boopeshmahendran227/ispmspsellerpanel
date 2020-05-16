@@ -41,7 +41,7 @@ const Layout = (props: LayoutProps) => {
         body {
           padding: 0;
           margin: 0;
-          font-size: 14px;
+          font-size: 15px;
           background: ${CSSConstants.backgroundColor};
           font-family: "Lato", sans-serif;
           -webkit-tap-highlight-color: rgba(

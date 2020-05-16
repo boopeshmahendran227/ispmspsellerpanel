@@ -1,7 +1,6 @@
 import {
   OrderInterface,
   OrderItemInterface,
-  getOrderStatusText,
   OrderStatus,
 } from "../../src/types/order";
 import OrderActions from "../../src/actions/order";
@@ -26,6 +25,7 @@ import { formatPrice } from "../../src/utils/misc";
 import moment from "moment";
 import SortableTable from "../../src/components/SortableTable";
 import Button, { ButtonType } from "../../src/components/Button";
+import { getColor, getOrderStatusText } from "../../src/utils/order";
 
 interface StateProps {
   orders: OrderInterface[];
@@ -232,7 +232,14 @@ const Orders = (props: OrdersProps) => {
           </td>
           <td>{formatPrice(orderItem.finalPrice)}</td>
           <td>{orderItem.qty}</td>
-          <td>{getOrderStatusText(orderItem.orderItemStatus)}</td>
+          <td
+            style={{
+              color: getColor(orderItem.orderItemStatus),
+            }}
+            className="status"
+          >
+            {getOrderStatusText(orderItem.orderItemStatus)}
+          </td>
           <td>
             {moment
               .utc(orderItem.createdDateTime)

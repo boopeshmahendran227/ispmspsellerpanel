@@ -1,9 +1,5 @@
 import ProductCard from "./ProductCard";
-import {
-  OrderItemInterface,
-  OrderStatus,
-  getOrderStatusText,
-} from "../types/order";
+import { OrderItemInterface, OrderStatus } from "../types/order";
 import CSSConstants from "../constants/CSSConstants";
 import Button, { ButtonType } from "./Button";
 import { formatPrice, splitCamelCase } from "../utils/misc";
@@ -11,6 +7,7 @@ import _ from "lodash";
 import { Fragment } from "react";
 import Loader from "./Loader";
 import moment from "moment";
+import { getColor, getOrderStatusText } from "../utils/order";
 
 interface OrderItemDetailProps {
   orderItem: OrderItemInterface;
@@ -174,27 +171,8 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
     return null;
   };
 
-  const getColor = () => {
-    switch (orderItem.orderItemStatus) {
-      case OrderStatus.PaymentSuccess:
-      case OrderStatus.PaymentOnDelivery:
-      case OrderStatus.PackageReadyForCollection:
-        return CSSConstants.secondaryTextColor;
-      case OrderStatus.Shipping:
-      case OrderStatus.ShippingCompleted:
-        return CSSConstants.successColor;
-      case OrderStatus.CancelRequested:
-      case OrderStatus.CancelCompleted:
-        return CSSConstants.dangerColor;
-      case OrderStatus.ReturnRequested:
-      case OrderStatus.ReturnCompleted:
-        return CSSConstants.warningColor;
-    }
-    return CSSConstants.secondaryTextColor;
-  };
-
   const buttons = getButtons();
-  const color = getColor();
+  const color = getColor(orderItem.orderItemStatus);
   const orderText = getOrderStatusText(orderItem.orderItemStatus);
 
   const latestStatus =
