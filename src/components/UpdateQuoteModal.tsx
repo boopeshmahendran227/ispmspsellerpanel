@@ -11,6 +11,7 @@ import FieldInput from "../components/FieldInput";
 import { formatPrice } from "../utils/misc";
 import UIActions from "../actions/ui";
 import QuoteActions from "../actions/quote";
+import * as Yup from "yup";
 
 interface StateProps {
   open: boolean;
@@ -24,13 +25,32 @@ interface DispatchProps {
 
 type UpdateQuoteModalProps = StateProps & DispatchProps;
 
+const validationSchema = Yup.object().shape({
+  quoteItems: Yup.array().of(
+    Yup.object().shape({
+      productId: Yup.number(),
+      skuId: Yup.string(),
+      finalTotalPrice: Yup.number()
+        .typeError("Quote value must be a number")
+        .positive("Quote value must be greater than 0")
+        .required("Quote value is required"),
+    })
+  ),
+});
+
 const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
   const { currentQuote } = props;
 
-  const onSubmit = (values) => {
-    console.log(values);
-    props.updateQuoteRequest(currentQuote.id, values.quoteItems);
+  const onSubmit = (values, { resetForm }) => {
+    props.updateQuoteRequest(
+      currentQuote.id,
+      values.quoteItems.map((quoteItem) => ({
+        ...quoteItem,
+        finalTotalPrice: Number(quoteItem.finalTotalPrice),
+      }))
+    );
     props.onClose();
+    resetForm();
   };
 
   const handleCancelClicked = () => {
@@ -61,6 +81,7 @@ const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
             ),
           }}
           onSubmit={onSubmit}
+          validationSchema={validationSchema}
         >
           {({ values }) => (
             <Form>
@@ -119,7 +140,7 @@ const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
                 />
               </div>
               <div className="buttonContainer">
-                <Button onClick={onSubmit} isSubmitButton={true}>
+                <Button isSubmitButton={true}>
                   Update Quote and notify customer
                 </Button>
                 <Button outlined={true} onClick={handleCancelClicked}>

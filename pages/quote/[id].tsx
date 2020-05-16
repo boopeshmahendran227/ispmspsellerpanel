@@ -7,7 +7,7 @@ import Loader from "../../src/components/Loader";
 import { connect } from "react-redux";
 import Error from "next/error";
 import { QuoteInterface } from "../../src/types/quote";
-import { getQuoteStatusText, getColor } from "../../src/utils/quote";
+import { getQuoteStatusText } from "../../src/utils/quote";
 import QuoteItemDetail from "../../src/components/QuoteItemDetail";
 import QuoteActions from "../../src/actions/quote";
 
@@ -36,8 +36,6 @@ const Quote = (props: QuoteProps) => {
   const quote: QuoteInterface = quotes.find(
     (quote: QuoteInterface) => quote.id === Number(router.query.id)
   );
-
-  const color = getColor(quote.status);
 
   return (
     <div className="container">

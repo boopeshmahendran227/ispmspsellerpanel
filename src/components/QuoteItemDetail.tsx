@@ -27,10 +27,10 @@ const QuoteItemDetail = (props: QuoteItemDetailProps) => {
         return (
           <>
             <Button
-              type={ButtonType.warning}
+              type={ButtonType.success}
               onClick={(e) => handleClick(e, props.updateQuote)}
             >
-              Update Quote
+              Respond To Quote
             </Button>
             <Button
               type={ButtonType.danger}

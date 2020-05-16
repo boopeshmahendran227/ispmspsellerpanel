@@ -48,11 +48,19 @@ const QuoteProduct = (props: QuoteProductProps) => {
       <section className="respondedPrice">
         <div className="name">Responded Quote</div>
         <div className="value">
-          {formatPrice(
-            productDetail.updatedQuote.totalDiscountedPrice / productDetail.qty
-          )}{" "}
-          x {productDetail.qty} ={" "}
-          {formatPrice(productDetail.updatedQuote.totalDiscountedPrice)}
+          {productDetail.updatedQuote ? (
+            <div>
+              {formatPrice(
+                productDetail.updatedQuote.totalDiscountedPrice /
+                  productDetail.qty
+              )}{" "}
+              x {productDetail.qty} ={" "}
+              {formatPrice(productDetail.updatedQuote.totalDiscountedPrice)}
+              )}
+            </div>
+          ) : (
+            <div className="notRespondedMsg">Not yet Responded</div>
+          )}
         </div>
       </section>
       <style jsx>{`
