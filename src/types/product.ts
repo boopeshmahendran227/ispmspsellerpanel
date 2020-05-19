@@ -1,12 +1,20 @@
 import * as Yup from "yup";
-import { ADD_ATTRIBUTE_REQUEST } from "../constants/ActionTypes";
+import {
+  ADD_ATTRIBUTE_REQUEST,
+  SET_SELECTED_ATTRIBUTES,
+} from "../constants/ActionTypes";
 
 interface AddAttributeAction {
   type: typeof ADD_ATTRIBUTE_REQUEST;
   attribute: AddAttributeInterface;
 }
 
-export type ProductActionType = AddAttributeAction;
+interface SetSelectedAttributeAction {
+  type: typeof SET_SELECTED_ATTRIBUTES;
+  attributes: SelectedAttribute[];
+}
+
+export type ProductActionType = AddAttributeAction | SetSelectedAttributeAction;
 
 export interface ProductAttributeValue {
   attributeId: number;
@@ -44,6 +52,11 @@ export interface AddAttributeInterface {
   description: string;
   attributeType: AttributeType;
   values: string[];
+}
+
+export interface SelectedAttribute {
+  attributeId: number;
+  attributeName: string;
 }
 
 export const ProductSchema = Yup.object().shape({

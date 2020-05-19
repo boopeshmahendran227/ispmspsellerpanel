@@ -1,5 +1,12 @@
-import { ADD_ATTRIBUTE_REQUEST } from "../constants/ActionTypes";
-import { AddAttributeInterface, ProductActionType } from "../types/product";
+import {
+  ADD_ATTRIBUTE_REQUEST,
+  SET_SELECTED_ATTRIBUTES,
+} from "../constants/ActionTypes";
+import {
+  AddAttributeInterface,
+  ProductActionType,
+  SelectedAttribute,
+} from "../types/product";
 
 const addAttribute = (attribute: AddAttributeInterface): ProductActionType => {
   return {
@@ -8,6 +15,16 @@ const addAttribute = (attribute: AddAttributeInterface): ProductActionType => {
   };
 };
 
+const setSelectedAttributes = (
+  attributes: SelectedAttribute[]
+): ProductActionType => {
+  return {
+    type: SET_SELECTED_ATTRIBUTES,
+    attributes,
+  };
+};
+
 export default {
   addAttribute,
+  setSelectedAttributes,
 };
