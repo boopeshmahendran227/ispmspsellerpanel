@@ -7,7 +7,7 @@ interface FieldInputProps {
   label: string;
   name: string;
   placeholder?: string;
-  metaInfo: string;
+  metaInfo?: string;
 }
 
 const FieldInput = (props: FieldInputProps) => {
@@ -35,20 +35,25 @@ const FieldInput = (props: FieldInputProps) => {
               width: 100%;
               margin-bottom: 0.7em;
               font-size: 1.1rem;
+              display: flex;
             }
             .label {
               display: inline-block;
               margin: 0.6em 0;
               font-weight: 500;
+              min-width: 200px;
+              text-align: right;
             }
             .inputContainer {
               display: inline-flex;
               flex-direction: column;
               align-items: flex-start;
+              flex: 1;
             }
             input {
               padding: 0.6em;
               margin: 0.5em;
+              width: 100%;
             }
             .metaContainer {
               color: ${CSSConstants.secondaryTextColor};

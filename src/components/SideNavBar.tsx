@@ -61,10 +61,10 @@ const SideNavBar = () => {
             </Link>
           </li>
           <li>
-            <Link activeClassName="active" href="/catalog">
+            <Link activeClassName="active" href="/product">
               <a>
                 <i className="fas fa-warehouse" aria-hidden={true}></i>
-                <span>Catalog</span>
+                <span>Products</span>
               </a>
             </Link>
           </li>

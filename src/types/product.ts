@@ -7,6 +7,30 @@ export interface ProductAttributeValue {
   value: string;
 }
 
+export interface BrandInterface {
+  id: number;
+  name: string;
+}
+
+enum AttributeType {
+  Default = "Default",
+  Color = "Color",
+  Warranty = "Warranty",
+}
+
+export interface AttributeValueInterface {
+  id: number;
+  value: string;
+}
+
+export interface AttributeInterface {
+  id: number;
+  description: string;
+  name: string;
+  attributeType: AttributeType;
+  values: AttributeValueInterface[];
+}
+
 export const ProductSchema = Yup.object().shape({
   name: Yup.string().required().nullable(),
   brand: Yup.string().required().nullable(),
