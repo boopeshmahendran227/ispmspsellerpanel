@@ -12,7 +12,7 @@ import QuoteItemDetail from "../../src/components/QuoteItemDetail";
 import QuoteActions from "../../src/actions/quote";
 
 interface DispatchProps {
-  rejectQuote: (quoteId: number) => void;
+  rejectQuote: (quote: QuoteInterface) => void;
   updateQuote: (quote: QuoteInterface) => void;
 }
 

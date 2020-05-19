@@ -10,7 +10,7 @@ import QuoteProduct from "./QuoteProduct";
 interface QuoteItemDetailProps {
   quote: QuoteInterface;
   updateQuote: (quote: QuoteInterface) => void;
-  rejectQuote: (quoteId: number) => void;
+  rejectQuote: (quote: QuoteInterface) => void;
 }
 
 const QuoteItemDetail = (props: QuoteItemDetailProps) => {

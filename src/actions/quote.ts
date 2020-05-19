@@ -1,5 +1,5 @@
 import {
-  REJECT_QUOTE_REQUEST,
+  REJECT_QUOTE,
   UPDATE_QUOTE,
   SET_CURRENT_QUOTE,
   UPDATE_QUOTE_REQUEST,
@@ -28,10 +28,10 @@ const updateQuoteRequest = (
   };
 };
 
-const rejectQuote = (quoteId: number): QuoteActionType => {
+const rejectQuote = (quote: QuoteInterface): QuoteActionType => {
   return {
-    type: REJECT_QUOTE_REQUEST,
-    quoteId,
+    type: REJECT_QUOTE,
+    quote,
   };
 };
 
