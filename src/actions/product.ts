@@ -1,12 +1,13 @@
-import { ADD_PRODUCT_REQUEST } from "../constants/ActionTypes";
+import { ADD_ATTRIBUTE_REQUEST } from "../constants/ActionTypes";
+import { AddAttributeInterface, ProductActionType } from "../types/product";
 
-const addProduct = product => {
+const addAttribute = (attribute: AddAttributeInterface): ProductActionType => {
   return {
-    type: ADD_PRODUCT_REQUEST,
-    product
+    type: ADD_ATTRIBUTE_REQUEST,
+    attribute,
   };
 };
 
 export default {
-  addProduct
+  addAttribute,
 };

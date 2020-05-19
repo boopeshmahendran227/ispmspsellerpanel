@@ -11,6 +11,8 @@ import {
   SURE_MODAL_CANCEL_CLICKED,
   REASON_MODAL_SUBMIT_CLICKED,
   REASON_MODAL_CANCEL_CLICKED,
+  SHOW_ATTRIBUTE_MODAL,
+  HIDE_ATTRIBUTE_MODAL,
 } from "../constants/ActionTypes";
 
 interface ShowSureModalAction {
@@ -67,6 +69,14 @@ interface HideUpdateQuoteModalAction {
   type: typeof HIDE_UPDATE_QUOTE_MODAL;
 }
 
+interface ShowAttributeModalAction {
+  type: typeof SHOW_ATTRIBUTE_MODAL;
+}
+
+interface HideAttributeModalAction {
+  type: typeof HIDE_ATTRIBUTE_MODAL;
+}
+
 export type UIActionType =
   | ShowSureModalAction
   | HideSureModalAction
@@ -79,7 +89,9 @@ export type UIActionType =
   | ReasonModalSubmitClicked
   | ReasonModalCancelClicked
   | ShowUpdateQuoteModalAction
-  | HideUpdateQuoteModalAction;
+  | HideUpdateQuoteModalAction
+  | ShowAttributeModalAction
+  | HideAttributeModalAction;
 
 export interface SureModalData {
   open: boolean;

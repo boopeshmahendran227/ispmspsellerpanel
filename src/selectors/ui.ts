@@ -22,9 +22,15 @@ const getUpdateQuoteModalOpen = createSelector(
   (ui): boolean => ui.updateQuoteModalOpen
 );
 
+const getAttributeModalOpen = createSelector(
+  (state: RootState) => state.ui,
+  (ui): boolean => ui.attributeModalOpen
+);
+
 export {
   getSureModalData,
   getLoadingScreenOpen,
   getReasonModalData,
   getUpdateQuoteModalOpen,
+  getAttributeModalOpen,
 };

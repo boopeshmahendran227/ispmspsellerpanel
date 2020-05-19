@@ -1,4 +1,12 @@
 import * as Yup from "yup";
+import { ADD_ATTRIBUTE_REQUEST } from "../constants/ActionTypes";
+
+interface AddAttributeAction {
+  type: typeof ADD_ATTRIBUTE_REQUEST;
+  attribute: AddAttributeInterface;
+}
+
+export type ProductActionType = AddAttributeAction;
 
 export interface ProductAttributeValue {
   attributeId: number;
@@ -12,7 +20,7 @@ export interface BrandInterface {
   name: string;
 }
 
-enum AttributeType {
+export enum AttributeType {
   Default = "Default",
   Color = "Color",
   Warranty = "Warranty",
@@ -29,6 +37,13 @@ export interface AttributeInterface {
   name: string;
   attributeType: AttributeType;
   values: AttributeValueInterface[];
+}
+
+export interface AddAttributeInterface {
+  name: string;
+  description: string;
+  attributeType: AttributeType;
+  values: string[];
 }
 
 export const ProductSchema = Yup.object().shape({
