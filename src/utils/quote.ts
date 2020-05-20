@@ -10,6 +10,7 @@ const getQuoteStatusText = (status: QuoteStatus) => {
       return "Responded";
     case QuoteStatus.Converted:
       return "Converted";
+    case QuoteStatus.SellerRejected:
     case QuoteStatus.Rejected:
       return "Rejected";
     case QuoteStatus.Expired:
@@ -28,6 +29,7 @@ const getColor = (status: QuoteStatus) => {
       return CSSConstants.successColor;
     case QuoteStatus.Converted:
       return CSSConstants.successColor;
+    case QuoteStatus.SellerRejected:
     case QuoteStatus.Rejected:
       return CSSConstants.dangerColor;
   }

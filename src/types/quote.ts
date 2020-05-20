@@ -92,6 +92,7 @@ export enum QuoteStatus {
   Rejected = "Rejected",
   SellerResponsePending = "SellerResponsePending",
   SellerResponded = "SellerResponded",
+  SellerRejected = "SellerRejected",
   Converted = "Converted",
   Expired = "Expired",
 }
