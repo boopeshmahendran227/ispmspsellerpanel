@@ -64,6 +64,17 @@ export interface AddAttributeInterface {
   values: string[];
 }
 
+export interface ProductMiniInterface {
+  id: number;
+  imageRelativePaths: string[];
+  name: string;
+  averageRating: number;
+  shortDescription: string;
+  price: number;
+  specialDiscount: number;
+  isBundle: boolean;
+}
+
 export interface SelectedAttribute {
   attributeId: number;
   attributeName: string;
