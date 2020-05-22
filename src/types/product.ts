@@ -84,6 +84,26 @@ export interface SelectedAttributeValuesMap {
   [key: number]: AttributeValueInterface[];
 }
 
+export interface ProductSkuDetail {
+  skuId: string;
+  price: number;
+  boughtPrice: number;
+  qty: number;
+  attributeValueIds: ProductAttributeValueId[];
+  imageRelativePaths: string[];
+  length: string;
+  width: string;
+  height: string;
+  weight: string;
+}
+
+export interface ProductAttributeValueId {
+  attributeId: number;
+  valueId: number;
+  attributeName: string;
+  value: string;
+}
+
 export const ProductSchema = Yup.object().shape({
   name: Yup.string().required().nullable(),
   brand: Yup.string().required().nullable(),
@@ -95,6 +115,5 @@ export const ProductSchema = Yup.object().shape({
     .typeError("Quantity must be a number")
     .positive("Quantity must be greater than zero")
     .required(),
-  sku: Yup.string().required("Unit is a required field"),
   productCategoryId: Yup.string().required(),
 });

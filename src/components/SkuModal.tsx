@@ -3,6 +3,7 @@ import { useState } from "react";
 import Button, { ButtonType } from "../../src/components/Button";
 import SelectAttributes from "./SelectAttributes";
 import SelectAttributeValues from "./SelectAttributeValues";
+import SkuInputTable from "./SkuInputTable";
 
 interface SkuModalProps {
   open: boolean;
@@ -13,7 +14,11 @@ const SkuModal = (props: SkuModalProps) => {
   const { open, onClose } = props;
   const [currentStep, setCurrentStep] = useState(0);
 
-  const steps = [<SelectAttributes />, <SelectAttributeValues />];
+  const steps = [
+    <SelectAttributes />,
+    <SelectAttributeValues />,
+    <SkuInputTable />,
+  ];
 
   return (
     <Modal open={open} onClose={onClose}>
