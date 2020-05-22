@@ -1,17 +1,7 @@
 import SortableTable from "./SortableTable";
-import { connect } from "react-redux";
-import { RootState } from "../reducers";
 import { ProductSkuDetail } from "../types/product";
-import { getSkus } from "../selectors/product";
 import CSSConstants from "../constants/CSSConstants";
-
-interface StateProps {
-  skus: ProductSkuDetail[];
-}
-
-interface DispatchProps {}
-
-type SkuInputTableProps = StateProps & DispatchProps;
+import { Field, FieldArray, useFormikContext } from "formik";
 
 const getTableHeaders = () => {
   return [
@@ -55,28 +45,52 @@ const getTableHeaders = () => {
 };
 
 const renderTableBody = (skus: ProductSkuDetail[]) => {
-  return skus.map((sku) => (
-    <tr>
-      <td>{sku.skuId}</td>
-      <td>{""}</td>
-      <td>{sku.price}</td>
-      <td>{sku.boughtPrice}</td>
-      <td>{sku.qty}</td>
-      <td>{sku.length}</td>
-      <td>{sku.width}</td>
-      <td>{sku.height}</td>
-      <td>{sku.weight}</td>
-      <style jsx>{`
-        tr:hover {
-          background-color: ${CSSConstants.hoverColor} !important;
-          cursor: pointer;
-        }
-      `}</style>
-    </tr>
-  ));
+  return (
+    <FieldArray
+      name="skus"
+      render={(arrayHelpers) =>
+        skus.map((sku, index) => (
+          <tr>
+            <td>{sku.skuId}</td>
+            <td>{""}</td>
+            <td>
+              <Field name={`sku.${index}.price`} />
+            </td>
+            <td>
+              <Field name={`sku.${index}.boughtPrice`} />
+            </td>
+            <td>
+              <Field name={`sku.${index}.qty`} />
+            </td>
+            <td>
+              <Field name={`sku.${index}.length`} />
+            </td>
+            <td>
+              <Field name={`sku.${index}.width`} />
+            </td>
+            <td>
+              <Field name={`sku.${index}.height`} />
+            </td>
+            <td>
+              <Field name={`sku.${index}.weight`} />
+            </td>
+            <style jsx>{`
+              tr:hover {
+                background-color: ${CSSConstants.hoverColor} !important;
+                cursor: pointer;
+              }
+            `}</style>
+          </tr>
+        ))
+      }
+    />
+  );
 };
 
-const SkuInputTable = (props: SkuInputTableProps) => {
+const SkuInputTable = () => {
+  const { values } = useFormikContext();
+  const skus = values.skus;
+
   return (
     <SortableTable
       initialSortData={{
@@ -84,15 +98,11 @@ const SkuInputTable = (props: SkuInputTableProps) => {
         isAsc: false,
       }}
       headers={getTableHeaders()}
-      data={props.skus}
+      data={skus}
       emptyMsg="There are no orders"
       body={renderTableBody}
     />
   );
 };
 
-const mapStateToProps = (state: RootState): StateProps => ({
-  skus: getSkus(state),
-});
-
-export default connect(mapStateToProps, null)(SkuInputTable);
+export default SkuInputTable;
