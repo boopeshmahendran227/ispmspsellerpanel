@@ -4,7 +4,6 @@ import ValidationErrorMsg from "../components/ValidationErrorMsg";
 import CSSConstants from "../constants/CSSConstants";
 
 interface FieldInputProps {
-  label: string;
   name: string;
   placeholder?: string;
   metaInfo?: string;
@@ -20,7 +19,6 @@ const FieldInput = (props: FieldInputProps) => {
             error: Boolean(form.touched[props.name] && form.errors[props.name]),
           })}
         >
-          <span className="label">{props.label}: </span>
           <div className="inputContainer">
             <input type="text" placeholder={props.placeholder} {...field} />
             {Boolean(props.metaInfo) && (
@@ -36,13 +34,6 @@ const FieldInput = (props: FieldInputProps) => {
               margin-bottom: 0.7em;
               font-size: 1.1rem;
               display: flex;
-            }
-            .label {
-              display: inline-block;
-              margin: 0.6em 0;
-              font-weight: 500;
-              min-width: 200px;
-              text-align: right;
             }
             .inputContainer {
               display: inline-flex;

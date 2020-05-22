@@ -4,16 +4,21 @@ import { Field, ErrorMessage } from "formik";
 import classNames from "classnames";
 import CSSConstants from "../constants/CSSConstants";
 
+interface OptionInterface {
+  value: number;
+  label: string;
+}
+
 interface FieldSelectProps {
-  id: string;
   name: string;
-  placeholder: string;
-  children: React.ReactNode;
+  options: OptionInterface[];
 }
 
 const FieldSelect = (props: FieldSelectProps) => {
+  const { name } = props;
+
   return (
-    <Field name={props.name}>
+    <Field name={name}>
       {({ field, form }) => (
         <div
           className={classNames({
@@ -21,34 +26,26 @@ const FieldSelect = (props: FieldSelectProps) => {
             error: Boolean(form.touched[props.name] && form.errors[props.name]),
           })}
         >
-          <label htmlFor={props.id}>{props.placeholder}:</label>
           <div className="selectContainer">
-            <Select {...field}>{props.children}</Select>
+            <Select
+              value={field.value}
+              onChange={(value) => {
+                field.onChange({
+                  target: { name, value: value },
+                });
+              }}
+              options={props.options}
+            />
           </div>
           <div className="errorContainer">
             <ErrorMessage component={ValidationErrorMsg} name={props.name} />
           </div>
           <style jsx>{`
             .container {
-              display: grid;
-              grid-template-columns: 1fr 2fr;
-              grid-column-gap: 0.5em;
-              align-items: center;
               margin: 0.3em 0;
             }
             .container.error {
               color: ${CSSConstants.dangerColor};
-            }
-            label {
-              font-weight: bold;
-              text-align: right;
-            }
-            .selectContainer {
-              text-align: left;
-            }
-            .errorContainer {
-              grid-column-start: 2;
-              text-align: left;
             }
           `}</style>
         </div>

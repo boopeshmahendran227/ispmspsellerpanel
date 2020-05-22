@@ -126,7 +126,7 @@ export interface SpecificationItemGroup {
 
 export interface SpecificationInterface {
   name: string;
-  itemGroups: SpecificationItem[];
+  itemGroups: SpecificationItemGroup[];
 }
 
 export const ProductSchema = Yup.object().shape({

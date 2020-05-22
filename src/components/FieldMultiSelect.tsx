@@ -2,16 +2,23 @@ import ValidationErrorMsg from "./ValidationErrorMsg";
 import { Field, ErrorMessage } from "formik";
 import classNames from "classnames";
 import CSSConstants from "../constants/CSSConstants";
-import Select from "react-select";
+import MultiSelect from "./MultiSelect";
 
-interface FieldMultiSelectProps {
-  name: string;
+interface OptionInterface {
+  value: number;
   label: string;
 }
 
+interface FieldMultiSelectProps {
+  name: string;
+  options: OptionInterface[];
+}
+
 const FieldMultiSelect = (props: FieldMultiSelectProps) => {
+  const { name } = props;
+
   return (
-    <Field name={props.name}>
+    <Field name={name}>
       {({ field, form }) => (
         <label
           className={classNames({
@@ -19,29 +26,26 @@ const FieldMultiSelect = (props: FieldMultiSelectProps) => {
             error: Boolean(form.touched[props.name] && form.errors[props.name]),
           })}
         >
-          <span className="label">{props.label}: </span>
           <div className="selectContainer">
-            <Select {...field} />
+            <MultiSelect
+              value={field.value}
+              onChange={(value) => {
+                field.onChange({
+                  target: { name, value: value },
+                });
+              }}
+              options={props.options}
+            />
           </div>
           <div className="errorContainer">
             <ErrorMessage component={ValidationErrorMsg} name={props.name} />
           </div>
           <style jsx>{`
             .container {
-              width: 100%;
-              margin-bottom: 0.7em;
-              font-size: 1.1rem;
-              display: flex;
+              margin: 0.3em 0;
             }
             .container.error {
               color: ${CSSConstants.dangerColor};
-            }
-            .label {
-              display: inline-block;
-              margin: 0.6em 0;
-              font-weight: 500;
-              min-width: 200px;
-              text-align: right;
             }
           `}</style>
         </label>

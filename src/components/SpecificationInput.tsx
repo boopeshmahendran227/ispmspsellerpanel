@@ -1,6 +1,7 @@
 import Button from "./Button";
 import { FieldArray, useFormikContext, Field } from "formik";
 import { SpecificationInterface } from "../types/product";
+import InputLabel from "./InputLabel";
 
 const SpecificationInput = () => {
   const { values } = useFormikContext();
@@ -35,6 +36,7 @@ const SpecificationInput = () => {
             {specification.itemGroups.length > 0 &&
               specification.itemGroups.map((group, groupIndex) => (
                 <div className="specGroupContainer">
+                  <InputLabel label="Group name" />
                   <Field name={`specification.itemGroups.${groupIndex}.name`} />
                   <FieldArray
                     name={`specification.itemGroups.${groupIndex}.items`}
@@ -76,7 +78,7 @@ const SpecificationInput = () => {
                                       <i
                                         className="fa fa-trash"
                                         aria-hidden="true"
-                                      ></i>
+                                      />
                                     </button>
                                   </td>
                                 </tr>
