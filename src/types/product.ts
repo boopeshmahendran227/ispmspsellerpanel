@@ -104,6 +104,31 @@ export interface ProductAttributeValueId {
   value: string;
 }
 
+export interface TierPriceInterface {
+  minQty: number;
+  discountPercentage: number;
+}
+
+export interface FAQInterface {
+  question: string;
+  answer: string;
+}
+
+export interface SpecificationItem {
+  key: string;
+  value: string;
+}
+
+export interface SpecificationItemGroup {
+  name: string;
+  items: SpecificationItem[];
+}
+
+export interface SpecificationInterface {
+  name: string;
+  itemGroups: SpecificationItem[];
+}
+
 export const ProductSchema = Yup.object().shape({
   name: Yup.string().required().nullable(),
   brand: Yup.string().required().nullable(),

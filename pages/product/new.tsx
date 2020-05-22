@@ -18,6 +18,8 @@ import UIActions from "../../src/actions/ui";
 import AttributeModal from "../../src/components/AttributeModal";
 import SkuModal from "../../src/components/SkuModal";
 import { useState } from "react";
+import TierPriceInput from "../../src/components/TierpriceInput";
+import FAQInput from "../../src/components/FAQInput";
 
 interface StateProps {}
 
@@ -46,9 +48,6 @@ const AddProduct = (props: AddProductProps) => {
     return <Loader />;
   }
 
-  console.log(brands);
-  console.log(attributes);
-
   const onSubmit = (values) => {};
 
   return (
@@ -56,7 +55,27 @@ const AddProduct = (props: AddProductProps) => {
       <AttributeModal />
       <SkuModal open={skuModalOpen} onClose={() => setSkuModalOpen(false)} />
       <div className="formContainer">
-        <Formik initialValues={{}} onSubmit={onSubmit}>
+        <Formik
+          initialValues={{
+            tierPrice: [
+              {
+                minQty: 0,
+                discountPercentage: 0,
+              },
+            ],
+            faqs: [
+              {
+                question: "",
+                answer: "",
+              },
+            ],
+            specification: {
+              name: null,
+              itemGroups: [],
+            },
+          }}
+          onSubmit={onSubmit}
+        >
           {() => (
             <Form>
               <FieldInput name="name" label="Name" />
@@ -69,6 +88,8 @@ const AddProduct = (props: AddProductProps) => {
                 Create New Attribute
               </Button>
               <Button onClick={() => setSkuModalOpen(true)}>Create SKUs</Button>
+              <TierPriceInput />
+              <FAQInput />
               <div>
                 <Button isSubmitButton={true}>Add</Button>
               </div>
