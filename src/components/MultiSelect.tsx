@@ -1,14 +1,10 @@
 import Select from "react-select";
+import { SelectOptionInterface } from "../types/product";
 
 interface MultiSelectProps {
-  value: OptionInterface[];
-  onChange: (selectedOptions: OptionInterface[]) => void;
-  options: OptionInterface[];
-}
-
-interface OptionInterface {
-  value: number;
-  label: string;
+  value: SelectOptionInterface[];
+  onChange: (selectedOptions: SelectOptionInterface[]) => void;
+  options: SelectOptionInterface[];
 }
 
 const MultiSelect = (props: MultiSelectProps) => {

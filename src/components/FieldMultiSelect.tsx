@@ -3,15 +3,11 @@ import { Field, ErrorMessage } from "formik";
 import classNames from "classnames";
 import CSSConstants from "../constants/CSSConstants";
 import MultiSelect from "./MultiSelect";
-
-interface OptionInterface {
-  value: number;
-  label: string;
-}
+import { SelectOptionInterface } from "../types/product";
 
 interface FieldMultiSelectProps {
   name: string;
-  options: OptionInterface[];
+  options: SelectOptionInterface[];
 }
 
 const FieldMultiSelect = (props: FieldMultiSelectProps) => {

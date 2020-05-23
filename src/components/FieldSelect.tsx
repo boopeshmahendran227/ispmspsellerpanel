@@ -3,15 +3,11 @@ import ValidationErrorMsg from "./ValidationErrorMsg";
 import { Field, ErrorMessage } from "formik";
 import classNames from "classnames";
 import CSSConstants from "../constants/CSSConstants";
-
-interface OptionInterface {
-  value: number;
-  label: string;
-}
+import { SelectOptionInterface } from "../types/product";
 
 interface FieldSelectProps {
   name: string;
-  options: OptionInterface[];
+  options: SelectOptionInterface[];
 }
 
 const FieldSelect = (props: FieldSelectProps) => {

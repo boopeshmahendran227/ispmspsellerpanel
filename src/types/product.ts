@@ -47,23 +47,18 @@ export interface ProductInputInterface {
   specialDiscountValue: number;
   minPrice: number;
   maxPrice: number;
-  brand: {
-    value: number;
-    label: string;
-  };
+  brand: SelectOptionInterface;
   tierPrices: TierPriceInterface[];
   faqs: FAQInterface[];
-  categories: [
-    {
-      value: number;
-      label: string;
-    }
-  ];
-  defaultCategory: {
-    value: number;
-    label: string;
-  };
+  categories: SelectOptionInterface[];
+  defaultCategory: SelectOptionInterface;
   specification: SpecificationInterface;
+  skus: ProductSkuDetail[];
+}
+
+export interface SelectOptionInterface {
+  value: number;
+  label: string;
 }
 
 export interface ProductAttributeValue {
