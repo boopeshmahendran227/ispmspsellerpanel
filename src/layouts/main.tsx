@@ -69,18 +69,17 @@ const Layout = (props: LayoutProps) => {
             0px 4px 5px 0px rgba(0, 0, 0, 0.14),
             0px 1px 10px 0px rgba(0, 0, 0, 0.12);
         }
-        input {
-          padding: 0.8em;
-          margin: 0.5em 0;
-          transition: border 0.3s;
-          background: #ffffff;
-          border: 1px solid ${CSSConstants.borderColor};
-        }
         input,
         textarea {
+          padding: 0.8em;
+          margin: 0.5em 0;
+          background: #ffffff;
           font-size: 0.8rem;
+          border: 1px solid ${CSSConstants.borderColor};
+          transition: border 0.3s;
         }
-        input:focus {
+        input:focus,
+        textarea:focus {
           outline: none;
           border: 1px solid ${CSSConstants.primaryColor};
         }

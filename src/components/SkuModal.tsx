@@ -3,7 +3,6 @@ import { useState } from "react";
 import Button, { ButtonType } from "../../src/components/Button";
 import SelectAttributes from "./SelectAttributes";
 import SelectAttributeValues from "./SelectAttributeValues";
-import SkuInputTable from "./SkuInputTable";
 
 interface SkuModalProps {
   open: boolean;
@@ -14,11 +13,7 @@ const SkuModal = (props: SkuModalProps) => {
   const { open, onClose } = props;
   const [currentStep, setCurrentStep] = useState(0);
 
-  const steps = [
-    <SelectAttributes />,
-    <SelectAttributeValues />,
-    <SkuInputTable />,
-  ];
+  const steps = [<SelectAttributes />, <SelectAttributeValues />];
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -29,15 +24,27 @@ const SkuModal = (props: SkuModalProps) => {
           <Button
             type={ButtonType.primary}
             onClick={() => setCurrentStep(currentStep - 1)}
+            disabled={currentStep === 0}
+            outlined={true}
           >
             Back
           </Button>
-          <Button
-            type={ButtonType.primary}
-            onClick={() => setCurrentStep(currentStep + 1)}
-          >
-            Next
-          </Button>
+          {currentStep === 0 && (
+            <Button
+              type={ButtonType.primary}
+              onClick={() => setCurrentStep(currentStep + 1)}
+            >
+              Next
+            </Button>
+          )}
+          {currentStep === 1 && (
+            <Button
+              type={ButtonType.primary}
+              onClick={() => setCurrentStep(currentStep + 1)}
+            >
+              Create
+            </Button>
+          )}
         </div>
       </div>
       <style jsx>{`
@@ -55,6 +62,7 @@ const SkuModal = (props: SkuModalProps) => {
         }
         .buttonContainer {
           padding: 1em;
+          text-align: center;
         }
       `}</style>
     </Modal>

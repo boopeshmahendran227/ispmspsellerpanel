@@ -99,7 +99,7 @@ const SkuInputTable = () => {
       }}
       headers={getTableHeaders()}
       data={skus}
-      emptyMsg="There are no orders"
+      emptyMsg=""
       body={renderTableBody}
     />
   );

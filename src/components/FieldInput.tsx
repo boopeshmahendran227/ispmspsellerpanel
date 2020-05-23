@@ -19,32 +19,19 @@ const FieldInput = (props: FieldInputProps) => {
             error: Boolean(form.touched[props.name] && form.errors[props.name]),
           })}
         >
-          <div className="inputContainer">
-            <input type="text" placeholder={props.placeholder} {...field} />
-            {Boolean(props.metaInfo) && (
-              <div className="metaContainer">{props.metaInfo}</div>
-            )}
-          </div>
+          <input type="text" placeholder={props.placeholder} {...field} />
+          {Boolean(props.metaInfo) && (
+            <div className="metaContainer">{props.metaInfo}</div>
+          )}
           <div className="errorContainer">
             <ErrorMessage component={ValidationErrorMsg} name={props.name} />
           </div>
           <style jsx>{`
             .container {
-              width: 100%;
-              margin-bottom: 0.7em;
-              font-size: 1.1rem;
-              display: flex;
-            }
-            .inputContainer {
-              display: inline-flex;
-              flex-direction: column;
-              align-items: flex-start;
-              flex: 1;
+              margin: 0.3em 0;
             }
             input {
               padding: 0.6em;
-              margin: 0.5em;
-              width: 100%;
             }
             .metaContainer {
               color: ${CSSConstants.secondaryTextColor};
