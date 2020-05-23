@@ -130,15 +130,19 @@ export interface SpecificationInterface {
 }
 
 export const ProductSchema = Yup.object().shape({
-  name: Yup.string().required().nullable(),
-  brand: Yup.string().required().nullable(),
-  price: Yup.number()
-    .typeError("Price must be a number")
-    .positive("Price must be greater than 0")
+  name: Yup.string().required(),
+  shortDescription: Yup.string().required(),
+  longDescription: Yup.string().required(),
+  brand: Yup.object().required(),
+  specialDiscountValue: Yup.number()
+    .typeError("Special discount value must be a number")
     .required(),
-  quantity: Yup.number()
-    .typeError("Quantity must be a number")
-    .positive("Quantity must be greater than zero")
+  minPrice: Yup.number()
+    .typeError("Min price must be a number")
+    .positive("Min price must be greater than 0")
     .required(),
-  productCategoryId: Yup.string().required(),
+  maxPrice: Yup.number()
+    .typeError("Max price must be a number")
+    .positive("Max price must be greater than 0")
+    .required(),
 });

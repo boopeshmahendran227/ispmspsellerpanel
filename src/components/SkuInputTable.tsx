@@ -2,6 +2,15 @@ import SortableTable from "./SortableTable";
 import { ProductSkuDetail } from "../types/product";
 import CSSConstants from "../constants/CSSConstants";
 import { Field, FieldArray, useFormikContext } from "formik";
+import Button from "./Button";
+import { connect } from "react-redux";
+import UIActions from "../actions/ui";
+
+interface DispatchProps {
+  showSkuModal: () => void;
+}
+
+type SkuInputTableProps = DispatchProps;
 
 const getTableHeaders = () => {
   return [
@@ -87,22 +96,48 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
   );
 };
 
-const SkuInputTable = () => {
+const SkuInputTable = (props: SkuInputTableProps) => {
   const { values } = useFormikContext();
   const skus = values.skus;
 
   return (
-    <SortableTable
-      initialSortData={{
-        index: 1,
-        isAsc: false,
-      }}
-      headers={getTableHeaders()}
-      data={skus}
-      emptyMsg=""
-      body={renderTableBody}
-    />
+    <div className="container">
+      <header>Skus</header>
+      <div className="buttonContainer">
+        <Button onClick={props.showSkuModal}>Generate SKUs</Button>
+      </div>
+      <SortableTable
+        initialSortData={{
+          index: 1,
+          isAsc: false,
+        }}
+        headers={getTableHeaders()}
+        data={skus}
+        emptyMsg=""
+        body={renderTableBody}
+      />
+      <style jsx>{`
+        .container {
+          margin: 3em 0;
+          font-size: 1.1rem;
+        }
+        header {
+          font-weight: bold;
+          font-size: 1.3rem;
+          border-bottom: 1px solid ${CSSConstants.borderColor};
+          padding: 0.3em;
+          margin-bottom: 1em;
+        }
+      `}</style>
+    </div>
   );
 };
 
-export default SkuInputTable;
+const mapDispatchToProps: DispatchProps = {
+  showSkuModal: UIActions.showSkuModal,
+};
+
+export default connect<null, DispatchProps>(
+  null,
+  mapDispatchToProps
+)(SkuInputTable);

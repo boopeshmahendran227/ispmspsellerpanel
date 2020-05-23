@@ -10,6 +10,8 @@ import {
   HIDE_UPDATE_QUOTE_MODAL,
   SHOW_ATTRIBUTE_MODAL,
   HIDE_ATTRIBUTE_MODAL,
+  SHOW_SKU_MODAL,
+  HIDE_SKU_MODAL,
 } from "../constants/ActionTypes";
 import { SureModalData, UIActionType, ReasonModalData } from "../types/ui";
 
@@ -102,10 +104,21 @@ const getAttributeModalOpen = (
   return state;
 };
 
+const getSkuModalOpen = (state: boolean = false, action: UIActionType) => {
+  switch (action.type) {
+    case SHOW_SKU_MODAL:
+      return true;
+    case HIDE_SKU_MODAL:
+      return false;
+  }
+  return state;
+};
+
 export default combineReducers({
   sureModalData: getSureModalData,
   reasonModalData: getReasonModalData,
   loadingScreenOpen: getLoadingScreenOpen,
   updateQuoteModalOpen: getUpdateQuoteModalOpen,
   attributeModalOpen: getAttributeModalOpen,
+  skuModalOpen: getSkuModalOpen,
 });

@@ -27,10 +27,16 @@ const getAttributeModalOpen = createSelector(
   (ui): boolean => ui.attributeModalOpen
 );
 
+const getSkuModalOpen = createSelector(
+  (state: RootState) => state.ui,
+  (ui): boolean => ui.skuModalOpen
+);
+
 export {
   getSureModalData,
   getLoadingScreenOpen,
   getReasonModalData,
   getUpdateQuoteModalOpen,
   getAttributeModalOpen,
+  getSkuModalOpen,
 };

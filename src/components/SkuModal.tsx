@@ -3,11 +3,20 @@ import { useState } from "react";
 import Button, { ButtonType } from "../../src/components/Button";
 import SelectAttributes from "./SelectAttributes";
 import SelectAttributeValues from "./SelectAttributeValues";
+import { getSkuModalOpen } from "../selectors/ui";
+import { connect } from "react-redux";
+import UIActions from "../actions/ui";
+import { RootState } from "../reducers";
 
-interface SkuModalProps {
+interface StateProps {
   open: boolean;
+}
+
+interface DispatchProps {
   onClose: () => void;
 }
+
+type SkuModalProps = StateProps & DispatchProps;
 
 const SkuModal = (props: SkuModalProps) => {
   const { open, onClose } = props;
@@ -69,4 +78,15 @@ const SkuModal = (props: SkuModalProps) => {
   );
 };
 
-export default SkuModal;
+const mapStateToProps = (state: RootState): StateProps => ({
+  open: getSkuModalOpen(state),
+});
+
+const mapDispatchToProps: DispatchProps = {
+  onClose: UIActions.hideSkuModal,
+};
+
+export default connect<StateProps, DispatchProps>(
+  mapStateToProps,
+  mapDispatchToProps
+)(SkuModal);

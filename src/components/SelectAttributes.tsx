@@ -5,8 +5,10 @@ import Loader from "../../src/components/Loader";
 import MultiSelect from "../../src/components/MultiSelect";
 import { RootState } from "../reducers";
 import ProductActions from "../../src/actions/product";
+import UIActions from "../../src/actions/ui";
 import { connect } from "react-redux";
 import { getSelectedAttributes } from "../../src/selectors/product";
+import Button from "../../src/components/Button";
 
 interface StateProps {
   selectedAttributes: SelectedAttribute[];
@@ -14,6 +16,7 @@ interface StateProps {
 
 interface DispatchProps {
   setSelectedAttributes: (selectedAttributes: SelectedAttribute[]) => void;
+  showAttributeModal: () => void;
 }
 
 type SelectAttributesProps = StateProps & DispatchProps;
@@ -55,7 +58,14 @@ const SelectAttributes = (props: SelectAttributesProps) => {
 
   return (
     <div className="container">
-      <header>Step 1: Select Attributes </header>
+      <header>
+        Step 1: Select Attributes
+        <div className="buttonContainer">
+          <Button onClick={() => props.showAttributeModal()}>
+            Create New Attribute
+          </Button>
+        </div>
+      </header>
       <div className="selectContainer">
         <MultiSelect
           value={selectedOption}
@@ -68,6 +78,12 @@ const SelectAttributes = (props: SelectAttributesProps) => {
           font-size: 1.2rem;
           font-weight: bold;
           margin-bottom: 1em;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .buttonContainer {
+          font-size: 0.9rem;
         }
       `}</style>
     </div>
@@ -80,6 +96,7 @@ const mapStateToProps = (state: RootState): StateProps => ({
 
 const mapDispatchToProps: DispatchProps = {
   setSelectedAttributes: ProductActions.setSelectedAttributes,
+  showAttributeModal: UIActions.showAttributeModal,
 };
 
 export default connect<StateProps, DispatchProps>(
