@@ -6,14 +6,20 @@ import SelectAttributeValues from "./SelectAttributeValues";
 import { getSkuModalOpen } from "../selectors/ui";
 import { connect } from "react-redux";
 import UIActions from "../actions/ui";
+import ProductActions from "../actions/product";
 import { RootState } from "../reducers";
+import { getSelectedAttributes } from "../../src/selectors/product";
+import { SelectedAttribute } from "../types/product";
 
 interface StateProps {
+  selectedAttributes: SelectedAttribute[];
   open: boolean;
 }
 
 interface DispatchProps {
   onClose: () => void;
+  setSelectedAttributes: (selectedAttributes: SelectedAttribute[]) => void;
+  showAttributeModal: () => void;
 }
 
 type SkuModalProps = StateProps & DispatchProps;
@@ -22,7 +28,14 @@ const SkuModal = (props: SkuModalProps) => {
   const { open, onClose } = props;
   const [currentStep, setCurrentStep] = useState(0);
 
-  const steps = [<SelectAttributes />, <SelectAttributeValues />];
+  const steps = [
+    <SelectAttributes
+      selectedAttributes={props.selectedAttributes}
+      setSelectedAttributes={props.setSelectedAttributes}
+      showAttributeModal={props.showAttributeModal}
+    />,
+    <SelectAttributeValues />,
+  ];
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -42,6 +55,7 @@ const SkuModal = (props: SkuModalProps) => {
             <Button
               type={ButtonType.primary}
               onClick={() => setCurrentStep(currentStep + 1)}
+              disabled={props.selectedAttributes.length === 0}
             >
               Next
             </Button>
@@ -80,10 +94,13 @@ const SkuModal = (props: SkuModalProps) => {
 
 const mapStateToProps = (state: RootState): StateProps => ({
   open: getSkuModalOpen(state),
+  selectedAttributes: getSelectedAttributes(state),
 });
 
 const mapDispatchToProps: DispatchProps = {
+  setSelectedAttributes: ProductActions.setSelectedAttributes,
   onClose: UIActions.hideSkuModal,
+  showAttributeModal: UIActions.showAttributeModal,
 };
 
 export default connect<StateProps, DispatchProps>(

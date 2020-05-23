@@ -61,32 +61,68 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
         skus.map((sku, index) => (
           <tr>
             <td>{sku.skuId}</td>
-            <td>{""}</td>
             <td>
-              <Field name={`sku.${index}.price`} />
+              <FieldArray
+                name={`skus.${index}.imageRelativePaths`}
+                render={(arrayHelpers) => {
+                  const images = sku.imageRelativePaths;
+                  return (
+                    <div className="imageInputContainer">
+                      {images.map((image, index) => (
+                        <div className="imageInputField">
+                          <Field
+                            name={`skus.${index}.imageRelativePaths.${index}`}
+                          />
+                          {index > 0 && (
+                            <button
+                              type="button"
+                              onClick={() => arrayHelpers.remove(index)}
+                            >
+                              <i className="fa fa-trash" />
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                      <a onClick={() => arrayHelpers.push("")}>
+                        {images.length === 0 ? "+ Add" : "Add another"}
+                      </a>
+                    </div>
+                  );
+                }}
+              />
             </td>
             <td>
-              <Field name={`sku.${index}.boughtPrice`} />
+              <Field name={`skus.${index}.price`} />
             </td>
             <td>
-              <Field name={`sku.${index}.qty`} />
+              <Field name={`skus.${index}.boughtPrice`} />
             </td>
             <td>
-              <Field name={`sku.${index}.length`} />
+              <Field name={`skus.${index}.qty`} />
             </td>
             <td>
-              <Field name={`sku.${index}.width`} />
+              <Field name={`skus.${index}.length`} />
             </td>
             <td>
-              <Field name={`sku.${index}.height`} />
+              <Field name={`skus.${index}.width`} />
             </td>
             <td>
-              <Field name={`sku.${index}.weight`} />
+              <Field name={`skus.${index}.height`} />
+            </td>
+            <td>
+              <Field name={`skus.${index}.weight`} />
             </td>
             <style jsx>{`
               tr:hover {
                 background-color: ${CSSConstants.hoverColor} !important;
                 cursor: pointer;
+              }
+              .imageInputContainer a {
+                display: block;
+                text-align: left;
+              }
+              .imageInputField {
+                display: flex;
               }
             `}</style>
           </tr>
@@ -106,16 +142,18 @@ const SkuInputTable = (props: SkuInputTableProps) => {
       <div className="buttonContainer">
         <Button onClick={props.showSkuModal}>Generate SKUs</Button>
       </div>
-      <SortableTable
-        initialSortData={{
-          index: 1,
-          isAsc: false,
-        }}
-        headers={getTableHeaders()}
-        data={skus}
-        emptyMsg=""
-        body={renderTableBody}
-      />
+      {skus.length > 1 && (
+        <SortableTable
+          initialSortData={{
+            index: 1,
+            isAsc: false,
+          }}
+          headers={getTableHeaders()}
+          data={skus}
+          emptyMsg=""
+          body={renderTableBody}
+        />
+      )}
       <style jsx>{`
         .container {
           margin: 3em 0;
