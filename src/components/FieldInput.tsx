@@ -29,9 +29,12 @@ const FieldInput = (props: FieldInputProps) => {
           <style jsx>{`
             .container {
               margin: 0.3em 0;
+              width: 100%;
+              font-size: 1.1rem;
             }
             input {
-              padding: 0.6em;
+              padding: 0.8em;
+              width: 100%;
             }
             .metaContainer {
               color: ${CSSConstants.secondaryTextColor};

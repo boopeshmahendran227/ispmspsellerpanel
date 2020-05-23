@@ -121,9 +121,6 @@ const SpecificationInput = () => {
               padding: 0.3em;
               margin-bottom: 1em;
             }
-            .inputContainer {
-              margin: 0 1em;
-            }
           `}</style>
         </div>
       )}

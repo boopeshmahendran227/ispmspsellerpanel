@@ -23,7 +23,6 @@ const MultiSelect = (props: MultiSelectProps) => {
       <style jsx>{`
         .container {
           margin: 0.9em 0;
-          max-width: 400px;
         }
       `}</style>
     </div>

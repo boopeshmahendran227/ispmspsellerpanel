@@ -24,6 +24,7 @@ const FieldTextArea = (props: FieldTextAreaProps) => {
           <style jsx>{`
             .container {
               margin: 0.3em 0;
+              width: 100%;
             }
             .container.error {
               color: ${CSSConstants.dangerColor};
@@ -34,6 +35,7 @@ const FieldTextArea = (props: FieldTextAreaProps) => {
             textarea {
               padding: 0.3em;
               resize: none;
+              width: 100%;
             }
           `}</style>
         </div>

@@ -3,23 +3,13 @@ import { AttributeInterface, SelectedAttribute } from "../types/product";
 import Error from "next/error";
 import Loader from "../../src/components/Loader";
 import MultiSelect from "../../src/components/MultiSelect";
-import { RootState } from "../reducers";
-import ProductActions from "../../src/actions/product";
-import UIActions from "../../src/actions/ui";
-import { connect } from "react-redux";
-import { getSelectedAttributes } from "../../src/selectors/product";
 import Button from "../../src/components/Button";
 
-interface StateProps {
+interface SelectAttributesProps {
   selectedAttributes: SelectedAttribute[];
-}
-
-interface DispatchProps {
   setSelectedAttributes: (selectedAttributes: SelectedAttribute[]) => void;
   showAttributeModal: () => void;
 }
-
-type SelectAttributesProps = StateProps & DispatchProps;
 
 const SelectAttributes = (props: SelectAttributesProps) => {
   const attributeSWR = useSWR("/attribute");
@@ -90,16 +80,4 @@ const SelectAttributes = (props: SelectAttributesProps) => {
   );
 };
 
-const mapStateToProps = (state: RootState): StateProps => ({
-  selectedAttributes: getSelectedAttributes(state),
-});
-
-const mapDispatchToProps: DispatchProps = {
-  setSelectedAttributes: ProductActions.setSelectedAttributes,
-  showAttributeModal: UIActions.showAttributeModal,
-};
-
-export default connect<StateProps, DispatchProps>(
-  mapStateToProps,
-  mapDispatchToProps
-)(SelectAttributes);
+export default SelectAttributes;
