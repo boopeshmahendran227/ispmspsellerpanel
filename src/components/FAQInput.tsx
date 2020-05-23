@@ -1,6 +1,8 @@
 import Button from "./Button";
-import { FieldArray, useFormikContext, Field } from "formik";
+import { FieldArray, useFormikContext } from "formik";
 import { FAQInterface } from "../types/product";
+import CSSConstants from "../constants/CSSConstants";
+import FieldTextArea from "./FieldTextArea";
 
 const FAQInput = () => {
   const { values } = useFormikContext();
@@ -23,7 +25,7 @@ const FAQInput = () => {
       name="faqs"
       render={(arrayHelpers) => (
         <div className="container">
-          <div className="label">FAQs: </div>
+          <header>FAQs </header>
           <div className="inputContainer">
             <table>
               {faqs.length > 0 && (
@@ -41,10 +43,10 @@ const FAQInput = () => {
                   <tr>
                     <td>{index + 1}</td>
                     <td>
-                      <Field name={`faqs.${index}.question`} />
+                      <FieldTextArea name={`faqs.${index}.question`} />
                     </td>
                     <td>
-                      <Field name={`faqs.${index}.answer`} />
+                      <FieldTextArea name={`faqs.${index}.answer`} />
                     </td>
                     <td>
                       <button onClick={() => handleDelete(arrayHelpers, index)}>
@@ -63,17 +65,15 @@ const FAQInput = () => {
           </div>
           <style jsx>{`
             .container {
-              margin: 1em 0;
-              width: 100%;
+              margin: 3em 0;
               font-size: 1.1rem;
-              display: flex;
-              align-items: center;
             }
-            .label {
-              display: inline-block;
-              font-weight: 500;
-              min-width: 200px;
-              text-align: right;
+            header {
+              font-weight: bold;
+              font-size: 1.3rem;
+              border-bottom: 1px solid ${CSSConstants.borderColor};
+              padding: 0.3em;
+              margin-bottom: 1em;
             }
             .inputContainer {
               margin: 0 1em;

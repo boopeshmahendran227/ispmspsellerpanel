@@ -75,6 +75,10 @@ const getAttributeValueCombinations = (
   const attributeIds = Object.keys(attributeValuesMap);
   const attributeId = attributeIds[index];
 
+  if (attributeIds.length === 0) {
+    return [];
+  }
+
   attributeValuesMap[attributeId].forEach((value: AttributeValueInterface) => {
     currentAttributeValueIds[index] = {
       attributeId: Number(attributeId),

@@ -2,6 +2,7 @@ import Button from "./Button";
 import { FieldArray, useFormikContext, Field } from "formik";
 import { SpecificationInterface } from "../types/product";
 import InputLabel from "./InputLabel";
+import CSSConstants from "../constants/CSSConstants";
 
 const SpecificationInput = () => {
   const { values } = useFormikContext();
@@ -31,7 +32,7 @@ const SpecificationInput = () => {
       name="specification.itemGroups"
       render={(arrayHelpers) => (
         <div className="container">
-          <div className="label">Specification: </div>
+          <header>Specification</header>
           <div className="inputContainer">
             {specification.itemGroups.length > 0 &&
               specification.itemGroups.map((group, groupIndex) => (
@@ -110,17 +111,15 @@ const SpecificationInput = () => {
           </div>
           <style jsx>{`
             .container {
-              margin: 1em 0;
-              width: 100%;
+              margin: 3em 0;
               font-size: 1.1rem;
-              display: flex;
-              align-items: center;
             }
-            .label {
-              display: inline-block;
-              font-weight: 500;
-              min-width: 200px;
-              text-align: right;
+            header {
+              font-weight: bold;
+              font-size: 1.3rem;
+              border-bottom: 1px solid ${CSSConstants.borderColor};
+              padding: 0.3em;
+              margin-bottom: 1em;
             }
             .inputContainer {
               margin: 0 1em;

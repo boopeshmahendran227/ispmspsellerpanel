@@ -86,6 +86,7 @@ const Button = (props: ButtonProps) => {
         button:disabled,
         button[disabled] {
           background: #ebebe4;
+          border-color: #ebebe4;
           color: rgba(119, 119, 119, 0.54);
           box-shadow: none;
         }

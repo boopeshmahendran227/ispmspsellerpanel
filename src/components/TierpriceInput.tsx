@@ -1,6 +1,7 @@
 import Button from "./Button";
 import { FieldArray, useFormikContext, Field } from "formik";
 import { TierPriceInterface } from "../types/product";
+import CSSConstants from "../constants/CSSConstants";
 
 const TierPriceInput = () => {
   const { values } = useFormikContext();
@@ -23,7 +24,7 @@ const TierPriceInput = () => {
       name="tierPrice"
       render={(arrayHelpers) => (
         <div className="container">
-          <div className="label">Tier Price:</div>
+          <header>Tier Price</header>
           <div className="inputContainer">
             <table>
               {tierPrice.length > 0 && (
@@ -65,17 +66,15 @@ const TierPriceInput = () => {
           </div>
           <style jsx>{`
             .container {
-              margin: 1em 0;
-              width: 100%;
+              margin: 3em 0;
               font-size: 1.1rem;
-              display: flex;
-              align-items: center;
             }
-            .label {
-              display: inline-block;
-              font-weight: 500;
-              min-width: 200px;
-              text-align: right;
+            header {
+              font-weight: bold;
+              font-size: 1.3rem;
+              border-bottom: 1px solid ${CSSConstants.borderColor};
+              padding: 0.3em;
+              margin-bottom: 1em;
             }
             .inputContainer {
               margin: 0 1em;
