@@ -15,21 +15,8 @@ const getSelectedAttributes = createSelector(
 );
 
 const getSelectedAttributeValues = createSelector(
-  getSelectedAttributes,
   (state: RootState) => state.product,
-  (selectedAttributes, product): SelectedAttributeValuesMap => {
-    // Return empty array for values if attribute id not present in the map
-    return {
-      ...selectedAttributes.reduce(
-        (acc, attribute) => ({
-          ...acc,
-          [attribute.attributeId]: [],
-        }),
-        {}
-      ),
-      ...product.selectedAttributeValues,
-    };
-  }
+  (product): SelectedAttributeValuesMap => product.selectedAttributeValues
 );
 
 const getSkus = createSelector(

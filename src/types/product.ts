@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import {
   ADD_ATTRIBUTE_REQUEST,
   SET_SELECTED_ATTRIBUTES,
-  SET_SELECTED_ATTRIBUTE_VALUES,
+  SET_SELECTED_ATTRIBUTE_VALUES_MAP,
 } from "../constants/ActionTypes";
 
 interface AddAttributeAction {
@@ -16,9 +16,8 @@ interface SetSelectedAttributeAction {
 }
 
 interface SetSelectedAttributeValuesAction {
-  type: typeof SET_SELECTED_ATTRIBUTE_VALUES;
-  attributeId: number;
-  values: AttributeValueInterface[];
+  type: typeof SET_SELECTED_ATTRIBUTE_VALUES_MAP;
+  value: SelectedAttributeValuesMap;
 }
 
 export type ProductActionType =

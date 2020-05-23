@@ -1,9 +1,3 @@
-import { RootState } from "../reducers";
-import {
-  getSelectedAttributes,
-  getSelectedAttributeValues,
-} from "../selectors/product";
-import { connect } from "react-redux";
 import {
   AttributeInterface,
   SelectedAttribute,
@@ -15,21 +9,15 @@ import Error from "next/error";
 import Loader from "../../src/components/Loader";
 import CSSConstants from "../../src/constants/CSSConstants";
 import MultiSelect from "./MultiSelect";
-import ProductActions from "../../src/actions/product";
 
-interface StateProps {
+interface SelectAttributeValuesProps {
   selectedAttributes: SelectedAttribute[];
   selectedAttributeValues: SelectedAttributeValuesMap;
-}
-
-interface DispatchProps {
   setSelectedAttributeValues: (
     attributeId: number,
     values: AttributeValueInterface[]
   ) => void;
 }
-
-type SelectAttributeValuesProps = StateProps & DispatchProps;
 
 const SelectAttributeValues = (props: SelectAttributeValuesProps) => {
   const attributeSWR = useSWR("/attribute");
@@ -106,16 +94,4 @@ const SelectAttributeValues = (props: SelectAttributeValuesProps) => {
   );
 };
 
-const mapStateToProps = (state: RootState): StateProps => ({
-  selectedAttributes: getSelectedAttributes(state),
-  selectedAttributeValues: getSelectedAttributeValues(state),
-});
-
-const mapDispatchToProps: DispatchProps = {
-  setSelectedAttributeValues: ProductActions.setSelectedAttributeValues,
-};
-
-export default connect<StateProps, DispatchProps>(
-  mapStateToProps,
-  mapDispatchToProps
-)(SelectAttributeValues);
+export default SelectAttributeValues;

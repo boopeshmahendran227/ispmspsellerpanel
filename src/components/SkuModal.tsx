@@ -1,5 +1,5 @@
 import Modal from "./Modal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button, { ButtonType } from "../../src/components/Button";
 import SelectAttributes from "./SelectAttributes";
 import SelectAttributeValues from "./SelectAttributeValues";
@@ -8,17 +8,27 @@ import { connect } from "react-redux";
 import UIActions from "../actions/ui";
 import ProductActions from "../actions/product";
 import { RootState } from "../reducers";
-import { getSelectedAttributes } from "../../src/selectors/product";
-import { SelectedAttribute } from "../types/product";
+import {
+  SelectedAttribute,
+  AttributeValueInterface,
+  SelectedAttributeValuesMap,
+} from "../types/product";
+import _ from "lodash";
+import {
+  getSelectedAttributeValues,
+  getSelectedAttributes,
+} from "../selectors/product";
 
 interface StateProps {
   selectedAttributes: SelectedAttribute[];
+  selectedAttributeValues: SelectedAttributeValuesMap;
   open: boolean;
 }
 
 interface DispatchProps {
   onClose: () => void;
   setSelectedAttributes: (selectedAttributes: SelectedAttribute[]) => void;
+  setSelectedAttributeValuesMap: (value: SelectedAttributeValuesMap) => void;
   showAttributeModal: () => void;
 }
 
@@ -27,15 +37,77 @@ type SkuModalProps = StateProps & DispatchProps;
 const SkuModal = (props: SkuModalProps) => {
   const { open, onClose } = props;
   const [currentStep, setCurrentStep] = useState(0);
+  const [selectedAttributes, setSelectedAttributes] = useState([]);
+  const [selectedAttributeValues, setSelectedAttributeValues] = useState({});
 
   const steps = [
     <SelectAttributes
-      selectedAttributes={props.selectedAttributes}
-      setSelectedAttributes={props.setSelectedAttributes}
+      selectedAttributes={selectedAttributes}
+      setSelectedAttributes={(selectedAttributes: SelectedAttribute[]) => {
+        setSelectedAttributes(selectedAttributes);
+
+        // Set empty array for values if attribute id not present in the map
+        setSelectedAttributeValues({
+          ...selectedAttributes.reduce(
+            (acc, attribute) => ({
+              ...acc,
+              [attribute.attributeId]: [],
+            }),
+            {}
+          ),
+          ...selectedAttributeValues,
+        });
+      }}
       showAttributeModal={props.showAttributeModal}
     />,
-    <SelectAttributeValues />,
+    <SelectAttributeValues
+      selectedAttributes={selectedAttributes}
+      selectedAttributeValues={selectedAttributeValues}
+      setSelectedAttributeValues={(
+        attributeId,
+        values: AttributeValueInterface[]
+      ) => {
+        setSelectedAttributeValues({
+          ...selectedAttributeValues,
+          [attributeId]: values,
+        });
+      }}
+    />,
   ];
+
+  const handleGenerate = () => {
+    // Copy to redux and reset
+    props.setSelectedAttributes(selectedAttributes);
+    props.setSelectedAttributeValuesMap(selectedAttributeValues);
+
+    setSelectedAttributes([]);
+    setSelectedAttributeValues({});
+
+    props.onClose();
+  };
+
+  const getBackButtonDisabled = () => {
+    return currentStep === 0;
+  };
+
+  const getNextButtonDisabled = () => {
+    return selectedAttributes.length === 0;
+  };
+
+  const getCreateDisabled = () => {
+    return _.values(selectedAttributeValues).some(
+      (values) => values.length === 0
+    );
+  };
+
+  // Reset state on open
+  useEffect(() => {
+    if (props.open) {
+      setCurrentStep(0);
+      setSelectedAttributes(props.selectedAttributes);
+      setSelectedAttributeValues(props.selectedAttributeValues);
+    }
+  }, [props.open]);
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -46,7 +118,7 @@ const SkuModal = (props: SkuModalProps) => {
           <Button
             type={ButtonType.primary}
             onClick={() => setCurrentStep(currentStep - 1)}
-            disabled={currentStep === 0}
+            disabled={getBackButtonDisabled()}
             outlined={true}
           >
             Back
@@ -55,7 +127,7 @@ const SkuModal = (props: SkuModalProps) => {
             <Button
               type={ButtonType.primary}
               onClick={() => setCurrentStep(currentStep + 1)}
-              disabled={props.selectedAttributes.length === 0}
+              disabled={getNextButtonDisabled()}
             >
               Next
             </Button>
@@ -63,7 +135,8 @@ const SkuModal = (props: SkuModalProps) => {
           {currentStep === 1 && (
             <Button
               type={ButtonType.primary}
-              onClick={() => setCurrentStep(currentStep + 1)}
+              onClick={handleGenerate}
+              disabled={getCreateDisabled()}
             >
               Create
             </Button>
@@ -95,10 +168,12 @@ const SkuModal = (props: SkuModalProps) => {
 const mapStateToProps = (state: RootState): StateProps => ({
   open: getSkuModalOpen(state),
   selectedAttributes: getSelectedAttributes(state),
+  selectedAttributeValues: getSelectedAttributeValues(state),
 });
 
 const mapDispatchToProps: DispatchProps = {
   setSelectedAttributes: ProductActions.setSelectedAttributes,
+  setSelectedAttributeValuesMap: ProductActions.setSelectedAttributeValuesMap,
   onClose: UIActions.hideSkuModal,
   showAttributeModal: UIActions.showAttributeModal,
 };

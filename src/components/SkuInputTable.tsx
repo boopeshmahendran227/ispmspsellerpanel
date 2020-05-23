@@ -21,6 +21,10 @@ const getTableHeaders = () => {
       valueFunc: (sku: ProductSkuDetail) => sku.skuId,
     },
     {
+      name: "Attributes",
+      valueFunc: (sku: ProductSkuDetail) => null,
+    },
+    {
       name: "Image",
       valueFunc: (sku: ProductSkuDetail) => null,
     },
@@ -63,6 +67,16 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
         skus.map((sku, index) => (
           <tr>
             <td>{sku.skuId}</td>
+            <td>
+              {sku.attributeValueIds
+                .map(
+                  (attributeValueId) =>
+                    attributeValueId.attributeName +
+                    ":" +
+                    attributeValueId.value
+                )
+                .join(" , ")}
+            </td>
             <td>
               <FieldArray
                 name={`skus.${index}.imageRelativePaths`}
@@ -148,11 +162,11 @@ const SkuInputTable = (props: SkuInputTableProps) => {
       <div className="buttonContainer">
         <Button onClick={props.showSkuModal}>Generate SKUs</Button>
       </div>
-      {skus.length > 1 && (
+      {skus.length > 0 && (
         <SortableTable
           initialSortData={{
-            index: 1,
-            isAsc: false,
+            index: 0,
+            isAsc: true,
           }}
           headers={getTableHeaders()}
           data={skus}

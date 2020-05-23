@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import {
   SET_SELECTED_ATTRIBUTES,
-  SET_SELECTED_ATTRIBUTE_VALUES,
+  SET_SELECTED_ATTRIBUTE_VALUES_MAP,
 } from "../constants/ActionTypes";
 import {
   SelectedAttribute,
@@ -25,11 +25,8 @@ const getSelectedAttributeValues = (
   action: ProductActionType
 ) => {
   switch (action.type) {
-    case SET_SELECTED_ATTRIBUTE_VALUES:
-      return {
-        ...state,
-        [action.attributeId]: action.values,
-      };
+    case SET_SELECTED_ATTRIBUTE_VALUES_MAP:
+      return action.value;
   }
   return state;
 };
