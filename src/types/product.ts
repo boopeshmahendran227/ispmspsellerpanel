@@ -133,7 +133,7 @@ export const ProductSchema = Yup.object().shape({
   name: Yup.string().required(),
   shortDescription: Yup.string().required(),
   longDescription: Yup.string().required(),
-  brand: Yup.object().required(),
+  brand: Yup.object().required("Brand is required").nullable(),
   specialDiscountValue: Yup.number()
     .typeError("Special discount value must be a number")
     .required(),
@@ -145,4 +145,46 @@ export const ProductSchema = Yup.object().shape({
     .typeError("Max price must be a number")
     .positive("Max price must be greater than 0")
     .required(),
+  skus: Yup.array()
+    .of(
+      Yup.object().shape({
+        skuId: Yup.string().required(),
+        price: Yup.number()
+          .typeError("Price must be a number")
+          .positive("Price must be greater than 0")
+          .required(),
+        boughtPrice: Yup.number()
+          .typeError("Bought Price must be a number")
+          .positive("Bought Price must be greater than 0")
+          .required(),
+        qty: Yup.number()
+          .typeError("Qty must be a number")
+          .positive("Qty must be greater than 0")
+          .required(),
+        length: Yup.string(),
+        width: Yup.string(),
+        height: Yup.string(),
+        weight: Yup.string(),
+        imageRelativePaths: Yup.array()
+          .of(Yup.string())
+          .min(1, "Each sku should contain atleast one image"),
+      })
+    )
+    .min(1),
+  tierPrices: Yup.array().of(
+    Yup.object().shape({
+      minQty: Yup.number("Minimum Qty must be a number").positive(
+        "Minimum Qty must be lesser than 0"
+      ),
+      discountPercentage: Yup.number()
+        .min(1, "Discount Percentage must be greater than 1")
+        .max(100, "Discount Percentage should be less than 100"),
+    })
+  ),
+  productFaqs: Yup.array().of(
+    Yup.object().shape({
+      question: Yup.string().required(),
+      answer: Yup.string().required(),
+    })
+  ),
 });

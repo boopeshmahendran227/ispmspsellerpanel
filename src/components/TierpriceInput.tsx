@@ -1,7 +1,8 @@
 import Button from "./Button";
-import { FieldArray, useFormikContext, Field } from "formik";
+import { FieldArray, useFormikContext } from "formik";
 import { TierPriceInterface } from "../types/product";
 import CSSConstants from "../constants/CSSConstants";
+import FieldInput from "../components/FieldInput";
 
 const TierPriceInput = () => {
   const { values } = useFormikContext();
@@ -42,10 +43,12 @@ const TierPriceInput = () => {
                   <tr>
                     <td>{index + 1}</td>
                     <td>
-                      <Field name={`tierPrices.${index}.minQty`} />
+                      <FieldInput name={`tierPrices.${index}.minQty`} />
                     </td>
                     <td>
-                      <Field name={`tierPrices.${index}.discountPercentage`} />
+                      <FieldInput
+                        name={`tierPrices.${index}.discountPercentage`}
+                      />
                     </td>
                     <td>
                       <button onClick={() => handleDelete(arrayHelpers, index)}>

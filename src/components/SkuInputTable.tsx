@@ -1,10 +1,12 @@
 import SortableTable from "./SortableTable";
 import { ProductSkuDetail } from "../types/product";
 import CSSConstants from "../constants/CSSConstants";
-import { Field, FieldArray, useFormikContext } from "formik";
+import { ErrorMessage, FieldArray, useFormikContext } from "formik";
 import Button from "./Button";
 import { connect } from "react-redux";
 import UIActions from "../actions/ui";
+import FieldInput from "./FieldInput";
+import ValidationErrorMsg from "./ValidationErrorMsg";
 
 interface DispatchProps {
   showSkuModal: () => void;
@@ -69,8 +71,8 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
                   return (
                     <div className="imageInputContainer">
                       {images.map((image, index) => (
-                        <div className="imageInputField">
-                          <Field
+                        <div key={index} className="imageInputField">
+                          <FieldInput
                             name={`skus.${index}.imageRelativePaths.${index}`}
                           />
                           {index > 0 && (
@@ -86,31 +88,35 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
                       <a onClick={() => arrayHelpers.push("")}>
                         {images.length === 0 ? "+ Add" : "Add another"}
                       </a>
+                      <ErrorMessage
+                        component={ValidationErrorMsg}
+                        name={`skus.${index}.imageRelativePaths`}
+                      />
                     </div>
                   );
                 }}
               />
             </td>
             <td>
-              <Field name={`skus.${index}.price`} />
+              <FieldInput name={`skus.${index}.price`} />
             </td>
             <td>
-              <Field name={`skus.${index}.boughtPrice`} />
+              <FieldInput name={`skus.${index}.boughtPrice`} />
             </td>
             <td>
-              <Field name={`skus.${index}.qty`} />
+              <FieldInput name={`skus.${index}.qty`} />
             </td>
             <td>
-              <Field name={`skus.${index}.length`} />
+              <FieldInput name={`skus.${index}.length`} />
             </td>
             <td>
-              <Field name={`skus.${index}.width`} />
+              <FieldInput name={`skus.${index}.width`} />
             </td>
             <td>
-              <Field name={`skus.${index}.height`} />
+              <FieldInput name={`skus.${index}.height`} />
             </td>
             <td>
-              <Field name={`skus.${index}.weight`} />
+              <FieldInput name={`skus.${index}.weight`} />
             </td>
             <style jsx>{`
               tr:hover {

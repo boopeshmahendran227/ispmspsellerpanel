@@ -11,6 +11,7 @@ const ValidationErrorMsg = (props: ValidationErrorMsgProps) => {
       <style jsx>{`
         div {
           color: red;
+          font-size: 0.9rem;
           padding: 0.7em 0;
           animation: shake 0.4s 1 linear;
         }
