@@ -4,6 +4,7 @@ import {
   SET_SELECTED_ATTRIBUTES,
   SET_SELECTED_ATTRIBUTE_VALUES_MAP,
   ADD_ATTRIBUTE_VALUE_REQUEST,
+  ADD_PRODUCT_REQUEST,
 } from "../constants/ActionTypes";
 
 interface AddAttributeAction {
@@ -27,11 +28,43 @@ interface SetSelectedAttributeValuesAction {
   value: SelectedAttributeValuesMap;
 }
 
+interface AddProductAction {
+  type: typeof ADD_PRODUCT_REQUEST;
+  product: ProductInputInterface;
+}
+
 export type ProductActionType =
   | AddAttributeAction
   | AddAttributeValueAction
   | SetSelectedAttributeAction
-  | SetSelectedAttributeValuesAction;
+  | SetSelectedAttributeValuesAction
+  | AddProductAction;
+
+export interface ProductInputInterface {
+  name: string;
+  shortDescription: string;
+  longDescription: string;
+  specialDiscountValue: number;
+  minPrice: number;
+  maxPrice: number;
+  brand: {
+    value: number;
+    label: string;
+  };
+  tierPrices: TierPriceInterface[];
+  faqs: FAQInterface[];
+  categories: [
+    {
+      value: number;
+      label: string;
+    }
+  ];
+  defaultCategory: {
+    value: number;
+    label: string;
+  };
+  specification: SpecificationInterface;
+}
 
 export interface ProductAttributeValue {
   attributeId: number;
@@ -177,7 +210,7 @@ export const ProductSchema = Yup.object().shape({
           .min(1, "Each sku should contain atleast one image"),
       })
     )
-    .min(1),
+    .min(1, "Atlease one sku is required"),
   tierPrices: Yup.array().of(
     Yup.object().shape({
       minQty: Yup.number("Minimum Qty must be a number").positive(

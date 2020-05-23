@@ -10,6 +10,7 @@ import {
   ProductActionType,
   SelectedAttribute,
   SelectedAttributeValuesMap,
+  ProductInputInterface,
 } from "../types/product";
 
 const addAttribute = (attribute: AddAttributeInterface): ProductActionType => {
@@ -48,7 +49,7 @@ const setSelectedAttributeValuesMap = (
   };
 };
 
-const addProduct = (product: any): ProductActionType => {
+const addProduct = (product: ProductInputInterface): ProductActionType => {
   return {
     type: ADD_PRODUCT_REQUEST,
     product,

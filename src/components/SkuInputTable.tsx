@@ -174,6 +174,7 @@ const SkuInputTable = (props: SkuInputTableProps) => {
           body={renderTableBody}
         />
       )}
+      <ErrorMessage component={ValidationErrorMsg} name="skus" />
       <style jsx>{`
         .container {
           margin: 3em 0;
