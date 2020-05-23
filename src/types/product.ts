@@ -3,11 +3,18 @@ import {
   ADD_ATTRIBUTE_REQUEST,
   SET_SELECTED_ATTRIBUTES,
   SET_SELECTED_ATTRIBUTE_VALUES_MAP,
+  ADD_ATTRIBUTE_VALUE_REQUEST,
 } from "../constants/ActionTypes";
 
 interface AddAttributeAction {
   type: typeof ADD_ATTRIBUTE_REQUEST;
   attribute: AddAttributeInterface;
+}
+
+interface AddAttributeValueAction {
+  type: typeof ADD_ATTRIBUTE_VALUE_REQUEST;
+  attributeId: number;
+  value: string;
 }
 
 interface SetSelectedAttributeAction {
@@ -22,6 +29,7 @@ interface SetSelectedAttributeValuesAction {
 
 export type ProductActionType =
   | AddAttributeAction
+  | AddAttributeValueAction
   | SetSelectedAttributeAction
   | SetSelectedAttributeValuesAction;
 

@@ -1,19 +1,32 @@
 import {
   ADD_ATTRIBUTE_REQUEST,
   SET_SELECTED_ATTRIBUTES,
-  SET_SELECTED_ATTRIBUTE_VALUES,
+  ADD_PRODUCT_REQUEST,
+  SET_SELECTED_ATTRIBUTE_VALUES_MAP,
+  ADD_ATTRIBUTE_VALUE_REQUEST,
 } from "../constants/ActionTypes";
 import {
   AddAttributeInterface,
   ProductActionType,
   SelectedAttribute,
-  AttributeValueInterface,
+  SelectedAttributeValuesMap,
 } from "../types/product";
 
 const addAttribute = (attribute: AddAttributeInterface): ProductActionType => {
   return {
     type: ADD_ATTRIBUTE_REQUEST,
     attribute,
+  };
+};
+
+const addAttributeValue = (
+  attributeId: number,
+  value: string
+): ProductActionType => {
+  return {
+    type: ADD_ATTRIBUTE_VALUE_REQUEST,
+    attributeId,
+    value,
   };
 };
 
@@ -26,19 +39,26 @@ const setSelectedAttributes = (
   };
 };
 
-const setSelectedAttributeValues = (
-  attributeId: number,
-  values: AttributeValueInterface[]
+const setSelectedAttributeValuesMap = (
+  value: SelectedAttributeValuesMap
 ): ProductActionType => {
   return {
-    type: SET_SELECTED_ATTRIBUTE_VALUES,
-    attributeId,
-    values,
+    type: SET_SELECTED_ATTRIBUTE_VALUES_MAP,
+    value,
+  };
+};
+
+const addProduct = (product: any): ProductActionType => {
+  return {
+    type: ADD_PRODUCT_REQUEST,
+    product,
   };
 };
 
 export default {
   addAttribute,
+  addAttributeValue,
   setSelectedAttributes,
-  setSelectedAttributeValues,
+  setSelectedAttributeValuesMap,
+  addProduct,
 };

@@ -5,15 +5,20 @@ import {
   ADD_ATTRIBUTE_REQUEST,
   ADD_ATTRIBUTE_SUCCESS,
   ADD_ATTRIBUTE_FAILURE,
+  ADD_ATTRIBUTE_VALUE_REQUEST,
+  ADD_ATTRIBUTE_VALUE_SUCCESS,
+  ADD_ATTRIBUTE_VALUE_FAILURE,
 } from "../constants/ActionTypes";
 import { takeEvery, all, call, put } from "redux-saga/effects";
 import api from "../api";
 
-function* addProduct() {
+function* addProduct(action) {
   try {
-    yield call(api, "/product", {
+    yield call(api, "/product/draft", {
       method: "POST",
-      data: {},
+      data: {
+        ...action.product,
+      },
     });
     yield put({ type: ADD_PRODUCT_SUCCESS });
   } catch (err) {
@@ -33,6 +38,21 @@ function* addAttribute(action) {
   }
 }
 
+function* addAttributeValue(action) {
+  try {
+    yield call(api, "/attribute/attrvalue", {
+      method: "POST",
+      data: {
+        attributeId: action.attributeId,
+        values: [action.value],
+      },
+    });
+    yield put({ type: ADD_ATTRIBUTE_VALUE_SUCCESS });
+  } catch (err) {
+    yield put({ type: ADD_ATTRIBUTE_VALUE_FAILURE });
+  }
+}
+
 function* watchAddProduct() {
   yield takeEvery(ADD_PRODUCT_REQUEST, addProduct);
 }
@@ -41,6 +61,10 @@ function* watchAddAttribute() {
   yield takeEvery(ADD_ATTRIBUTE_REQUEST, addAttribute);
 }
 
+function* watchAddAttributeValue() {
+  yield takeEvery(ADD_ATTRIBUTE_VALUE_REQUEST, addAttributeValue);
+}
+
 export default function* () {
-  yield all([watchAddProduct(), watchAddAttribute()]);
+  yield all([watchAddProduct(), watchAddAttribute(), watchAddAttributeValue()]);
 }

@@ -9,6 +9,7 @@ import Error from "next/error";
 import Loader from "../../src/components/Loader";
 import CSSConstants from "../../src/constants/CSSConstants";
 import MultiSelect from "./MultiSelect";
+import CreateAttributeValue from "./CreateAttributeValue";
 
 interface SelectAttributeValuesProps {
   selectedAttributes: SelectedAttribute[];
@@ -71,6 +72,7 @@ const SelectAttributeValues = (props: SelectAttributeValuesProps) => {
                 value: value.id,
               }))}
             />
+            <CreateAttributeValue attributeId={attribute.id} />
           </div>
         );
       })}

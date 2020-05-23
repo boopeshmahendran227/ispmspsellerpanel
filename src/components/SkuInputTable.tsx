@@ -75,7 +75,7 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
                     ":" +
                     attributeValueId.value
                 )
-                .join(" , ")}
+                .join(", ")}
             </td>
             <td>
               <FieldArray

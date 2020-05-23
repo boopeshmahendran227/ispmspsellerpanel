@@ -19,6 +19,9 @@ import {
   ADD_PRODUCT_REQUEST,
   ADD_PRODUCT_SUCCESS,
   ADD_PRODUCT_FAILURE,
+  ADD_ATTRIBUTE_VALUE_REQUEST,
+  ADD_ATTRIBUTE_VALUE_SUCCESS,
+  ADD_ATTRIBUTE_VALUE_FAILURE,
 } from "../constants/ActionTypes";
 
 const openActionItems = [
@@ -28,6 +31,7 @@ const openActionItems = [
   REJECT_QUOTE_REQUEST,
   ADD_ATTRIBUTE_REQUEST,
   ADD_PRODUCT_REQUEST,
+  ADD_ATTRIBUTE_VALUE_REQUEST,
 ];
 
 const closeActions = [
@@ -43,6 +47,8 @@ const closeActions = [
   ADD_ATTRIBUTE_FAILURE,
   ADD_PRODUCT_SUCCESS,
   ADD_PRODUCT_FAILURE,
+  ADD_ATTRIBUTE_VALUE_SUCCESS,
+  ADD_ATTRIBUTE_VALUE_FAILURE,
 ];
 
 function* watchLoadingScreenShow() {

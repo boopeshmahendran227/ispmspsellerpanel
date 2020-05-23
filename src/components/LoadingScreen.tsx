@@ -23,7 +23,7 @@ const LoadingScreen = (props: LoadingScreenProps) => {
         .container {
           position: fixed;
           background: white;
-          z-index: 1000;
+          z-index: 10001;
           width: 100%;
           height: 100vh;
           opacity: 0.8;
