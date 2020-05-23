@@ -11,13 +11,23 @@ import {
 } from "../constants/ActionTypes";
 import { takeEvery, all, call, put } from "redux-saga/effects";
 import api from "../api";
+import { ProductInputInterface } from "../types/product";
 
 function* addProduct(action) {
   try {
+    // Todo: Move the product transformation to seperate module
+    const product: ProductInputInterface = action.product;
     yield call(api, "/product/draft", {
       method: "POST",
       data: {
-        ...action.product,
+        ...product,
+        maxPrice: Number(product.maxPrice),
+        minPrice: Number(product.minPrice),
+        specialDiscountValue: Number(product.specialDiscountValue),
+        brandId: product.brand.value,
+        defaultCategoryId: product.defaultCategory.value,
+        parentCategoryIds: product.categories.map((category) => category.value),
+        skuDetails: product.skus,
       },
     });
     yield put({ type: ADD_PRODUCT_SUCCESS });
