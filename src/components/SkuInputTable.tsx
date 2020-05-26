@@ -64,7 +64,7 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
     <FieldArray
       name="skus"
       render={(arrayHelpers) =>
-        skus.map((sku, index) => (
+        skus.map((sku, skuIndex) => (
           <tr>
             <td>{sku.skuId}</td>
             <td>
@@ -79,7 +79,7 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
             </td>
             <td>
               <FieldArray
-                name={`skus.${index}.imageRelativePaths`}
+                name={`skus.${skuIndex}.imageRelativePaths`}
                 render={(arrayHelpers) => {
                   const images = sku.imageRelativePaths;
                   return (
@@ -87,7 +87,7 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
                       {images.map((image, index) => (
                         <div key={index} className="imageInputField">
                           <FieldInput
-                            name={`skus.${index}.imageRelativePaths.${index}`}
+                            name={`skus.${skuIndex}.imageRelativePaths.${index}`}
                           />
                           {index > 0 && (
                             <button
@@ -104,7 +104,7 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
                       </a>
                       <ErrorMessage
                         component={ValidationErrorMsg}
-                        name={`skus.${index}.imageRelativePaths`}
+                        name={`skus.${skuIndex}.imageRelativePaths`}
                       />
                     </div>
                   );
@@ -112,25 +112,25 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
               />
             </td>
             <td>
-              <FieldInput name={`skus.${index}.price`} />
+              <FieldInput name={`skus.${skuIndex}.price`} />
             </td>
             <td>
-              <FieldInput name={`skus.${index}.boughtPrice`} />
+              <FieldInput name={`skus.${skuIndex}.boughtPrice`} />
             </td>
             <td>
-              <FieldInput name={`skus.${index}.qty`} />
+              <FieldInput name={`skus.${skuIndex}.qty`} />
             </td>
             <td>
-              <FieldInput name={`skus.${index}.length`} />
+              <FieldInput name={`skus.${skuIndex}.length`} />
             </td>
             <td>
-              <FieldInput name={`skus.${index}.width`} />
+              <FieldInput name={`skus.${skuIndex}.width`} />
             </td>
             <td>
-              <FieldInput name={`skus.${index}.height`} />
+              <FieldInput name={`skus.${skuIndex}.height`} />
             </td>
             <td>
-              <FieldInput name={`skus.${index}.weight`} />
+              <FieldInput name={`skus.${skuIndex}.weight`} />
             </td>
             <style jsx>{`
               tr:hover {

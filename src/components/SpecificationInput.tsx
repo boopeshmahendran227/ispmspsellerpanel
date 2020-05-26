@@ -1,8 +1,10 @@
 import Button from "./Button";
-import { FieldArray, useFormikContext, Field } from "formik";
+import { FieldArray, useFormikContext, ErrorMessage } from "formik";
 import { SpecificationInterface } from "../types/product";
 import InputLabel from "./InputLabel";
 import CSSConstants from "../constants/CSSConstants";
+import FieldInput from "./FieldInput";
+import ValidationErrorMsg from "./ValidationErrorMsg";
 
 const SpecificationInput = () => {
   const { values } = useFormikContext();
@@ -11,7 +13,7 @@ const SpecificationInput = () => {
 
   const handleAddSpecGroup = (arrayHelpers) => {
     arrayHelpers.push({
-      name: "abcd",
+      name: "",
       items: [],
     });
   };
@@ -27,18 +29,33 @@ const SpecificationInput = () => {
     arrayHelpers.remove(index);
   };
 
+  const handleDeleteSpecItemGroup = (arrayHelpers, index: number) => {
+    arrayHelpers.remove(index);
+  };
+
   return (
-    <FieldArray
-      name="specification.itemGroups"
-      render={(arrayHelpers) => (
-        <div className="container">
-          <header>Specification</header>
+    <div className="container">
+      <header>Specification</header>
+      <FieldArray
+        name="specification.itemGroups"
+        render={(arrayHelpers) => (
           <div className="inputContainer">
             {specification.itemGroups.length > 0 &&
               specification.itemGroups.map((group, groupIndex) => (
                 <div className="specGroupContainer">
-                  <InputLabel label="Group name" />
-                  <Field name={`specification.itemGroups.${groupIndex}.name`} />
+                  <div className="specGroupInput">
+                    <InputLabel label="Group name" />
+                    <FieldInput
+                      name={`specification.itemGroups.${groupIndex}.name`}
+                    />
+                    <button
+                      onClick={() =>
+                        handleDeleteSpecItemGroup(arrayHelpers, groupIndex)
+                      }
+                    >
+                      <i className="fa fa-trash" aria-hidden="true" />
+                    </button>
+                  </div>
                   <FieldArray
                     name={`specification.itemGroups.${groupIndex}.items`}
                     render={(arrayHelpers) => (
@@ -58,12 +75,12 @@ const SpecificationInput = () => {
                                 <tr>
                                   <td>{itemIndex + 1}</td>
                                   <td>
-                                    <Field
+                                    <FieldInput
                                       name={`specification.itemGroups.${groupIndex}.items.${itemIndex}.key`}
                                     />
                                   </td>
                                   <td>
-                                    <Field
+                                    <FieldInput
                                       name={`specification.itemGroups.${groupIndex}.items.${itemIndex}.value`}
                                     />
                                   </td>
@@ -99,6 +116,10 @@ const SpecificationInput = () => {
                       </>
                     )}
                   />
+                  <ErrorMessage
+                    component={ValidationErrorMsg}
+                    name={`specification.itemGroups.${groupIndex}.items`}
+                  />
                 </div>
               ))}
             <div className="buttonContainer">
@@ -109,22 +130,35 @@ const SpecificationInput = () => {
               </Button>
             </div>
           </div>
-          <style jsx>{`
-            .container {
-              margin: 3em 0;
-              font-size: 1.1rem;
-            }
-            header {
-              font-weight: bold;
-              font-size: 1.3rem;
-              border-bottom: 1px solid ${CSSConstants.borderColor};
-              padding: 0.3em;
-              margin-bottom: 1em;
-            }
-          `}</style>
-        </div>
-      )}
-    />
+        )}
+      />
+      <ErrorMessage
+        component={ValidationErrorMsg}
+        name={`specification.itemGroups`}
+      />
+      <style jsx>{`
+        .container {
+          margin: 3em 0;
+          font-size: 1.1rem;
+        }
+        header {
+          font-weight: bold;
+          font-size: 1.3rem;
+          border-bottom: 1px solid ${CSSConstants.borderColor};
+          padding: 0.3em;
+          margin-bottom: 1em;
+        }
+        .specGroupContainer {
+          margin: 1em 5em;
+        }
+        .specGroupInput {
+          display: grid;
+          grid-template-columns: 200px 200px 100px;
+          align-items: center;
+          font-size: 1.1rem;
+        }
+      `}</style>
+    </div>
   );
 };
 

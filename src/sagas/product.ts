@@ -43,6 +43,10 @@ function* addProduct(action) {
           boughtPrice: Number(sku.boughtPrice),
           qty: Number(sku.qty),
         })),
+        tierPrices: product.tierPrices.map((tierPrice) => ({
+          minQty: Number(tierPrice.minQty),
+          discountPercentage: Number(tierPrice.discountPercentage),
+        })),
         loanIds: [],
         upSellProductIds: [],
         crossSellProductIds: [],

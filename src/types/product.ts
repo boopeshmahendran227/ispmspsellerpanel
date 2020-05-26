@@ -251,4 +251,21 @@ export const ProductSchema = Yup.object().shape({
     })
   ),
   taxGroup: Yup.object().required("Tax group is required").nullable(),
+  specification: Yup.object().shape({
+    itemGroups: Yup.array()
+      .of(
+        Yup.object().shape({
+          name: Yup.string().required(),
+          items: Yup.array()
+            .of(
+              Yup.object().shape({
+                key: Yup.string().required(),
+                value: Yup.string().required(),
+              })
+            )
+            .min(1, "Atleast one specification item is required"),
+        })
+      )
+      .min(1, "Atleast one specification item group is required"),
+  }),
 });
