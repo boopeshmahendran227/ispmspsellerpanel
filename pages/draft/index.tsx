@@ -95,6 +95,7 @@ const Drafts = (props: DraftsProps) => {
           <Button>Add Product</Button>
         </Link>
       </div>
+      <header>Product Drafts Pending for Admin Approval</header>
       <SortableTable
         initialSortData={{
           index: 1,
@@ -128,6 +129,9 @@ const Drafts = (props: DraftsProps) => {
           .container {
             padding: 0;
           }
+        }
+        header {
+          font-size: 1.3rem;
         }
       `}</style>
     </div>

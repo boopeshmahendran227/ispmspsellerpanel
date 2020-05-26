@@ -46,7 +46,7 @@ function* addProduct(action) {
         loanIds: [],
         upSellProductIds: [],
         crossSellProductIds: [],
-        ecosystemIds: ["public1"],
+        ecosystemIds: ["ecosystem1"],
         productFaqs: product.faqs,
         allProductAttributeValueIds: _.chain(selectedAttributeValues)
           .keys()
