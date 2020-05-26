@@ -17,7 +17,7 @@ import { getColor } from "../../src/utils/quote";
 
 interface DispatchProps {
   updateQuote: (quote: QuoteInterface) => void;
-  rejectQuote: (quoteId: number) => void;
+  rejectQuote: (quote: QuoteInterface) => void;
 }
 
 type QuotesProps = DispatchProps;

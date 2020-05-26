@@ -3,6 +3,14 @@ import {
   CHANGE_ORDER_ITEM_STATUS_FAILURE,
   UPDATE_QUOTE_SUCCESS,
   UPDATE_QUOTE_FAILURE,
+  REJECT_QUOTE_SUCCESS,
+  REJECT_QUOTE_FAILURE,
+  ADD_ATTRIBUTE_FAILURE,
+  ADD_ATTRIBUTE_SUCCESS,
+  ADD_ATTRIBUTE_VALUE_SUCCESS,
+  ADD_ATTRIBUTE_VALUE_FAILURE,
+  ADD_PRODUCT_SUCCESS,
+  ADD_PRODUCT_FAILURE,
 } from "../constants/ActionTypes";
 import { put, take } from "redux-saga/effects";
 import ToastActions from "../actions/toast";
@@ -25,6 +33,38 @@ export const toasts = {
   [UPDATE_QUOTE_FAILURE]: {
     type: ToastType.error,
     msg: "Quote updation failed. Please try again",
+  },
+  [REJECT_QUOTE_SUCCESS]: {
+    type: ToastType.success,
+    msg: "Quote successfully rejected",
+  },
+  [REJECT_QUOTE_FAILURE]: {
+    type: ToastType.error,
+    msg: "Quote Rejection failed. Please try again",
+  },
+  [ADD_ATTRIBUTE_SUCCESS]: {
+    type: ToastType.success,
+    msg: "Attribute successfully added",
+  },
+  [ADD_ATTRIBUTE_FAILURE]: {
+    type: ToastType.error,
+    msg: "Attribute addition failed. Please try again",
+  },
+  [ADD_ATTRIBUTE_VALUE_SUCCESS]: {
+    type: ToastType.success,
+    msg: "Attribute value successfully added",
+  },
+  [ADD_ATTRIBUTE_VALUE_FAILURE]: {
+    type: ToastType.error,
+    msg: "Attribute value addition failed. Please try again",
+  },
+  [ADD_PRODUCT_SUCCESS]: {
+    type: ToastType.success,
+    msg: "Product Draft Created and has been sent to admin for approval",
+  },
+  [ADD_PRODUCT_FAILURE]: {
+    type: ToastType.error,
+    msg: "Product Draft Creation failed. Please try again",
   },
 };
 

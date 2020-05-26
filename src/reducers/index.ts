@@ -4,6 +4,9 @@ import notification from "./notification";
 import ui from "./ui";
 import quote from "./quote";
 import showroomVisit from "./showroomVisit";
+import product from "./product";
+import search from "./search";
+import draft from "./draft";
 import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
@@ -13,6 +16,9 @@ const rootReducer = combineReducers({
   ui,
   quote,
   showroomVisit,
+  product,
+  search,
+  draft,
 });
 export default rootReducer;
 

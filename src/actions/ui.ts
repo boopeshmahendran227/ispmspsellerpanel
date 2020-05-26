@@ -11,6 +11,10 @@ import {
   SURE_MODAL_CANCEL_CLICKED,
   REASON_MODAL_SUBMIT_CLICKED,
   REASON_MODAL_CANCEL_CLICKED,
+  SHOW_ATTRIBUTE_MODAL,
+  HIDE_ATTRIBUTE_MODAL,
+  SHOW_SKU_MODAL,
+  HIDE_SKU_MODAL,
 } from "../constants/ActionTypes";
 import { UIActionType } from "../types/ui";
 
@@ -96,6 +100,30 @@ const hideUpdateQuoteModal = (): UIActionType => {
   };
 };
 
+const showAttributeModal = (): UIActionType => {
+  return {
+    type: SHOW_ATTRIBUTE_MODAL,
+  };
+};
+
+const hideAttributeModal = (): UIActionType => {
+  return {
+    type: HIDE_ATTRIBUTE_MODAL,
+  };
+};
+
+const showSkuModal = (): UIActionType => {
+  return {
+    type: SHOW_SKU_MODAL,
+  };
+};
+
+const hideSkuModal = (): UIActionType => {
+  return {
+    type: HIDE_SKU_MODAL,
+  };
+};
+
 export default {
   showSureModal,
   hideSureModal,
@@ -109,4 +137,8 @@ export default {
   hideReasonModal,
   showUpdateQuoteModal,
   hideUpdateQuoteModal,
+  showAttributeModal,
+  hideAttributeModal,
+  showSkuModal,
+  hideSkuModal,
 };

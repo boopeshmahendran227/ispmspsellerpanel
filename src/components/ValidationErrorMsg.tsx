@@ -5,12 +5,19 @@ interface ValidationErrorMsgProps {
 }
 
 const ValidationErrorMsg = (props: ValidationErrorMsgProps) => {
+  const { children } = props;
+
+  if (typeof children !== "string") {
+    return null;
+  }
+
   return (
     <div>
-      {capitalizeFirstLetter(props.children)}
+      {capitalizeFirstLetter(children)}
       <style jsx>{`
         div {
           color: red;
+          font-size: 0.9rem;
           padding: 0.7em 0;
           animation: shake 0.4s 1 linear;
         }

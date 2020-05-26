@@ -16,18 +16,6 @@ const Layout = (props: LayoutProps) => {
           rel="stylesheet"
         ></link>
         <link rel="stylesheet" type="text/css" href="/css/nprogress.css" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:1747320,hjsv:6};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        a.appendChild(r);
-    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`,
-          }}
-        />
       </Head>
       <div>{props.children}</div>
       <div className="portalRoot"></div>
@@ -64,23 +52,22 @@ const Layout = (props: LayoutProps) => {
           outline: none;
           border: none;
         }
-        button:focus {
+        button:active {
           box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
             0px 4px 5px 0px rgba(0, 0, 0, 0.14),
             0px 1px 10px 0px rgba(0, 0, 0, 0.12);
         }
-        input {
-          padding: 0.8em;
-          margin: 0.5em 0;
-          transition: border 0.3s;
-          background: #ffffff;
-          border: 1px solid ${CSSConstants.borderColor};
-        }
         input,
         textarea {
+          padding: 0.8em;
+          margin: 0.5em 0;
+          background: #ffffff;
           font-size: 0.8rem;
+          border: 1px solid ${CSSConstants.borderColor};
+          transition: border 0.3s;
         }
-        input:focus {
+        input:focus,
+        textarea:focus {
           outline: none;
           border: 1px solid ${CSSConstants.primaryColor};
         }

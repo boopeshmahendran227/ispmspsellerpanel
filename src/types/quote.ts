@@ -3,6 +3,7 @@ import {
   SET_CURRENT_QUOTE,
   UPDATE_QUOTE,
   UPDATE_QUOTE_REQUEST,
+  REJECT_QUOTE,
 } from "../constants/ActionTypes";
 
 export interface ProductDetailQuoteInterface {
@@ -48,8 +49,13 @@ export interface QuoteStatusHistoryItem {
 }
 
 interface RejectQuoteAction {
+  type: typeof REJECT_QUOTE;
+  quote: QuoteInterface;
+}
+
+interface RejectQuoteRequestAction {
   type: typeof REJECT_QUOTE_REQUEST;
-  quoteId: number;
+  quote: QuoteInterface;
 }
 
 interface UpdateQuoteAction {
@@ -76,6 +82,7 @@ export interface QuoteItemUpdate {
 
 export type QuoteActionType =
   | RejectQuoteAction
+  | RejectQuoteRequestAction
   | UpdateQuoteAction
   | UpdateQuoteRequestAction
   | SetCurrentQuoteAction;
@@ -85,6 +92,7 @@ export enum QuoteStatus {
   Rejected = "Rejected",
   SellerResponsePending = "SellerResponsePending",
   SellerResponded = "SellerResponded",
+  SellerRejected = "SellerRejected",
   Converted = "Converted",
   Expired = "Expired",
 }

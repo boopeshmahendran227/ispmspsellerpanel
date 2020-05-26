@@ -4,10 +4,9 @@ import ValidationErrorMsg from "../components/ValidationErrorMsg";
 import CSSConstants from "../constants/CSSConstants";
 
 interface FieldInputProps {
-  label: string;
   name: string;
   placeholder?: string;
-  metaInfo: string;
+  metaInfo?: string;
 }
 
 const FieldInput = (props: FieldInputProps) => {
@@ -20,35 +19,22 @@ const FieldInput = (props: FieldInputProps) => {
             error: Boolean(form.touched[props.name] && form.errors[props.name]),
           })}
         >
-          <span className="label">{props.label}: </span>
-          <div className="inputContainer">
-            <input type="text" placeholder={props.placeholder} {...field} />
-            {Boolean(props.metaInfo) && (
-              <div className="metaContainer">{props.metaInfo}</div>
-            )}
-          </div>
+          <input type="text" placeholder={props.placeholder} {...field} />
+          {Boolean(props.metaInfo) && (
+            <div className="metaContainer">{props.metaInfo}</div>
+          )}
           <div className="errorContainer">
             <ErrorMessage component={ValidationErrorMsg} name={props.name} />
           </div>
           <style jsx>{`
             .container {
+              margin: 0.3em 0;
               width: 100%;
-              margin-bottom: 0.7em;
               font-size: 1.1rem;
             }
-            .label {
-              display: inline-block;
-              margin: 0.6em 0;
-              font-weight: 500;
-            }
-            .inputContainer {
-              display: inline-flex;
-              flex-direction: column;
-              align-items: flex-start;
-            }
             input {
-              padding: 0.6em;
-              margin: 0.5em;
+              padding: 0.8em;
+              width: 100%;
             }
             .metaContainer {
               color: ${CSSConstants.secondaryTextColor};

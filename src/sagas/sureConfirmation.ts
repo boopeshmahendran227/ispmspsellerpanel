@@ -13,6 +13,8 @@ import {
   REJECT_RETURN_ORDER_ITEM_REQUEST,
   MARK_AS_SHIPPING_COMPLETE_REQUEST,
   SURE_MODAL_CANCEL_CLICKED,
+  REJECT_QUOTE,
+  REJECT_QUOTE_REQUEST,
 } from "../constants/ActionTypes";
 import { take, all, put, race, call } from "redux-saga/effects";
 import UIActions from "../actions/ui";
@@ -107,6 +109,19 @@ function* markAsShippingComplete() {
   }
 }
 
+function* rejectQuote() {
+  while (true) {
+    const action = yield take(REJECT_QUOTE);
+    yield put(
+      UIActions.showSureModal(
+        "Confirm Quote Rejection",
+        `Are you sure you want to reject Quote #${action.quote.id}?`
+      )
+    );
+    yield call(handleSure, action, REJECT_QUOTE_REQUEST);
+  }
+}
+
 export default function* () {
   yield all([
     approveCancelOrderItem(),
@@ -115,5 +130,6 @@ export default function* () {
     rejectReturnOrderItem(),
     markAsShipping(),
     markAsShippingComplete(),
+    rejectQuote(),
   ]);
 }
