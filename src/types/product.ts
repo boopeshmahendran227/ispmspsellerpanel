@@ -183,7 +183,6 @@ export interface SpecificationItemGroup {
 }
 
 export interface SpecificationInterface {
-  name: string;
   itemGroups: SpecificationItemGroup[];
 }
 

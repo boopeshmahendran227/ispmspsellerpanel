@@ -61,6 +61,7 @@ function* addProduct(action) {
           })
           .flatten(),
         taxGroupId: product.taxGroup.value,
+        productSpecificationDto: product.specification,
       },
     });
     yield put({ type: ADD_PRODUCT_SUCCESS });

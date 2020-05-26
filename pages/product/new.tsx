@@ -27,6 +27,7 @@ import InputLabel from "../../src/components/InputLabel";
 import { getSkus } from "../../src/selectors/product";
 import SkuInputTable from "../../src/components/SkuInputTable";
 import FieldTextArea from "../../src/components/FieldTextArea";
+import { useRef, useEffect } from "react";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -39,6 +40,12 @@ interface DispatchProps {
 type AddProductProps = StateProps & DispatchProps;
 
 const AddProduct = (props: AddProductProps) => {
+  const formikRef: any = useRef(null);
+
+  useEffect(() => {
+    formikRef?.current?.setFieldValue("skus", props.skus);
+  }, [props.skus]);
+
   const brandSWR = useSWR("/brand");
   const attributeSWR = useSWR("/attribute");
   const categorySWR = useSWR("/category/tree");
@@ -70,6 +77,7 @@ const AddProduct = (props: AddProductProps) => {
       <header>Add Product</header>
       <div className="formContainer">
         <Formik
+          innerRef={formikRef}
           initialValues={{
             name: "",
             shortDescription: "",
@@ -81,7 +89,6 @@ const AddProduct = (props: AddProductProps) => {
             tierPrices: [],
             faqs: [],
             specification: {
-              name: null,
               itemGroups: [],
             },
             skus: props.skus,
@@ -90,7 +97,6 @@ const AddProduct = (props: AddProductProps) => {
             taxGroup: null,
           }}
           onSubmit={onSubmit}
-          enableReinitialize={true}
           validationSchema={ProductSchema}
         >
           {({ errors, resetForm }) => (
