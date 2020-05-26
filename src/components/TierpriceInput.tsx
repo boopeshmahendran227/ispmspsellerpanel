@@ -1,11 +1,13 @@
 import Button from "./Button";
 import { FieldArray, useFormikContext } from "formik";
-import { TierPriceInterface } from "../types/product";
+import { TierPriceInterface, ProductInputInterface } from "../types/product";
 import CSSConstants from "../constants/CSSConstants";
 import FieldInput from "../components/FieldInput";
 
 const TierPriceInput = () => {
-  const { values } = useFormikContext();
+  const values: ProductInputInterface = useFormikContext<
+    ProductInputInterface
+  >().values;
 
   const tierPrices: TierPriceInterface[] = values.tierPrices;
 

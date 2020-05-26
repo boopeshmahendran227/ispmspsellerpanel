@@ -1,11 +1,13 @@
 import Button from "./Button";
 import { FieldArray, useFormikContext } from "formik";
-import { FAQInterface } from "../types/product";
+import { FAQInterface, ProductInputInterface } from "../types/product";
 import CSSConstants from "../constants/CSSConstants";
 import FieldTextArea from "./FieldTextArea";
 
 const FAQInput = () => {
-  const { values } = useFormikContext();
+  const values: ProductInputInterface = useFormikContext<
+    ProductInputInterface
+  >().values;
 
   const faqs: FAQInterface[] = values.faqs;
 

@@ -12,6 +12,7 @@ import { formatPrice } from "../utils/misc";
 import UIActions from "../actions/ui";
 import QuoteActions from "../actions/quote";
 import * as Yup from "yup";
+import InputLabel from "./InputLabel";
 
 interface StateProps {
   open: boolean;
@@ -120,9 +121,9 @@ const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
                                 },
                               ]}
                             />
+                            <InputLabel label="Enter Updated Quote Value" />
                             <FieldInput
                               name={`quoteItems[${index}].finalTotalPrice`}
-                              label="Enter Updated Quote Value"
                               metaInfo={`(${formatPrice(
                                 values.quoteItems[index].finalTotalPrice /
                                   productDetail.qty

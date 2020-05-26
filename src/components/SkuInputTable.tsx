@@ -1,5 +1,5 @@
 import SortableTable from "./SortableTable";
-import { ProductSkuDetail } from "../types/product";
+import { ProductSkuDetail, ProductInputInterface } from "../types/product";
 import CSSConstants from "../constants/CSSConstants";
 import { ErrorMessage, FieldArray, useFormikContext } from "formik";
 import Button from "./Button";
@@ -153,7 +153,9 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
 };
 
 const SkuInputTable = (props: SkuInputTableProps) => {
-  const { values } = useFormikContext();
+  const values: ProductInputInterface = useFormikContext<
+    ProductInputInterface
+  >().values;
   const skus = values.skus;
 
   return (

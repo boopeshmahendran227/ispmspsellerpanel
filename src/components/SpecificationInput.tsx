@@ -1,13 +1,18 @@
 import Button from "./Button";
 import { FieldArray, useFormikContext, ErrorMessage } from "formik";
-import { SpecificationInterface } from "../types/product";
+import {
+  SpecificationInterface,
+  ProductInputInterface,
+} from "../types/product";
 import InputLabel from "./InputLabel";
 import CSSConstants from "../constants/CSSConstants";
 import FieldInput from "./FieldInput";
 import ValidationErrorMsg from "./ValidationErrorMsg";
 
 const SpecificationInput = () => {
-  const { values } = useFormikContext();
+  const values: ProductInputInterface = useFormikContext<
+    ProductInputInterface
+  >().values;
 
   const specification: SpecificationInterface = values.specification;
 
