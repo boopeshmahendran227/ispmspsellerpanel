@@ -5,6 +5,7 @@ import {
   SET_SELECTED_ATTRIBUTE_VALUES_MAP,
   ADD_ATTRIBUTE_VALUE_REQUEST,
   ADD_PRODUCT_REQUEST,
+  INIT_PRODUCT_CREATE,
 } from "../constants/ActionTypes";
 
 interface AddAttributeAction {
@@ -33,7 +34,12 @@ interface AddProductAction {
   product: ProductInputInterface;
 }
 
+interface InitProductCreateAction {
+  type: typeof INIT_PRODUCT_CREATE;
+}
+
 export type ProductActionType =
+  | InitProductCreateAction
   | AddAttributeAction
   | AddAttributeValueAction
   | SetSelectedAttributeAction

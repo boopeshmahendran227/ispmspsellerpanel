@@ -4,6 +4,7 @@ import {
   ADD_PRODUCT_REQUEST,
   SET_SELECTED_ATTRIBUTE_VALUES_MAP,
   ADD_ATTRIBUTE_VALUE_REQUEST,
+  INIT_PRODUCT_CREATE,
 } from "../constants/ActionTypes";
 import {
   AddAttributeInterface,
@@ -56,10 +57,17 @@ const addProduct = (product: ProductInputInterface): ProductActionType => {
   };
 };
 
+const initProductCreate = (): ProductActionType => {
+  return {
+    type: INIT_PRODUCT_CREATE,
+  };
+};
+
 export default {
   addAttribute,
   addAttributeValue,
   setSelectedAttributes,
   setSelectedAttributeValuesMap,
   addProduct,
+  initProductCreate,
 };

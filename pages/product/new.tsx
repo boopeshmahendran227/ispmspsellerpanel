@@ -35,12 +35,17 @@ interface StateProps {
 
 interface DispatchProps {
   addProduct: (product: ProductInputInterface) => void;
+  initProductCreate: () => void;
 }
 
 type AddProductProps = StateProps & DispatchProps;
 
 const AddProduct = (props: AddProductProps) => {
   const formikRef: any = useRef(null);
+
+  useEffect(() => {
+    props.initProductCreate();
+  }, []);
 
   useEffect(() => {
     formikRef?.current?.setFieldValue("skus", props.skus);
@@ -205,6 +210,7 @@ const mapStateToProps = (state: RootState): StateProps => ({
 
 const mapDispatchToProps: DispatchProps = {
   addProduct: ProductActions.addProduct,
+  initProductCreate: ProductActions.initProductCreate,
 };
 
 export default connect<StateProps, DispatchProps>(
