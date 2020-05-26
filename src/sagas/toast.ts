@@ -9,6 +9,8 @@ import {
   ADD_ATTRIBUTE_SUCCESS,
   ADD_ATTRIBUTE_VALUE_SUCCESS,
   ADD_ATTRIBUTE_VALUE_FAILURE,
+  ADD_PRODUCT_SUCCESS,
+  ADD_PRODUCT_FAILURE,
 } from "../constants/ActionTypes";
 import { put, take } from "redux-saga/effects";
 import ToastActions from "../actions/toast";
@@ -55,6 +57,14 @@ export const toasts = {
   [ADD_ATTRIBUTE_VALUE_FAILURE]: {
     type: ToastType.error,
     msg: "Attribute value addition failed. Please try again",
+  },
+  [ADD_PRODUCT_SUCCESS]: {
+    type: ToastType.success,
+    msg: "Product Draft Created and has been sent to admin for approval",
+  },
+  [ADD_PRODUCT_FAILURE]: {
+    type: ToastType.error,
+    msg: "Product Draft Creation failed. Please try again",
   },
 };
 

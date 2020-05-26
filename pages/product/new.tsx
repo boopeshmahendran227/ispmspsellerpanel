@@ -8,6 +8,7 @@ import {
   AttributeInterface,
   ProductSkuDetail,
   ProductInputInterface,
+  TaxGroupInterface,
 } from "../../src/types/product";
 import { RootState } from "../../src/reducers";
 import ProductActions from "../../src/actions/product";
@@ -41,18 +42,21 @@ const AddProduct = (props: AddProductProps) => {
   const brandSWR = useSWR("/brand");
   const attributeSWR = useSWR("/attribute");
   const categorySWR = useSWR("/category/tree");
+  const taxSWR = useSWR("/tax/taxgroup");
 
   const brands: BrandInterface[] = brandSWR.data;
   const attributes: AttributeInterface[] = attributeSWR.data;
   const categories = flattenCategoryTree(categorySWR.data);
+  const taxGroups: TaxGroupInterface[] = taxSWR.data;
 
-  const error = brandSWR.error || attributeSWR.error || categorySWR.error;
+  const error =
+    brandSWR.error || attributeSWR.error || categorySWR.error || taxSWR.error;
 
   if (error) {
     return <Error title="Unexpected error occured" statusCode={500} />;
   }
 
-  if (!brands || !attributes || !categories) {
+  if (!brands || !attributes || !categories || !taxGroups) {
     return <Loader />;
   }
 
@@ -83,6 +87,7 @@ const AddProduct = (props: AddProductProps) => {
             skus: props.skus,
             categories: [],
             defaultCategory: null,
+            taxGroup: null,
           }}
           onSubmit={onSubmit}
           enableReinitialize={true}
@@ -129,6 +134,14 @@ const AddProduct = (props: AddProductProps) => {
                 <FieldInput name="minPrice" />
                 <InputLabel label="Max Price" />
                 <FieldInput name="maxPrice" />
+                <InputLabel label="Tax Group" />
+                <FieldSelect
+                  name="taxGroup"
+                  options={taxGroups.map((taxGroup) => ({
+                    value: taxGroup.id,
+                    label: taxGroup.desscription,
+                  }))}
+                />
               </div>
               <SkuInputTable />
               <TierPriceInput />

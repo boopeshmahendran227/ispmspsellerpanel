@@ -9,14 +9,24 @@ import {
   ADD_ATTRIBUTE_VALUE_SUCCESS,
   ADD_ATTRIBUTE_VALUE_FAILURE,
 } from "../constants/ActionTypes";
-import { takeEvery, all, call, put } from "redux-saga/effects";
+import { takeEvery, all, call, put, select } from "redux-saga/effects";
 import api from "../api";
-import { ProductInputInterface } from "../types/product";
+import {
+  ProductInputInterface,
+  SelectedAttributeValuesMap,
+  AttributeValueInterface,
+} from "../types/product";
+import { getSelectedAttributeValues } from "../selectors/product";
+import _ from "lodash";
 
 function* addProduct(action) {
   try {
     // Todo: Move the product transformation to seperate module
     const product: ProductInputInterface = action.product;
+    const selectedAttributeValues: SelectedAttributeValuesMap = yield select(
+      getSelectedAttributeValues
+    );
+
     yield call(api, "/product/draft", {
       method: "POST",
       data: {
@@ -27,7 +37,30 @@ function* addProduct(action) {
         brandId: product.brand.value,
         defaultCategoryId: product.defaultCategory.value,
         parentCategoryIds: product.categories.map((category) => category.value),
-        skuDetails: product.skus,
+        skuDetails: product.skus.map((sku) => ({
+          ...sku,
+          price: Number(sku.price),
+          boughtPrice: Number(sku.boughtPrice),
+          qty: Number(sku.qty),
+        })),
+        loanIds: [],
+        upSellProductIds: [],
+        crossSellProductIds: [],
+        ecosystemIds: ["public1"],
+        productFaqs: product.faqs,
+        allProductAttributeValueIds: _.chain(selectedAttributeValues)
+          .keys()
+          .map((attributeId) => {
+            const attributeValues: AttributeValueInterface[] =
+              selectedAttributeValues[attributeId];
+
+            return attributeValues.map((attributeValue) => ({
+              attributeId: Number(attributeId),
+              valueId: attributeValue.id,
+            }));
+          })
+          .flatten(),
+        taxGroupId: product.taxGroup.value,
       },
     });
     yield put({ type: ADD_PRODUCT_SUCCESS });

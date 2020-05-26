@@ -54,6 +54,7 @@ export interface ProductInputInterface {
   defaultCategory: SelectOptionInterface;
   specification: SpecificationInterface;
   skus: ProductSkuDetail[];
+  taxGroup: SelectOptionInterface;
 }
 
 export interface SelectOptionInterface {
@@ -164,6 +165,12 @@ export interface SpecificationInterface {
   itemGroups: SpecificationItemGroup[];
 }
 
+export interface TaxGroupInterface {
+  id: number;
+  name: string;
+  desscription: string;
+}
+
 export const ProductSchema = Yup.object().shape({
   name: Yup.string().required(),
   shortDescription: Yup.string().required(),
@@ -222,4 +229,5 @@ export const ProductSchema = Yup.object().shape({
       answer: Yup.string().required(),
     })
   ),
+  taxGroup: Yup.object().required("Tax group is required").nullable(),
 });
