@@ -57,6 +57,22 @@ export interface ProductInputInterface {
   taxGroup: SelectOptionInterface;
 }
 
+export interface ProductResponseInterface {
+  id: number;
+  name: string;
+  brandName: string;
+  shortDescription: string;
+  longDescription: string;
+  specialDiscountValue: number;
+  minPrice: number;
+  maxPrice: number;
+  productType: ProductType;
+  tierPrice: TierPriceInterface[];
+  specification: SpecificationInterface;
+  faqs: FAQInterface[];
+  skuDetails: ProductSkuDetail[];
+}
+
 export interface SelectOptionInterface {
   value: number;
   label: string;
@@ -78,6 +94,12 @@ export enum AttributeType {
   Default = "Default",
   Color = "Color",
   Warranty = "Warranty",
+}
+
+export enum ProductType {
+  Simple = "Simple",
+  Configurable = "Configurable",
+  Virtual = "Virtual",
 }
 
 export interface AttributeValueInterface {
@@ -174,7 +196,7 @@ export interface TaxGroupInterface {
 export const ProductSchema = Yup.object().shape({
   name: Yup.string().required(),
   shortDescription: Yup.string().required(),
-  longDescription: Yup.string().required(),
+  longDescription: Yup.string().min(20).required(),
   brand: Yup.object().required("Brand is required").nullable(),
   specialDiscountValue: Yup.number()
     .typeError("Special discount value must be a number")
