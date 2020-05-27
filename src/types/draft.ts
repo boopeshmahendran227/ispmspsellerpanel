@@ -2,7 +2,7 @@ import {
   GET_PRODUCT_DRAFTS_REQUEST,
   SET_DRAFT_CURRENT_PAGE_NUMBER,
 } from "../constants/ActionTypes";
-import { ProductMiniInterface } from "./product";
+import { ProductMiniInterface, ProductResponseInterface } from "./product";
 
 interface GetDraftsAction {
   type: typeof GET_PRODUCT_DRAFTS_REQUEST;
@@ -21,6 +21,10 @@ export interface DraftMetadataInterface {
 }
 
 export interface DraftMiniInterface extends ProductMiniInterface {
+  status: string;
+}
+
+export interface DraftResponseInterface extends ProductResponseInterface {
   status: string;
 }
 

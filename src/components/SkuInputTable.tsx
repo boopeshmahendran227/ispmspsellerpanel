@@ -133,10 +133,6 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
               <FieldInput name={`skus.${skuIndex}.weight`} />
             </td>
             <style jsx>{`
-              tr:hover {
-                background-color: ${CSSConstants.hoverColor} !important;
-                cursor: pointer;
-              }
               .imageInputContainer a {
                 display: block;
                 text-align: left;

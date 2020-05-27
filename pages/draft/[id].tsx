@@ -1,4 +1,4 @@
-import { ProductResponseInterface } from "../../src/types/product";
+import { DraftResponseInterface } from "../../src/types/draft";
 import useSWR from "swr";
 import Error from "next/error";
 import Loader from "../../src/components/Loader";
@@ -8,12 +8,13 @@ import Specification from "../../src/components/Specification";
 import TierPrice from "../../src/components/TierPrice";
 import FAQ from "../../src/components/FAQ";
 import { formatPrice } from "../../src/utils/misc";
+import CSSConstants from "../../src/constants/CSSConstants";
 
 const Draft = () => {
   const router = useRouter();
   const draftSWR = useSWR(`/product/draft/${router.query.id}`);
 
-  const draft: ProductResponseInterface = draftSWR.data;
+  const draft: DraftResponseInterface = draftSWR.data;
 
   if (draftSWR.error) {
     return <Error title="Unexpected error occured" statusCode={500} />;
@@ -25,9 +26,14 @@ const Draft = () => {
 
   return (
     <div className="container">
-      <header>{draft.name}</header>
+      <header>
+        <span className="name">Draft #{draft.id}</span>
+        <span className="status">{draft.status}</span>
+      </header>
       <div className="body">
         <div className="gridContainer">
+          <div className="key">Name</div>
+          <div className="value">{draft.name}</div>
           <div className="key">Product Type</div>
           <div className="value">{draft.productType}</div>
           <div className="key">Brand</div>
@@ -43,18 +49,21 @@ const Draft = () => {
           <div className="key">Special Discount</div>
           <div className="value">{formatPrice(draft.specialDiscount)}</div>
         </div>
-        <SkuTable skus={draft.skuDetails} />
+        <SkuTable
+          attributeValues={draft.attributeValues}
+          skus={draft.skuDetails}
+        />
         <Specification specification={draft.specification} />
         <TierPrice tierPrice={draft.tierPrice} />
         <FAQ faqs={draft.faqs} />
       </div>
       <style jsx>{`
         .container {
-          padding: 0 1em;
+          padding: 0.5em;
         }
         header {
           font-size: 1.4rem;
-          margin: 1em 0;
+          margin: 0.7em;
           text-transform: uppercase;
         }
         .gridContainer {
@@ -68,7 +77,18 @@ const Draft = () => {
           font-weight: bold;
         }
         .body {
-          margin: 1em 2em;
+          padding: 1em 2em;
+          background: white;
+        }
+        .status {
+          border-radius: 2em;
+          display: inline-block;
+          background: ${CSSConstants.primaryColor};
+          padding: 0.2em 0.5em;
+          color: white;
+          margin: 0 0.3em;
+          font-size: 1rem;
+          text-transform: initial;
         }
       `}</style>
     </div>

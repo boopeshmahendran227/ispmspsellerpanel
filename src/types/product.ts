@@ -77,6 +77,14 @@ export interface ProductResponseInterface {
   specification: SpecificationInterface;
   faqs: FAQInterface[];
   skuDetails: ProductSkuDetail[];
+  attributeValues: ResponseAttributeValuesInterface[];
+}
+
+export interface ResponseAttributeValuesInterface {
+  attributeId: number;
+  valueId: number;
+  attributeName: string;
+  value: string;
 }
 
 export interface SelectOptionInterface {
