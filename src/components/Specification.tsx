@@ -15,7 +15,7 @@ const Specification = (props: SpecificationProps) => {
         {specification.itemGroups.map((group, groupIndex) => (
           <div className="specGroupContainer">
             <div className="groupName">
-              <div className="key">Group Name:</div>
+              <div className="key">Group Name: </div>
               <div className="value">{group.name}</div>
             </div>
             {group.items.length > 0 && (
