@@ -73,7 +73,11 @@ const SideNavBar = () => {
             </Link>
           </li>
           <li>
-            <Link activeClassName="active" href="/draft">
+            <Link
+              activeClassName="active"
+              href="/draft"
+              matchFunc={(path) => path.includes("/draft")}
+            >
               <a>
                 <i className="fas fa-pen-square" aria-hidden={true}></i>
                 <span>Product Drafts</span>

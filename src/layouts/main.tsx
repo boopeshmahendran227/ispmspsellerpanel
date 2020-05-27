@@ -80,6 +80,10 @@ const Layout = (props: LayoutProps) => {
         table {
           border-collapse: collapse;
         }
+        td,
+        th {
+          padding: 0.3em;
+        }
         @media only screen and (max-width: 1000px) {
           html,
           body {

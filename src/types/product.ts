@@ -69,7 +69,7 @@ export interface ProductResponseInterface {
   brandName: string;
   shortDescription: string;
   longDescription: string;
-  specialDiscountValue: number;
+  specialDiscount: number;
   minPrice: number;
   maxPrice: number;
   productType: ProductType;

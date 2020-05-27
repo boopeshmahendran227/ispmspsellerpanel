@@ -119,10 +119,6 @@ const SortableTable = (props: SortableTableProps) => {
         .sortableTable tbody :global(tr:nth-child(odd)) {
           background-color: #6565650f;
         }
-        .sortableTable :global(td),
-        :global(th) {
-          padding: 0.7em;
-        }
         .sortableTable th {
           font-weight: 500;
           position: relative;

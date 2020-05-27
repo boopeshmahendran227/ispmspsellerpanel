@@ -2,6 +2,7 @@ import {
   GET_PRODUCT_DRAFTS_REQUEST,
   SET_DRAFT_CURRENT_PAGE_NUMBER,
 } from "../constants/ActionTypes";
+import { ProductMiniInterface } from "./product";
 
 interface GetDraftsAction {
   type: typeof GET_PRODUCT_DRAFTS_REQUEST;
@@ -17,6 +18,10 @@ export interface DraftMetadataInterface {
   currentPageNumber: number;
   currentPageSize: number;
   totalPages: number;
+}
+
+export interface DraftMiniInterface extends ProductMiniInterface {
+  status: string;
 }
 
 export type DraftActionType = GetDraftsAction | SetDraftCurrentPageNumberAction;

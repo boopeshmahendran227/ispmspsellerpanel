@@ -3,7 +3,6 @@ import { RootState } from "../../src/reducers";
 import CSSConstants from "../../src/constants/CSSConstants";
 import Link from "next/link";
 import SortableTable from "../../src/components/SortableTable";
-import { ProductMiniInterface } from "../../src/types/product";
 import DraftActions from "../../src/actions/draft";
 import RelativeImg from "../../src/components/RelativeImg";
 import Pagination from "../../src/components/Pagination";
@@ -11,10 +10,13 @@ import Button from "../../src/components/Button";
 import { getDrafts, getDraftMetadata } from "../../src/selectors/draft";
 import { RequestReducerState } from "../../src/reducers/utils";
 import WithReduxDataLoader from "../../src/components/WithReduxDataLoader";
-import { DraftMetadataInterface } from "../../src/types/draft";
+import {
+  DraftMetadataInterface,
+  DraftMiniInterface,
+} from "../../src/types/draft";
 
 interface StateProps {
-  drafts: ProductMiniInterface[];
+  drafts: DraftMiniInterface[];
   getDraftsLoadingState: RequestReducerState;
   draftMetadata: DraftMetadataInterface;
 }
@@ -31,28 +33,32 @@ const Drafts = (props: DraftsProps) => {
     return [
       {
         name: "Product Id",
-        valueFunc: (product: ProductMiniInterface) => product.id,
+        valueFunc: (product: DraftMiniInterface) => product.id,
       },
       {
         name: "Image",
-        valueFunc: (product: ProductMiniInterface) => null,
+        valueFunc: (product: DraftMiniInterface) => null,
       },
       {
         name: "Name",
-        valueFunc: (product: ProductMiniInterface) => product.name,
+        valueFunc: (product: DraftMiniInterface) => product.name,
       },
       {
         name: "Average Rating",
-        valueFunc: (product: ProductMiniInterface) => product.averageRating,
+        valueFunc: (product: DraftMiniInterface) => product.averageRating,
       },
       {
         name: "Short Description",
-        valueFunc: (product: ProductMiniInterface) => product.shortDescription,
+        valueFunc: (product: DraftMiniInterface) => product.shortDescription,
+      },
+      {
+        name: "Status",
+        valueFunc: (product: DraftMiniInterface) => product.status,
       },
     ];
   };
 
-  const renderTableBody = (products: ProductMiniInterface[]) => {
+  const renderTableBody = (products: DraftMiniInterface[]) => {
     return products.map((product) => (
       <Link key={product.id} href="/draft/[id]" as={`/draft/${product.id}`}>
         <tr>
@@ -65,6 +71,7 @@ const Drafts = (props: DraftsProps) => {
           <td>{product.name}</td>
           <td>{product.averageRating}</td>
           <td>{product.shortDescription}</td>
+          <td>{product.status}</td>
           <style jsx>{`
             .imageContainer {
               display: inline-flex;
@@ -95,7 +102,7 @@ const Drafts = (props: DraftsProps) => {
           <Button>Add Product</Button>
         </Link>
       </div>
-      <header>Product Drafts Pending for Admin Approval</header>
+      <header>Product Drafts</header>
       <SortableTable
         initialSortData={{
           index: 1,
@@ -132,6 +139,9 @@ const Drafts = (props: DraftsProps) => {
         }
         header {
           font-size: 1.3rem;
+          font-weight: bold;
+          margin-top: 0.8em;
+          margin-bottom: 1.3em;
         }
       `}</style>
     </div>
