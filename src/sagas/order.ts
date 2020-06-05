@@ -10,15 +10,18 @@ import {
   MARK_AS_SHIPPING_COMPLETE_REQUEST,
   MARK_AS_SHIPPING_REQUEST,
   CANCEL_ORDER_ITEM_REQUEST,
+  SET_ORDER_CURRENT_PAGE_NUMBER,
 } from "../constants/ActionTypes";
-import { takeEvery, all, call, put, take } from "redux-saga/effects";
+import { takeEvery, all, call, put, take, select } from "redux-saga/effects";
 import api from "../api";
 import OrderActions from "../actions/order";
 import { OrderStatus } from "../types/order";
+import { getCurrentPageNumber } from "../selectors/order";
 
 function* getOrders() {
   try {
-    const data = yield call(api, "/order");
+    const pageNumber = yield select(getCurrentPageNumber);
+    const data = yield call(api, `/order?pageNumber=${pageNumber}`);
     yield put({ type: GET_ORDERS_SUCCESS, data: data });
   } catch (err) {
     yield put({ type: GET_ORDERS_FAILURE });
@@ -57,6 +60,13 @@ function* watchGetOrders() {
   yield takeEvery(GET_ORDERS_REQUEST, getOrders);
 }
 
+function* watchSetOrderCurrentPageNumber() {
+  while (true) {
+    yield take(SET_ORDER_CURRENT_PAGE_NUMBER);
+    yield put({ type: GET_ORDERS_REQUEST });
+  }
+}
+
 function* watchChangeOrderItemStatus() {
   yield takeEvery(CHANGE_ORDER_ITEM_STATUS_REQUEST, changeOrderItemStatus);
 }
@@ -90,5 +100,6 @@ export default function* () {
     watchGetOrders(),
     watchChangeOrderItemStatus(),
     watchStatusChange(),
+    watchSetOrderCurrentPageNumber(),
   ]);
 }

@@ -12,7 +12,6 @@ const getNotifications = (): NotificationActionType => {
 };
 
 const incrementUnreadNotificationCount = (): NotificationActionType => {
-  console.log("oiwuer");
   return {
     type: INCREMENT_UNREAD_NOTIFICATION_COUNT,
   };

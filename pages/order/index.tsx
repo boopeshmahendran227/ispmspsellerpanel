@@ -15,6 +15,7 @@ import {
   getCurrentlyProcessingOrderItemIds,
   getDeliveredOrderItems,
   getReturnedOrderItems,
+  getOrderPaginatedData,
 } from "../../src/selectors/order";
 import { RequestReducerState } from "../../src/reducers/utils";
 import CSSConstants from "../../src/constants/CSSConstants";
@@ -26,6 +27,8 @@ import moment from "moment";
 import SortableTable from "../../src/components/SortableTable";
 import Button, { ButtonType } from "../../src/components/Button";
 import { getColor, getOrderStatusText } from "../../src/utils/order";
+import Pagination from "../../src/components/Pagination";
+import { PaginationDataInterface } from "../../src/types/pagination";
 
 interface StateProps {
   orders: OrderInterface[];
@@ -36,6 +39,7 @@ interface StateProps {
   cancelledOrderItems: OrderItemInterface[];
   getOrdersLoadingState: RequestReducerState;
   currentlyProcessingOrderItemIds: number[];
+  orderPaginationData: PaginationDataInterface;
 }
 
 interface DispatchProps {
@@ -47,6 +51,7 @@ interface DispatchProps {
   approveReturnOrderItem: (orderId: number, orderItemId: number) => void;
   rejectReturnOrderItem: (orderId: number, orderItemId: number) => void;
   cancelOrderItem: (orderId: number, orderItemId: number) => void;
+  setOrderCurrentPageNumber: (value: number) => void;
 }
 
 type OrdersProps = StateProps & DispatchProps;
@@ -336,6 +341,10 @@ const Orders = (props: OrdersProps) => {
           />,
         ]}
       />
+      <Pagination
+        data={props.orderPaginationData}
+        onChange={props.setOrderCurrentPageNumber}
+      />
       <style jsx>{`
         .container {
           padding: 1em 0;
@@ -364,6 +373,7 @@ const mapStateToProps = (state: RootState): StateProps => ({
   returnedOrderItems: getReturnedOrderItems(state),
   getOrdersLoadingState: state.order.order,
   currentlyProcessingOrderItemIds: getCurrentlyProcessingOrderItemIds(state),
+  orderPaginationData: getOrderPaginatedData(state),
 });
 
 const mapDispatchToProps: DispatchProps = {
@@ -375,6 +385,7 @@ const mapDispatchToProps: DispatchProps = {
   approveReturnOrderItem: OrderActions.approveReturnOrderItem,
   rejectReturnOrderItem: OrderActions.rejectReturnOrderItem,
   cancelOrderItem: OrderActions.cancelOrderItem,
+  setOrderCurrentPageNumber: OrderActions.setOrderCurrentPageNumber,
 };
 
 const mapPropsToLoadData = (props: OrdersProps) => {

@@ -6,6 +6,7 @@ import {
   CHANGE_ORDER_ITEM_STATUS_REQUEST,
   CHANGE_ORDER_ITEM_STATUS_SUCCESS,
   CHANGE_ORDER_ITEM_STATUS_FAILURE,
+  SET_ORDER_CURRENT_PAGE_NUMBER,
 } from "../constants/ActionTypes";
 import { getRequestReducer } from "./utils";
 import { OrderActionType } from "../types/order";
@@ -30,6 +31,18 @@ const getCurrentlyProcessingOrderItemIds = (
   return state;
 };
 
+const updateCurrentPageNumber = (
+  state = 1,
+  action: OrderActionType
+): number => {
+  switch (action.type) {
+    case SET_ORDER_CURRENT_PAGE_NUMBER:
+      return action.value;
+  }
+
+  return state;
+};
+
 export default combineReducers({
   order: getRequestReducer([
     GET_ORDERS_REQUEST,
@@ -37,4 +50,5 @@ export default combineReducers({
     GET_ORDERS_FAILURE,
   ]),
   currentlyProcessingOrderItemIds: getCurrentlyProcessingOrderItemIds,
+  currentPageNumber: updateCurrentPageNumber,
 });

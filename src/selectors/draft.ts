@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 import { RootState } from "../reducers";
-import { DraftMetadataInterface } from "../types/draft";
+import { PaginationDataInterface } from "../types/pagination";
 
 const getDrafts = createSelector(
   (state: RootState) => state.draft,
@@ -12,9 +12,9 @@ const getCurrentPageNumber = createSelector(
   (draft): number => draft.currentPageNumber
 );
 
-const getDraftMetadata = createSelector(
+const getDraftPaginationData = createSelector(
   (state: RootState) => state.draft,
-  (draft): DraftMetadataInterface =>
+  (draft): PaginationDataInterface =>
     draft.drafts.data || {
       totalItems: 0,
       totalPages: 0,
@@ -23,4 +23,4 @@ const getDraftMetadata = createSelector(
     }
 );
 
-export { getDrafts, getCurrentPageNumber, getDraftMetadata };
+export { getDrafts, getCurrentPageNumber, getDraftPaginationData };

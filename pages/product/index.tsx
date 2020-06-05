@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { RootState } from "../../src/reducers";
 import {
   getSearchResults,
-  getSearchMetadata,
+  getSearchPaginationData,
   getFilterData,
 } from "../../src/selectors/search";
 import CSSConstants from "../../src/constants/CSSConstants";
@@ -15,15 +15,13 @@ import SearchBar from "../../src/components/SearchBar";
 import RelativeImg from "../../src/components/RelativeImg";
 import Pagination from "../../src/components/Pagination";
 import ActiveFilters from "../../src/components/ActiveFilters";
-import {
-  SearchMetadataInterface,
-  FilterDataInterface,
-} from "../../src/types/search";
+import { PaginationDataInterface } from "../../src/types/pagination";
+import { FilterDataInterface } from "../../src/types/search";
 import Button from "../../src/components/Button";
 
 interface StateProps {
   products: ProductMiniInterface[];
-  searchMetadata: SearchMetadataInterface;
+  searchPaginationData: PaginationDataInterface;
   filterData: FilterDataInterface;
 }
 
@@ -128,9 +126,8 @@ const Products = (props: ProductsProps) => {
         body={renderTableBody}
       />
       <Pagination
-        value={props.searchMetadata.currentPageNumber}
+        data={props.searchPaginationData}
         onChange={props.setSearchCurrentPageNumber}
-        totalNumberOfPages={props.searchMetadata.totalPages}
       />
       <style jsx>{`
         .container {
@@ -158,7 +155,7 @@ const Products = (props: ProductsProps) => {
 
 const mapStateToProps = (state: RootState): StateProps => ({
   products: getSearchResults(state),
-  searchMetadata: getSearchMetadata(state),
+  searchPaginationData: getSearchPaginationData(state),
   filterData: getFilterData(state),
 });
 

@@ -10,6 +10,7 @@ import {
   MARK_AS_SHIPPING_COMPLETE,
   MARK_AS_SHIPPING,
   CANCEL_ORDER_ITEM,
+  SET_ORDER_CURRENT_PAGE_NUMBER,
 } from "../constants/ActionTypes";
 import { ProductAttributeValue } from "./product";
 
@@ -200,6 +201,11 @@ interface CancelOrderItemAction {
   reason: string;
 }
 
+interface SetOrderCurrentPageNumberAction {
+  type: typeof SET_ORDER_CURRENT_PAGE_NUMBER;
+  value: number;
+}
+
 export type OrderActionType =
   | GetOrderAction
   | ChangeOrderItemStatusAction
@@ -211,4 +217,5 @@ export type OrderActionType =
   | RejectReturnOrderItemAction
   | MarkAsShippingCompleteAction
   | MarkAsShippingAction
-  | CancelOrderItemAction;
+  | CancelOrderItemAction
+  | SetOrderCurrentPageNumberAction;

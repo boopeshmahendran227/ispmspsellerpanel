@@ -1,6 +1,7 @@
 import { createSelector } from "reselect";
 import { RootState } from "../reducers";
-import { FilterDataInterface, SearchMetadataInterface } from "../types/search";
+import { FilterDataInterface } from "../types/search";
+import { PaginationDataInterface } from "../types/pagination";
 
 const getFilterData = createSelector(
   (state: RootState) => state.search,
@@ -12,9 +13,9 @@ const getSearchResults = createSelector(
   (search) => search.searchResults.data?.results
 );
 
-const getSearchMetadata = createSelector(
+const getSearchPaginationData = createSelector(
   (state: RootState) => state.search,
-  (search): SearchMetadataInterface =>
+  (search): PaginationDataInterface =>
     search.searchResults.data || {
       totalItems: 0,
       totalPages: 0,
@@ -32,5 +33,5 @@ export {
   getFilterData,
   getSearchResults,
   getCurrentPageNumber,
-  getSearchMetadata,
+  getSearchPaginationData,
 };

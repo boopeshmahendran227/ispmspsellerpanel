@@ -7,18 +7,16 @@ import DraftActions from "../../src/actions/draft";
 import RelativeImg from "../../src/components/RelativeImg";
 import Pagination from "../../src/components/Pagination";
 import Button from "../../src/components/Button";
-import { getDrafts, getDraftMetadata } from "../../src/selectors/draft";
+import { getDrafts, getDraftPaginationData } from "../../src/selectors/draft";
 import { RequestReducerState } from "../../src/reducers/utils";
 import WithReduxDataLoader from "../../src/components/WithReduxDataLoader";
-import {
-  DraftMetadataInterface,
-  DraftMiniInterface,
-} from "../../src/types/draft";
+import { DraftMiniInterface } from "../../src/types/draft";
+import { PaginationDataInterface } from "../../src/types/pagination";
 
 interface StateProps {
   drafts: DraftMiniInterface[];
   getDraftsLoadingState: RequestReducerState;
-  draftMetadata: DraftMetadataInterface;
+  draftPaginationData: PaginationDataInterface;
 }
 
 interface DispatchProps {
@@ -114,9 +112,8 @@ const Drafts = (props: DraftsProps) => {
         body={renderTableBody}
       />
       <Pagination
-        value={props.draftMetadata.currentPageNumber}
+        data={props.draftPaginationData}
         onChange={props.setDraftCurrentPageNumber}
-        totalNumberOfPages={props.draftMetadata.totalPages}
       />
       <style jsx>{`
         .container {
@@ -151,7 +148,7 @@ const Drafts = (props: DraftsProps) => {
 const mapStateToProps = (state: RootState): StateProps => ({
   drafts: getDrafts(state),
   getDraftsLoadingState: state.draft.drafts,
-  draftMetadata: getDraftMetadata(state),
+  draftPaginationData: getDraftPaginationData(state),
 });
 
 const mapDispatchToProps: DispatchProps = {

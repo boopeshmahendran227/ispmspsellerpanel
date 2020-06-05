@@ -13,13 +13,6 @@ interface SetDraftCurrentPageNumberAction {
   value: number;
 }
 
-export interface DraftMetadataInterface {
-  totalItems: number;
-  currentPageNumber: number;
-  currentPageSize: number;
-  totalPages: number;
-}
-
 export interface DraftMiniInterface extends ProductMiniInterface {
   status: string;
 }

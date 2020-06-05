@@ -10,6 +10,7 @@ import {
   MARK_AS_SHIPPING_COMPLETE,
   MARK_AS_SHIPPING,
   CANCEL_ORDER_ITEM,
+  SET_ORDER_CURRENT_PAGE_NUMBER,
 } from "../constants/ActionTypes";
 import { OrderActionType } from "../types/order";
 
@@ -135,6 +136,13 @@ const cancelOrderItem = (
   };
 };
 
+const setOrderCurrentPageNumber = (value: number): OrderActionType => {
+  return {
+    type: SET_ORDER_CURRENT_PAGE_NUMBER,
+    value,
+  };
+};
+
 export default {
   getOrders,
   changeOrderItemStatus,
@@ -147,4 +155,5 @@ export default {
   markAsShippingComplete,
   markAsShipping,
   cancelOrderItem,
+  setOrderCurrentPageNumber,
 };

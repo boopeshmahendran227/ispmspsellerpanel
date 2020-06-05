@@ -4,13 +4,6 @@ import {
   SET_SEARCH_CURRENT_PAGE_NUMBER,
 } from "../constants/ActionTypes";
 
-export interface SearchMetadataInterface {
-  totalItems: number;
-  currentPageNumber: number;
-  currentPageSize: number;
-  totalPages: number;
-}
-
 interface SearchByTextAction {
   type: typeof SEARCH_BY_TEXT;
   text: string;

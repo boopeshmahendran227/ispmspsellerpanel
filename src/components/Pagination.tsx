@@ -2,33 +2,36 @@ import CSSConstants from "../constants/CSSConstants";
 import classNames from "classnames";
 import Chroma from "chroma-js";
 import _ from "lodash";
+import { PaginationDataInterface } from "../types/pagination";
 
 interface PaginationProps {
-  value: number;
+  data: PaginationDataInterface;
   onChange: (value: number) => void;
-  totalNumberOfPages: number;
 }
 
 const Pagination = (props: PaginationProps) => {
-  const low = Math.max(props.value - 4, 1);
-  const high = Math.min(props.totalNumberOfPages, low + 9);
+  const value = props.data.currentPageNumber;
+  const totalNumberOfPages = props.data.totalPages;
+
+  const low = Math.max(value - 4, 1);
+  const high = Math.min(totalNumberOfPages, low + 9);
 
   const handleClick = (value) => {
     props.onChange(value);
   };
 
   const goToNext = () => {
-    props.onChange(props.value + 1);
+    props.onChange(value + 1);
   };
 
   const goToPrev = () => {
-    props.onChange(props.value - 1);
+    props.onChange(value - 1);
   };
 
   const pages = _.range(low, high + 1).map((i) => {
     const classes = classNames({
       page: true,
-      active: props.value === i,
+      active: value === i,
     });
     return (
       <div key={i} className={classes}>
@@ -63,12 +66,12 @@ const Pagination = (props: PaginationProps) => {
 
   const prevButtonClasses = classNames({
     prevButton: true,
-    hide: props.value <= 1,
+    hide: value <= 1,
   });
 
   const nextButtonClasses = classNames({
     nextButton: true,
-    hide: props.value >= props.totalNumberOfPages,
+    hide: value >= totalNumberOfPages,
   });
 
   return (
