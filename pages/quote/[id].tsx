@@ -5,11 +5,11 @@ import useSWR from "swr";
 import { useRouter } from "next/router";
 import Loader from "../../src/components/Loader";
 import { connect } from "react-redux";
-import Error from "next/error";
 import { QuoteInterface } from "../../src/types/quote";
 import { getQuoteStatusText } from "../../src/utils/quote";
 import QuoteItemDetail from "../../src/components/QuoteItemDetail";
 import QuoteActions from "../../src/actions/quote";
+import PageError from "../../src/components/PageError";
 
 interface DispatchProps {
   rejectQuote: (quote: QuoteInterface) => void;
@@ -27,7 +27,7 @@ const Quote = (props: QuoteProps) => {
 
   // Todo: handle 404 errors
   if (error) {
-    return <Error title="Unexpected error occured" statusCode={500} />;
+    return <PageError statusCode={error.response?.status} />;
   }
   if (!quotes) {
     return <Loader />;

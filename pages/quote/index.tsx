@@ -5,7 +5,6 @@ import SortableTable from "../../src/components/SortableTable";
 import { QuoteInterface, QuoteStatus } from "../../src/types/quote";
 import { getQuoteStatusText } from "../../src/utils/quote";
 import useSWR from "swr";
-import Error from "next/error";
 import Loader from "../../src/components/Loader";
 import Link from "next/link";
 import ProductCard from "../../src/components/ProductCard";
@@ -14,6 +13,7 @@ import Button, { ButtonType } from "../../src/components/Button";
 import QuoteActions from "../../src/actions/quote";
 import { formatPrice } from "../../src/utils/misc";
 import { getColor } from "../../src/utils/quote";
+import PageError from "../../src/components/PageError";
 
 interface DispatchProps {
   updateQuote: (quote: QuoteInterface) => void;
@@ -199,7 +199,7 @@ const Quotes = (props: QuotesProps) => {
   const error = swr.error;
 
   if (error) {
-    return <Error title="Unexpected error occured" statusCode={500} />;
+    return <PageError statusCode={error.response?.status} />;
   }
   if (!quotes) {
     return <Loader />;

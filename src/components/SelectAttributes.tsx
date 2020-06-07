@@ -1,9 +1,9 @@
 import useSWR from "swr";
 import { AttributeInterface, SelectedAttribute } from "../types/product";
-import Error from "next/error";
 import Loader from "../../src/components/Loader";
 import MultiSelect from "../../src/components/MultiSelect";
 import Button from "../../src/components/Button";
+import PageError from "./PageError";
 
 interface SelectAttributesProps {
   selectedAttributes: SelectedAttribute[];
@@ -18,7 +18,7 @@ const SelectAttributes = (props: SelectAttributesProps) => {
   const error = attributeSWR.error;
 
   if (error) {
-    return <Error title="Unexpected error occured" statusCode={500} />;
+    return <PageError statusCode={error.response?.status} />;
   }
 
   if (!attributes) {

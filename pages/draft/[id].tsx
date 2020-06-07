@@ -1,6 +1,5 @@
 import { DraftResponseInterface } from "../../src/types/draft";
 import useSWR from "swr";
-import Error from "next/error";
 import Loader from "../../src/components/Loader";
 import SkuTable from "../../src/components/SkuTable";
 import { useRouter } from "next/router";
@@ -9,15 +8,17 @@ import TierPrice from "../../src/components/TierPrice";
 import FAQ from "../../src/components/FAQ";
 import { formatPrice } from "../../src/utils/misc";
 import CSSConstants from "../../src/constants/CSSConstants";
+import PageError from "../../src/components/PageError";
 
 const Draft = () => {
   const router = useRouter();
   const draftSWR = useSWR(`/product/draft/${router.query.id}`);
 
   const draft: DraftResponseInterface = draftSWR.data;
+  const error = draftSWR.error;
 
-  if (draftSWR.error) {
-    return <Error title="Unexpected error occured" statusCode={500} />;
+  if (error) {
+    return <PageError statusCode={error.response?.status} />;
   }
 
   if (!draft) {

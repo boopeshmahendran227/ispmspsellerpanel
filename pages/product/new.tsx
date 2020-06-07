@@ -15,7 +15,6 @@ import ProductActions from "../../src/actions/product";
 import { connect } from "react-redux";
 import { Formik, Form } from "formik";
 import useSWR from "swr";
-import Error from "next/error";
 import Loader from "../../src/components/Loader";
 import AttributeModal from "../../src/components/AttributeModal";
 import SkuModal from "../../src/components/SkuModal";
@@ -28,6 +27,7 @@ import { getSkus } from "../../src/selectors/product";
 import SkuInputTable from "../../src/components/SkuInputTable";
 import FieldTextArea from "../../src/components/FieldTextArea";
 import { useRef, useEffect } from "react";
+import PageError from "../../src/components/PageError";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -65,7 +65,7 @@ const AddProduct = (props: AddProductProps) => {
     brandSWR.error || attributeSWR.error || categorySWR.error || taxSWR.error;
 
   if (error) {
-    return <Error title="Unexpected error occured" statusCode={500} />;
+    return <PageError statusCode={error.response?.status} />;
   }
 
   if (!brands || !attributes || !categories || !taxGroups) {

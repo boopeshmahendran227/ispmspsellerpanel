@@ -12,8 +12,8 @@ import { RootState } from "../../../src/reducers";
 import { getCurrentlyProcessingOrderItemIds } from "../../../src/selectors/order";
 import { transformOrderItem } from "../../../src/transformers/orderItem";
 import { OrderDetailInterface } from "../../../src/types/order";
-import Error from "next/error";
 import { getOrderStatusText } from "../../../src/utils/order";
+import PageError from "../../../src/components/PageError";
 
 interface StateProps {
   currentlyProcessingOrderItemIds: number[];
@@ -38,7 +38,7 @@ const Order = (props: OrderProps) => {
   const error = swr.error;
 
   if (error) {
-    return <Error title="Unexpected error occured" statusCode={500} />;
+    return <PageError statusCode={error.response?.status} />;
   }
 
   if (!order) {

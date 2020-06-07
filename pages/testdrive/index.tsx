@@ -1,8 +1,8 @@
 import TestDriveCard from "../../src/components/TestDriveCard";
 import { TestDriveInterface } from "../../src/types/testdrive";
 import Loader from "../../src/components/Loader";
-import Error from "next/error";
 import useSWR from "swr";
+import PageError from "../../src/components/PageError";
 
 const Testdrives = () => {
   const swr = useSWR("/testdrive");
@@ -10,7 +10,7 @@ const Testdrives = () => {
   const error = swr.error;
 
   if (error) {
-    return <Error title="Unexpected error occured" statusCode={500} />;
+    return <PageError statusCode={error.response?.status} />;
   }
   if (!testdrives) {
     return <Loader />;

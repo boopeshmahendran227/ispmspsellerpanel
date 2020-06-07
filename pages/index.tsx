@@ -12,7 +12,7 @@ import WithReduxDataLoader from "../src/components/WithReduxDataLoader";
 import OrderActions from "../src/actions/order";
 import useSWR from "swr";
 import Loader from "../src/components/Loader";
-import Error from "next/error";
+import PageError from "../src/components/PageError";
 
 interface StateProps {
   orders: OrderInterface[];
@@ -32,7 +32,7 @@ const Home = (props: HomeProps) => {
   const error = swr.error;
 
   if (error) {
-    return <Error title="Unexpected error occured" statusCode={500} />;
+    return <PageError statusCode={error.response?.status} />;
   }
 
   if (!quotes) {

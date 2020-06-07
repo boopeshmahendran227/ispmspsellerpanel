@@ -9,9 +9,9 @@ import {
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import Loader from "../../../src/components/Loader";
+import PageError from "../../../src/components/PageError";
 import { OrderDetailInterface } from "../../../src/types/order";
 import { transformOrderItem } from "../../../src/transformers/orderItem";
-import Error from "next/error";
 
 // images
 import LogoImg from "../../../public/icons/logo.png";
@@ -24,7 +24,7 @@ const Invoice = () => {
   const error = swr.error;
 
   if (error) {
-    return <Error title="Unexpected error occured" statusCode={500} />;
+    return <PageError statusCode={error.response?.status} />;
   }
 
   if (!order) {
