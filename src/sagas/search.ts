@@ -26,6 +26,7 @@ function* search() {
         orderByPrice: 0,
         attributeFilters: [],
         brandId: [],
+        sellerIds: [],
       },
     });
     yield put({ type: SEARCH_SUCCESS, data: data });
