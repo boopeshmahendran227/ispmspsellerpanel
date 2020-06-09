@@ -3,7 +3,6 @@ import {
   MARK_AS_SHIPPING_REQUEST,
   APPROVE_CANCEL_ORDER_ITEM,
   REJECT_CANCEL_ORDER_ITEM,
-  MARK_AS_SHIPPING_COMPLETE,
   MARK_AS_SHIPPING,
   REJECT_RETURN_ORDER_ITEM,
   APPROVE_RETURN_ORDER_ITEM,
@@ -11,7 +10,6 @@ import {
   REJECT_CANCEL_ORDER_ITEM_REQUEST,
   APPROVE_RETURN_ORDER_ITEM_REQUEST,
   REJECT_RETURN_ORDER_ITEM_REQUEST,
-  MARK_AS_SHIPPING_COMPLETE_REQUEST,
   SURE_MODAL_CANCEL_CLICKED,
   REJECT_QUOTE,
   REJECT_QUOTE_REQUEST,
@@ -96,19 +94,6 @@ function* markAsShipping() {
   }
 }
 
-function* markAsShippingComplete() {
-  while (true) {
-    const action = yield take(MARK_AS_SHIPPING_COMPLETE);
-    yield put(
-      UIActions.showSureModal(
-        "Confirm Delivery",
-        `Are you sure you want to mark Order Item #${action.orderItemId} as Delivered?`
-      )
-    );
-    yield call(handleSure, action, MARK_AS_SHIPPING_COMPLETE_REQUEST);
-  }
-}
-
 function* rejectQuote() {
   while (true) {
     const action = yield take(REJECT_QUOTE);
@@ -129,7 +114,6 @@ export default function* () {
     approveReturnOrderitem(),
     rejectReturnOrderItem(),
     markAsShipping(),
-    markAsShippingComplete(),
     rejectQuote(),
   ]);
 }

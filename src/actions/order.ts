@@ -11,6 +11,7 @@ import {
   MARK_AS_SHIPPING,
   CANCEL_ORDER_ITEM,
   SET_ORDER_CURRENT_PAGE_NUMBER,
+  MARK_AS_PROCESSING,
 } from "../constants/ActionTypes";
 import { OrderActionType } from "../types/order";
 
@@ -123,6 +124,17 @@ const markAsShipping = (
   };
 };
 
+const markAsProcessing = (
+  orderId: number,
+  orderItemId: number
+): OrderActionType => {
+  return {
+    type: MARK_AS_PROCESSING,
+    orderId,
+    orderItemId,
+  };
+};
+
 const cancelOrderItem = (
   orderId: number,
   orderItemId: number,
@@ -154,6 +166,7 @@ export default {
   rejectReturnOrderItem,
   markAsShippingComplete,
   markAsShipping,
+  markAsProcessing,
   cancelOrderItem,
   setOrderCurrentPageNumber,
 };

@@ -28,6 +28,7 @@ import SortableTable from "../../src/components/SortableTable";
 import Button, { ButtonType } from "../../src/components/Button";
 import { getColor, getOrderStatusText } from "../../src/utils/order";
 import Pagination from "../../src/components/Pagination";
+import DeliveryCodeModal from "../../src/components/DeliveryCodeModal";
 import { PaginationDataInterface } from "../../src/types/pagination";
 
 interface StateProps {
@@ -46,6 +47,7 @@ interface DispatchProps {
   getOrders: () => void;
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
   markAsShipping: (orderId: number, orderItemId: number) => void;
+  markAsProcessing: (orderId: number, orderItemId: number) => void;
   approveCancelOrderItem: (orderId: number, orderItemId: number) => void;
   rejectCancelOrderItem: (orderId: number, orderItemId: number) => void;
   approveReturnOrderItem: (orderId: number, orderItemId: number) => void;
@@ -107,6 +109,24 @@ const Orders = (props: OrdersProps) => {
     switch (orderItem.orderItemStatus) {
       case OrderStatus.PaymentSuccess:
       case OrderStatus.PaymentOnDelivery:
+        return (
+          <>
+            <Button
+              type={ButtonType.success}
+              onClick={(e) => handleClick(e, props.markAsProcessing)}
+            >
+              Mark as Processing
+            </Button>
+            <Button
+              type={ButtonType.danger}
+              onClick={(e) => handleClick(e, props.cancelOrderItem)}
+              outlined={true}
+            >
+              Cancel Order
+            </Button>
+          </>
+        );
+      case OrderStatus.SellerProcessing:
         return (
           <>
             <Button
@@ -280,6 +300,8 @@ const Orders = (props: OrdersProps) => {
 
   return (
     <div className="container">
+      {/* Modals */}
+      <DeliveryCodeModal />
       <TabSection
         headingList={[
           `All Orders (${orderItems.length})`,
@@ -380,6 +402,7 @@ const mapDispatchToProps: DispatchProps = {
   getOrders: OrderActions.getOrders,
   markAsShippingComplete: OrderActions.markAsShippingComplete,
   markAsShipping: OrderActions.markAsShipping,
+  markAsProcessing: OrderActions.markAsProcessing,
   approveCancelOrderItem: OrderActions.approveCancelOrderItem,
   rejectCancelOrderItem: OrderActions.rejectCancelOrderItem,
   approveReturnOrderItem: OrderActions.approveReturnOrderItem,

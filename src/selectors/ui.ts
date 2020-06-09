@@ -32,6 +32,11 @@ const getSkuModalOpen = createSelector(
   (ui): boolean => ui.skuModalOpen
 );
 
+const getDeliveryCodeModalOpen = createSelector(
+  (state: RootState) => state.ui,
+  (ui): boolean => ui.deliveryCodeModalOpen
+);
+
 export {
   getSureModalData,
   getLoadingScreenOpen,
@@ -39,4 +44,5 @@ export {
   getUpdateQuoteModalOpen,
   getAttributeModalOpen,
   getSkuModalOpen,
+  getDeliveryCodeModalOpen,
 };

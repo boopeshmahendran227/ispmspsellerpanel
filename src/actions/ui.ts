@@ -11,10 +11,13 @@ import {
   SURE_MODAL_CANCEL_CLICKED,
   REASON_MODAL_SUBMIT_CLICKED,
   REASON_MODAL_CANCEL_CLICKED,
+  DELIVERY_CODE_MODAL_SUBMIT_CLICKED,
   SHOW_ATTRIBUTE_MODAL,
   HIDE_ATTRIBUTE_MODAL,
   SHOW_SKU_MODAL,
   HIDE_SKU_MODAL,
+  HIDE_DELIVERY_CODE_MODAL,
+  SHOW_DELIVERY_CODE_MODAL,
 } from "../constants/ActionTypes";
 import { UIActionType } from "../types/ui";
 
@@ -76,6 +79,13 @@ const reasonModalCancelClicked = (): UIActionType => {
   };
 };
 
+const deliveryCodeModalSubmitClicked = (deliveryCode: string): UIActionType => {
+  return {
+    type: DELIVERY_CODE_MODAL_SUBMIT_CLICKED,
+    deliveryCode,
+  };
+};
+
 const showLoadingScreen = (): UIActionType => {
   return {
     type: SHOW_LOADING_SCREEN,
@@ -124,6 +134,18 @@ const hideSkuModal = (): UIActionType => {
   };
 };
 
+const showDeliveryCodeModal = (): UIActionType => {
+  return {
+    type: SHOW_DELIVERY_CODE_MODAL,
+  };
+};
+
+const hideDeliveryCodeModal = (): UIActionType => {
+  return {
+    type: HIDE_DELIVERY_CODE_MODAL,
+  };
+};
+
 export default {
   showSureModal,
   hideSureModal,
@@ -131,6 +153,9 @@ export default {
   sureModalCancelClicked,
   reasonModalSubmitClicked,
   reasonModalCancelClicked,
+  deliveryCodeModalSubmitClicked,
+  showDeliveryCodeModal,
+  hideDeliveryCodeModal,
   showLoadingScreen,
   hideLoadingScreen,
   showReasonModal,

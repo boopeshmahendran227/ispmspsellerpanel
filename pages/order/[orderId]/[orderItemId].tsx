@@ -22,6 +22,7 @@ interface StateProps {
 interface DispatchProps {
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
   markAsShipping: (orderId: number, orderItemId: number) => void;
+  markAsProcessing: (orderId: number, orderItemId: number) => void;
   approveCancelOrderItem: (orderId: number, orderItemId: number) => void;
   rejectCancelOrderItem: (orderId: number, orderItemId: number) => void;
   approveReturnOrderItem: (orderId: number, orderItemId: number) => void;
@@ -88,6 +89,7 @@ const Order = (props: OrderProps) => {
               orderItem={orderItem}
               markAsShipping={props.markAsShipping}
               markAsShippingComplete={props.markAsShippingComplete}
+              markAsProcessing={props.markAsProcessing}
               approveCancelOrderItem={props.approveCancelOrderItem}
               rejectCancelOrderItem={props.rejectCancelOrderItem}
               approveReturnOrderItem={props.approveReturnOrderItem}
@@ -199,6 +201,7 @@ const mapDispatchToProps: DispatchProps = {
   approveReturnOrderItem: OrderActions.approveReturnOrderItem,
   rejectReturnOrderItem: OrderActions.rejectReturnOrderItem,
   cancelOrderItem: OrderActions.cancelOrderItem,
+  markAsProcessing: OrderActions.markAsProcessing,
 };
 
 export default connect<StateProps, DispatchProps>(

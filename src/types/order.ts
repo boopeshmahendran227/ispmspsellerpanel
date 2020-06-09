@@ -11,6 +11,7 @@ import {
   MARK_AS_SHIPPING,
   CANCEL_ORDER_ITEM,
   SET_ORDER_CURRENT_PAGE_NUMBER,
+  MARK_AS_PROCESSING,
 } from "../constants/ActionTypes";
 import { ProductAttributeValue } from "./product";
 
@@ -18,6 +19,7 @@ export enum OrderStatus {
   Created = "Created",
   PaymentSuccess = "PaymentSuccess",
   PaymentFail = "PaymentFail",
+  SellerProcessing = "SellerProcessing",
   SellerApprovalPending = "SellerApprovalPending",
   AdminApprovalPending = "AdminApprovalPending",
   Shipping = "Shipping",
@@ -194,6 +196,12 @@ interface MarkAsShippingAction {
   orderItemId: number;
 }
 
+interface MarkAsProcessingAction {
+  type: typeof MARK_AS_PROCESSING;
+  orderId: number;
+  orderItemId: number;
+}
+
 interface CancelOrderItemAction {
   type: typeof CANCEL_ORDER_ITEM;
   orderId: number;
@@ -217,5 +225,6 @@ export type OrderActionType =
   | RejectReturnOrderItemAction
   | MarkAsShippingCompleteAction
   | MarkAsShippingAction
+  | MarkAsProcessingAction
   | CancelOrderItemAction
   | SetOrderCurrentPageNumberAction;
