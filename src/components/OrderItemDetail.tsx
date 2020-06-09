@@ -13,6 +13,7 @@ interface OrderItemDetailProps {
   orderItem: OrderItemInterface;
   markAsShipping: (orderId: number, orderItemId: number) => void;
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
+  markAsProcessing: (orderId: number, orderItemId: number) => void;
   approveReturnOrderItem: (orderId: number, orderItemId: number) => void;
   rejectReturnOrderItem: (orderId: number, orderItemId: number) => void;
   approveCancelOrderItem: (orderId: number, orderItemId: number) => void;
@@ -28,6 +29,34 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
     switch (orderItem.orderItemStatus) {
       case OrderStatus.PaymentSuccess:
       case OrderStatus.PaymentOnDelivery:
+        return (
+          <>
+            <Button
+              type={ButtonType.success}
+              onClick={() =>
+                props.markAsProcessing(
+                  props.orderItem.order.id,
+                  props.orderItem.id
+                )
+              }
+            >
+              Mark as Processing
+            </Button>
+            <Button
+              type={ButtonType.danger}
+              onClick={() =>
+                props.cancelOrderItem(
+                  props.orderItem.order.id,
+                  props.orderItem.id
+                )
+              }
+              outlined={true}
+            >
+              Cancel Order
+            </Button>
+          </>
+        );
+      case OrderStatus.SellerProcessing:
         return (
           <>
             <Button

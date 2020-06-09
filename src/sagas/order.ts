@@ -11,6 +11,7 @@ import {
   MARK_AS_SHIPPING_REQUEST,
   CANCEL_ORDER_ITEM_REQUEST,
   SET_ORDER_CURRENT_PAGE_NUMBER,
+  MARK_AS_PROCESSING,
 } from "../constants/ActionTypes";
 import { takeEvery, all, call, put, take, select } from "redux-saga/effects";
 import api from "../api";
@@ -38,6 +39,9 @@ function* changeOrderItemStatus(action) {
           cancelReason: action.reason,
         }),
         orderItemStatus: action.orderItemStatus,
+        ...(action.deliveryCode && {
+          deliveryCode: action.deliveryCode,
+        }),
       },
     });
     yield put(
@@ -79,6 +83,7 @@ const status = {
   [MARK_AS_SHIPPING_REQUEST]: OrderStatus.Shipping,
   [MARK_AS_SHIPPING_COMPLETE_REQUEST]: OrderStatus.ShippingCompleted,
   [CANCEL_ORDER_ITEM_REQUEST]: OrderStatus.CancelRequested,
+  [MARK_AS_PROCESSING]: OrderStatus.SellerProcessing,
 };
 
 function* watchStatusChange() {
@@ -89,7 +94,8 @@ function* watchStatusChange() {
         action.orderId,
         action.orderItemId,
         status[action.type],
-        action.reason
+        action.reason,
+        action.deliveryCode
       )
     );
   }

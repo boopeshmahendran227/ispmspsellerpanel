@@ -15,7 +15,7 @@ interface StateProps {
 
 interface DispatchProps {
   onSubmit: (deliveryCode: string) => void;
-  onClose: () => void;
+  onCancel: () => void;
 }
 
 type DeliveryCodeModalProps = StateProps & DispatchProps;
@@ -26,7 +26,7 @@ const DeliveryCodeModal = (props: DeliveryCodeModalProps) => {
   };
 
   return (
-    <Modal open={props.open} onClose={props.onClose}>
+    <Modal open={props.open} onClose={props.onCancel}>
       <div className="container">
         <header>Delivery Code</header>
         <div className="subHeader">
@@ -88,7 +88,7 @@ const mapStateToProps = (state: RootState): StateProps => ({
 
 const mapDispatchToProps: DispatchProps = {
   onSubmit: UIActions.deliveryCodeModalSubmitClicked,
-  onClose: UIActions.hideDeliveryCodeModal,
+  onCancel: UIActions.deliveryCodeModalCancelClicked,
 };
 
 export default connect<StateProps, DispatchProps>(

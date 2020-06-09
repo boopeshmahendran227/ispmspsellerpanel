@@ -146,6 +146,7 @@ interface ChangeOrderItemStatusAction {
   orderItemId: number;
   orderItemStatus: string;
   reason: string;
+  deliveryCode: string;
 }
 
 interface ChangeOrderItemStatusSuccessAction {

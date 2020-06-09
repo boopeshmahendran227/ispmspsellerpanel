@@ -25,7 +25,8 @@ const changeOrderItemStatus = (
   orderId: number,
   orderItemId: number,
   orderItemStatus: string,
-  reason: string = ""
+  reason: string = "",
+  deliveryCode: string = ""
 ): OrderActionType => {
   return {
     type: CHANGE_ORDER_ITEM_STATUS_REQUEST,
@@ -33,6 +34,7 @@ const changeOrderItemStatus = (
     orderItemId,
     orderItemStatus,
     reason,
+    deliveryCode,
   };
 };
 

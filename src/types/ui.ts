@@ -18,6 +18,7 @@ import {
   DELIVERY_CODE_MODAL_SUBMIT_CLICKED,
   SHOW_DELIVERY_CODE_MODAL,
   HIDE_DELIVERY_CODE_MODAL,
+  DELIVERY_CODE_MODAL_CANCEL_CLICKED,
 } from "../constants/ActionTypes";
 
 interface ShowSureModalAction {
@@ -61,6 +62,10 @@ interface ReasonModalCancelClicked {
 interface DeliveryCodeModalSubmitClicked {
   type: typeof DELIVERY_CODE_MODAL_SUBMIT_CLICKED;
   deliveryCode: string;
+}
+
+interface DeliveryCodeModalCancelClicked {
+  type: typeof DELIVERY_CODE_MODAL_CANCEL_CLICKED;
 }
 
 interface ShowLoadingScreenAction {
@@ -117,6 +122,7 @@ export type UIActionType =
   | ReasonModalSubmitClicked
   | ReasonModalCancelClicked
   | DeliveryCodeModalSubmitClicked
+  | DeliveryCodeModalCancelClicked
   | ShowUpdateQuoteModalAction
   | HideUpdateQuoteModalAction
   | ShowAttributeModalAction

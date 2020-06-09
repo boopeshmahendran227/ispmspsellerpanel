@@ -18,6 +18,7 @@ import {
   HIDE_SKU_MODAL,
   HIDE_DELIVERY_CODE_MODAL,
   SHOW_DELIVERY_CODE_MODAL,
+  DELIVERY_CODE_MODAL_CANCEL_CLICKED,
 } from "../constants/ActionTypes";
 import { UIActionType } from "../types/ui";
 
@@ -83,6 +84,12 @@ const deliveryCodeModalSubmitClicked = (deliveryCode: string): UIActionType => {
   return {
     type: DELIVERY_CODE_MODAL_SUBMIT_CLICKED,
     deliveryCode,
+  };
+};
+
+const deliveryCodeModalCancelClicked = (): UIActionType => {
+  return {
+    type: DELIVERY_CODE_MODAL_CANCEL_CLICKED,
   };
 };
 
@@ -154,6 +161,7 @@ export default {
   reasonModalSubmitClicked,
   reasonModalCancelClicked,
   deliveryCodeModalSubmitClicked,
+  deliveryCodeModalCancelClicked,
   showDeliveryCodeModal,
   hideDeliveryCodeModal,
   showLoadingScreen,
