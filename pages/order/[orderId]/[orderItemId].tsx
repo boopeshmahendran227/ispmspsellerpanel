@@ -14,6 +14,8 @@ import { transformOrderItem } from "../../../src/transformers/orderItem";
 import { OrderDetailInterface } from "../../../src/types/order";
 import { getOrderStatusText } from "../../../src/utils/order";
 import PageError from "../../../src/components/PageError";
+import ShippingInformationContainer from "../../../src/components/ShippingInformationContainer";
+import DeliveryCodeModal from "../../../src/components/DeliveryCodeModal";
 
 interface StateProps {
   currentlyProcessingOrderItemIds: number[];
@@ -55,6 +57,7 @@ const Order = (props: OrderProps) => {
 
   return (
     <div className="container">
+      <DeliveryCodeModal />
       <Link href="/order">
         <a className="backBtn">
           <i className="icon fas fa-chevron-left"></i> Back to Orders
@@ -121,6 +124,7 @@ const Order = (props: OrderProps) => {
           </section>
         </div>
       </div>
+      <ShippingInformationContainer orderItem={orderItem} />
       <style jsx>{`
         .container {
           margin: 1em auto;

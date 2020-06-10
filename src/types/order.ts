@@ -12,6 +12,7 @@ import {
   CANCEL_ORDER_ITEM,
   SET_ORDER_CURRENT_PAGE_NUMBER,
   MARK_AS_PROCESSING,
+  UPDATE_SHIPPING_INFORMATION_REQUEST,
 } from "../constants/ActionTypes";
 import { ProductAttributeValue } from "./product";
 
@@ -215,6 +216,14 @@ interface SetOrderCurrentPageNumberAction {
   value: number;
 }
 
+interface UpdateShippingInformationAction {
+  type: typeof UPDATE_SHIPPING_INFORMATION_REQUEST;
+  orderItemId: number;
+  providerName: string;
+  trackingCode: string;
+  expectedDeliveryDate: string;
+}
+
 export type OrderActionType =
   | GetOrderAction
   | ChangeOrderItemStatusAction
@@ -228,4 +237,5 @@ export type OrderActionType =
   | MarkAsShippingAction
   | MarkAsProcessingAction
   | CancelOrderItemAction
-  | SetOrderCurrentPageNumberAction;
+  | SetOrderCurrentPageNumberAction
+  | UpdateShippingInformationAction;

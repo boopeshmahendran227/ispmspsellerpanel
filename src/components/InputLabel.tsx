@@ -1,3 +1,5 @@
+import CSSConstants from "../constants/CSSConstants";
+
 interface InputLabelProps {
   label: string;
 }
@@ -8,6 +10,7 @@ const InputLabel = (props: InputLabelProps) => {
       {props.label}:
       <style jsx>{`
         .label {
+          color: ${CSSConstants.secondaryTextColor};
           display: inline-block;
           margin: 0.6em 0;
           font-weight: 500;

@@ -12,6 +12,9 @@ import {
   CANCEL_ORDER_ITEM_REQUEST,
   SET_ORDER_CURRENT_PAGE_NUMBER,
   MARK_AS_PROCESSING,
+  UPDATE_SHIPPING_INFORMATION_REQUEST,
+  UPDATE_SHIPPING_INFORMATION_SUCCESS,
+  UPDATE_SHIPPING_INFORMATION_FAILURE,
 } from "../constants/ActionTypes";
 import { takeEvery, all, call, put, take, select } from "redux-saga/effects";
 import api from "../api";
@@ -60,6 +63,23 @@ function* changeOrderItemStatus(action) {
   }
 }
 
+function* updateShippingInformation(action) {
+  try {
+    yield call(api, "/shipment/order", {
+      method: "PUT",
+      data: {
+        orderItemId: action.orderItemId,
+        providerName: action.providerName,
+        trackingCode: action.trackingCode,
+        expectedDeliveryDate: action.expectedDeliveryDate,
+      },
+    });
+    yield put({ type: UPDATE_SHIPPING_INFORMATION_SUCCESS });
+  } catch (err) {
+    yield put({ type: UPDATE_SHIPPING_INFORMATION_FAILURE });
+  }
+}
+
 function* watchGetOrders() {
   yield takeEvery(GET_ORDERS_REQUEST, getOrders);
 }
@@ -101,11 +121,19 @@ function* watchStatusChange() {
   }
 }
 
+function* watchUpdateShippingInformation() {
+  yield takeEvery(
+    UPDATE_SHIPPING_INFORMATION_REQUEST,
+    updateShippingInformation
+  );
+}
+
 export default function* () {
   yield all([
     watchGetOrders(),
     watchChangeOrderItemStatus(),
     watchStatusChange(),
     watchSetOrderCurrentPageNumber(),
+    watchUpdateShippingInformation(),
   ]);
 }

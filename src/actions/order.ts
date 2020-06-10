@@ -12,6 +12,7 @@ import {
   CANCEL_ORDER_ITEM,
   SET_ORDER_CURRENT_PAGE_NUMBER,
   MARK_AS_PROCESSING,
+  UPDATE_SHIPPING_INFORMATION_REQUEST,
 } from "../constants/ActionTypes";
 import { OrderActionType } from "../types/order";
 
@@ -157,6 +158,21 @@ const setOrderCurrentPageNumber = (value: number): OrderActionType => {
   };
 };
 
+const updateShippingInformation = (
+  orderItemId: number,
+  providerName: string,
+  trackingCode: string,
+  expectedDeliveryDate: string
+): OrderActionType => {
+  return {
+    type: UPDATE_SHIPPING_INFORMATION_REQUEST,
+    orderItemId,
+    providerName,
+    trackingCode,
+    expectedDeliveryDate,
+  };
+};
+
 export default {
   getOrders,
   changeOrderItemStatus,
@@ -171,4 +187,5 @@ export default {
   markAsProcessing,
   cancelOrderItem,
   setOrderCurrentPageNumber,
+  updateShippingInformation,
 };

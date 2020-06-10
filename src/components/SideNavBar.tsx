@@ -85,6 +85,14 @@ const SideNavBar = () => {
             </Link>
           </li>
           <li>
+            <Link activeClassName="active" href="/coupons">
+              <a>
+                <i className="fas fa-tag"></i>
+                <span>Seller Coupons</span>
+              </a>
+            </Link>
+          </li>
+          <li>
             <Link activeClassName="active" href="/customers">
               <a>
                 <i className="fas fa-users" aria-hidden="true"></i>
