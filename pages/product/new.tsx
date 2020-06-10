@@ -73,7 +73,6 @@ const AddProduct = (props: AddProductProps) => {
   }
 
   const onSubmit = (values: ProductInputInterface) => {
-    console.log(values);
     props.addProduct(values);
   };
 
@@ -106,7 +105,6 @@ const AddProduct = (props: AddProductProps) => {
         >
           {({ errors, resetForm }) => (
             <Form>
-              {console.log(errors)}
               <SkuModal />
               <div className="gridContainer">
                 <InputLabel label="Name" />

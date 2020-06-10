@@ -33,7 +33,7 @@ const FieldInput = (props: FieldInputProps) => {
               font-size: 1.1rem;
             }
             input {
-              padding: 0.8em;
+              padding: 0.6em;
               width: 100%;
             }
             .metaContainer {

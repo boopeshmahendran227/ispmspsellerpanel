@@ -63,11 +63,12 @@ const Button = (props: ButtonProps) => {
           font-size: inherit;
           border: none;
           letter-spacing: 1px;
+          text-transform: uppercase;
+          border-radius: 4px;
         }
         button:hover {
-          box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
-            0px 2px 2px 0px rgba(0, 0, 0, 0.14),
-            0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16),
+            0 3px 6px rgba(0, 0, 0, 0.23);
         }
         .primary,
         .danger,

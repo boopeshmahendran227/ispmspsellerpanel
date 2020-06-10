@@ -79,6 +79,8 @@ export interface OrderItemInterface {
     id: number;
     providerName: string;
     shipmentFee: number;
+    trackingCode: string;
+    expectedDeliveryDate: string;
   };
   taxDetails: {
     taxGroupId: number;
