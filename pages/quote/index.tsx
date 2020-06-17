@@ -117,7 +117,7 @@ const Quotes = (props: QuotesProps) => {
       <Link key={quote.id} href="/quote/[id]" as={`/quote/${quote.id}`}>
         <tr>
           <td>{quote.id}</td>
-          <td>{quote.customerId}</td>
+          <td>{quote.customerName || "Name Not Available"}</td>
           <td>
             {quote.productDetails.map((productDetail) => (
               <div key={productDetail.id} className="productContainer">

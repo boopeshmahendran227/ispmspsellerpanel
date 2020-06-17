@@ -230,7 +230,7 @@ const Orders = (props: OrdersProps) => {
         <tr>
           <td>{orderItem.order.id}</td>
           <td>{orderItem.id}</td>
-          <td>{orderItem.order.customerId}</td>
+          <td>{orderItem.order.customerName || "Name Not Available"}</td>
           <td>
             <div className="productContainer">
               <ProductCard
