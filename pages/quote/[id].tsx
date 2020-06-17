@@ -68,8 +68,10 @@ const Quote = (props: QuoteProps) => {
           <section className="customerContainer">
             <div className="header">Customer Information</div>
             <div className="row">
-              <div className="name">Id</div>
-              <div className="value">{quote.customerId}</div>
+              <div className="name">Name</div>
+              <div className="value">
+                {quote.customerName || "Name Not Available"}
+              </div>
             </div>
           </section>
         </div>

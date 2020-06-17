@@ -113,6 +113,7 @@ export interface AddressInterface {
 export interface OrderInterface {
   id: number;
   customerId: string;
+  customerName: string;
   totalPrice: number;
   totalDiscount: number;
   items: OrderItemInterface[];
