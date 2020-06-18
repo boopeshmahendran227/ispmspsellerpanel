@@ -41,6 +41,7 @@ export interface ShowroomVisitInterface {
   bookingId: number;
   customerId: string;
   customerName: string;
+  customerPhone: string;
   date: string;
   startTime: string;
   endTime: string;

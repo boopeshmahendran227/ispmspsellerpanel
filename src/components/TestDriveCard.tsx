@@ -1,6 +1,7 @@
 import { TestDriveInterface } from "../types/testdrive";
 import RelativeImg from "./RelativeImg";
 import moment from "moment";
+import { getCustomerInfo } from "../utils/customer";
 
 interface TestDriveCardProps {
   testdrive: TestDriveInterface;
@@ -16,7 +17,9 @@ const TestDriveCard = (props: TestDriveCardProps) => {
       <div className="contentContainer">
         <div className="customerContainer">
           <i className="fas fa-user"></i>
-          <span className="customerName">Customer #{testdrive.customerId}</span>
+          <span className="customerName">
+            Customer {getCustomerInfo(testdrive)}
+          </span>
         </div>{" "}
         <div className="productContainer">
           <i className="fa fa-motorcycle" aria-hidden="true"></i>

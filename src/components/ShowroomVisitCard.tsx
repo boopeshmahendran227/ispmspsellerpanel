@@ -3,6 +3,7 @@ import CSSConstants from "../constants/CSSConstants";
 import Chroma from "chroma-js";
 import { ShowroomVisitInterface } from "../types/showroomVisit";
 import { convertTo12hour } from "../utils/misc";
+import { getCustomerInfo } from "../utils/customer";
 
 interface ShowroomVisitCardProps {
   showroomVisit: ShowroomVisitInterface;
@@ -25,8 +26,7 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
         <div className="info">
           <div className="customer">
             <span className="customerName">
-              Customer{" "}
-              {showroomVisit.customerName || "#" + showroomVisit.customerId}
+              Customer {getCustomerInfo(showroomVisit)}
             </span>{" "}
             has booked
             <br /> a visit for{" "}
