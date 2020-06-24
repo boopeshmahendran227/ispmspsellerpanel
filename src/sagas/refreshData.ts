@@ -3,6 +3,7 @@ import {
   UPDATE_QUOTE_SUCCESS,
   REJECT_QUOTE_SUCCESS,
   ADD_ATTRIBUTE_SUCCESS,
+  ADD_ATTRIBUTE_VALUE_SUCCESS,
 } from "../constants/ActionTypes";
 import { take, all, put, call } from "redux-saga/effects";
 import OrderActions from "../actions/order";
@@ -25,7 +26,7 @@ function* refreshQuote() {
 
 function* refreshAttributes() {
   while (true) {
-    yield take([ADD_ATTRIBUTE_SUCCESS]);
+    yield take([ADD_ATTRIBUTE_SUCCESS, ADD_ATTRIBUTE_VALUE_SUCCESS]);
     yield call(mutate, `/attribute`);
   }
 }
