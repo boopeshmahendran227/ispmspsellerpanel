@@ -48,7 +48,7 @@ export interface OrderItemInterface {
   skuId: string;
   sellerId: string;
   sellerName: string;
-  actualPrice: number;
+  actualUnitPrice: number;
   actualPriceWithoutTax: number;
   discountedPrice: number;
   productSnapshot: {

@@ -9,6 +9,7 @@ import {
   ProductSkuDetail,
   ProductInputInterface,
   TaxGroupInterface,
+  SelectOptionInterface,
 } from "../../src/types/product";
 import { RootState } from "../../src/reducers";
 import ProductActions from "../../src/actions/product";
@@ -21,13 +22,17 @@ import SkuModal from "../../src/components/SkuModal";
 import TierPriceInput from "../../src/components/TierpriceInput";
 import FAQInput from "../../src/components/FAQInput";
 import SpecificationInput from "../../src/components/SpecificationInput";
-import { flattenCategoryTree } from "../../src/utils/categoryTree";
+import {
+  flattenCategoryTree,
+  getChildCategories,
+} from "../../src/utils/categoryTree";
 import InputLabel from "../../src/components/InputLabel";
 import { getSkus } from "../../src/selectors/product";
 import SkuInputTable from "../../src/components/SkuInputTable";
 import FieldTextArea from "../../src/components/FieldTextArea";
 import { useRef, useEffect } from "react";
 import PageError from "../../src/components/PageError";
+import { CategoryTreeInterface } from "../../src/types/categoryTree";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -58,8 +63,10 @@ const AddProduct = (props: AddProductProps) => {
 
   const brands: BrandInterface[] = brandSWR.data;
   const attributes: AttributeInterface[] = attributeSWR.data;
-  const categories = flattenCategoryTree(categorySWR.data);
+  const categoryTree: CategoryTreeInterface = categorySWR.data;
   const taxGroups: TaxGroupInterface[] = taxSWR.data;
+
+  const categories = flattenCategoryTree(categoryTree);
 
   const error =
     brandSWR.error || attributeSWR.error || categorySWR.error || taxSWR.error;
@@ -74,6 +81,16 @@ const AddProduct = (props: AddProductProps) => {
 
   const onSubmit = (values: ProductInputInterface) => {
     props.addProduct(values);
+  };
+
+  const getOtherCategories = (defaultCategory: SelectOptionInterface) => {
+    if (defaultCategory) {
+      const category = categories.find(
+        (category) => category.id === defaultCategory.value
+      );
+      return getChildCategories(category);
+    }
+    return categories;
   };
 
   return (
@@ -103,7 +120,7 @@ const AddProduct = (props: AddProductProps) => {
           onSubmit={onSubmit}
           validationSchema={ProductSchema}
         >
-          {({ errors, resetForm }) => (
+          {({ resetForm, values }) => (
             <Form>
               <SkuModal />
               <div className="gridContainer">
@@ -121,7 +138,7 @@ const AddProduct = (props: AddProductProps) => {
                     label: brand.name,
                   }))}
                 />
-                <InputLabel label="Default Category" />
+                <InputLabel label="Main Category" />
                 <FieldSelect
                   name="defaultCategory"
                   options={categories.map((category) => ({
@@ -129,13 +146,15 @@ const AddProduct = (props: AddProductProps) => {
                     label: category.name,
                   }))}
                 />
-                <InputLabel label="All Categories" />
+                <InputLabel label="Other Categories" />
                 <FieldMultiSelect
                   name="categories"
-                  options={categories.map((category) => ({
-                    value: category.id,
-                    label: category.name,
-                  }))}
+                  options={getOtherCategories(values.defaultCategory).map(
+                    (category) => ({
+                      value: category.id,
+                      label: category.name,
+                    })
+                  )}
                 />
                 <InputLabel label="Special Discount Value" />
                 <FieldInput name="specialDiscountValue" />

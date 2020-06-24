@@ -40,8 +40,8 @@ const Invoice = () => {
 
   const productName = orderItem.productSnapshot.productName;
   const attributeValues = orderItem.productSnapshot.attributeValues;
-  const tax = orderItem.taxDetails.totalTaxPaid * orderItem.qty;
-  const price = orderItem.actualPriceWithoutTax * orderItem.qty;
+  const tax = orderItem.taxDetails.totalTaxPaid;
+  const price = orderItem.actualPriceWithoutTax;
   const discount = orderItem.totalDiscount;
   const finalAmount = orderItem.discountedPrice;
 
@@ -114,7 +114,7 @@ const Invoice = () => {
                       <div className="taxSplit">
                         <span className="name">{taxSplit.taxName}:</span>
                         <span className="value">
-                          {formatPrice(taxSplit.taxAmountPaid * orderItem.qty)}
+                          {formatPrice(taxSplit.taxAmountPaid)}
                         </span>
                       </div>
                     ))}

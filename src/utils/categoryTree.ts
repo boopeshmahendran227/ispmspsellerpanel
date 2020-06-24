@@ -14,10 +14,20 @@ export const flattenCategoryTree = (
     categories.push({
       id: node.id,
       name: node.name,
+      children: node.children,
     });
     node.children.forEach((child) => queue.push(child));
     ++i;
   }
 
   return categories;
+};
+
+export const getChildCategories = (
+  category: CategoryInterface
+): CategoryInterface[] => {
+  return category.children.reduce(
+    (acc, child) => [...acc, ...flattenCategoryTree(child)],
+    []
+  );
 };
