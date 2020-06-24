@@ -34,6 +34,7 @@ import { useRef, useEffect } from "react";
 import PageError from "../../src/components/PageError";
 import { CategoryTreeInterface } from "../../src/types/categoryTree";
 import { EcosystemInterface } from "../../src/types/ecosystem";
+import CSSConstants from "../../src/constants/CSSConstants";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -183,7 +184,18 @@ const AddProduct = (props: AddProductProps) => {
                   name="ecosystems"
                   options={ecosystems.map((ecosystem) => ({
                     value: ecosystem.id,
-                    label: ecosystem.name,
+                    label: (
+                      <span className="ecosystemOptionName">
+                        <span className="iconContainer">
+                          {ecosystem.isPublic ? (
+                            <i className="fas fa-users"></i>
+                          ) : (
+                            <i className="fa fa-lock" aria-hidden="true"></i>
+                          )}
+                        </span>
+                        <span>{ecosystem.name}</span>
+                      </span>
+                    ),
                   }))}
                 />
               </div>
@@ -231,6 +243,12 @@ const AddProduct = (props: AddProductProps) => {
           text-align: center;
           font-size: 1.2rem;
           margin-bottom: 1em;
+        }
+        .ecosystemOptionName .iconContainer {
+          color: ${CSSConstants.primaryColor};
+          width: 2rem;
+          display: inline-flex;
+          justify-content: center;
         }
       `}</style>
     </div>

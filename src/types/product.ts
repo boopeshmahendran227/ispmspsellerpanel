@@ -90,7 +90,7 @@ export interface ResponseAttributeValuesInterface {
 
 export interface SelectOptionInterface {
   value: number | string;
-  label: string;
+  label: React.ReactNode;
 }
 
 export interface ProductAttributeValue {
