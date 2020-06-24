@@ -1,9 +1,16 @@
 import useSWR from "swr";
-import { AttributeInterface, SelectedAttribute } from "../types/product";
+import {
+  AttributeInterface,
+  SelectedAttribute,
+  ProductInputInterface,
+  SelectOptionInterface,
+} from "../types/product";
 import Loader from "../../src/components/Loader";
 import MultiSelect from "../../src/components/MultiSelect";
 import Button from "../../src/components/Button";
 import PageError from "./PageError";
+import { useFormikContext } from "formik";
+import _ from "lodash";
 
 interface SelectAttributesProps {
   selectedAttributes: SelectedAttribute[];
@@ -25,7 +32,30 @@ const SelectAttributes = (props: SelectAttributesProps) => {
     return <Loader />;
   }
 
-  const attributeOptions = attributes.map((attribute) => ({
+  // Filter Attributes by category
+  const values: ProductInputInterface = useFormikContext<
+    ProductInputInterface
+  >().values;
+  const defaultCategory: SelectOptionInterface = values.defaultCategory;
+  const categories: SelectOptionInterface[] = values.categories;
+
+  const allCategoryIds = _.compact([
+    defaultCategory?.value,
+    ...categories.map((category) => category.value),
+  ]);
+
+  const categoryFilteredAttributes =
+    allCategoryIds.length === 0
+      ? attributes
+      : attributes.filter((attribute) => {
+          const commonCategories = _.intersection(
+            attribute.associatedCategoryIds,
+            allCategoryIds
+          );
+          return commonCategories.length > 0;
+        });
+
+  const attributeOptions = categoryFilteredAttributes.map((attribute) => ({
     value: attribute.id,
     label: attribute.name,
   }));
