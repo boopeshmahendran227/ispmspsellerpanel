@@ -136,17 +136,9 @@ const AddProduct = (props: AddProductProps) => {
                 <InputLabel label="Name" />
                 <FieldInput name="name" />
                 <InputLabel label="Short Description" />
-                <FieldTextArea name="shortDescription" />
+                <FieldInput name="shortDescription" />
                 <InputLabel label="Long Description" />
                 <FieldTextArea name="longDescription" />
-                <InputLabel label="Brand" />
-                <FieldSelect
-                  name="brand"
-                  options={brands.map((brand) => ({
-                    value: brand.id,
-                    label: brand.name,
-                  }))}
-                />
                 <InputLabel label="Main Category" />
                 <FieldSelect
                   name="defaultCategory"
@@ -165,6 +157,36 @@ const AddProduct = (props: AddProductProps) => {
                     })
                   )}
                 />
+                <InputLabel label="Ecosystems" />
+                <FieldMultiSelect
+                  name="ecosystems"
+                  options={ecosystems.map((ecosystem) => ({
+                    value: ecosystem.id,
+                    label: (
+                      <span className="ecosystemOptionName">
+                        <span>{ecosystem.name}</span>
+                        <span className="iconContainer">
+                          {ecosystem.isPublic ? (
+                            <i className="publicIcon fas fa-users"></i>
+                          ) : (
+                            <i
+                              className="privateIcon fa fa-lock"
+                              aria-hidden="true"
+                            ></i>
+                          )}
+                        </span>
+                      </span>
+                    ),
+                  }))}
+                />
+                <InputLabel label="Brand" />
+                <FieldSelect
+                  name="brand"
+                  options={brands.map((brand) => ({
+                    value: brand.id,
+                    label: brand.name,
+                  }))}
+                />
                 <InputLabel label="Special Discount Value" />
                 <FieldInput name="specialDiscountValue" />
                 <InputLabel label="Min Price" />
@@ -177,25 +199,6 @@ const AddProduct = (props: AddProductProps) => {
                   options={taxGroups.map((taxGroup) => ({
                     value: taxGroup.id,
                     label: taxGroup.desscription,
-                  }))}
-                />
-                <InputLabel label="Ecosystems" />
-                <FieldMultiSelect
-                  name="ecosystems"
-                  options={ecosystems.map((ecosystem) => ({
-                    value: ecosystem.id,
-                    label: (
-                      <span className="ecosystemOptionName">
-                        <span className="iconContainer">
-                          {ecosystem.isPublic ? (
-                            <i className="fas fa-users"></i>
-                          ) : (
-                            <i className="fa fa-lock" aria-hidden="true"></i>
-                          )}
-                        </span>
-                        <span>{ecosystem.name}</span>
-                      </span>
-                    ),
                   }))}
                 />
               </div>
@@ -234,6 +237,8 @@ const AddProduct = (props: AddProductProps) => {
           grid-template-columns: 200px 1fr;
           align-items: center;
           font-size: 1.1rem;
+          max-width: 700px;
+          margin: auto;
         }
         .formContainer {
           max-width: 1200px;
@@ -244,11 +249,16 @@ const AddProduct = (props: AddProductProps) => {
           font-size: 1.2rem;
           margin-bottom: 1em;
         }
-        .ecosystemOptionName .iconContainer {
-          color: ${CSSConstants.primaryColor};
-          width: 2rem;
+        .ecosystemOptionName {
           display: inline-flex;
-          justify-content: center;
+          width: 100%;
+          justify-content: space-between;
+        }
+        .publicIcon {
+          color: ${CSSConstants.successColor};
+        }
+        .privateIcon {
+          color: ${CSSConstants.dangerColor};
         }
       `}</style>
     </div>

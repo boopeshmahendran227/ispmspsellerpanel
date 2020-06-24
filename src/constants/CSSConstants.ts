@@ -8,8 +8,8 @@ const constants = {
   primaryColor: "#6c5ce7",
   secondaryColor: "#068ff4",
   warningColor: "#d35400",
-  dangerColor: "#ff0000",
-  successColor: "#378E3B",
+  dangerColor: "#f94a5b",
+  successColor: "#61B246",
   outlineColor: "", // This is set down
   primaryTextColor: "#454f5b",
   secondaryTextColor: "#6c757d",
