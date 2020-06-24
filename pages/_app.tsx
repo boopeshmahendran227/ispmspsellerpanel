@@ -3,7 +3,7 @@ import NProgress from "nprogress";
 import { Provider } from "react-redux";
 import withRedux from "next-redux-wrapper";
 import withReduxSaga from "next-redux-saga";
-import withToastProvider from "../src/components/WithToastProvider";
+import ToastProvider from "../src/components/ToastProvider";
 import { initializeStore } from "../src/store";
 import Router, { withRouter } from "next/router";
 import { SWRConfig } from "swr";
@@ -39,7 +39,7 @@ function MyApp(props) {
   const AuthComponent = WithAuth(Component);
 
   const swrConfigData = {
-    refreshInterval: 10000,
+    refreshInterval: 600000,
     fetcher: api,
   };
 
@@ -57,34 +57,36 @@ function MyApp(props) {
   return (
     <SWRConfig value={swrConfigData}>
       <Provider store={store}>
-        <LoadingScreen />
-        <UpdateQuoteModal />
-        <ReasonModal />
-        <SureModal />
-        <Layout>
-          <main>
-            <div className="sideNavBarContainer">
-              <SideNavBar />
-            </div>
-            <div className="bodyContainer">
-              <TopNavBar />
-              <AuthComponent {...pageProps} />
-            </div>
-            <style jsx>{`
-              .sideNavBarContainer {
-                position: fixed;
-                top: 0;
-                left: 0;
-                height: 100%;
-                width: 190px;
-                z-index: 1;
-              }
-              .bodyContainer {
-                margin-left: 190px;
-              }
-            `}</style>
-          </main>
-        </Layout>
+        <ToastProvider>
+          <LoadingScreen />
+          <UpdateQuoteModal />
+          <ReasonModal />
+          <SureModal />
+          <Layout>
+            <main>
+              <div className="sideNavBarContainer">
+                <SideNavBar />
+              </div>
+              <div className="bodyContainer">
+                <TopNavBar />
+                <AuthComponent {...pageProps} />
+              </div>
+              <style jsx>{`
+                .sideNavBarContainer {
+                  position: fixed;
+                  top: 0;
+                  left: 0;
+                  height: 100%;
+                  width: 190px;
+                  z-index: 1;
+                }
+                .bodyContainer {
+                  margin-left: 190px;
+                }
+              `}</style>
+            </main>
+          </Layout>
+        </ToastProvider>
       </Provider>
     </SWRConfig>
   );
@@ -100,6 +102,4 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
   return { pageProps };
 };
 
-export default withRedux(initializeStore)(
-  withReduxSaga(withToastProvider(withRouter(MyApp)))
-);
+export default withRedux(initializeStore)(withReduxSaga(withRouter(MyApp)));
