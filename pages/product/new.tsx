@@ -33,6 +33,7 @@ import FieldTextArea from "../../src/components/FieldTextArea";
 import { useRef, useEffect } from "react";
 import PageError from "../../src/components/PageError";
 import { CategoryTreeInterface } from "../../src/types/categoryTree";
+import { EcosystemInterface } from "../../src/types/ecosystem";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -60,22 +61,28 @@ const AddProduct = (props: AddProductProps) => {
   const attributeSWR = useSWR("/attribute");
   const categorySWR = useSWR("/category/tree");
   const taxSWR = useSWR("/tax/taxgroup");
+  const ecosystemSWR = useSWR("/ecosystem/seller");
 
   const brands: BrandInterface[] = brandSWR.data;
   const attributes: AttributeInterface[] = attributeSWR.data;
   const categoryTree: CategoryTreeInterface = categorySWR.data;
   const taxGroups: TaxGroupInterface[] = taxSWR.data;
+  const ecosystems: EcosystemInterface[] = ecosystemSWR.data;
 
   const categories = flattenCategoryTree(categoryTree);
 
   const error =
-    brandSWR.error || attributeSWR.error || categorySWR.error || taxSWR.error;
+    brandSWR.error ||
+    attributeSWR.error ||
+    categorySWR.error ||
+    taxSWR.error ||
+    ecosystemSWR.error;
 
   if (error) {
     return <PageError statusCode={error.response?.status} />;
   }
 
-  if (!brands || !attributes || !categories || !taxGroups) {
+  if (!brands || !attributes || !categories || !taxGroups || !ecosystems) {
     return <Loader />;
   }
 
@@ -114,6 +121,7 @@ const AddProduct = (props: AddProductProps) => {
             },
             skus: props.skus,
             categories: [],
+            ecosystems: [],
             defaultCategory: null,
             taxGroup: null,
           }}
@@ -168,6 +176,14 @@ const AddProduct = (props: AddProductProps) => {
                   options={taxGroups.map((taxGroup) => ({
                     value: taxGroup.id,
                     label: taxGroup.desscription,
+                  }))}
+                />
+                <InputLabel label="Ecosystems" />
+                <FieldMultiSelect
+                  name="ecosystems"
+                  options={ecosystems.map((ecosystem) => ({
+                    value: ecosystem.id,
+                    label: ecosystem.name,
                   }))}
                 />
               </div>

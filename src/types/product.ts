@@ -61,6 +61,7 @@ export interface ProductInputInterface {
   specification: SpecificationInterface;
   skus: ProductSkuDetail[];
   taxGroup: SelectOptionInterface;
+  ecosystems: SelectOptionInterface[];
 }
 
 export interface ProductResponseInterface {
@@ -88,7 +89,7 @@ export interface ResponseAttributeValuesInterface {
 }
 
 export interface SelectOptionInterface {
-  value: number;
+  value: number | string;
   label: string;
 }
 

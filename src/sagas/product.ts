@@ -50,7 +50,7 @@ function* addProduct(action) {
         loanIds: [],
         upSellProductIds: [],
         crossSellProductIds: [],
-        ecosystemIds: ["ecosystem1"],
+        ecosystemIds: product.ecosystems.map((ecosystem) => ecosystem.value),
         productFaqs: product.faqs,
         allProductAttributeValueIds: _.chain(selectedAttributeValues)
           .keys()
