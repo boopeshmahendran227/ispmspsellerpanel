@@ -77,11 +77,11 @@ function MyApp(props) {
                   top: 0;
                   left: 0;
                   height: 100%;
-                  width: 190px;
+                  width: 100px;
                   z-index: 1;
                 }
                 .bodyContainer {
-                  margin-left: 190px;
+                  margin-left: 100px;
                 }
               `}</style>
             </main>

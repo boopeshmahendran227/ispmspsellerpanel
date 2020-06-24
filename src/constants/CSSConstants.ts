@@ -5,7 +5,7 @@ const constants = {
   foregroundColor: "#FFFFFF",
   disabledColor: "#999",
   borderColor: "#ccc",
-  primaryColor: "#6c5ce7",
+  primaryColor: "#416fd1",
   secondaryColor: "#068ff4",
   warningColor: "#d35400",
   dangerColor: "#f94a5b",
@@ -19,7 +19,9 @@ const constants = {
   borderStyle: "", // This is set down
 };
 
-constants.lightPrimaryColor = Chroma(constants.primaryColor).brighten(1).css();
+constants.lightPrimaryColor = Chroma(constants.primaryColor)
+  .brighten(0.4)
+  .css();
 constants.borderStyle = `1px solid ${constants.borderColor}`;
 constants.hoverTextColor = constants.primaryColor;
 constants.hoverColor = Chroma(constants.primaryColor).brighten(3.2).css();

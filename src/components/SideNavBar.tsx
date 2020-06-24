@@ -5,11 +5,6 @@ import Chroma from "chroma-js";
 const SideNavBar = () => {
   return (
     <nav>
-      <div className="logoContainer">
-        <Link href="/">
-          <a>Istakapaza Sellers</a>
-        </Link>
-      </div>
       <div className="navigation">
         <ul>
           <li>
@@ -48,7 +43,7 @@ const SideNavBar = () => {
             <Link activeClassName="active" href="/visit">
               <a>
                 <i className="fas fa-calendar-alt"></i>
-                <span>Showroom Visits</span>
+                <span>Visits</span>
               </a>
             </Link>
           </li>
@@ -56,7 +51,7 @@ const SideNavBar = () => {
             <Link activeClassName="active" href="/testdrive">
               <a>
                 <i className="fa fa-motorcycle" aria-hidden="true"></i>
-                <span>Booked Test Rides</span>
+                <span>Test Rides</span>
               </a>
             </Link>
           </li>
@@ -80,7 +75,7 @@ const SideNavBar = () => {
             >
               <a>
                 <i className="fas fa-pen-square" aria-hidden={true}></i>
-                <span>Product Drafts</span>
+                <span>Drafts</span>
               </a>
             </Link>
           </li>
@@ -88,11 +83,11 @@ const SideNavBar = () => {
             <Link activeClassName="active" href="/coupons">
               <a>
                 <i className="fas fa-tag"></i>
-                <span>Seller Coupons</span>
+                <span>Coupons</span>
               </a>
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link activeClassName="active" href="/customers">
               <a>
                 <i className="fas fa-users" aria-hidden="true"></i>
@@ -107,7 +102,7 @@ const SideNavBar = () => {
                 <span>Settings</span>
               </a>
             </Link>
-          </li>
+          </li> */}
         </ul>
       </div>
       <style jsx>
@@ -137,17 +132,21 @@ const SideNavBar = () => {
             display: flex;
             width: 100%;
             padding: 0;
+            margin: 0;
             flex-direction: column;
           }
           a {
-            display: inline-block;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
             width: 100%;
-            padding: 1em;
+            padding: 1.2em 1em;
             transition: all 0.3s;
             text-decoration: none;
+            font-size: 0.9rem;
           }
           a i {
-            width: 1.3rem;
+            font-size: 1.4rem;
             margin: 0.3em;
           }
           .navigation a.active {

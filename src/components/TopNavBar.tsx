@@ -53,7 +53,7 @@ const TopNavBar = (props: TopNavBarProps) => {
 
   return (
     <div className="container">
-      <header>Seller Dashboard</header>
+      <header>Istakapaza Sellers</header>
       <a
         className={classes}
         key={
