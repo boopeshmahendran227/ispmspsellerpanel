@@ -213,6 +213,9 @@ export const ProductSchema = Yup.object().shape({
   shortDescription: Yup.string().required(),
   longDescription: Yup.string().min(20).required(),
   brand: Yup.object().required("Brand is required").nullable(),
+  defaultCategory: Yup.object()
+    .required("Default Category is required")
+    .nullable(),
   specialDiscountValue: Yup.number()
     .typeError("Special discount value must be a number")
     .required(),
