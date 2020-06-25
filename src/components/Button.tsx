@@ -1,5 +1,6 @@
 import CSSConstants from "../constants/CSSConstants";
 import classNames from "classnames";
+import Chroma from "chroma-js";
 
 export enum ButtonType {
   default = "default",
@@ -59,16 +60,18 @@ const Button = (props: ButtonProps) => {
           margin: 0.2em;
           font-weight: 500;
           background: ${currentColor};
-          transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+          transition: all 0.3s;
           font-size: inherit;
           border: none;
           letter-spacing: 1px;
           text-transform: uppercase;
           border-radius: 4px;
         }
-        button:hover {
-          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16),
-            0 3px 6px rgba(0, 0, 0, 0.23);
+        button:not(.outlined):hover {
+          background: ${Chroma(currentColor).darken(0.7).css()};
+        }
+        button.outlined:hover {
+          background: #f3f4f6;
         }
         .primary,
         .danger,
