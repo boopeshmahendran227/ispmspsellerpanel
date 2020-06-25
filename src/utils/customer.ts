@@ -3,9 +3,9 @@ const getCustomerInfo = (data: any) => {
 
   return (
     (data.customerName || "Name Not Available") +
-    " (Ph: " +
-    (data.customerPhone || "Not Available") +
-    ")"
+    (data.customerPhone
+      ? " (Ph: " + (data.customerPhone || "Not Available") + ")"
+      : "")
   );
 };
 

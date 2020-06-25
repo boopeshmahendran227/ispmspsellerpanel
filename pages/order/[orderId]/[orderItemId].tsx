@@ -113,6 +113,12 @@ const Order = (props: OrderProps) => {
                 {order.customerName || "Name Not Available"}
               </div>
             </div>
+            {Boolean(order.customerPhone) && (
+              <div className="row">
+                <div className="name">Phone</div>
+                <div className="value">{order.customerPhone}</div>
+              </div>
+            )}
             <div className="row">
               <div className="name">Billing Address</div>
               <div className="value">{formatAddress(order.billingAddress)}</div>

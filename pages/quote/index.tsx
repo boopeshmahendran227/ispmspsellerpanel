@@ -14,6 +14,7 @@ import QuoteActions from "../../src/actions/quote";
 import { formatPrice } from "../../src/utils/misc";
 import { getColor } from "../../src/utils/quote";
 import PageError from "../../src/components/PageError";
+import { getCustomerInfo } from "../../src/utils/customer";
 
 interface DispatchProps {
   updateQuote: (quote: QuoteInterface) => void;
@@ -117,7 +118,7 @@ const Quotes = (props: QuotesProps) => {
       <Link key={quote.id} href="/quote/[id]" as={`/quote/${quote.id}`}>
         <tr>
           <td>{quote.id}</td>
-          <td>{quote.customerName || "Name Not Available"}</td>
+          <td>{getCustomerInfo(quote)}</td>
           <td>
             {quote.productDetails.map((productDetail) => (
               <div key={productDetail.id} className="productContainer">

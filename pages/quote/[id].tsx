@@ -73,6 +73,12 @@ const Quote = (props: QuoteProps) => {
                 {quote.customerName || "Name Not Available"}
               </div>
             </div>
+            {Boolean(quote.customerPhone) && (
+              <div className="row">
+                <div className="name">Phone</div>
+                <div className="value">{quote.customerPhone}</div>
+              </div>
+            )}
           </section>
         </div>
       </div>

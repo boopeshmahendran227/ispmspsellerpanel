@@ -30,6 +30,7 @@ import { getColor, getOrderStatusText } from "../../src/utils/order";
 import Pagination from "../../src/components/Pagination";
 import DeliveryCodeModal from "../../src/components/DeliveryCodeModal";
 import { PaginationDataInterface } from "../../src/types/pagination";
+import { getCustomerInfo } from "../../src/utils/customer";
 
 interface StateProps {
   orders: OrderInterface[];
@@ -230,7 +231,7 @@ const Orders = (props: OrdersProps) => {
         <tr>
           <td>{orderItem.order.id}</td>
           <td>{orderItem.id}</td>
-          <td>{orderItem.order.customerName || "Name Not Available"}</td>
+          <td>{getCustomerInfo(orderItem.order)}</td>
           <td>
             <div className="productContainer">
               <ProductCard

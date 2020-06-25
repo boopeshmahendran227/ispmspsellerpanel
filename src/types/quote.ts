@@ -35,6 +35,7 @@ export interface QuoteInterface {
   id: number;
   customerId: string;
   customerName: string;
+  customerPhone: string;
   sellerName: string;
   sellerId: string;
   productDetails: ProductDetailQuoteInterface[];

@@ -114,6 +114,7 @@ export interface OrderInterface {
   id: number;
   customerId: string;
   customerName: string;
+  customerPhone: string;
   totalPrice: number;
   totalDiscount: number;
   items: OrderItemInterface[];
