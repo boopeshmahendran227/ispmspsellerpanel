@@ -12,7 +12,7 @@ import { destroyCookie } from "nookies";
 import { redirectToLogin } from "../utils/login";
 
 // images
-import LogoIcon from "../../public/icons/logo.png";
+import LogoIcon from "../../public/icons/logo2.png";
 
 interface StateProps {
   unreadNotificationCount: number;
@@ -59,6 +59,7 @@ const TopNavBar = (props: TopNavBarProps) => {
       <header>
         <a href="/">
           <img className="logo" src={LogoIcon} />
+          &nbsp;<span> Sellers</span>
         </a>
       </header>
       <a
@@ -100,6 +101,20 @@ const TopNavBar = (props: TopNavBarProps) => {
         header {
           flex: 1;
           font-size: 1.5rem;
+        }
+        header a {
+          font-family: "Roboto";
+          color: #202649;
+          text-decoration: none;
+          display: flex;
+          align-items: center;
+        }
+        header span {
+          font-size: 2rem;
+          font-weight: 300;
+        }
+        .logo {
+          height: 2.2rem;
         }
         .time {
           display: inline-block;

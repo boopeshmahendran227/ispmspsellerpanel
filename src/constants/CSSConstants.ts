@@ -1,7 +1,7 @@
 import Chroma from "chroma-js";
 
 const constants = {
-  backgroundColor: "#F5F6F8",
+  backgroundColor: "#FAFBFD",
   foregroundColor: "#FFFFFF",
   disabledColor: "#999",
   borderColor: "#ccc",

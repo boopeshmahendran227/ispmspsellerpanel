@@ -15,6 +15,10 @@ const Layout = (props: LayoutProps) => {
           href="https://fonts.googleapis.com/css?family=Lato:400,500,700&display=swap"
           rel="stylesheet"
         ></link>
+        <link
+          href="https://fonts.googleapis.com/css?family=Roboto:300&display=swap"
+          rel="stylesheet"
+        ></link>
         <link rel="stylesheet" type="text/css" href="/css/nprogress.css" />
       </Head>
       <div>{props.children}</div>
