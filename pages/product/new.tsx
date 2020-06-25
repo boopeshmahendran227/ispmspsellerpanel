@@ -33,8 +33,8 @@ import FieldTextArea from "../../src/components/FieldTextArea";
 import { useRef, useEffect } from "react";
 import PageError from "../../src/components/PageError";
 import { CategoryTreeInterface } from "../../src/types/categoryTree";
-import { EcosystemInterface } from "../../src/types/ecosystem";
 import CSSConstants from "../../src/constants/CSSConstants";
+import Tooltip from "../../src/components/Tooltip";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -62,13 +62,13 @@ const AddProduct = (props: AddProductProps) => {
   const attributeSWR = useSWR("/attribute");
   const categorySWR = useSWR("/category/tree");
   const taxSWR = useSWR("/tax/taxgroup");
-  const ecosystemSWR = useSWR("/ecosystem/seller");
+  const businessSWR = useSWR("/businesses/business");
 
   const brands: BrandInterface[] = brandSWR.data;
   const attributes: AttributeInterface[] = attributeSWR.data;
   const categoryTree: CategoryTreeInterface = categorySWR.data;
   const taxGroups: TaxGroupInterface[] = taxSWR.data;
-  const ecosystems: EcosystemInterface[] = ecosystemSWR.data;
+  const businessData = businessSWR.data;
 
   const categories = flattenCategoryTree(categoryTree);
 
@@ -77,13 +77,13 @@ const AddProduct = (props: AddProductProps) => {
     attributeSWR.error ||
     categorySWR.error ||
     taxSWR.error ||
-    ecosystemSWR.error;
+    businessSWR.error;
 
   if (error) {
     return <PageError statusCode={error.response?.status} />;
   }
 
-  if (!brands || !attributes || !categories || !taxGroups || !ecosystems) {
+  if (!brands || !attributes || !categories || !taxGroups || !businessData) {
     return <Loader />;
   }
 
@@ -148,31 +148,38 @@ const AddProduct = (props: AddProductProps) => {
                   }))}
                 />
                 <InputLabel label="Other Categories" />
-                <FieldMultiSelect
-                  name="categories"
-                  options={getOtherCategories(values.defaultCategory).map(
-                    (category) => ({
-                      value: category.id,
-                      label: category.name,
-                    })
-                  )}
-                />
+                <Tooltip trigger="focus" tooltip="Select Other Categories">
+                  <FieldMultiSelect
+                    name="categories"
+                    options={getOtherCategories(values.defaultCategory).map(
+                      (category) => ({
+                        value: category.id,
+                        label: category.name,
+                      })
+                    )}
+                  />
+                </Tooltip>
                 <InputLabel label="Ecosystems" />
                 <FieldMultiSelect
                   name="ecosystems"
-                  options={ecosystems.map((ecosystem) => ({
-                    value: ecosystem.id,
+                  options={businessData.ecosystems.map((ecosystem) => ({
+                    value: ecosystem._id,
                     label: (
                       <span className="ecosystemOptionName">
-                        <span>{ecosystem.name}</span>
+                        <span className="contentContainer">
+                          <span>{ecosystem.ecosystem_id.ecosystem_name}</span>
+                          <span className="ecoUrl">
+                            {ecosystem.ecosystem_id.ecosystem_url}
+                          </span>
+                        </span>
                         <span className="iconContainer">
-                          {ecosystem.isPublic ? (
-                            <i className="publicIcon fas fa-users"></i>
-                          ) : (
+                          {ecosystem.ecosystem_id.mode === "PRIVATE" ? (
                             <i
                               className="privateIcon fa fa-lock"
                               aria-hidden="true"
                             ></i>
+                          ) : (
+                            <i className="publicIcon fas fa-users"></i>
                           )}
                         </span>
                       </span>
@@ -188,9 +195,19 @@ const AddProduct = (props: AddProductProps) => {
                   }))}
                 />
                 <InputLabel label="Special Discount Value" />
-                <FieldInput name="specialDiscountValue" />
+                <Tooltip
+                  trigger="focus"
+                  tooltip="This discount value will always be applied"
+                >
+                  <FieldInput name="specialDiscountValue" />
+                </Tooltip>
                 <InputLabel label="Min Price" />
-                <FieldInput name="minPrice" />
+                <Tooltip
+                  trigger="focus"
+                  tooltip="Minimum price after all discounts"
+                >
+                  <FieldInput name="minPrice" />
+                </Tooltip>
                 <InputLabel label="Max Price" />
                 <FieldInput name="maxPrice" />
                 <InputLabel label="Tax Group" />
@@ -253,6 +270,14 @@ const AddProduct = (props: AddProductProps) => {
           display: inline-flex;
           width: 100%;
           justify-content: space-between;
+        }
+        .ecosystemOptionName .contentContainer {
+          display: flex;
+          flex-direction: column;
+        }
+        .ecoUrl {
+          font-size: 0.8rem;
+          color: ${CSSConstants.secondaryTextColor};
         }
         .publicIcon {
           color: ${CSSConstants.successColor};

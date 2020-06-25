@@ -18,6 +18,7 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 import "../public/css/react_dates_overrides.css";
+import "react-popper-tooltip/dist/styles.css";
 import WithAuth from "../src/components/WithAuth";
 import LoadingScreen from "../src/components/LoadingScreen";
 import UpdateQuoteModal from "../src/components/UpdateQuoteModal";
@@ -74,6 +75,7 @@ function MyApp(props) {
               <style jsx>{`
                 .sideNavBarContainer {
                   position: fixed;
+                  top: 0;
                   left: 0;
                   height: 100%;
                   width: 80px;
