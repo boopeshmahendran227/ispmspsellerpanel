@@ -116,6 +116,7 @@ const SideNavBar = () => {
             background: ${CSSConstants.primaryColor};
             color: white;
             box-shadow: 0 3px 6px #00000029;
+            padding-top: 60px;
           }
           .logoContainer {
             margin: 0.8em;

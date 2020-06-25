@@ -56,45 +56,55 @@ const TopNavBar = (props: TopNavBarProps) => {
 
   return (
     <div className="container">
-      <header>
-        <a href="/">
-          <img className="logo" src={LogoIcon} />
-          &nbsp;<span> Sellers</span>
+      <div className="fixedContainer">
+        <header>
+          <a href="/">
+            <img className="logo" src={LogoIcon} />
+            &nbsp;<span> Sellers</span>
+          </a>
+        </header>
+        <a
+          className={classes}
+          key={
+            props.unreadNotificationCount
+          } /* Retrigger animation when count changes */
+          onClick={handleNotificationClick}
+        >
+          <i className="fas fa-bell"></i>
+          {Boolean(props.unreadNotificationCount) && (
+            <span className="notificationCount">
+              {props.unreadNotificationCount}
+            </span>
+          )}
         </a>
-      </header>
-      <a
-        className={classes}
-        key={
-          props.unreadNotificationCount
-        } /* Retrigger animation when count changes */
-        onClick={handleNotificationClick}
-      >
-        <i className="fas fa-bell"></i>
-        {Boolean(props.unreadNotificationCount) && (
-          <span className="notificationCount">
-            {props.unreadNotificationCount}
-          </span>
-        )}
-      </a>
-      <div className="timeContainer">
-        <i className="far fa-clock" aria-hidden={true}></i>
-        <span className="time">{time.format("MMM D, hh:mm a")}</span>
+        <div className="timeContainer">
+          <i className="far fa-clock" aria-hidden={true}></i>
+          <span className="time">{time.format("MMM D, hh:mm a")}</span>
+        </div>
+        <div className="logoutContainer">
+          <a onClick={handleLogout}>
+            <i className="fas fa-sign-out-alt" aria-hidden={true}></i>
+            Logout
+          </a>
+        </div>
+        <NotificationBar
+          open={notificationBarOpen}
+          onClose={() => setNotificationBarOpen(false)}
+        />
       </div>
-      <div className="logoutContainer">
-        <a onClick={handleLogout}>
-          <i className="fas fa-sign-out-alt" aria-hidden={true}></i>
-          Logout
-        </a>
-      </div>
-      <NotificationBar
-        open={notificationBarOpen}
-        onClose={() => setNotificationBarOpen(false)}
-      />
       <style jsx>{`
         .container {
+          height: 60px;
+        }
+        .fixedContainer {
+          padding: 0.9em 1.3em;
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 10;
           display: flex;
           align-items: center;
-          padding: 0.9em 1.3em;
           background: ${CSSConstants.foregroundColor};
           box-shadow: 0 0 20px #00000014;
         }
