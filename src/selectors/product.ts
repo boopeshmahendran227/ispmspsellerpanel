@@ -46,6 +46,8 @@ const getSkus = createSelector(
           width: "",
           height: "",
           weight: "",
+          barCodeIdentifier: "",
+          externalId: "",
         };
       }
     );
