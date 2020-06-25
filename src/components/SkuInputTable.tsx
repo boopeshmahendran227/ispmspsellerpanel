@@ -56,6 +56,14 @@ const getTableHeaders = () => {
       name: "Weight",
       valueFunc: (sku: ProductSkuDetail) => sku.weight,
     },
+    {
+      name: "Bar Code",
+      valueFunc: (sku: ProductSkuDetail) => sku.barCodeIdentifier,
+    },
+    {
+      name: "External Id",
+      valueFunc: (sku: ProductSkuDetail) => sku.externalId,
+    },
   ];
 };
 
@@ -131,6 +139,12 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
             </td>
             <td>
               <FieldInput name={`skus.${skuIndex}.weight`} />
+            </td>
+            <td>
+              <FieldInput name={`skus.${skuIndex}.barCodeIdentifier`} />
+            </td>
+            <td>
+              <FieldInput name={`skus.${skuIndex}.externalId`} />
             </td>
             <style jsx>{`
               .imageInputContainer a {

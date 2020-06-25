@@ -54,6 +54,14 @@ const getTableHeaders = () => {
       name: "Weight",
       valueFunc: (sku: ProductSkuDetail) => sku.weight,
     },
+    {
+      name: "Bar Code",
+      valueFunc: (sku: ProductSkuDetail) => sku.barCodeIdentifier,
+    },
+    {
+      name: "External Id",
+      valueFunc: (sku: ProductSkuDetail) => sku.externalId,
+    },
   ];
 };
 
@@ -102,6 +110,8 @@ const renderTableBody = (
       <td>{sku.width}</td>
       <td>{sku.height}</td>
       <td>{sku.weight}</td>
+      <td>{sku.barCodeIdentifier}</td>
+      <td>{sku.externalId}</td>
     </tr>
   ));
 };

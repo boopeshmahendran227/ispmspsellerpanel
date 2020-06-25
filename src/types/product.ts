@@ -169,6 +169,8 @@ export interface ProductSkuDetail {
   width: string;
   height: string;
   weight: string;
+  barCodeIdentifier: string;
+  externalId: string;
 }
 
 export interface ProductAttributeValueId {
@@ -247,6 +249,8 @@ export const ProductSchema = Yup.object().shape({
         width: Yup.string(),
         height: Yup.string(),
         weight: Yup.string(),
+        barCodeIdentifier: Yup.string(),
+        externalId: Yup.string(),
         imageRelativePaths: Yup.array()
           .of(Yup.string())
           .min(1, "Each sku should contain atleast one image"),
