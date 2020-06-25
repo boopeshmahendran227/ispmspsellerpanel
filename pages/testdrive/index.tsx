@@ -20,8 +20,8 @@ const Testdrives = () => {
     <div className="container">
       <header>Test Drives ({testdrives.length})</header>
       <div className="body">
-        {testdrives.map((testdrive) => (
-          <TestDriveCard testdrive={testdrive} />
+        {testdrives.map((testdrive, index) => (
+          <TestDriveCard key={index} testdrive={testdrive} />
         ))}
       </div>
       <style jsx>{`

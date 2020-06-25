@@ -76,11 +76,11 @@ function MyApp(props) {
                   position: fixed;
                   left: 0;
                   height: 100%;
-                  width: 75px;
+                  width: 80px;
                   z-index: 1;
                 }
                 .bodyContainer {
-                  margin-left: 75px;
+                  margin-left: 80px;
                 }
               `}</style>
             </main>

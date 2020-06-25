@@ -80,6 +80,14 @@ const SideNavBar = () => {
             </Link>
           </li>
           <li>
+            <Link activeClassName="active" href="/customer">
+              <a>
+                <i className="fas fa-users" aria-hidden="true"></i>
+                <span>Customers</span>
+              </a>
+            </Link>
+          </li>
+          <li>
             <Link activeClassName="active" href="/coupons">
               <a>
                 <i className="fas fa-tag"></i>
@@ -88,14 +96,6 @@ const SideNavBar = () => {
             </Link>
           </li>
           {/* <li>
-            <Link activeClassName="active" href="/customers">
-              <a>
-                <i className="fas fa-users" aria-hidden="true"></i>
-                <span>Customers</span>
-              </a>
-            </Link>
-          </li>
-          <li>
             <Link activeClassName="active" href="/customers">
               <a>
                 <i className="fas fa-cog" aria-hidden="true"></i>
