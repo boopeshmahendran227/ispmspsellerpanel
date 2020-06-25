@@ -113,8 +113,8 @@ const SideNavBar = () => {
             left: 0;
             width: 100%;
             height: 100%;
-            background: ${CSSConstants.primaryColor};
-            color: white;
+            background: white;
+            color: ${CSSConstants.secondaryTextColor};
             box-shadow: 0 3px 6px #00000029;
             padding-top: 60px;
           }
@@ -151,13 +151,12 @@ const SideNavBar = () => {
             margin: 0.3em;
           }
           .navigation a.active {
-            background: ${CSSConstants.lightPrimaryColor};
-            border-left: 2px solid white;
+            border-left: 2px solid ${CSSConstants.primaryColor};
+            background: #efefef;
+            color: ${CSSConstants.primaryColor};
           }
           .navigation a:hover {
-            background: ${Chroma(CSSConstants.primaryColor)
-              .brighten(0.4)
-              .css()};
+            background: #eee;
           }
         `}
       </style>

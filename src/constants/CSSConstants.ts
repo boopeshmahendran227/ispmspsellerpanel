@@ -5,7 +5,7 @@ const constants = {
   foregroundColor: "#FFFFFF",
   disabledColor: "#999",
   borderColor: "#ccc",
-  primaryColor: "#2384e4",
+  primaryColor: "#416fd1",
   secondaryColor: "#068ff4",
   warningColor: "#d35400",
   dangerColor: "#f94a5b",
