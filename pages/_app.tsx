@@ -64,17 +64,16 @@ function MyApp(props) {
           <SureModal />
           <Layout>
             <main>
+              <TopNavBar />
               <div className="sideNavBarContainer">
                 <SideNavBar />
               </div>
               <div className="bodyContainer">
-                <TopNavBar />
                 <AuthComponent {...pageProps} />
               </div>
               <style jsx>{`
                 .sideNavBarContainer {
                   position: fixed;
-                  top: 0;
                   left: 0;
                   height: 100%;
                   width: 75px;

@@ -11,6 +11,9 @@ import api from "../api";
 import { destroyCookie } from "nookies";
 import { redirectToLogin } from "../utils/login";
 
+// images
+import LogoIcon from "../../public/icons/logo.png";
+
 interface StateProps {
   unreadNotificationCount: number;
 }
@@ -53,7 +56,11 @@ const TopNavBar = (props: TopNavBarProps) => {
 
   return (
     <div className="container">
-      <header>Istakapaza Sellers</header>
+      <header>
+        <a href="/">
+          <img className="logo" src={LogoIcon} />
+        </a>
+      </header>
       <a
         className={classes}
         key={
