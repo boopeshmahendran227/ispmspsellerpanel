@@ -8,7 +8,7 @@
 }
 .CalendarDay__selected,
 .CalendarDay__selected:hover {
-  background: #6c5ce7;
+  background: #416fd1;
   color: white;
   border-color: transparent;
   border-radius: 100%;
