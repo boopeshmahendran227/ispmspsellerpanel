@@ -140,7 +140,7 @@ const SideNavBar = () => {
             flex-direction: column;
             text-align: center;
             width: 100%;
-            padding: 1.2em 1em;
+            padding: 1.2em 0.5em;
             transition: all 0.3s;
             text-decoration: none;
             font-size: 0.9rem;
