@@ -88,7 +88,7 @@ const SideNavBar = () => {
             </Link>
           </li>
           <li>
-            <Link activeClassName="active" href="/coupons">
+            <Link activeClassName="active" href="/coupon">
               <a>
                 <i className="fas fa-tag"></i>
                 <span>Coupons</span>
