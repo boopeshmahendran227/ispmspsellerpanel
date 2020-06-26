@@ -12,6 +12,7 @@ import { RequestReducerState } from "../../src/reducers/utils";
 import WithReduxDataLoader from "../../src/components/WithReduxDataLoader";
 import { DraftMiniInterface } from "../../src/types/draft";
 import { PaginationDataInterface } from "../../src/types/pagination";
+import PageHeader from "../../src/components/PageHeader";
 
 interface StateProps {
   drafts: DraftMiniInterface[];
@@ -100,7 +101,7 @@ const Drafts = (props: DraftsProps) => {
           <Button>Add Product</Button>
         </Link>
       </div>
-      <header>Product Drafts</header>
+      <PageHeader>Product Drafts</PageHeader>
       <SortableTable
         initialSortData={{
           index: 1,
@@ -133,12 +134,6 @@ const Drafts = (props: DraftsProps) => {
           .container {
             padding: 0;
           }
-        }
-        header {
-          font-size: 1.3rem;
-          font-weight: bold;
-          margin-top: 0.8em;
-          margin-bottom: 1.3em;
         }
       `}</style>
     </div>

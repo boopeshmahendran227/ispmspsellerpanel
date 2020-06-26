@@ -3,6 +3,7 @@ import { TestDriveInterface } from "../../src/types/testdrive";
 import Loader from "../../src/components/Loader";
 import useSWR from "swr";
 import PageError from "../../src/components/PageError";
+import PageHeader from "../../src/components/PageHeader";
 
 const Testdrives = () => {
   const swr = useSWR("/testdrive");
@@ -18,7 +19,7 @@ const Testdrives = () => {
 
   return (
     <div className="container">
-      <header>Test Drives ({testdrives.length})</header>
+      <PageHeader>Test Drives ({testdrives.length})</PageHeader>
       <div className="body">
         {testdrives.map((testdrive, index) => (
           <TestDriveCard key={index} testdrive={testdrive} />
@@ -31,11 +32,6 @@ const Testdrives = () => {
           background: white;
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
             0 1px 2px rgba(0, 0, 0, 0.24);
-        }
-        header {
-          font-weight: 500;
-          font-size: 1.2rem;
-          padding: 0.5em;
         }
         @media (max-width: 800px) {
           .container {

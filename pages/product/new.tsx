@@ -35,6 +35,7 @@ import PageError from "../../src/components/PageError";
 import { CategoryTreeInterface } from "../../src/types/categoryTree";
 import CSSConstants from "../../src/constants/CSSConstants";
 import Tooltip from "../../src/components/Tooltip";
+import PageHeader from "../../src/components/PageHeader";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -103,7 +104,7 @@ const AddProduct = (props: AddProductProps) => {
 
   return (
     <div className="container">
-      <header>Add Product</header>
+      <PageHeader>Add Product</PageHeader>
       <div className="formContainer">
         <Formik
           innerRef={formikRef}

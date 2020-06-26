@@ -25,7 +25,6 @@ const Quote = (props: QuoteProps) => {
   const quotes: QuoteInterface[] = swr.data;
   const error = swr.error;
 
-  // Todo: handle 404 errors
   if (error) {
     return <PageError statusCode={error.response?.status} />;
   }

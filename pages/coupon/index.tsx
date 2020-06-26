@@ -6,91 +6,92 @@ import { CouponInterface } from "../../src/types/coupon";
 import PageError from "../../src/components/PageError";
 import { formatPrice } from "../../src/utils/misc";
 import Button from "../../src/components/Button";
+import PageHeader from "../../src/components/PageHeader";
+
+const getTableHeaders = () => {
+  return [
+    {
+      name: "Ecosystem",
+      valueFunc: (coupon: CouponInterface) => coupon.ecosystemName,
+    },
+    {
+      name: "Coupon Code",
+      valueFunc: (coupon: CouponInterface) => coupon.couponCode,
+    },
+    {
+      name: "Discount",
+      valueFunc: (coupon: CouponInterface) =>
+        coupon.discountValue || coupon.discountPercentage,
+    },
+    {
+      name: "Products",
+      valueFunc: (coupon: CouponInterface) => null,
+    },
+    {
+      name: "Category Ids",
+      valueFunc: (coupon: CouponInterface) => null,
+    },
+  ];
+};
+
+const renderTableBody = (coupons: CouponInterface[]) => {
+  return coupons.map((coupon) => (
+    <tr>
+      <td>{coupon.ecosystemName}</td>
+      <td className="couponCode">{coupon.couponCode}</td>
+      <td className="discount">
+        {coupon.discountValue
+          ? formatPrice(coupon.discountValue)
+          : coupon.discountPercentage + "%"}
+      </td>
+      <td>
+        {coupon.products.map((product) => (
+          <div className="couponProduct">
+            <div className="row">
+              <span className="label">ProductId:</span>
+              <span className="value">{product.productId}</span>
+            </div>
+            <div className="row">
+              <span className="label">SkuId:</span>
+              <span className="value">{product.skuId}</span>
+            </div>
+          </div>
+        ))}
+      </td>
+      <td>{coupon.categoryIds.join(", ")}</td>
+      <style jsx>{`
+        .productContainer {
+          text-align: initial;
+          margin: 1.2em 0;
+        }
+        .couponProduct {
+          margin: 0.5em;
+        }
+        .couponCode {
+          color: ${CSSConstants.warningColor};
+        }
+        .discount {
+          color: ${CSSConstants.successColor};
+        }
+        tr:hover {
+          background-color: ${CSSConstants.hoverColor} !important;
+          cursor: pointer;
+        }
+        .label,
+        .value {
+          min-width: 80px;
+          display: inline-block;
+          text-align: left;
+        }
+        .label {
+          font-weight: bold;
+        }
+      `}</style>
+    </tr>
+  ));
+};
 
 const Coupons = () => {
-  const getTableHeaders = () => {
-    return [
-      {
-        name: "Ecosystem",
-        valueFunc: (coupon: CouponInterface) => coupon.ecosystemName,
-      },
-      {
-        name: "Coupon Code",
-        valueFunc: (coupon: CouponInterface) => coupon.couponCode,
-      },
-      {
-        name: "Discount",
-        valueFunc: (coupon: CouponInterface) =>
-          coupon.discountValue || coupon.discountPercentage,
-      },
-      {
-        name: "Products",
-        valueFunc: (coupon: CouponInterface) => null,
-      },
-      {
-        name: "Category Ids",
-        valueFunc: (coupon: CouponInterface) => null,
-      },
-    ];
-  };
-
-  const renderTableBody = (coupons: CouponInterface[]) => {
-    return coupons.map((coupon) => (
-      <tr>
-        <td>{coupon.ecosystemName}</td>
-        <td className="couponCode">{coupon.couponCode}</td>
-        <td className="discount">
-          {coupon.discountValue
-            ? formatPrice(coupon.discountValue)
-            : coupon.discountPercentage + "%"}
-        </td>
-        <td>
-          {coupon.products.map((product) => (
-            <div className="couponProduct">
-              <div className="row">
-                <span className="label">ProductId:</span>
-                <span className="value">{product.productId}</span>
-              </div>
-              <div className="row">
-                <span className="label">SkuId:</span>
-                <span className="value">{product.skuId}</span>
-              </div>
-            </div>
-          ))}
-        </td>
-        <td>{coupon.categoryIds.join(", ")}</td>
-        <style jsx>{`
-          .productContainer {
-            text-align: initial;
-            margin: 1.2em 0;
-          }
-          .couponProduct {
-            margin: 0.5em;
-          }
-          .couponCode {
-            color: ${CSSConstants.warningColor};
-          }
-          .discount {
-            color: ${CSSConstants.successColor};
-          }
-          tr:hover {
-            background-color: ${CSSConstants.hoverColor} !important;
-            cursor: pointer;
-          }
-          .label,
-          .value {
-            min-width: 80px;
-            display: inline-block;
-            text-align: left;
-          }
-          .label {
-            font-weight: bold;
-          }
-        `}</style>
-      </tr>
-    ));
-  };
-
   const swr = useSWR("/sellercoupon");
   const coupons: CouponInterface[] = swr.data;
   const error = swr.error;
@@ -105,7 +106,7 @@ const Coupons = () => {
   return (
     <div className="container">
       <div className="headerContainer">
-        <header>Seller Coupons</header>
+        <PageHeader>Seller Coupons</PageHeader>
         <Button>Create New Coupon</Button>
       </div>
       <SortableTable
@@ -131,10 +132,6 @@ const Coupons = () => {
           justify-content: space-between;
           align-items: center;
           padding-right: 1.6em;
-        }
-        header {
-          font-size: 1.5rem;
-          margin: 0.8em;
         }
         @media (max-width: 800px) {
           .container {

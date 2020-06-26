@@ -3,6 +3,7 @@ import SortableTable from "../../src/components/SortableTable";
 import useSWR from "swr";
 import Loader from "../../src/components/Loader";
 import PageError from "../../src/components/PageError";
+import PageHeader from "../../src/components/PageHeader";
 import { CustomerInterface } from "../../src/types/customer";
 
 const Customers = () => {
@@ -46,7 +47,7 @@ const Customers = () => {
 
   return (
     <div className="container">
-      <header>Customers</header>
+      <PageHeader>Customers</PageHeader>
       <SortableTable
         initialSortData={{
           index: 1,
