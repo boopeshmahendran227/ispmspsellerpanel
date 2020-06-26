@@ -98,8 +98,7 @@ const SortableTable = (props: SortableTableProps) => {
       </table>
       <style jsx>{`
         .sortableTableContainer {
-          margin-top: 1em;
-          margin-bottom: 2em;
+          margin: 1.6em;
           overflow-x: auto;
           overflow-y: hidden;
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),

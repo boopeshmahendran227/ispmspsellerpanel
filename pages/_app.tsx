@@ -95,7 +95,8 @@ function MyApp(props) {
                   z-index: 1;
                 }
                 .bodyContainer {
-                  margin-left: 80px;
+                  margin-left: calc(80px + 0.7em);
+                  margin-right: 0.7em;
                 }
               `}</style>
             </main>
