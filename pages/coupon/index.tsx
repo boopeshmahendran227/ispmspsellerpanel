@@ -1,10 +1,11 @@
-import CSSConstants from "../src/constants/CSSConstants";
-import SortableTable from "../src/components/SortableTable";
+import CSSConstants from "../../src/constants/CSSConstants";
+import SortableTable from "../../src/components/SortableTable";
 import useSWR from "swr";
-import Loader from "../src/components/Loader";
-import { CouponInterface } from "../src/types/coupon";
-import PageError from "../src/components/PageError";
-import { formatPrice } from "../src/utils/misc";
+import Loader from "../../src/components/Loader";
+import { CouponInterface } from "../../src/types/coupon";
+import PageError from "../../src/components/PageError";
+import { formatPrice } from "../../src/utils/misc";
+import Button from "../../src/components/Button";
 
 const Coupons = () => {
   const getTableHeaders = () => {
@@ -103,7 +104,10 @@ const Coupons = () => {
 
   return (
     <div className="container">
-      <header>Seller Coupons</header>
+      <div className="headerContainer">
+        <header>Seller Coupons</header>
+        <Button>Create New Coupon</Button>
+      </div>
       <SortableTable
         initialSortData={{
           index: 1,
@@ -121,6 +125,12 @@ const Coupons = () => {
           background: ${CSSConstants.foregroundColor};
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
             0 1px 2px rgba(0, 0, 0, 0.24);
+        }
+        .headerContainer {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding-right: 1.6em;
         }
         header {
           font-size: 1.5rem;
