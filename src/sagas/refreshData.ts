@@ -13,6 +13,7 @@ function* refreshOrder() {
   while (true) {
     const action = yield take([CHANGE_ORDER_ITEM_STATUS_SUCCESS]);
     yield call(mutate, `/order/${action.orderId}`);
+    yield call(mutate, `/order/groupbyproduct`);
     yield put(OrderActions.getOrders());
   }
 }

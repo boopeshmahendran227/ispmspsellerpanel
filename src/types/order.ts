@@ -141,6 +141,18 @@ export interface OrderDetailInterface extends OrderInterface {
   shippingAddress: AddressInterface;
 }
 
+interface OrderItemCountMap {
+  [key: string]: number;
+}
+
+export interface ProductOrderInterface {
+  productId: number;
+  productName: string;
+  skuId: string;
+  imagePath: string;
+  orderItemCount: OrderItemCountMap;
+}
+
 interface GetOrderAction {
   type: typeof GET_ORDERS_REQUEST;
 }

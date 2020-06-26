@@ -41,4 +41,33 @@ const getOrderStatusText = (status: OrderStatus) => {
   return splitCamelCase(status);
 };
 
-export { getColor, getOrderStatusText };
+const isOpenOrderStatus = (status: OrderStatus) => {
+  return (
+    status !== OrderStatus.CancelRejected &&
+    status !== OrderStatus.CancelCompleted &&
+    status !== OrderStatus.ShippingCompleted &&
+    status !== OrderStatus.ReturnCompleted &&
+    status !== OrderStatus.ReturnRejected
+  );
+};
+
+const isDeliveredOrderStatus = (status: OrderStatus) => {
+  return status === OrderStatus.ShippingCompleted;
+};
+
+const isReturnedOrderStatus = (status: OrderStatus) => {
+  return status === OrderStatus.ReturnCompleted;
+};
+
+const isCancelledOrderStatus = (status: OrderStatus) => {
+  return status === OrderStatus.CancelCompleted;
+};
+
+export {
+  getColor,
+  getOrderStatusText,
+  isOpenOrderStatus,
+  isDeliveredOrderStatus,
+  isReturnedOrderStatus,
+  isCancelledOrderStatus,
+};

@@ -8,6 +8,12 @@ import {
 import _ from "lodash";
 import { transformOrderItem } from "../transformers/orderItem";
 import { PaginationDataInterface } from "../types/pagination";
+import {
+  isOpenOrderStatus,
+  isDeliveredOrderStatus,
+  isReturnedOrderStatus,
+  isCancelledOrderStatus,
+} from "../utils/order";
 
 const getOrders = createSelector(
   (state: RootState) => state.order,
@@ -62,8 +68,8 @@ const getCancelledOrderItems = createSelector(
       return null;
     }
 
-    return orderItems.filter(
-      (orderItem) => orderItem.orderItemStatus === OrderStatus.CancelCompleted
+    return orderItems.filter((orderItem) =>
+      isCancelledOrderStatus(orderItem.orderItemStatus)
     );
   }
 );
@@ -75,13 +81,8 @@ const getOpenOrderItems = createSelector(
       return null;
     }
 
-    return orderItems.filter(
-      (orderItem) =>
-        orderItem.orderItemStatus !== OrderStatus.CancelRejected &&
-        orderItem.orderItemStatus !== OrderStatus.CancelCompleted &&
-        orderItem.orderItemStatus !== OrderStatus.ShippingCompleted &&
-        orderItem.orderItemStatus !== OrderStatus.ReturnCompleted &&
-        orderItem.orderItemStatus !== OrderStatus.ReturnRejected
+    return orderItems.filter((orderItem) =>
+      isOpenOrderStatus(orderItem.orderItemStatus)
     );
   }
 );
@@ -93,8 +94,8 @@ const getDeliveredOrderItems = createSelector(
       return null;
     }
 
-    return orderItems.filter(
-      (orderItem) => orderItem.orderItemStatus === OrderStatus.ShippingCompleted
+    return orderItems.filter((orderItem) =>
+      isDeliveredOrderStatus(orderItem.orderItemStatus)
     );
   }
 );
@@ -106,8 +107,8 @@ const getReturnedOrderItems = createSelector(
       return null;
     }
 
-    return orderItems.filter(
-      (orderItem) => orderItem.orderItemStatus === OrderStatus.ReturnCompleted
+    return orderItems.filter((orderItem) =>
+      isReturnedOrderStatus(orderItem.orderItemStatus)
     );
   }
 );

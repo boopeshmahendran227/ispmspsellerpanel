@@ -14,6 +14,8 @@ import {
   HIDE_SKU_MODAL,
   SHOW_DELIVERY_CODE_MODAL,
   HIDE_DELIVERY_CODE_MODAL,
+  SHOW_PRODUCT_ORDERS_MODAL,
+  HIDE_PRODUCT_ORDERS_MODAL,
 } from "../constants/ActionTypes";
 import { SureModalData, UIActionType, ReasonModalData } from "../types/ui";
 
@@ -129,6 +131,19 @@ const getDeliveryCodeModalOpen = (
   return state;
 };
 
+const getProductOrdersModalOpen = (
+  state: boolean = false,
+  action: UIActionType
+) => {
+  switch (action.type) {
+    case SHOW_PRODUCT_ORDERS_MODAL:
+      return true;
+    case HIDE_PRODUCT_ORDERS_MODAL:
+      return false;
+  }
+  return state;
+};
+
 export default combineReducers({
   sureModalData: getSureModalData,
   reasonModalData: getReasonModalData,
@@ -137,4 +152,5 @@ export default combineReducers({
   attributeModalOpen: getAttributeModalOpen,
   skuModalOpen: getSkuModalOpen,
   deliveryCodeModalOpen: getDeliveryCodeModalOpen,
+  productOrdersModalOpen: getProductOrdersModalOpen,
 });

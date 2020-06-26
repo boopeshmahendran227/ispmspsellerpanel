@@ -31,6 +31,9 @@ import Pagination from "../../src/components/Pagination";
 import DeliveryCodeModal from "../../src/components/DeliveryCodeModal";
 import { PaginationDataInterface } from "../../src/types/pagination";
 import { getCustomerInfo } from "../../src/utils/customer";
+import PageHeader from "../../src/components/PageHeader";
+import ProductOrdersModal from "../../src/components/ProductOrdersModal";
+import UIActions from "../../src/actions/ui";
 
 interface StateProps {
   orders: OrderInterface[];
@@ -55,6 +58,7 @@ interface DispatchProps {
   rejectReturnOrderItem: (orderId: number, orderItemId: number) => void;
   cancelOrderItem: (orderId: number, orderItemId: number) => void;
   setOrderCurrentPageNumber: (value: number) => void;
+  showProductOrderModal: () => void;
 }
 
 type OrdersProps = StateProps & DispatchProps;
@@ -303,6 +307,13 @@ const Orders = (props: OrdersProps) => {
     <div className="container">
       {/* Modals */}
       <DeliveryCodeModal />
+      <ProductOrdersModal />
+      <div className="headerContainer">
+        <PageHeader>Orders</PageHeader>
+        <Button onClick={() => props.showProductOrderModal()}>
+          View Orders By Products
+        </Button>
+      </div>
       <TabSection
         headingList={[
           `All Orders (${orderItems.length})`,
@@ -377,6 +388,12 @@ const Orders = (props: OrdersProps) => {
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
             0 1px 2px rgba(0, 0, 0, 0.24);
         }
+        .headerContainer {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 1em;
+        }
         @media (max-width: 800px) {
           .container {
             padding: 0;
@@ -410,6 +427,7 @@ const mapDispatchToProps: DispatchProps = {
   rejectReturnOrderItem: OrderActions.rejectReturnOrderItem,
   cancelOrderItem: OrderActions.cancelOrderItem,
   setOrderCurrentPageNumber: OrderActions.setOrderCurrentPageNumber,
+  showProductOrderModal: UIActions.showProductOrdersModal,
 };
 
 const mapPropsToLoadData = (props: OrdersProps) => {

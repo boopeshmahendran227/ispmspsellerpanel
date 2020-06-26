@@ -19,6 +19,8 @@ import {
   SHOW_DELIVERY_CODE_MODAL,
   HIDE_DELIVERY_CODE_MODAL,
   DELIVERY_CODE_MODAL_CANCEL_CLICKED,
+  SHOW_PRODUCT_ORDERS_MODAL,
+  HIDE_PRODUCT_ORDERS_MODAL,
 } from "../constants/ActionTypes";
 
 interface ShowSureModalAction {
@@ -108,6 +110,14 @@ interface HideSkuModalAction {
   type: typeof HIDE_SKU_MODAL;
 }
 
+interface ShowProductOrdersModalAction {
+  type: typeof SHOW_PRODUCT_ORDERS_MODAL;
+}
+
+interface HideProductOrdersModalAction {
+  type: typeof HIDE_PRODUCT_ORDERS_MODAL;
+}
+
 export type UIActionType =
   | ShowSureModalAction
   | HideSureModalAction
@@ -128,7 +138,9 @@ export type UIActionType =
   | ShowAttributeModalAction
   | HideAttributeModalAction
   | ShowSkuModalAction
-  | HideSkuModalAction;
+  | HideSkuModalAction
+  | ShowProductOrdersModalAction
+  | HideProductOrdersModalAction;
 
 export interface SureModalData {
   open: boolean;

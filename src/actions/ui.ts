@@ -19,6 +19,8 @@ import {
   HIDE_DELIVERY_CODE_MODAL,
   SHOW_DELIVERY_CODE_MODAL,
   DELIVERY_CODE_MODAL_CANCEL_CLICKED,
+  SHOW_PRODUCT_ORDERS_MODAL,
+  HIDE_PRODUCT_ORDERS_MODAL,
 } from "../constants/ActionTypes";
 import { UIActionType } from "../types/ui";
 
@@ -153,6 +155,18 @@ const hideDeliveryCodeModal = (): UIActionType => {
   };
 };
 
+const showProductOrdersModal = (): UIActionType => {
+  return {
+    type: SHOW_PRODUCT_ORDERS_MODAL,
+  };
+};
+
+const hideProductOrdersModal = (): UIActionType => {
+  return {
+    type: HIDE_PRODUCT_ORDERS_MODAL,
+  };
+};
+
 export default {
   showSureModal,
   hideSureModal,
@@ -174,4 +188,6 @@ export default {
   hideAttributeModal,
   showSkuModal,
   hideSkuModal,
+  showProductOrdersModal,
+  hideProductOrdersModal,
 };
