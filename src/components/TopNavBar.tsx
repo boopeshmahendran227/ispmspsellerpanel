@@ -6,10 +6,8 @@ import { connect } from "react-redux";
 import { RootState } from "../reducers";
 import { getUnreadNotificationCount } from "../selectors/notification";
 import NotificationActions from "../actions/notification";
+import LoginActions from "../actions/login";
 import classNames from "classnames";
-import api from "../api";
-import { destroyCookie } from "nookies";
-import { redirectToLogin } from "../utils/login";
 
 // images
 import LogoIcon from "../../public/icons/logo2.png";
@@ -20,6 +18,7 @@ interface StateProps {
 
 interface DispatchProps {
   clearUnreadNotificationCount: () => void;
+  logout: () => void;
 }
 
 type TopNavBarProps = StateProps & DispatchProps;
@@ -41,12 +40,7 @@ const TopNavBar = (props: TopNavBarProps) => {
   };
 
   const handleLogout = () => {
-    api("/auth/logout").then(() => {
-      destroyCookie(null, "isp-jwt", {
-        path: ".istakapaza.com",
-      });
-      redirectToLogin();
-    });
+    props.logout();
   };
 
   const classes = classNames({
@@ -194,6 +188,7 @@ const mapStateToProps = (state: RootState): StateProps => ({
 const mapDispatchToProps: DispatchProps = {
   clearUnreadNotificationCount:
     NotificationActions.clearUnreadNotificationCount,
+  logout: LoginActions.logout,
 };
 
 export default connect<StateProps, DispatchProps>(

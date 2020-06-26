@@ -6,12 +6,13 @@ import withReduxSaga from "next-redux-saga";
 import ToastProvider from "../src/components/ToastProvider";
 import { initializeStore } from "../src/store";
 import Router, { withRouter } from "next/router";
-import { SWRConfig } from "swr";
+import useSWR, { SWRConfig } from "swr";
 import api from "../src/api";
 import SureModal from "../src/components/SureModal";
 import ReasonModal from "../src/components/ReasonModal";
 import SideNavBar from "../src/components/SideNavBar";
 import TopNavBar from "../src/components/TopNavBar";
+import LoginActions from "../src/actions/login";
 
 // Add all third-party CSS here
 import "@fortawesome/fontawesome-free/css/all.css";
@@ -22,6 +23,8 @@ import "react-popper-tooltip/dist/styles.css";
 import WithAuth from "../src/components/WithAuth";
 import LoadingScreen from "../src/components/LoadingScreen";
 import UpdateQuoteModal from "../src/components/UpdateQuoteModal";
+import { isLoggedIn } from "../src/utils/login";
+import { LoginState } from "../src/types/login";
 
 NProgress.configure({ showSpinner: false });
 
@@ -43,6 +46,16 @@ function MyApp(props) {
     refreshInterval: 600000,
     fetcher: api,
   };
+
+  useSWR("CheckLoggedIn", () => {
+    isLoggedIn().then((loggedIn) => {
+      store.dispatch(
+        LoginActions.setLoginState(
+          loggedIn ? LoginState.LoggedIn : LoginState.NotLoggedIn
+        )
+      );
+    });
+  });
 
   // We don't need navbar and redux for invoice page
   if (["invoice"].some((str) => router.pathname.includes(str))) {

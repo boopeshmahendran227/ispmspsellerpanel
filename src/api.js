@@ -2,8 +2,7 @@
  * Inspired from https://read.reduxbook.com/markdown/part2/13-authenticated-requests.html
  */
 const axios = require("axios");
-const createAuthRefreshInterceptor = require("axios-auth-refresh").default;
-const { parseCookies, setCookie, destroyCookie } = require("nookies");
+const { parseCookies } = require("nookies");
 const NProgress = require("nprogress");
 const { getApiUrl } = require("./utils/url");
 
@@ -25,41 +24,7 @@ module.exports = (route, options) => {
     // NProgress.start();
   }
 
-  const refreshAuthLogic = (failedRequest) => {
-    // const axios = require("axios");
-    // const cookies = parseCookies();
-    // const refreshtoken = cookies["isp-refresh"];
-
-    // Temp fix. Todo: Remove this and add refresh logic
-    console.log("refresh auth");
-    return Promise.resolve();
-
-    // return axios({
-    //   method: "GET",
-    //   url: "https://ispdev.istakapaza.com/auth/verify/token",
-    //   headers: {
-    //     refreshtoken,
-    //   },
-    // })
-    //   .then((tokenRefreshResponse) => {
-    //     const token = tokenRefreshResponse.data.token;
-    //     failedRequest.response.config.headers["Authorization"] =
-    //       "Bearer " + token;
-    //     // setCookie(null, "isp-jwt", token);
-    //     return Promise.resolve();
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     // window.location.href =
-    //     //   "http://isp.app.dev.istakapaza.com/#/login?redirect_uri=" +
-    //     //   window.location.href;
-    //   });
-  };
-
-  // Instantiate the interceptor (you can chain it as it returns the axios instance)
-
   const combinedOptions = Object.assign({}, options, { headers });
-  // createAuthRefreshInterceptor(axios, refreshAuthLogic);
 
   // Use interceptor to inject the token to requests
   axios.interceptors.request.use((request) => {

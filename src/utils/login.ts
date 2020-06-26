@@ -19,7 +19,7 @@ const isLoggedIn = () => {
       if (err.response.status === 401) {
         return false;
       }
-      return true;
+      return false;
     });
 };
 
