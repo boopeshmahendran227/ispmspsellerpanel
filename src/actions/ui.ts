@@ -155,18 +155,6 @@ const hideDeliveryCodeModal = (): UIActionType => {
   };
 };
 
-const showProductOrdersModal = (): UIActionType => {
-  return {
-    type: SHOW_PRODUCT_ORDERS_MODAL,
-  };
-};
-
-const hideProductOrdersModal = (): UIActionType => {
-  return {
-    type: HIDE_PRODUCT_ORDERS_MODAL,
-  };
-};
-
 export default {
   showSureModal,
   hideSureModal,
@@ -188,6 +176,4 @@ export default {
   hideAttributeModal,
   showSkuModal,
   hideSkuModal,
-  showProductOrdersModal,
-  hideProductOrdersModal,
 };

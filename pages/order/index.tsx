@@ -32,8 +32,7 @@ import DeliveryCodeModal from "../../src/components/DeliveryCodeModal";
 import { PaginationDataInterface } from "../../src/types/pagination";
 import { getCustomerInfo } from "../../src/utils/customer";
 import PageHeader from "../../src/components/PageHeader";
-import ProductOrdersModal from "../../src/components/ProductOrdersModal";
-import UIActions from "../../src/actions/ui";
+import ProductOrdersContainer from "../../src/components/ProductOrdersContainer";
 
 interface StateProps {
   orders: OrderInterface[];
@@ -58,7 +57,6 @@ interface DispatchProps {
   rejectReturnOrderItem: (orderId: number, orderItemId: number) => void;
   cancelOrderItem: (orderId: number, orderItemId: number) => void;
   setOrderCurrentPageNumber: (value: number) => void;
-  showProductOrderModal: () => void;
 }
 
 type OrdersProps = StateProps & DispatchProps;
@@ -307,12 +305,8 @@ const Orders = (props: OrdersProps) => {
     <div className="container">
       {/* Modals */}
       <DeliveryCodeModal />
-      <ProductOrdersModal />
       <div className="headerContainer">
         <PageHeader>Orders</PageHeader>
-        <Button onClick={() => props.showProductOrderModal()}>
-          View Orders By Products
-        </Button>
       </div>
       <TabSection
         headingList={[
@@ -321,6 +315,7 @@ const Orders = (props: OrdersProps) => {
           `Delivered Orders (${deliveredOrderItems.length})`,
           `Cancelled Orders (${cancelledOrderItems.length})`,
           `Returned Orders (${returnedOrderItems.length})`,
+          `Orders By Products`,
         ]}
         contentList={[
           <SortableTable
@@ -373,6 +368,7 @@ const Orders = (props: OrdersProps) => {
             emptyMsg="There are no returned orders"
             body={renderTableBody}
           />,
+          <ProductOrdersContainer />,
         ]}
       />
       <Pagination
@@ -427,7 +423,6 @@ const mapDispatchToProps: DispatchProps = {
   rejectReturnOrderItem: OrderActions.rejectReturnOrderItem,
   cancelOrderItem: OrderActions.cancelOrderItem,
   setOrderCurrentPageNumber: OrderActions.setOrderCurrentPageNumber,
-  showProductOrderModal: UIActions.showProductOrdersModal,
 };
 
 const mapPropsToLoadData = (props: OrdersProps) => {

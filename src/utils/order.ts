@@ -63,6 +63,18 @@ const isCancelledOrderStatus = (status: OrderStatus) => {
   return status === OrderStatus.CancelCompleted;
 };
 
+const isShippingOrderStatus = (status: OrderStatus) => {
+  return status === OrderStatus.Shipping;
+};
+
+const isPendingOrderStatus = (status: OrderStatus) => {
+  return (
+    status === OrderStatus.PaymentSuccess ||
+    status === OrderStatus.PaymentOnDelivery ||
+    status === OrderStatus.SellerProcessing
+  );
+};
+
 export {
   getColor,
   getOrderStatusText,
@@ -70,4 +82,6 @@ export {
   isDeliveredOrderStatus,
   isReturnedOrderStatus,
   isCancelledOrderStatus,
+  isShippingOrderStatus,
+  isPendingOrderStatus,
 };
