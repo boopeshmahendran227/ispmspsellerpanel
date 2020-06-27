@@ -254,6 +254,10 @@ const Orders = (props: OrdersProps) => {
                     key: "Sku Id",
                     value: orderItem.skuId,
                   },
+                  {
+                    key: "External Id",
+                    value: orderItem.productSnapshot.customId,
+                  },
                 ]}
               />
             </div>

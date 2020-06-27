@@ -58,6 +58,7 @@ export interface OrderItemInterface {
     discountSplit: {
       [key: string]: number;
     };
+    customId: string;
   };
   totalDiscount: number;
   finalPrice: number;
