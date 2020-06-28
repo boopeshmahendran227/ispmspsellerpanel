@@ -58,7 +58,7 @@ export interface OrderItemInterface {
     discountSplit: {
       [key: string]: number;
     };
-    customId: string;
+    externalId: string;
   };
   totalDiscount: number;
   finalPrice: number;
@@ -142,8 +142,11 @@ export interface OrderDetailInterface extends OrderInterface {
   shippingAddress: AddressInterface;
 }
 
-interface OrderItemCountMap {
-  [key: string]: number;
+export interface OrderItemCountMap {
+  [key: string]: {
+    orderCount: number;
+    qty: number;
+  };
 }
 
 export interface ProductOrderInterface {
@@ -152,6 +155,7 @@ export interface ProductOrderInterface {
   skuId: string;
   imagePath: string;
   orderItemCount: OrderItemCountMap;
+  externalId: string;
 }
 
 interface GetOrderAction {

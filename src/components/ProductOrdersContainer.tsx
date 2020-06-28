@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import Loader from "./Loader";
-import { ProductOrderInterface } from "../types/order";
+import { ProductOrderInterface, OrderItemCountMap } from "../types/order";
 import SortableTable from "./SortableTable";
 import ProductCard from "./ProductCard";
 import _ from "lodash";
@@ -28,6 +28,22 @@ const getTableHeaders = () => {
   ];
 };
 
+const getOrderItemCount = (orderItemCount: OrderItemCountMap, filterFunc) => {
+  return _.chain(orderItemCount)
+    .pickBy((value, key) => filterFunc(key))
+    .map((item) => item.orderCount)
+    .sum()
+    .value();
+};
+
+const getQty = (orderItemCount: OrderItemCountMap, filterFunc) => {
+  return _.chain(orderItemCount)
+    .pickBy((value, key) => filterFunc(key))
+    .map((item) => item.qty)
+    .sum()
+    .value();
+};
+
 const renderTableBody = (productOrders: ProductOrderInterface[]) => {
   return productOrders.map((productOrder) => (
     <tr>
@@ -44,33 +60,43 @@ const renderTableBody = (productOrders: ProductOrderInterface[]) => {
               key: "SKU Id",
               value: productOrder.skuId,
             },
+            {
+              key: "External Id",
+              value: productOrder.externalId,
+            },
           ]}
         />
       </td>
-      <td>
-        {_.chain(productOrder.orderItemCount)
-          .pickBy((value, key) => isPendingOrderStatus(key))
-          .values()
-          .sum()
-          .value()}
-      </td>
-      <td>
-        {_.chain(productOrder.orderItemCount)
-          .pickBy((value, key) => isShippingOrderStatus(key))
-          .values()
-          .sum()
-          .value()}
-      </td>
-      <td>
-        {_.chain(productOrder.orderItemCount)
-          .pickBy(
-            (value, key) =>
-              isPendingOrderStatus(key) || isShippingOrderStatus(key)
-          )
-          .values()
-          .sum()
-          .value()}
-      </td>
+      {[
+        isPendingOrderStatus,
+        isShippingOrderStatus,
+        (key) => isPendingOrderStatus(key) || isShippingOrderStatus(key),
+      ].map((filterFunc) => (
+        <td>
+          <div className="row">
+            <span className="key">Order Count: </span>
+            <span className="value">
+              {getOrderItemCount(productOrder.orderItemCount, filterFunc)}
+            </span>
+          </div>
+          <div className="row">
+            <span className="key">Qty: </span>
+            <span className="value">
+              {getQty(productOrder.orderItemCount, filterFunc)}
+            </span>
+          </div>
+        </td>
+      ))}
+      <style jsx>{`
+        .row {
+          text-align: left;
+          max-width: 100px;
+          margin: auto;
+        }
+        .key {
+          font-weight: bold;
+        }
+      `}</style>
     </tr>
   ));
 };
