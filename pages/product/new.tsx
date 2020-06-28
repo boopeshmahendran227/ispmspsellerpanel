@@ -36,6 +36,7 @@ import { CategoryTreeInterface } from "../../src/types/categoryTree";
 import CSSConstants from "../../src/constants/CSSConstants";
 import Tooltip from "../../src/components/Tooltip";
 import PageHeader from "../../src/components/PageHeader";
+import { BusinessDataInterface } from "../../src/types/business";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -69,7 +70,7 @@ const AddProduct = (props: AddProductProps) => {
   const attributes: AttributeInterface[] = attributeSWR.data;
   const categoryTree: CategoryTreeInterface = categorySWR.data;
   const taxGroups: TaxGroupInterface[] = taxSWR.data;
-  const businessData = businessSWR.data;
+  const businessData: BusinessDataInterface = businessSWR.data;
 
   const categories = flattenCategoryTree(categoryTree);
 

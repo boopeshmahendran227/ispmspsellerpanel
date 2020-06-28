@@ -40,6 +40,14 @@ const SideNavBar = () => {
             </Link>
           </li>
           <li>
+            <Link activeClassName="active" href="/insights">
+              <a>
+                <i className="fas fa-chart-line"></i>
+                <span>Insights</span>
+              </a>
+            </Link>
+          </li>
+          <li>
             <Link activeClassName="active" href="/visit">
               <a>
                 <i className="fas fa-calendar-alt"></i>
@@ -141,7 +149,7 @@ const SideNavBar = () => {
             flex-direction: column;
             text-align: center;
             width: 100%;
-            padding: 1.2em 0.5em;
+            padding: 1em 0.5em;
             transition: all 0.3s;
             text-decoration: none;
             font-size: 0.9rem;
