@@ -9,7 +9,6 @@ import {
   ProductSkuDetail,
   ProductInputInterface,
   TaxGroupInterface,
-  SelectOptionInterface,
 } from "../../src/types/product";
 import { RootState } from "../../src/reducers";
 import ProductActions from "../../src/actions/product";
@@ -22,10 +21,7 @@ import SkuModal from "../../src/components/SkuModal";
 import TierPriceInput from "../../src/components/TierpriceInput";
 import FAQInput from "../../src/components/FAQInput";
 import SpecificationInput from "../../src/components/SpecificationInput";
-import {
-  flattenCategoryTree,
-  getChildCategories,
-} from "../../src/utils/categoryTree";
+import { flattenCategoryTree } from "../../src/utils/categoryTree";
 import InputLabel from "../../src/components/InputLabel";
 import { getSkus } from "../../src/selectors/product";
 import SkuInputTable from "../../src/components/SkuInputTable";
@@ -93,16 +89,6 @@ const AddProduct = (props: AddProductProps) => {
     props.addProduct(values);
   };
 
-  const getOtherCategories = (defaultCategory: SelectOptionInterface) => {
-    if (defaultCategory) {
-      const category = categories.find(
-        (category) => category.id === defaultCategory.value
-      );
-      return getChildCategories(category);
-    }
-    return categories;
-  };
-
   return (
     <div className="container">
       <PageHeader>Add Product</PageHeader>
@@ -150,17 +136,18 @@ const AddProduct = (props: AddProductProps) => {
                   }))}
                 />
                 <InputLabel label="Other Categories" />
-                <Tooltip trigger="focus" tooltip="Select Other Categories">
-                  <FieldMultiSelect
-                    name="categories"
-                    options={getOtherCategories(values.defaultCategory).map(
-                      (category) => ({
-                        value: category.id,
-                        label: category.name,
-                      })
-                    )}
-                  />
-                </Tooltip>
+                <FieldMultiSelect
+                  name="categories"
+                  options={categories
+                    .filter(
+                      (category) =>
+                        category.id !== values.defaultCategory?.value
+                    )
+                    .map((category) => ({
+                      value: category.id,
+                      label: category.name,
+                    }))}
+                />
                 <InputLabel label="Ecosystems" />
                 <FieldMultiSelect
                   name="ecosystems"

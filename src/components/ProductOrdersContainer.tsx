@@ -7,23 +7,39 @@ import _ from "lodash";
 import { isPendingOrderStatus, isShippingOrderStatus } from "../utils/order";
 import ErrorMsg from "./ErrorMsg";
 
+const isOpenOrderStatus = (key) =>
+  isPendingOrderStatus(key) || isShippingOrderStatus(key);
+
 const getTableHeaders = () => {
   return [
     {
       name: "Product",
-      valueFunc: (productOrder: ProductOrderInterface) => null,
+      valueFunc: (productOrder: ProductOrderInterface) =>
+        productOrder.productId,
+    },
+    {
+      name: "SKU Id",
+      valueFunc: (productOrder: ProductOrderInterface) => productOrder.skuId,
+    },
+    {
+      name: "External Id",
+      valueFunc: (productOrder: ProductOrderInterface) =>
+        productOrder.externalId,
     },
     {
       name: "Pending Orders",
-      valueFunc: (productOrder: ProductOrderInterface) => null,
+      valueFunc: (productOrder: ProductOrderInterface) =>
+        getQty(productOrder.orderItemCount, isPendingOrderStatus),
     },
     {
       name: "Shipping Orders",
-      valueFunc: (productOrder: ProductOrderInterface) => null,
+      valueFunc: (productOrder: ProductOrderInterface) =>
+        getQty(productOrder.orderItemCount, isShippingOrderStatus),
     },
     {
       name: "Total Open Orders",
-      valueFunc: (productOrder: ProductOrderInterface) => null,
+      valueFunc: (productOrder: ProductOrderInterface) =>
+        getQty(productOrder.orderItemCount, isOpenOrderStatus),
     },
   ];
 };
@@ -56,45 +72,33 @@ const renderTableBody = (productOrders: ProductOrderInterface[]) => {
               key: "Product Id",
               value: productOrder.productId,
             },
-            {
-              key: "SKU Id",
-              value: productOrder.skuId,
-            },
-            {
-              key: "External Id",
-              value: productOrder.externalId,
-            },
           ]}
         />
       </td>
-      {[
-        isPendingOrderStatus,
-        isShippingOrderStatus,
-        (key) => isPendingOrderStatus(key) || isShippingOrderStatus(key),
-      ].map((filterFunc) => (
-        <td>
-          <div className="row">
-            <span className="key">Order Count: </span>
-            <span className="value">
-              {getOrderItemCount(productOrder.orderItemCount, filterFunc)}
-            </span>
-          </div>
-          <div className="row">
-            <span className="key">Qty: </span>
-            <span className="value">
-              {getQty(productOrder.orderItemCount, filterFunc)}
-            </span>
-          </div>
-        </td>
-      ))}
+      <td>{productOrder.skuId}</td>
+      <td>{productOrder.externalId}</td>
+      {[isPendingOrderStatus, isShippingOrderStatus, isOpenOrderStatus].map(
+        (filterFunc) => (
+          <td>
+            <div className="qty">
+              <span className="key">Qty: </span>
+              <span className="value">
+                {getQty(productOrder.orderItemCount, filterFunc)}
+              </span>
+            </div>
+            <div className="orderCount">
+              (Order Count:{" "}
+              {getOrderItemCount(productOrder.orderItemCount, filterFunc)})
+            </div>
+          </td>
+        )
+      )}
       <style jsx>{`
-        .row {
-          text-align: left;
-          max-width: 100px;
-          margin: auto;
-        }
         .key {
           font-weight: bold;
+        }
+        .orderCount {
+          font-size: 0.8rem;
         }
       `}</style>
     </tr>

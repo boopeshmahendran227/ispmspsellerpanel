@@ -22,12 +22,3 @@ export const flattenCategoryTree = (
 
   return categories;
 };
-
-export const getChildCategories = (
-  category: CategoryInterface
-): CategoryInterface[] => {
-  return category.children.reduce(
-    (acc, child) => [...acc, ...flattenCategoryTree(child)],
-    []
-  );
-};
