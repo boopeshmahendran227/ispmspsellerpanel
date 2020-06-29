@@ -17,7 +17,7 @@ function* search() {
     const filterData = yield select(getFilterData);
     const currentPageNumber = yield select(getCurrentPageNumber);
 
-    const data = yield call(api, "/product/search", {
+    const data = yield call(api, "/product/search/seller", {
       method: "POST",
       data: {
         ...filterData,
