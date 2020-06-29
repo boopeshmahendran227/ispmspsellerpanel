@@ -61,7 +61,6 @@ export interface OrderItemInterface {
     externalId: string;
   };
   totalDiscount: number;
-  finalPrice: number;
   qty: number;
   tax: number;
   bundleId: number;

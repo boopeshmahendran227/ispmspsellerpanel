@@ -258,7 +258,9 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
             </Fragment>
           ))}
           <div className="key total">Total</div>
-          <div className="value total">{formatPrice(orderItem.finalPrice)}</div>
+          <div className="value total">
+            {formatPrice(orderItem.discountedPrice)}
+          </div>
         </div>
       </section>
       {Boolean(buttons) && (

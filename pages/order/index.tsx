@@ -262,7 +262,7 @@ const Orders = (props: OrdersProps) => {
               />
             </div>
           </td>
-          <td>{formatPrice(orderItem.finalPrice)}</td>
+          <td>{formatPrice(orderItem.discountedPrice)}</td>
           <td>{orderItem.qty}</td>
           <td
             style={{

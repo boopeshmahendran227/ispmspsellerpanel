@@ -130,14 +130,14 @@ const Invoice = () => {
             <tbody>
               <tr>
                 <td>Total</td>
-                <td>{formatPrice(orderItem.finalPrice)}</td>
+                <td>{formatPrice(orderItem.discountedPrice)}</td>
               </tr>
             </tbody>
           </table>
         </section>
         <section className="section totalSection">
           <div>Net Total </div>
-          <div className="total">{formatPrice(orderItem.finalPrice)}</div>
+          <div className="total">{formatPrice(orderItem.discountedPrice)}</div>
         </section>
         <Feedback orderId={order.id} />
       </div>
