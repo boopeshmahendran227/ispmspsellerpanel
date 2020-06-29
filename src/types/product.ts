@@ -128,6 +128,7 @@ export interface AttributeInterface {
   name: string;
   attributeType: AttributeType;
   values: AttributeValueInterface[];
+  associatedCategoryIds: number[];
 }
 
 export interface AddAttributeInterface {
