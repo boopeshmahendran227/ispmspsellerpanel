@@ -16,6 +16,7 @@ import { getOrderStatusText } from "../../../src/utils/order";
 import PageError from "../../../src/components/PageError";
 import ShippingInformationContainer from "../../../src/components/ShippingInformationContainer";
 import DeliveryCodeModal from "../../../src/components/DeliveryCodeModal";
+import OrderInformation from "../../../src/components/OrderInformation";
 
 interface StateProps {
   currentlyProcessingOrderItemIds: number[];
@@ -103,6 +104,9 @@ const Order = (props: OrderProps) => {
               cancelOrderItem={props.cancelOrderItem}
             />
           </section>
+          <div>
+            <ShippingInformationContainer orderItem={orderItem} />
+          </div>
         </div>
         <div className="col2">
           <section className="customerContainer">
@@ -130,9 +134,11 @@ const Order = (props: OrderProps) => {
               </div>
             </div>
           </section>
+          <div>
+            <OrderInformation order={order} />
+          </div>
         </div>
       </div>
-      <ShippingInformationContainer orderItem={orderItem} />
       <style jsx>{`
         .container {
           margin: 1em auto;
@@ -173,8 +179,9 @@ const Order = (props: OrderProps) => {
           border: ${CSSConstants.borderStyle};
         }
         .customerContainer .header {
+          font-weight: bold;
           font-size: 1.3rem;
-          padding: 0.3em 0.8em;
+          padding: 0.3em 0.5em;
           margin: 0.4em 0;
         }
         .row {

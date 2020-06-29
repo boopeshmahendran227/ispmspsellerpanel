@@ -15,6 +15,7 @@ import {
   UPDATE_SHIPPING_INFORMATION_REQUEST,
 } from "../constants/ActionTypes";
 import { ProductAttributeValue } from "./product";
+import { OrderDiscountInterface } from "../utils/discount";
 
 export enum OrderStatus {
   Created = "Created",
@@ -134,6 +135,11 @@ export interface OrderInterface {
     }
   ];
   createdDateTime: string;
+  metadata: {
+    quoteId: number;
+    shipmentFee: number;
+  };
+  discountSplits: OrderDiscountInterface[];
 }
 
 export interface OrderDetailInterface extends OrderInterface {

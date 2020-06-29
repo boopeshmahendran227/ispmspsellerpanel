@@ -106,8 +106,8 @@ const ShippingInformationContainer = (
           background: white;
         }
         header {
-          font-weight: 500;
-          font-size: 1.2rem;
+          font-weight: bold;
+          font-size: 1.3rem;
           margin-bottom: 0.7em;
         }
         .gridContainer {
