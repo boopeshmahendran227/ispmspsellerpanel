@@ -128,7 +128,6 @@ export interface AttributeInterface {
   name: string;
   attributeType: AttributeType;
   values: AttributeValueInterface[];
-  associatedCategoryIds: number[];
 }
 
 export interface AddAttributeInterface {
@@ -136,6 +135,7 @@ export interface AddAttributeInterface {
   description: string;
   attributeType: AttributeType;
   values: string[];
+  associatedCategories: SelectOptionInterface[];
 }
 
 export interface ProductMiniInterface {

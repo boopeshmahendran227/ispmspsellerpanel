@@ -15,6 +15,7 @@ import {
   ProductInputInterface,
   SelectedAttributeValuesMap,
   AttributeValueInterface,
+  AddAttributeInterface,
 } from "../types/product";
 import { getSelectedAttributeValues } from "../selectors/product";
 import _ from "lodash";
@@ -76,9 +77,15 @@ function* addProduct(action) {
 
 function* addAttribute(action) {
   try {
+    const attribute: AddAttributeInterface = action.attribute;
     yield call(api, "/attribute", {
       method: "POST",
-      data: action.attribute,
+      data: {
+        ...action.attribute,
+        associatedCategoryIds: attribute.associatedCategories.map(
+          (category) => category.value
+        ),
+      },
     });
     yield put({ type: ADD_ATTRIBUTE_SUCCESS });
   } catch (err) {

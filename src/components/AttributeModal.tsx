@@ -13,6 +13,8 @@ import InputLabel from "./InputLabel";
 import * as Yup from "yup";
 import ValidationErrorMsg from "../components/ValidationErrorMsg";
 import { useRef } from "react";
+import { CategoryInterface } from "../types/category";
+import FieldMultiSelect from "./FieldMultiSelect";
 
 interface StateProps {
   open: boolean;
@@ -23,16 +25,21 @@ interface DispatchProps {
   onClose: () => void;
 }
 
-type AttributeModalProps = StateProps & DispatchProps;
+interface OwnProps {
+  categories: CategoryInterface[];
+}
+
+type AttributeModalProps = OwnProps & StateProps & DispatchProps;
 
 export const attributeSchema = Yup.object().shape({
   name: Yup.string().required(),
   description: Yup.string().required(),
   values: Yup.array().of(Yup.string()).min(1),
+  associatedCategories: Yup.array().of(Yup.object()).min(1),
 });
 
 const AttributeModal = (props: AttributeModalProps) => {
-  const { open } = props;
+  const { open, categories } = props;
   const resetFormRef = useRef(null);
 
   const onSubmit = (values: AddAttributeInterface, { resetForm }) => {
@@ -57,6 +64,7 @@ const AttributeModal = (props: AttributeModalProps) => {
             description: "",
             values: [],
             attributeType: AttributeType.Default,
+            associatedCategories: [],
           }}
           validationSchema={attributeSchema}
           onSubmit={onSubmit}
@@ -68,10 +76,18 @@ const AttributeModal = (props: AttributeModalProps) => {
                 <div className="gridContainer">
                   <InputLabel label="Name" />
                   <FieldInput name="name" />
+                  <InputLabel label="Associated Categories" />
+                  <FieldMultiSelect
+                    name="associatedCategories"
+                    options={categories.map((category) => ({
+                      value: category.id,
+                      label: category.name,
+                    }))}
+                  />
                   <InputLabel label="Description" />
                   <FieldTextArea name="description" />
                   <InputLabel label="Values" />
-                  <div className="valueInputContainer">
+                  <div>
                     <FieldArray
                       name="values"
                       render={(arrayHelpers) => (
@@ -146,9 +162,7 @@ const AttributeModal = (props: AttributeModalProps) => {
         .gridContainer {
           display: grid;
           grid-template-columns: 200px 1fr;
-        }
-        .valueInputContainer {
-          align-self: center;
+          align-items: center;
         }
       `}</style>
     </Modal>

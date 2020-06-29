@@ -67,10 +67,10 @@ const Button = (props: ButtonProps) => {
           text-transform: uppercase;
           border-radius: 4px;
         }
-        button:not(.outlined):hover {
+        button:not(:disabled):not(.outlined):hover {
           background: ${Chroma(currentColor).darken(0.7).css()};
         }
-        button.outlined:hover {
+        button:not(:disabled).outlined:hover {
           background: #f3f4f6;
         }
         .primary,

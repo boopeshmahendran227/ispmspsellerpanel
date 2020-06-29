@@ -240,7 +240,7 @@ const AddProduct = (props: AddProductProps) => {
             </Form>
           )}
         </Formik>
-        <AttributeModal />
+        <AttributeModal categories={categories} />
       </div>
       <style jsx>{`
         .container {
