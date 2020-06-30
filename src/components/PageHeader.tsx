@@ -9,7 +9,7 @@ const PageHeader = (props: PageHeaderProps) => {
       <style jsx>{`
         header {
           font-size: 1.5rem;
-          margin: 0.5em;
+          margin: 0.5em 0;
         }
       `}</style>
     </header>

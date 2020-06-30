@@ -40,6 +40,7 @@ import useSWR from "swr";
 import { BusinessDataInterface } from "../../src/types/business";
 import PageError from "../../src/components/PageError";
 import Loader from "../../src/components/Loader";
+import EcosystemOption from "../../src/components/EcosystemOption";
 
 interface StateProps {
   orders: OrderInterface[];
@@ -333,7 +334,7 @@ const Orders = (props: OrdersProps) => {
     },
     ...businessData.ecosystems.map((ecosystem) => ({
       value: ecosystem.ecosystem_id._id,
-      label: ecosystem.ecosystem_id.ecosystem_name,
+      label: <EcosystemOption ecosystem={ecosystem} />,
     })),
   ];
 
@@ -434,10 +435,13 @@ const Orders = (props: OrdersProps) => {
             0 1px 2px rgba(0, 0, 0, 0.24);
         }
         .headerContainer {
+          padding: 0.6em 1.3em;
           display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          padding: 0 1em;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .filterContainer {
+          min-width: 300px;
         }
         @media (max-width: 800px) {
           .container {

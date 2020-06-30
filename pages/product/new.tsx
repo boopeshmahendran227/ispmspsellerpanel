@@ -29,10 +29,10 @@ import FieldTextArea from "../../src/components/FieldTextArea";
 import { useRef, useEffect } from "react";
 import PageError from "../../src/components/PageError";
 import { CategoryTreeInterface } from "../../src/types/categoryTree";
-import CSSConstants from "../../src/constants/CSSConstants";
 import Tooltip from "../../src/components/Tooltip";
 import PageHeader from "../../src/components/PageHeader";
 import { BusinessDataInterface } from "../../src/types/business";
+import EcosystemOption from "../../src/components/EcosystemOption";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -152,27 +152,8 @@ const AddProduct = (props: AddProductProps) => {
                 <FieldMultiSelect
                   name="ecosystems"
                   options={businessData.ecosystems.map((ecosystem) => ({
-                    value: ecosystem._id,
-                    label: (
-                      <span className="ecosystemOptionName">
-                        <span className="contentContainer">
-                          <span>{ecosystem.ecosystem_id.ecosystem_name}</span>
-                          <span className="ecoUrl">
-                            {ecosystem.ecosystem_id.ecosystem_url}
-                          </span>
-                        </span>
-                        <span className="iconContainer">
-                          {ecosystem.ecosystem_id.mode === "PRIVATE" ? (
-                            <i
-                              className="privateIcon fa fa-lock"
-                              aria-hidden="true"
-                            ></i>
-                          ) : (
-                            <i className="publicIcon fas fa-users"></i>
-                          )}
-                        </span>
-                      </span>
-                    ),
+                    value: ecosystem.ecosystem_id._id,
+                    label: <EcosystemOption ecosystem={ecosystem} />,
                   }))}
                 />
                 <InputLabel label="Brand" />
@@ -254,25 +235,6 @@ const AddProduct = (props: AddProductProps) => {
           text-align: center;
           font-size: 1.2rem;
           margin-bottom: 1em;
-        }
-        .ecosystemOptionName {
-          display: inline-flex;
-          width: 100%;
-          justify-content: space-between;
-        }
-        .ecosystemOptionName .contentContainer {
-          display: flex;
-          flex-direction: column;
-        }
-        .ecoUrl {
-          font-size: 0.8rem;
-          color: ${CSSConstants.secondaryTextColor};
-        }
-        .publicIcon {
-          color: ${CSSConstants.successColor};
-        }
-        .privateIcon {
-          color: ${CSSConstants.dangerColor};
         }
       `}</style>
     </div>
