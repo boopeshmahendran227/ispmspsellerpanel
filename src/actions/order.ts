@@ -1,5 +1,5 @@
 import {
-  GET_ORDERS_REQUEST,
+  GET_FILTERED_ORDERS_REQUEST,
   CHANGE_ORDER_ITEM_STATUS_REQUEST,
   CHANGE_ORDER_ITEM_STATUS_SUCCESS,
   CHANGE_ORDER_ITEM_STATUS_FAILURE,
@@ -13,12 +13,13 @@ import {
   SET_ORDER_CURRENT_PAGE_NUMBER,
   MARK_AS_PROCESSING,
   UPDATE_SHIPPING_INFORMATION_REQUEST,
+  SET_ECOSYSTEM_FILTER_FOR_ORDERS,
 } from "../constants/ActionTypes";
 import { OrderActionType } from "../types/order";
 
 const getOrders = (): OrderActionType => {
   return {
-    type: GET_ORDERS_REQUEST,
+    type: GET_FILTERED_ORDERS_REQUEST,
   };
 };
 
@@ -173,6 +174,13 @@ const updateShippingInformation = (
   };
 };
 
+const setEcosystemFilter = (ecosystemId: string): OrderActionType => {
+  return {
+    type: SET_ECOSYSTEM_FILTER_FOR_ORDERS,
+    ecosystemId,
+  };
+};
+
 export default {
   getOrders,
   changeOrderItemStatus,
@@ -188,4 +196,5 @@ export default {
   cancelOrderItem,
   setOrderCurrentPageNumber,
   updateShippingInformation,
+  setEcosystemFilter,
 };

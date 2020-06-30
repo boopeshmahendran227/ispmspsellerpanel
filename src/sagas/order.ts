@@ -1,7 +1,7 @@
 import {
-  GET_ORDERS_REQUEST,
-  GET_ORDERS_SUCCESS,
-  GET_ORDERS_FAILURE,
+  GET_FILTERED_ORDERS_REQUEST,
+  GET_FILTERED_ORDERS_SUCCESS,
+  GET_FILTERED_ORDERS_FAILURE,
   CHANGE_ORDER_ITEM_STATUS_REQUEST,
   APPROVE_CANCEL_ORDER_ITEM_REQUEST,
   REJECT_CANCEL_ORDER_ITEM_REQUEST,
@@ -15,20 +15,43 @@ import {
   UPDATE_SHIPPING_INFORMATION_REQUEST,
   UPDATE_SHIPPING_INFORMATION_SUCCESS,
   UPDATE_SHIPPING_INFORMATION_FAILURE,
+  SET_ECOSYSTEM_FILTER_FOR_ORDERS,
 } from "../constants/ActionTypes";
 import { takeEvery, all, call, put, take, select } from "redux-saga/effects";
 import api from "../api";
 import OrderActions from "../actions/order";
 import { OrderStatus } from "../types/order";
-import { getCurrentPageNumber } from "../selectors/order";
+import {
+  getCurrentPageNumber,
+  getEcosystemFilterForOrder,
+} from "../selectors/order";
+import UIActions from "../actions/ui";
 
-function* getOrders() {
+function* getFilteredOrders(action) {
   try {
+    const ecosystemFilter = yield select(getEcosystemFilterForOrder);
     const pageNumber = yield select(getCurrentPageNumber);
-    const data = yield call(api, `/order?pageNumber=${pageNumber}`);
-    yield put({ type: GET_ORDERS_SUCCESS, data: data });
+
+    if (action.showLoading) {
+      yield put(UIActions.showLoadingScreen());
+    }
+
+    const data = yield call(api, `/order?pageNumber=${pageNumber}`, {
+      params: {
+        pageNumber: pageNumber,
+        ...(ecosystemFilter && {
+          ecosystemids: ecosystemFilter,
+        }),
+      },
+    });
+
+    if (action.showLoading) {
+      yield put(UIActions.hideLoadingScreen());
+    }
+
+    yield put({ type: GET_FILTERED_ORDERS_SUCCESS, data: data });
   } catch (err) {
-    yield put({ type: GET_ORDERS_FAILURE });
+    yield put({ type: GET_FILTERED_ORDERS_FAILURE });
   }
 }
 
@@ -80,14 +103,14 @@ function* updateShippingInformation(action) {
   }
 }
 
-function* watchGetOrders() {
-  yield takeEvery(GET_ORDERS_REQUEST, getOrders);
+function* watchGetFilteredOrders() {
+  yield takeEvery(GET_FILTERED_ORDERS_REQUEST, getFilteredOrders);
 }
 
 function* watchSetOrderCurrentPageNumber() {
   while (true) {
     yield take(SET_ORDER_CURRENT_PAGE_NUMBER);
-    yield put({ type: GET_ORDERS_REQUEST });
+    yield put({ type: GET_FILTERED_ORDERS_REQUEST });
   }
 }
 
@@ -128,12 +151,23 @@ function* watchUpdateShippingInformation() {
   );
 }
 
+function* watchFilters() {
+  while (true) {
+    yield take(SET_ECOSYSTEM_FILTER_FOR_ORDERS);
+    yield put({
+      type: GET_FILTERED_ORDERS_REQUEST,
+      showLoading: true,
+    });
+  }
+}
+
 export default function* () {
   yield all([
-    watchGetOrders(),
+    watchGetFilteredOrders(),
     watchChangeOrderItemStatus(),
     watchStatusChange(),
     watchSetOrderCurrentPageNumber(),
     watchUpdateShippingInformation(),
+    watchFilters(),
   ]);
 }

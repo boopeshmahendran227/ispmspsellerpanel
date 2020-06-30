@@ -134,6 +134,11 @@ const getOrderPaginatedData = createSelector(
     }
 );
 
+const getEcosystemFilterForOrder = createSelector(
+  (state: RootState) => state.order,
+  (order) => order.filters.ecosystem
+);
+
 export {
   getOrders,
   getOrderItems,
@@ -146,4 +151,5 @@ export {
   getReturnedOrderItems,
   getCurrentPageNumber,
   getOrderPaginatedData,
+  getEcosystemFilterForOrder,
 };

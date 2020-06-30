@@ -16,10 +16,12 @@ import {
   getDeliveredOrderItems,
   getReturnedOrderItems,
   getOrderPaginatedData,
+  getEcosystemFilterForOrder,
 } from "../../src/selectors/order";
 import { RequestReducerState } from "../../src/reducers/utils";
 import CSSConstants from "../../src/constants/CSSConstants";
 import TabSection from "../../src/components/TabSection";
+import Select from "../../src/components/Select";
 import Link from "next/link";
 import ProductCard from "../../src/components/ProductCard";
 import { formatPrice } from "../../src/utils/misc";
@@ -33,6 +35,11 @@ import { PaginationDataInterface } from "../../src/types/pagination";
 import { getCustomerInfo } from "../../src/utils/customer";
 import PageHeader from "../../src/components/PageHeader";
 import ProductOrdersContainer from "../../src/components/ProductOrdersContainer";
+import { SelectOptionInterface } from "../../src/types/product";
+import useSWR from "swr";
+import { BusinessDataInterface } from "../../src/types/business";
+import PageError from "../../src/components/PageError";
+import Loader from "../../src/components/Loader";
 
 interface StateProps {
   orders: OrderInterface[];
@@ -44,6 +51,7 @@ interface StateProps {
   getOrdersLoadingState: RequestReducerState;
   currentlyProcessingOrderItemIds: number[];
   orderPaginationData: PaginationDataInterface;
+  selectedEcosystemId: string;
 }
 
 interface DispatchProps {
@@ -57,6 +65,7 @@ interface DispatchProps {
   rejectReturnOrderItem: (orderId: number, orderItemId: number) => void;
   cancelOrderItem: (orderId: number, orderItemId: number) => void;
   setOrderCurrentPageNumber: (value: number) => void;
+  setEcosystemFilter: (ecosystemId: string) => void;
 }
 
 type OrdersProps = StateProps & DispatchProps;
@@ -305,12 +314,48 @@ const Orders = (props: OrdersProps) => {
     returnedOrderItems,
   } = props;
 
+  const businessSWR = useSWR("/businesses/business");
+  const businessData: BusinessDataInterface = businessSWR.data;
+  const error = businessSWR.error;
+
+  if (error) {
+    return <PageError statusCode={error.response?.status} />;
+  }
+
+  if (!businessData) {
+    return <Loader />;
+  }
+
+  const ecosystems: SelectOptionInterface[] = [
+    {
+      value: null,
+      label: "All Ecosystems",
+    },
+    ...businessData.ecosystems.map((ecosystem) => ({
+      value: ecosystem.ecosystem_id._id,
+      label: ecosystem.ecosystem_id.ecosystem_name,
+    })),
+  ];
+
+  const currentEcosystem = ecosystems.find(
+    (ecosystem) => ecosystem.value === props.selectedEcosystemId
+  );
+
   return (
     <div className="container">
       {/* Modals */}
       <DeliveryCodeModal />
       <div className="headerContainer">
         <PageHeader>Orders</PageHeader>
+        <div className="filterContainer">
+          <Select
+            value={currentEcosystem}
+            onChange={(ecosystem) =>
+              props.setEcosystemFilter(ecosystem.value as string)
+            }
+            options={ecosystems}
+          />
+        </div>
       </div>
       <TabSection
         headingList={[
@@ -390,8 +435,8 @@ const Orders = (props: OrdersProps) => {
         }
         .headerContainer {
           display: flex;
-          justify-content: space-between;
-          align-items: center;
+          flex-direction: column;
+          align-items: flex-start;
           padding: 0 1em;
         }
         @media (max-width: 800px) {
@@ -414,6 +459,7 @@ const mapStateToProps = (state: RootState): StateProps => ({
   getOrdersLoadingState: state.order.order,
   currentlyProcessingOrderItemIds: getCurrentlyProcessingOrderItemIds(state),
   orderPaginationData: getOrderPaginatedData(state),
+  selectedEcosystemId: getEcosystemFilterForOrder(state),
 });
 
 const mapDispatchToProps: DispatchProps = {
@@ -427,6 +473,7 @@ const mapDispatchToProps: DispatchProps = {
   rejectReturnOrderItem: OrderActions.rejectReturnOrderItem,
   cancelOrderItem: OrderActions.cancelOrderItem,
   setOrderCurrentPageNumber: OrderActions.setOrderCurrentPageNumber,
+  setEcosystemFilter: OrderActions.setEcosystemFilter,
 };
 
 const mapPropsToLoadData = (props: OrdersProps) => {

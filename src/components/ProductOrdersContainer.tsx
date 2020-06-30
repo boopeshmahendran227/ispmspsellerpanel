@@ -6,6 +6,9 @@ import ProductCard from "./ProductCard";
 import _ from "lodash";
 import { isPendingOrderStatus, isShippingOrderStatus } from "../utils/order";
 import ErrorMsg from "./ErrorMsg";
+import { connect } from "react-redux";
+import { RootState } from "../reducers";
+import { getEcosystemFilterForOrder } from "../selectors/order";
 
 const isOpenOrderStatus = (key) =>
   isPendingOrderStatus(key) || isShippingOrderStatus(key);
@@ -105,8 +108,19 @@ const renderTableBody = (productOrders: ProductOrderInterface[]) => {
   ));
 };
 
-const ProductOrdersContainer = () => {
-  const swr = useSWR(`/order/groupbyproduct`);
+interface StateProps {
+  selectedEcosystemId: string;
+}
+
+type ProductOrdersContainerProps = StateProps;
+
+const ProductOrdersContainer = (props: ProductOrdersContainerProps) => {
+  const { selectedEcosystemId } = props;
+  const swr = useSWR(
+    selectedEcosystemId
+      ? `/order/groupbyproduct?ecosystemId=${selectedEcosystemId}`
+      : `/order/groupbyproduct`
+  );
   const productOrders: ProductOrderInterface[] = swr.data;
   const error = swr.error;
 
@@ -130,4 +144,8 @@ const ProductOrdersContainer = () => {
   );
 };
 
-export default ProductOrdersContainer;
+const mapStateToProps = (state: RootState): StateProps => ({
+  selectedEcosystemId: getEcosystemFilterForOrder(state),
+});
+
+export default connect<StateProps>(mapStateToProps)(ProductOrdersContainer);
