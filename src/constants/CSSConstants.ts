@@ -12,7 +12,7 @@ const constants = {
   successColor: "#61B246",
   outlineColor: "", // This is set down
   primaryTextColor: "#4d4d4d",
-  secondaryTextColor: "#707070",
+  secondaryTextColor: "#878787",
   hoverColor: "", // This is set down
   hoverTextColor: "", // This is set down
   lightPrimaryColor: "", // This is set down

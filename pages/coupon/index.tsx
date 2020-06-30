@@ -121,7 +121,7 @@ const Coupons = () => {
       />
       <style jsx>{`
         .container {
-          padding: 1em 0;
+          padding: 1em;
           margin: 1em auto;
           background: ${CSSConstants.foregroundColor};
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),

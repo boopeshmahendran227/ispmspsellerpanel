@@ -108,9 +108,6 @@ const SortableTable = (props: SortableTableProps) => {
           width: 100%;
           text-align: center;
         }
-        .sortableTable th {
-          cursor: pointer;
-        }
         .sortableTable tbody {
           color: ${CSSConstants.secondaryTextColor};
         }
@@ -121,6 +118,7 @@ const SortableTable = (props: SortableTableProps) => {
         .sortableTable th {
           font-weight: bold;
           position: relative;
+          cursor: pointer;
         }
         .sortableTable th .icon {
           position: absolute;
