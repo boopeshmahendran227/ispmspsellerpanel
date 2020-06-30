@@ -4,6 +4,8 @@ import Loader from "../../src/components/Loader";
 import useSWR from "swr";
 import PageError from "../../src/components/PageError";
 import PageHeader from "../../src/components/PageHeader";
+import moment from "moment";
+import _ from "lodash";
 
 const Testdrives = () => {
   const swr = useSWR("/testdrive");
@@ -17,11 +19,17 @@ const Testdrives = () => {
     return <Loader />;
   }
 
+  // sort in reverse chronological order
+  const sortedTestdrives: TestDriveInterface[] = _.sortBy(
+    testdrives,
+    (testdrive: TestDriveInterface) => moment(testdrive.requestedDate)
+  ).reverse();
+
   return (
     <div className="container">
       <PageHeader>Test Drives ({testdrives.length})</PageHeader>
       <div className="body">
-        {testdrives.map((testdrive, index) => (
+        {sortedTestdrives.map((testdrive, index) => (
           <TestDriveCard key={index} testdrive={testdrive} />
         ))}
       </div>
