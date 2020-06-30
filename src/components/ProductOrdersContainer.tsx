@@ -9,6 +9,7 @@ import ErrorMsg from "./ErrorMsg";
 import { connect } from "react-redux";
 import { RootState } from "../reducers";
 import { getEcosystemFilterForOrder } from "../selectors/order";
+import CSSConstants from "../constants/CSSConstants";
 
 const isOpenOrderStatus = (key) =>
   isPendingOrderStatus(key) || isShippingOrderStatus(key);
@@ -99,6 +100,16 @@ const renderTableBody = (productOrders: ProductOrderInterface[]) => {
       <style jsx>{`
         .key {
           font-weight: bold;
+        }
+        tr {
+          font-size: 1rem;
+        }
+        .qty {
+          color: ${CSSConstants.primaryTextColor};
+          font-size: 1.1rem;
+        }
+        .orderCount {
+          color: ${CSSConstants.secondaryTextColor};
         }
         .orderCount {
           font-size: 0.8rem;

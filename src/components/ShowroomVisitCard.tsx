@@ -1,6 +1,5 @@
 import * as React from "react";
 import CSSConstants from "../constants/CSSConstants";
-import Chroma from "chroma-js";
 import { ShowroomVisitInterface } from "../types/showroomVisit";
 import { convertTo12hour } from "../utils/misc";
 import { getCustomerInfo } from "../utils/customer";
@@ -10,7 +9,6 @@ interface ShowroomVisitCardProps {
 }
 
 const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
-  const stateBackgroundColor = CSSConstants.primaryColor;
   const { showroomVisit } = props;
 
   return (
@@ -49,8 +47,8 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
           margin-bottom: 1em;
           display: flex;
           align-items: center;
-          background: ${Chroma(stateBackgroundColor).alpha(0.15).css()};
-          border-left: 6px solid ${stateBackgroundColor};
+          background: rgba(172, 198, 255, 0.15);
+          border-left: 4px solid ${CSSConstants.primaryColor};
           border-top-right-radius: 3em;
           border-bottom-right-radius: 3em;
         }
@@ -71,21 +69,21 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
           height: 0.3rem;
           margin: auto;
           border-radius: 100%;
-          border: 2px solid ${stateBackgroundColor};
+          border: 2px solid ${CSSConstants.primaryColor};
         }
         hr {
           width: 0;
           padding: 0;
           background: none;
           border: none;
-          border-left: 1px dashed ${stateBackgroundColor};
-          border-right: 1px dashed ${stateBackgroundColor};
+          border-left: 1px dashed ${CSSConstants.primaryColor};
+          border-right: 1px dashed ${CSSConstants.primaryColor};
           height: 2.3rem;
           margin: 3px auto;
         }
         .state {
           padding: 0.3em 0.5em;
-          color: ${stateBackgroundColor};
+          color: ${CSSConstants.primaryColor};
           font-weight: bold;
           text-transform: uppercase;
           margin-left: auto;

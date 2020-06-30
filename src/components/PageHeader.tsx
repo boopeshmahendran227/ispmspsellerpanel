@@ -10,6 +10,7 @@ const PageHeader = (props: PageHeaderProps) => {
         header {
           font-size: 1.5rem;
           margin: 0.5em 0;
+          font-weight: bold;
         }
       `}</style>
     </header>

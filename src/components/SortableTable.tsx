@@ -119,7 +119,7 @@ const SortableTable = (props: SortableTableProps) => {
           background-color: #6565650f;
         }
         .sortableTable th {
-          font-weight: 500;
+          font-weight: bold;
           position: relative;
         }
         .sortableTable th .icon {

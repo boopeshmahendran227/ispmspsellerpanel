@@ -46,6 +46,7 @@ const ProductCard = (props: ProductCardProps) => {
         .name {
           font-weight: 700;
           font-size: 1rem;
+          color: ${CSSConstants.primaryTextColor};
         }
         .metaInfoContainer {
           margin-top: 0.5em;
