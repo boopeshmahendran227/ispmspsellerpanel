@@ -10,6 +10,7 @@ import { getQuoteStatusText } from "../../src/utils/quote";
 import QuoteItemDetail from "../../src/components/QuoteItemDetail";
 import QuoteActions from "../../src/actions/quote";
 import PageError from "../../src/components/PageError";
+import WithAuth from "../../src/components/WithAuth";
 
 interface DispatchProps {
   rejectQuote: (quote: QuoteInterface) => void;
@@ -149,4 +150,6 @@ const mapDispatchToProps: DispatchProps = {
   updateQuote: QuoteActions.updateQuote,
 };
 
-export default connect<null, DispatchProps>(null, mapDispatchToProps)(Quote);
+export default WithAuth(
+  connect<null, DispatchProps>(null, mapDispatchToProps)(Quote)
+);

@@ -9,6 +9,7 @@ import FAQ from "../../src/components/FAQ";
 import { formatPrice } from "../../src/utils/misc";
 import CSSConstants from "../../src/constants/CSSConstants";
 import PageError from "../../src/components/PageError";
+import WithAuth from "../../src/components/WithAuth";
 
 const Draft = () => {
   const router = useRouter();
@@ -96,4 +97,4 @@ const Draft = () => {
   );
 };
 
-export default Draft;
+export default WithAuth(Draft);

@@ -6,6 +6,7 @@ import PageError from "../../src/components/PageError";
 import PageHeader from "../../src/components/PageHeader";
 import moment from "moment";
 import _ from "lodash";
+import WithAuth from "../../src/components/WithAuth";
 
 const Testdrives = () => {
   const swr = useSWR("/testdrive");
@@ -51,4 +52,4 @@ const Testdrives = () => {
   );
 };
 
-export default Testdrives;
+export default WithAuth(Testdrives);

@@ -21,6 +21,7 @@ import {
 } from "../../src/types/showroomVisit";
 import { RootState } from "../../src/reducers";
 import { RequestReducerState } from "../../src/reducers/utils";
+import WithAuth from "../../src/components/WithAuth";
 
 interface StateProps {
   showroomVisits: ShowroomVisitInterface[];
@@ -165,7 +166,9 @@ const mapPropsToLoadData = (props: ShowroomVisitsProps) => {
   ];
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(WithReduxDataLoader(mapPropsToLoadData)(ShowroomVisits));
+export default WithAuth(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(WithReduxDataLoader(mapPropsToLoadData)(ShowroomVisits))
+);

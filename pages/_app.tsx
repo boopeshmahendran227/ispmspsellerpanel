@@ -20,7 +20,6 @@ import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 import "../public/css/react_dates_overrides.css";
 import "react-popper-tooltip/dist/styles.css";
-import WithAuth from "../src/components/WithAuth";
 import LoadingScreen from "../src/components/LoadingScreen";
 import UpdateQuoteModal from "../src/components/UpdateQuoteModal";
 import { isLoggedIn } from "../src/utils/login";
@@ -39,8 +38,6 @@ Router.events.on("routeChangeError", () => NProgress.done());
 
 function MyApp(props) {
   const { store, Component, router, pageProps } = props;
-
-  const AuthComponent = WithAuth(Component);
 
   const swrConfigData = {
     refreshInterval: 600000,
@@ -83,7 +80,7 @@ function MyApp(props) {
                 <SideNavBar />
               </div>
               <div className="bodyContainer">
-                <AuthComponent {...pageProps} />
+                <Component {...pageProps} />
               </div>
               <style jsx>{`
                 .sideNavBarContainer {

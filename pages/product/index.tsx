@@ -18,6 +18,7 @@ import ActiveFilters from "../../src/components/ActiveFilters";
 import { PaginationDataInterface } from "../../src/types/pagination";
 import { FilterDataInterface } from "../../src/types/search";
 import Button from "../../src/components/Button";
+import WithAuth from "../../src/components/WithAuth";
 
 interface StateProps {
   products: ProductMiniInterface[];
@@ -165,7 +166,9 @@ const mapDispatchToProps: DispatchProps = {
   clearFilters: SearchActions.clearFilters,
 };
 
-export default connect<StateProps, DispatchProps>(
-  mapStateToProps,
-  mapDispatchToProps
-)(Products);
+export default WithAuth(
+  connect<StateProps, DispatchProps>(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Products)
+);

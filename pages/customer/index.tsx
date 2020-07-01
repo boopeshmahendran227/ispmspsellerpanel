@@ -5,6 +5,7 @@ import Loader from "../../src/components/Loader";
 import PageError from "../../src/components/PageError";
 import PageHeader from "../../src/components/PageHeader";
 import { CustomerInterface } from "../../src/types/customer";
+import WithAuth from "../../src/components/WithAuth";
 
 const Customers = () => {
   const getTableHeaders = () => {
@@ -80,4 +81,4 @@ const Customers = () => {
   );
 };
 
-export default Customers;
+export default WithAuth(Customers);

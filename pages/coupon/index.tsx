@@ -7,6 +7,7 @@ import PageError from "../../src/components/PageError";
 import { formatPrice } from "../../src/utils/misc";
 import Button from "../../src/components/Button";
 import PageHeader from "../../src/components/PageHeader";
+import WithAuth from "../../src/components/WithAuth";
 
 const getTableHeaders = () => {
   return [
@@ -143,4 +144,4 @@ const Coupons = () => {
   );
 };
 
-export default Coupons;
+export default WithAuth(Coupons);

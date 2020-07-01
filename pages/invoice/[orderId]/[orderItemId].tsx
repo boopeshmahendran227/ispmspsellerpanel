@@ -15,6 +15,7 @@ import { transformOrderItem } from "../../../src/transformers/orderItem";
 
 // images
 import LogoImg from "../../../public/icons/logo.png";
+import WithAuth from "../../../src/components/WithAuth";
 
 const Invoice = () => {
   const router = useRouter();
@@ -262,4 +263,4 @@ const Invoice = () => {
   );
 };
 
-export default Invoice;
+export default WithAuth(Invoice);

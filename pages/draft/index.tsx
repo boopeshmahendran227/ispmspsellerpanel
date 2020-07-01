@@ -13,6 +13,7 @@ import WithReduxDataLoader from "../../src/components/WithReduxDataLoader";
 import { DraftMiniInterface } from "../../src/types/draft";
 import { PaginationDataInterface } from "../../src/types/pagination";
 import PageHeader from "../../src/components/PageHeader";
+import WithAuth from "../../src/components/WithAuth";
 
 interface StateProps {
   drafts: DraftMiniInterface[];
@@ -161,7 +162,9 @@ const mapPropsToLoadData = (props: DraftsProps) => {
   ];
 };
 
-export default connect<StateProps, DispatchProps>(
-  mapStateToProps,
-  mapDispatchToProps
-)(WithReduxDataLoader(mapPropsToLoadData)(Drafts));
+export default WithAuth(
+  connect<StateProps, DispatchProps>(
+    mapStateToProps,
+    mapDispatchToProps
+  )(WithReduxDataLoader(mapPropsToLoadData)(Drafts))
+);

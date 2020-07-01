@@ -41,6 +41,7 @@ import { BusinessDataInterface } from "../../src/types/business";
 import PageError from "../../src/components/PageError";
 import Loader from "../../src/components/Loader";
 import EcosystemOption from "../../src/components/EcosystemOption";
+import WithAuth from "../../src/components/WithAuth";
 
 interface StateProps {
   orders: OrderInterface[];
@@ -490,7 +491,9 @@ const mapPropsToLoadData = (props: OrdersProps) => {
   ];
 };
 
-export default connect<StateProps, DispatchProps>(
-  mapStateToProps,
-  mapDispatchToProps
-)(WithReduxDataLoader(mapPropsToLoadData)(Orders));
+export default WithAuth(
+  connect<StateProps, DispatchProps>(
+    mapStateToProps,
+    mapDispatchToProps
+  )(WithReduxDataLoader(mapPropsToLoadData)(Orders))
+);

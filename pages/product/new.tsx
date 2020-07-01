@@ -33,6 +33,7 @@ import Tooltip from "../../src/components/Tooltip";
 import PageHeader from "../../src/components/PageHeader";
 import { BusinessDataInterface } from "../../src/types/business";
 import EcosystemOption from "../../src/components/EcosystemOption";
+import WithAuth from "../../src/components/WithAuth";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -256,7 +257,9 @@ const mapDispatchToProps: DispatchProps = {
   initProductCreate: ProductActions.initProductCreate,
 };
 
-export default connect<StateProps, DispatchProps>(
-  mapStateToProps,
-  mapDispatchToProps
-)(AddProduct);
+export default WithAuth(
+  connect<StateProps, DispatchProps>(
+    mapStateToProps,
+    mapDispatchToProps
+  )(AddProduct)
+);

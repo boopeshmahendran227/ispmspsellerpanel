@@ -17,6 +17,7 @@ import PageError from "../../../src/components/PageError";
 import ShippingInformationContainer from "../../../src/components/ShippingInformationContainer";
 import DeliveryCodeModal from "../../../src/components/DeliveryCodeModal";
 import OrderInformation from "../../../src/components/OrderInformation";
+import WithAuth from "../../../src/components/WithAuth";
 
 interface StateProps {
   currentlyProcessingOrderItemIds: number[];
@@ -223,7 +224,6 @@ const mapDispatchToProps: DispatchProps = {
   markAsProcessing: OrderActions.markAsProcessing,
 };
 
-export default connect<StateProps, DispatchProps>(
-  mapStateToProps,
-  mapDispatchToProps
-)(Order);
+export default WithAuth(
+  connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(Order)
+);

@@ -11,6 +11,7 @@ import useSWR from "swr";
 import Loader from "../src/components/Loader";
 import PageError from "../src/components/PageError";
 import { BusinessDataInterface } from "../src/types/business";
+import WithAuth from "../src/components/WithAuth";
 
 interface StateProps {
   orders: OrderInterface[];
@@ -69,7 +70,9 @@ const mapPropsToLoadData = (props: HomeProps) => {
   ];
 };
 
-export default connect<StateProps, DispatchProps>(
-  mapStateToProps,
-  mapDispatchToProps
-)(WithReduxDataLoader(mapPropsToLoadData)(Home));
+export default WithAuth(
+  connect<StateProps, DispatchProps>(
+    mapStateToProps,
+    mapDispatchToProps
+  )(WithReduxDataLoader(mapPropsToLoadData)(Home))
+);

@@ -15,6 +15,7 @@ import { formatPrice } from "../../src/utils/misc";
 import { getColor } from "../../src/utils/quote";
 import PageError from "../../src/components/PageError";
 import { getCustomerInfo } from "../../src/utils/customer";
+import WithAuth from "../../src/components/WithAuth";
 
 interface DispatchProps {
   updateQuote: (quote: QuoteInterface) => void;
@@ -324,4 +325,6 @@ const mapDispatchToProps: DispatchProps = {
   rejectQuote: QuoteActions.rejectQuote,
 };
 
-export default connect<null, DispatchProps>(null, mapDispatchToProps)(Quotes);
+export default WithAuth(
+  connect<null, DispatchProps>(null, mapDispatchToProps)(Quotes)
+);
