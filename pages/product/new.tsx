@@ -151,10 +151,16 @@ const AddProduct = (props: AddProductProps) => {
                 <InputLabel label="Ecosystems" />
                 <FieldMultiSelect
                   name="ecosystems"
-                  options={businessData.ecosystems.map((ecosystem) => ({
-                    value: ecosystem.ecosystem_id._id,
-                    label: <EcosystemOption ecosystem={ecosystem} />,
-                  }))}
+                  options={[
+                    {
+                      value: "Default",
+                      label: "Istakapaza Default Marketplace",
+                    },
+                    ...businessData.ecosystems.map((ecosystem) => ({
+                      value: ecosystem.ecosystem_id._id,
+                      label: <EcosystemOption ecosystem={ecosystem} />,
+                    })),
+                  ]}
                 />
                 <InputLabel label="Brand" />
                 <FieldSelect

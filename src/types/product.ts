@@ -292,4 +292,5 @@ export const ProductSchema = Yup.object().shape({
       )
       .min(1, "Atleast one specification item group is required"),
   }),
+  ecosystems: Yup.array().of(Yup.object()).min(1),
 });
