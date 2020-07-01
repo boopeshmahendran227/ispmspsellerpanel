@@ -12,7 +12,7 @@ function* createNotificationChannel() {
   return eventChannel((emit) => {
     const connection = new signalR.HubConnectionBuilder()
       .withUrl(getApiUrl("/chat"), {
-        accessTokenFactory: () => parseCookies()["isp-jwt"],
+        accessTokenFactory: () => parseCookies()["userToken"],
       })
       .configureLogging(signalR.LogLevel.Information)
       .build();

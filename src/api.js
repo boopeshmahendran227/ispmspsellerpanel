@@ -13,7 +13,7 @@ NProgress.configure({ showSpinner: false });
 
 const getAccessToken = (options) => {
   const cookies = parseCookies(options && options.context);
-  const token = cookies["isp-jwt"];
+  const token = cookies["userToken"];
   return token;
 };
 

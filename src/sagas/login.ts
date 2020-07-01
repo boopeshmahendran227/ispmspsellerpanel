@@ -12,12 +12,8 @@ import { redirectToLogin } from "../utils/login";
 function* logout() {
   try {
     const data = yield call(api, "/auth/logout");
-    yield call(destroyCookie, {}, "isp-jwt", {
-      path: ".istakapaza.com",
-    });
-    yield call(destroyCookie, {}, "isp-refresh", {
-      path: ".istakapaza.com",
-    });
+    yield call(destroyCookie, {}, "userToken");
+    yield call(destroyCookie, {}, "userRefreshToken");
     yield put({
       type: LOGOUT_SUCCESS,
       data: data,
