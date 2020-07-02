@@ -1,12 +1,7 @@
 import {
-  GET_NOTIFICATIONS_REQUEST,
   INCREMENT_UNREAD_NOTIFICATION_COUNT,
   CLEAR_UNREAD_NOTIFICATION_COUNT,
 } from "../constants/ActionTypes";
-
-interface GetNotificationAction {
-  type: typeof GET_NOTIFICATIONS_REQUEST;
-}
 
 interface IncrementUnreadNotificationCountAction {
   type: typeof INCREMENT_UNREAD_NOTIFICATION_COUNT;
@@ -17,7 +12,6 @@ interface ClearUnreadNotificationCountAction {
 }
 
 export type NotificationActionType =
-  | GetNotificationAction
   | IncrementUnreadNotificationCountAction
   | ClearUnreadNotificationCountAction;
 

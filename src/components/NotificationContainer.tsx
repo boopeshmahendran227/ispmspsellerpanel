@@ -1,32 +1,39 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import NotificationActions from "../actions/notification";
-import { getNotifications } from "../selectors/notification";
-import WithReduxDataLoader from "./WithReduxDataLoader";
 import NotificationCard from "./NotificationCard";
-import { NotificationItemInterface } from "../types/notification";
+import PageError from "./PageError";
+import Loader from "./Loader";
 import EmptyMsg from "./EmptyMsg";
 import _ from "lodash";
+import useSWR from "swr";
+import { NotificationItemInterface } from "../types/notification";
+import moment from "moment";
 
-interface StateProps {
-  notifications: NotificationItemInterface[];
-  getNotificationsState: any;
-}
+const Notifications = () => {
+  const swr = useSWR("/notification");
+  const notifications = swr.data;
+  const error = swr.error;
 
-interface DispatchProps {
-  getNotifications: () => void;
-}
+  if (error) {
+    return <PageError statusCode={error.response?.status} />;
+  }
 
-type NotificationsProps = StateProps & DispatchProps;
+  if (!notifications) {
+    return <Loader />;
+  }
 
-const Notifications = (props: NotificationsProps) => {
-  const { notifications } = props;
+  // Sort notifications by created time
+  const sortedNotifications: NotificationItemInterface[] = _.sortBy(
+    notifications,
+    (notification) => moment(notification.createdDateTime)
+  ).reverse();
 
   return (
     <div className="container">
-      {!notifications ||
-        (Boolean(!notifications.length) && <EmptyMsg msg="No Notifications" />)}
-      {notifications.map((notification, index) => (
+      {!sortedNotifications ||
+        (Boolean(!sortedNotifications.length) && (
+          <EmptyMsg msg="No Notifications" />
+        ))}
+      {sortedNotifications.map((notification, index) => (
         <NotificationCard key={index} notification={notification} />
       ))}
       <style jsx>{`
@@ -38,26 +45,4 @@ const Notifications = (props: NotificationsProps) => {
   );
 };
 
-const mapStateToProps = (state): StateProps => ({
-  notifications: getNotifications(state),
-  getNotificationsState: state.notification.notification,
-});
-
-const mapDispatchToProps: DispatchProps = {
-  getNotifications: NotificationActions.getNotifications,
-};
-
-const mapPropsToLoadData = (props: NotificationsProps) => {
-  return [
-    {
-      data: props.notifications,
-      fetch: props.getNotifications,
-      loadingState: props.getNotificationsState,
-    },
-  ];
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(WithReduxDataLoader(mapPropsToLoadData)(Notifications));
+export default Notifications;

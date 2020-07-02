@@ -7,6 +7,7 @@ import NotificationActions from "../actions/notification";
 import { NotificationItemInterface } from "../types/notification";
 import { ToastType } from "../types/toast";
 import { getApiUrl } from "../utils/url";
+import { mutate } from "swr";
 
 function* createNotificationChannel() {
   return eventChannel((emit) => {
@@ -59,7 +60,7 @@ export default function* () {
           msg: notification.message,
         })
       );
-      yield put(NotificationActions.getNotifications());
+      yield call(mutate, "/notifications");
     } catch (err) {
       notificationChannel.close();
     }
