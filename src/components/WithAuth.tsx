@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { RootState } from "../reducers";
 import { getLoginState } from "../selectors/login";
 import { LoginState } from "../types/login";
+import AuthWall from "./AuthWall";
 
 interface StateProps {
   loginState: LoginState;
@@ -20,7 +21,12 @@ const WithAuth = (WrappedComponent) => {
       }
     }, [props.loginState]);
 
-    return <WrappedComponent {...props} />;
+    return (
+      <>
+        <AuthWall />
+        <WrappedComponent {...props} />;
+      </>
+    );
   };
 
   hoistNonReactStatics(LoginHOC, WrappedComponent);

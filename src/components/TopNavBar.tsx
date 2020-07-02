@@ -8,9 +8,7 @@ import { getUnreadNotificationCount } from "../selectors/notification";
 import NotificationActions from "../actions/notification";
 import LoginActions from "../actions/login";
 import classNames from "classnames";
-
-// images
-import LogoIcon from "../../public/icons/logo2.png";
+import Logo from "./Logo";
 
 interface StateProps {
   unreadNotificationCount: number;
@@ -51,12 +49,9 @@ const TopNavBar = (props: TopNavBarProps) => {
   return (
     <div className="container">
       <div className="fixedContainer">
-        <header>
-          <a href="/">
-            <img className="logo" src={LogoIcon} />
-            &nbsp;<span> Sellers</span>
-          </a>
-        </header>
+        <div className="logoContainer">
+          <Logo />
+        </div>
         <a
           className={classes}
           key={
@@ -102,23 +97,8 @@ const TopNavBar = (props: TopNavBarProps) => {
           background: ${CSSConstants.foregroundColor};
           box-shadow: 0 0 20px #00000014;
         }
-        header {
+        .logoContainer {
           flex: 1;
-          font-size: 1.5rem;
-        }
-        header a {
-          font-family: "Roboto";
-          color: #202649;
-          text-decoration: none;
-          display: flex;
-          align-items: center;
-        }
-        header span {
-          font-size: 2rem;
-          font-weight: 300;
-        }
-        .logo {
-          height: 2.2rem;
         }
         .time {
           display: inline-block;

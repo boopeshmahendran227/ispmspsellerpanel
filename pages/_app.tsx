@@ -13,6 +13,10 @@ import ReasonModal from "../src/components/ReasonModal";
 import SideNavBar from "../src/components/SideNavBar";
 import TopNavBar from "../src/components/TopNavBar";
 import LoginActions from "../src/actions/login";
+import LoadingScreen from "../src/components/LoadingScreen";
+import UpdateQuoteModal from "../src/components/UpdateQuoteModal";
+import { isLoggedIn } from "../src/utils/login";
+import { LoginState } from "../src/types/login";
 
 // Add all third-party CSS here
 import "@fortawesome/fontawesome-free/css/all.css";
@@ -20,10 +24,6 @@ import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 import "../public/css/react_dates_overrides.css";
 import "react-popper-tooltip/dist/styles.css";
-import LoadingScreen from "../src/components/LoadingScreen";
-import UpdateQuoteModal from "../src/components/UpdateQuoteModal";
-import { isLoggedIn } from "../src/utils/login";
-import { LoginState } from "../src/types/login";
 
 NProgress.configure({ showSpinner: false });
 
@@ -54,13 +54,15 @@ function MyApp(props) {
     });
   });
 
-  // We don't need navbar and redux for invoice page
+  // We don't need navbar for invoice page
   if (["invoice"].some((str) => router.pathname.includes(str))) {
     return (
       <SWRConfig value={swrConfigData}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <Provider store={store}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </Provider>
       </SWRConfig>
     );
   }

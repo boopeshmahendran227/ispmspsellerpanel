@@ -12,10 +12,8 @@ import Loader from "../../../src/components/Loader";
 import PageError from "../../../src/components/PageError";
 import { OrderDetailInterface } from "../../../src/types/order";
 import { transformOrderItem } from "../../../src/transformers/orderItem";
-
-// images
-import LogoImg from "../../../public/icons/logo.png";
 import WithAuth from "../../../src/components/WithAuth";
+import Logo from "../../../src/components/Logo";
 
 const Invoice = () => {
   const router = useRouter();
@@ -49,9 +47,7 @@ const Invoice = () => {
   return (
     <section className="container">
       <div className="body">
-        <div className="logoContainer">
-          <img src={LogoImg} />
-        </div>
+        <Logo />
         <section className="section shopSection">
           <div>{Strings.ADDRESS}</div>
         </section>
