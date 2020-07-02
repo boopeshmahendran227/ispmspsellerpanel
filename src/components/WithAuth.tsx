@@ -24,7 +24,7 @@ const WithAuth = (WrappedComponent) => {
     return (
       <>
         <AuthWall />
-        <WrappedComponent {...props} />;
+        <WrappedComponent {...props} />
       </>
     );
   };
