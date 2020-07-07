@@ -6,9 +6,8 @@ import { useState } from "react";
 interface TabSectionProps {
   headingList: string[];
   contentList: React.ReactNode[];
+  headingWidth?: string;
 }
-
-const HEADING_WIDTH = "200px";
 
 const TabSection = (props: TabSectionProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -35,7 +34,7 @@ const TabSection = (props: TabSectionProps) => {
             color: ${CSSConstants.primaryColor};
           }
           .heading {
-            width: ${HEADING_WIDTH};
+            width: ${props.headingWidth};
           }
           .heading a {
             display: inline-block;
@@ -118,7 +117,7 @@ const TabSection = (props: TabSectionProps) => {
           background: ${CSSConstants.primaryColor};
         }
         .activeLineContainer {
-          width: ${HEADING_WIDTH};
+          width: ${props.headingWidth};
           position: absolute;
           left: 0;
           bottom: 0;
@@ -133,6 +132,9 @@ const TabSection = (props: TabSectionProps) => {
       `}</style>
     </section>
   );
+};
+TabSection.defaultProps = {
+  headingWidth: "200px",
 };
 
 export default TabSection;
