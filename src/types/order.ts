@@ -88,6 +88,7 @@ export interface OrderItemInterface {
     providerName: string;
     shipmentFee: number;
   };
+  createdDateTime: string;
 }
 
 export interface OrderStatusHistoryItem {
