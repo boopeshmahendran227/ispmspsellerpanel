@@ -44,6 +44,17 @@ const CreateCoupon = (props: CreateCouponProps) => {
   const categories = flattenCategoryTree(categoryTree);
 
   const onSubmit = (values: CouponInputInterface) => {
+    let products = [];
+
+    values.products.forEach((product) => {
+      product.skuIds.forEach((skuId) => {
+        products.push({
+          productId: product.productId,
+          skuId: skuId,
+        });
+      });
+    });
+
     props.createCoupon({
       ...(values.type === CouponType.FixedAmount && {
         discountValue: values.discountValue,
@@ -51,6 +62,7 @@ const CreateCoupon = (props: CreateCouponProps) => {
       ...(values.type === CouponType.Percentage && {
         discountPercentage: values.discountPercentage,
       }),
+      products,
       categoryIds: values.categories.map((category) => Number(category.value)),
     });
   };
@@ -69,10 +81,13 @@ const CreateCoupon = (props: CreateCouponProps) => {
         }}
         validate={(values) => {
           const errors: any = {};
-          if (values.type === CouponType.FixedAmount) {
+          if (values.type === CouponType.FixedAmount && !values.discountValue) {
             errors.discountValue = "Discount Value is required";
           }
-          if (values.type === CouponType.Percentage) {
+          if (
+            values.type === CouponType.Percentage &&
+            !values.discountPercentage
+          ) {
             errors.discountPercentage = "Discount Percentage is required";
           }
           if (values.products.length === 0 && values.categories.length === 0) {
