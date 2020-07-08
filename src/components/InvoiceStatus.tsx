@@ -1,40 +1,34 @@
 import CSSConstants from "../constants/CSSConstants";
-import classNames from "classnames";
 import Chroma from "chroma-js";
 import { StatusType } from "../types/invoice";
 
 interface StatusProps {
-  className?: string;
   type: StatusType;
-  children: React.ReactNode;
 }
 const getCurrentColor = (type: String) => {
   switch (type) {
-    case "Draft":
+    case StatusType.Draft:
       return CSSConstants.disabledColor;
-    case "Issued":
+    case StatusType.Issued:
       return CSSConstants.lightPrimaryColor;
-    case "Pending":
+    case StatusType.Pending:
       return CSSConstants.warningColor;
-    case "Paid":
+    case StatusType.Paid:
       return CSSConstants.successColor;
-    case "Partial":
+    case StatusType.Partial:
       return CSSConstants.secondaryColor;
-    case "Overdue":
+    case StatusType.Overdue:
       return CSSConstants.dangerColor;
-    case "Cancelled":
+    case StatusType.Cancelled:
       return Chroma(CSSConstants.warningColor).darken(1).css();
   }
-  return "rgba(0,0,0,0)"
+  return "rgba(0,0,0,0)";
 };
 const InvoiceStatus = (props: StatusProps) => {
-  const classes = classNames({
-    [props.className]: true,
-  });
   const currentColor = getCurrentColor(props.type);
   return (
-    <div className={classes}>
-      {props.children}
+    <div className="invoiceStatus">
+      {props.type}
       <style jsx>{`
         div {
           padding: 0.5em 0.5em;
@@ -53,11 +47,6 @@ const InvoiceStatus = (props: StatusProps) => {
       `}</style>
     </div>
   );
-};
-
-InvoiceStatus.defaultProps = {
-  type: "Draft",
-  className: "",
 };
 
 export default InvoiceStatus;

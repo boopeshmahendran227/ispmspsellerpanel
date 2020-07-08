@@ -1,114 +1,52 @@
-import React from "react";
+import { InvoiceInterface, StatusType } from "../types/invoice";
 
-interface StatusProps {
-  className?: string;
-  types: [];
-  children: React.ReactNode;
+export interface StatusProps {
+  values: InvoiceInterface[];
 }
-
-function StatusDashboard(props) {
-  const datas = [
-    {
-      invoiceId: 1,
-      issueDate: "4/12/2020",
-      customerId: "string",
-      customerName: "string",
-      totalAmount: 20,
-      amountPending: 5,
-      status: "draft",
-    },
-    {
-      invoiceId: 1,
-      issueDate: "4/12/2020",
-      customerId: "string",
-      customerName: "string",
-      totalAmount: 20,
-      amountPending: 5,
-      status: "paid",
-    },
-    {
-      invoiceId: 1,
-      issueDate: "4/12/2020",
-      customerId: "string",
-      customerName: "string",
-      totalAmount: 20,
-      amountPending: 5,
-      status: "overdue",
-    },
-    {
-      invoiceId: 2,
-      issueDate: "4/1/2020",
-      customerId: "string",
-      customerName: "string",
-      totalAmount: 5,
-      amountPending: 0,
-      status: "partial",
-    },
-    {
-      invoiceId: 2,
-      issueDate: "4/1/2020",
-      customerId: "string",
-      customerName: "string",
-      totalAmount: 5,
-      amountPending: 0,
-      status: "cancelled",
-    },
-    {
-      invoiceId: 2,
-      issueDate: "4/1/2020",
-      customerId: "string",
-      customerName: "string",
-      totalAmount: 5,
-      amountPending: 0,
-      status: "issued",
-    },
-    {
-      invoiceId: 2,
-      issueDate: "4/1/2020",
-      customerId: "string",
-      customerName: "string",
-      totalAmount: 5,
-      amountPending: 0,
-      status: "pending",
-    },
-  ];
-
-  //  const unyique= Set(datas.map(item => item.status));
-  const unique = [
-    "draft",
-    "paid",
-    "overdue",
-    "partial",
-    "cancelled",
-    "issued",
-    "pending",
-  ];
+const statusList = [
+  StatusType.Draft,
+  StatusType.Issued,
+  StatusType.Pending,
+  StatusType.Paid,
+  StatusType.Partial,
+  StatusType.Overdue,
+  StatusType.Cancelled,
+];
+const StatusDashboard = (props: StatusProps) => {
   return (
-    <div>
-      <div className="container">
-        {unique.map((un) => (
-          <span>
-            <div>{datas.filter((e) => e.status === un).length}</div>
-            <div>{un}</div>
-          </span>
-        ))}
-      </div>
+    <div className="container">
+      {statusList.map((status) => (
+        <div className="statusContainer" key={status}>
+          <div className="statusCount">
+            {props.values.filter((value) => value.status === status).length}
+          </div>
+          <div>{status}</div>
+        </div>
+      ))}
       <style jsx>{`
         .container {
           display: flex;
           justify-content: space-around;
+        }
+        .statusContainer {
+          display: inline-block;
+          width: 120px;
           text-align: center;
           font-size: inherit;
+          font-weight: 900;
           letter-spacing: 1px;
           text-transform: uppercase;
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
             0 1px 2px rgba(0, 0, 0, 0.24);
-            margin: 2em;
+          margin: 2em;
           padding: 1em;
+        }
+        .statusCount {
+          font-size: 2rem;
         }
       `}</style>
     </div>
   );
-}
+};
 
 export default StatusDashboard;

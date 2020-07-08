@@ -1,4 +1,3 @@
-import React from "react";
 import CSSConstants from "../../src/constants/CSSConstants";
 import PageHeader from "../../src/components/PageHeader";
 import SortableTable from "../../src/components/SortableTable";
@@ -10,25 +9,26 @@ import Loader from "../../src/components/Loader";
 import useSWR from "swr";
 import { formatPrice } from "../../src/utils/misc";
 import TabSection from "../../src/components/TabSection";
+import StatusDashboard from "../../src/components/StatusDashboard";
 
 const CustomerInvoice = () => {
   const swr = useSWR("/invoice");
-  const invoice: InvoiceInterface[] = swr.data;
+  const invoiceList: InvoiceInterface[] = swr.data;
   const error = swr.error;
 
   if (error) {
     return <PageError statusCode={error.response?.status} />;
   }
-  if (!invoice) {
+  if (!invoiceList) {
     return <Loader />;
   }
-  const draft = invoice.filter((e) => e.status === StatusType.draft);
-  const issued = invoice.filter((e) => e.status === StatusType.issued);
-  const pending = invoice.filter((e) => e.status === StatusType.pending);
-  const paid = invoice.filter((e) => e.status === StatusType.paid);
-  const partial = invoice.filter((e) => e.status === StatusType.partial);
-  const overdue = invoice.filter((e) => e.status === StatusType.overdue);
-  const cancelled = invoice.filter((e) => e.status === StatusType.cancelled);
+  const draft = invoiceList.filter((e) => e.status === StatusType.Draft);
+  const issued = invoiceList.filter((e) => e.status === StatusType.Issued);
+  const pending = invoiceList.filter((e) => e.status === StatusType.Pending);
+  const paid = invoiceList.filter((e) => e.status === StatusType.Paid);
+  const partial = invoiceList.filter((e) => e.status === StatusType.Partial);
+  const overdue = invoiceList.filter((e) => e.status === StatusType.Overdue);
+  const cancelled = invoiceList.filter((e) => e.status === StatusType.Cancelled);
   const getTableHeaders = () => {
     return [
       {
@@ -72,7 +72,7 @@ const CustomerInvoice = () => {
         <td>{formatPrice(invoice.totalAmount)}</td>
         <td>{formatPrice(invoice.amountPending)}</td>
         <td>
-          <InvoiceStatus type={invoice.status}>{invoice.status}</InvoiceStatus>
+          <InvoiceStatus type={invoice.status} />
         </td>
         <style jsx>{`
           tr:hover {
@@ -84,107 +84,103 @@ const CustomerInvoice = () => {
   };
 
   return (
-    <div>
-      <div className="container">
-        <PageHeader>Invoice</PageHeader>
-        <div className="tab">
-          <TabSection
-            headingList={[
-              `All (${invoice.length})`,
-              `Draft (${draft.length})`,
-              `Issued (${issued.length})`,
-              `Pending (${pending.length})`,
-              `Paid (${paid.length})`,
-              `Partial (${partial.length})`,
-              `Overdue (${overdue.length})`,
-              `Cancelled (${cancelled.length})`,
-            ]}
-            headingWidth="170px"
-            contentList={[
-              <SortableTable
-                initialSortData={{
-                  index: 1,
-                  isAsc: false,
-                }}
-                headers={getTableHeaders()}
-                data={invoice}
-                emptyMsg="No Invoice yet"
-                body={renderTableBody}
-              />,
-              <SortableTable
-                initialSortData={{
-                  index: 1,
-                  isAsc: false,
-                }}
-                headers={getTableHeaders()}
-                data={draft}
-                emptyMsg="No Invoice yet"
-                body={renderTableBody}
-              />,
-              <SortableTable
-                initialSortData={{
-                  index: 1,
-                  isAsc: false,
-                }}
-                headers={getTableHeaders()}
-                data={issued}
-                emptyMsg="No Invoice yet"
-                body={renderTableBody}
-              />,
-              <SortableTable
-                initialSortData={{
-                  index: 1,
-                  isAsc: false,
-                }}
-                headers={getTableHeaders()}
-                data={pending}
-                emptyMsg="No Invoice yet"
-                body={renderTableBody}
-              />,
-              <SortableTable
-                initialSortData={{
-                  index: 1,
-                  isAsc: false,
-                }}
-                headers={getTableHeaders()}
-                data={paid}
-                emptyMsg="No Invoice yet"
-                body={renderTableBody}
-              />,
-              <SortableTable
-                initialSortData={{
-                  index: 1,
-                  isAsc: false,
-                }}
-                headers={getTableHeaders()}
-                data={partial}
-                emptyMsg="No Invoice yet"
-                body={renderTableBody}
-              />,
-              <SortableTable
-                initialSortData={{
-                  index: 1,
-                  isAsc: false,
-                }}
-                headers={getTableHeaders()}
-                data={overdue}
-                emptyMsg="No Invoice yet"
-                body={renderTableBody}
-              />,
-              <SortableTable
-                initialSortData={{
-                  index: 1,
-                  isAsc: false,
-                }}
-                headers={getTableHeaders()}
-                data={cancelled}
-                emptyMsg="No Invoice yet"
-                body={renderTableBody}
-              />,
-            ]}
-          />
-        </div>
-      </div>
+    <div className="container">
+      <PageHeader>Invoice</PageHeader>
+      <TabSection
+        headingList={[
+          `All (${invoiceList.length})`,
+          `Draft (${draft.length})`,
+          `Issued (${issued.length})`,
+          `Pending (${pending.length})`,
+          `Paid (${paid.length})`,
+          `Partial (${partial.length})`,
+          `Overdue (${overdue.length})`,
+          `Cancelled (${cancelled.length})`,
+        ]}
+        headingWidth="170px"
+        contentList={[
+          <SortableTable
+            initialSortData={{
+              index: 1,
+              isAsc: false,
+            }}
+            headers={getTableHeaders()}
+            data={invoiceList}
+            emptyMsg="No Invoice yet"
+            body={renderTableBody}
+          />,
+          <SortableTable
+            initialSortData={{
+              index: 1,
+              isAsc: false,
+            }}
+            headers={getTableHeaders()}
+            data={draft}
+            emptyMsg="No Invoice yet"
+            body={renderTableBody}
+          />,
+          <SortableTable
+            initialSortData={{
+              index: 1,
+              isAsc: false,
+            }}
+            headers={getTableHeaders()}
+            data={issued}
+            emptyMsg="No Invoice yet"
+            body={renderTableBody}
+          />,
+          <SortableTable
+            initialSortData={{
+              index: 1,
+              isAsc: false,
+            }}
+            headers={getTableHeaders()}
+            data={pending}
+            emptyMsg="No Invoice yet"
+            body={renderTableBody}
+          />,
+          <SortableTable
+            initialSortData={{
+              index: 1,
+              isAsc: false,
+            }}
+            headers={getTableHeaders()}
+            data={paid}
+            emptyMsg="No Invoice yet"
+            body={renderTableBody}
+          />,
+          <SortableTable
+            initialSortData={{
+              index: 1,
+              isAsc: false,
+            }}
+            headers={getTableHeaders()}
+            data={partial}
+            emptyMsg="No Invoice yet"
+            body={renderTableBody}
+          />,
+          <SortableTable
+            initialSortData={{
+              index: 1,
+              isAsc: false,
+            }}
+            headers={getTableHeaders()}
+            data={overdue}
+            emptyMsg="No Invoice yet"
+            body={renderTableBody}
+          />,
+          <SortableTable
+            initialSortData={{
+              index: 1,
+              isAsc: false,
+            }}
+            headers={getTableHeaders()}
+            data={cancelled}
+            emptyMsg="No Invoice yet"
+            body={renderTableBody}
+          />,
+        ]}
+      />
       <style jsx>{`
         .container {
           padding: 1em;
@@ -193,17 +189,6 @@ const CustomerInvoice = () => {
           background: ${CSSConstants.foregroundColor};
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
             0 1px 2px rgba(0, 0, 0, 0.24);
-        }
-        .tab {
-          margin-top: 5em;
-        }
-        @keyframes inn {
-          0% {
-            opacity: 0;
-          }
-          100% {
-            opacity: 1;
-          }
         }
       `}</style>
     </div>

@@ -5,15 +5,15 @@ export interface InvoiceInterface {
   customerName: string;
   totalAmount: number;
   amountPending: number;
-  status:StatusType ;
+  status: StatusType;
 }
 
 export enum StatusType {
-  draft = "Draft",
-  issued = "Issued",
-  pending = "Pending",
-  paid = "Paid",
-  partial = "Partial",
-  overdue = "Overdue",
-  cancelled = "Cancelled",
+  Draft = "Draft",
+  Issued = "Issued",
+  Pending = "Pending",
+  Paid = "Paid",
+  Partial = "Partial",
+  Overdue = "Overdue",
+  Cancelled = "Cancelled",
 }
