@@ -8,6 +8,7 @@ import UIActions from "../actions/ui";
 import FieldInput from "./FieldInput";
 import ValidationErrorMsg from "./ValidationErrorMsg";
 import FieldNumInput from "./FieldNumInput";
+import FieldPriceInput from "./FieldPriceInput";
 
 interface DispatchProps {
   showSkuModal: () => void;
@@ -121,10 +122,10 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
               />
             </td>
             <td>
-              <FieldNumInput name={`skus.${skuIndex}.price`} />
+              <FieldPriceInput name={`skus.${skuIndex}.price`} />
             </td>
             <td>
-              <FieldNumInput name={`skus.${skuIndex}.boughtPrice`} />
+              <FieldPriceInput name={`skus.${skuIndex}.boughtPrice`} />
             </td>
             <td>
               <FieldNumInput name={`skus.${skuIndex}.qty`} />

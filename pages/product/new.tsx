@@ -34,7 +34,7 @@ import PageHeader from "../../src/components/PageHeader";
 import { BusinessDataInterface } from "../../src/types/business";
 import EcosystemOption from "../../src/components/EcosystemOption";
 import WithAuth from "../../src/components/WithAuth";
-import FieldNumInput from "../../src/components/FieldNumInput";
+import FieldPriceInput from "../../src/components/FieldPriceInput";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -177,17 +177,17 @@ const AddProduct = (props: AddProductProps) => {
                   trigger="focus"
                   tooltip="This discount value will always be applied"
                 >
-                  <FieldNumInput name="specialDiscountValue" />
+                  <FieldPriceInput name="specialDiscountValue" />
                 </Tooltip>
                 <InputLabel label="Min Price" />
                 <Tooltip
                   trigger="focus"
                   tooltip="Minimum price after all discounts"
                 >
-                  <FieldNumInput name="minPrice" />
+                  <FieldPriceInput name="minPrice" />
                 </Tooltip>
                 <InputLabel label="Max Price" />
-                <FieldNumInput name="maxPrice" />
+                <FieldPriceInput name="maxPrice" />
                 <InputLabel label="Tax Group" />
                 <FieldSelect
                   name="taxGroup"
