@@ -59,6 +59,9 @@ export interface OrderItemInterface {
     images: string[];
     attributeValues: ProductAttributeValue[];
     externalId: string;
+    discountSplit: {
+      [key: string]: number;
+    };
   };
   totalDiscount: number;
   qty: number;
@@ -89,6 +92,8 @@ export interface OrderItemInterface {
     id: number;
     providerName: string;
     shipmentFee: number;
+    expectedDeliveryDate: string;
+    trackingCode: string;
   };
   createdDateTime: string;
 }
