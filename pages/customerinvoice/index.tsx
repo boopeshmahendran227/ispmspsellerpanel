@@ -9,6 +9,7 @@ import Loader from "../../src/components/Loader";
 import useSWR from "swr";
 import { formatPrice } from "../../src/utils/misc";
 import TabSection from "../../src/components/TabSection";
+import WithAuth from "../../src/components/WithAuth";
 
 const CustomerInvoice = () => {
   const swr = useSWR("/invoice");
@@ -162,4 +163,4 @@ const CustomerInvoice = () => {
   );
 };
 
-export default CustomerInvoice;
+export default WithAuth(CustomerInvoice);

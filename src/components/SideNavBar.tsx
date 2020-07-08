@@ -156,7 +156,7 @@ const SideNavBar = () => {
             font-size: 0.9rem;
           }
           a i {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             margin: 0.3em;
           }
           .navigation a.active {

@@ -8,6 +8,7 @@ import { formatPrice } from "../../src/utils/misc";
 import Button from "../../src/components/Button";
 import PageHeader from "../../src/components/PageHeader";
 import WithAuth from "../../src/components/WithAuth";
+import Link from "next/link";
 
 const getTableHeaders = () => {
   return [
@@ -108,7 +109,9 @@ const Coupons = () => {
     <div className="container">
       <div className="headerContainer">
         <PageHeader>Seller Coupons</PageHeader>
-        <Button>Create New Coupon</Button>
+        <Link href="/coupon/create">
+          <Button>Create New Coupon</Button>
+        </Link>
       </div>
       <SortableTable
         initialSortData={{
