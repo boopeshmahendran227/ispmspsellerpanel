@@ -55,7 +55,7 @@ function MyApp(props) {
   });
 
   // We don't need navbar for invoice page
-  if (["invoice"].some((str) => router.pathname.includes(str))) {
+  if (["/invoice"].some((str) => router.pathname.includes(str))) {
     return (
       <SWRConfig value={swrConfigData}>
         <Provider store={store}>

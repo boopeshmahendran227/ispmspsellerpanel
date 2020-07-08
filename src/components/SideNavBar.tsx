@@ -48,6 +48,14 @@ const SideNavBar = () => {
             </Link>
           </li>
           <li>
+            <Link activeClassName="active" href="/customerinvoice">
+              <a>
+                <i className="fas fa-file"></i>
+                <span>Invoice</span>
+              </a>
+            </Link>
+          </li>
+          <li>
             <Link activeClassName="active" href="/visit">
               <a>
                 <i className="fas fa-calendar-alt"></i>
@@ -117,21 +125,14 @@ const SideNavBar = () => {
         {`
           nav {
             position: absolute;
-            top: 0;
+            top: 60px;
             left: 0;
             width: 100%;
             height: 100%;
             background: ${CSSConstants.primaryColor};
             color: white;
             box-shadow: 0 3px 6px #00000029;
-            padding-top: 60px;
-          }
-          .logoContainer {
-            margin: 0.8em;
-            font-size: 1.5rem;
-          }
-          .logoContainer a {
-            padding: 0.8em 0;
+            animation: dragIn ease-in-out 0.5s;
           }
           .navigation {
             width: 100%;
@@ -149,7 +150,7 @@ const SideNavBar = () => {
             flex-direction: column;
             text-align: center;
             width: 100%;
-            padding: 1em 0.5em;
+            padding: 0.5em 0.5em;
             transition: all 0.3s;
             text-decoration: none;
             font-size: 0.9rem;
@@ -166,6 +167,14 @@ const SideNavBar = () => {
             background: ${Chroma(CSSConstants.primaryColor)
               .brighten(0.4)
               .css()};
+          }
+          @keyframes dragIn {
+            0% {
+              transform: translateX(-100px);
+            }
+            100% {
+              transform: translateX(0px);
+            }
           }
         `}
       </style>

@@ -84,6 +84,7 @@ const TopNavBar = (props: TopNavBarProps) => {
       <style jsx>{`
         .container {
           height: 60px;
+          animation: dragIn ease-in-out 0.5s;
         }
         .fixedContainer {
           padding: 0.9em 1.3em;
@@ -106,6 +107,9 @@ const TopNavBar = (props: TopNavBarProps) => {
         }
         .logoutContainer {
           margin: 0 0.5em;
+        }
+        .logoutContainer i {
+          margin: 0 0.2em;
         }
         .notificationLink {
           font-size: 1.3rem;
@@ -154,6 +158,14 @@ const TopNavBar = (props: TopNavBarProps) => {
           }
           100% {
             transform: rotate(0deg);
+          }
+        }
+        @keyframes dragIn {
+          0% {
+            transform: translateY(-100px);
+          }
+          100% {
+            transform: translateY(0px);
           }
         }
       `}</style>
