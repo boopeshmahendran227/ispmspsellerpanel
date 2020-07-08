@@ -21,6 +21,7 @@ const CustomerInvoice = () => {
   if (!invoiceList) {
     return <Loader />;
   }
+  
   const draft = invoiceList.filter((e) => e.status === StatusType.Draft);
   const issued = invoiceList.filter((e) => e.status === StatusType.Issued);
   const pending = invoiceList.filter((e) => e.status === StatusType.Pending);
@@ -28,6 +29,7 @@ const CustomerInvoice = () => {
   const partial = invoiceList.filter((e) => e.status === StatusType.Partial);
   const overdue = invoiceList.filter((e) => e.status === StatusType.Overdue);
   const cancelled = invoiceList.filter((e) => e.status === StatusType.Cancelled);
+
   const getTableHeaders = () => {
     return [
       {

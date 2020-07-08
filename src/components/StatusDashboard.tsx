@@ -3,6 +3,7 @@ import { InvoiceInterface, StatusType } from "../types/invoice";
 export interface StatusProps {
   values: InvoiceInterface[];
 }
+
 const statusList = [
   StatusType.Draft,
   StatusType.Issued,
@@ -12,6 +13,7 @@ const statusList = [
   StatusType.Overdue,
   StatusType.Cancelled,
 ];
+
 const StatusDashboard = (props: StatusProps) => {
   return (
     <div className="container">

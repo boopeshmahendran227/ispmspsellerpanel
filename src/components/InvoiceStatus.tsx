@@ -5,14 +5,15 @@ import { StatusType } from "../types/invoice";
 interface StatusProps {
   type: StatusType;
 }
-const getCurrentColor = (type: String) => {
+
+const getCurrentColor = (type: StatusType) => {
   switch (type) {
     case StatusType.Draft:
       return CSSConstants.disabledColor;
     case StatusType.Issued:
       return CSSConstants.lightPrimaryColor;
     case StatusType.Pending:
-      return CSSConstants.warningColor;
+      return Chroma(CSSConstants.warningColor).saturate(1).css();
     case StatusType.Paid:
       return CSSConstants.successColor;
     case StatusType.Partial:
@@ -22,22 +23,22 @@ const getCurrentColor = (type: String) => {
     case StatusType.Cancelled:
       return Chroma(CSSConstants.warningColor).darken(1).css();
   }
-  return "rgba(0,0,0,0)";
 };
+
 const InvoiceStatus = (props: StatusProps) => {
   const currentColor = getCurrentColor(props.type);
   return (
-    <div className="invoiceStatus">
+    <div>
       {props.type}
       <style jsx>{`
         div {
           padding: 0.5em 0.5em;
           margin: 0.2em;
           font-weight: 900;
-          background: ${currentColor};
+          background: ${Chroma(currentColor).alpha(0.3).css()};
           font-size: inherit;
           border: none;
-          color: rgb(255, 255, 255);
+          color: ${Chroma(currentColor).darken(0.5).css()};
           letter-spacing: 1.2px;
           text-transform: uppercase;
           border-radius: 25px;
