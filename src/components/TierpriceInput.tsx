@@ -53,7 +53,10 @@ const TierPriceInput = () => {
                       />
                     </td>
                     <td>
-                      <button onClick={() => handleDelete(arrayHelpers, index)}>
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(arrayHelpers, index)}
+                      >
                         <i className="fa fa-trash" aria-hidden="true"></i>
                       </button>
                     </td>

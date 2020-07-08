@@ -11,6 +11,8 @@ import { CategoryTreeInterface } from "../../src/types/categoryTree";
 import CouponActions from "../../src/actions/coupon";
 import { connect } from "react-redux";
 import WithAuth from "../../src/components/WithAuth";
+import SelectProductSkus from "../../src/components/SelectProductSkus";
+import { CouponInputInterface } from "../../src/types/coupon";
 
 interface DispatchProps {
   createCoupon: () => void;
@@ -38,7 +40,7 @@ const CreateCoupon = (props: CreateCouponProps) => {
 
   const categories = flattenCategoryTree(categoryTree);
 
-  const onSubmit = (values, { resetForm }) => {
+  const onSubmit = (values: CouponInputInterface, { resetForm }) => {
     props.createCoupon();
     resetForm();
   };
@@ -49,6 +51,7 @@ const CreateCoupon = (props: CreateCouponProps) => {
 
       <Formik
         initialValues={{
+          products: [],
           categories: [],
         }}
         validationSchema={couponSchema}
@@ -57,6 +60,7 @@ const CreateCoupon = (props: CreateCouponProps) => {
         {({ values, resetForm }) => (
           <div className="formContainer">
             <Form>
+              <SelectProductSkus />
               <div className="gridContainer">
                 <InputLabel label="Categories" />
                 <FieldMultiSelect

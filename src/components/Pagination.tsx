@@ -35,7 +35,9 @@ const Pagination = (props: PaginationProps) => {
     });
     return (
       <div key={i} className={classes}>
-        <button onClick={() => handleClick(i)}>{i}</button>
+        <button type="button" onClick={() => handleClick(i)}>
+          {i}
+        </button>
         <style jsx>{`
           .page {
             display: inline-block;
@@ -76,11 +78,11 @@ const Pagination = (props: PaginationProps) => {
 
   return (
     <div className="container">
-      <button className={prevButtonClasses} onClick={goToPrev}>
+      <button type="button" className={prevButtonClasses} onClick={goToPrev}>
         <i className="fas fa-chevron-left"></i> Previous
       </button>
       <div className="pageContainer">{pages}</div>
-      <button className={nextButtonClasses} onClick={goToNext}>
+      <button type="button" className={nextButtonClasses} onClick={goToNext}>
         Next <i className="fas fa-chevron-right"></i>
       </button>
       <style jsx>{`

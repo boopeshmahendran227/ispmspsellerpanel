@@ -1,103 +1,91 @@
 import Button from "./Button";
 import { FieldArray, useFormikContext, ErrorMessage } from "formik";
-import {
-  SpecificationInterface,
-  ProductInputInterface,
-} from "../types/product";
 import InputLabel from "./InputLabel";
 import CSSConstants from "../constants/CSSConstants";
 import FieldInput from "./FieldInput";
 import ValidationErrorMsg from "./ValidationErrorMsg";
+import {
+  CouponInputInterface,
+  CouponProductInputInterface,
+} from "../types/coupon";
+import FieldNumInput from "./FieldNumInput";
 
-const SpecificationInput = () => {
-  const values: ProductInputInterface = useFormikContext<
-    ProductInputInterface
-  >().values;
+const SelectProductSkus = () => {
+  const values: CouponInputInterface = useFormikContext<CouponInputInterface>()
+    .values;
 
-  const specification: SpecificationInterface = values.specification;
+  const products: CouponProductInputInterface[] = values.products;
 
-  const handleAddSpecGroup = (arrayHelpers) => {
+  const handleAddProduct = (arrayHelpers) => {
     arrayHelpers.push({
-      name: "",
-      items: [],
+      productId: 0,
+      skuIds: [],
     });
   };
 
-  const handleAddSpecItem = (arrayHelpers) => {
-    arrayHelpers.push({
-      key: "",
-      value: "",
-    });
+  const handleAddSku = (arrayHelpers) => {
+    arrayHelpers.push("");
   };
 
-  const handleDeleteSpecItem = (arrayHelpers, index: number) => {
+  const handleDeleteSku = (arrayHelpers, index: number) => {
     arrayHelpers.remove(index);
   };
 
-  const handleDeleteSpecItemGroup = (arrayHelpers, index: number) => {
+  const handleDeleteProduct = (arrayHelpers, index: number) => {
     arrayHelpers.remove(index);
   };
 
   return (
     <div className="container">
-      <header>Specification</header>
+      <header>Products</header>
       <FieldArray
-        name="specification.itemGroups"
+        name="products"
         render={(arrayHelpers) => (
           <div className="inputContainer">
-            {specification.itemGroups.length > 0 &&
-              specification.itemGroups.map((group, groupIndex) => (
-                <div className="specGroupContainer">
-                  <div className="specGroupInput">
-                    <InputLabel label="Group name" />
-                    <FieldInput
-                      name={`specification.itemGroups.${groupIndex}.name`}
+            {products.length > 0 &&
+              products.map((product, productIndex) => (
+                <div className="productContainer">
+                  <div className="productInput">
+                    <InputLabel label="Product Id" />
+                    <FieldNumInput
+                      name={`products.${productIndex}.productId`}
                     />
                     <button
                       type="button"
                       onClick={() =>
-                        handleDeleteSpecItemGroup(arrayHelpers, groupIndex)
+                        handleDeleteProduct(arrayHelpers, productIndex)
                       }
                     >
                       <i className="fa fa-trash" aria-hidden="true" />
                     </button>
                   </div>
                   <FieldArray
-                    name={`specification.itemGroups.${groupIndex}.items`}
+                    name={`products.${productIndex}.skuIds`}
                     render={(arrayHelpers) => (
                       <>
-                        {group.items.length > 0 && (
+                        {product.skuIds.length > 0 && (
                           <table>
                             <thead>
                               <tr>
                                 <th>S.no</th>
-                                <th>Key</th>
-                                <th>Value</th>
+                                <th>Sku Id</th>
                                 <th></th>
                               </tr>
                             </thead>
                             <tbody>
-                              {group.items.map((item, itemIndex) => (
+                              {product.skuIds.map((skuId, skuIndex) => (
                                 <tr>
-                                  <td>{itemIndex + 1}</td>
+                                  <td>{skuIndex + 1}</td>
                                   <td>
                                     <FieldInput
-                                      name={`specification.itemGroups.${groupIndex}.items.${itemIndex}.key`}
-                                    />
-                                  </td>
-                                  <td>
-                                    <FieldInput
-                                      name={`specification.itemGroups.${groupIndex}.items.${itemIndex}.value`}
+                                      name={`products.${productIndex}.skuIds.${skuIndex}`}
                                     />
                                   </td>
                                   <td>
                                     <button
                                       type="button"
                                       onClick={() =>
-                                        handleDeleteSpecItem(
-                                          arrayHelpers,
-                                          itemIndex
-                                        )
+                                        handleDeleteSku(arrayHelpers, skuIndex)
                                       }
                                     >
                                       <i
@@ -112,12 +100,10 @@ const SpecificationInput = () => {
                           </table>
                         )}
                         <div className="buttonContainer">
-                          <Button
-                            onClick={() => handleAddSpecItem(arrayHelpers)}
-                          >
-                            {group.items.length === 0
-                              ? "Add Specification Item"
-                              : "Add one more Specification Item"}
+                          <Button onClick={() => handleAddSku(arrayHelpers)}>
+                            {product.skuIds.length === 0
+                              ? "Add SKUs"
+                              : "Add one more SKU"}
                           </Button>
                         </div>
                       </>
@@ -125,24 +111,19 @@ const SpecificationInput = () => {
                   />
                   <ErrorMessage
                     component={ValidationErrorMsg}
-                    name={`specification.itemGroups.${groupIndex}.items`}
+                    name={`products.${productIndex}.skuIds`}
                   />
                 </div>
               ))}
             <div className="buttonContainer">
-              <Button onClick={() => handleAddSpecGroup(arrayHelpers)}>
-                {specification.itemGroups.length === 0
-                  ? "Add Specification"
-                  : "Add one more Specification Group"}
+              <Button onClick={() => handleAddProduct(arrayHelpers)}>
+                {products.length === 0 ? "Add Product" : "Add one more Product"}
               </Button>
             </div>
           </div>
         )}
       />
-      <ErrorMessage
-        component={ValidationErrorMsg}
-        name={`specification.itemGroups`}
-      />
+      <ErrorMessage component={ValidationErrorMsg} name={`products`} />
       <style jsx>{`
         .container {
           margin: 3em 0;
@@ -155,10 +136,10 @@ const SpecificationInput = () => {
           padding: 0.3em;
           margin-bottom: 1em;
         }
-        .specGroupContainer {
+        .productContainer {
           margin: 1em 5em;
         }
-        .specGroupInput {
+        .productInput {
           display: grid;
           grid-template-columns: 200px 200px 100px;
           align-items: center;
@@ -169,4 +150,4 @@ const SpecificationInput = () => {
   );
 };
 
-export default SpecificationInput;
+export default SelectProductSkus;
