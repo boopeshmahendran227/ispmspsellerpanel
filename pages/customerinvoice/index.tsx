@@ -18,17 +18,28 @@ const CustomerInvoice = () => {
   if (error) {
     return <PageError statusCode={error.response?.status} />;
   }
+
   if (!invoiceList) {
     return <Loader />;
   }
-  
-  const draft = invoiceList.filter((e) => e.status === StatusType.Draft);
-  const issued = invoiceList.filter((e) => e.status === StatusType.Issued);
-  const pending = invoiceList.filter((e) => e.status === StatusType.Pending);
-  const paid = invoiceList.filter((e) => e.status === StatusType.Paid);
-  const partial = invoiceList.filter((e) => e.status === StatusType.Partial);
-  const overdue = invoiceList.filter((e) => e.status === StatusType.Overdue);
-  const cancelled = invoiceList.filter((e) => e.status === StatusType.Cancelled);
+
+  const pendingInvoices = invoiceList.filter((invoice) =>
+    [
+      StatusType.Draft,
+      StatusType.Issued,
+      StatusType.Partial,
+      StatusType.Pending,
+      StatusType.Overdue,
+    ].includes(invoice.status)
+  );
+
+  const paidInvoices = invoiceList.filter(
+    (invoice) => invoice.status === StatusType.Paid
+  );
+
+  const cancelledInvoices = invoiceList.filter(
+    (invoice) => invoice.status === StatusType.Cancelled
+  );
 
   const getTableHeaders = () => {
     return [
@@ -44,7 +55,6 @@ const CustomerInvoice = () => {
         name: "Issued Date",
         valueFunc: (invoice: InvoiceInterface) => invoice.issueDate,
       },
-
       {
         name: "Total amount",
         valueFunc: (invoice: InvoiceInterface) => invoice.totalAmount,
@@ -59,6 +69,7 @@ const CustomerInvoice = () => {
       },
     ];
   };
+
   const renderTableBody = (invoices: InvoiceInterface[]) => {
     return invoices.map((invoice) => (
       <tr key={invoice.invoiceId}>
@@ -86,98 +97,53 @@ const CustomerInvoice = () => {
 
   return (
     <div className="container">
-      <PageHeader>Invoice</PageHeader>
+      <PageHeader>Invoices</PageHeader>
       <TabSection
         headingList={[
-          `All (${invoiceList.length})`,
-          `Draft (${draft.length})`,
-          `Issued (${issued.length})`,
-          `Pending (${pending.length})`,
-          `Paid (${paid.length})`,
-          `Partial (${partial.length})`,
-          `Overdue (${overdue.length})`,
-          `Cancelled (${cancelled.length})`,
+          `All Invoices (${invoiceList.length})`,
+          `Pending Invoices (${pendingInvoices.length})`,
+          `Paid Invoices (${paidInvoices.length})`,
+          `Cancelled Invoices (${cancelledInvoices.length})`,
         ]}
-        headingWidth="170px"
         contentList={[
           <SortableTable
             initialSortData={{
-              index: 1,
+              index: 2,
               isAsc: false,
             }}
             headers={getTableHeaders()}
             data={invoiceList}
-            emptyMsg="No Invoice yet"
+            emptyMsg="There are no invoices"
             body={renderTableBody}
           />,
           <SortableTable
             initialSortData={{
-              index: 1,
+              index: 2,
               isAsc: false,
             }}
             headers={getTableHeaders()}
-            data={draft}
-            emptyMsg="No Invoice yet"
+            data={pendingInvoices}
+            emptyMsg="There are no pending invoices"
             body={renderTableBody}
           />,
           <SortableTable
             initialSortData={{
-              index: 1,
+              index: 2,
               isAsc: false,
             }}
             headers={getTableHeaders()}
-            data={issued}
-            emptyMsg="No Invoice yet"
+            data={paidInvoices}
+            emptyMsg="There are no paid invoices"
             body={renderTableBody}
           />,
           <SortableTable
             initialSortData={{
-              index: 1,
+              index: 2,
               isAsc: false,
             }}
             headers={getTableHeaders()}
-            data={pending}
-            emptyMsg="No Invoice yet"
-            body={renderTableBody}
-          />,
-          <SortableTable
-            initialSortData={{
-              index: 1,
-              isAsc: false,
-            }}
-            headers={getTableHeaders()}
-            data={paid}
-            emptyMsg="No Invoice yet"
-            body={renderTableBody}
-          />,
-          <SortableTable
-            initialSortData={{
-              index: 1,
-              isAsc: false,
-            }}
-            headers={getTableHeaders()}
-            data={partial}
-            emptyMsg="No Invoice yet"
-            body={renderTableBody}
-          />,
-          <SortableTable
-            initialSortData={{
-              index: 1,
-              isAsc: false,
-            }}
-            headers={getTableHeaders()}
-            data={overdue}
-            emptyMsg="No Invoice yet"
-            body={renderTableBody}
-          />,
-          <SortableTable
-            initialSortData={{
-              index: 1,
-              isAsc: false,
-            }}
-            headers={getTableHeaders()}
-            data={cancelled}
-            emptyMsg="No Invoice yet"
+            data={cancelledInvoices}
+            emptyMsg="There are no cancelled invoices"
             body={renderTableBody}
           />,
         ]}

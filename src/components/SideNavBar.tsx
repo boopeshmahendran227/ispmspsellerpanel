@@ -50,7 +50,7 @@ const SideNavBar = () => {
           <li>
             <Link activeClassName="active" href="/customerinvoice">
               <a>
-                <i className="fas fa-file"></i>
+                <i className="fas fa-file-invoice"></i>
                 <span>Invoice</span>
               </a>
             </Link>
@@ -150,7 +150,7 @@ const SideNavBar = () => {
             flex-direction: column;
             text-align: center;
             width: 100%;
-            padding: 0.5em 0.5em;
+            padding: 0.9em 0.5em;
             transition: all 0.3s;
             text-decoration: none;
             font-size: 0.9rem;

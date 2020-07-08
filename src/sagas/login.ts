@@ -4,7 +4,6 @@ import {
   LOGOUT_FAILURE,
 } from "../constants/ActionTypes";
 import { takeLatest, all, call, put } from "redux-saga/effects";
-import _ from "lodash";
 import api from "../api";
 import { destroyCookie } from "nookies";
 import { redirectToLogin } from "../utils/login";
@@ -12,8 +11,10 @@ import { redirectToLogin } from "../utils/login";
 function* logout() {
   try {
     const data = yield call(api, "/auth/logout");
-    yield call(destroyCookie, {}, "userToken");
-    yield call(destroyCookie, {}, "userRefreshToken");
+    yield call(destroyCookie, null, "userToken");
+    yield call(destroyCookie, null, "userRefreshToken");
+    yield call(destroyCookie, null, "isp-jwt");
+    yield call(destroyCookie, null, "isp-refresh");
     yield put({
       type: LOGOUT_SUCCESS,
       data: data,
