@@ -75,7 +75,7 @@ const CreateCoupon = (props: CreateCouponProps) => {
           if (values.type === CouponType.Percentage) {
             errors.discountPercentage = "Discount Percentage is required";
           }
-          if (values.products.length === 0 || values.categories.length === 0) {
+          if (values.products.length === 0 && values.categories.length === 0) {
             errors.products = "Products/Categories is required";
             errors.categories = "Products/Categories is required";
           }
