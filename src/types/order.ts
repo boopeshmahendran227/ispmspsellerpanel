@@ -58,6 +58,7 @@ export interface OrderItemInterface {
     productName: string;
     images: string[];
     attributeValues: ProductAttributeValue[];
+    externalId: string;
   };
   totalDiscount: number;
   qty: number;
