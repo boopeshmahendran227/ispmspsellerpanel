@@ -9,7 +9,6 @@ import Loader from "../../src/components/Loader";
 import useSWR from "swr";
 import { formatPrice } from "../../src/utils/misc";
 import TabSection from "../../src/components/TabSection";
-import StatusDashboard from "../../src/components/StatusDashboard";
 
 const CustomerInvoice = () => {
   const swr = useSWR("/invoice");
