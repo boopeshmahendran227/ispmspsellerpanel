@@ -16,7 +16,7 @@ import {
   SET_ECOSYSTEM_FILTER_FOR_ORDERS,
 } from "../constants/ActionTypes";
 import { ProductAttributeValue } from "./product";
-import { OrderDiscountInterface } from "../utils/discount";
+import { OrderDiscountInterface } from "../types/discount";
 
 export enum OrderStatus {
   Created = "Created",
@@ -57,33 +57,14 @@ export interface OrderItemInterface {
     productName: string;
     images: string[];
     attributeValues: ProductAttributeValue[];
-    discountSplit: {
-      [key: string]: number;
-    };
-    externalId: string;
   };
   totalDiscount: number;
   qty: number;
   tax: number;
   bundleId: number;
   shipmentId: number;
-  orderItemStatusHistories: [
-    {
-      id: number;
-      orderStatus: OrderStatus;
-      createdDateTime: string;
-    }
-  ];
+  orderItemStatusHistories: OrderStatusHistoryItem[];
   orderItemStatus: OrderStatus;
-  createdDateTime: string;
-  order: OrderInterface;
-  shipment: {
-    id: number;
-    providerName: string;
-    shipmentFee: number;
-    trackingCode: string;
-    expectedDeliveryDate: string;
-  };
   taxDetails: {
     taxGroupId: number;
     taxGroupName: string;
@@ -98,6 +79,21 @@ export interface OrderItemInterface {
       }
     ];
   };
+  metadata: {
+    deliveryCode?: string;
+    shipmentFeePerSeller: number;
+  };
+  shipment: {
+    id: number;
+    providerName: string;
+    shipmentFee: number;
+  };
+}
+
+export interface OrderStatusHistoryItem {
+  id: number;
+  orderStatus: OrderStatus;
+  createdDateTime: string;
 }
 
 export interface AddressInterface {

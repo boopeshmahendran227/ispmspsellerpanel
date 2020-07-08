@@ -1,3 +1,5 @@
+import { OrderDetailInterface } from "./order";
+
 export interface InvoiceInterface {
   invoiceId: number;
   issueDate: string;
@@ -6,6 +8,22 @@ export interface InvoiceInterface {
   totalAmount: number;
   amountPending: number;
   status: InvoiceStatus;
+}
+
+export interface InvoiceDetailInterface {
+  invoiceId: number;
+  invoiceNumber: string;
+  order: OrderDetailInterface;
+  businessDetails: {
+    name: string;
+    gstin: string;
+    cin: string;
+    tan: string;
+    pan: string;
+    phone: string;
+    mobile: string;
+    email: string;
+  };
 }
 
 export enum InvoiceStatus {

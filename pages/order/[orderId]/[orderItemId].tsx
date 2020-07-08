@@ -10,7 +10,6 @@ import { connect } from "react-redux";
 import OrderActions from "../../../src/actions/order";
 import { RootState } from "../../../src/reducers";
 import { getCurrentlyProcessingOrderItemIds } from "../../../src/selectors/order";
-import { transformOrderItem } from "../../../src/transformers/orderItem";
 import { OrderDetailInterface } from "../../../src/types/order";
 import { getOrderStatusText } from "../../../src/utils/order";
 import PageError from "../../../src/components/PageError";
@@ -50,11 +49,8 @@ const Order = (props: OrderProps) => {
     return <Loader />;
   }
 
-  const orderItem = transformOrderItem(
-    order,
-    order.items.find(
-      (orderItem) => orderItem.id === Number(router.query.orderItemId)
-    )
+  const orderItem = order.items.find(
+    (orderItem) => orderItem.id === Number(router.query.orderItemId)
   );
 
   return (
@@ -79,10 +75,7 @@ const Order = (props: OrderProps) => {
           {getOrderStatusText(orderItem.orderItemStatus)}
         </span>
       </header>
-      <Link
-        href="/invoice/[orderId]/[orderItemId]"
-        as={`/invoice/${orderItem.order.id}/${orderItem.id}`}
-      >
+      <Link href="/invoice/[orderItemId]" as={`/invoice/${orderItem.id}`}>
         <a className="invoiceLink">
           <i className="fas fa-file-invoice"></i> View Invoice
         </a>
