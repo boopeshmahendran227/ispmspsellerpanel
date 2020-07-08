@@ -1,7 +1,6 @@
 import { Formik, Form } from "formik";
 import Button, { ButtonType } from "../../src/components/Button";
 import InputLabel from "../../src/components/InputLabel";
-import * as Yup from "yup";
 import FieldMultiSelect from "../../src/components/FieldMultiSelect";
 import useSWR from "swr";
 import { flattenCategoryTree } from "../../src/utils/categoryTree";

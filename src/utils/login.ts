@@ -16,7 +16,7 @@ const isLoggedIn = () => {
       return true;
     })
     .catch((err) => {
-      if (err.response.status === 401) {
+      if (err.response?.status === 401) {
         return false;
       }
       return false;
