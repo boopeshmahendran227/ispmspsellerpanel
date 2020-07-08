@@ -5,10 +5,10 @@ export interface InvoiceInterface {
   customerName: string;
   totalAmount: number;
   amountPending: number;
-  status: StatusType;
+  status: InvoiceStatus;
 }
 
-export enum StatusType {
+export enum InvoiceStatus {
   Draft = "Draft",
   Issued = "Issued",
   Pending = "Pending",

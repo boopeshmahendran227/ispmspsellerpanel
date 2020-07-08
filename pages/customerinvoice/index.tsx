@@ -1,9 +1,9 @@
 import CSSConstants from "../../src/constants/CSSConstants";
 import PageHeader from "../../src/components/PageHeader";
 import SortableTable from "../../src/components/SortableTable";
-import { InvoiceInterface, StatusType } from "../../src/types/invoice";
+import { InvoiceInterface, InvoiceStatus } from "../../src/types/invoice";
 import moment from "moment";
-import InvoiceStatus from "../../src/components/InvoiceStatus";
+import InvoiceStatusTag from "../../src/components/InvoiceStatusTag";
 import PageError from "../../src/components/PageError";
 import Loader from "../../src/components/Loader";
 import useSWR from "swr";
@@ -25,20 +25,20 @@ const CustomerInvoice = () => {
 
   const pendingInvoices = invoiceList.filter((invoice) =>
     [
-      StatusType.Draft,
-      StatusType.Issued,
-      StatusType.Partial,
-      StatusType.Pending,
-      StatusType.Overdue,
+      InvoiceStatus.Draft,
+      InvoiceStatus.Issued,
+      InvoiceStatus.Partial,
+      InvoiceStatus.Pending,
+      InvoiceStatus.Overdue,
     ].includes(invoice.status)
   );
 
   const paidInvoices = invoiceList.filter(
-    (invoice) => invoice.status === StatusType.Paid
+    (invoice) => invoice.status === InvoiceStatus.Paid
   );
 
   const cancelledInvoices = invoiceList.filter(
-    (invoice) => invoice.status === StatusType.Cancelled
+    (invoice) => invoice.status === InvoiceStatus.Cancelled
   );
 
   const getTableHeaders = () => {
@@ -84,7 +84,7 @@ const CustomerInvoice = () => {
         <td>{formatPrice(invoice.totalAmount)}</td>
         <td>{formatPrice(invoice.amountPending)}</td>
         <td>
-          <InvoiceStatus type={invoice.status} />
+          <InvoiceStatusTag status={invoice.status} />
         </td>
         <style jsx>{`
           tr:hover {

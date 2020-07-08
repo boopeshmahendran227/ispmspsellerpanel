@@ -1,17 +1,17 @@
-import { InvoiceInterface, StatusType } from "../types/invoice";
+import { InvoiceInterface, InvoiceStatus } from "../types/invoice";
 
 export interface StatusProps {
   values: InvoiceInterface[];
 }
 
 const statusList = [
-  StatusType.Draft,
-  StatusType.Issued,
-  StatusType.Pending,
-  StatusType.Paid,
-  StatusType.Partial,
-  StatusType.Overdue,
-  StatusType.Cancelled,
+  InvoiceStatus.Draft,
+  InvoiceStatus.Issued,
+  InvoiceStatus.Pending,
+  InvoiceStatus.Paid,
+  InvoiceStatus.Partial,
+  InvoiceStatus.Overdue,
+  InvoiceStatus.Cancelled,
 ];
 
 const StatusDashboard = (props: StatusProps) => {

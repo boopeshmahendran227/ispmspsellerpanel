@@ -51,7 +51,7 @@ const SideNavBar = () => {
             <Link activeClassName="active" href="/customerinvoice">
               <a>
                 <i className="fas fa-file-invoice"></i>
-                <span>Invoice</span>
+                <span>Invoices</span>
               </a>
             </Link>
           </li>
