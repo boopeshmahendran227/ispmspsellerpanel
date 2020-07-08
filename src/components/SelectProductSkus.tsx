@@ -127,14 +127,12 @@ const SelectProductSkus = () => {
       <style jsx>{`
         .container {
           margin: 3em 0;
-          font-size: 1.1rem;
         }
         header {
           font-weight: bold;
-          font-size: 1.3rem;
-          border-bottom: 1px solid ${CSSConstants.borderColor};
+          font-size: 1.2rem;
           padding: 0.3em;
-          margin-bottom: 1em;
+          margin-bottom: 0.7em;
         }
         .productContainer {
           margin: 1em 5em;

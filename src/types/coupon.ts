@@ -3,6 +3,7 @@ import { SelectOptionInterface } from "./product";
 
 interface CreateCouponAction {
   type: typeof CREATE_COUPON_REQUEST;
+  couponData: CouponRequestInterface;
 }
 
 export type CouponActionType = CreateCouponAction;
@@ -23,7 +24,17 @@ interface CouponProduct {
   skuId: string;
 }
 
+export interface CouponRequestInterface {
+  discountValue?: number;
+  discountPercentage?: number;
+  products?: CouponProduct[];
+  categoryIds?: number[];
+}
+
 export interface CouponInputInterface {
+  type: CouponType;
+  discountValue: number;
+  discountPercentage: number;
   products: CouponProductInputInterface[];
   categories: SelectOptionInterface[];
 }
@@ -31,4 +42,9 @@ export interface CouponInputInterface {
 export interface CouponProductInputInterface {
   productId: number;
   skuIds: string[];
+}
+
+export enum CouponType {
+  Percentage = "Percentage",
+  FixedAmount = "FixedAmount",
 }

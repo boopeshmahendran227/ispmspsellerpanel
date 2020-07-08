@@ -2,19 +2,13 @@ import { Field, ErrorMessage, useFormikContext } from "formik";
 import classNames from "classnames";
 import ValidationErrorMsg from "../components/ValidationErrorMsg";
 import CSSConstants from "../constants/CSSConstants";
-import { useState } from "react";
 
-interface FieldPriceInputProps {
+interface FieldPercentageInputProps {
   name: string;
 }
 
-const FieldPriceInput = (props: FieldPriceInputProps) => {
+const FieldPercentageInput = (props: FieldPercentageInputProps) => {
   const { setFieldValue } = useFormikContext();
-  const [isFocused, setIsFocused] = useState(false);
-
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
 
   const handleBlur = (e, fieldName) => {
     // Remove non numeric characters
@@ -22,7 +16,6 @@ const FieldPriceInput = (props: FieldPriceInputProps) => {
     const numValue = Number(value);
 
     setFieldValue(fieldName, numValue);
-    setIsFocused(false);
   };
 
   return (
@@ -34,14 +27,12 @@ const FieldPriceInput = (props: FieldPriceInputProps) => {
             error: Boolean(form.touched[props.name] && form.errors[props.name]),
           })}
         >
-          <span className="prefix">₹ </span>
           <input
             type="text"
             {...field}
-            value={isFocused ? field.value : field.value?.toLocaleString()}
             onBlur={(e) => handleBlur(e, field.name)}
-            onFocus={handleFocus}
           />
+          <span className="suffix"> %</span>
           <div className="errorContainer">
             <ErrorMessage component={ValidationErrorMsg} name={props.name} />
           </div>
@@ -57,11 +48,6 @@ const FieldPriceInput = (props: FieldPriceInputProps) => {
             .container:focus-within {
               border: 1px solid ${CSSConstants.primaryColor};
             }
-            .prefix {
-              min-width: 20px;
-              text-align: center;
-              color: ${CSSConstants.secondaryTextColor};
-            }
             input {
               padding: 0.6em;
               width: 100%;
@@ -71,6 +57,11 @@ const FieldPriceInput = (props: FieldPriceInputProps) => {
             input:focus {
               border: none;
             }
+            .suffix {
+              min-width: 20px;
+              text-align: center;
+              color: ${CSSConstants.secondaryTextColor};
+            }
           `}</style>
         </label>
       )}
@@ -78,4 +69,4 @@ const FieldPriceInput = (props: FieldPriceInputProps) => {
   );
 };
 
-export default FieldPriceInput;
+export default FieldPercentageInput;
