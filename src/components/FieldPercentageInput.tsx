@@ -27,17 +27,19 @@ const FieldPercentageInput = (props: FieldPercentageInputProps) => {
             error: Boolean(form.touched[props.name] && form.errors[props.name]),
           })}
         >
-          <input
-            type="text"
-            {...field}
-            onBlur={(e) => handleBlur(e, field.name)}
-          />
-          <span className="suffix"> %</span>
+          <div className="inputContainer">
+            <input
+              type="text"
+              {...field}
+              onBlur={(e) => handleBlur(e, field.name)}
+            />
+            <span className="suffix"> %</span>
+          </div>
           <div className="errorContainer">
             <ErrorMessage component={ValidationErrorMsg} name={props.name} />
           </div>
           <style jsx>{`
-            .container {
+            .inputContainer {
               margin: 0.3em 0;
               width: 100%;
               font-size: 1.1rem;
@@ -45,7 +47,7 @@ const FieldPercentageInput = (props: FieldPercentageInputProps) => {
               display: inline-flex;
               align-items: center;
             }
-            .container:focus-within {
+            .inputContainer:focus-within {
               border: 1px solid ${CSSConstants.primaryColor};
             }
             input {

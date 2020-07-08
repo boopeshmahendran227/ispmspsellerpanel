@@ -27,10 +27,6 @@ interface DispatchProps {
 
 type CreateCouponProps = DispatchProps;
 
-export const couponSchema = Yup.object().shape({
-  categories: Yup.array().of(Yup.object()),
-});
-
 const CreateCoupon = (props: CreateCouponProps) => {
   const categorySWR = useSWR("/category/tree");
   const categoryTree: CategoryTreeInterface = categorySWR.data;
@@ -71,7 +67,20 @@ const CreateCoupon = (props: CreateCouponProps) => {
           products: [],
           categories: [],
         }}
-        validationSchema={couponSchema}
+        validate={(values) => {
+          const errors: any = {};
+          if (values.type === CouponType.FixedAmount) {
+            errors.discountValue = "Discount Value is required";
+          }
+          if (values.type === CouponType.Percentage) {
+            errors.discountPercentage = "Discount Percentage is required";
+          }
+          if (values.products.length === 0 || values.categories.length === 0) {
+            errors.products = "Products/Categories is required";
+            errors.categories = "Products/Categories is required";
+          }
+          return errors;
+        }}
         onSubmit={onSubmit}
       >
         {({ setFieldValue, values, resetForm }) => (

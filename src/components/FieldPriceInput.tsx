@@ -34,19 +34,21 @@ const FieldPriceInput = (props: FieldPriceInputProps) => {
             error: Boolean(form.touched[props.name] && form.errors[props.name]),
           })}
         >
-          <span className="prefix">₹ </span>
-          <input
-            type="text"
-            {...field}
-            value={isFocused ? field.value : field.value?.toLocaleString()}
-            onBlur={(e) => handleBlur(e, field.name)}
-            onFocus={handleFocus}
-          />
+          <div className="inputContainer">
+            <span className="prefix">₹ </span>
+            <input
+              type="text"
+              {...field}
+              value={isFocused ? field.value : field.value?.toLocaleString()}
+              onBlur={(e) => handleBlur(e, field.name)}
+              onFocus={handleFocus}
+            />
+          </div>
           <div className="errorContainer">
             <ErrorMessage component={ValidationErrorMsg} name={props.name} />
           </div>
           <style jsx>{`
-            .container {
+            .inputContainer {
               margin: 0.3em 0;
               width: 100%;
               font-size: 1.1rem;
@@ -54,7 +56,7 @@ const FieldPriceInput = (props: FieldPriceInputProps) => {
               display: inline-flex;
               align-items: center;
             }
-            .container:focus-within {
+            .inputContainer:focus-within {
               border: 1px solid ${CSSConstants.primaryColor};
             }
             .prefix {
