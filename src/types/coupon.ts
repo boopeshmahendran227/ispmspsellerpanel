@@ -1,7 +1,7 @@
 import { CREATE_COUPON_REQUEST } from "../constants/ActionTypes";
 import { SelectOptionInterface } from "./product";
 
-interface CreateCouponAction {
+export interface CreateCouponAction {
   type: typeof CREATE_COUPON_REQUEST;
   couponData: CouponRequestInterface;
 }
