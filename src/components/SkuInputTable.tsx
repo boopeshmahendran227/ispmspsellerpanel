@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import UIActions from "../actions/ui";
 import FieldInput from "./FieldInput";
 import ValidationErrorMsg from "./ValidationErrorMsg";
+import FieldNumInput from "./FieldNumInput";
 
 interface DispatchProps {
   showSkuModal: () => void;
@@ -120,13 +121,13 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
               />
             </td>
             <td>
-              <FieldInput name={`skus.${skuIndex}.price`} />
+              <FieldNumInput name={`skus.${skuIndex}.price`} />
             </td>
             <td>
-              <FieldInput name={`skus.${skuIndex}.boughtPrice`} />
+              <FieldNumInput name={`skus.${skuIndex}.boughtPrice`} />
             </td>
             <td>
-              <FieldInput name={`skus.${skuIndex}.qty`} />
+              <FieldNumInput name={`skus.${skuIndex}.qty`} />
             </td>
             <td>
               <FieldInput name={`skus.${skuIndex}.length`} />

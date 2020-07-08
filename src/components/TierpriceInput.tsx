@@ -2,7 +2,7 @@ import Button from "./Button";
 import { FieldArray, useFormikContext } from "formik";
 import { TierPriceInterface, ProductInputInterface } from "../types/product";
 import CSSConstants from "../constants/CSSConstants";
-import FieldInput from "../components/FieldInput";
+import FieldNumInput from "./FieldNumInput";
 
 const TierPriceInput = () => {
   const values: ProductInputInterface = useFormikContext<
@@ -45,10 +45,10 @@ const TierPriceInput = () => {
                   <tr>
                     <td>{index + 1}</td>
                     <td>
-                      <FieldInput name={`tierPrices.${index}.minQty`} />
+                      <FieldNumInput name={`tierPrices.${index}.minQty`} />
                     </td>
                     <td>
-                      <FieldInput
+                      <FieldNumInput
                         name={`tierPrices.${index}.discountPercentage`}
                       />
                     </td>
