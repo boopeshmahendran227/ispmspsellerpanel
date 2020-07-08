@@ -5,7 +5,6 @@ import { RootState } from "../reducers";
 import { Formik, Form } from "formik";
 import UIActions from "../actions/ui";
 import CreditActions from "../actions/credit";
-import * as Yup from "yup";
 import InputLabel from "./InputLabel";
 import FieldPriceInput from "./FieldPriceInput";
 import { InvoiceInterface } from "../types/invoice";
@@ -23,10 +22,6 @@ interface DispatchProps {
 }
 
 type UpdateCreditsModalProps = StateProps & DispatchProps;
-
-const validationSchema = Yup.object().shape({
-  creditsPaid: Yup.number(),
-});
 
 const UpdateCreditsModal = (props: UpdateCreditsModalProps) => {
   const { currentInvoice } = props;
@@ -59,7 +54,16 @@ const UpdateCreditsModal = (props: UpdateCreditsModalProps) => {
             creditsPaid: 0,
           }}
           onSubmit={onSubmit}
-          validationSchema={validationSchema}
+          validate={(values) => {
+            const errors: any = {};
+            const { creditsPaid } = values;
+
+            if (creditsPaid > currentInvoice.amountPending) {
+              errors.creditsPaid =
+                "Paid Credits should be less than or equal to pending amount";
+            }
+            return errors;
+          }}
         >
           {() => (
             <Form>
