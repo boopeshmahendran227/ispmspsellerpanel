@@ -31,6 +31,9 @@ import {
   CREATE_COUPON_REQUEST,
   CREATE_COUPON_SUCCESS,
   CREATE_COUPON_FAILURE,
+  UPDATE_CREDITS_REQUEST,
+  UPDATE_CREDITS_SUCCESS,
+  UPDATE_CREDITS_FAILURE,
 } from "../constants/ActionTypes";
 
 const openActionItems = [
@@ -44,6 +47,7 @@ const openActionItems = [
   UPDATE_SHIPPING_INFORMATION_REQUEST,
   LOGOUT_REQUEST,
   CREATE_COUPON_REQUEST,
+  UPDATE_CREDITS_REQUEST,
 ];
 
 const closeActions = [
@@ -67,6 +71,8 @@ const closeActions = [
   LOGOUT_FAILURE,
   CREATE_COUPON_SUCCESS,
   CREATE_COUPON_FAILURE,
+  UPDATE_CREDITS_SUCCESS,
+  UPDATE_CREDITS_FAILURE,
 ];
 
 function* watchLoadingScreenShow() {

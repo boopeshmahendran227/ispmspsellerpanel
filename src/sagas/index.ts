@@ -13,6 +13,7 @@ import SearchSaga from "./search";
 import DraftSaga from "./draft";
 import LoginSaga from "./login";
 import CouponSaga from "./coupon";
+import CreditSaga from "./credit";
 import { all, fork, spawn } from "redux-saga/effects";
 
 export default function* rootSaga() {
@@ -34,5 +35,6 @@ export default function* rootSaga() {
     fork(UISaga),
     fork(LoginSaga),
     fork(CouponSaga),
+    fork(CreditSaga),
   ]);
 }

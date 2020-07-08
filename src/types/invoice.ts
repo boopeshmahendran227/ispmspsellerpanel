@@ -1,4 +1,12 @@
 import { OrderDetailInterface } from "./order";
+import { SET_CURRENT_INVOICE } from "../constants/ActionTypes";
+
+interface SetCurrentInvoiceAction {
+  type: typeof SET_CURRENT_INVOICE;
+  invoice: InvoiceInterface;
+}
+
+export type InvoiceActionType = SetCurrentInvoiceAction;
 
 export interface InvoiceInterface {
   invoiceId: number;

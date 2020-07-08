@@ -37,6 +37,11 @@ const getDeliveryCodeModalOpen = createSelector(
   (ui): boolean => ui.deliveryCodeModalOpen
 );
 
+const getUpdateCreditsModalOpen = createSelector(
+  (state: RootState) => state.ui,
+  (ui): boolean => ui.updateCreditsModalOpen
+);
+
 export {
   getSureModalData,
   getLoadingScreenOpen,
@@ -45,4 +50,5 @@ export {
   getAttributeModalOpen,
   getSkuModalOpen,
   getDeliveryCodeModalOpen,
+  getUpdateCreditsModalOpen,
 };

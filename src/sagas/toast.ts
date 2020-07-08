@@ -13,6 +13,8 @@ import {
   ADD_PRODUCT_FAILURE,
   CREATE_COUPON_SUCCESS,
   CREATE_COUPON_FAILURE,
+  UPDATE_CREDITS_REQUEST,
+  UPDATE_CREDITS_FAILURE,
 } from "../constants/ActionTypes";
 import { put, take } from "redux-saga/effects";
 import ToastActions from "../actions/toast";
@@ -75,6 +77,14 @@ export const toasts = {
   [CREATE_COUPON_FAILURE]: {
     type: ToastType.error,
     msg: "Coupon Creation Failed",
+  },
+  [UPDATE_CREDITS_REQUEST]: {
+    type: ToastType.success,
+    msg: "Credits Updated Successfully",
+  },
+  [UPDATE_CREDITS_FAILURE]: {
+    type: ToastType.error,
+    msg: "Credits Updation Failed",
   },
 };
 

@@ -19,6 +19,8 @@ import {
   HIDE_DELIVERY_CODE_MODAL,
   SHOW_DELIVERY_CODE_MODAL,
   DELIVERY_CODE_MODAL_CANCEL_CLICKED,
+  SHOW_UPDATE_CREDITS_MODAL,
+  HIDE_UPDATE_CREDITS_MODAL,
 } from "../constants/ActionTypes";
 import { UIActionType } from "../types/ui";
 
@@ -153,6 +155,18 @@ const hideDeliveryCodeModal = (): UIActionType => {
   };
 };
 
+const showUpdateCreditsModal = (): UIActionType => {
+  return {
+    type: SHOW_UPDATE_CREDITS_MODAL,
+  };
+};
+
+const hideUpdateCreditsModal = (): UIActionType => {
+  return {
+    type: HIDE_UPDATE_CREDITS_MODAL,
+  };
+};
+
 export default {
   showSureModal,
   hideSureModal,
@@ -174,4 +188,6 @@ export default {
   hideAttributeModal,
   showSkuModal,
   hideSkuModal,
+  showUpdateCreditsModal,
+  hideUpdateCreditsModal,
 };

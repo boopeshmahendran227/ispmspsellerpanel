@@ -10,8 +10,18 @@ import useSWR from "swr";
 import { formatPrice } from "../../src/utils/misc";
 import TabSection from "../../src/components/TabSection";
 import WithAuth from "../../src/components/WithAuth";
+import Button, { ButtonType } from "../../src/components/Button";
+import UpdateCreditsModal from "../../src/components/UpdateCreditsModal";
+import { connect } from "react-redux";
+import CreditActions from "../../src/actions/credit";
 
-const CustomerInvoice = () => {
+interface DispatchProps {
+  updateCredits: (invoice: InvoiceInterface) => void;
+}
+
+type CustomerInvoiceProps = DispatchProps;
+
+const CustomerInvoice = (props: CustomerInvoiceProps) => {
   const swr = useSWR("/invoice");
   const invoiceList: InvoiceInterface[] = swr.data;
   const error = swr.error;
@@ -25,13 +35,7 @@ const CustomerInvoice = () => {
   }
 
   const pendingInvoices = invoiceList.filter((invoice) =>
-    [
-      InvoiceStatus.Draft,
-      InvoiceStatus.Issued,
-      InvoiceStatus.Partial,
-      InvoiceStatus.Pending,
-      InvoiceStatus.Overdue,
-    ].includes(invoice.status)
+    [InvoiceStatus.Partial, InvoiceStatus.Pending].includes(invoice.status)
   );
 
   const paidInvoices = invoiceList.filter(
@@ -68,6 +72,10 @@ const CustomerInvoice = () => {
         name: "Status",
         valueFunc: (invoice: InvoiceInterface) => invoice.status,
       },
+      {
+        name: "Action",
+        valueFunc: (invoice: InvoiceInterface) => null,
+      },
     ];
   };
 
@@ -87,6 +95,18 @@ const CustomerInvoice = () => {
         <td>
           <InvoiceStatusTag status={invoice.status} />
         </td>
+        <td>
+          {[InvoiceStatus.Pending, InvoiceStatus.Partial].includes(
+            invoice.status
+          ) && (
+            <Button
+              type={ButtonType.success}
+              onClick={() => props.updateCredits(invoice)}
+            >
+              Update Credits
+            </Button>
+          )}
+        </td>
         <style jsx>{`
           tr:hover {
             cursor: pointer;
@@ -98,6 +118,7 @@ const CustomerInvoice = () => {
 
   return (
     <div className="container">
+      <UpdateCreditsModal />
       <PageHeader>Invoices</PageHeader>
       <TabSection
         headingList={[
@@ -163,4 +184,10 @@ const CustomerInvoice = () => {
   );
 };
 
-export default WithAuth(CustomerInvoice);
+const mapDispatchToProps: DispatchProps = {
+  updateCredits: CreditActions.updateCredits,
+};
+
+export default WithAuth(
+  connect<null, DispatchProps>(null, mapDispatchToProps)(CustomerInvoice)
+);

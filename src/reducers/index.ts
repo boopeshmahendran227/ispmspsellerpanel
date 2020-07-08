@@ -8,6 +8,7 @@ import product from "./product";
 import search from "./search";
 import draft from "./draft";
 import login from "./login";
+import invoice from "./invoice";
 import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   search,
   draft,
   login,
+  invoice,
 });
 export default rootReducer;
 

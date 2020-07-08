@@ -42,6 +42,15 @@ const validationSchema = Yup.object().shape({
 const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
   const { currentQuote } = props;
 
+  if (!currentQuote) {
+    // Return empty modal
+    return (
+      <Modal open={props.open} onClose={props.onClose}>
+        <div></div>
+      </Modal>
+    );
+  }
+
   const onSubmit = (values, { resetForm }) => {
     props.updateQuoteRequest(
       currentQuote.id,
@@ -57,15 +66,6 @@ const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
   const handleCancelClicked = () => {
     props.onClose();
   };
-
-  if (!currentQuote) {
-    // Return empty modal
-    return (
-      <Modal open={props.open} onClose={props.onClose}>
-        <div></div>
-      </Modal>
-    );
-  }
 
   return (
     <Modal open={props.open} onClose={props.onClose}>

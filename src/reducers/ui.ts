@@ -14,6 +14,8 @@ import {
   HIDE_SKU_MODAL,
   SHOW_DELIVERY_CODE_MODAL,
   HIDE_DELIVERY_CODE_MODAL,
+  SHOW_UPDATE_CREDITS_MODAL,
+  HIDE_UPDATE_CREDITS_MODAL,
 } from "../constants/ActionTypes";
 import { SureModalData, UIActionType, ReasonModalData } from "../types/ui";
 
@@ -129,11 +131,25 @@ const getDeliveryCodeModalOpen = (
   return state;
 };
 
+const getUpdateCreditsModalOpen = (
+  state: boolean = false,
+  action: UIActionType
+) => {
+  switch (action.type) {
+    case SHOW_UPDATE_CREDITS_MODAL:
+      return true;
+    case HIDE_UPDATE_CREDITS_MODAL:
+      return false;
+  }
+  return state;
+};
+
 export default combineReducers({
   sureModalData: getSureModalData,
   reasonModalData: getReasonModalData,
   loadingScreenOpen: getLoadingScreenOpen,
   updateQuoteModalOpen: getUpdateQuoteModalOpen,
+  updateCreditsModalOpen: getUpdateCreditsModalOpen,
   attributeModalOpen: getAttributeModalOpen,
   skuModalOpen: getSkuModalOpen,
   deliveryCodeModalOpen: getDeliveryCodeModalOpen,
