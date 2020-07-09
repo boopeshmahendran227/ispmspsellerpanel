@@ -108,7 +108,10 @@ const CustomerInvoice = (props: CustomerInvoiceProps) => {
           ) && (
             <Button
               type={ButtonType.success}
-              onClick={() => props.updateCredits(invoice)}
+              onClick={(e) => {
+                props.updateCredits(invoice);
+                e.stopPropagation();
+              }}
             >
               Update Credits
             </Button>
