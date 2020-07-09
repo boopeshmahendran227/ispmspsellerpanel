@@ -16,6 +16,7 @@ export interface InvoiceInterface {
   totalAmount: number;
   amountPending: number;
   status: InvoiceStatus;
+  orderItemId: number;
 }
 
 export interface InvoiceDetailInterface {

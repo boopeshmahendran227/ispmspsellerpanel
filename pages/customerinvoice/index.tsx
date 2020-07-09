@@ -80,8 +80,15 @@ const CustomerInvoice = (props: CustomerInvoiceProps) => {
   };
 
   const renderTableBody = (invoices: InvoiceInterface[]) => {
+    const openInvoice = (id) => {
+      window.open(`/invoice/${id}`);
+    };
+
     return invoices.map((invoice) => (
-      <tr key={invoice.invoiceId}>
+      <tr
+        key={invoice.invoiceId}
+        onClick={() => openInvoice(invoice.orderItemId)}
+      >
         <td>{invoice.invoiceId}</td>
         <td>{invoice.customerName}</td>
         <td>
