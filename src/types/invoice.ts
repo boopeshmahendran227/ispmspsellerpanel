@@ -10,7 +10,7 @@ export type InvoiceActionType = SetCurrentInvoiceAction;
 
 export interface InvoiceInterface {
   invoiceId: number;
-  issueDate: string;
+  issuedDate: string;
   customerId: string;
   customerName: string;
   totalAmount: number;

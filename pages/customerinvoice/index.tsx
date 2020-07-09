@@ -58,7 +58,7 @@ const CustomerInvoice = (props: CustomerInvoiceProps) => {
       },
       {
         name: "Issued Date",
-        valueFunc: (invoice: InvoiceInterface) => invoice.issueDate,
+        valueFunc: (invoice: InvoiceInterface) => invoice.issuedDate,
       },
       {
         name: "Total amount",
@@ -86,7 +86,7 @@ const CustomerInvoice = (props: CustomerInvoiceProps) => {
         <td>{invoice.customerName}</td>
         <td>
           {moment
-            .utc(invoice.issueDate)
+            .utc(invoice.issuedDate)
             .local()
             .format("MMMM Do YYYY, hh:mm A")}
         </td>
