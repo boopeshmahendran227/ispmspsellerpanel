@@ -4,8 +4,6 @@ const transformOrderItem = (order, orderItem): OrderItemInterface => {
   return {
     ...orderItem,
     order,
-    finalPrice:
-      orderItem.actualUnitPrice * orderItem.qty - orderItem.totalDiscount,
   };
 };
 

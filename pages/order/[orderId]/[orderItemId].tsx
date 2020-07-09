@@ -17,6 +17,7 @@ import ShippingInformationContainer from "../../../src/components/ShippingInform
 import DeliveryCodeModal from "../../../src/components/DeliveryCodeModal";
 import OrderInformation from "../../../src/components/OrderInformation";
 import WithAuth from "../../../src/components/WithAuth";
+import { transformOrderItem } from "../../../src/transformers/orderItem";
 
 interface StateProps {
   currentlyProcessingOrderItemIds: number[];
@@ -49,8 +50,11 @@ const Order = (props: OrderProps) => {
     return <Loader />;
   }
 
-  const orderItem = order.items.find(
-    (orderItem) => orderItem.id === Number(router.query.orderItemId)
+  const orderItem = transformOrderItem(
+    order,
+    order.items.find(
+      (orderItem) => orderItem.id === Number(router.query.orderItemId)
+    )
   );
 
   return (
