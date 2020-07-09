@@ -62,31 +62,29 @@ const Products = (props: ProductsProps) => {
 
   const renderTableBody = (products: ProductMiniInterface[]) => {
     return products.map((product) => (
-      <Link key={product.id} href="/product/[id]" as={`/product/${product.id}`}>
-        <tr>
-          <td>{product.id}</td>
-          <td>
-            <div className="imageContainer">
-              <RelativeImg src={product.imageRelativePaths[0]} />
-            </div>
-          </td>
-          <td>{product.name}</td>
-          <td>{product.averageRating}</td>
-          <td>{product.shortDescription}</td>
-          <style jsx>{`
-            .imageContainer {
-              display: inline-flex;
-              width: 5rem;
-              height: 5rem;
-              align-items: center;
-            }
-            tr:hover {
-              background-color: ${CSSConstants.hoverColor} !important;
-              cursor: pointer;
-            }
-          `}</style>
-        </tr>
-      </Link>
+      <tr>
+        <td>{product.id}</td>
+        <td>
+          <div className="imageContainer">
+            <RelativeImg src={product.imageRelativePaths[0]} />
+          </div>
+        </td>
+        <td>{product.name}</td>
+        <td>{product.averageRating}</td>
+        <td>{product.shortDescription}</td>
+        <style jsx>{`
+          .imageContainer {
+            display: inline-flex;
+            width: 5rem;
+            height: 5rem;
+            align-items: center;
+          }
+          tr:hover {
+            background-color: ${CSSConstants.hoverColor} !important;
+            cursor: pointer;
+          }
+        `}</style>
+      </tr>
     ));
   };
 

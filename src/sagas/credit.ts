@@ -22,6 +22,8 @@ function* updateCreditsRequest(action: UpdateCreditsRequestAction) {
       data: {
         invoiceId: action.invoiceId,
         creditsPaid: action.creditsPaid,
+        paymentMode: action.paymentMode,
+        paymentReferenceId: action.paymentReferenceId,
       },
     });
     yield put({ type: UPDATE_CREDITS_SUCCESS });

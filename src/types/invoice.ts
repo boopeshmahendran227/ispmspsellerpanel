@@ -44,3 +44,9 @@ export enum InvoiceStatus {
   Overdue = "Overdue",
   Cancelled = "Cancelled",
 }
+
+export enum PaymentMode {
+  Cash = "Cash",
+  Online = "Online",
+  PazaWallet = "PazaWallet",
+}

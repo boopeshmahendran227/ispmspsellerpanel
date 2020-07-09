@@ -7,9 +7,11 @@ import UIActions from "../actions/ui";
 import CreditActions from "../actions/credit";
 import InputLabel from "./InputLabel";
 import FieldPriceInput from "./FieldPriceInput";
-import { InvoiceInterface } from "../types/invoice";
+import { InvoiceInterface, PaymentMode } from "../types/invoice";
 import { getCurrentInvoice } from "../selectors/invoice";
 import { getUpdateCreditsModalOpen } from "../selectors/ui";
+import FieldSelect from "./FieldSelect";
+import FieldInput from "./FieldInput";
 
 interface StateProps {
   open: boolean;
@@ -17,9 +19,29 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  updateCreditsRequest: (invoiceId: number, creditsPaid: number) => void;
+  updateCreditsRequest: (
+    invoiceId: number,
+    creditsPaid: number,
+    paymentMode: PaymentMode,
+    paymentReferenceId: string
+  ) => void;
   onClose: () => void;
 }
+
+const paymentOptions = [
+  {
+    value: PaymentMode.Cash,
+    label: "Cash",
+  },
+  {
+    value: PaymentMode.Online,
+    label: "Online",
+  },
+  {
+    value: PaymentMode.PazaWallet,
+    label: "Paza Wallet",
+  },
+];
 
 type UpdateCreditsModalProps = StateProps & DispatchProps;
 
@@ -36,7 +58,12 @@ const UpdateCreditsModal = (props: UpdateCreditsModalProps) => {
   }
 
   const onSubmit = (values, { resetForm }) => {
-    props.updateCreditsRequest(currentInvoice.invoiceId, values.creditsPaid);
+    props.updateCreditsRequest(
+      currentInvoice.invoiceId,
+      values.creditsPaid,
+      values.paymentMode.value,
+      values.paymentReferenceId
+    );
     props.onClose();
     resetForm();
   };
@@ -54,6 +81,8 @@ const UpdateCreditsModal = (props: UpdateCreditsModalProps) => {
         <Formik
           initialValues={{
             creditsPaid: 0,
+            paymentMode: paymentOptions[0],
+            paymentReferenceId: "",
           }}
           onSubmit={onSubmit}
           validate={(values) => {
@@ -72,6 +101,10 @@ const UpdateCreditsModal = (props: UpdateCreditsModalProps) => {
               <div className="gridContainer">
                 <InputLabel label="Paid Credits" />
                 <FieldPriceInput name="creditsPaid" />
+                <InputLabel label="Payment Mode" />
+                <FieldSelect name="paymentMode" options={paymentOptions} />
+                <InputLabel label="Payment Reference Id" />
+                <FieldInput name="paymentReferenceId" />
               </div>
               <div className="buttonContainer">
                 <Button isSubmitButton={true}>Update Pending Credits</Button>
