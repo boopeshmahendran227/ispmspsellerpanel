@@ -9,6 +9,7 @@ import Button from "../../src/components/Button";
 import PageHeader from "../../src/components/PageHeader";
 import WithAuth from "../../src/components/WithAuth";
 import Link from "next/link";
+import ProductCard from "../../src/components/ProductCard";
 
 const getTableHeaders = () => {
   return [
@@ -30,8 +31,9 @@ const getTableHeaders = () => {
       valueFunc: (coupon: CouponInterface) => null,
     },
     {
-      name: "Category Ids",
-      valueFunc: (coupon: CouponInterface) => null,
+      name: "Categories",
+      valueFunc: (coupon: CouponInterface) =>
+        coupon.categories.map((category) => category.name).join(", "),
     },
   ];
 };
@@ -48,19 +50,27 @@ const renderTableBody = (coupons: CouponInterface[]) => {
       </td>
       <td>
         {coupon.products.map((product) => (
-          <div className="couponProduct">
-            <div className="row">
-              <span className="label">ProductId:</span>
-              <span className="value">{product.productId}</span>
-            </div>
-            <div className="row">
-              <span className="label">SkuId:</span>
-              <span className="value">{product.skuId}</span>
-            </div>
-          </div>
+          <ProductCard
+            name={product.productInfo.name}
+            image={product.productInfo.imageRelativePaths[0]}
+            metaInfo={[
+              {
+                key: "Product Id",
+                value: product.productId,
+              },
+              {
+                key: "Sku Id",
+                value: product.skuId,
+              },
+              {
+                key: "Price",
+                value: formatPrice(product.productInfo.price),
+              },
+            ]}
+          />
         ))}
       </td>
-      <td>{coupon.categoryIds.join(", ")}</td>
+      <td>{coupon.categories.map((category) => category.name).join(", ")}</td>
       <style jsx>{`
         .productContainer {
           text-align: initial;
