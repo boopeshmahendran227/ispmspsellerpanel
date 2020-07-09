@@ -14,7 +14,7 @@ export interface InvoiceInterface {
   customerId: string;
   customerName: string;
   totalAmount: number;
-  amountPending: number;
+  creditAmountPending: number;
   status: InvoiceStatus;
   orderItemId: number;
 }

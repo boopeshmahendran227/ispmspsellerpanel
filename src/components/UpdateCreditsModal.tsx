@@ -48,7 +48,9 @@ const UpdateCreditsModal = (props: UpdateCreditsModalProps) => {
   return (
     <Modal open={props.open} onClose={props.onClose}>
       <div className="container">
-        <header>Update Credits For Invoice #{currentInvoice.invoiceId}</header>
+        <header>
+          Record Credit Payment For Invoice #{currentInvoice.invoiceId}
+        </header>
         <Formik
           initialValues={{
             creditsPaid: 0,
@@ -58,7 +60,7 @@ const UpdateCreditsModal = (props: UpdateCreditsModalProps) => {
             const errors: any = {};
             const { creditsPaid } = values;
 
-            if (creditsPaid > currentInvoice.amountPending) {
+            if (creditsPaid > currentInvoice.creditAmountPending) {
               errors.creditsPaid =
                 "Paid Credits should be less than or equal to pending amount";
             }

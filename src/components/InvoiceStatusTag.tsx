@@ -29,7 +29,7 @@ const InvoiceStatusTag = (props: InvoiceStatusTagProps) => {
 
   return (
     <div className="container">
-      {status}
+      {status === InvoiceStatus.Paid ? "Paid / COD" : status}
       <style jsx>{`
         .container {
           padding: 0.5em 1.1em;

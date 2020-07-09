@@ -65,8 +65,8 @@ const CustomerInvoice = (props: CustomerInvoiceProps) => {
         valueFunc: (invoice: InvoiceInterface) => invoice.totalAmount,
       },
       {
-        name: "Amount Pending",
-        valueFunc: (invoice: InvoiceInterface) => invoice.amountPending,
+        name: "Credit Amount Pending",
+        valueFunc: (invoice: InvoiceInterface) => invoice.creditAmountPending,
       },
       {
         name: "Status",
@@ -98,7 +98,7 @@ const CustomerInvoice = (props: CustomerInvoiceProps) => {
             .format("MMMM Do YYYY, hh:mm A")}
         </td>
         <td>{formatPrice(invoice.totalAmount)}</td>
-        <td>{formatPrice(invoice.amountPending)}</td>
+        <td>{formatPrice(invoice.creditAmountPending)}</td>
         <td>
           <InvoiceStatusTag status={invoice.status} />
         </td>
@@ -113,7 +113,7 @@ const CustomerInvoice = (props: CustomerInvoiceProps) => {
                 e.stopPropagation();
               }}
             >
-              Update Credits
+              Record Credit Payment
             </Button>
           )}
         </td>
