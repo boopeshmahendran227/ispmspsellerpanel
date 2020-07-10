@@ -99,9 +99,9 @@ const CreateCoupon = (props: CreateCouponProps) => {
                 )}
                 <InputLabel label="Minimum Order Amount" />
                 <FieldPriceInput name="minimumOrderAmount" />
-                <InputLabel label="Start Date" />
+                <InputLabel label="Valid From" />
                 <FieldDatePicker name="startDate" />
-                <InputLabel label="End Date" />
+                <InputLabel label="Valid Till" />
                 <FieldDatePicker name="endDate" />
               </div>
               <div className="buttonContainer">
