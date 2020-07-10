@@ -36,7 +36,7 @@ function* getFilteredOrders(action) {
       yield put(UIActions.showLoadingScreen());
     }
 
-    const data = yield call(api, `/order?pageNumber=${pageNumber}`, {
+    const data = yield call(api, `/order`, {
       params: {
         pageNumber: pageNumber,
         ...(ecosystemFilter && {

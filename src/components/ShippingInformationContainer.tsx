@@ -1,12 +1,11 @@
 import InputLabel from "./InputLabel";
 import FieldInput from "./FieldInput";
+import FieldDatePicker from "./FieldDatePicker";
 import Button from "./Button";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import moment from "moment";
-import DatePicker from "./DatePicker";
 import CSSConstants from "../constants/CSSConstants";
-import ValidationErrorMsg from "./ValidationErrorMsg";
 import { connect } from "react-redux";
 import OrderActions from "../actions/order";
 import { OrderItemInterface } from "../types/order";
@@ -72,24 +71,7 @@ const ShippingInformationContainer = (
                 <InputLabel label="Tracking Code" />
                 <FieldInput name="trackingCode" />
                 <InputLabel label="Expected Delivery Date" />
-                <Field name="expectedDeliveryDate">
-                  {({ field }) => (
-                    <>
-                      <DatePicker
-                        value={field.value}
-                        onChange={(value) => {
-                          field.onChange({
-                            target: { name: field.name, value },
-                          });
-                        }}
-                      />
-                      <ErrorMessage
-                        component={ValidationErrorMsg}
-                        name={field.name}
-                      />
-                    </>
-                  )}
-                </Field>
+                <FieldDatePicker name="expectedDeliveryDate" />
               </div>
               <div>
                 <Button isSubmitButton={true}>Update</Button>

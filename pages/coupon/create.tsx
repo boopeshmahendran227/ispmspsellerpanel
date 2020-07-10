@@ -1,16 +1,9 @@
 import { Formik, Form } from "formik";
 import Button, { ButtonType } from "../../src/components/Button";
 import InputLabel from "../../src/components/InputLabel";
-import FieldMultiSelect from "../../src/components/FieldMultiSelect";
-import useSWR from "swr";
-import { flattenCategoryTree } from "../../src/utils/categoryTree";
-import Loader from "../../src/components/Loader";
-import PageError from "../../src/components/PageError";
-import { CategoryTreeInterface } from "../../src/types/categoryTree";
 import CouponActions from "../../src/actions/coupon";
 import { connect } from "react-redux";
 import WithAuth from "../../src/components/WithAuth";
-import SelectProductSkus from "../../src/components/SelectProductSkus";
 import {
   CouponInputInterface,
   CouponType,
@@ -19,6 +12,8 @@ import {
 import RadioButton from "../../src/components/RadioButton";
 import FieldPriceInput from "../../src/components/FieldPriceInput";
 import FieldPercentageInput from "../../src/components/FieldPercentageInput";
+import FieldDatePicker from "../../src/components/FieldDatePicker";
+import moment from "moment";
 
 interface DispatchProps {
   createCoupon: (couponData: CouponRequestInterface) => void;
@@ -27,33 +22,7 @@ interface DispatchProps {
 type CreateCouponProps = DispatchProps;
 
 const CreateCoupon = (props: CreateCouponProps) => {
-  const categorySWR = useSWR("/category/tree");
-  const categoryTree: CategoryTreeInterface = categorySWR.data;
-
-  const error = categorySWR.error;
-
-  if (error) {
-    return <PageError statusCode={error.response?.status} />;
-  }
-
-  if (!categoryTree) {
-    return <Loader />;
-  }
-
-  const categories = flattenCategoryTree(categoryTree);
-
   const onSubmit = (values: CouponInputInterface) => {
-    let products = [];
-
-    values.products.forEach((product) => {
-      product.skuIds.forEach((skuId) => {
-        products.push({
-          productId: product.productId,
-          skuId: skuId,
-        });
-      });
-    });
-
     props.createCoupon({
       ...(values.type === CouponType.FixedAmount && {
         discountValue: values.discountValue,
@@ -61,8 +30,9 @@ const CreateCoupon = (props: CreateCouponProps) => {
       ...(values.type === CouponType.Percentage && {
         discountPercentage: values.discountPercentage,
       }),
-      products,
-      categoryIds: values.categories.map((category) => Number(category.value)),
+      minimumOrderAmount: values.minimumOrderAmount,
+      startDate: values.startDate.format(),
+      endDate: values.endDate.format(),
     });
   };
 
@@ -75,8 +45,9 @@ const CreateCoupon = (props: CreateCouponProps) => {
           type: CouponType.FixedAmount,
           discountValue: 0,
           discountPercentage: 0,
-          products: [],
-          categories: [],
+          minimumOrderAmount: 0,
+          startDate: moment(),
+          endDate: moment(),
         }}
         validate={(values) => {
           const errors: any = {};
@@ -88,10 +59,6 @@ const CreateCoupon = (props: CreateCouponProps) => {
             !values.discountPercentage
           ) {
             errors.discountPercentage = "Discount Percentage is required";
-          }
-          if (values.products.length === 0 && values.categories.length === 0) {
-            errors.products = "Products/Categories is required";
-            errors.categories = "Products/Categories is required";
           }
           return errors;
         }}
@@ -130,16 +97,13 @@ const CreateCoupon = (props: CreateCouponProps) => {
                 ) : (
                   <FieldPercentageInput name="discountPercentage" />
                 )}
+                <InputLabel label="Minimum Order Amount" />
+                <FieldPriceInput name="minimumOrderAmount" />
+                <InputLabel label="Start Date" />
+                <FieldDatePicker name="startDate" />
+                <InputLabel label="End Date" />
+                <FieldDatePicker name="endDate" />
               </div>
-              <SelectProductSkus />
-              <div className="categoriesLabel">Categories</div>
-              <FieldMultiSelect
-                name="categories"
-                options={categories.map((category) => ({
-                  value: category.id,
-                  label: category.name,
-                }))}
-              />
               <div className="buttonContainer">
                 <Button type={ButtonType.success} isSubmitButton={true}>
                   Submit

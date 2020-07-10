@@ -9,7 +9,7 @@ import Button from "../../src/components/Button";
 import PageHeader from "../../src/components/PageHeader";
 import WithAuth from "../../src/components/WithAuth";
 import Link from "next/link";
-import ProductCard from "../../src/components/ProductCard";
+import moment from "moment";
 
 const getTableHeaders = () => {
   return [
@@ -27,13 +27,16 @@ const getTableHeaders = () => {
         coupon.discountValue || coupon.discountPercentage,
     },
     {
-      name: "Products",
-      valueFunc: (coupon: CouponInterface) => null,
+      name: "Minimum Order Amount",
+      valueFunc: (coupon: CouponInterface) => coupon.minimumOrderAmount,
     },
     {
-      name: "Categories",
-      valueFunc: (coupon: CouponInterface) =>
-        coupon.categories.map((category) => category.name).join(", "),
+      name: "Valid From",
+      valueFunc: (coupon: CouponInterface) => new Date(coupon.startDate),
+    },
+    {
+      name: "Valid Till",
+      valueFunc: (coupon: CouponInterface) => new Date(coupon.endDate),
     },
   ];
 };
@@ -48,55 +51,18 @@ const renderTableBody = (coupons: CouponInterface[]) => {
           ? formatPrice(coupon.discountValue)
           : coupon.discountPercentage + "%"}
       </td>
-      <td>
-        {coupon.products.map((product) => (
-          <ProductCard
-            name={product.productInfo.name}
-            image={product.productInfo.imageRelativePaths[0]}
-            metaInfo={[
-              {
-                key: "Product Id",
-                value: product.productId,
-              },
-              {
-                key: "Sku Id",
-                value: product.skuId,
-              },
-              {
-                key: "Price",
-                value: formatPrice(product.productInfo.price),
-              },
-            ]}
-          />
-        ))}
-      </td>
-      <td>{coupon.categories.map((category) => category.name).join(", ")}</td>
+      <td>{formatPrice(coupon.minimumOrderAmount)}</td>
+      <td>{moment.utc(coupon.startDate).local().format("MMMM Do YYYY")}</td>
+      <td>{moment.utc(coupon.endDate).local().format("MMMM Do YYYY")}</td>
       <style jsx>{`
-        .productContainer {
-          text-align: initial;
-          margin: 1.2em 0;
-        }
-        .couponProduct {
-          margin: 0.5em;
+        td {
+          padding: 1.4em;
         }
         .couponCode {
           color: ${CSSConstants.warningColor};
         }
         .discount {
           color: ${CSSConstants.successColor};
-        }
-        tr:hover {
-          background-color: ${CSSConstants.hoverColor} !important;
-          cursor: pointer;
-        }
-        .label,
-        .value {
-          min-width: 80px;
-          display: inline-block;
-          text-align: left;
-        }
-        .label {
-          font-weight: bold;
         }
       `}</style>
     </tr>

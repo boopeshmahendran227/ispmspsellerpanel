@@ -13,37 +13,28 @@ export interface CouponInterface {
   couponCode: string;
   discountValue: number;
   discountPercentage: number;
-  products: CouponProduct[];
-  categoryIds: number[];
   ecosystemName: string;
   ecosystemId: string;
-  categories: CouponCategoryInterface[];
-}
-
-interface CouponCategoryInterface {
-  id: number;
-  name: string;
-}
-
-interface CouponProduct {
-  productId: number;
-  skuId: string;
-  productInfo: ProductMiniInterface;
+  minimumOrderAmount: number;
+  startDate: string;
+  endDate: string;
 }
 
 export interface CouponRequestInterface {
   discountValue?: number;
   discountPercentage?: number;
-  products?: CouponProduct[];
-  categoryIds?: number[];
+  minimumOrderAmount: number;
+  startDate: string;
+  endDate: string;
 }
 
 export interface CouponInputInterface {
   type: CouponType;
   discountValue: number;
   discountPercentage: number;
-  products: CouponProductInputInterface[];
-  categories: SelectOptionInterface[];
+  minimumOrderAmount: number;
+  startDate: moment.Moment;
+  endDate: moment.Moment;
 }
 
 export interface CouponProductInputInterface {
