@@ -1,7 +1,6 @@
 import Button from "./Button";
 import { FieldArray, useFormikContext, ErrorMessage } from "formik";
 import InputLabel from "./InputLabel";
-import CSSConstants from "../constants/CSSConstants";
 import FieldInput from "./FieldInput";
 import ValidationErrorMsg from "./ValidationErrorMsg";
 import {
@@ -14,7 +13,8 @@ const SelectProductSkus = () => {
   const values: CouponInputInterface = useFormikContext<CouponInputInterface>()
     .values;
 
-  const products: CouponProductInputInterface[] = values.products;
+  // const products: CouponProductInputInterface[] = values.products;
+  const products: CouponProductInputInterface[] = [];
 
   const handleAddProduct = (arrayHelpers) => {
     arrayHelpers.push({
