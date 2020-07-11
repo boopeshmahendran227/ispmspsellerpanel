@@ -38,11 +38,12 @@
   "devDependencies": {
     "@types/node": "^13.13.6",
     "@types/react": "^16.9.35",
+    "cross-env": "^7.0.2",
     "typescript": "^3.9.2"
   },
   "scripts": {
-    "dev": "ENV=local next dev",
-    "build": "rm -rf .next && ENV=prod next build",
+    "dev": "cross-env ENV=local next dev",
+    "build": "cross-env ENV=prod next build",
     "start": "next start -p 80",
     "test": "jest --coverage",
     "test:watch": "jest --watch"
