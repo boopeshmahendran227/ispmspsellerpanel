@@ -159,6 +159,7 @@ const Feedback = (props: FeedbackProps) => {
           border-radius: 7px;
           padding: 10px;
           box-sizing: border-box;
+          font-family: inherit;
           outline: none;
           margin: 0;
           resize: none;

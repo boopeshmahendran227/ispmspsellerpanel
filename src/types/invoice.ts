@@ -33,6 +33,15 @@ export interface InvoiceDetailInterface {
     mobile: string;
     email: string;
   };
+  businessAddress: {
+    aptno: string;
+    street: string;
+    locality: string;
+    city: string;
+    state: string;
+    country: string;
+    code: string;
+  };
 }
 
 export enum InvoiceStatus {
