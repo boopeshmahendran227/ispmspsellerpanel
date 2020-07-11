@@ -42,7 +42,7 @@
     "typescript": "^3.9.2"
   },
   "scripts": {
-    "dev": "cross-env ENV=local next dev -p 5001",
+    "dev": "cross-env ENV=local next dev",
     "build": "cross-env ENV=prod next build",
     "start": "next start -p 80",
     "test": "jest --coverage",
