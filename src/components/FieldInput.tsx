@@ -1,11 +1,9 @@
 import { Field, ErrorMessage } from "formik";
 import classNames from "classnames";
 import ValidationErrorMsg from "../components/ValidationErrorMsg";
-import CSSConstants from "../constants/CSSConstants";
 
 interface FieldInputProps {
   name: string;
-  metaInfo?: string;
 }
 
 const FieldInput = (props: FieldInputProps) => {
@@ -19,9 +17,6 @@ const FieldInput = (props: FieldInputProps) => {
           })}
         >
           <input type="text" {...field} />
-          {Boolean(props.metaInfo) && (
-            <div className="metaContainer">{props.metaInfo}</div>
-          )}
           <div className="errorContainer">
             <ErrorMessage component={ValidationErrorMsg} name={props.name} />
           </div>
@@ -34,11 +29,6 @@ const FieldInput = (props: FieldInputProps) => {
             input {
               padding: 0.6em;
               width: 100%;
-            }
-            .metaContainer {
-              color: ${CSSConstants.secondaryTextColor};
-              font-size: 0.8rem;
-              max-width: 200px;
             }
           `}</style>
         </label>

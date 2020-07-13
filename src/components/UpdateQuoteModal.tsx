@@ -7,12 +7,12 @@ import { getCurrentQuote } from "../selectors/quote";
 import { getUpdateQuoteModalOpen } from "../selectors/ui";
 import ProductCard from "./ProductCard";
 import { Formik, Form, FieldArray } from "formik";
-import FieldInput from "../components/FieldInput";
 import { formatPrice } from "../utils/misc";
 import UIActions from "../actions/ui";
 import QuoteActions from "../actions/quote";
 import * as Yup from "yup";
 import InputLabel from "./InputLabel";
+import FieldPriceInput from "./FieldPriceInput";
 
 interface StateProps {
   open: boolean;
@@ -121,18 +121,20 @@ const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
                                 },
                               ]}
                             />
-                            <InputLabel label="Enter Updated Quote Value" />
-                            <FieldInput
-                              name={`quoteItems[${index}].finalTotalPrice`}
-                              metaInfo={`(${formatPrice(
-                                values.quoteItems[index].finalTotalPrice /
-                                  productDetail.qty
-                              )} x ${productDetail.qty} =
+                            <div className="gridContainer">
+                              <InputLabel label="Updated Total Quote Value" />
+                              <FieldPriceInput
+                                name={`quoteItems[${index}].finalTotalPrice`}
+                                metaInfo={`(${formatPrice(
+                                  values.quoteItems[index].finalTotalPrice /
+                                    productDetail.qty
+                                )} x ${productDetail.qty} =
                             ${formatPrice(
                               Number(values.quoteItems[index].finalTotalPrice)
                             )})
                               `}
-                            />
+                              />
+                            </div>
                           </div>
                         )
                       )}
@@ -166,6 +168,11 @@ const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
         .buttonContainer {
           margin-top: 1em;
           text-align: right;
+        }
+        .gridContainer {
+          display: grid;
+          grid-template-columns: 200px 1fr;
+          margin: 0.3em 0;
         }
       `}</style>
     </Modal>

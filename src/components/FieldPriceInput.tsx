@@ -6,6 +6,7 @@ import { useState } from "react";
 
 interface FieldPriceInputProps {
   name: string;
+  metaInfo?: string;
 }
 
 const FieldPriceInput = (props: FieldPriceInputProps) => {
@@ -44,6 +45,9 @@ const FieldPriceInput = (props: FieldPriceInputProps) => {
               onFocus={handleFocus}
             />
           </div>
+          {Boolean(props.metaInfo) && (
+            <div className="metaContainer">{props.metaInfo}</div>
+          )}
           <div className="errorContainer">
             <ErrorMessage component={ValidationErrorMsg} name={props.name} />
           </div>
@@ -72,6 +76,11 @@ const FieldPriceInput = (props: FieldPriceInputProps) => {
             }
             input:focus {
               border: none;
+            }
+            .metaContainer {
+              color: ${CSSConstants.secondaryTextColor};
+              font-size: 0.8rem;
+              max-width: 200px;
             }
           `}</style>
         </label>
