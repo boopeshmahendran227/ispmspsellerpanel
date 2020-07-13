@@ -156,6 +156,12 @@ const Invoice = () => {
                 <td>Shipping Fee</td>
                 <td>{formatPrice(shippingFee)}</td>
               </tr>
+              {order.discountSplits.map((discount) => (
+                <tr className="discount">
+                  <td>{discount.discountType}</td>
+                  <td>- {formatPrice(discount.discountAmount)}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </section>
@@ -317,10 +323,8 @@ const Invoice = () => {
           font-size: 1.5rem;
           color: #666666;
         }
-        .priceSection .tax,
-        .priceSection .discount {
-          font-size: 0.9rem;
-          padding-left: 1.2em;
+        .discount {
+          color: ${CSSConstants.successColor};
         }
         footer {
           padding: 1em;
