@@ -39,38 +39,35 @@ const Invoice = () => {
       <div className="body">
         <div className="title">Invoice</div>
         <section className="section sellerSection">
-          <div>
+          <div className="row">
             <strong>Sold By: </strong>
-            {invoice.businessDetails.name}
-          </div>
-          <div>
-            <strong>Business Address: </strong>
+            {invoice.businessDetails.name},<br />
             {formatAddress(invoice.businessAddress)}
           </div>
-          <div>
+          <div className="row">
             <strong>GSTIN: </strong>
             {invoice.businessDetails.gstin}
           </div>
-          <div>
+          <div className="row">
             <strong>TAN: </strong>
             {invoice.businessDetails.tan}
           </div>
         </section>
         <section className="section detailsSection">
           <div>
-            <div className="date">
+            <div className="row invoiceNumber">
+              <strong>Invoice No: </strong>
+              {invoice.invoiceNumber}
+            </div>
+            <div className="row date">
               <strong>Date: </strong>
               {moment.utc(order.createdDateTime).local().format("MMMM Do YYYY")}
             </div>
-            <div className="invoiceNumber">
-              <strong>Invoice No: </strong>
-              {order.id}
-            </div>
-            <div>
+            <div className="row">
               <strong>PAN: </strong>
               {invoice.businessDetails.pan}
             </div>
-            <div>
+            <div className="row">
               <strong>CIN: </strong>
               {invoice.businessDetails.cin}
             </div>
@@ -198,6 +195,14 @@ const Invoice = () => {
           text-align: center;
           padding: 0.5em;
           font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+        }
+        .row {
+          display: grid;
+          grid-template-columns: 80px 1fr;
+          grid-column-gap: 0.3em;
+          margin: 0.2em 0;
         }
         .sellerSection {
           max-width: 300px;
