@@ -62,6 +62,7 @@ const ShippingInformationContainer = (
           }}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
+          enableReinitialize={true}
         >
           {() => (
             <Form>
