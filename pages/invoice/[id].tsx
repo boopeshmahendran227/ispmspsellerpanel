@@ -77,12 +77,12 @@ const Invoice = () => {
           </div>
           <div className="address">
             <div className="name">Billing Address: </div>
-            <div>{invoice.order.customerName},</div>
+            <div>{order.customerName?order.customerName:"XXXX"},</div>
             <div className="value">{formatAddress(order.billingAddress)}</div>
           </div>
           <div className="address">
             <div className="name">Shipping Address: </div>
-            <div>{invoice.order.customerName},</div>
+            <div>{order.customerName?order.customerName:"XXXX"},</div>
             <div className="value">{formatAddress(order.shippingAddress)}</div>
           </div>
         </section>
@@ -196,8 +196,8 @@ const Invoice = () => {
         .title {
           font-size: 2.5rem;
           text-align: center;
-          padding: 16px;
-          font-weight: 800;
+          padding: 0.5em;
+          font-weight: 700;
         }
         .sellerSection {
           max-width: 300px;
@@ -212,7 +212,7 @@ const Invoice = () => {
           transform: rotate(-25deg);
           border: 2px solid ${CSSConstants.warningColor};
           border-radius: 0.8em;
-          padding: 0.4em 30px;
+          padding: 0.4em 1.2em;
         }
         .pending .text {
           font-size: 2.5rem;
