@@ -83,6 +83,7 @@ const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
           }}
           onSubmit={onSubmit}
           validationSchema={validationSchema}
+          enableReinitialize={true}
         >
           {({ values }) => (
             <Form>
