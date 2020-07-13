@@ -77,12 +77,12 @@ const Invoice = () => {
           </div>
           <div className="address">
             <div className="name">Billing Address: </div>
-            <div>{order.customerName?order.customerName:"XXXX"},</div>
+            <div>{order.customerName || "Name Not Available"},</div>
             <div className="value">{formatAddress(order.billingAddress)}</div>
           </div>
           <div className="address">
             <div className="name">Shipping Address: </div>
-            <div>{order.customerName?order.customerName:"XXXX"},</div>
+            <div>{order.customerName || "Name Not Available"},</div>
             <div className="value">{formatAddress(order.shippingAddress)}</div>
           </div>
         </section>
