@@ -28,7 +28,6 @@ const Invoice = () => {
   }
 
   const order = invoice.order;
-
   const shippingFee = order.items[0].metadata.shipmentFeePerSeller;
 
   const isCreditPending = order.discountSplits.some(
@@ -46,14 +45,7 @@ const Invoice = () => {
           </div>
           <div>
             <strong>Business Address: </strong>
-            <div>
-              {invoice.businessAddress.aptno},{invoice.businessAddress.street},
-              {invoice.businessAddress.locality},
-            </div>
-            <div>
-              {invoice.businessAddress.city},{invoice.businessAddress.state},
-              {invoice.businessAddress.country},{invoice.businessAddress.code}
-            </div>
+            {formatAddress(invoice.businessAddress)}
           </div>
           <div>
             <strong>GSTIN: </strong>
@@ -206,6 +198,9 @@ const Invoice = () => {
           text-align: center;
           padding: 16px;
           font-weight: 800;
+        }
+        .sellerSection {
+          max-width: 300px;
         }
         .pendingContainer {
           position: absolute;

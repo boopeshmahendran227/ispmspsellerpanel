@@ -1,4 +1,4 @@
-import { OrderDetailInterface } from "./order";
+import { OrderDetailInterface, AddressInterface } from "./order";
 import { SET_CURRENT_INVOICE } from "../constants/ActionTypes";
 
 interface SetCurrentInvoiceAction {
@@ -33,15 +33,7 @@ export interface InvoiceDetailInterface {
     mobile: string;
     email: string;
   };
-  businessAddress: {
-    aptno: string;
-    street: string;
-    locality: string;
-    city: string;
-    state: string;
-    country: string;
-    code: string;
-  };
+  businessAddress:AddressInterface;
 }
 
 export enum InvoiceStatus {
