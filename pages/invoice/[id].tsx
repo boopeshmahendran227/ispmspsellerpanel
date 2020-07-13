@@ -9,7 +9,7 @@ import { OrderItemInterface } from "../../src/types/order";
 import { InvoiceDetailInterface } from "../../src/types/invoice";
 import WithAuth from "../../src/components/WithAuth";
 import PageError from "../../src/components/PageError";
-import Logo from "../../src/components/Logo";
+import LogoIcon from "../../public/icons/logo2.png";
 import { DiscountType } from "../../src/types/discount";
 import CSSConstants from "../../src/constants/CSSConstants";
 
@@ -28,7 +28,6 @@ const Invoice = () => {
   }
 
   const order = invoice.order;
-
   const shippingFee = order.items[0].metadata.shipmentFeePerSeller;
 
   const isCreditPending = order.discountSplits.some(
@@ -38,16 +37,15 @@ const Invoice = () => {
   return (
     <section className="container">
       <div className="body">
-        <div className="logoContainer">
-          <Logo />
-        </div>
-        <section className="section shopSection">
-          <div>{Strings.ADDRESS}</div>
-        </section>
+        <div className="title">Invoice</div>
         <section className="section sellerSection">
           <div>
             <strong>Sold By: </strong>
             {invoice.businessDetails.name}
+          </div>
+          <div>
+            <strong>Business Address: </strong>
+            {formatAddress(invoice.businessAddress)}
           </div>
           <div>
             <strong>GSTIN: </strong>
@@ -79,10 +77,12 @@ const Invoice = () => {
           </div>
           <div className="address">
             <div className="name">Billing Address: </div>
+            <div>{order.customerName || "Name Not Available"},</div>
             <div className="value">{formatAddress(order.billingAddress)}</div>
           </div>
           <div className="address">
             <div className="name">Shipping Address: </div>
+            <div>{order.customerName || "Name Not Available"},</div>
             <div className="value">{formatAddress(order.shippingAddress)}</div>
           </div>
         </section>
@@ -169,6 +169,7 @@ const Invoice = () => {
         <Feedback orderId={order.id} />
       </div>
       <footer>
+        <img className="logoContainer" src={LogoIcon} />
         <div>
           <div className="line">Thank You for shopping with us!!</div>
         </div>
@@ -192,6 +193,15 @@ const Invoice = () => {
           flex-direction: column;
           min-height: 100vh;
         }
+        .title {
+          font-size: 2.5rem;
+          text-align: center;
+          padding: 0.5em;
+          font-weight: 700;
+        }
+        .sellerSection {
+          max-width: 300px;
+        }
         .pendingContainer {
           position: absolute;
           top: 50%;
@@ -202,7 +212,7 @@ const Invoice = () => {
           transform: rotate(-25deg);
           border: 2px solid ${CSSConstants.warningColor};
           border-radius: 0.8em;
-          padding: 0.4em 30px;
+          padding: 0.4em 1.2em;
         }
         .pending .text {
           font-size: 2.5rem;
@@ -223,9 +233,7 @@ const Invoice = () => {
         }
         .logoContainer {
           text-align: center;
-          padding: 0.5em;
-          font-size: 1.8rem;
-          font-weight: 700;
+          height: 1.5rem;
         }
         .productTable tbody tr td:first-child::before {
           counter-increment: rowCount;
