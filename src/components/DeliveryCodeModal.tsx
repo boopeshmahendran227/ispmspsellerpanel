@@ -21,8 +21,9 @@ interface DispatchProps {
 type DeliveryCodeModalProps = StateProps & DispatchProps;
 
 const DeliveryCodeModal = (props: DeliveryCodeModalProps) => {
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { resetForm }) => {
     props.onSubmit(values.deliveryCode);
+    resetForm();
   };
 
   return (
