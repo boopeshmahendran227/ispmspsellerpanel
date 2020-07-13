@@ -1,6 +1,6 @@
 import moment from "moment";
 import Feedback from "../../src/components/Feedback";
-import Strings from "../../strings";
+import _ from "lodash";
 import { formatPrice, formatAddress, formatNumber } from "../../src/utils/misc";
 import useSWR from "swr";
 import { useRouter } from "next/router";
@@ -33,6 +33,10 @@ const Invoice = () => {
   const isCreditPending = order.discountSplits.some(
     (discount) => discount.discountType === DiscountType.CreditAmount
   );
+  const subTotal = _.chain(order.items)
+    .map((item) => item.discountedPrice)
+    .sum()
+    .value();
 
   return (
     <section className="container">
@@ -150,7 +154,7 @@ const Invoice = () => {
             <tbody>
               <tr>
                 <td>Total</td>
-                <td>{formatPrice(order.totalPrice - shippingFee)}</td>
+                <td>{formatPrice(subTotal)}</td>
               </tr>
               <tr>
                 <td>Shipping Fee</td>
