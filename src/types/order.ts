@@ -70,6 +70,11 @@ export interface OrderItemInterface {
   shipmentId: number;
   orderItemStatusHistories: OrderStatusHistoryItem[];
   orderItemStatus: OrderStatus;
+  loanDetail: {
+    loanAmountChosen: number;
+    loanProcessingFee: number;
+    providerName: string;
+  };
   taxDetails: {
     taxGroupId: number;
     taxGroupName: string;

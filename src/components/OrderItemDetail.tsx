@@ -249,6 +249,20 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
               <div className="value">- {formatPrice(value)}</div>
             </Fragment>
           ))}
+          {orderItem.loanDetail && (
+            <Fragment>
+              <div className="key">
+                Loan ({orderItem.loanDetail.providerName})
+              </div>
+              <div className="value">
+                - {formatPrice(orderItem.loanDetail.loanAmountChosen)}
+              </div>
+              <div className="key">Loan Processing Fee</div>
+              <div className="value">
+                + {formatPrice(orderItem.loanDetail.loanProcessingFee)}
+              </div>
+            </Fragment>
+          )}
           {orderItem.taxDetails.taxSplits.map((taxSplit, index) => (
             <Fragment key={index}>
               <div className="key">{taxSplit.taxName}:</div>
