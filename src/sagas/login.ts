@@ -13,8 +13,14 @@ function* logout() {
     const data = yield call(api, "/auth/logout");
     yield call(destroyCookie, null, "userToken");
     yield call(destroyCookie, null, "userRefreshToken");
-    yield call(destroyCookie, null, "isp-jwt");
-    yield call(destroyCookie, null, "isp-refresh");
+    yield call(destroyCookie, null, "isp-jwt", {
+      domain: ".istakapaza.com",
+      path: "/",
+    });
+    yield call(destroyCookie, null, "isp-refresh", {
+      domain: ".istakapaza.com",
+      path: "/",
+    });
     yield put({
       type: LOGOUT_SUCCESS,
       data: data,
