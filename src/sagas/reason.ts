@@ -14,7 +14,7 @@ function* cancelOrderItem() {
       UIActions.showReasonModal(
         "Confirm Cancellation",
         "Please provide a cancellation reason",
-        ["OrderedByMistake", "NoLongerNeedIt", "CannotBeFulfilled"]
+        ["CannotBeFulfilled","CurrentlyNotAvailable"]
       )
     );
     const { submitClickedAction, cancelClickedAction } = yield race({
