@@ -15,7 +15,7 @@ import CSSConstants from "../../src/constants/CSSConstants";
 
 const Invoice = () => {
   const router = useRouter();
-  const invoiceSWR = useSWR(`/invoice/orderitem/${router.query.id}`);
+  const invoiceSWR = useSWR(`/invoice/${router.query.id}`);
   const invoice: InvoiceDetailInterface = invoiceSWR.data;
 
   const error = invoiceSWR.error;
