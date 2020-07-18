@@ -17,6 +17,7 @@ const constants = {
   hoverTextColor: "", // This is set down
   lightPrimaryColor: "", // This is set down
   borderStyle: "", // This is set down
+  sideNavBarWidth: "80px",
 };
 
 constants.lightPrimaryColor = Chroma(constants.primaryColor)

@@ -22,6 +22,7 @@ const getApiUrl = (route) => {
     route.includes("preorder") ||
     route.includes("/users/subscription") ||
     route.includes("/auth/logout") ||
+    route.includes("/auth/verify/token/seller") ||
     route.includes("/businesses/business")
   ) {
     return istakapazaApiUrl + route;

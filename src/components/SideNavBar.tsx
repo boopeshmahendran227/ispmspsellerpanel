@@ -1,130 +1,166 @@
 import Link from "./Link";
 import CSSConstants from "../constants/CSSConstants";
 import Chroma from "chroma-js";
+import SubMenu, { SubMenuItemInterface } from "./SubMenu";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import classNames from "classnames";
+
+interface MenuTreeItem {
+  name: string;
+  hasSubMenu?: boolean;
+  subMenuItems?: SubMenuItemInterface[];
+  href?: string;
+  matchFunc?: (path: string) => boolean;
+  icon: React.ReactNode;
+}
+
+const menuTree: MenuTreeItem[] = [
+  {
+    name: "Home",
+    href: "/",
+    icon: <i className="fas fa-home" aria-hidden={true}></i>,
+  },
+  {
+    name: "Sales",
+    hasSubMenu: true,
+    matchFunc: (path) =>
+      path.includes("/order") || path.includes("customerinvoice"),
+    subMenuItems: [
+      {
+        name: "Order",
+        href: "/order",
+      },
+      {
+        name: "Invoices",
+        href: "/customerinvoice",
+      },
+    ],
+    icon: <i className="fas fa-shopping-cart" aria-hidden={true}></i>,
+  },
+  {
+    name: "Catalog",
+    hasSubMenu: true,
+    subMenuItems: [
+      {
+        name: "Products",
+        href: "/product",
+      },
+      {
+        name: "Drafts",
+        href: "/draft",
+      },
+    ],
+    matchFunc: (path) => path.includes("/product") || path.includes("/draft"),
+    icon: <i className="fas fa-warehouse" aria-hidden={true}></i>,
+  },
+  {
+    name: "Customers",
+    href: "/customer",
+    icon: <i className="fas fa-users" aria-hidden="true"></i>,
+    matchFunc: (path) => path.includes("/customer"),
+  },
+  {
+    name: "Quotes",
+    href: "/quote",
+    icon: <i className="fas fa-clipboard-list" aria-hidden="true"></i>,
+    matchFunc: (path) => path.includes("/quote"),
+  },
+  {
+    name: "Discounts",
+    hasSubMenu: true,
+    subMenuItems: [
+      {
+        name: "Coupons",
+        href: "/coupon",
+      },
+    ],
+    icon: <i className="fas fa-tag"></i>,
+    matchFunc: (path) => path.includes("/coupon"),
+  },
+  {
+    name: "Insights",
+    href: "/insights",
+    icon: <i className="fas fa-chart-line"></i>,
+    matchFunc: (path) => path.includes("/insights"),
+  },
+  {
+    name: "Visits",
+    href: "/visit",
+    icon: <i className="fas fa-calendar-alt" aria-hidden="true"></i>,
+    matchFunc: (path) => path.includes("/visit"),
+  },
+  {
+    name: "Test Rides",
+    href: "/testdrive",
+    icon: <i className="fas fa-motorcycle" aria-hidden="true"></i>,
+    matchFunc: (path) => path.includes("/testdrive"),
+  },
+];
 
 const SideNavBar = () => {
+  const [currentOpenIndex, setCurrentOpenIndex] = useState(null);
+  const router = useRouter();
+  const activePath = router.pathname;
+
+  const getCurrentActiveIndex = () => {
+    if (currentOpenIndex !== null) {
+      return currentOpenIndex;
+    }
+
+    const currentActiveIndex = menuTree.findIndex(
+      (item) => item.matchFunc && item.matchFunc(activePath)
+    );
+
+    if (currentActiveIndex !== -1) {
+      return currentActiveIndex;
+    }
+
+    return 0;
+  };
+
+  const activeIndex = getCurrentActiveIndex();
+
   return (
     <nav>
       <div className="navigation">
         <ul>
-          <li>
-            <Link activeClassName="active" href="/">
-              <a>
-                <i className="fas fa-home" aria-hidden={true}></i>
-                <span>Home</span>
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link
-              activeClassName="active"
-              href="/order"
-              matchFunc={(path) => path.includes("/order")}
-            >
-              <a>
-                <i className="fas fa-shopping-cart" aria-hidden={true}></i>
-                <span>Orders</span>
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link
-              activeClassName="active"
-              href="/quote"
-              matchFunc={(path) => path.includes("/quote")}
-            >
-              <a>
-                <i className="fas fa-clipboard-list" aria-hidden="true"></i>
-                <span>Quotes</span>
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link activeClassName="active" href="/insights">
-              <a>
-                <i className="fas fa-chart-line"></i>
-                <span>Insights</span>
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link activeClassName="active" href="/customerinvoice">
-              <a>
-                <i className="fas fa-file-invoice"></i>
-                <span>Invoices</span>
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link activeClassName="active" href="/visit">
-              <a>
-                <i className="fas fa-calendar-alt"></i>
-                <span>Visits</span>
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link activeClassName="active" href="/testdrive">
-              <a>
-                <i className="fa fa-motorcycle" aria-hidden="true"></i>
-                <span>Test Rides</span>
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link
-              activeClassName="active"
-              href="/product"
-              matchFunc={(path) => path.includes("/product")}
-            >
-              <a>
-                <i className="fas fa-warehouse" aria-hidden={true}></i>
-                <span>Products</span>
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link
-              activeClassName="active"
-              href="/draft"
-              matchFunc={(path) => path.includes("/draft")}
-            >
-              <a>
-                <i className="fas fa-pen-square" aria-hidden={true}></i>
-                <span>Drafts</span>
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link activeClassName="active" href="/customer">
-              <a>
-                <i className="fas fa-users" aria-hidden="true"></i>
-                <span>Customers</span>
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link
-              activeClassName="active"
-              href="/coupon"
-              matchFunc={(path) => path.includes("/coupon")}
-            >
-              <a>
-                <i className="fas fa-tag"></i>
-                <span>Coupons</span>
-              </a>
-            </Link>
-          </li>
-          {/* <li>
-            <Link activeClassName="active" href="/customers">
-              <a>
-                <i className="fas fa-cog" aria-hidden="true"></i>
-                <span>Settings</span>
-              </a>
-            </Link>
-          </li> */}
+          {menuTree.map((item, index) => (
+            <li>
+              {item.hasSubMenu ? (
+                <a
+                  className={classNames({ active: index === activeIndex })}
+                  onClick={() => setCurrentOpenIndex(index)}
+                >
+                  {item.icon}
+                  <span>{item.name}</span>
+                </a>
+              ) : (
+                <Link href={item.href}>
+                  <a
+                    className={classNames({ active: index === activeIndex })}
+                    onClick={() => setCurrentOpenIndex(null)}
+                  >
+                    {item.icon}
+                    <span>{item.name}</span>
+                  </a>
+                </Link>
+              )}
+            </li>
+          ))}
         </ul>
       </div>
+      {menuTree.map(
+        (item, index) =>
+          item.hasSubMenu && (
+            <SubMenu
+              header={item.name}
+              open={currentOpenIndex === index}
+              items={item.subMenuItems}
+              onClose={() => setCurrentOpenIndex(null)}
+            />
+          )
+      )}
       <style jsx>
         {`
           nav {
@@ -159,8 +195,8 @@ const SideNavBar = () => {
             text-decoration: none;
             font-size: 0.9rem;
           }
-          a i {
-            font-size: 1.2rem;
+          a :global(i) {
+            font-size: 1.3rem;
             margin: 0.3em;
           }
           .navigation a.active {

@@ -17,6 +17,7 @@ import LoadingScreen from "../src/components/LoadingScreen";
 import UpdateQuoteModal from "../src/components/UpdateQuoteModal";
 import { isLoggedIn } from "../src/utils/login";
 import { LoginState } from "../src/types/login";
+import CSSConstants from "../src/constants/CSSConstants";
 
 // Add all third-party CSS here
 import "@fortawesome/fontawesome-free/css/all.css";
@@ -90,7 +91,7 @@ function MyApp(props) {
                   top: 0;
                   left: 0;
                   height: 100%;
-                  width: 80px;
+                  width: ${CSSConstants.sideNavBarWidth};
                   z-index: 1;
                 }
                 .bodyContainer {
