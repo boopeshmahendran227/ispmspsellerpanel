@@ -1,17 +1,16 @@
 import moment from "moment";
-import Feedback from "../../src/components/Feedback";
 import _ from "lodash";
 import { formatPrice, formatAddress, formatNumber } from "../../src/utils/misc";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import Loader from "../../src/components/Loader";
-import { OrderItemInterface } from "../../src/types/order";
-import { InvoiceDetailInterface } from "../../src/types/invoice";
+import { OrderItemInterface, OrderStatus } from "../../src/types/order";
+import { InvoiceDetailInterface, InvoiceStatus } from "../../src/types/invoice";
 import WithAuth from "../../src/components/WithAuth";
 import PageError from "../../src/components/PageError";
-import LogoIcon from "../../public/icons/logo2.png";
-import { DiscountType } from "../../src/types/discount";
+import LogoIcon from "../../public/icons/logo.png";
 import CSSConstants from "../../src/constants/CSSConstants";
+import classNames from "classnames";
 
 const Invoice = () => {
   const router = useRouter();
@@ -30,13 +29,12 @@ const Invoice = () => {
   const order = invoice.order;
   const shippingFee = order.items[0].metadata.shipmentFeePerSeller;
 
-  const isCreditPending = order.discountSplits.some(
-    (discount) => discount.discountType === DiscountType.CreditAmount
-  );
   const subTotal = _.chain(order.items)
     .map((item) => item.discountedPrice)
     .sum()
     .value();
+
+  const showWaterMark = invoice.invoiceStatus === InvoiceStatus.Pending;
 
   return (
     <section className="container">
@@ -109,8 +107,13 @@ const Invoice = () => {
                 const discount = item.totalDiscount;
                 const finalAmount = item.discountedPrice;
 
+                const classes = classNames({
+                  cancelledOrder:
+                    item.orderItemStatus === OrderStatus.CancelCompleted,
+                });
+
                 return (
-                  <tr key={index}>
+                  <tr className={classes} key={index}>
                     <td></td>
                     <td className="productInfo">
                       <div className="productName">{productName}</div>
@@ -132,8 +135,10 @@ const Invoice = () => {
                       {formatPrice(tax)}
                       <div className="taxSplitContainer">
                         {item.taxDetails.taxSplits.map((taxSplit) => (
-                          <div className="taxSplit">
-                            <span className="name">{taxSplit.taxName}:</span>
+                          <div key={taxSplit.taxId} className="taxSplit">
+                            <span className="name">
+                              {taxSplit.taxName} ({taxSplit.taxPercentage}%) :
+                            </span>
                             <span className="value">
                               {formatPrice(taxSplit.taxAmountPaid)}
                             </span>
@@ -160,8 +165,8 @@ const Invoice = () => {
                 <td>Shipping Fee</td>
                 <td>{formatPrice(shippingFee)}</td>
               </tr>
-              {order.discountSplits.map((discount) => (
-                <tr className="discount">
+              {order.discountSplits.map((discount, index) => (
+                <tr key={index} className="discount">
                   <td>{discount.discountType}</td>
                   <td>- {formatPrice(discount.discountAmount)}</td>
                 </tr>
@@ -173,17 +178,16 @@ const Invoice = () => {
           <div>Net Total </div>
           <div className="total">{formatPrice(order.totalPrice)}</div>
         </section>
-        <Feedback orderId={order.id} />
       </div>
       <footer>
-        <img className="logoContainer" src={LogoIcon} />
+        <img className="logoContainer" src={LogoIcon} alt="logo" />
         <div>
           <div className="line">Thank You for shopping with us!!</div>
         </div>
       </footer>
-      {isCreditPending && (
-        <div className="pendingContainer">
-          <div className="pending">
+      {showWaterMark && (
+        <div className="waterMarkContainer">
+          <div className="waterMark">
             <div className="text">Pending</div>
             <div className="subText">(Credit Not Settled)</div>
           </div>
@@ -199,6 +203,10 @@ const Invoice = () => {
           display: flex;
           flex-direction: column;
           min-height: 100vh;
+        }
+        .cancelledOrder {
+          color: ${CSSConstants.dangerColor};
+          text-decoration: solid line-through ${CSSConstants.dangerColor};
         }
         .title {
           font-size: 2.5rem;
@@ -217,26 +225,26 @@ const Invoice = () => {
         .sellerSection {
           max-width: 300px;
         }
-        .pendingContainer {
+        .waterMarkContainer {
           position: absolute;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
         }
-        .pending {
+        .waterMark {
           transform: rotate(-25deg);
           border: 2px solid ${CSSConstants.warningColor};
           border-radius: 0.8em;
           padding: 0.4em 1.2em;
         }
-        .pending .text {
+        .waterMark .text {
           font-size: 2.5rem;
           text-transform: uppercase;
           letter-spacing: 1px;
           color: ${CSSConstants.warningColor};
           font-weight: bold;
         }
-        .pending .subText {
+        .waterMark .subText {
           text-align: center;
           font-size: 1.3rem;
           color: ${CSSConstants.secondaryTextColor};

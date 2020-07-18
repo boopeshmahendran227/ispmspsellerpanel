@@ -23,6 +23,7 @@ export interface InvoiceDetailInterface {
   invoiceId: number;
   invoiceNumber: string;
   order: OrderDetailInterface;
+  invoiceStatus: InvoiceStatus;
   businessDetails: {
     name: string;
     gstin: string;
@@ -33,7 +34,7 @@ export interface InvoiceDetailInterface {
     mobile: string;
     email: string;
   };
-  businessAddress:AddressInterface;
+  businessAddress: AddressInterface;
 }
 
 export enum InvoiceStatus {
