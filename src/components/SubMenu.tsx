@@ -54,12 +54,13 @@ const SubMenu = (props: SubMenuProps) => {
           z-index: -1;
           margin-left: ${CSSConstants.sideNavBarWidth};
           transform: translateX(-110%);
-          transition: transform 0.3s;
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
             0 1px 2px rgba(0, 0, 0, 0.24);
+          transition: transform 0.13s cubic-bezier(0, 0, 0.3, 1);
         }
         .container.open {
           transform: translateX(0%);
+          transition: transform 0.33s cubic-bezier(0, 0, 0.3, 1);
         }
         .closeBtn {
           position: absolute;

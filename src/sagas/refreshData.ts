@@ -4,6 +4,7 @@ import {
   REJECT_QUOTE_SUCCESS,
   ADD_ATTRIBUTE_SUCCESS,
   ADD_ATTRIBUTE_VALUE_SUCCESS,
+  UPDATE_CREDITS_SUCCESS,
 } from "../constants/ActionTypes";
 import { take, all, put, call } from "redux-saga/effects";
 import OrderActions from "../actions/order";
@@ -32,6 +33,18 @@ function* refreshAttributes() {
   }
 }
 
+function* refreshInvoice() {
+  while (true) {
+    yield take(UPDATE_CREDITS_SUCCESS);
+    yield call(mutate, `/invoice`);
+  }
+}
+
 export default function* () {
-  yield all([refreshOrder(), refreshQuote(), refreshAttributes()]);
+  yield all([
+    refreshOrder(),
+    refreshQuote(),
+    refreshAttributes(),
+    refreshInvoice(),
+  ]);
 }
