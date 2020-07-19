@@ -130,7 +130,11 @@ const SideNavBar = () => {
               {item.hasSubMenu ? (
                 <a
                   className={classNames({ active: index === activeIndex })}
-                  onClick={() => setCurrentOpenIndex(index)}
+                  onClick={() =>
+                    setCurrentOpenIndex(
+                      currentOpenIndex !== index ? index : null
+                    )
+                  }
                 >
                   {item.icon}
                   <span>{item.name}</span>
