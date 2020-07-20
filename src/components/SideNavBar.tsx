@@ -25,11 +25,17 @@ const menuTree: MenuTreeItem[] = [
     name: "Sales",
     hasSubMenu: true,
     matchFunc: (path) =>
-      path.includes("/order") || path.includes("customerinvoice"),
+      path.includes("/order") ||
+      path.includes("customerinvoice") ||
+      path.includes("/quote"),
     subMenuItems: [
       {
         name: "Order",
         href: "/order",
+      },
+      {
+        name: "Quotes",
+        href: "/quote",
       },
       {
         name: "Invoices",
@@ -61,12 +67,6 @@ const menuTree: MenuTreeItem[] = [
     matchFunc: (path) => path.includes("/customer"),
   },
   {
-    name: "Quotes",
-    href: "/quote",
-    icon: <i className="fas fa-clipboard-list" aria-hidden="true"></i>,
-    matchFunc: (path) => path.includes("/quote"),
-  },
-  {
     name: "Discounts",
     hasSubMenu: true,
     subMenuItems: [
@@ -85,16 +85,20 @@ const menuTree: MenuTreeItem[] = [
     matchFunc: (path) => path.includes("/insights"),
   },
   {
-    name: "Visits",
-    href: "/visit",
-    icon: <i className="fas fa-calendar-alt" aria-hidden="true"></i>,
-    matchFunc: (path) => path.includes("/visit"),
-  },
-  {
-    name: "Test Rides",
-    href: "/testdrive",
-    icon: <i className="fas fa-motorcycle" aria-hidden="true"></i>,
-    matchFunc: (path) => path.includes("/testdrive"),
+    name: "Others",
+    hasSubMenu: true,
+    subMenuItems: [
+      {
+        name: "Showroom Visits",
+        href: "/visit",
+      },
+      {
+        name: "Test Rides",
+        href: "/testdrive",
+      },
+    ],
+    icon: <i className="fa fa-ellipsis-h" aria-hidden="true"></i>,
+    matchFunc: (path) => path.includes("/visit") || path.includes("/testdrive"),
   },
 ];
 
