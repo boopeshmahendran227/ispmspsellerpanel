@@ -33,8 +33,8 @@ const SubMenu = (props: SubMenuProps) => {
         <img src={CloseIcon} onClick={onClose} />
       </a>
       <ul className="subMenuItemContainer">
-        {items.map((item) => (
-          <li className="subMenuItem" onClick={onClose}>
+        {items.map((item, index) => (
+          <li key={index} className="subMenuItem" onClick={onClose}>
             <Link href={item.href}>
               <a>{item.name}</a>
             </Link>
