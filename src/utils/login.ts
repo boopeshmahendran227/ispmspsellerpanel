@@ -11,7 +11,7 @@ const redirectToLogin = () => {
 
 // Should be called only on client side
 const isLoggedIn = () => {
-  return api("/auth/seller")
+  return api("/auth/verify/token/seller")
     .then((res) => {
       return true;
     })
