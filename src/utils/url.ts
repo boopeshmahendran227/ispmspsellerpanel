@@ -6,6 +6,7 @@ const {
   istakapazaApiUrl,
   notificationApiUrl,
   cdnUrl,
+  appInsightsKey,
 } = publicRuntimeConfig;
 
 const getIstakapazaApiUrl = () => {
@@ -39,4 +40,14 @@ const getProductImageUrl = (relativePath) => {
   return encodeURI(cdnUrl + "/" + relativePath);
 };
 
-export { getProductUrl, getProductImageUrl, getApiUrl, getIstakapazaApiUrl };
+const getAppInsightsKey = (): string => {
+  return appInsightsKey;
+};
+
+export {
+  getProductUrl,
+  getProductImageUrl,
+  getApiUrl,
+  getIstakapazaApiUrl,
+  getAppInsightsKey,
+};

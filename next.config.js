@@ -6,6 +6,7 @@ const getConfig = () => {
         istakapazaApiUrl: "https://ispdev.istakapaza.com",
         notificationApiUrl: "https://mplnotifydev.istakapaza.com",
         cdnUrl: "https://mpldev.cdn.istakapaza.com",
+        appInsightsKey: "09aa067a-855b-4a40-8f4f-91c5fc0812be",
       };
     case "dev":
       return {
@@ -13,6 +14,7 @@ const getConfig = () => {
         istakapazaApiUrl: "https://ispdev.istakapaza.com",
         notificationApiUrl: "https://mplnotifydev.istakapaza.com",
         cdnUrl: "https://mpldev.cdn.istakapaza.com",
+        appInsightsKey: "09aa067a-855b-4a40-8f4f-91c5fc0812be",
       };
     case "stage":
       return {
@@ -20,6 +22,7 @@ const getConfig = () => {
         istakapazaApiUrl: "https://test.istakapaza.com",
         notificationApiUrl: "https://mplnotifysit.istakapaza.com",
         cdnUrl: "https://mpldev.cdn.istakapaza.com",
+        appInsightsKey: "09aa067a-855b-4a40-8f4f-91c5fc0812be",
       };
     case "prod":
       return {
@@ -27,6 +30,7 @@ const getConfig = () => {
         istakapazaApiUrl: "https://istakapaza.com",
         notificationApiUrl: "https://mplnotify.istakapaza.com",
         cdnUrl: "https://ispmpl.cdn.istakapaza.com",
+        appInsightsKey: "d17a1f4b-6a85-4c33-98dc-e129cae29921",
       };
   }
 };
