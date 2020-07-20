@@ -213,8 +213,8 @@ export interface TaxGroupInterface {
 
 export const ProductSchema = Yup.object().shape({
   name: Yup.string().required(),
-  shortDescription: Yup.string().required(),
-  longDescription: Yup.string().min(20).required(),
+  shortDescription: Yup.string().max(250).required(),
+  longDescription: Yup.string().min(20).max(1000).required(),
   brand: Yup.object().required("Brand is required").nullable(),
   defaultCategory: Yup.object()
     .required("Default Category is required")
