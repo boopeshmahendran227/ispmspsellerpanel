@@ -146,7 +146,19 @@ const Invoice = () => {
                         ))}
                       </div>
                     </td>
-                    <td>{formatPrice(discount)}</td>
+                    <td>
+                      {formatPrice(discount)}
+                      {item.loanDetail && (
+                        <div style={{ maxWidth: "180px", margin: "auto" }}>
+                          (
+                          <span>
+                            Includes Loan Availed From{" "}
+                            {item.loanDetail.providerName}:{" "}
+                          </span>
+                          {formatPrice(item.loanDetail.loanAmountChosen)})
+                        </div>
+                      )}
+                    </td>
                     <td>{formatPrice(finalAmount)}</td>
                   </tr>
                 );
