@@ -60,6 +60,15 @@ const CreateCoupon = (props: CreateCouponProps) => {
           ) {
             errors.discountPercentage = "Discount Percentage is required";
           }
+          if (values.startDate === null) {
+            errors.startDate = "Invalid Date";
+          }
+          if (
+            values.endDate === null ||
+            values.endDate.isBefore(values.startDate)
+          ) {
+            errors.endDate = "Invalid Date";
+          }
           return errors;
         }}
         onSubmit={onSubmit}
