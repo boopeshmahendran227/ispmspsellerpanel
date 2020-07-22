@@ -45,41 +45,63 @@ const ShippingInformationContainer = (
       values.expectedDeliveryDate.format()
     );
   };
-
+  const currentStatus = orderItem.orderItemStatus;
   return (
     <div className="container">
       <header>Shipping Information</header>
       <div className="body">
-        <Formik
-          initialValues={{
-            providerName: orderItem.shipment.providerName || "",
-            trackingCode: orderItem.shipment.trackingCode || "",
-            expectedDeliveryDate: moment(
-              orderItem.shipment.expectedDeliveryDate === "0001-01-01T00:00:00"
-                ? undefined
-                : orderItem.shipment.expectedDeliveryDate
-            ),
-          }}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}
-          enableReinitialize={true}
-        >
-          {() => (
-            <Form>
-              <div className="gridContainer">
-                <InputLabel label="Provider Name" />
-                <FieldInput name="providerName" />
-                <InputLabel label="Tracking Code" />
-                <FieldInput name="trackingCode" />
-                <InputLabel label="Expected Delivery Date" />
-                <FieldDatePicker name="expectedDeliveryDate" />
-              </div>
-              <div>
-                <Button isSubmitButton={true}>Update</Button>
-              </div>
-            </Form>
-          )}
-        </Formik>
+        {currentStatus === "ShippingCompleted" ||
+        currentStatus === "CancelCompleted" ||
+        currentStatus === "CancelAutoApproved" ||
+        currentStatus === "ReturnCompleted" ||
+        currentStatus === "Completed" ? (
+          <table className="shipmentContainer">
+            <tbody>
+              <tr>
+                <td> Provider Name:</td>
+                <td> {orderItem.shipment.providerName || "Not available"}</td>
+              </tr>
+              <tr>
+                <td>Tracking Code:</td>
+                <td>{orderItem.shipment.trackingCode || "Not available"}</td>
+              </tr>
+            </tbody>
+          </table>
+        ) : (
+          <div>
+            <Formik
+              initialValues={{
+                providerName: orderItem.shipment.providerName || "",
+                trackingCode: orderItem.shipment.trackingCode || "",
+                expectedDeliveryDate: moment(
+                  orderItem.shipment.expectedDeliveryDate ===
+                    "0001-01-01T00:00:00"
+                    ? undefined
+                    : orderItem.shipment.expectedDeliveryDate
+                ),
+              }}
+              onSubmit={handleSubmit}
+              validationSchema={validationSchema}
+              enableReinitialize={true}
+            >
+              {() => (
+                <Form>
+                  <div className="gridContainer">
+                    <InputLabel label="Provider Name" />
+                    <FieldInput name="providerName" />
+                    <InputLabel label="Tracking Code" />
+                    <FieldInput name="trackingCode" />
+                    <InputLabel label="Expected Delivery Date" />
+                    <FieldDatePicker name="expectedDeliveryDate" />
+                  </div>
+                  <div>
+                    <Button isSubmitButton={true}>Update</Button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
+          </div>
+        )}
       </div>
       <style jsx>{`
         .container {
@@ -92,6 +114,9 @@ const ShippingInformationContainer = (
           font-weight: bold;
           font-size: 1.3rem;
           margin-bottom: 0.7em;
+        }
+        .shipmentContainer {
+          font-size: 1.1rem;
         }
         .gridContainer {
           display: grid;
