@@ -9,6 +9,7 @@ import CSSConstants from "../constants/CSSConstants";
 import { connect } from "react-redux";
 import OrderActions from "../actions/order";
 import { OrderItemInterface } from "../types/order";
+import { isCompletedOrderStatus } from "../utils/order";
 
 const validationSchema = Yup.object().shape({
   providerName: Yup.string().required("Provider Name is required"),
@@ -45,16 +46,12 @@ const ShippingInformationContainer = (
       values.expectedDeliveryDate.format()
     );
   };
-  const currentStatus = orderItem.orderItemStatus;
+  
   return (
     <div className="container">
       <header>Shipping Information</header>
       <div className="body">
-        {currentStatus === "ShippingCompleted" ||
-        currentStatus === "CancelCompleted" ||
-        currentStatus === "CancelAutoApproved" ||
-        currentStatus === "ReturnCompleted" ||
-        currentStatus === "Completed" ? (
+        {isCompletedOrderStatus(orderItem.orderItemStatus)? (
           <table className="shipmentContainer">
             <tbody>
               <tr>
