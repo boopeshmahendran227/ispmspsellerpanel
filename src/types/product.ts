@@ -270,8 +270,8 @@ export const ProductSchema = Yup.object().shape({
   ),
   faqs: Yup.array().of(
     Yup.object().shape({
-      question: Yup.string().required("required"),
-      answer: Yup.string().required("required"),
+      question: Yup.string().required("Question is required"),
+      answer: Yup.string().required("Answer is required"),
     })
   ),
   taxGroup: Yup.object().required("Tax group is required").nullable(),
