@@ -68,11 +68,21 @@ const isShippingOrderStatus = (status: OrderStatus) => {
 };
 
 const isPendingOrderStatus = (status: OrderStatus) => {
-  return (
-    status === OrderStatus.PaymentSuccess ||
-    status === OrderStatus.PaymentOnDelivery ||
-    status === OrderStatus.SellerProcessing
-  );
+  return [
+    OrderStatus.PaymentSuccess,
+    OrderStatus.PaymentOnDelivery,
+    OrderStatus.SellerProcessing,
+  ].includes(status);
+};
+
+const isCompletedOrderStatus = (currentStatus: OrderStatus) => {
+  return [
+    OrderStatus.ShippingCompleted,
+    OrderStatus.CancelCompleted,
+    OrderStatus.CancelAutoApproved,
+    OrderStatus.ReturnCompleted,
+    OrderStatus.Completed,
+  ].includes(currentStatus);
 };
 
 export {
@@ -84,4 +94,5 @@ export {
   isCancelledOrderStatus,
   isShippingOrderStatus,
   isPendingOrderStatus,
+  isCompletedOrderStatus,
 };
