@@ -61,13 +61,13 @@ const CreateCoupon = (props: CreateCouponProps) => {
             errors.discountPercentage = "Discount Percentage is required";
           }
           if (values.startDate === null) {
-            errors.startDate = "Invalid Date";
+            errors.startDate = "Start date cannot be a past date";
           }
-          if (
-            values.endDate === null ||
-            values.endDate.isBefore(values.startDate)
-          ) {
-            errors.endDate = "Invalid Date";
+          if (values.endDate === null) {
+            errors.endDate = "End date cannot be a past date";
+          }
+          if (values.endDate.isBefore(values.startDate)) {
+            errors.endDate = "End Date should be greater than start date";
           }
           return errors;
         }}
