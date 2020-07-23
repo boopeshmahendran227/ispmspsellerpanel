@@ -95,7 +95,7 @@ function MyApp(props) {
                   z-index: 1;
                 }
                 .bodyContainer {
-                  margin-left: calc(80px + 0.7em);
+                  margin-left: calc(${CSSConstants.sideNavBarWidth} + 0.7em);
                   margin-right: 0.7em;
                 }
               `}</style>
