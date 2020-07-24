@@ -1,4 +1,4 @@
-import Link from "./Link";
+import Link from "next/link";
 import CSSConstants from "../constants/CSSConstants";
 import Chroma from "chroma-js";
 import SubMenu, { SubMenuItemInterface } from "./SubMenu";

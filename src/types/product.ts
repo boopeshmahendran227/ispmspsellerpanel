@@ -233,7 +233,7 @@ export const ProductSchema = Yup.object().shape({
   maxPrice: Yup.number()
     .typeError("Max price must be a number")
     .positive("Max price must be greater than 0")
-    .required(),
+    .required().moreThan(Yup.ref("minPrice"), "Max price must be greater than min price"),
   skus: Yup.array()
     .of(
       Yup.object().shape({
@@ -272,10 +272,10 @@ export const ProductSchema = Yup.object().shape({
         .max(100, "Discount Percentage should be less than 100"),
     })
   ),
-  productFaqs: Yup.array().of(
+  faqs: Yup.array().of(
     Yup.object().shape({
-      question: Yup.string().required(),
-      answer: Yup.string().required(),
+      question: Yup.string().required("Question is required"),
+      answer: Yup.string().required("Answer is required"),
     })
   ),
   taxGroup: Yup.object().required("Tax group is required").nullable(),

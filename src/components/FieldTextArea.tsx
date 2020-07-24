@@ -36,6 +36,7 @@ const FieldTextArea = (props: FieldTextAreaProps) => {
               padding: 0.3em;
               resize: none;
               width: 100%;
+              font-family: Lato;
             }
           `}</style>
         </div>
