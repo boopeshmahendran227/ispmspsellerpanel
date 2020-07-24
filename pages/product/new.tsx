@@ -35,7 +35,7 @@ import { BusinessDataInterface } from "../../src/types/business";
 import EcosystemOption from "../../src/components/EcosystemOption";
 import WithAuth from "../../src/components/WithAuth";
 import FieldPriceInput from "../../src/components/FieldPriceInput";
-import listOfCountries from "../../src/utils/listOfCountries";
+import listOfCountries from "../../src/data/listOfCountries";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -177,8 +177,8 @@ const AddProduct = (props: AddProductProps) => {
                 <FieldSelect
                   name="countryOfOrigin"
                   options={listOfCountries.map((country) => ({
-                    value: country.name,
-                    label: country.name,
+                    value: country,
+                    label: country,
                   }))}
                 />
                 <InputLabel label="Special Discount Value" />
