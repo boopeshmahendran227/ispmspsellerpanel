@@ -35,6 +35,7 @@ import { BusinessDataInterface } from "../../src/types/business";
 import EcosystemOption from "../../src/components/EcosystemOption";
 import WithAuth from "../../src/components/WithAuth";
 import FieldPriceInput from "../../src/components/FieldPriceInput";
+import listOfCountries from "../../src/utils/listOfCountries";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -71,7 +72,7 @@ const AddProduct = (props: AddProductProps) => {
   const businessData: BusinessDataInterface = businessSWR.data;
 
   const categories = flattenCategoryTree(categoryTree);
-
+  console.log(brands);
   const error =
     brandSWR.error ||
     attributeSWR.error ||
@@ -105,6 +106,7 @@ const AddProduct = (props: AddProductProps) => {
             minPrice: 0,
             maxPrice: 0,
             brand: null,
+            countryOfOrigin: null,
             tierPrices: [],
             faqs: [],
             specification: {
@@ -170,6 +172,14 @@ const AddProduct = (props: AddProductProps) => {
                   options={brands.map((brand) => ({
                     value: brand.id,
                     label: brand.name,
+                  }))}
+                />
+                <InputLabel label="Country of Origin" />
+                <FieldSelect
+                  name="countryOfOrigin"
+                  options={listOfCountries.map((country) => ({
+                    value: country.name,
+                    label: country.name,
                   }))}
                 />
                 <InputLabel label="Special Discount Value" />
