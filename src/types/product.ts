@@ -54,6 +54,7 @@ export interface ProductInputInterface {
   minPrice: number;
   maxPrice: number;
   brand: SelectOptionInterface;
+  countryOfOrigin: SelectOptionInterface;
   tierPrices: TierPriceInterface[];
   faqs: FAQInterface[];
   categories: SelectOptionInterface[];
@@ -216,6 +217,9 @@ export const ProductSchema = Yup.object().shape({
   shortDescription: Yup.string().max(250).required(),
   longDescription: Yup.string().min(20).max(1000).required(),
   brand: Yup.object().required("Brand is required").nullable(),
+  countryOfOrigin: Yup.object()
+    .required("Country of origin is required")
+    .nullable(),
   defaultCategory: Yup.object()
     .required("Default Category is required")
     .nullable(),
@@ -229,7 +233,7 @@ export const ProductSchema = Yup.object().shape({
   maxPrice: Yup.number()
     .typeError("Max price must be a number")
     .positive("Max price must be greater than 0")
-    .required(),
+    .required().moreThan(Yup.ref("minPrice"), "Max price must be greater than min price"),
   skus: Yup.array()
     .of(
       Yup.object().shape({
