@@ -18,8 +18,6 @@ import useSWR from "swr";
 import Loader from "../../src/components/Loader";
 import AttributeModal from "../../src/components/AttributeModal";
 import SkuModal from "../../src/components/SkuModal";
-import TierPriceInput from "../../src/components/TierpriceInput";
-import FAQInput from "../../src/components/FAQInput";
 import SpecificationInput from "../../src/components/SpecificationInput";
 import { flattenCategoryTree } from "../../src/utils/categoryTree";
 import InputLabel from "../../src/components/InputLabel";
@@ -35,6 +33,8 @@ import { BusinessDataInterface } from "../../src/types/business";
 import EcosystemOption from "../../src/components/EcosystemOption";
 import WithAuth from "../../src/components/WithAuth";
 import FieldPriceInput from "../../src/components/FieldPriceInput";
+import FAQInput from "../../src/components/FAQInput";
+import TierPriceInput from "../../src/components/TierpriceInput";
 
 interface StateProps {
   skus: ProductSkuDetail[];
