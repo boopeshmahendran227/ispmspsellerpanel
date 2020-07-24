@@ -1,6 +1,5 @@
 import Button from "./Button";
 import { FieldArray, useFormikContext, ArrayHelpers } from "formik";
-import { ProductInputInterface } from "../types/product";
 import CSSConstants from "../constants/CSSConstants";
 
 interface FieldEditableArrayProps {
@@ -12,11 +11,11 @@ interface FieldEditableArrayProps {
 }
 
 const FieldEditableArray = (props: FieldEditableArrayProps) => {
-  const values:object = useFormikContext<object>().values;
+  const values: object = useFormikContext<object>().values;
 
-  const dataList:any[] = values[props.name];
+  const dataList: any[] = values[props.name];
 
-  const handleDelete = (arrayHelpers:ArrayHelpers, index: number) => {
+  const handleDelete = (arrayHelpers: ArrayHelpers, index: number) => {
     arrayHelpers.remove(index);
   };
   return (
