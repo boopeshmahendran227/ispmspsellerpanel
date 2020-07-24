@@ -36,6 +36,7 @@ function* addProduct(action) {
         minPrice: product.minPrice,
         specialDiscountValue: product.specialDiscountValue,
         brandId: product.brand.value,
+        countryOfOrigin: product.countryOfOrigin.value,
         defaultCategoryId: product.defaultCategory.value,
         parentCategoryIds: product.categories.map((category) => category.value),
         skuDetails: product.skus.map((sku) => ({
