@@ -72,7 +72,6 @@ const AddProduct = (props: AddProductProps) => {
   const businessData: BusinessDataInterface = businessSWR.data;
 
   const categories = flattenCategoryTree(categoryTree);
-  console.log(brands);
   const error =
     brandSWR.error ||
     attributeSWR.error ||
