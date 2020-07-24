@@ -1,24 +1,22 @@
 import Button from "./Button";
-import { FieldArray, useFormikContext } from "formik";
+import { FieldArray, useFormikContext, ArrayHelpers } from "formik";
 import { ProductInputInterface } from "../types/product";
 import CSSConstants from "../constants/CSSConstants";
 
-interface FeildEditableArrayProps {
+interface FieldEditableArrayProps {
   title: string;
   headers: string[];
   name: string;
-  handleAdd: (arrayHelpers: object) => void;
-  renderBody: (index: number) => React.ReactNode;
+  handleAdd: (arrayHelpers: ArrayHelpers) => void;
+  renderInputRow: (index: number) => React.ReactNode;
 }
 
-const FeildEditableArray = (props: FeildEditableArrayProps) => {
-  const values: ProductInputInterface = useFormikContext<
-    ProductInputInterface
-  >().values;
+const FieldEditableArray = (props: FieldEditableArrayProps) => {
+  const values:object = useFormikContext<object>().values;
 
-  const value = values[props.name];
+  const dataList:any[] = values[props.name];
 
-  const handleDelete = (arrayHelpers, index: number) => {
+  const handleDelete = (arrayHelpers:ArrayHelpers, index: number) => {
     arrayHelpers.remove(index);
   };
   return (
@@ -31,14 +29,14 @@ const FeildEditableArray = (props: FeildEditableArrayProps) => {
             <table>
               <thead>
                 <tr>
-                  {value.length > 0 &&
+                  {dataList.length > 0 &&
                     props.headers.map((header) => <th>{header}</th>)}
                 </tr>
               </thead>
               <tbody>
-                {value.map((item, index) => (
+                {dataList.map((item, index) => (
                   <tr>
-                    {props.renderBody(index)}
+                    {props.renderInputRow(index)}
                     <td>
                       <button
                         type="button"
@@ -53,7 +51,7 @@ const FeildEditableArray = (props: FeildEditableArrayProps) => {
             </table>
             <div className="buttonContainer">
               <Button onClick={() => props.handleAdd(arrayHelpers)}>
-                {value.length === 0
+                {dataList.length === 0
                   ? `Add ${props.title}`
                   : `Add one more ${props.title}`}
               </Button>
@@ -81,4 +79,4 @@ const FeildEditableArray = (props: FeildEditableArrayProps) => {
   );
 };
 
-export default FeildEditableArray;
+export default FieldEditableArray;
