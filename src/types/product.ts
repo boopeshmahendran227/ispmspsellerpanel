@@ -229,7 +229,7 @@ export const ProductSchema = Yup.object().shape({
   maxPrice: Yup.number()
     .typeError("Max price must be a number")
     .positive("Max price must be greater than 0")
-    .required(),
+    .required().moreThan(Yup.ref("minPrice"), "Max price must be greater than min price"),
   skus: Yup.array()
     .of(
       Yup.object().shape({
