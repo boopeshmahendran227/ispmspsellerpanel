@@ -18,8 +18,6 @@ import useSWR from "swr";
 import Loader from "../../src/components/Loader";
 import AttributeModal from "../../src/components/AttributeModal";
 import SkuModal from "../../src/components/SkuModal";
-import TierPriceInput from "../../src/components/TierpriceInput";
-import FAQInput from "../../src/components/FAQInput";
 import SpecificationInput from "../../src/components/SpecificationInput";
 import { flattenCategoryTree } from "../../src/utils/categoryTree";
 import InputLabel from "../../src/components/InputLabel";
@@ -35,6 +33,9 @@ import { BusinessDataInterface } from "../../src/types/business";
 import EcosystemOption from "../../src/components/EcosystemOption";
 import WithAuth from "../../src/components/WithAuth";
 import FieldPriceInput from "../../src/components/FieldPriceInput";
+import FieldEditableArray from "../../src/components/FieldEditableArray";
+import FieldNumInput from "../../src/components/FieldNumInput";
+import FieldPercentageInput from "../../src/components/FieldPercentageInput";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -89,6 +90,54 @@ const AddProduct = (props: AddProductProps) => {
 
   const onSubmit = (values: ProductInputInterface) => {
     props.addProduct(values);
+  };
+  const addTierPrice = (arrayHelpers) => {
+    arrayHelpers.push({
+      minQty: 0,
+      discountPercentage: 0,
+    });
+  };
+  const renderTierPriceBody = (index) => {
+    return (
+      <>
+        <td>{index + 1}</td>
+        <td>
+          <FieldNumInput name={`tierPrices.${index}.minQty`} />
+        </td>
+        <td>
+          <FieldPercentageInput
+            name={`tierPrices.${index}.discountPercentage`}
+          />
+        </td>
+      </>
+    );
+  };
+  const addFaq = (arrayHelpers) => {
+    arrayHelpers.push({
+      question: "",
+      answer: "",
+    });
+  };
+
+  const renderFaqBody = (index) => {
+    return (
+      <>
+        <td>{index + 1}</td>
+        <td>
+          <FieldTextArea name={`faqs.${index}.question`} />
+        </td>
+        <td>
+          <FieldTextArea name={`faqs.${index}.answer`} />
+        </td>
+        <style jsx>
+          {`
+            td {
+              font-family: Lato;
+            }
+          `}
+        </style>
+      </>
+    );
   };
 
   return (
@@ -198,8 +247,20 @@ const AddProduct = (props: AddProductProps) => {
                 />
               </div>
               <SkuInputTable />
-              <TierPriceInput />
-              <FAQInput />
+              <FieldEditableArray
+                title="Tier Price"
+                headers={["s.no", "MinQty", "Discount Percentage"]}
+                name="tierPrices"
+                handleAdd={addTierPrice}
+                renderBody={renderTierPriceBody}
+              />
+              <FieldEditableArray
+                title="FAQ"
+                headers={["s.no", "Question", "Answer"]}
+                name="faqs"
+                handleAdd={addFaq}
+                renderBody={renderFaqBody}
+              />
               <SpecificationInput />
               <div className="buttonContainer">
                 <Button type={ButtonType.success} isSubmitButton={true}>
