@@ -1,21 +1,9 @@
-import Button from "./Button";
-import { FieldArray, useFormikContext, ErrorMessage } from "formik";
-import {
-  SpecificationInterface,
-  ProductInputInterface,
-} from "../types/product";
 import InputLabel from "./InputLabel";
 import CSSConstants from "../constants/CSSConstants";
 import FieldInput from "./FieldInput";
-import ValidationErrorMsg from "./ValidationErrorMsg";
+import FieldEditableArray from "./FieldEditableArray";
 
 const SpecificationInput = () => {
-  const values: ProductInputInterface = useFormikContext<
-    ProductInputInterface
-  >().values;
-
-  const specification: SpecificationInterface = values.specification;
-
   const handleAddSpecGroup = (arrayHelpers) => {
     arrayHelpers.push({
       name: "",
@@ -30,118 +18,43 @@ const SpecificationInput = () => {
     });
   };
 
-  const handleDeleteSpecItem = (arrayHelpers, index: number) => {
-    arrayHelpers.remove(index);
-  };
-
-  const handleDeleteSpecItemGroup = (arrayHelpers, index: number) => {
-    arrayHelpers.remove(index);
-  };
-
   return (
     <div className="container">
       <header>Specification</header>
-      <FieldArray
+      <FieldEditableArray
         name="specification.itemGroups"
-        render={(arrayHelpers) => (
-          <div className="inputContainer">
-            {specification.itemGroups.length > 0 &&
-              specification.itemGroups.map((group, groupIndex) => (
-                <div className="specGroupContainer">
-                  <div className="specGroupInput">
-                    <InputLabel label="Group name" />
-                    <FieldInput
-                      name={`specification.itemGroups.${groupIndex}.name`}
-                    />
-                    <button
-                      type="button"
-                      onClick={() =>
-                        handleDeleteSpecItemGroup(arrayHelpers, groupIndex)
-                      }
-                    >
-                      <i className="fa fa-trash" aria-hidden="true" />
-                    </button>
-                  </div>
-                  <FieldArray
-                    name={`specification.itemGroups.${groupIndex}.items`}
-                    render={(arrayHelpers) => (
-                      <>
-                        {group.items.length > 0 && (
-                          <table>
-                            <thead>
-                              <tr>
-                                <th>S.no</th>
-                                <th>Key</th>
-                                <th>Value</th>
-                                <th></th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {group.items.map((item, itemIndex) => (
-                                <tr>
-                                  <td>{itemIndex + 1}</td>
-                                  <td>
-                                    <FieldInput
-                                      name={`specification.itemGroups.${groupIndex}.items.${itemIndex}.key`}
-                                    />
-                                  </td>
-                                  <td>
-                                    <FieldInput
-                                      name={`specification.itemGroups.${groupIndex}.items.${itemIndex}.value`}
-                                    />
-                                  </td>
-                                  <td>
-                                    <button
-                                      type="button"
-                                      onClick={() =>
-                                        handleDeleteSpecItem(
-                                          arrayHelpers,
-                                          itemIndex
-                                        )
-                                      }
-                                    >
-                                      <i
-                                        className="fa fa-trash"
-                                        aria-hidden="true"
-                                      />
-                                    </button>
-                                  </td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        )}
-                        <div className="buttonContainer">
-                          <Button
-                            onClick={() => handleAddSpecItem(arrayHelpers)}
-                          >
-                            {group.items.length === 0
-                              ? "Add Specification Item"
-                              : "Add one more Specification Item"}
-                          </Button>
-                        </div>
-                      </>
-                    )}
-                  />
-                  <ErrorMessage
-                    component={ValidationErrorMsg}
-                    name={`specification.itemGroups.${groupIndex}.items`}
-                  />
-                </div>
-              ))}
-            <div className="buttonContainer">
-              <Button onClick={() => handleAddSpecGroup(arrayHelpers)}>
-                {specification.itemGroups.length === 0
-                  ? "Add Specification"
-                  : "Add one more Specification Group"}
-              </Button>
+        headers={[]}
+        renderInputRow={(index) => (
+          <div className="specGroupContainer">
+            <div className="specGroupInput">
+              <InputLabel label="Group name" />
+              <FieldInput name={`specification.itemGroups.${index}.name`} />
             </div>
+            <FieldEditableArray
+              headers={["S.no", "Key", "Value"]}
+              name={`specification.itemGroups.${index}.items`}
+              onAdd={handleAddSpecItem}
+              renderInputRow={(index) => (
+                <>
+                  <td>{index + 1}</td>
+                  <td>
+                    <FieldInput
+                      name={`specification.itemGroups.${index}.items.${index}.key`}
+                    />
+                  </td>
+                  <td>
+                    <FieldInput
+                      name={`specification.itemGroups.${index}.items.${index}.value`}
+                    />
+                  </td>
+                </>
+              )}
+              label="Specification Item"
+            />
           </div>
         )}
-      />
-      <ErrorMessage
-        component={ValidationErrorMsg}
-        name={`specification.itemGroups`}
+        onAdd={handleAddSpecGroup}
+        label="Specification Group"
       />
       <style jsx>{`
         .container {
@@ -156,11 +69,11 @@ const SpecificationInput = () => {
           margin-bottom: 1em;
         }
         .specGroupContainer {
-          margin: 1em 5em;
+          margin-left: 3em;
         }
         .specGroupInput {
           display: grid;
-          grid-template-columns: 200px 200px 100px;
+          grid-template-columns: 200px 200px;
           align-items: center;
           font-size: 1.1rem;
         }

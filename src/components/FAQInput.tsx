@@ -1,6 +1,7 @@
 import FieldTextArea from "./FieldTextArea";
 import FieldEditableArray from "./FieldEditableArray";
 import { ArrayHelpers } from "formik";
+import CSSConstants from "../constants/CSSConstants";
 
 const FAQInput = () => {
   const addFaq = (arrayHelpers: ArrayHelpers) => {
@@ -24,13 +25,25 @@ const FAQInput = () => {
     );
   };
   return (
-    <FieldEditableArray
-      title="FAQ"
-      headers={["S.no", "Question", "Answer"]}
-      name="faqs"
-      handleAdd={addFaq}
-      renderInputRow={renderFaqRow}
-    />
+    <>
+      <header>FAQ</header>
+      <FieldEditableArray
+        headers={["S.no", "Question", "Answer"]}
+        name="faqs"
+        onAdd={addFaq}
+        renderInputRow={renderFaqRow}
+        label="FAQ"
+      />
+      <style jsx>{`
+        header {
+          font-weight: bold;
+          font-size: 1.3rem;
+          border-bottom: 1px solid ${CSSConstants.borderColor};
+          padding: 0.3em;
+          margin-bottom: 1em;
+        }
+      `}</style>
+    </>
   );
 };
 

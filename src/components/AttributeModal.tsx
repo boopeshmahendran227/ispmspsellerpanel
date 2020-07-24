@@ -1,6 +1,6 @@
 import Modal from "./Modal";
 import { connect } from "react-redux";
-import { Formik, Form, FieldArray, ErrorMessage } from "formik";
+import { Formik, Form, ArrayHelpers } from "formik";
 import FieldInput from "../../src/components/FieldInput";
 import FieldTextArea from "../../src/components/FieldTextArea";
 import Button from "../../src/components/Button";
@@ -11,10 +11,10 @@ import UIActions from "../actions/ui";
 import ProductActions from "../actions/product";
 import InputLabel from "./InputLabel";
 import * as Yup from "yup";
-import ValidationErrorMsg from "../components/ValidationErrorMsg";
 import { useRef } from "react";
 import { CategoryInterface } from "../types/category";
 import FieldMultiSelect from "./FieldMultiSelect";
+import FieldEditableArray from "./FieldEditableArray";
 
 interface StateProps {
   open: boolean;
@@ -69,7 +69,7 @@ const AttributeModal = (props: AttributeModalProps) => {
           validationSchema={attributeSchema}
           onSubmit={onSubmit}
         >
-          {({ values, resetForm }) => (
+          {({ resetForm }) => (
             <div className="formContainer">
               <Form>
                 {(resetFormRef.current = resetForm)}
@@ -87,55 +87,22 @@ const AttributeModal = (props: AttributeModalProps) => {
                   <InputLabel label="Description" />
                   <FieldTextArea name="description" />
                   <InputLabel label="Values" />
-                  <div>
-                    <FieldArray
-                      name="values"
-                      render={(arrayHelpers) => (
-                        <>
-                          <table>
-                            {values.values.length > 0 && (
-                              <thead>
-                                <tr>
-                                  <th>S.no</th>
-                                  <th>Value</th>
-                                </tr>
-                              </thead>
-                            )}
-                            <tbody>
-                              {values.values.map((value, index) => (
-                                <tr>
-                                  <td>{index + 1}</td>
-                                  <td>
-                                    <FieldInput name={`values.${index}`} />
-                                  </td>
-                                  <td>
-                                    <button
-                                      type="button"
-                                      onClick={() => arrayHelpers.remove(index)}
-                                    >
-                                      <i
-                                        className="fa fa-trash"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </button>
-                                  </td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                          <div className="addValueButtonContainer">
-                            <Button onClick={() => arrayHelpers.push("")}>
-                              Add Value
-                            </Button>
-                          </div>
-                        </>
-                      )}
-                    />
-                    <ErrorMessage
-                      component={ValidationErrorMsg}
-                      name="values"
-                    />
-                  </div>
+                  <FieldEditableArray
+                    headers={["S.no", "Value"]}
+                    name="values"
+                    onAdd={(arrayHelpers: ArrayHelpers) => {
+                      arrayHelpers.push("");
+                    }}
+                    renderInputRow={(index: number) => (
+                      <>
+                        <td>{index + 1}</td>
+                        <td>
+                          <FieldInput name={`values.${index}`} />
+                        </td>
+                      </>
+                    )}
+                    label="Value"
+                  />
                 </div>
                 <div>
                   <Button isSubmitButton={true}>Submit</Button>

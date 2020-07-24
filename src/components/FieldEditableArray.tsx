@@ -1,19 +1,26 @@
 import Button from "./Button";
-import { FieldArray, useFormikContext, ArrayHelpers } from "formik";
+import {
+  FieldArray,
+  ErrorMessage,
+  useFormikContext,
+  ArrayHelpers,
+} from "formik";
 import CSSConstants from "../constants/CSSConstants";
+import _ from "lodash";
+import ValidationErrorMsg from "./ValidationErrorMsg";
 
 interface FieldEditableArrayProps {
-  title: string;
   headers: string[];
   name: string;
-  handleAdd: (arrayHelpers: ArrayHelpers) => void;
+  onAdd: (arrayHelpers: ArrayHelpers) => void;
   renderInputRow: (index: number) => React.ReactNode;
+  label: string;
 }
 
 const FieldEditableArray = (props: FieldEditableArrayProps) => {
   const values: object = useFormikContext<object>().values;
 
-  const dataList: any[] = values[props.name];
+  const dataList: any[] = _.get(values, props.name);
 
   const handleDelete = (arrayHelpers: ArrayHelpers, index: number) => {
     arrayHelpers.remove(index);
@@ -24,7 +31,6 @@ const FieldEditableArray = (props: FieldEditableArrayProps) => {
       name={props.name}
       render={(arrayHelpers) => (
         <div className="container">
-          <header>{props.title}</header>
           <div className="inputContainer">
             <table>
               <thead>
@@ -37,7 +43,7 @@ const FieldEditableArray = (props: FieldEditableArrayProps) => {
                 {dataList.map((item, index) => (
                   <tr>
                     {props.renderInputRow(index)}
-                    <td>
+                    <td className="deleteContainer">
                       <button
                         type="button"
                         onClick={() => handleDelete(arrayHelpers, index)}
@@ -50,24 +56,22 @@ const FieldEditableArray = (props: FieldEditableArrayProps) => {
               </tbody>
             </table>
             <div className="buttonContainer">
-              <Button onClick={() => props.handleAdd(arrayHelpers)}>
+              <Button onClick={() => props.onAdd(arrayHelpers)}>
                 {dataList.length === 0
-                  ? `Add ${props.title}`
-                  : `Add one more ${props.title}`}
+                  ? `Add ${props.label}`
+                  : `Add one more ${props.label}`}
               </Button>
             </div>
+            <ErrorMessage component={ValidationErrorMsg} name={props.name} />
           </div>
           <style jsx>{`
             .container {
-              margin: 3em 0;
+              margin: 1em 0;
               font-size: 1.1rem;
             }
-            header {
-              font-weight: bold;
-              font-size: 1.3rem;
-              border-bottom: 1px solid ${CSSConstants.borderColor};
-              padding: 0.3em;
-              margin-bottom: 1em;
+            .deleteContainer {
+              padding: 1em 0.3em;
+              vertical-align: top;
             }
             .fa-trash:hover {
               color: ${CSSConstants.warningColor};
