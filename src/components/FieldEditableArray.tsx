@@ -18,6 +18,7 @@ const FieldEditableArray = (props: FieldEditableArrayProps) => {
   const handleDelete = (arrayHelpers: ArrayHelpers, index: number) => {
     arrayHelpers.remove(index);
   };
+
   return (
     <FieldArray
       name={props.name}

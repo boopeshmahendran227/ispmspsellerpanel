@@ -9,7 +9,8 @@ const FAQInput = () => {
       answer: "",
     });
   };
-  const renderFaqBody = (index: number) => {
+
+  const renderFaqRow = (index: number) => {
     return (
       <>
         <td>{index + 1}</td>
@@ -19,13 +20,6 @@ const FAQInput = () => {
         <td>
           <FieldTextArea name={`faqs.${index}.answer`} />
         </td>
-        <style jsx>
-          {`
-            td {
-              font-family: Lato;
-            }
-          `}
-        </style>
       </>
     );
   };
@@ -35,7 +29,7 @@ const FAQInput = () => {
       headers={["S.no", "Question", "Answer"]}
       name="faqs"
       handleAdd={addFaq}
-      renderInputRow={renderFaqBody}
+      renderInputRow={renderFaqRow}
     />
   );
 };

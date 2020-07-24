@@ -10,7 +10,8 @@ const TierPriceInput = () => {
       discountPercentage: 0,
     });
   };
-  const renderTierPriceBody = (index: number) => {
+
+  const renderTierPriceRow = (index: number) => {
     return (
       <>
         <td>{index + 1}</td>
@@ -25,13 +26,14 @@ const TierPriceInput = () => {
       </>
     );
   };
+
   return (
     <FieldEditableArray
       title="Tier Price"
-      headers={["s.no", "MinQty", "Discount Percentage"]}
+      headers={["S.no", "MinQty", "Discount Percentage"]}
       name="tierPrices"
       handleAdd={addTierPrice}
-      renderInputRow={renderTierPriceBody}
+      renderInputRow={renderTierPriceRow}
     />
   );
 };
