@@ -5,7 +5,7 @@ import useSWR from "swr";
 import { useRouter } from "next/router";
 import Loader from "../../src/components/Loader";
 import { connect } from "react-redux";
-import { QuoteInterface } from "../../src/types/quote";
+import { QuoteInterface, QuoteDetailInterface } from "../../src/types/quote";
 import { getQuoteStatusText } from "../../src/utils/quote";
 import QuoteItemDetail from "../../src/components/QuoteItemDetail";
 import QuoteActions from "../../src/actions/quote";
@@ -22,20 +22,16 @@ type QuoteProps = DispatchProps;
 const Quote = (props: QuoteProps) => {
   const router = useRouter();
 
-  const swr = useSWR(`/quote`);
-  const quotes: QuoteInterface[] = swr.data;
+  const swr = useSWR(`/quote/${router.query.id}`);
+  const quote: QuoteDetailInterface = swr.data;
   const error = swr.error;
 
   if (error) {
     return <PageError statusCode={error.response?.status} />;
   }
-  if (!quotes) {
+  if (!quote) {
     return <Loader />;
   }
-
-  const quote: QuoteInterface = quotes.find(
-    (quote: QuoteInterface) => quote.id === Number(router.query.id)
-  );
 
   return (
     <div className="container">

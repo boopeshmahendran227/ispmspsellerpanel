@@ -41,6 +41,9 @@ export interface QuoteInterface {
   productDetails: ProductDetailQuoteInterface[];
   createdDateTime: string;
   status: QuoteStatus;
+}
+
+export interface QuoteDetailInterface extends QuoteInterface {
   statusHistories: QuoteStatusHistoryItem[];
 }
 

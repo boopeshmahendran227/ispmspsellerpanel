@@ -1,14 +1,17 @@
-import { QuoteStatus } from "../types/quote";
+import {
+  QuoteStatus,
+  QuoteDetailInterface,
+  QuoteInterface,
+} from "../types/quote";
 import { getQuoteStatusText, getColor } from "../../src/utils/quote";
 import CSSConstants from "../constants/CSSConstants";
 import Button, { ButtonType } from "./Button";
 import _ from "lodash";
 import moment from "moment";
-import { QuoteInterface } from "../../src/types/quote";
 import QuoteProduct from "./QuoteProduct";
 
 interface QuoteItemDetailProps {
-  quote: QuoteInterface;
+  quote: QuoteDetailInterface;
   updateQuote: (quote: QuoteInterface) => void;
   rejectQuote: (quote: QuoteInterface) => void;
 }
@@ -16,7 +19,7 @@ interface QuoteItemDetailProps {
 const QuoteItemDetail = (props: QuoteItemDetailProps) => {
   const { quote } = props;
 
-  const getButtons = (quote: QuoteInterface) => {
+  const getButtons = (quote: QuoteDetailInterface) => {
     const handleClick = (e, action) => {
       action(quote);
       e.preventDefault();
