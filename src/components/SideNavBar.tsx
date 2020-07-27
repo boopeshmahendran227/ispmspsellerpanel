@@ -130,7 +130,7 @@ const SideNavBar = () => {
       <div className="navigation">
         <ul>
           {menuTree.map((item, index) => (
-            <li>
+            <li key={index}>
               {item.hasSubMenu ? (
                 <a
                   className={classNames({ active: index === activeIndex })}
@@ -144,7 +144,7 @@ const SideNavBar = () => {
                   <span>{item.name}</span>
                 </a>
               ) : (
-                <Link href={item.href}>
+                <Link href={item.href} key={index}>
                   <a
                     className={classNames({ active: index === activeIndex })}
                     onClick={() => setCurrentOpenIndex(null)}
@@ -162,6 +162,7 @@ const SideNavBar = () => {
         (item, index) =>
           item.hasSubMenu && (
             <SubMenu
+              key={index}
               header={item.name}
               open={currentOpenIndex === index}
               items={item.subMenuItems}
