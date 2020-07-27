@@ -202,7 +202,7 @@ const AddProduct = (props: AddProductProps) => {
                   name="taxGroup"
                   options={taxGroups.map((taxGroup) => ({
                     value: taxGroup.id,
-                    label: taxGroup.desscription,
+                    label: taxGroup.description,
                   }))}
                 />
               </div>
