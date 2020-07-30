@@ -99,6 +99,13 @@ export interface OrderItemInterface {
     shipmentFee: number;
     expectedDeliveryDate: string;
     trackingCode: string;
+    shiprocketResponse?: {
+      awb_code: string;
+      label_url: string;
+      manifest_url: string;
+      pickup_scheduled_date: string;
+      pickup_token_number: string;
+    };
   };
   createdDateTime: string;
 }

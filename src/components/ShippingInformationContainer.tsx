@@ -1,23 +1,9 @@
-import InputLabel from "./InputLabel";
-import FieldInput from "./FieldInput";
-import FieldDatePicker from "./FieldDatePicker";
-import Button from "./Button";
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
-import moment from "moment";
 import CSSConstants from "../constants/CSSConstants";
 import { connect } from "react-redux";
 import OrderActions from "../actions/order";
 import { OrderItemInterface } from "../types/order";
-import { isCompletedOrderStatus } from "../utils/order";
-
-const validationSchema = Yup.object().shape({
-  providerName: Yup.string().required("Provider Name is required"),
-  trackingCode: Yup.string().required("Tracking Code is required"),
-  expectedDeliveryDate: Yup.object().required(
-    "Expected Delivery Date is required"
-  ),
-});
+import { isCompletedOrderStatus, isShippingOrderStatus } from "../utils/order";
+import moment from "moment";
 
 interface OwnProps {
   orderItem: OrderItemInterface;
@@ -38,68 +24,47 @@ const ShippingInformationContainer = (
   props: ShippingInformationContainerProps
 ) => {
   const { orderItem } = props;
-  const handleSubmit = (values) => {
-    props.updateShippingInformation(
-      orderItem.id,
-      values.providerName,
-      values.trackingCode,
-      values.expectedDeliveryDate.format()
-    );
-  };
-  
+
+  if (
+    !isShippingOrderStatus(orderItem.orderItemStatus) &&
+    !isCompletedOrderStatus(orderItem.orderItemStatus)
+  ) {
+    return null;
+  }
+
   return (
     <div className="container">
-      <header>Shipping Information</header>
-      <div className="body">
-        {isCompletedOrderStatus(orderItem.orderItemStatus)? (
-          <table className="shipmentContainer">
-            <tbody>
-              <tr>
-                <td> Provider Name:</td>
-                <td> {orderItem.shipment.providerName || "Not available"}</td>
-              </tr>
-              <tr>
-                <td>Tracking Code:</td>
-                <td>{orderItem.shipment.trackingCode || "Not available"}</td>
-              </tr>
-            </tbody>
-          </table>
-        ) : (
-          <div>
-            <Formik
-              initialValues={{
-                providerName: orderItem.shipment.providerName || "",
-                trackingCode: orderItem.shipment.trackingCode || "",
-                expectedDeliveryDate: moment(
-                  orderItem.shipment.expectedDeliveryDate ===
-                    "0001-01-01T00:00:00"
-                    ? undefined
-                    : orderItem.shipment.expectedDeliveryDate
-                ),
-              }}
-              onSubmit={handleSubmit}
-              validationSchema={validationSchema}
-              enableReinitialize={true}
-            >
-              {() => (
-                <Form>
-                  <div className="gridContainer">
-                    <InputLabel label="Provider Name" />
-                    <FieldInput name="providerName" />
-                    <InputLabel label="Tracking Code" />
-                    <FieldInput name="trackingCode" />
-                    <InputLabel label="Expected Delivery Date" />
-                    <FieldDatePicker name="expectedDeliveryDate" />
-                  </div>
-                  <div>
-                    <Button isSubmitButton={true}>Update</Button>
-                  </div>
-                </Form>
-              )}
-            </Formik>
-          </div>
-        )}
+      <div className="headerContainer">
+        <header>Shipping Information</header>
+        <a href={orderItem.shipment.shiprocketResponse?.label_url}>
+          Download Shipping Label
+        </a>
+        <a href={orderItem.shipment.shiprocketResponse?.manifest_url}>
+          Download Manifest
+        </a>
       </div>
+      <table>
+        <tr>
+          <td className="key"> Provider Name:</td>
+          <td> {orderItem.shipment.providerName}</td>
+        </tr>
+        <tr>
+          <td className="key">Tracking Code:</td>
+          <td>AWB-{orderItem.shipment.shiprocketResponse?.awb_code}</td>
+        </tr>
+        <tr>
+          <td className="key">Pickup Token Number:</td>
+          <td>{orderItem.shipment.shiprocketResponse?.pickup_token_number}</td>
+        </tr>
+        <tr>
+          <td className="key">Pickup Scheduled Date: </td>
+          <td>
+            {moment(
+              orderItem.shipment.shiprocketResponse?.pickup_scheduled_date
+            ).format("MMM D, YYYY")}
+          </td>
+        </tr>
+      </table>
       <style jsx>{`
         .container {
           border: ${CSSConstants.borderStyle};
@@ -107,20 +72,22 @@ const ShippingInformationContainer = (
           margin: 2em 0;
           background: white;
         }
+        .headerContainer {
+          display: flex;
+          align-items: baseline;
+        }
         header {
           font-weight: bold;
           font-size: 1.3rem;
-          margin-bottom: 0.7em;
+          margin-bottom: 0.9em;
         }
-        .shipmentContainer {
-          font-size: 1.1rem;
+        a {
+          color: ${CSSConstants.secondaryColor};
+          display: inline-block;
+          margin: 0 0.5em;
         }
-        .gridContainer {
-          display: grid;
-          grid-template-columns: 200px 300px;
-          align-items: center;
-          font-size: 1.1rem;
-          margin-bottom: 0.5em;
+        .key {
+          color: ${CSSConstants.secondaryTextColor};
         }
       `}</style>
     </div>
