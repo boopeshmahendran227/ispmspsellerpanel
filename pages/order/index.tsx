@@ -30,7 +30,6 @@ import SortableTable from "../../src/components/SortableTable";
 import Button, { ButtonType } from "../../src/components/Button";
 import { getColor, getOrderStatusText } from "../../src/utils/order";
 import Pagination from "../../src/components/Pagination";
-import DeliveryCodeModal from "../../src/components/DeliveryCodeModal";
 import { PaginationDataInterface } from "../../src/types/pagination";
 import { getCustomerInfo } from "../../src/utils/customer";
 import PageHeader from "../../src/components/PageHeader";
@@ -345,8 +344,6 @@ const Orders = (props: OrdersProps) => {
 
   return (
     <div className="container">
-      {/* Modals */}
-      <DeliveryCodeModal />
       <div className="headerContainer">
         <PageHeader>Orders</PageHeader>
         <div className="filterContainer">

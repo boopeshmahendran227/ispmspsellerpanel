@@ -14,7 +14,6 @@ import { OrderDetailInterface } from "../../../src/types/order";
 import { getOrderStatusText } from "../../../src/utils/order";
 import PageError from "../../../src/components/PageError";
 import ShippingInformationContainer from "../../../src/components/ShippingInformationContainer";
-import DeliveryCodeModal from "../../../src/components/DeliveryCodeModal";
 import OrderInformation from "../../../src/components/OrderInformation";
 import WithAuth from "../../../src/components/WithAuth";
 import { transformOrderItem } from "../../../src/transformers/orderItem";
@@ -59,7 +58,6 @@ const Order = (props: OrderProps) => {
 
   return (
     <div className="container">
-      <DeliveryCodeModal />
       <Link href="/order">
         <a className="backBtn">
           <i className="icon fas fa-chevron-left"></i> Back to Orders

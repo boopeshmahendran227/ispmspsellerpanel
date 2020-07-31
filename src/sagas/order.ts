@@ -65,9 +65,6 @@ function* changeOrderItemStatus(action) {
           cancelReason: action.reason,
         }),
         orderItemStatus: action.orderItemStatus,
-        ...(action.deliveryCode && {
-          deliveryCode: action.deliveryCode,
-        }),
       },
     });
     yield put(
@@ -137,8 +134,7 @@ function* watchStatusChange() {
         action.orderId,
         action.orderItemId,
         status[action.type],
-        action.reason,
-        action.deliveryCode
+        action.reason
       )
     );
   }

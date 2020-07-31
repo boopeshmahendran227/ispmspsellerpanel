@@ -6,7 +6,6 @@ import RealTimeNotificationSaga from "./realTimeNotification";
 import LoaderSaga from "./loader";
 import ShowroomVisitSaga from "./showroomVisit";
 import QuoteSaga from "./quote";
-import UISaga from "./ui";
 import SureConfirmationSaga from "./sureConfirmation";
 import ReasonSaga from "./reason";
 import SearchSaga from "./search";
@@ -32,7 +31,6 @@ export default function* rootSaga() {
     fork(ReasonSaga),
     fork(SearchSaga),
     fork(DraftSaga),
-    fork(UISaga),
     fork(LoginSaga),
     fork(CouponSaga),
     fork(CreditSaga),

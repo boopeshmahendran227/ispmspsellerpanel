@@ -15,10 +15,6 @@ import {
   HIDE_ATTRIBUTE_MODAL,
   SHOW_SKU_MODAL,
   HIDE_SKU_MODAL,
-  DELIVERY_CODE_MODAL_SUBMIT_CLICKED,
-  SHOW_DELIVERY_CODE_MODAL,
-  HIDE_DELIVERY_CODE_MODAL,
-  DELIVERY_CODE_MODAL_CANCEL_CLICKED,
   SHOW_UPDATE_CREDITS_MODAL,
   HIDE_UPDATE_CREDITS_MODAL,
 } from "../constants/ActionTypes";
@@ -61,15 +57,6 @@ interface ReasonModalCancelClicked {
   type: typeof REASON_MODAL_CANCEL_CLICKED;
 }
 
-interface DeliveryCodeModalSubmitClicked {
-  type: typeof DELIVERY_CODE_MODAL_SUBMIT_CLICKED;
-  deliveryCode: string;
-}
-
-interface DeliveryCodeModalCancelClicked {
-  type: typeof DELIVERY_CODE_MODAL_CANCEL_CLICKED;
-}
-
 interface ShowLoadingScreenAction {
   type: typeof SHOW_LOADING_SCREEN;
 }
@@ -84,14 +71,6 @@ interface ShowUpdateQuoteModalAction {
 
 interface HideUpdateQuoteModalAction {
   type: typeof HIDE_UPDATE_QUOTE_MODAL;
-}
-
-interface ShowDeliveryCodeModalAction {
-  type: typeof SHOW_DELIVERY_CODE_MODAL;
-}
-
-interface HideDeliveryCodeModalAction {
-  type: typeof HIDE_DELIVERY_CODE_MODAL;
 }
 
 interface ShowAttributeModalAction {
@@ -127,12 +106,8 @@ export type UIActionType =
   | HideLoadingScreenAction
   | ShowReasonModalAction
   | HideReasonModalAction
-  | ShowDeliveryCodeModalAction
-  | HideDeliveryCodeModalAction
   | ReasonModalSubmitClicked
   | ReasonModalCancelClicked
-  | DeliveryCodeModalSubmitClicked
-  | DeliveryCodeModalCancelClicked
   | ShowUpdateQuoteModalAction
   | HideUpdateQuoteModalAction
   | ShowAttributeModalAction

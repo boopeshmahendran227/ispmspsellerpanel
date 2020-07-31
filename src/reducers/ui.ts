@@ -12,8 +12,6 @@ import {
   HIDE_ATTRIBUTE_MODAL,
   SHOW_SKU_MODAL,
   HIDE_SKU_MODAL,
-  SHOW_DELIVERY_CODE_MODAL,
-  HIDE_DELIVERY_CODE_MODAL,
   SHOW_UPDATE_CREDITS_MODAL,
   HIDE_UPDATE_CREDITS_MODAL,
 } from "../constants/ActionTypes";
@@ -118,19 +116,6 @@ const getSkuModalOpen = (state: boolean = false, action: UIActionType) => {
   return state;
 };
 
-const getDeliveryCodeModalOpen = (
-  state: boolean = false,
-  action: UIActionType
-) => {
-  switch (action.type) {
-    case SHOW_DELIVERY_CODE_MODAL:
-      return true;
-    case HIDE_DELIVERY_CODE_MODAL:
-      return false;
-  }
-  return state;
-};
-
 const getUpdateCreditsModalOpen = (
   state: boolean = false,
   action: UIActionType
@@ -152,5 +137,4 @@ export default combineReducers({
   updateCreditsModalOpen: getUpdateCreditsModalOpen,
   attributeModalOpen: getAttributeModalOpen,
   skuModalOpen: getSkuModalOpen,
-  deliveryCodeModalOpen: getDeliveryCodeModalOpen,
 });
