@@ -85,6 +85,7 @@ const ShippingInformationContainer = (
           color: ${CSSConstants.secondaryColor};
           display: inline-block;
           margin: 0 0.5em;
+          text-decoration: underline;
         }
         .key {
           color: ${CSSConstants.secondaryTextColor};
