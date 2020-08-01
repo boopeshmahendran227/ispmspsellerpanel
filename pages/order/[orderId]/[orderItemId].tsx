@@ -17,6 +17,7 @@ import ShippingInformationContainer from "../../../src/components/ShippingInform
 import OrderInformation from "../../../src/components/OrderInformation";
 import WithAuth from "../../../src/components/WithAuth";
 import { transformOrderItem } from "../../../src/transformers/orderItem";
+import Button from "../../../src/components/Button";
 
 interface StateProps {
   currentlyProcessingOrderItemIds: number[];
@@ -77,11 +78,11 @@ const Order = (props: OrderProps) => {
           {getOrderStatusText(orderItem.orderItemStatus)}
         </span>
       </header>
-      <Link href="/invoice/[orderItemId]" as={`/invoice/${orderItem.id}`}>
-        <a className="invoiceLink">
-          <i className="fas fa-file-invoice"></i> View Invoice
-        </a>
-      </Link>
+      <div className="invoiceBtnContainer">
+        <Button onClick={() => window.open(`/invoice/${orderItem.id}`)}>
+          View Invoice
+        </Button>
+      </div>
       <div className="flexContainer">
         <div className="col1">
           <section className="itemContainer">
@@ -154,10 +155,8 @@ const Order = (props: OrderProps) => {
         header {
           margin-bottom: 1em;
         }
-        .invoiceLink {
-          display: inline-block;
-          font-size: 1.1rem;
-          margin-bottom: 1.3em;
+        .invoiceBtnContainer {
+          margin: 0.5em 0;
         }
         .time {
           color: ${CSSConstants.secondaryTextColor};
