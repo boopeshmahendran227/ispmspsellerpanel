@@ -13,6 +13,7 @@ export interface ProductDetailQuoteInterface {
     name: string;
     averageRating: number;
     imageRelativePaths: string[];
+    skuPrice: number;
     attributeValueIds: [
       {
         attributeId: number;

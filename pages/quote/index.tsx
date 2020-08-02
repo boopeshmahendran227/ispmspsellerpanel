@@ -24,6 +24,13 @@ interface DispatchProps {
 
 type QuotesProps = DispatchProps;
 
+const getTotalOriginalPrice = (quote: QuoteInterface) =>
+  quote.productDetails.reduce(
+    (acc, productDetail) =>
+      acc + productDetail.productDetails.skuPrice * productDetail.qty,
+    0
+  );
+
 const getTotalRequestedPrice = (quote: QuoteInterface) =>
   quote.productDetails.reduce(
     (acc, productDetail) => acc + productDetail.price,
@@ -61,6 +68,10 @@ const Quotes = (props: QuotesProps) => {
       {
         name: "Total Qty",
         valueFunc: (quote: QuoteInterface) => getTotalQty(quote),
+      },
+      {
+        name: "Total Original Price",
+        valueFunc: (quote: QuoteInterface) => getTotalOriginalPrice(quote),
       },
       {
         name: "Total Requested Price",
@@ -142,6 +153,16 @@ const Quotes = (props: QuotesProps) => {
                       value: productDetail.skuId,
                     },
                     {
+                      key: "Original Price",
+                      value: `${formatPrice(
+                        productDetail.productDetails.skuPrice
+                      )} x
+                      ${productDetail.qty} = ${formatPrice(
+                        productDetail.productDetails.skuPrice *
+                          productDetail.qty
+                      )}`,
+                    },
+                    {
                       key: "Requested Quote",
                       value: `${formatPrice(
                         productDetail.price / productDetail.qty
@@ -156,6 +177,7 @@ const Quotes = (props: QuotesProps) => {
             ))}
           </td>
           <td>{getTotalQty(quote)}</td>
+          <td>{formatPrice(getTotalOriginalPrice(quote))}</td>
           <td>{formatPrice(getTotalRequestedPrice(quote))}</td>
           <td>
             {quote.status !== QuoteStatus.SellerResponsePending ? (

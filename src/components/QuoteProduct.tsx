@@ -32,6 +32,13 @@ const QuoteProduct = (props: QuoteProductProps) => {
               value: productDetail.skuId,
             },
             {
+              key: "Original Price",
+              value: `${formatPrice(productDetail.productDetails.skuPrice)} x
+                      ${productDetail.qty} = ${formatPrice(
+                productDetail.productDetails.skuPrice * productDetail.qty
+              )}`,
+            },
+            {
               key: "Qty",
               value: productDetail.qty,
             },
