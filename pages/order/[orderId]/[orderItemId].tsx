@@ -11,7 +11,11 @@ import OrderActions from "../../../src/actions/order";
 import { RootState } from "../../../src/reducers";
 import { getCurrentlyProcessingOrderItemIds } from "../../../src/selectors/order";
 import { OrderDetailInterface } from "../../../src/types/order";
-import { getOrderStatusText } from "../../../src/utils/order";
+import {
+  getOrderStatusText,
+  getPaymentText,
+  getPaymentModeColor,
+} from "../../../src/utils/order";
 import PageError from "../../../src/components/PageError";
 import ShippingInformationContainer from "../../../src/components/ShippingInformationContainer";
 import OrderInformation from "../../../src/components/OrderInformation";
@@ -76,6 +80,16 @@ const Order = (props: OrderProps) => {
         </span>{" "}
         <span className="status">
           {getOrderStatusText(orderItem.orderItemStatus)}
+        </span>
+        <span
+          style={{
+            backgroundColor: getPaymentModeColor(
+              orderItem.order.paymentSplits[0].paymentMode
+            ),
+          }}
+          className="paymentMode"
+        >
+          {getPaymentText(orderItem.order.paymentSplits[0].paymentMode)}
         </span>
       </header>
       <div className="invoiceBtnContainer">
@@ -161,11 +175,12 @@ const Order = (props: OrderProps) => {
         .time {
           color: ${CSSConstants.secondaryTextColor};
         }
-        .status {
+        .status,
+        .paymentMode {
           border-radius: 2em;
           display: inline-block;
           background: ${CSSConstants.primaryColor};
-          padding: 0.2em 0.5em;
+          padding: 0.2em 0.7em;
           color: white;
           margin: 0 0.3em;
         }

@@ -28,7 +28,12 @@ import { formatPrice } from "../../src/utils/misc";
 import moment from "moment";
 import SortableTable from "../../src/components/SortableTable";
 import Button, { ButtonType } from "../../src/components/Button";
-import { getColor, getOrderStatusText } from "../../src/utils/order";
+import {
+  getColor,
+  getOrderStatusText,
+  getPaymentText,
+  getPaymentModeColor,
+} from "../../src/utils/order";
 import Pagination from "../../src/components/Pagination";
 import { PaginationDataInterface } from "../../src/types/pagination";
 import { getCustomerInfo } from "../../src/utils/customer";
@@ -97,6 +102,11 @@ const Orders = (props: OrdersProps) => {
       {
         name: "Qty",
         valueFunc: (orderItem: OrderItemInterface) => orderItem.qty,
+      },
+      {
+        name: "Payment",
+        valueFunc: (orderItem: OrderItemInterface) =>
+          orderItem.order.paymentSplits[0].paymentMode,
       },
       {
         name: "Status",
@@ -274,6 +284,15 @@ const Orders = (props: OrdersProps) => {
           </td>
           <td>{formatPrice(orderItem.discountedPrice)}</td>
           <td>{orderItem.qty}</td>
+          <td
+            style={{
+              color: getPaymentModeColor(
+                orderItem.order.paymentSplits[0].paymentMode
+              ),
+            }}
+          >
+            {getPaymentText(orderItem.order.paymentSplits[0].paymentMode)}
+          </td>
           <td
             style={{
               color: getColor(orderItem.orderItemStatus),

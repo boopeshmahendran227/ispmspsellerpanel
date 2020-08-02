@@ -17,6 +17,7 @@ import {
 } from "../constants/ActionTypes";
 import { ProductAttributeValue } from "./product";
 import { OrderDiscountInterface } from "../types/discount";
+import { PaymentMode } from "./invoice";
 
 export enum OrderStatus {
   Created = "Created",
@@ -138,7 +139,7 @@ export interface OrderInterface {
   paymentSplits: [
     {
       id: number;
-      paymentMode: string;
+      paymentMode: PaymentMode;
       price: number;
     }
   ];

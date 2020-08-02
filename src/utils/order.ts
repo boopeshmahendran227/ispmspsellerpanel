@@ -1,6 +1,7 @@
 import { splitCamelCase } from "../utils/misc";
 import { OrderStatus } from "../types/order";
 import CSSConstants from "../constants/CSSConstants";
+import { PaymentMode } from "../types/invoice";
 
 const getColor = (status: OrderStatus) => {
   switch (status) {
@@ -26,7 +27,7 @@ const getOrderStatusText = (status: OrderStatus) => {
   switch (status) {
     case OrderStatus.PaymentSuccess:
     case OrderStatus.PaymentOnDelivery:
-      return "Pending";
+      return "Order Created";
     case OrderStatus.Shipping:
       return "Shipping";
     case OrderStatus.ShippingCompleted:
@@ -39,6 +40,26 @@ const getOrderStatusText = (status: OrderStatus) => {
       return "Return Requested";
   }
   return splitCamelCase(status);
+};
+
+const getPaymentText = (paymentMode: PaymentMode) => {
+  switch (paymentMode) {
+    case PaymentMode.Cash:
+      return "Cash on Delivery";
+    case PaymentMode.Online:
+      return "Online Payment";
+  }
+  return splitCamelCase(paymentMode);
+};
+
+const getPaymentModeColor = (paymentMode: PaymentMode) => {
+  switch (paymentMode) {
+    case PaymentMode.Cash:
+      return CSSConstants.warningColor;
+    case PaymentMode.Online:
+      return CSSConstants.successColor;
+  }
+  return CSSConstants.primaryColor;
 };
 
 const isOpenOrderStatus = (status: OrderStatus) => {
@@ -88,6 +109,8 @@ const isCompletedOrderStatus = (currentStatus: OrderStatus) => {
 export {
   getColor,
   getOrderStatusText,
+  getPaymentModeColor,
+  getPaymentText,
   isOpenOrderStatus,
   isDeliveredOrderStatus,
   isReturnedOrderStatus,
