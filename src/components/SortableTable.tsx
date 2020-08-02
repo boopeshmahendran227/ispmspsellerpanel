@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CSSConstants from "../constants/CSSConstants";
 import classNames from "classnames";
 import EmptyMsg from "./EmptyMsg";
+import _ from "lodash";
 
 interface SortHeader {
   name: string;
@@ -21,12 +22,35 @@ interface SortableTableProps {
   initialSortData: SortableTableInitialSortData;
 }
 
-function isString(value) {
+const isString = (value) => {
   return typeof value === "string" || value instanceof String;
-}
+};
 
-const SortableTable = (props: SortableTableProps) => {
-  const [data, setData] = useState(props.data);
+const convertToLowerCase = (val) => {
+  if (isString(val)) return val.toLowerCase();
+  return val;
+};
+
+const sortData = (headers, data, index, isAsc) => {
+  if (index === null) {
+    return data;
+  }
+
+  const valueFunc = headers[index].valueFunc;
+
+  return _.orderBy(
+    data,
+    [
+      (item) => {
+        return convertToLowerCase(valueFunc(item));
+      },
+    ],
+    [isAsc ? "asc" : "desc"]
+  );
+};
+
+const SortableTable = (props: SortableTableProps): JSX.Element => {
+  const { data } = props;
   const [activeHeaderIndex, setActiveHeaderIndex] = useState(
     props.initialSortData.index
   );
@@ -41,35 +65,11 @@ const SortableTable = (props: SortableTableProps) => {
     setActiveHeaderIndex(index);
   };
 
-  useEffect(() => {
-    if (activeHeaderIndex === null) {
-      setData(props.data);
-      return;
-    }
-
-    const valueFunc = props.headers[activeHeaderIndex].valueFunc;
-
-    const copy = props.data.slice(0);
-    copy.sort((a, b) => {
-      const convertToLowerCase = (val) => {
-        if (isString(val)) return val.toLowerCase();
-        return val;
-      };
-
-      const aVal = convertToLowerCase(valueFunc(a));
-      const bVal = convertToLowerCase(valueFunc(b));
-
-      if (aVal < bVal) return isAsc ? -1 : 1;
-      else if (aVal > bVal) return isAsc ? 1 : -1;
-      else return 0;
-    });
-
-    setData(copy);
-  }, [props.data, activeHeaderIndex, isAsc]);
-
   if (!data || !data.length) {
     return <EmptyMsg msg={props.emptyMsg} />;
   }
+
+  const sortedData = sortData(props.headers, data, activeHeaderIndex, isAsc);
 
   return (
     <div className="sortableTableContainer">
@@ -94,11 +94,12 @@ const SortableTable = (props: SortableTableProps) => {
             })}
           </tr>
         </thead>
-        <tbody>{props.body(data)}</tbody>
+        <tbody>{props.body(sortedData)}</tbody>
       </table>
       <style jsx>{`
         .sortableTableContainer {
-          margin: 1.6em;
+          margin-top: 1em;
+          margin-bottom: 2em;
           overflow-x: auto;
           overflow-y: hidden;
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
@@ -106,6 +107,10 @@ const SortableTable = (props: SortableTableProps) => {
         }
         .sortableTable {
           width: 100%;
+          overflow-x: auto;
+        }
+        .sortableTable th {
+          cursor: pointer;
           text-align: center;
         }
         .sortableTable tbody {
@@ -116,9 +121,7 @@ const SortableTable = (props: SortableTableProps) => {
           background-color: #6565650f;
         }
         .sortableTable th {
-          font-weight: bold;
           position: relative;
-          cursor: pointer;
         }
         .sortableTable th .icon {
           position: absolute;
