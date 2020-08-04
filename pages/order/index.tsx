@@ -4,21 +4,7 @@ import {
   OrderStatus,
 } from "../../src/types/order";
 import OrderActions from "../../src/actions/order";
-import WithReduxDataLoader from "../../src/components/WithReduxDataLoader";
 import { connect } from "react-redux";
-import { RootState } from "../../src/reducers";
-import {
-  getOrders,
-  getOpenOrderItems,
-  getOrderItems,
-  getCancelledOrderItems,
-  getCurrentlyProcessingOrderItemIds,
-  getDeliveredOrderItems,
-  getReturnedOrderItems,
-  getOrderPaginatedData,
-  getEcosystemFilterForOrder,
-} from "../../src/selectors/order";
-import { RequestReducerState } from "../../src/reducers/utils";
 import CSSConstants from "../../src/constants/CSSConstants";
 import TabSection from "../../src/components/TabSection";
 import Select from "../../src/components/Select";
@@ -33,6 +19,10 @@ import {
   getOrderStatusText,
   getPaymentText,
   getPaymentModeColor,
+  isCancelledOrderStatus,
+  isReturnedOrderStatus,
+  isOpenOrderStatus,
+  isDeliveredOrderStatus,
 } from "../../src/utils/order";
 import Pagination from "../../src/components/Pagination";
 import { PaginationDataInterface } from "../../src/types/pagination";
@@ -46,22 +36,11 @@ import PageError from "../../src/components/PageError";
 import Loader from "../../src/components/Loader";
 import EcosystemOption from "../../src/components/EcosystemOption";
 import WithAuth from "../../src/components/WithAuth";
-
-interface StateProps {
-  orders: OrderInterface[];
-  orderItems: OrderItemInterface[];
-  openOrderItems: OrderItemInterface[];
-  deliveredOrderItems: OrderItemInterface[];
-  returnedOrderItems: OrderItemInterface[];
-  cancelledOrderItems: OrderItemInterface[];
-  getOrdersLoadingState: RequestReducerState;
-  currentlyProcessingOrderItemIds: number[];
-  orderPaginationData: PaginationDataInterface;
-  selectedEcosystemId: string;
-}
+import { useState } from "react";
+import { transformOrderItem } from "../../src/transformers/orderItem";
+import _ from "lodash";
 
 interface DispatchProps {
-  getOrders: () => void;
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
   markAsShipping: (orderId: number, orderItemId: number) => void;
   markAsProcessing: (orderId: number, orderItemId: number) => void;
@@ -74,7 +53,7 @@ interface DispatchProps {
   setEcosystemFilter: (ecosystemId: string) => void;
 }
 
-type OrdersProps = StateProps & DispatchProps;
+type OrdersProps = DispatchProps;
 
 const Orders = (props: OrdersProps) => {
   const getTableHeaders = () => {
@@ -326,25 +305,50 @@ const Orders = (props: OrdersProps) => {
     ));
   };
 
-  const {
-    orderItems,
-    openOrderItems,
-    cancelledOrderItems,
-    deliveredOrderItems,
-    returnedOrderItems,
-  } = props;
+  const [currentPageNumber, setCurrentPageNumber] = useState(1);
+  const [selectedEcosystemId, setSelectedEcosystemId] = useState(null);
+  const orderSWR = useSWR(
+    `/order?pageNumber=${currentPageNumber}&ecosystemids=${selectedEcosystemId}`
+  );
+
+  const orderData: PaginationDataInterface<OrderInterface> = orderSWR.data;
 
   const businessSWR = useSWR("/businesses/business");
   const businessData: BusinessDataInterface = businessSWR.data;
-  const error = businessSWR.error;
+  const error = businessSWR.error || orderSWR.error;
 
   if (error) {
     return <PageError statusCode={error.response?.status} />;
   }
 
-  if (!businessData) {
+  if (!businessData || !orderData) {
     return <Loader />;
   }
+
+  const orders: OrderInterface[] = orderData.results;
+
+  const orderItems: OrderItemInterface[] = _.chain(orders)
+    .map((order) =>
+      order.items.map((orderItem) => transformOrderItem(order, orderItem))
+    )
+    .flatten()
+    .value();
+
+  const openOrderItems = orderItems.filter((orderItem) =>
+    isOpenOrderStatus(orderItem.orderItemStatus)
+  );
+
+  const deliveredOrderItems = orderItems.filter((orderItem) =>
+    isDeliveredOrderStatus(orderItem.orderItemStatus)
+  );
+
+  const cancelledOrderItems = orderItems.filter((orderItem) =>
+    isCancelledOrderStatus(orderItem.orderItemStatus)
+  );
+
+  const returnedOrderItems = orderItems.filter((orderItem) =>
+    isReturnedOrderStatus(orderItem.orderItemStatus)
+  );
 
   const ecosystems: SelectOptionInterface[] = [
     {
@@ -358,7 +362,7 @@ const Orders = (props: OrdersProps) => {
   ];
 
   const currentEcosystem = ecosystems.find(
-    (ecosystem) => ecosystem.value === props.selectedEcosystemId
+    (ecosystem) => ecosystem.value === selectedEcosystemId
   );
 
   return (
@@ -369,7 +373,7 @@ const Orders = (props: OrdersProps) => {
           <Select
             value={currentEcosystem}
             onChange={(ecosystem) =>
-              props.setEcosystemFilter(ecosystem.value as string)
+              setSelectedEcosystemId(ecosystem.value as string)
             }
             options={ecosystems}
           />
@@ -435,13 +439,10 @@ const Orders = (props: OrdersProps) => {
             emptyMsg="There are no returned orders"
             body={renderTableBody}
           />,
-          <ProductOrdersContainer />,
+          <ProductOrdersContainer selectedEcosystemId={selectedEcosystemId} />,
         ]}
       />
-      <Pagination
-        data={props.orderPaginationData}
-        onChange={props.setOrderCurrentPageNumber}
-      />
+      <Pagination data={orderData} onChange={setCurrentPageNumber} />
       <style jsx>{`
         .container {
           padding: 1em 0;
@@ -470,21 +471,7 @@ const Orders = (props: OrdersProps) => {
   );
 };
 
-const mapStateToProps = (state: RootState): StateProps => ({
-  orders: getOrders(state),
-  orderItems: getOrderItems(state),
-  openOrderItems: getOpenOrderItems(state),
-  cancelledOrderItems: getCancelledOrderItems(state),
-  deliveredOrderItems: getDeliveredOrderItems(state),
-  returnedOrderItems: getReturnedOrderItems(state),
-  getOrdersLoadingState: state.order.order,
-  currentlyProcessingOrderItemIds: getCurrentlyProcessingOrderItemIds(state),
-  orderPaginationData: getOrderPaginatedData(state),
-  selectedEcosystemId: getEcosystemFilterForOrder(state),
-});
-
 const mapDispatchToProps: DispatchProps = {
-  getOrders: OrderActions.getOrders,
   markAsShippingComplete: OrderActions.markAsShippingComplete,
   markAsShipping: OrderActions.markAsShipping,
   markAsProcessing: OrderActions.markAsProcessing,
@@ -497,19 +484,6 @@ const mapDispatchToProps: DispatchProps = {
   setEcosystemFilter: OrderActions.setEcosystemFilter,
 };
 
-const mapPropsToLoadData = (props: OrdersProps) => {
-  return [
-    {
-      data: props.orders,
-      fetch: props.getOrders,
-      loadingState: props.getOrdersLoadingState,
-    },
-  ];
-};
-
 export default WithAuth(
-  connect<StateProps, DispatchProps>(
-    mapStateToProps,
-    mapDispatchToProps
-  )(WithReduxDataLoader(mapPropsToLoadData)(Orders))
+  connect<{}, DispatchProps>({}, mapDispatchToProps)(Orders)
 );
