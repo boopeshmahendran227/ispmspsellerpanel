@@ -485,5 +485,5 @@ const mapDispatchToProps: DispatchProps = {
 };
 
 export default WithAuth(
-  connect<{}, DispatchProps>({}, mapDispatchToProps)(Orders)
+  connect<null, DispatchProps>(null, mapDispatchToProps)(Orders)
 );
