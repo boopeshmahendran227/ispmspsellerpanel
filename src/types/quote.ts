@@ -43,6 +43,13 @@ export interface QuoteInterface {
   createdDateTime: string;
   status: QuoteStatus;
 }
+export interface SummaryInterface {
+  orderCount: {};
+  totalOrderCount: number;
+  totalRevenue: number;
+  totalQuotes: number;
+  totalCustomers: number;
+}
 
 export interface QuoteDetailInterface extends QuoteInterface {
   statusHistories: QuoteStatusHistoryItem[];

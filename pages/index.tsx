@@ -2,49 +2,44 @@ import MetricCard from "../src/components/MetricCard";
 import CancellationRequestContainer from "../src/components/CancellationRequestContainer";
 import TabSection from "../src/components/TabSection";
 import ReturnRequestContainer from "../src/components/ReturnRequestContainer";
-import { connect } from "react-redux";
-import { RootState } from "../src/reducers";
-import { RequestReducerState } from "../src/reducers/utils";
-import { QuoteInterface } from "../src/types/quote";
-import { OrderInterface, OrderItemInterface } from "../src/types/order";
-import { getOrderItems, getOrders } from "../src/selectors/order";
-import WithReduxDataLoader from "../src/components/WithReduxDataLoader";
-import OrderActions from "../src/actions/order";
+import { SummaryInterface } from "../src/types/quote";
 import useSWR from "swr";
 import Loader from "../src/components/Loader";
 import PageError from "../src/components/PageError";
 import WithAuth from "../src/components/WithAuth";
+import moment from "moment";
+import { formatPrice } from "../src/utils/misc";
 
-interface StateProps {
-  orders: OrderInterface[];
-  orderItems: OrderItemInterface[];
-  getOrdersLoadingState: RequestReducerState;
-}
+const Home = () => {
+  const startDate = moment().subtract(7, "days").startOf("day");
+  const endDate = moment().endOf("day");
+  const swr = useSWR(
+    `/reports/seller/summary?start=${startDate
+      .utc()
+      .format()}&end=${endDate.utc().format()}`
+  );
 
-interface DispatchProps {
-  getOrders: () => void;
-}
-
-type HomeProps = StateProps & DispatchProps;
-
-const Home = (props: HomeProps) => {
-  const swr = useSWR("/quote");
-  const quotes: QuoteInterface[] = swr.data;
+  const summary: SummaryInterface = swr.data;
   const error = swr.error;
 
   if (error) {
     return <PageError statusCode={error.response?.status} />;
   }
 
-  if (!quotes) {
+  if (!summary) {
     return <Loader />;
   }
 
   return (
     <div>
       <div>
-        <MetricCard title="Orders" value={props.orderItems?.length || 0} />
-        <MetricCard title="Quotes" value={quotes?.length || 0} />
+        <MetricCard title="Total orders" value={summary.totalOrderCount} />
+        <MetricCard title="Total Customers" value={summary.totalCustomers} />
+        <MetricCard title="Total Quotes" value={summary.totalQuotes} />
+        <MetricCard
+          title="Total Revenue"
+          value={formatPrice(summary.totalRevenue)}
+        />
       </div>
       <div>
         <TabSection
@@ -59,29 +54,4 @@ const Home = (props: HomeProps) => {
   );
 };
 
-const mapStateToProps = (state: RootState): StateProps => ({
-  orders: getOrders(state),
-  orderItems: getOrderItems(state),
-  getOrdersLoadingState: state.order.order,
-});
-
-const mapDispatchToProps: DispatchProps = {
-  getOrders: OrderActions.getOrders,
-};
-
-const mapPropsToLoadData = (props: HomeProps) => {
-  return [
-    {
-      data: props.orders,
-      fetch: props.getOrders,
-      loadingState: props.getOrdersLoadingState,
-    },
-  ];
-};
-
-export default WithAuth(
-  connect<StateProps, DispatchProps>(
-    mapStateToProps,
-    mapDispatchToProps
-  )(WithReduxDataLoader(mapPropsToLoadData)(Home))
-);
+export default WithAuth(Home);
