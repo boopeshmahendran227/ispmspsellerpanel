@@ -41,18 +41,22 @@ const Invoice = () => {
       <div className="body">
         <div className="title">Invoice</div>
         <section className="section sellerSection">
-          <div className="row">
-            <strong>Sold By: </strong>
-            {invoice.businessDetails.name},<br />
-            {formatAddress(invoice.businessAddress)}
+          <div>
+            <div className="row">
+              <strong>Sold By: </strong>
+              {invoice.businessDetails.name},<br />
+              {formatAddress(invoice.businessAddress)}
+            </div>
           </div>
-          <div className="row">
-            <strong>GSTIN: </strong>
-            {invoice.businessDetails.gstin}
-          </div>
-          <div className="row">
-            <strong>TAN: </strong>
-            {invoice.businessDetails.tan}
+          <div>
+            <div className="row">
+              <strong>GSTIN: </strong>
+              {invoice.businessDetails.gstin}
+            </div>
+            <div className="row">
+              <strong>TAN: </strong>
+              {invoice.businessDetails.tan}
+            </div>
           </div>
         </section>
         <section className="section detailsSection">
@@ -216,6 +220,11 @@ const Invoice = () => {
           flex-direction: column;
           min-height: 100vh;
         }
+        @media print {
+          .container {
+            font-size: 0.8rem;
+          }
+        }
         .cancelledOrder {
           color: ${CSSConstants.dangerColor};
           text-decoration: solid line-through ${CSSConstants.dangerColor};
@@ -223,19 +232,20 @@ const Invoice = () => {
         .title {
           font-size: 2.5rem;
           text-align: center;
-          padding: 0.5em;
+          padding: 0.3em;
           font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 1px;
         }
         .row {
           display: grid;
-          grid-template-columns: 80px 1fr;
+          grid-template-columns: 60px 150px;
           grid-column-gap: 0.3em;
           margin: 0.2em 0;
         }
         .sellerSection {
-          max-width: 300px;
+          display: flex;
+          justify-content: space-between;
         }
         .waterMarkContainer {
           position: absolute;
@@ -289,7 +299,7 @@ const Invoice = () => {
           text-align: center;
         }
         .section {
-          padding: 0.7em 1.5em;
+          padding: 0.5em 1.5em;
           box-sizing: border-box;
         }
         .address {
