@@ -5,7 +5,7 @@ import PageError from "../src/components/PageError";
 import { BusinessDataInterface } from "../src/types/business";
 import WithAuth from "../src/components/WithAuth";
 import moment from "moment";
-import { SummaryInterface } from "../src/types/quote";
+import { SummaryInterface } from "../src/types/insights";
 import { formatPrice } from "../src/utils/misc";
 
 const startDate = moment().subtract(7, "days").startOf("day");
