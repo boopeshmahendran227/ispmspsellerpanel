@@ -1,7 +1,4 @@
 import MetricCard from "../src/components/MetricCard";
-import CancellationRequestContainer from "../src/components/CancellationRequestContainer";
-import TabSection from "../src/components/TabSection";
-import ReturnRequestContainer from "../src/components/ReturnRequestContainer";
 import { SummaryInterface } from "../src/types/quote";
 import useSWR from "swr";
 import Loader from "../src/components/Loader";
@@ -32,24 +29,13 @@ const Home = () => {
 
   return (
     <div>
-      <div>
-        <MetricCard title="Total orders" value={summary.totalOrderCount} />
-        <MetricCard title="Total Customers" value={summary.totalCustomers} />
-        <MetricCard title="Total Quotes" value={summary.totalQuotes} />
-        <MetricCard
-          title="Total Revenue"
-          value={formatPrice(summary.totalRevenue)}
-        />
-      </div>
-      <div>
-        <TabSection
-          headingList={["Cancellation Requests", "Return Requests"]}
-          contentList={[
-            <CancellationRequestContainer />,
-            <ReturnRequestContainer />,
-          ]}
-        />
-      </div>
+      <MetricCard title="Total orders" value={summary.totalOrderCount} />
+      <MetricCard title="Total Customers" value={summary.totalCustomers} />
+      <MetricCard title="Total Quotes" value={summary.totalQuotes} />
+      <MetricCard
+        title="Total Revenue"
+        value={formatPrice(summary.totalRevenue)}
+      />
     </div>
   );
 };
