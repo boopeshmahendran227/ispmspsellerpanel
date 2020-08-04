@@ -143,6 +143,9 @@ const SortableTable = (props: SortableTableProps): JSX.Element => {
           color: ${CSSConstants.primaryColor};
           text-decoration: underline;
         }
+        .sortableTable :global(tr) {
+          text-align: center !important;
+        }
       `}</style>
     </div>
   );

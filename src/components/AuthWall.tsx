@@ -57,6 +57,11 @@ const AuthWall = (props: AuthWallProps) => {
           padding: 0.4em 0;
           color: #202649;
         }
+        @media print {
+          .container {
+            display: none;
+          }
+        }
       `}</style>
     </div>
   );
