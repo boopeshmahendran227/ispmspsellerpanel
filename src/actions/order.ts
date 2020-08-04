@@ -12,7 +12,6 @@ import {
   CANCEL_ORDER_ITEM,
   SET_ORDER_CURRENT_PAGE_NUMBER,
   MARK_AS_PROCESSING,
-  UPDATE_SHIPPING_INFORMATION_REQUEST,
   SET_ECOSYSTEM_FILTER_FOR_ORDERS,
 } from "../constants/ActionTypes";
 import { OrderActionType } from "../types/order";
@@ -157,21 +156,6 @@ const setOrderCurrentPageNumber = (value: number): OrderActionType => {
   };
 };
 
-const updateShippingInformation = (
-  orderItemId: number,
-  providerName: string,
-  trackingCode: string,
-  expectedDeliveryDate: string
-): OrderActionType => {
-  return {
-    type: UPDATE_SHIPPING_INFORMATION_REQUEST,
-    orderItemId,
-    providerName,
-    trackingCode,
-    expectedDeliveryDate,
-  };
-};
-
 const setEcosystemFilter = (ecosystemId: string): OrderActionType => {
   return {
     type: SET_ECOSYSTEM_FILTER_FOR_ORDERS,
@@ -193,6 +177,5 @@ export default {
   markAsProcessing,
   cancelOrderItem,
   setOrderCurrentPageNumber,
-  updateShippingInformation,
   setEcosystemFilter,
 };

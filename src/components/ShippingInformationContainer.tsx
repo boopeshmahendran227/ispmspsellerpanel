@@ -1,24 +1,11 @@
 import CSSConstants from "../constants/CSSConstants";
-import { connect } from "react-redux";
-import OrderActions from "../actions/order";
 import { OrderItemInterface } from "../types/order";
 import { isCompletedOrderStatus, isShippingOrderStatus } from "../utils/order";
 import moment from "moment";
 
-interface OwnProps {
+interface ShippingInformationContainerProps {
   orderItem: OrderItemInterface;
 }
-
-interface DispatchProps {
-  updateShippingInformation: (
-    orderItemId: number,
-    providerName: string,
-    trackingCode: string,
-    expectedDeliveryDate: string
-  ) => void;
-}
-
-type ShippingInformationContainerProps = OwnProps & DispatchProps;
 
 const ShippingInformationContainer = (
   props: ShippingInformationContainerProps
@@ -95,11 +82,4 @@ const ShippingInformationContainer = (
   );
 };
 
-const mapDispatchToProps: DispatchProps = {
-  updateShippingInformation: OrderActions.updateShippingInformation,
-};
-
-export default connect<null, DispatchProps>(
-  null,
-  mapDispatchToProps
-)(ShippingInformationContainer);
+export default ShippingInformationContainer;
