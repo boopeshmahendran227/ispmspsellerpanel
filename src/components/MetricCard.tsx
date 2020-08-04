@@ -2,7 +2,7 @@ import CSSConstants from "../constants/CSSConstants";
 
 interface MetricCardProps {
   title: string;
-  value: number;
+  value: number | string;
   beforeContent?: string;
 }
 
@@ -31,7 +31,7 @@ const MetricCard = (props: MetricCardProps) => {
         }
         .content {
           padding: 0.5em;
-          font-size: 3rem;
+          font-size: 2rem;
         }
       `}</style>
     </div>
