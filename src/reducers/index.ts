@@ -5,7 +5,6 @@ import quote from "./quote";
 import showroomVisit from "./showroomVisit";
 import product from "./product";
 import search from "./search";
-import draft from "./draft";
 import login from "./login";
 import invoice from "./invoice";
 import { combineReducers } from "redux";
@@ -18,7 +17,6 @@ const rootReducer = combineReducers({
   showroomVisit,
   product,
   search,
-  draft,
   login,
   invoice,
 });

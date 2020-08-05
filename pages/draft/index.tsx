@@ -1,34 +1,19 @@
-import { connect } from "react-redux";
-import { RootState } from "../../src/reducers";
 import CSSConstants from "../../src/constants/CSSConstants";
 import Link from "next/link";
 import SortableTable from "../../src/components/SortableTable";
-import DraftActions from "../../src/actions/draft";
 import RelativeImg from "../../src/components/RelativeImg";
 import Pagination from "../../src/components/Pagination";
 import Button from "../../src/components/Button";
-import { getDrafts, getDraftPaginationData } from "../../src/selectors/draft";
-import { RequestReducerState } from "../../src/reducers/utils";
-import WithReduxDataLoader from "../../src/components/WithReduxDataLoader";
 import { DraftMiniInterface } from "../../src/types/draft";
-import { PaginationDataInterface } from "../../src/types/pagination";
+import { PaginatedDataInterface } from "../../src/types/pagination";
 import PageHeader from "../../src/components/PageHeader";
 import WithAuth from "../../src/components/WithAuth";
+import useSWR from "swr";
+import { useState } from "react";
+import PageError from "../../src/components/PageError";
+import Loader from "../../src/components/Loader";
 
-interface StateProps {
-  drafts: DraftMiniInterface[];
-  getDraftsLoadingState: RequestReducerState;
-  draftPaginationData: PaginationDataInterface;
-}
-
-interface DispatchProps {
-  getDrafts: () => void;
-  setDraftCurrentPageNumber: (value: number) => void;
-}
-
-type DraftsProps = StateProps & DispatchProps;
-
-const Drafts = (props: DraftsProps) => {
+const Drafts = () => {
   const getTableHeaders = () => {
     return [
       {
@@ -89,10 +74,18 @@ const Drafts = (props: DraftsProps) => {
     ));
   };
 
-  const { drafts } = props;
+  const [currentPageNumber, setCurrentPageNumber] = useState(1);
+  const swr = useSWR(`/product/draft?pageNumber=${currentPageNumber}`);
 
-  if (!drafts) {
-    return null;
+  const draftData: PaginatedDataInterface<DraftMiniInterface> = swr.data;
+  const error = swr.error;
+
+  if (error) {
+    return <PageError statusCode={error.response?.status} />;
+  }
+
+  if (!draftData) {
+    return <Loader />;
   }
 
   return (
@@ -109,14 +102,11 @@ const Drafts = (props: DraftsProps) => {
           isAsc: false,
         }}
         headers={getTableHeaders()}
-        data={drafts}
+        data={draftData.results}
         emptyMsg="No product Drafts found"
         body={renderTableBody}
       />
-      <Pagination
-        data={props.draftPaginationData}
-        onChange={props.setDraftCurrentPageNumber}
-      />
+      <Pagination data={draftData} onChange={setCurrentPageNumber} />
       <style jsx>{`
         .container {
           padding: 1em;
@@ -141,30 +131,4 @@ const Drafts = (props: DraftsProps) => {
   );
 };
 
-const mapStateToProps = (state: RootState): StateProps => ({
-  drafts: getDrafts(state),
-  getDraftsLoadingState: state.draft.drafts,
-  draftPaginationData: getDraftPaginationData(state),
-});
-
-const mapDispatchToProps: DispatchProps = {
-  getDrafts: DraftActions.getDrafts,
-  setDraftCurrentPageNumber: DraftActions.setDraftCurrentPageNumber,
-};
-
-const mapPropsToLoadData = (props: DraftsProps) => {
-  return [
-    {
-      data: props.drafts,
-      fetch: props.getDrafts,
-      loadingState: props.getDraftsLoadingState,
-    },
-  ];
-};
-
-export default WithAuth(
-  connect<StateProps, DispatchProps>(
-    mapStateToProps,
-    mapDispatchToProps
-  )(WithReduxDataLoader(mapPropsToLoadData)(Drafts))
-);
+export default WithAuth(Drafts);
