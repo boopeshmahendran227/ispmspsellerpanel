@@ -53,9 +53,9 @@ const Orders = () => {
   );
 
   return (
-    <div className="container">
+    <div>
       <div className="headerContainer">
-        <PageHeader>Orders</PageHeader>
+        <PageHeader>Order Details</PageHeader>
         <div className="filterContainer">
           <Select
             value={currentEcosystem}
@@ -66,11 +66,13 @@ const Orders = () => {
           />
         </div>
       </div>
-      <OrdersContainer
-        orderData={orderData}
-        setCurrentPageNumber={setCurrentPageNumber}
-        selectedEcosystemId={selectedEcosystemId}
-      />
+      <div className="container">
+        <OrdersContainer
+          orderData={orderData}
+          setCurrentPageNumber={setCurrentPageNumber}
+          selectedEcosystemId={selectedEcosystemId}
+        />
+      </div>
       <style jsx>{`
         .container {
           padding: 1em 0;
