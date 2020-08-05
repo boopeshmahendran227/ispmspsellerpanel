@@ -10,25 +10,13 @@ import {
   ShowroomInterface,
   ShowroomVisitInterface,
 } from "../../src/types/showroomVisit";
-import { RequestReducerState } from "../../src/reducers/utils";
 import WithAuth from "../../src/components/WithAuth";
 import useSWR from "swr";
 import { useState } from "react";
 import PageError from "../../src/components/PageError";
 import Loader from "../../src/components/Loader";
 
-interface StateProps {
-  showrooms: ShowroomInterface[];
-  getShowroomsState: RequestReducerState;
-}
-
-interface DispatchProps {
-  getShowrooms: () => void;
-}
-
-type ShowroomVisitsProps = StateProps & DispatchProps;
-
-const ShowroomVisits = (props: ShowroomVisitsProps) => {
+const ShowroomVisits = () => {
   const [showroomFilter, setShowroomFilter] = useState(null);
   const [dateFilter, setDateFilter] = useState(moment());
 
