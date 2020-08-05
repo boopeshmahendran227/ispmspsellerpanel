@@ -221,5 +221,5 @@ const mapDispatchToProps: DispatchProps = {
 };
 
 export default WithAuth(
-  connect<{}, DispatchProps>({}, mapDispatchToProps)(Order)
+  connect<null, DispatchProps>(null, mapDispatchToProps)(Order)
 );

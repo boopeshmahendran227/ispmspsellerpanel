@@ -25,7 +25,7 @@ import {
   isDeliveredOrderStatus,
 } from "../../src/utils/order";
 import Pagination from "../../src/components/Pagination";
-import { PaginationDataInterface } from "../../src/types/pagination";
+import { PaginatedDataInterface } from "../../src/types/pagination";
 import { getCustomerInfo } from "../../src/utils/customer";
 import PageHeader from "../../src/components/PageHeader";
 import ProductOrdersContainer from "../../src/components/ProductOrdersContainer";
@@ -49,8 +49,6 @@ interface DispatchProps {
   approveReturnOrderItem: (orderId: number, orderItemId: number) => void;
   rejectReturnOrderItem: (orderId: number, orderItemId: number) => void;
   cancelOrderItem: (orderId: number, orderItemId: number) => void;
-  setOrderCurrentPageNumber: (value: number) => void;
-  setEcosystemFilter: (ecosystemId: string) => void;
 }
 
 type OrdersProps = DispatchProps;
@@ -308,10 +306,12 @@ const Orders = (props: OrdersProps) => {
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const [selectedEcosystemId, setSelectedEcosystemId] = useState(null);
   const orderSWR = useSWR(
-    `/order?pageNumber=${currentPageNumber}&ecosystemids=${selectedEcosystemId}`
+    selectedEcosystemId
+      ? `/order?pageNumber=${currentPageNumber}&ecosystemids=${selectedEcosystemId}`
+      : `/order?pageNumber=${currentPageNumber}`
   );
 
-  const orderData: PaginationDataInterface<OrderInterface> = orderSWR.data;
+  const orderData: PaginatedDataInterface<OrderInterface> = orderSWR.data;
 
   const businessSWR = useSWR("/businesses/business");
   const businessData: BusinessDataInterface = businessSWR.data;
@@ -480,8 +480,6 @@ const mapDispatchToProps: DispatchProps = {
   approveReturnOrderItem: OrderActions.approveReturnOrderItem,
   rejectReturnOrderItem: OrderActions.rejectReturnOrderItem,
   cancelOrderItem: OrderActions.cancelOrderItem,
-  setOrderCurrentPageNumber: OrderActions.setOrderCurrentPageNumber,
-  setEcosystemFilter: OrderActions.setEcosystemFilter,
 };
 
 export default WithAuth(
