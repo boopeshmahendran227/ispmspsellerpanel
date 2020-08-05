@@ -1,10 +1,8 @@
 import * as React from "react";
-import ShowroomVisitCard from "../../src/components/ShowroomVisitCard";
 import moment from "moment";
 import SingleDatePicker from "../../src/components/SingleDatePicker";
 import RadioButton from "../../src/components/RadioButton";
 import CSSConstants from "../../src/constants/CSSConstants";
-import EmptyMsg from "../../src/components/EmptyMsg";
 import _ from "lodash";
 import {
   ShowroomInterface,
@@ -15,6 +13,7 @@ import useSWR from "swr";
 import { useState } from "react";
 import PageError from "../../src/components/PageError";
 import Loader from "../../src/components/Loader";
+import ShowroomVisitsContainer from "../../src/components/ShowroomVisitsContainer";
 
 const ShowroomVisits = () => {
   const [showroomFilter, setShowroomFilter] = useState(null);
@@ -35,7 +34,7 @@ const ShowroomVisits = () => {
     return <PageError statusCode={error.response?.status} />;
   }
 
-  if (!showroomVisits || !showrooms) {
+  if (!showrooms) {
     return <Loader />;
   }
 
@@ -51,17 +50,10 @@ const ShowroomVisits = () => {
     <div className="container">
       <div className="showroomVisitsContainer">
         <h1>Showroom Visits</h1>
-        {showroomVisits && showroomVisits.length === 0 && (
-          <EmptyMsg msg="No Showroom Visits match the currently selected filters." />
-        )}
-        {showroomVisits && showroomVisits.length > 0 && (
-          <>
-            <div className="date">{dateFilter.format("dddd, MMMM DD")}</div>
-            {showroomVisits.map((showroomVisit) => (
-              <ShowroomVisitCard showroomVisit={showroomVisit} />
-            ))}
-          </>
-        )}
+        <ShowroomVisitsContainer
+          showroomVisits={showroomVisits}
+          dateFilter={dateFilter}
+        />
       </div>
       <div className="filterContainer">
         <SingleDatePicker onChange={handleDateChange} value={dateFilter} />
@@ -99,12 +91,6 @@ const ShowroomVisits = () => {
           padding: 2em;
           max-width: 1200px;
           margin: auto;
-        }
-        .date {
-          text-transform: uppercase;
-          font-weight: bold;
-          margin: 1em 0;
-          font-size: 0.8rem;
         }
         .showroomFilterContainer {
           background: white;
