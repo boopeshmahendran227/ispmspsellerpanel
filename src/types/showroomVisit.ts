@@ -1,35 +1,11 @@
 import { AddressInterface } from "./order";
-import {
-  GET_SHOWROOMS_REQUEST,
-  GET_FILTERED_SHOWROOM_VISITS_REQUEST,
-  SET_DATE_FILTER_FOR_SHOWROOM_VISIT,
-  SET_SHOWROOM_FILTER_FOR_SHOWROOM_VISIT,
-} from "../constants/ActionTypes";
-import moment from "moment";
+import { GET_SHOWROOMS_REQUEST } from "../constants/ActionTypes";
 
 interface GetShowroomsAction {
   type: typeof GET_SHOWROOMS_REQUEST;
 }
 
-interface GetFilteredShowroomVisitsAction {
-  type: typeof GET_FILTERED_SHOWROOM_VISITS_REQUEST;
-}
-
-interface SetDateFilterAction {
-  type: typeof SET_DATE_FILTER_FOR_SHOWROOM_VISIT;
-  date: moment.Moment;
-}
-
-interface SetShowroomFilterAction {
-  type: typeof SET_SHOWROOM_FILTER_FOR_SHOWROOM_VISIT;
-  showroomId: string;
-}
-
-export type ShowroomVisitActionType =
-  | GetShowroomsAction
-  | GetFilteredShowroomVisitsAction
-  | SetDateFilterAction
-  | SetShowroomFilterAction;
+export type ShowroomVisitActionType = GetShowroomsAction;
 
 export interface ShowroomInterface {
   id: string;
