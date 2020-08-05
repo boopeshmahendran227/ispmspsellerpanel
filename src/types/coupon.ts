@@ -1,5 +1,4 @@
 import { CREATE_COUPON_REQUEST } from "../constants/ActionTypes";
-import { SelectOptionInterface, ProductMiniInterface } from "./product";
 
 export interface CreateCouponAction {
   type: typeof CREATE_COUPON_REQUEST;
