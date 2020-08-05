@@ -74,4 +74,7 @@ const mapDispatchToProps: DispatchProps = {
   remove: ToastActions.removeToast,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToastProvider);
+export default connect<StateProps, DispatchProps>(
+  mapStateToProps,
+  mapDispatchToProps
+)(ToastProvider);

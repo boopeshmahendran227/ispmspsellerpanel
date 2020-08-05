@@ -1,22 +1,21 @@
-import { FilterDataInterface } from "../types/search";
 import CSSConstants from "../constants/CSSConstants";
 
 interface ActiveFiltersProps {
-  filterData: FilterDataInterface;
+  searchText: string;
   clearFilters: () => void;
 }
 
 const ActiveFilters = (props: ActiveFiltersProps) => {
-  const { filterData } = props;
+  const { searchText } = props;
 
-  if (!filterData.searchText) {
+  if (!searchText) {
     return null;
   }
 
   return (
     <div className="container">
       <header>Active Filters:</header>
-      <div className="searchText">{filterData.searchText}</div>
+      <div className="searchText">{searchText}</div>
       <a className="clearAllBtn" onClick={props.clearFilters}>
         Clear all
       </a>

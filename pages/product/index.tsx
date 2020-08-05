@@ -1,40 +1,21 @@
-import { connect } from "react-redux";
-import { RootState } from "../../src/reducers";
-import {
-  getSearchResults,
-  getSearchPaginationData,
-  getFilterData,
-} from "../../src/selectors/search";
 import CSSConstants from "../../src/constants/CSSConstants";
 import Link from "next/link";
 import SortableTable from "../../src/components/SortableTable";
 import { ProductMiniInterface } from "../../src/types/product";
-import SearchActions from "../../src/actions/search";
-import { useEffect } from "react";
+import { useState } from "react";
 import SearchBar from "../../src/components/SearchBar";
 import RelativeImg from "../../src/components/RelativeImg";
 import Pagination from "../../src/components/Pagination";
 import ActiveFilters from "../../src/components/ActiveFilters";
-import { PaginationDataInterface } from "../../src/types/pagination";
-import { FilterDataInterface } from "../../src/types/search";
+import { PaginatedDataInterface } from "../../src/types/pagination";
 import Button from "../../src/components/Button";
 import WithAuth from "../../src/components/WithAuth";
+import useSWR from "swr";
+import { useMemo } from "react";
+import PageError from "../../src/components/PageError";
+import Loader from "../../src/components/Loader";
 
-interface StateProps {
-  products: ProductMiniInterface[];
-  searchPaginationData: PaginationDataInterface;
-  filterData: FilterDataInterface;
-}
-
-interface DispatchProps {
-  searchByText: (text: string) => void;
-  setSearchCurrentPageNumber: (value: number) => void;
-  clearFilters: () => void;
-}
-
-type ProductsProps = StateProps & DispatchProps;
-
-const Products = (props: ProductsProps) => {
+const Products = () => {
   const getTableHeaders = () => {
     return [
       {
@@ -88,15 +69,35 @@ const Products = (props: ProductsProps) => {
     ));
   };
 
-  const { products } = props;
+  const [searchText, setSearchText] = useState("");
+  const [currentPageNumber, setCurrentPageNumber] = useState(1);
 
-  // init search
-  useEffect(() => {
-    props.searchByText("");
-  }, []);
+  const params = useMemo(
+    () => ({
+      method: "POST",
+      data: {
+        searchText: searchText,
+        categoryId: 1,
+        pageNumber: currentPageNumber,
+        orderByPrice: 0,
+        attributeFilters: [],
+        brandId: [],
+        sellerIds: [],
+      },
+    }),
+    [searchText, currentPageNumber]
+  );
 
-  if (!products) {
-    return null;
+  const swr = useSWR(["/product/search/seller", params]);
+  const productData: PaginatedDataInterface<ProductMiniInterface> = swr.data;
+  const error = swr.error;
+
+  if (error) {
+    return <PageError statusCode={error?.response.status} />;
+  }
+
+  if (!productData) {
+    return <Loader />;
   }
 
   return (
@@ -107,27 +108,21 @@ const Products = (props: ProductsProps) => {
         </Link>
       </div>
       <ActiveFilters
-        filterData={props.filterData}
-        clearFilters={props.clearFilters}
+        searchText={searchText}
+        clearFilters={() => setSearchText("")}
       />
-      <SearchBar
-        searchText={props.filterData.searchText}
-        searchByText={props.searchByText}
-      />
+      <SearchBar searchText={searchText} searchByText={setSearchText} />
       <SortableTable
         initialSortData={{
           index: 1,
           isAsc: false,
         }}
         headers={getTableHeaders()}
-        data={products}
+        data={productData.results}
         emptyMsg="No products found for the given query"
         body={renderTableBody}
       />
-      <Pagination
-        data={props.searchPaginationData}
-        onChange={props.setSearchCurrentPageNumber}
-      />
+      <Pagination data={productData} onChange={setCurrentPageNumber} />
       <style jsx>{`
         .container {
           padding: 1em;
@@ -152,21 +147,4 @@ const Products = (props: ProductsProps) => {
   );
 };
 
-const mapStateToProps = (state: RootState): StateProps => ({
-  products: getSearchResults(state),
-  searchPaginationData: getSearchPaginationData(state),
-  filterData: getFilterData(state),
-});
-
-const mapDispatchToProps: DispatchProps = {
-  searchByText: SearchActions.searchByText,
-  setSearchCurrentPageNumber: SearchActions.setSearchCurrentPageNumber,
-  clearFilters: SearchActions.clearFilters,
-};
-
-export default WithAuth(
-  connect<StateProps, DispatchProps>(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Products)
-);
+export default WithAuth(Products);

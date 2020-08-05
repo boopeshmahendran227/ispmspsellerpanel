@@ -7,7 +7,6 @@ import LoaderSaga from "./loader";
 import QuoteSaga from "./quote";
 import SureConfirmationSaga from "./sureConfirmation";
 import ReasonSaga from "./reason";
-import SearchSaga from "./search";
 import LoginSaga from "./login";
 import CouponSaga from "./coupon";
 import CreditSaga from "./credit";
@@ -26,7 +25,6 @@ export default function* rootSaga() {
     fork(QuoteSaga),
     fork(SureConfirmationSaga),
     fork(ReasonSaga),
-    fork(SearchSaga),
     fork(LoginSaga),
     fork(CouponSaga),
     fork(CreditSaga),

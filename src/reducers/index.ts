@@ -3,7 +3,6 @@ import notification from "./notification";
 import ui from "./ui";
 import quote from "./quote";
 import product from "./product";
-import search from "./search";
 import login from "./login";
 import invoice from "./invoice";
 import { combineReducers } from "redux";
@@ -14,7 +13,6 @@ const rootReducer = combineReducers({
   ui,
   quote,
   product,
-  search,
   login,
   invoice,
 });
