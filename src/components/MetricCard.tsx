@@ -20,7 +20,7 @@ const MetricCard = (props: MetricCardProps) => {
           background: ${CSSConstants.foregroundColor};
           box-shadow: 0 0 20px #00000014;
           width: 250px;
-          height: 150px;
+          height: 120px;
           margin: 1em;
         }
         .title {

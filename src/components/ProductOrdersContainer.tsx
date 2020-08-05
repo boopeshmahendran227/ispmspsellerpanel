@@ -63,7 +63,7 @@ const getQty = (orderItemCount: OrderItemCountMap, filterFunc) => {
 
 const renderTableBody = (productOrders: ProductOrderInterface[]) => {
   return productOrders.map((productOrder) => (
-    <tr>
+    <tr key={productOrder.productId + " " + productOrder.skuId}>
       <td>
         <ProductCard
           name={productOrder.productName}
@@ -79,8 +79,8 @@ const renderTableBody = (productOrders: ProductOrderInterface[]) => {
       <td>{productOrder.skuId}</td>
       <td>{productOrder.externalId}</td>
       {[isPendingOrderStatus, isShippingOrderStatus, isOpenOrderStatus].map(
-        (filterFunc) => (
-          <td>
+        (filterFunc, index) => (
+          <td key={index}>
             <div className="qty">
               <span className="key">Qty: </span>
               <span className="value">
