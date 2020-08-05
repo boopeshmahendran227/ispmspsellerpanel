@@ -4,7 +4,6 @@ import RefreshDataSaga from "./refreshData";
 import ToastSaga from "./toast";
 import RealTimeNotificationSaga from "./realTimeNotification";
 import LoaderSaga from "./loader";
-import ShowroomVisitSaga from "./showroomVisit";
 import QuoteSaga from "./quote";
 import SureConfirmationSaga from "./sureConfirmation";
 import ReasonSaga from "./reason";
@@ -24,7 +23,6 @@ export default function* rootSaga() {
     fork(ToastSaga),
     fork(RefreshDataSaga),
     fork(LoaderSaga),
-    fork(ShowroomVisitSaga),
     fork(QuoteSaga),
     fork(SureConfirmationSaga),
     fork(ReasonSaga),

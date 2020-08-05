@@ -1,11 +1,4 @@
 import { AddressInterface } from "./order";
-import { GET_SHOWROOMS_REQUEST } from "../constants/ActionTypes";
-
-interface GetShowroomsAction {
-  type: typeof GET_SHOWROOMS_REQUEST;
-}
-
-export type ShowroomVisitActionType = GetShowroomsAction;
 
 export interface ShowroomInterface {
   id: string;

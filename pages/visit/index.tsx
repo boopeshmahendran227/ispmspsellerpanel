@@ -1,11 +1,7 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { getShowrooms } from "../../src/selectors/showroomVisit";
-import WithReduxDataLoader from "../../src/components/WithReduxDataLoader";
 import ShowroomVisitCard from "../../src/components/ShowroomVisitCard";
 import moment from "moment";
 import SingleDatePicker from "../../src/components/SingleDatePicker";
-import ShowroomVisitActions from "../../src/actions/showroomVisit";
 import RadioButton from "../../src/components/RadioButton";
 import CSSConstants from "../../src/constants/CSSConstants";
 import EmptyMsg from "../../src/components/EmptyMsg";
@@ -14,7 +10,6 @@ import {
   ShowroomInterface,
   ShowroomVisitInterface,
 } from "../../src/types/showroomVisit";
-import { RootState } from "../../src/reducers";
 import { RequestReducerState } from "../../src/reducers/utils";
 import WithAuth from "../../src/components/WithAuth";
 import useSWR from "swr";
@@ -37,20 +32,22 @@ const ShowroomVisits = (props: ShowroomVisitsProps) => {
   const [showroomFilter, setShowroomFilter] = useState(null);
   const [dateFilter, setDateFilter] = useState(moment());
 
-  const swr = useSWR(
+  const showroomVisitsSWR = useSWR(
     `/showroom/seller?showroomId=${showroomFilter}&date=${moment(dateFilter)
       .utc()
       .format("YYYY-MM-DD")}`
   );
+  const showroomSWR = useSWR("/showroom/short");
 
-  const showroomVisits: ShowroomVisitInterface[] = swr.data;
-  const error = swr.error;
+  const showrooms: ShowroomInterface[] = showroomSWR.data;
+  const showroomVisits: ShowroomVisitInterface[] = showroomVisitsSWR.data;
+  const error = showroomVisitsSWR.error || showroomSWR.error;
 
   if (error) {
     return <PageError statusCode={error.response?.status} />;
   }
 
-  if (!showroomVisits) {
+  if (!showroomVisits || !showrooms) {
     return <Loader />;
   }
 
@@ -92,7 +89,7 @@ const ShowroomVisits = (props: ShowroomVisitsProps) => {
                 onChange={handleShowroomChange}
               />
             </div>
-            {props.showrooms.map((showroom, index) => (
+            {showrooms.map((showroom, index) => (
               <div key={index}>
                 <RadioButton
                   key={index}
@@ -144,28 +141,4 @@ const ShowroomVisits = (props: ShowroomVisitsProps) => {
   );
 };
 
-const mapStateToProps = (state: RootState): StateProps => ({
-  showrooms: getShowrooms(state),
-  getShowroomsState: state.showroomVisit.showrooms,
-});
-
-const mapDispatchToProps: DispatchProps = {
-  getShowrooms: ShowroomVisitActions.getShowrooms,
-};
-
-const mapPropsToLoadData = (props: ShowroomVisitsProps) => {
-  return [
-    {
-      data: props.showrooms,
-      fetch: props.getShowrooms,
-      loadingState: props.getShowroomsState,
-    },
-  ];
-};
-
-export default WithAuth(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(WithReduxDataLoader(mapPropsToLoadData)(ShowroomVisits))
-);
+export default WithAuth(ShowroomVisits);
