@@ -9,7 +9,8 @@ import { formatPrice } from "../src/utils/misc";
 
 const startDate = moment().subtract(7, "days").startOf("day");
 const endDate = moment().endOf("day");
-const Home = () => {
+
+const Home = (): JSX.Element => {
   const swr = useSWR(
     `/reports/seller/summary?start=${startDate
       .utc()

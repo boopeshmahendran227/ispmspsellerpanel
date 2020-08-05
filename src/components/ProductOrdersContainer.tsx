@@ -6,9 +6,6 @@ import ProductCard from "./ProductCard";
 import _ from "lodash";
 import { isPendingOrderStatus, isShippingOrderStatus } from "../utils/order";
 import ErrorMsg from "./ErrorMsg";
-import { connect } from "react-redux";
-import { RootState } from "../reducers";
-import { getEcosystemFilterForOrder } from "../selectors/order";
 import CSSConstants from "../constants/CSSConstants";
 
 const isOpenOrderStatus = (key) =>
@@ -66,7 +63,7 @@ const getQty = (orderItemCount: OrderItemCountMap, filterFunc) => {
 
 const renderTableBody = (productOrders: ProductOrderInterface[]) => {
   return productOrders.map((productOrder) => (
-    <tr>
+    <tr key={productOrder.productId + " " + productOrder.skuId}>
       <td>
         <ProductCard
           name={productOrder.productName}
@@ -82,8 +79,8 @@ const renderTableBody = (productOrders: ProductOrderInterface[]) => {
       <td>{productOrder.skuId}</td>
       <td>{productOrder.externalId}</td>
       {[isPendingOrderStatus, isShippingOrderStatus, isOpenOrderStatus].map(
-        (filterFunc) => (
-          <td>
+        (filterFunc, index) => (
+          <td key={index}>
             <div className="qty">
               <span className="key">Qty: </span>
               <span className="value">
@@ -119,11 +116,9 @@ const renderTableBody = (productOrders: ProductOrderInterface[]) => {
   ));
 };
 
-interface StateProps {
+interface ProductOrdersContainerProps {
   selectedEcosystemId: string;
 }
-
-type ProductOrdersContainerProps = StateProps;
 
 const ProductOrdersContainer = (props: ProductOrdersContainerProps) => {
   const { selectedEcosystemId } = props;
@@ -155,8 +150,4 @@ const ProductOrdersContainer = (props: ProductOrdersContainerProps) => {
   );
 };
 
-const mapStateToProps = (state: RootState): StateProps => ({
-  selectedEcosystemId: getEcosystemFilterForOrder(state),
-});
-
-export default connect<StateProps>(mapStateToProps)(ProductOrdersContainer);
+export default ProductOrdersContainer;

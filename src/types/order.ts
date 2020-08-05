@@ -1,5 +1,4 @@
 import {
-  GET_FILTERED_ORDERS_REQUEST,
   CHANGE_ORDER_ITEM_STATUS_REQUEST,
   CHANGE_ORDER_ITEM_STATUS_SUCCESS,
   CHANGE_ORDER_ITEM_STATUS_FAILURE,
@@ -10,10 +9,7 @@ import {
   MARK_AS_SHIPPING_COMPLETE,
   MARK_AS_SHIPPING,
   CANCEL_ORDER_ITEM,
-  SET_ORDER_CURRENT_PAGE_NUMBER,
   MARK_AS_PROCESSING,
-  UPDATE_SHIPPING_INFORMATION_REQUEST,
-  SET_ECOSYSTEM_FILTER_FOR_ORDERS,
 } from "../constants/ActionTypes";
 import { ProductAttributeValue } from "./product";
 import { OrderDiscountInterface } from "../types/discount";
@@ -180,10 +176,6 @@ export interface ProductOrderInterface {
   externalId: string;
 }
 
-interface GetFilteredOrdersAction {
-  type: typeof GET_FILTERED_ORDERS_REQUEST;
-}
-
 interface ChangeOrderItemStatusAction {
   type: typeof CHANGE_ORDER_ITEM_STATUS_REQUEST;
   orderId: number;
@@ -253,26 +245,7 @@ interface CancelOrderItemAction {
   reason: string;
 }
 
-interface SetOrderCurrentPageNumberAction {
-  type: typeof SET_ORDER_CURRENT_PAGE_NUMBER;
-  value: number;
-}
-
-interface UpdateShippingInformationAction {
-  type: typeof UPDATE_SHIPPING_INFORMATION_REQUEST;
-  orderItemId: number;
-  providerName: string;
-  trackingCode: string;
-  expectedDeliveryDate: string;
-}
-
-interface SetEcosystemFilterAction {
-  type: typeof SET_ECOSYSTEM_FILTER_FOR_ORDERS;
-  ecosystemId: string;
-}
-
 export type OrderActionType =
-  | GetFilteredOrdersAction
   | ChangeOrderItemStatusAction
   | ChangeOrderItemStatusSuccessAction
   | ChangeOrderItemStatusFailureAction
@@ -283,7 +256,4 @@ export type OrderActionType =
   | MarkAsShippingCompleteAction
   | MarkAsShippingAction
   | MarkAsProcessingAction
-  | CancelOrderItemAction
-  | SetOrderCurrentPageNumberAction
-  | UpdateShippingInformationAction
-  | SetEcosystemFilterAction;
+  | CancelOrderItemAction;

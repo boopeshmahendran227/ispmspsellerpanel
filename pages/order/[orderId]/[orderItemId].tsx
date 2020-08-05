@@ -8,8 +8,6 @@ import OrderItemDetail from "../../../src/components/OrderItemDetail";
 import { formatAddress } from "../../../src/utils/misc";
 import { connect } from "react-redux";
 import OrderActions from "../../../src/actions/order";
-import { RootState } from "../../../src/reducers";
-import { getCurrentlyProcessingOrderItemIds } from "../../../src/selectors/order";
 import { OrderDetailInterface } from "../../../src/types/order";
 import {
   getOrderStatusText,
@@ -23,10 +21,6 @@ import WithAuth from "../../../src/components/WithAuth";
 import { transformOrderItem } from "../../../src/transformers/orderItem";
 import Button from "../../../src/components/Button";
 
-interface StateProps {
-  currentlyProcessingOrderItemIds: number[];
-}
-
 interface DispatchProps {
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
   markAsShipping: (orderId: number, orderItemId: number) => void;
@@ -38,7 +32,7 @@ interface DispatchProps {
   cancelOrderItem: (orderId: number, orderItemId: number) => void;
 }
 
-type OrderProps = StateProps & DispatchProps;
+type OrderProps = DispatchProps;
 
 const Order = (props: OrderProps) => {
   const router = useRouter();
@@ -109,9 +103,6 @@ const Order = (props: OrderProps) => {
               rejectCancelOrderItem={props.rejectCancelOrderItem}
               approveReturnOrderItem={props.approveReturnOrderItem}
               rejectReturnOrderItem={props.rejectReturnOrderItem}
-              inLoadingState={props.currentlyProcessingOrderItemIds.includes(
-                orderItem.id
-              )}
               cancelOrderItem={props.cancelOrderItem}
             />
           </section>
@@ -218,10 +209,6 @@ const Order = (props: OrderProps) => {
   );
 };
 
-const mapStateToProps = (state: RootState): StateProps => ({
-  currentlyProcessingOrderItemIds: getCurrentlyProcessingOrderItemIds(state),
-});
-
 const mapDispatchToProps: DispatchProps = {
   markAsShippingComplete: OrderActions.markAsShippingComplete,
   markAsShipping: OrderActions.markAsShipping,
@@ -234,5 +221,5 @@ const mapDispatchToProps: DispatchProps = {
 };
 
 export default WithAuth(
-  connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(Order)
+  connect<null, DispatchProps>(null, mapDispatchToProps)(Order)
 );

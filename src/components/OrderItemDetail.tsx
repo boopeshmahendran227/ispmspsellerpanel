@@ -5,7 +5,6 @@ import Button, { ButtonType } from "./Button";
 import { formatPrice, splitCamelCase } from "../utils/misc";
 import _ from "lodash";
 import { Fragment } from "react";
-import Loader from "./Loader";
 import moment from "moment";
 import { getColor, getOrderStatusText } from "../utils/order";
 
@@ -19,7 +18,6 @@ interface OrderItemDetailProps {
   approveCancelOrderItem: (orderId: number, orderItemId: number) => void;
   rejectCancelOrderItem: (orderId: number, orderItemId: number) => void;
   cancelOrderItem: (orderId: number, orderItemId: number) => void;
-  inLoadingState: boolean;
 }
 
 const OrderItemDetail = (props: OrderItemDetailProps) => {
@@ -211,12 +209,6 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
 
   return (
     <div className="container">
-      {props.inLoadingState && (
-        <div className="loadingOverlay">
-          <Loader width="2rem" height="2rem" />
-          <div>Processing..</div>
-        </div>
-      )}
       <section className="itemContainer">
         <div className="productContainer">
           <ProductCard
@@ -292,20 +284,6 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
         }
         .productContainer {
           padding: 0.5em;
-        }
-        .loadingOverlay {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          z-index: 1;
-          opacity: 0.7;
-          background: white;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
         }
         .container::before {
           content: "${orderText} on 

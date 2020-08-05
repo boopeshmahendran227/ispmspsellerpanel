@@ -3,5 +3,8 @@ export interface PaginationDataInterface {
   currentPageNumber: number;
   currentPageSize: number;
   totalPages: number;
-  results: any[];
+}
+
+export interface PaginatedDataInterface<T> extends PaginationDataInterface {
+  results: T[];
 }

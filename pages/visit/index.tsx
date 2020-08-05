@@ -1,73 +1,59 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import {
-  getShowroomVisits,
-  getShowroomFilterForShowroomVisit,
-  getDateFilterForShowroomVisit,
-} from "../../src/selectors/showroomVisit";
-import { getShowrooms } from "../../src/selectors/showroomVisit";
-import WithReduxDataLoader from "../../src/components/WithReduxDataLoader";
-import ShowroomVisitCard from "../../src/components/ShowroomVisitCard";
 import moment from "moment";
 import SingleDatePicker from "../../src/components/SingleDatePicker";
-import ShowroomVisitActions from "../../src/actions/showroomVisit";
 import RadioButton from "../../src/components/RadioButton";
 import CSSConstants from "../../src/constants/CSSConstants";
-import EmptyMsg from "../../src/components/EmptyMsg";
 import _ from "lodash";
 import {
   ShowroomInterface,
   ShowroomVisitInterface,
 } from "../../src/types/showroomVisit";
-import { RootState } from "../../src/reducers";
-import { RequestReducerState } from "../../src/reducers/utils";
 import WithAuth from "../../src/components/WithAuth";
+import useSWR from "swr";
+import { useState } from "react";
+import PageError from "../../src/components/PageError";
+import Loader from "../../src/components/Loader";
+import ShowroomVisitsContainer from "../../src/components/ShowroomVisitsContainer";
 
-interface StateProps {
-  showroomVisits: ShowroomVisitInterface[];
-  showrooms: ShowroomInterface[];
-  dateFilter: moment.Moment;
-  showroomFilter: string;
-  getFilteredShowroomVisitsState: RequestReducerState;
-  getShowroomsState: RequestReducerState;
-}
+const ShowroomVisits = () => {
+  const [showroomFilter, setShowroomFilter] = useState(null);
+  const [dateFilter, setDateFilter] = useState(moment());
 
-interface DispatchProps {
-  getShowrooms: () => void;
-  setDateFilter: (date: moment.Moment) => void;
-  setShowroomFilter: (id: string) => void;
-  getFilteredShowroomVisits: () => void;
-}
+  const showroomVisitsSWR = useSWR(
+    `/showroom/seller?showroomId=${showroomFilter}&date=${moment(dateFilter)
+      .utc()
+      .format("YYYY-MM-DD")}`
+  );
+  const showroomSWR = useSWR("/showroom/short");
 
-type ShowroomVisitsProps = StateProps & DispatchProps;
+  const showrooms: ShowroomInterface[] = showroomSWR.data;
+  const showroomVisits: ShowroomVisitInterface[] = showroomVisitsSWR.data;
+  const error = showroomVisitsSWR.error || showroomSWR.error;
 
-const ShowroomVisits = (props: ShowroomVisitsProps) => {
+  if (error) {
+    return <PageError statusCode={error.response?.status} />;
+  }
+
+  if (!showrooms) {
+    return <Loader />;
+  }
+
   const handleDateChange = (date) => {
-    props.setDateFilter(date);
+    setDateFilter(date);
   };
 
   const handleShowroomChange = (value) => {
-    props.setShowroomFilter(value || null);
+    setShowroomFilter(value || null);
   };
-
-  const { showroomVisits } = props;
-  const dateFilter = moment(props.dateFilter);
 
   return (
     <div className="container">
       <div className="showroomVisitsContainer">
         <h1>Showroom Visits</h1>
-        {showroomVisits && showroomVisits.length === 0 && (
-          <EmptyMsg msg="No Showroom Visits match the currently selected filters." />
-        )}
-        {showroomVisits && showroomVisits.length > 0 && (
-          <>
-            <div className="date">{dateFilter.format("dddd, MMMM DD")}</div>
-            {showroomVisits.map((showroomVisit) => (
-              <ShowroomVisitCard showroomVisit={showroomVisit} />
-            ))}
-          </>
-        )}
+        <ShowroomVisitsContainer
+          showroomVisits={showroomVisits}
+          dateFilter={dateFilter}
+        />
       </div>
       <div className="filterContainer">
         <SingleDatePicker onChange={handleDateChange} value={dateFilter} />
@@ -79,17 +65,17 @@ const ShowroomVisits = (props: ShowroomVisitsProps) => {
               <RadioButton
                 label="All Showrooms"
                 value={null}
-                checked={props.showroomFilter === null}
+                checked={showroomFilter === null}
                 onChange={handleShowroomChange}
               />
             </div>
-            {props.showrooms.map((showroom, index) => (
+            {showrooms.map((showroom, index) => (
               <div key={index}>
                 <RadioButton
                   key={index}
                   label={showroom.name}
                   value={showroom.id}
-                  checked={props.showroomFilter === showroom.id}
+                  checked={showroomFilter === showroom.id}
                   onChange={handleShowroomChange}
                 />
               </div>
@@ -105,12 +91,6 @@ const ShowroomVisits = (props: ShowroomVisitsProps) => {
           padding: 2em;
           max-width: 1200px;
           margin: auto;
-        }
-        .date {
-          text-transform: uppercase;
-          font-weight: bold;
-          margin: 1em 0;
-          font-size: 0.8rem;
         }
         .showroomFilterContainer {
           background: white;
@@ -135,40 +115,4 @@ const ShowroomVisits = (props: ShowroomVisitsProps) => {
   );
 };
 
-const mapStateToProps = (state: RootState): StateProps => ({
-  showroomVisits: getShowroomVisits(state),
-  showrooms: getShowrooms(state),
-  dateFilter: getDateFilterForShowroomVisit(state),
-  showroomFilter: getShowroomFilterForShowroomVisit(state),
-  getFilteredShowroomVisitsState: state.showroomVisit.showroomVisits,
-  getShowroomsState: state.showroomVisit.showrooms,
-});
-
-const mapDispatchToProps: DispatchProps = {
-  getFilteredShowroomVisits: ShowroomVisitActions.getFilteredShowroomVisits,
-  setDateFilter: ShowroomVisitActions.setDateFilter,
-  setShowroomFilter: ShowroomVisitActions.setShowroomFilter,
-  getShowrooms: ShowroomVisitActions.getShowrooms,
-};
-
-const mapPropsToLoadData = (props: ShowroomVisitsProps) => {
-  return [
-    {
-      data: props.showrooms,
-      fetch: props.getShowrooms,
-      loadingState: props.getShowroomsState,
-    },
-    {
-      data: props.showroomVisits,
-      fetch: props.getFilteredShowroomVisits,
-      loadingState: props.getFilteredShowroomVisitsState,
-    },
-  ];
-};
-
-export default WithAuth(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(WithReduxDataLoader(mapPropsToLoadData)(ShowroomVisits))
-);
+export default WithAuth(ShowroomVisits);

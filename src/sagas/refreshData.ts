@@ -6,16 +6,18 @@ import {
   ADD_ATTRIBUTE_VALUE_SUCCESS,
   UPDATE_CREDITS_SUCCESS,
 } from "../constants/ActionTypes";
-import { take, all, put, call } from "redux-saga/effects";
-import OrderActions from "../actions/order";
-import { mutate } from "swr";
+import { take, all, call } from "redux-saga/effects";
+import { mutate, cache } from "swr";
 
 function* refreshOrder() {
   while (true) {
-    const action = yield take([CHANGE_ORDER_ITEM_STATUS_SUCCESS]);
-    yield call(mutate, `/order/${action.orderId}`);
-    yield call(mutate, `/order/groupbyproduct`);
-    yield put(OrderActions.getOrders());
+    yield take([CHANGE_ORDER_ITEM_STATUS_SUCCESS]);
+    yield all(
+      cache
+        .keys()
+        .filter((key) => key.startsWith("/order"))
+        .map((key) => call(mutate, key))
+    );
   }
 }
 
