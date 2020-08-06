@@ -4,6 +4,7 @@ import Pagination from "../../src/components/Pagination";
 import RelativeImg from "../../src/components/RelativeImg";
 import CSSConstants from "../../src/constants/CSSConstants";
 import Loader from "./Loader";
+import Link from "next/link";
 import { PaginatedDataInterface } from "../types/pagination";
 
 interface ProductsContainerProps {
@@ -38,29 +39,31 @@ const getTableHeaders = () => {
 
 const renderTableBody = (products: ProductMiniInterface[]) => {
   return products.map((product) => (
-    <tr>
-      <td>{product.id}</td>
-      <td>
-        <div className="imageContainer">
-          <RelativeImg src={product.imageRelativePaths[0]} />
-        </div>
-      </td>
-      <td>{product.name}</td>
-      <td>{product.averageRating}</td>
-      <td>{product.shortDescription}</td>
-      <style jsx>{`
-        .imageContainer {
-          display: inline-flex;
-          width: 5rem;
-          height: 5rem;
-          align-items: center;
-        }
-        tr:hover {
-          background-color: ${CSSConstants.hoverColor} !important;
-          cursor: pointer;
-        }
-      `}</style>
-    </tr>
+    <Link href="/product/[id]" as={`/product/${product.id}`}>
+      <tr>
+        <td>{product.id}</td>
+        <td>
+          <div className="imageContainer">
+            <RelativeImg src={product.imageRelativePaths[0]} />
+          </div>
+        </td>
+        <td>{product.name}</td>
+        <td>{product.averageRating}</td>
+        <td>{product.shortDescription}</td>
+        <style jsx>{`
+          .imageContainer {
+            display: inline-flex;
+            width: 5rem;
+            height: 5rem;
+            align-items: center;
+          }
+          tr:hover {
+            background-color: ${CSSConstants.hoverColor} !important;
+            cursor: pointer;
+          }
+        `}</style>
+      </tr>
+    </Link>
   ));
 };
 

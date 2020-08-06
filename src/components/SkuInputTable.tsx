@@ -172,9 +172,9 @@ const SkuInputTable = (props: SkuInputTableProps) => {
 
   return (
     <div className="container">
-      <header>Skus</header>
+      <header>Variants</header>
       <div className="buttonContainer">
-        <Button onClick={props.showSkuModal}>Generate SKUs</Button>
+        <Button onClick={props.showSkuModal}>Generate Variants</Button>
       </div>
       {skus.length > 0 && (
         <SortableTable
