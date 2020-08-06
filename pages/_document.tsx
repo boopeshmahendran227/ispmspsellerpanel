@@ -4,11 +4,27 @@
 // ./pages/_document.js
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import { getAppInsightsKey } from "../src/utils/url";
+import { ServerStyleSheet } from "styled-components";
 
-class MyDocument extends Document {
-  static async getInitialProps(ctx) {
-    const initialProps = await Document.getInitialProps(ctx);
-    return { ...initialProps };
+interface DocumentProps {
+  styleTags: string;
+}
+
+class MyDocument extends Document<DocumentProps> {
+  static async getInitialProps({ renderPage }) {
+    // Step 1: Create an instance of ServerStyleSheet
+    const sheet = new ServerStyleSheet();
+
+    // Step 2: Retrieve styles from components in the page
+    const page = renderPage((App) => (props) =>
+      sheet.collectStyles(<App {...props} />)
+    );
+
+    // Step 3: Extract the styles as <style> tags
+    const styleTags = sheet.getStyleElement();
+
+    // Step 4: Pass styleTags as a prop
+    return { ...page, styleTags };
   }
 
   render() {
@@ -27,6 +43,7 @@ class MyDocument extends Document {
 );window[aiName]=aisdk,aisdk.queue&&0===aisdk.queue.length&&aisdk.trackPageView({});`,
             }}
           />
+          {this.props.styleTags}
         </Head>
         <body>
           <Main />

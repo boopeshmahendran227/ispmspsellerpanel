@@ -2,6 +2,7 @@ import RelativeImg from "./RelativeImg";
 import Link from "next/link";
 import Card from "./Card";
 import CSSConstants from "../constants/CSSConstants";
+import styled from "styled-components";
 
 interface SkuProductInfoProps {
   productId: number;
@@ -9,47 +10,46 @@ interface SkuProductInfoProps {
   image: string;
 }
 
+const Container = styled.div`
+  width: 300px;
+`;
+
+const MainContainer = styled.div`
+  display: flex;
+`;
+
+const ImageContainer = styled.div`
+  width: 50px;
+  height: 50px;
+  margin: 1em;
+`;
+
+const BackToProductLink = styled.a`
+  display: inline-block;
+  margin: 0.6em 0;
+  color: ${CSSConstants.secondaryColor};
+  text-decoration: none;
+`;
+
 const SkuProductInfo = (props: SkuProductInfoProps): JSX.Element => {
   const { productId, productName, image } = props;
 
   return (
-    <div className="container">
+    <Container>
       <Card>
-        <section className="mainContainer">
-          <div className="imageContainer">
+        <MainContainer>
+          <ImageContainer>
             <RelativeImg src={image}></RelativeImg>
-          </div>
-          <div className="contentContainer">
-            <div className="name">{productName}</div>
+          </ImageContainer>
+          <div>
+            <strong>{productName}</strong>
             <Link href="/product/[id]" as={`/product/${productId}`}>
-              <a className="backToProductLink">Back to product</a>
+              <BackToProductLink>Back to product</BackToProductLink>
             </Link>
           </div>
-        </section>
+        </MainContainer>
       </Card>
-      <style jsx>{`
-        .container {
-          width: 300px;
-        }
-        .imageContainer {
-          width: 50px;
-          height: 50px;
-          margin: 1em;
-        }
-        .mainContainer {
-          display: flex;
-        }
-        .name {
-          font-weight: bold;
-        }
-        .backToProductLink {
-          display: inline-block;
-          margin: 0.6em 0;
-          color: ${CSSConstants.secondaryColor};
-          text-decoration: none;
-        }
-      `}</style>
-    </div>
+    </Container>
   );
 };
 

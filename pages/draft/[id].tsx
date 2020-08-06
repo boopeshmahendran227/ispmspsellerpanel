@@ -6,10 +6,11 @@ import { useRouter } from "next/router";
 import Specification from "../../src/components/Specification";
 import TierPrice from "../../src/components/TierPrice";
 import FAQ from "../../src/components/FAQ";
-import { formatPrice } from "../../src/utils/misc";
 import CSSConstants from "../../src/constants/CSSConstants";
 import PageError from "../../src/components/PageError";
 import WithAuth from "../../src/components/WithAuth";
+import ProductMainInfo from "../../src/components/ProductMainInfo";
+import ProductPriceDetails from "../../src/components/ProductPriceDetails";
 
 const Draft = () => {
   const router = useRouter();
@@ -33,24 +34,17 @@ const Draft = () => {
         <span className="status">{draft.status}</span>
       </header>
       <div className="body">
-        <div className="gridContainer">
-          <div className="key">Name</div>
-          <div className="value">{draft.name}</div>
-          <div className="key">Product Type</div>
-          <div className="value">{draft.productType}</div>
-          <div className="key">Brand</div>
-          <div className="value">{draft.brandName}</div>
-          <div className="key">Short Description</div>
-          <div className="value">{draft.shortDescription}</div>
-          <div className="key">Long Description</div>
-          <div className="value">{draft.longDescription}</div>
-          <div className="key">Min Price</div>
-          <div className="value">{formatPrice(draft.minPrice)}</div>
-          <div className="key">Max Price</div>
-          <div className="value">{formatPrice(draft.maxPrice)}</div>
-          <div className="key">Special Discount</div>
-          <div className="value">{formatPrice(draft.specialDiscount)}</div>
-        </div>
+        <ProductMainInfo
+          name={draft.name}
+          brand={draft.brandName}
+          shortDescription={draft.shortDescription}
+          longDescription={draft.longDescription}
+        />
+        <ProductPriceDetails
+          minPrice={draft.minPrice}
+          maxPrice={draft.maxPrice}
+          specialDiscount={draft.specialDiscount}
+        />
         <SkuTable
           attributeValues={draft.attributeValues}
           skus={draft.skuDetails}
@@ -61,26 +55,12 @@ const Draft = () => {
       </div>
       <style jsx>{`
         .container {
-          padding: 0.5em;
+          padding: 0.8em;
         }
         header {
           font-size: 1.4rem;
-          margin: 0.7em;
+          margin: 0.7em 0;
           text-transform: uppercase;
-        }
-        .gridContainer {
-          display: grid;
-          grid-template-columns: 200px 500px;
-          grid-row-gap: 0.3em;
-          align-items: center;
-          font-size: 1.1rem;
-        }
-        .key {
-          font-weight: bold;
-        }
-        .body {
-          padding: 1em 2em;
-          background: white;
         }
         .status {
           border-radius: 2em;
