@@ -30,7 +30,6 @@ const SkuMini = (props: SkuMiniProps): JSX.Element => {
           .container {
             padding: 0.8em;
             display: flex;
-            max-width: 300px;
             justify-content: space-between;
             cursor: pointer;
           }

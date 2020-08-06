@@ -5,7 +5,6 @@ import PageHeader from "../../../src/components/PageHeader";
 import WithAuth from "../../../src/components/WithAuth";
 import { useRouter } from "next/router";
 import SkuMiniTable from "../../../src/components/SkuMiniTable";
-import Card from "../../../src/components/Card";
 
 const Product = () => {
   const router = useRouter();
@@ -25,9 +24,7 @@ const Product = () => {
   return (
     <div className="container">
       <PageHeader>{product.name}</PageHeader>
-      <Card>
-        <SkuMiniTable skus={product.skuDetails} productId={product.id} />
-      </Card>
+      <SkuMiniTable skus={product.skuDetails} productId={product.id} />
     </div>
   );
 };
