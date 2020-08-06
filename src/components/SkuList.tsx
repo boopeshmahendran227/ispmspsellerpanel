@@ -1,10 +1,12 @@
 import RelativeImg from "./RelativeImg";
 import CSSConstants from "../constants/CSSConstants";
 import Link from "next/link";
+import classNames from "classnames";
 
 interface SkuListProps {
   productId: number;
   skus: any[];
+  currentSkuId: string;
 }
 
 const SkuList = (props: SkuListProps): JSX.Element => {
@@ -19,7 +21,11 @@ const SkuList = (props: SkuListProps): JSX.Element => {
             href="/product/[id]/sku/[skuId]"
             as={`/product/${productId}/sku/${sku.skuId}`}
           >
-            <div className="sku">
+            <div
+              className={classNames("sku", {
+                active: props.currentSkuId === sku.skuId,
+              })}
+            >
               <div className="imageContainer">
                 <RelativeImg src={sku.imageRelativePaths[0]} />
               </div>
@@ -32,11 +38,14 @@ const SkuList = (props: SkuListProps): JSX.Element => {
         .container {
           width: 300px;
           background: ${CSSConstants.foregroundColor};
+          margin: 1em 0;
+          border: ${CSSConstants.borderStyle};
         }
         header {
-          padding: 0.5em;
+          padding: 1.1em 0.9em;
           font-size: 1.2rem;
           font-weight: bold;
+          background: ${CSSConstants.hoverColor};
         }
         .body {
           max-height: 300px;
@@ -47,14 +56,16 @@ const SkuList = (props: SkuListProps): JSX.Element => {
           padding: 0.5em;
           border-top: ${CSSConstants.borderStyle};
           cursor: pointer;
+          transition: all 0.3s;
         }
-        .sku:first-child {
-          background: ${CSSConstants.primaryColor};
+        .sku.active {
+          background: ${CSSConstants.secondaryColor};
           color: white;
         }
         .imageContainer {
           width: 50px;
           height: 50px;
+          margin: 0.3em;
         }
       `}</style>
     </div>

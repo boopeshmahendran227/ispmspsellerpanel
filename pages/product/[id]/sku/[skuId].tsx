@@ -15,6 +15,7 @@ import SkuProductInfo from "../../../../src/components/SkuProductInfo";
 const Sku = () => {
   const router = useRouter();
   const swr = useSWR(`/product/${router.query.id}`);
+  const skuId: string = router.query.skuId as string;
   const product = swr.data;
 
   const error = swr.error;
@@ -29,7 +30,9 @@ const Sku = () => {
 
   return (
     <div className="container">
-      <PageHeader>{product.name}</PageHeader>
+      <div className="headerContainer">
+        <PageHeader>{skuId}</PageHeader>
+      </div>
       <div className="flexContainer">
         <div>
           <SkuProductInfo
@@ -37,7 +40,11 @@ const Sku = () => {
             productName={product.name}
             image={product.skuDetails[0].imageRelativePaths[0]}
           />
-          <SkuList productId={product.id} skus={product.skuDetails} />
+          <SkuList
+            productId={product.id}
+            skus={product.skuDetails}
+            currentSkuId={skuId}
+          />
         </div>
         <div className="formContainer">
           <Formik
@@ -94,6 +101,9 @@ const Sku = () => {
         .container {
           max-width: 900px;
           margin: auto;
+        }
+        .headerContainer {
+          margin: 1.3em 0;
         }
         .flexContainer {
           display: flex;
