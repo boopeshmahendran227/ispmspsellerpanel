@@ -14,7 +14,6 @@ import BackLink from "../../../../src/components/BackLink";
 import SectionHeader from "../../../../src/components/SectionHeader";
 import SectionCard from "../../../../src/components/SectionCard";
 import FieldMultiSelect from "../../../../src/components/FieldMultiSelect";
-import ImageUploader from "../../../../src/components/ImageUploader";
 
 const Sku = () => {
   const router = useRouter();
@@ -38,7 +37,7 @@ const Sku = () => {
         <BackLink href="/product/[id]" as={`/product/${product.id}`}>
           Back to Product
         </BackLink>
-        <PageHeader>{skuId}</PageHeader>
+        <PageHeader>Add Variant</PageHeader>
       </div>
       <div className="flexContainer">
         <div>
@@ -71,7 +70,6 @@ const Sku = () => {
                   <label>Color</label>
                   <FieldMultiSelect name="length" options={[]} />
                 </SectionCard>
-                <ImageUploader />
                 <SectionCard>
                   <SectionHeader>Pricing</SectionHeader>
                   <label>Price</label>
