@@ -5,13 +5,15 @@ import PageHeader from "../../../../src/components/PageHeader";
 import WithAuth from "../../../../src/components/WithAuth";
 import { useRouter } from "next/router";
 import SkuList from "../../../../src/components/SkuList";
-import Card from "../../../../src/components/Card";
 import FieldPriceInput from "../../../../src/components/FieldPriceInput";
 import { Formik, Form } from "formik";
 import FieldNumInput from "../../../../src/components/FieldNumInput";
 import FieldInput from "../../../../src/components/FieldInput";
 import SkuProductInfo from "../../../../src/components/SkuProductInfo";
 import BackLink from "../../../../src/components/BackLink";
+import SectionHeader from "../../../../src/components/SectionHeader";
+import SectionCard from "../../../../src/components/SectionCard";
+import FieldMultiSelect from "../../../../src/components/FieldMultiSelect";
 
 const Sku = () => {
   const router = useRouter();
@@ -63,39 +65,38 @@ const Sku = () => {
           >
             {() => (
               <Form>
-                <div className="inputSection">
-                  <Card>
-                    <header>Pricing</header>
-                    <label>Price</label>
-                    <FieldPriceInput name="price" />
-                    <label>Bought Price</label>
-                    <FieldPriceInput name="boughtPrice" />
-                  </Card>
-                </div>
-                <div className="inputSection">
-                  <Card>
-                    <header>Inventory</header>
-                    <label>Qty</label>
-                    <FieldNumInput name="qty" />
-                    <label>Bar Code</label>
-                    <FieldInput name="barCode" />
-                    <label>External Id</label>
-                    <FieldInput name="externalId" />
-                  </Card>
-                </div>
-                <div className="inputSection">
-                  <Card>
-                    <header>Dimensions</header>
-                    <label>Length</label>
-                    <FieldNumInput name="length" />
-                    <label>Width</label>
-                    <FieldInput name="width" />
-                    <label>Height</label>
-                    <FieldInput name="height" />
-                    <label>Weight</label>
-                    <FieldInput name="weight" />
-                  </Card>
-                </div>
+                <SectionCard>
+                  <SectionHeader>Options</SectionHeader>
+                  <label>Color</label>
+                  <FieldMultiSelect name="length" options={[]} />
+                </SectionCard>
+                <SectionCard>
+                  <SectionHeader>Pricing</SectionHeader>
+                  <label>Price</label>
+                  <FieldPriceInput name="price" />
+                  <label>Bought Price</label>
+                  <FieldPriceInput name="boughtPrice" />
+                </SectionCard>
+                <SectionCard>
+                  <SectionHeader>Inventory</SectionHeader>
+                  <label>Qty</label>
+                  <FieldNumInput name="qty" />
+                  <label>Bar Code</label>
+                  <FieldInput name="barCode" />
+                  <label>External Id</label>
+                  <FieldInput name="externalId" />
+                </SectionCard>
+                <SectionCard>
+                  <SectionHeader>Dimensions</SectionHeader>
+                  <label>Length</label>
+                  <FieldNumInput name="length" />
+                  <label>Width</label>
+                  <FieldInput name="width" />
+                  <label>Height</label>
+                  <FieldInput name="height" />
+                  <label>Weight</label>
+                  <FieldInput name="weight" />
+                </SectionCard>
               </Form>
             )}
           </Formik>
@@ -114,15 +115,8 @@ const Sku = () => {
         }
         .formContainer {
           flex: 1;
-        }
-        .inputSection {
           margin-bottom: 1em;
           margin-left: 1em;
-        }
-        .inputSection header {
-          font-size: 1.3rem;
-          font-weight: bold;
-          margin-bottom: 0.8em;
         }
         label {
           margin-top: 0.3em;

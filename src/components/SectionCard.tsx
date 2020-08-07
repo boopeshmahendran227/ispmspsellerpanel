@@ -6,7 +6,7 @@ interface SectionCardProps {
 }
 
 const Container = styled.div`
-  margin: 1em 0;
+  margin-bottom: 1em;
 `;
 
 const SectionCard = (props: SectionCardProps): JSX.Element => {

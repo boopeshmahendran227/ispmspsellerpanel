@@ -90,12 +90,12 @@ const Drafts = () => {
 
   return (
     <div className="container">
+      <PageHeader>Product Drafts</PageHeader>
       <div className="addProductContainer">
         <Link href="/product/new">
           <Button>Add Product</Button>
         </Link>
       </div>
-      <PageHeader>Product Drafts</PageHeader>
       <SortableTable
         initialSortData={{
           index: 1,
@@ -108,23 +108,10 @@ const Drafts = () => {
       />
       <Pagination data={draftData} onChange={setCurrentPageNumber} />
       <style jsx>{`
-        .container {
-          padding: 1em;
-          margin: 1em auto;
-          font-size: 0.9rem;
-          background: ${CSSConstants.foregroundColor};
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-            0 1px 2px rgba(0, 0, 0, 0.24);
-        }
         .addProductContainer {
           text-align: right;
           padding: 0.4em 3em;
           font-size: 1rem;
-        }
-        @media (max-width: 800px) {
-          .container {
-            padding: 0;
-          }
         }
       `}</style>
     </div>
