@@ -1,5 +1,23 @@
 import { FAQInterface } from "../types/product";
-import CSSConstants from "../constants/CSSConstants";
+import SectionCard from "./SectionCard";
+import SectionHeader from "./SectionHeader";
+import styled from "styled-components";
+
+const QAContainer = styled.div`
+  margin: 0.4em 0;
+`;
+
+const Question = styled.div`
+  &::before {
+    content: "Q: ";
+  }
+`;
+
+const Answer = styled.div`
+  &::before {
+    content: "A: ";
+  }
+`;
 
 interface FAQProps {
   faqs: FAQInterface[];
@@ -13,42 +31,17 @@ const FAQ = (props: FAQProps) => {
   }
 
   return (
-    <div className="container">
-      <header>FAQs</header>
+    <SectionCard>
+      <SectionHeader>FAQs</SectionHeader>
       <div>
-        <table>
-          <thead>
-            <tr>
-              <th>S.no</th>
-              <th>Question</th>
-              <th>Answer</th>
-            </tr>
-          </thead>
-          <tbody>
-            {faqs.map((item, index) => (
-              <tr>
-                <td>{index + 1}</td>
-                <td>{item.question}</td>
-                <td>{item.answer}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {faqs.map((item, index) => (
+          <QAContainer>
+            <Question>{item.question}</Question>
+            <Answer>{item.question}</Answer>
+          </QAContainer>
+        ))}
       </div>
-      <style jsx>{`
-        .container {
-          margin: 3em 0;
-          font-size: 1.1rem;
-        }
-        header {
-          font-weight: bold;
-          font-size: 1.3rem;
-          border-bottom: 1px solid ${CSSConstants.borderColor};
-          padding: 0.3em;
-          margin-bottom: 1em;
-        }
-      `}</style>
-    </div>
+    </SectionCard>
   );
 };
 
