@@ -1,6 +1,42 @@
 import Link from "next/link";
 import { formatPrice } from "../utils/misc";
 import RelativeImg from "./RelativeImg";
+import CSSConstants from "../constants/CSSConstants";
+import styled from "styled-components";
+
+const Container = styled.div`
+  padding: 0.8em;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+`;
+
+const ImageContainer = styled.div`
+  width: 80px;
+  height: 80px;
+  margin: 0.4em;
+  padding: 0.3em;
+`;
+
+const MainContainer = styled.div`
+  display: flex;
+`;
+
+const SkuName = styled.div`
+  font-weight: bold;
+`;
+
+const Quantity = styled.div`
+  color: ${CSSConstants.secondaryTextColor};
+`;
+
+const Price = styled.div`
+  font-size: 1.1rem;
+`;
+
+const ContentContainer = styled.div`
+  width: 80px;
+`;
 
 interface SkuMiniProps {
   productId: number;
@@ -15,33 +51,18 @@ const SkuMini = (props: SkuMiniProps): JSX.Element => {
       href="/product/[id]/sku/[skuId]"
       as={`/product/${props.productId}/sku/${sku.skuId}`}
     >
-      <div className="container">
-        <div className="mainContainer">
-          <div className="imageContainer">
+      <Container>
+        <MainContainer>
+          <ImageContainer>
             <RelativeImg src={sku.imageRelativePaths[0]} />
-          </div>
-          <div>{sku.skuId}</div>
-        </div>
-        <div>
-          <div>{formatPrice(sku.price)}</div>
-          <div>Qty: {sku.qty}</div>
-        </div>
-        <style jsx>{`
-          .container {
-            padding: 0.8em;
-            display: flex;
-            justify-content: space-between;
-            cursor: pointer;
-          }
-          .mainContainer {
-            display: flex;
-          }
-          .imageContainer {
-            width: 80px;
-            height: 80px;
-          }
-        `}</style>
-      </div>
+          </ImageContainer>
+          <SkuName>{sku.skuId}</SkuName>
+        </MainContainer>
+        <ContentContainer>
+          <Price>{formatPrice(sku.price)}</Price>
+          <Quantity>Qty: {sku.qty}</Quantity>
+        </ContentContainer>
+      </Container>
     </Link>
   );
 };

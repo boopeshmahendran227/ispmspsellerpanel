@@ -1,5 +1,6 @@
 import SkuMini from "./SkuMini";
-import Card from "./Card";
+import SectionHeader from "./SectionHeader";
+import SectionCard from "./SectionCard";
 
 interface SkuMiniTableProps {
   productId: number;
@@ -9,14 +10,12 @@ interface SkuMiniTableProps {
 const SkuMiniTable = (props: SkuMiniTableProps): JSX.Element => {
   const { skus } = props;
   return (
-    <div className="container">
-      <Card>
-        <div>Variants</div>
-        {skus.map((sku) => (
-          <SkuMini productId={props.productId} sku={sku} />
-        ))}
-      </Card>
-    </div>
+    <SectionCard>
+      <SectionHeader>Variants</SectionHeader>
+      {skus.map((sku) => (
+        <SkuMini productId={props.productId} sku={sku} />
+      ))}
+    </SectionCard>
   );
 };
 

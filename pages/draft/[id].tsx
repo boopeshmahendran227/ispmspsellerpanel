@@ -33,7 +33,7 @@ const Draft = () => {
         <span className="name">Draft #{draft.id}</span>
         <span className="status">{draft.status}</span>
       </header>
-      <div className="body">
+      <div>
         <ProductMainInfo
           name={draft.name}
           brand={draft.brandName}
