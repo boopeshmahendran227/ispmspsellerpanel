@@ -1,73 +1,55 @@
 import { SpecificationInterface } from "../types/product";
+import SectionHeader from "./SectionHeader";
+import styled from "styled-components";
 import CSSConstants from "../constants/CSSConstants";
+import { Fragment } from "react";
+import SectionCard from "./SectionCard";
 
 interface SpecificationProps {
   specification: SpecificationInterface;
 }
 
+const GroupName = styled.div`
+  font-weight: bold;
+  font-size: 1.1rem;
+`;
+
+const SpecGrid = styled.div`
+  margin: 0.5em 0;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+`;
+
+const Key = styled.div`
+  color: ${CSSConstants.secondaryTextColor};
+`;
+
+const Value = styled.div``;
+
 const Specification = (props: SpecificationProps) => {
   const { specification } = props;
 
   return (
-    <div className="container">
-      <header>Specification</header>
-      <div className="body">
-        {specification.itemGroups.map((group, groupIndex) => (
-          <div className="specGroupContainer">
-            <div className="groupName">
-              <div className="key">Group Name: </div>
-              <div className="value">{group.name}</div>
-            </div>
+    <SectionCard>
+      <SectionHeader>Specification</SectionHeader>
+      <div>
+        {specification.itemGroups.map((group) => (
+          <div>
+            <GroupName>{group.name}</GroupName>
             {group.items.length > 0 && (
-              <table className="specTable">
-                <thead>
-                  <tr>
-                    <th>S.no</th>
-                    <th>Key</th>
-                    <th>Value</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {group.items.map((item, itemIndex) => (
-                    <tr>
-                      <td>{itemIndex + 1}</td>
-                      <td>{item.key}</td>
-                      <td>{item.value}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <SpecGrid>
+                {group.items.map((item, itemIndex) => (
+                  <Fragment key={itemIndex}>
+                    <Key>{item.key}</Key>
+                    <Value>{item.value}</Value>
+                  </Fragment>
+                ))}
+              </SpecGrid>
             )}
           </div>
         ))}
       </div>
-      <style jsx>{`
-        .container {
-          margin: 3em 0;
-          font-size: 1.1rem;
-        }
-        header {
-          font-weight: bold;
-          font-size: 1.3rem;
-          border-bottom: 1px solid ${CSSConstants.borderColor};
-          padding: 0.3em;
-          margin-bottom: 1em;
-        }
-        .body {
-          margin: 0.5em 2em;
-        }
-        .groupName {
-          display: grid;
-          grid-template-columns: 100px 300px;
-        }
-        .groupName .key {
-          font-weight: bold;
-        }
-        .specTable {
-          margin: 0.5em 0;
-        }
-      `}</style>
-    </div>
+    </SectionCard>
   );
 };
 
