@@ -1,6 +1,5 @@
 import moment from "moment";
 import CSSConstants from "../../src/constants/CSSConstants";
-import Link from "next/link";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import Loader from "../../src/components/Loader";
@@ -11,6 +10,7 @@ import QuoteItemDetail from "../../src/components/QuoteItemDetail";
 import QuoteActions from "../../src/actions/quote";
 import PageError from "../../src/components/PageError";
 import WithAuth from "../../src/components/WithAuth";
+import BackLink from "../../src/components/BackLink";
 
 interface DispatchProps {
   rejectQuote: (quote: QuoteInterface) => void;
@@ -35,11 +35,7 @@ const Quote = (props: QuoteProps) => {
 
   return (
     <div className="container">
-      <Link href="/quote">
-        <a className="backBtn">
-          <i className="icon fas fa-chevron-left"></i> Back to Quotes
-        </a>
-      </Link>
+      <BackLink href="/quote">Back to Quotes</BackLink>
       <header>
         <span className="id">#{quote.id}</span>{" "}
         <span className="time">
@@ -95,7 +91,7 @@ const Quote = (props: QuoteProps) => {
           font-size: 1.6rem;
         }
         header {
-          margin-bottom: 1em;
+          margin: 1em 0;
         }
         .time {
           color: ${CSSConstants.secondaryTextColor};

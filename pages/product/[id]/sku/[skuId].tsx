@@ -11,6 +11,7 @@ import { Formik, Form } from "formik";
 import FieldNumInput from "../../../../src/components/FieldNumInput";
 import FieldInput from "../../../../src/components/FieldInput";
 import SkuProductInfo from "../../../../src/components/SkuProductInfo";
+import BackLink from "../../../../src/components/BackLink";
 
 const Sku = () => {
   const router = useRouter();
@@ -31,6 +32,9 @@ const Sku = () => {
   return (
     <div className="container">
       <div className="headerContainer">
+        <BackLink href="/product/[id]" as={`/product/${product.id}`}>
+          Back to Product
+        </BackLink>
         <PageHeader>{skuId}</PageHeader>
       </div>
       <div className="flexContainer">

@@ -20,6 +20,7 @@ import OrderInformation from "../../../src/components/OrderInformation";
 import WithAuth from "../../../src/components/WithAuth";
 import { transformOrderItem } from "../../../src/transformers/orderItem";
 import Button from "../../../src/components/Button";
+import BackLink from "../../../src/components/BackLink";
 
 interface DispatchProps {
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
@@ -57,11 +58,7 @@ const Order = (props: OrderProps) => {
 
   return (
     <div className="container">
-      <Link href="/order">
-        <a className="backBtn">
-          <i className="icon fas fa-chevron-left"></i> Back to Orders
-        </a>
-      </Link>
+      <BackLink href="/order">Back to Orders</BackLink>
       <header>
         <span className="id">
           #{order.id}-{orderItem.id}
@@ -158,7 +155,7 @@ const Order = (props: OrderProps) => {
           font-size: 1.6rem;
         }
         header {
-          margin-bottom: 1em;
+          margin: 1em 0;
         }
         .invoiceBtnContainer {
           margin: 0.5em 0;
@@ -197,12 +194,6 @@ const Order = (props: OrderProps) => {
           padding-bottom: 0.4em;
           padding-left: 0.8em;
           padding-right: 0.8em;
-        }
-        .backBtn {
-          display: inline-block;
-          cursor: pointer;
-          margin: 1em 0;
-          font-size: 1.1rem;
         }
       `}</style>
     </div>

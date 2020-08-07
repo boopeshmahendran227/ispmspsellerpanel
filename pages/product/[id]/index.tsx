@@ -11,6 +11,7 @@ import Specification from "../../../src/components/Specification";
 import TierPrice from "../../../src/components/TierPrice";
 import FAQ from "../../../src/components/FAQ";
 import styled from "styled-components";
+import BackLink from "../../../src/components/BackLink";
 
 const Container = styled.div`
   max-width: 700px;
@@ -39,6 +40,7 @@ const Product = () => {
   return (
     <Container>
       <HeaderContainer>
+        <BackLink href="/product">Products</BackLink>
         <PageHeader>{product.name}</PageHeader>
       </HeaderContainer>
       <ProductMainInfo
