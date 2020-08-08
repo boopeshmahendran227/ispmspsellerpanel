@@ -1,5 +1,4 @@
 import {
-  ProductMiniInterface,
   ProductType,
   TierPriceInterface,
   SpecificationInterface,
@@ -7,7 +6,15 @@ import {
   ProductSkuDetail,
 } from "./product";
 
-export interface DraftMiniInterface extends ProductMiniInterface {
+export interface DraftMiniInterface {
+  id: number;
+  imageRelativePaths: string[];
+  name: string;
+  averageRating: number;
+  shortDescription: string;
+  price: number;
+  specialDiscount: number;
+  isBundle: boolean;
   status: string;
 }
 

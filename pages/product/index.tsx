@@ -21,19 +21,16 @@ const Products = () => {
     () => ({
       method: "POST",
       data: {
-        searchText: searchText,
-        categoryId: 1,
+        showOnlySelf: false,
+        ecosystemId: "Default",
         pageNumber: currentPageNumber,
-        orderByPrice: 0,
-        attributeFilters: [],
-        brandId: [],
-        sellerIds: [],
+        searchText: searchText,
       },
     }),
     [searchText, currentPageNumber]
   );
 
-  const swr = useSWR(["/product/search/seller", params]);
+  const swr = useSWR(["/search/seller/product", params]);
   const productData: PaginatedDataInterface<ProductMiniInterface> = swr.data;
   const error = swr.error;
 

@@ -166,14 +166,11 @@ export interface AddAttributeInterface {
 }
 
 export interface ProductMiniInterface {
-  id: number;
-  imageRelativePaths: string[];
-  name: string;
-  averageRating: number;
-  shortDescription: string;
-  price: number;
-  specialDiscount: number;
-  isBundle: boolean;
+  productId: number;
+  productName: string;
+  productShortDescription: string;
+  productImages: string[];
+  isActive: boolean;
 }
 
 export interface SelectedAttribute {

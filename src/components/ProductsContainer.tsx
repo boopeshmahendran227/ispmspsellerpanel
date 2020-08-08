@@ -16,7 +16,7 @@ const getTableHeaders = () => {
   return [
     {
       name: "Product Id",
-      valueFunc: (product: ProductMiniInterface) => product.id,
+      valueFunc: (product: ProductMiniInterface) => product.productId,
     },
     {
       name: "Image",
@@ -24,32 +24,28 @@ const getTableHeaders = () => {
     },
     {
       name: "Name",
-      valueFunc: (product: ProductMiniInterface) => product.name,
-    },
-    {
-      name: "Average Rating",
-      valueFunc: (product: ProductMiniInterface) => product.averageRating,
+      valueFunc: (product: ProductMiniInterface) => product.productName,
     },
     {
       name: "Short Description",
-      valueFunc: (product: ProductMiniInterface) => product.shortDescription,
+      valueFunc: (product: ProductMiniInterface) =>
+        product.productShortDescription,
     },
   ];
 };
 
 const renderTableBody = (products: ProductMiniInterface[]) => {
   return products.map((product) => (
-    <Link href="/product/[id]" as={`/product/${product.id}`}>
+    <Link href="/product/[id]" as={`/product/${product.productId}`}>
       <tr>
-        <td>{product.id}</td>
+        <td>{product.productId}</td>
         <td>
           <div className="imageContainer">
-            <RelativeImg src={product.imageRelativePaths[0]} />
+            <RelativeImg src={product.productImages[0]} />
           </div>
         </td>
-        <td>{product.name}</td>
-        <td>{product.averageRating}</td>
-        <td>{product.shortDescription}</td>
+        <td>{product.productName}</td>
+        <td>{product.productShortDescription}</td>
         <style jsx>{`
           .imageContainer {
             display: inline-flex;
