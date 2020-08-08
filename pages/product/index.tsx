@@ -2,16 +2,16 @@ import CSSConstants from "../../src/constants/CSSConstants";
 import Link from "next/link";
 import { ProductMiniInterface } from "../../src/types/product";
 import { useState } from "react";
-import SearchBar from "../../src/components/SearchBar";
-import ActiveFilters from "../../src/components/ActiveFilters";
+import SearchBar from "components/SearchBar";
+import ActiveFilters from "components/ActiveFilters";
 import { PaginatedDataInterface } from "../../src/types/pagination";
-import Button from "../../src/components/atoms/Button";
-import WithAuth from "../../src/components/WithAuth";
+import Button from "components/atoms/Button";
+import WithAuth from "components/WithAuth";
 import useSWR from "swr";
 import { useMemo } from "react";
-import PageError from "../../src/components/PageError";
-import ProductsContainer from "../../src/components/ProductsContainer";
-import PageHeader from "../../src/components/PageHeader";
+import PageError from "components/PageError";
+import ProductsContainer from "components/ProductsContainer";
+import PageHeader from "components/PageHeader";
 
 const Products = () => {
   const [searchText, setSearchText] = useState("");

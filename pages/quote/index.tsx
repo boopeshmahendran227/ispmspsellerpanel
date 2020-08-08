@@ -1,21 +1,21 @@
 import { connect } from "react-redux";
 import CSSConstants from "../../src/constants/CSSConstants";
-import TabSection from "../../src/components/TabSection";
-import SortableTable from "../../src/components/SortableTable";
+import TabSection from "components/TabSection";
+import SortableTable from "components/SortableTable";
 import { QuoteInterface, QuoteStatus } from "../../src/types/quote";
 import { getQuoteStatusText } from "../../src/utils/quote";
 import useSWR from "swr";
-import Loader from "../../src/components/Loader";
+import Loader from "components/Loader";
 import Link from "next/link";
-import ProductCard from "../../src/components/ProductCard";
+import ProductCard from "components/ProductCard";
 import moment from "moment";
-import Button, { ButtonType } from "../../src/components/atoms/Button";
+import Button, { ButtonType } from "components/atoms/Button";
 import QuoteActions from "../../src/actions/quote";
 import { formatPrice } from "../../src/utils/misc";
 import { getColor } from "../../src/utils/quote";
-import PageError from "../../src/components/PageError";
+import PageError from "components/PageError";
 import { getCustomerInfo } from "../../src/utils/customer";
-import WithAuth from "../../src/components/WithAuth";
+import WithAuth from "components/WithAuth";
 
 interface DispatchProps {
   updateQuote: (quote: QuoteInterface) => void;

@@ -6,12 +6,12 @@ import {
 import OrderActions from "../../src/actions/order";
 import { connect } from "react-redux";
 import CSSConstants from "../../src/constants/CSSConstants";
-import TabSection from "../../src/components/TabSection";
+import TabSection from "components/TabSection";
 import Link from "next/link";
-import ProductCard from "../../src/components/ProductCard";
+import ProductCard from "components/ProductCard";
 import { formatPrice } from "../../src/utils/misc";
 import moment from "moment";
-import SortableTable from "../../src/components/SortableTable";
+import SortableTable from "components/SortableTable";
 import Button, { ButtonType } from "./atoms/Button";
 import {
   getColor,
@@ -23,12 +23,12 @@ import {
   isOpenOrderStatus,
   isDeliveredOrderStatus,
 } from "../../src/utils/order";
-import Pagination from "../../src/components/Pagination";
+import Pagination from "components/Pagination";
 import { PaginatedDataInterface } from "../../src/types/pagination";
 import { getCustomerInfo } from "../../src/utils/customer";
-import ProductOrdersContainer from "../../src/components/ProductOrdersContainer";
-import Loader from "../../src/components/Loader";
-import WithAuth from "../../src/components/WithAuth";
+import ProductOrdersContainer from "components/ProductOrdersContainer";
+import Loader from "components/Loader";
+import WithAuth from "components/WithAuth";
 import { transformOrderItem } from "../../src/transformers/orderItem";
 import _ from "lodash";
 

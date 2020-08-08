@@ -1,19 +1,19 @@
 import * as React from "react";
 import moment from "moment";
-import SingleDatePicker from "../../src/components/SingleDatePicker";
-import RadioButton from "../../src/components/RadioButton";
+import SingleDatePicker from "components/SingleDatePicker";
+import RadioButton from "components/RadioButton";
 import CSSConstants from "../../src/constants/CSSConstants";
 import _ from "lodash";
 import {
   ShowroomInterface,
   ShowroomVisitInterface,
 } from "../../src/types/showroomVisit";
-import WithAuth from "../../src/components/WithAuth";
+import WithAuth from "components/WithAuth";
 import useSWR from "swr";
 import { useState } from "react";
-import PageError from "../../src/components/PageError";
-import Loader from "../../src/components/Loader";
-import ShowroomVisitsContainer from "../../src/components/ShowroomVisitsContainer";
+import PageError from "components/PageError";
+import Loader from "components/Loader";
+import ShowroomVisitsContainer from "components/ShowroomVisitsContainer";
 
 const ShowroomVisits = () => {
   const [showroomFilter, setShowroomFilter] = useState(null);

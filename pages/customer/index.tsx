@@ -1,11 +1,11 @@
 import CSSConstants from "../../src/constants/CSSConstants";
-import SortableTable from "../../src/components/SortableTable";
+import SortableTable from "components/SortableTable";
 import useSWR from "swr";
-import Loader from "../../src/components/Loader";
-import PageError from "../../src/components/PageError";
-import PageHeader from "../../src/components/PageHeader";
+import Loader from "components/Loader";
+import PageError from "components/PageError";
+import PageHeader from "components/PageHeader";
 import { CustomerInterface } from "../../src/types/customer";
-import WithAuth from "../../src/components/WithAuth";
+import WithAuth from "components/WithAuth";
 
 const Customers = () => {
   const getTableHeaders = () => {

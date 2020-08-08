@@ -1,7 +1,7 @@
 import { ProductMiniInterface } from "../types/product";
-import SortableTable from "../../src/components/SortableTable";
-import Pagination from "../../src/components/Pagination";
-import RelativeImg from "../../src/components/RelativeImg";
+import SortableTable from "components/SortableTable";
+import Pagination from "components/Pagination";
+import RelativeImg from "components/RelativeImg";
 import CSSConstants from "../../src/constants/CSSConstants";
 import Loader from "./Loader";
 import Link from "next/link";

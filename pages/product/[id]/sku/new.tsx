@@ -1,19 +1,19 @@
 import useSWR from "swr";
-import Loader from "../../../../src/components/Loader";
-import PageError from "../../../../src/components/PageError";
-import PageHeader from "../../../../src/components/PageHeader";
-import WithAuth from "../../../../src/components/WithAuth";
+import Loader from "components/Loader";
+import PageError from "components/PageError";
+import PageHeader from "components/PageHeader";
+import WithAuth from "components/WithAuth";
 import { useRouter } from "next/router";
-import SkuList from "../../../../src/components/SkuList";
-import FieldPriceInput from "../../../../src/components/FieldPriceInput";
+import SkuList from "components/SkuList";
+import FieldPriceInput from "components/FieldPriceInput";
 import { Formik, Form } from "formik";
-import FieldNumInput from "../../../../src/components/FieldNumInput";
-import FieldInput from "../../../../src/components/FieldInput";
-import SkuProductInfo from "../../../../src/components/SkuProductInfo";
-import BackLink from "../../../../src/components/atoms/BackLink";
-import SectionHeader from "../../../../src/components/SectionHeader";
-import SectionCard from "../../../../src/components/SectionCard";
-import FieldMultiSelect from "../../../../src/components/FieldMultiSelect";
+import FieldNumInput from "components/FieldNumInput";
+import FieldInput from "components/FieldInput";
+import SkuProductInfo from "components/SkuProductInfo";
+import BackLink from "components/atoms/BackLink";
+import SectionHeader from "components/SectionHeader";
+import SectionCard from "components/SectionCard";
+import FieldMultiSelect from "components/FieldMultiSelect";
 
 const Sku = () => {
   const router = useRouter();

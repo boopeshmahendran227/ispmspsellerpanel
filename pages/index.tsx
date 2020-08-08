@@ -1,9 +1,9 @@
-import MetricCard from "../src/components/MetricCard";
+import MetricCard from "components/MetricCard";
 import { SummaryInterface } from "../src/types/insights";
 import useSWR from "swr";
-import Loader from "../src/components/Loader";
-import PageError from "../src/components/PageError";
-import WithAuth from "../src/components/WithAuth";
+import Loader from "components/Loader";
+import PageError from "components/PageError";
+import WithAuth from "components/WithAuth";
 import moment from "moment";
 import { formatPrice } from "../src/utils/misc";
 

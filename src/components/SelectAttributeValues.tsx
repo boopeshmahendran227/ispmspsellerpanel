@@ -5,7 +5,7 @@ import {
   SelectedAttributeValuesMap,
 } from "../types/product";
 import useSWR from "swr";
-import Loader from "../../src/components/Loader";
+import Loader from "components/Loader";
 import CSSConstants from "../../src/constants/CSSConstants";
 import MultiSelect from "./MultiSelect";
 import CreateAttributeValue from "./CreateAttributeValue";

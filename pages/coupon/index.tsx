@@ -1,13 +1,13 @@
 import CSSConstants from "../../src/constants/CSSConstants";
-import SortableTable from "../../src/components/SortableTable";
+import SortableTable from "components/SortableTable";
 import useSWR from "swr";
-import Loader from "../../src/components/Loader";
+import Loader from "components/Loader";
 import { CouponInterface } from "../../src/types/coupon";
-import PageError from "../../src/components/PageError";
+import PageError from "components/PageError";
 import { formatPrice } from "../../src/utils/misc";
-import Button from "../../src/components/atoms/Button";
-import PageHeader from "../../src/components/PageHeader";
-import WithAuth from "../../src/components/WithAuth";
+import Button from "components/atoms/Button";
+import PageHeader from "components/PageHeader";
+import WithAuth from "components/WithAuth";
 import Link from "next/link";
 import moment from "moment";
 

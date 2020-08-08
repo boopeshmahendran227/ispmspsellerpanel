@@ -1,12 +1,12 @@
-import TestDriveCard from "../../src/components/TestDriveCard";
+import TestDriveCard from "components/TestDriveCard";
 import { TestDriveInterface } from "../../src/types/testdrive";
-import Loader from "../../src/components/Loader";
+import Loader from "components/Loader";
 import useSWR from "swr";
-import PageError from "../../src/components/PageError";
-import PageHeader from "../../src/components/PageHeader";
+import PageError from "components/PageError";
+import PageHeader from "components/PageHeader";
 import moment from "moment";
 import _ from "lodash";
-import WithAuth from "../../src/components/WithAuth";
+import WithAuth from "components/WithAuth";
 
 const Testdrives = () => {
   const swr = useSWR("/testdrive");

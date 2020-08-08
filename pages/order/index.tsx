@@ -1,18 +1,18 @@
 import { OrderInterface } from "../../src/types/order";
 import CSSConstants from "../../src/constants/CSSConstants";
-import Select from "../../src/components/Select";
+import Select from "components/Select";
 import { PaginatedDataInterface } from "../../src/types/pagination";
-import PageHeader from "../../src/components/PageHeader";
+import PageHeader from "components/PageHeader";
 import { SelectOptionInterface } from "../../src/types/product";
 import useSWR from "swr";
 import { BusinessDataInterface } from "../../src/types/business";
-import PageError from "../../src/components/PageError";
-import Loader from "../../src/components/Loader";
-import EcosystemOption from "../../src/components/EcosystemOption";
-import WithAuth from "../../src/components/WithAuth";
+import PageError from "components/PageError";
+import Loader from "components/Loader";
+import EcosystemOption from "components/EcosystemOption";
+import WithAuth from "components/WithAuth";
 import { useState } from "react";
 import _ from "lodash";
-import OrdersContainer from "../../src/components/OrdersContainer";
+import OrdersContainer from "components/OrdersContainer";
 
 const Orders = () => {
   const [currentPageNumber, setCurrentPageNumber] = useState(1);

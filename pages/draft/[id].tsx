@@ -1,16 +1,16 @@
 import { DraftResponseInterface } from "../../src/types/draft";
 import useSWR from "swr";
-import Loader from "../../src/components/Loader";
-import SkuTable from "../../src/components/SkuTable";
+import Loader from "components/Loader";
+import SkuTable from "components/SkuTable";
 import { useRouter } from "next/router";
-import Specification from "../../src/components/Specification";
-import TierPrice from "../../src/components/TierPrice";
-import FAQ from "../../src/components/FAQ";
+import Specification from "components/Specification";
+import TierPrice from "components/TierPrice";
+import FAQ from "components/FAQ";
 import CSSConstants from "../../src/constants/CSSConstants";
-import PageError from "../../src/components/PageError";
-import WithAuth from "../../src/components/WithAuth";
-import ProductMainInfo from "../../src/components/ProductMainInfo";
-import ProductPriceDetails from "../../src/components/ProductPriceDetails";
+import PageError from "components/PageError";
+import WithAuth from "components/WithAuth";
+import ProductMainInfo from "components/ProductMainInfo";
+import ProductPriceDetails from "components/ProductPriceDetails";
 
 const Draft = () => {
   const router = useRouter();

@@ -1,17 +1,17 @@
 import CSSConstants from "../../src/constants/CSSConstants";
-import PageHeader from "../../src/components/PageHeader";
-import SortableTable from "../../src/components/SortableTable";
+import PageHeader from "components/PageHeader";
+import SortableTable from "components/SortableTable";
 import { InvoiceInterface, InvoiceStatus } from "../../src/types/invoice";
 import moment from "moment";
-import InvoiceStatusTag from "../../src/components/InvoiceStatusTag";
-import PageError from "../../src/components/PageError";
-import Loader from "../../src/components/Loader";
+import InvoiceStatusTag from "components/InvoiceStatusTag";
+import PageError from "components/PageError";
+import Loader from "components/Loader";
 import useSWR from "swr";
 import { formatPrice } from "../../src/utils/misc";
-import TabSection from "../../src/components/TabSection";
-import WithAuth from "../../src/components/WithAuth";
-import Button, { ButtonType } from "../../src/components/atoms/Button";
-import UpdateCreditsModal from "../../src/components/UpdateCreditsModal";
+import TabSection from "components/TabSection";
+import WithAuth from "components/WithAuth";
+import Button, { ButtonType } from "components/atoms/Button";
+import UpdateCreditsModal from "components/UpdateCreditsModal";
 import { connect } from "react-redux";
 import CreditActions from "../../src/actions/credit";
 

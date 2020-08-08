@@ -1,17 +1,17 @@
 import CSSConstants from "../../src/constants/CSSConstants";
 import Link from "next/link";
-import SortableTable from "../../src/components/SortableTable";
-import RelativeImg from "../../src/components/RelativeImg";
-import Pagination from "../../src/components/Pagination";
-import Button from "../../src/components/atoms/Button";
+import SortableTable from "components/SortableTable";
+import RelativeImg from "components/RelativeImg";
+import Pagination from "components/Pagination";
+import Button from "components/atoms/Button";
 import { DraftMiniInterface } from "../../src/types/draft";
 import { PaginatedDataInterface } from "../../src/types/pagination";
-import PageHeader from "../../src/components/PageHeader";
-import WithAuth from "../../src/components/WithAuth";
+import PageHeader from "components/PageHeader";
+import WithAuth from "components/WithAuth";
 import useSWR from "swr";
 import { useState } from "react";
-import PageError from "../../src/components/PageError";
-import Loader from "../../src/components/Loader";
+import PageError from "components/PageError";
+import Loader from "components/Loader";
 
 const Drafts = () => {
   const getTableHeaders = () => {

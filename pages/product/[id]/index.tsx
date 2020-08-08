@@ -1,17 +1,17 @@
 import useSWR from "swr";
-import Loader from "../../../src/components/Loader";
-import PageError from "../../../src/components/PageError";
-import PageHeader from "../../../src/components/PageHeader";
-import WithAuth from "../../../src/components/WithAuth";
+import Loader from "components/Loader";
+import PageError from "components/PageError";
+import PageHeader from "components/PageHeader";
+import WithAuth from "components/WithAuth";
 import { useRouter } from "next/router";
-import SkuMiniTable from "../../../src/components/SkuMiniTable";
-import ProductMainInfo from "../../../src/components/ProductMainInfo";
-import ProductPriceDetails from "../../../src/components/ProductPriceDetails";
-import Specification from "../../../src/components/Specification";
-import TierPrice from "../../../src/components/TierPrice";
-import FAQ from "../../../src/components/FAQ";
+import SkuMiniTable from "components/SkuMiniTable";
+import ProductMainInfo from "components/ProductMainInfo";
+import ProductPriceDetails from "components/ProductPriceDetails";
+import Specification from "components/Specification";
+import TierPrice from "components/TierPrice";
+import FAQ from "components/FAQ";
 import styled from "styled-components";
-import BackLink from "../../../src/components/atoms/BackLink";
+import BackLink from "components/atoms/BackLink";
 import { ProductDetailInterface } from "../../../src/types/product";
 
 const Container = styled.div`

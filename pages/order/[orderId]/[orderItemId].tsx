@@ -3,8 +3,8 @@ import CSSConstants from "../../../src/constants/CSSConstants";
 import Link from "next/link";
 import useSWR from "swr";
 import { useRouter } from "next/router";
-import Loader from "../../../src/components/Loader";
-import OrderItemDetail from "../../../src/components/OrderItemDetail";
+import Loader from "components/Loader";
+import OrderItemDetail from "components/OrderItemDetail";
 import { formatAddress } from "../../../src/utils/misc";
 import { connect } from "react-redux";
 import OrderActions from "../../../src/actions/order";
@@ -14,13 +14,13 @@ import {
   getPaymentText,
   getPaymentModeColor,
 } from "../../../src/utils/order";
-import PageError from "../../../src/components/PageError";
-import ShippingInformationContainer from "../../../src/components/ShippingInformationContainer";
-import OrderInformation from "../../../src/components/OrderInformation";
-import WithAuth from "../../../src/components/WithAuth";
+import PageError from "components/PageError";
+import ShippingInformationContainer from "components/ShippingInformationContainer";
+import OrderInformation from "components/OrderInformation";
+import WithAuth from "components/WithAuth";
 import { transformOrderItem } from "../../../src/transformers/orderItem";
-import Button from "../../../src/components/atoms/Button";
-import BackLink from "../../../src/components/atoms/BackLink";
+import Button from "components/atoms/Button";
+import BackLink from "components/atoms/BackLink";
 
 interface DispatchProps {
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
