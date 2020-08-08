@@ -2,7 +2,7 @@ import * as React from "react";
 import NotificationCard from "./NotificationCard";
 import PageError from "./PageError";
 import Loader from "./Loader";
-import EmptyMsg from "./EmptyMsg";
+import EmptyMsg from "./atoms/EmptyMsg";
 import _ from "lodash";
 import useSWR from "swr";
 import { NotificationItemInterface } from "../types/notification";

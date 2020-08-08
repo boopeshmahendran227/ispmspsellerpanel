@@ -1,5 +1,5 @@
 import { ShowroomVisitInterface } from "../types/showroomVisit";
-import EmptyMsg from "../../src/components/EmptyMsg";
+import EmptyMsg from "./atoms/EmptyMsg";
 import ShowroomVisitCard from "../../src/components/ShowroomVisitCard";
 import Loader from "./Loader";
 

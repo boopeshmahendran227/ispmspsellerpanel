@@ -1,4 +1,4 @@
-import CSSConstants from "../constants/CSSConstants";
+import CSSConstants from "../../constants/CSSConstants";
 
 interface EmptyMsgProps {
   icon?: React.ReactNode;
@@ -30,7 +30,7 @@ const EmptyMsg = (props: EmptyMsgProps) => {
 };
 
 EmptyMsg.defaultProps = {
-  msg: "Sorry! We couldn't find anything."
+  msg: "Sorry! We couldn't find anything.",
 };
 
 export default EmptyMsg;
