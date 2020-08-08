@@ -12,6 +12,7 @@ import TierPrice from "../../../src/components/TierPrice";
 import FAQ from "../../../src/components/FAQ";
 import styled from "styled-components";
 import BackLink from "../../../src/components/BackLink";
+import { ProductDetailInterface } from "../../../src/types/product";
 
 const Container = styled.div`
   max-width: 700px;
@@ -24,8 +25,8 @@ const HeaderContainer = styled.div`
 
 const Product = () => {
   const router = useRouter();
-  const swr = useSWR(`/product/${router.query.id}`);
-  const product = swr.data;
+  const swr = useSWR(`/product/seller/${router.query.id}`);
+  const product: ProductDetailInterface = swr.data;
 
   const error = swr.error;
 

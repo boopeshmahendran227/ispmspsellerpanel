@@ -15,12 +15,13 @@ import SectionHeader from "../../../../src/components/SectionHeader";
 import SectionCard from "../../../../src/components/SectionCard";
 import FieldMultiSelect from "../../../../src/components/FieldMultiSelect";
 import ImageUploader from "../../../../src/components/ImageUploader";
+import { ProductDetailInterface } from "../../../../src/types/product";
 
 const Sku = () => {
   const router = useRouter();
   const swr = useSWR(`/product/${router.query.id}`);
-  const skuId: string = router.query.skuId as string;
-  const product = swr.data;
+  const currentSkuId: string = router.query.skuId as string;
+  const product: ProductDetailInterface = swr.data;
 
   const error = swr.error;
 
@@ -32,13 +33,17 @@ const Sku = () => {
     return <Loader />;
   }
 
+  const currentSku = product.skuDetails.find(
+    (sku) => sku.skuId === currentSkuId
+  );
+
   return (
     <div className="container">
       <div className="headerContainer">
         <BackLink href="/product/[id]" as={`/product/${product.id}`}>
           Back to Product
         </BackLink>
-        <PageHeader>{skuId}</PageHeader>
+        <PageHeader>{currentSkuId}</PageHeader>
       </div>
       <div className="flexContainer">
         <div>
@@ -50,18 +55,23 @@ const Sku = () => {
           <SkuList
             productId={product.id}
             skus={product.skuDetails}
-            currentSkuId={skuId}
+            currentSkuId={currentSkuId}
           />
         </div>
         <div className="formContainer">
           <Formik
             initialValues={{
-              price: 0,
-              boughtPrice: 0,
-              qty: 0,
-              barCode: "",
-              externalId: "",
+              price: currentSku.price,
+              boughtPrice: currentSku.boughtPrice,
+              qty: currentSku.qty,
+              barCode: currentSku.barCodeIdentifier,
+              externalId: currentSku.externalId,
+              length: currentSku.length,
+              width: currentSku.width,
+              height: currentSku.height,
+              weight: currentSku.weight,
             }}
+            enableReinitialize={true}
             onSubmit={() => null}
           >
             {() => (
@@ -91,7 +101,7 @@ const Sku = () => {
                 <SectionCard>
                   <SectionHeader>Dimensions</SectionHeader>
                   <label>Length</label>
-                  <FieldNumInput name="length" />
+                  <FieldInput name="length" />
                   <label>Width</label>
                   <FieldInput name="width" />
                   <label>Height</label>

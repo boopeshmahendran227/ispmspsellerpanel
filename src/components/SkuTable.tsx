@@ -1,15 +1,13 @@
 import SortableTable from "./SortableTable";
-import {
-  ProductSkuDetail,
-  ResponseAttributeValuesInterface,
-} from "../types/product";
+import { ProductSkuDetail } from "../types/product";
 import CSSConstants from "../constants/CSSConstants";
 import RelativeImg from "./RelativeImg";
 import { formatPrice } from "../utils/misc";
+import { DraftAttributeValuesInterface } from "../types/draft";
 
 interface SkuTableProps {
   skus: ProductSkuDetail[];
-  attributeValues: ResponseAttributeValuesInterface[];
+  attributeValues: DraftAttributeValuesInterface[];
 }
 
 const getTableHeaders = () => {

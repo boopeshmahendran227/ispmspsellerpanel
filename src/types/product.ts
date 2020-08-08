@@ -65,27 +65,52 @@ export interface ProductInputInterface {
   ecosystems: SelectOptionInterface[];
 }
 
-export interface ProductResponseInterface {
+export interface ProductDetailInterface {
   id: number;
   name: string;
-  brandName: string;
   shortDescription: string;
   longDescription: string;
-  specialDiscount: number;
+  brandName: string;
   minPrice: number;
   maxPrice: number;
   productType: ProductType;
-  tierPrice: TierPriceInterface[];
+  specialDiscount: number;
+  attributeValues: ProductAttributeInterface[];
+  skuDetails: ProductDetailSkuDetail[];
+  unOwnedSkuDetails: ProductDetailSkuDetail[];
   specification: SpecificationInterface;
+  tierPrice: TierPriceInterface[];
   faqs: FAQInterface[];
-  skuDetails: ProductSkuDetail[];
-  attributeValues: ResponseAttributeValuesInterface[];
 }
 
-export interface ResponseAttributeValuesInterface {
+interface ProductDetailSkuDetail {
+  skuDetailId: number;
+  ecosystemIds: string[];
+  skuId: string;
+  sellerId: string;
+  sellerName: string;
+  attributeValueIds: ProductAttributeValue[];
+  price: number;
+  boughtPrice: number;
+  qty: number;
+  length: string;
+  width: string;
+  height: string;
+  weight: string;
+  imageRelativePaths: string[];
+  externalId: string;
+  barCodeIdentifier: string;
+}
+
+interface ProductAttributeInterface {
   attributeId: number;
-  valueId: number;
   attributeName: string;
+  attributeType: AttributeType;
+  attributeValues: AttributeValue[];
+}
+
+interface AttributeValue {
+  valueId: number;
   value: string;
 }
 
