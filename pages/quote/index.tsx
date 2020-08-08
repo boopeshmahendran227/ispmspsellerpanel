@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import CSSConstants from "../../src/constants/CSSConstants";
 import TabSection from "components/TabSection";
 import SortableTable from "components/SortableTable";
-import { QuoteInterface, QuoteStatus } from "../../src/types/quote";
+import { QuoteInterface, QuoteStatus } from "types/quote";
 import { getQuoteStatusText } from "../../src/utils/quote";
 import useSWR from "swr";
 import Loader from "components/Loader";

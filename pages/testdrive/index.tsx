@@ -1,5 +1,5 @@
 import TestDriveCard from "components/TestDriveCard";
-import { TestDriveInterface } from "../../src/types/testdrive";
+import { TestDriveInterface } from "types/testdrive";
 import Loader from "components/Loader";
 import useSWR from "swr";
 import PageError from "components/PageError";

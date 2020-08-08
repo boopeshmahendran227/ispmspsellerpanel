@@ -1,5 +1,5 @@
 import MetricCard from "components/MetricCard";
-import { SummaryInterface } from "../src/types/insights";
+import { SummaryInterface } from "types/insights";
 import useSWR from "swr";
 import Loader from "components/Loader";
 import PageError from "components/PageError";

@@ -12,7 +12,7 @@ import TierPrice from "components/TierPrice";
 import FAQ from "components/FAQ";
 import styled from "styled-components";
 import BackLink from "components/atoms/BackLink";
-import { ProductDetailInterface } from "../../../src/types/product";
+import { ProductDetailInterface } from "types/product";
 
 const Container = styled.div`
   max-width: 700px;

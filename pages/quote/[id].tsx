@@ -4,7 +4,7 @@ import useSWR from "swr";
 import { useRouter } from "next/router";
 import Loader from "components/Loader";
 import { connect } from "react-redux";
-import { QuoteInterface, QuoteDetailInterface } from "../../src/types/quote";
+import { QuoteInterface, QuoteDetailInterface } from "types/quote";
 import { getQuoteStatusText } from "../../src/utils/quote";
 import QuoteItemDetail from "components/QuoteItemDetail";
 import QuoteActions from "../../src/actions/quote";

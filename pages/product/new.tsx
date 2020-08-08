@@ -9,7 +9,7 @@ import {
   ProductSkuDetail,
   ProductInputInterface,
   TaxGroupInterface,
-} from "../../src/types/product";
+} from "types/product";
 import { RootState } from "../../src/reducers";
 import ProductActions from "../../src/actions/product";
 import { connect } from "react-redux";
@@ -26,10 +26,10 @@ import SkuInputTable from "components/SkuInputTable";
 import FieldTextArea from "components/FieldTextArea";
 import { useRef, useEffect } from "react";
 import PageError from "components/PageError";
-import { CategoryTreeInterface } from "../../src/types/categoryTree";
+import { CategoryTreeInterface } from "types/categoryTree";
 import Tooltip from "components/Tooltip";
 import PageHeader from "components/PageHeader";
-import { BusinessDataInterface } from "../../src/types/business";
+import { BusinessDataInterface } from "types/business";
 import EcosystemOption from "components/EcosystemOption";
 import WithAuth from "components/WithAuth";
 import FieldPriceInput from "components/FieldPriceInput";

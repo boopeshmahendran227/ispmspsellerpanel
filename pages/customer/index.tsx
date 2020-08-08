@@ -4,7 +4,7 @@ import useSWR from "swr";
 import Loader from "components/Loader";
 import PageError from "components/PageError";
 import PageHeader from "components/PageHeader";
-import { CustomerInterface } from "../../src/types/customer";
+import { CustomerInterface } from "types/customer";
 import WithAuth from "components/WithAuth";
 
 const Customers = () => {

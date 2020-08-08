@@ -8,7 +8,7 @@ import {
   CouponInputInterface,
   CouponType,
   CouponRequestInterface,
-} from "../../src/types/coupon";
+} from "types/coupon";
 import RadioButton from "components/RadioButton";
 import FieldPriceInput from "components/FieldPriceInput";
 import FieldPercentageInput from "components/FieldPercentageInput";

@@ -2,7 +2,7 @@ import CSSConstants from "../../src/constants/CSSConstants";
 import SortableTable from "components/SortableTable";
 import useSWR from "swr";
 import Loader from "components/Loader";
-import { CouponInterface } from "../../src/types/coupon";
+import { CouponInterface } from "types/coupon";
 import PageError from "components/PageError";
 import { formatPrice } from "../../src/utils/misc";
 import Button from "components/atoms/Button";

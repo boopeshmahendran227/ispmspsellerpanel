@@ -16,7 +16,7 @@ import LoginActions from "../src/actions/login";
 import LoadingScreen from "components/LoadingScreen";
 import UpdateQuoteModal from "components/UpdateQuoteModal";
 import { isLoggedIn } from "../src/utils/login";
-import { LoginState } from "../src/types/login";
+import { LoginState } from "types/login";
 import CSSConstants from "../src/constants/CSSConstants";
 
 // Add all third-party CSS here

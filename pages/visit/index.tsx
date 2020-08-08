@@ -4,10 +4,7 @@ import SingleDatePicker from "components/SingleDatePicker";
 import RadioButton from "components/RadioButton";
 import CSSConstants from "../../src/constants/CSSConstants";
 import _ from "lodash";
-import {
-  ShowroomInterface,
-  ShowroomVisitInterface,
-} from "../../src/types/showroomVisit";
+import { ShowroomInterface, ShowroomVisitInterface } from "types/showroomVisit";
 import WithAuth from "components/WithAuth";
 import useSWR from "swr";
 import { useState } from "react";

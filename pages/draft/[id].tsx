@@ -1,4 +1,4 @@
-import { DraftResponseInterface } from "../../src/types/draft";
+import { DraftResponseInterface } from "types/draft";
 import useSWR from "swr";
 import Loader from "components/Loader";
 import SkuTable from "components/SkuTable";

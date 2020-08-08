@@ -15,7 +15,7 @@ import SectionHeader from "components/SectionHeader";
 import SectionCard from "components/SectionCard";
 import FieldMultiSelect from "components/FieldMultiSelect";
 import ImageUploader from "components/ImageUploader";
-import { ProductDetailInterface } from "../../../../src/types/product";
+import { ProductDetailInterface } from "types/product";
 
 const Sku = () => {
   const router = useRouter();

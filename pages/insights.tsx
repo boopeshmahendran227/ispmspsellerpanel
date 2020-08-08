@@ -2,10 +2,10 @@ import MetricCard from "components/MetricCard";
 import useSWR from "swr";
 import Loader from "components/Loader";
 import PageError from "components/PageError";
-import { BusinessDataInterface } from "../src/types/business";
+import { BusinessDataInterface } from "types/business";
 import WithAuth from "components/WithAuth";
 import moment from "moment";
-import { SummaryInterface } from "../src/types/insights";
+import { SummaryInterface } from "types/insights";
 import { formatPrice } from "../src/utils/misc";
 
 const startDate = moment().subtract(7, "days").startOf("day");

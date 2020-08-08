@@ -1,7 +1,7 @@
 import CSSConstants from "../../src/constants/CSSConstants";
 import PageHeader from "components/PageHeader";
 import SortableTable from "components/SortableTable";
-import { InvoiceInterface, InvoiceStatus } from "../../src/types/invoice";
+import { InvoiceInterface, InvoiceStatus } from "types/invoice";
 import moment from "moment";
 import InvoiceStatusTag from "components/InvoiceStatusTag";
 import PageError from "components/PageError";

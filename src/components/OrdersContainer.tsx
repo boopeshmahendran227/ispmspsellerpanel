@@ -1,8 +1,4 @@
-import {
-  OrderInterface,
-  OrderItemInterface,
-  OrderStatus,
-} from "../../src/types/order";
+import { OrderInterface, OrderItemInterface, OrderStatus } from "types/order";
 import OrderActions from "../../src/actions/order";
 import { connect } from "react-redux";
 import CSSConstants from "../../src/constants/CSSConstants";
@@ -24,7 +20,7 @@ import {
   isDeliveredOrderStatus,
 } from "../../src/utils/order";
 import Pagination from "components/Pagination";
-import { PaginatedDataInterface } from "../../src/types/pagination";
+import { PaginatedDataInterface } from "types/pagination";
 import { getCustomerInfo } from "../../src/utils/customer";
 import ProductOrdersContainer from "components/ProductOrdersContainer";
 import Loader from "components/Loader";

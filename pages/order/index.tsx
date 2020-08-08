@@ -1,11 +1,11 @@
-import { OrderInterface } from "../../src/types/order";
+import { OrderInterface } from "types/order";
 import CSSConstants from "../../src/constants/CSSConstants";
 import Select from "components/Select";
-import { PaginatedDataInterface } from "../../src/types/pagination";
+import { PaginatedDataInterface } from "types/pagination";
 import PageHeader from "components/PageHeader";
-import { SelectOptionInterface } from "../../src/types/product";
+import { SelectOptionInterface } from "types/product";
 import useSWR from "swr";
-import { BusinessDataInterface } from "../../src/types/business";
+import { BusinessDataInterface } from "types/business";
 import PageError from "components/PageError";
 import Loader from "components/Loader";
 import EcosystemOption from "components/EcosystemOption";
