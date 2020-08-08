@@ -19,7 +19,7 @@ import { ProductDetailInterface } from "../../../../src/types/product";
 
 const Sku = () => {
   const router = useRouter();
-  const swr = useSWR(`/product/${router.query.id}`);
+  const swr = useSWR(`/product/seller/${router.query.id}`);
   const currentSkuId: string = router.query.skuId as string;
   const product: ProductDetailInterface = swr.data;
 

@@ -42,6 +42,10 @@ const Orders = () => {
       value: null,
       label: "All Ecosystems",
     },
+    {
+      value: "Default",
+      label: "Istakapaza Default Marketplace",
+    },
     ...businessData.ecosystems.map((ecosystem) => ({
       value: ecosystem.ecosystem_id._id,
       label: <EcosystemOption ecosystem={ecosystem} />,
