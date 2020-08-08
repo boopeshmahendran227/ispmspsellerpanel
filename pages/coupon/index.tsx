@@ -5,7 +5,7 @@ import Loader from "../../src/components/Loader";
 import { CouponInterface } from "../../src/types/coupon";
 import PageError from "../../src/components/PageError";
 import { formatPrice } from "../../src/utils/misc";
-import Button from "../../src/components/Button";
+import Button from "../../src/components/atoms/Button";
 import PageHeader from "../../src/components/PageHeader";
 import WithAuth from "../../src/components/WithAuth";
 import Link from "next/link";

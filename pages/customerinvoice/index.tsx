@@ -10,7 +10,7 @@ import useSWR from "swr";
 import { formatPrice } from "../../src/utils/misc";
 import TabSection from "../../src/components/TabSection";
 import WithAuth from "../../src/components/WithAuth";
-import Button, { ButtonType } from "../../src/components/Button";
+import Button, { ButtonType } from "../../src/components/atoms/Button";
 import UpdateCreditsModal from "../../src/components/UpdateCreditsModal";
 import { connect } from "react-redux";
 import CreditActions from "../../src/actions/credit";

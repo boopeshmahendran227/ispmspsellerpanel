@@ -12,7 +12,7 @@ import ProductCard from "../../src/components/ProductCard";
 import { formatPrice } from "../../src/utils/misc";
 import moment from "moment";
 import SortableTable from "../../src/components/SortableTable";
-import Button, { ButtonType } from "../../src/components/Button";
+import Button, { ButtonType } from "./atoms/Button";
 import {
   getColor,
   getOrderStatusText,

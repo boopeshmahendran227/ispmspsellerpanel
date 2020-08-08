@@ -9,7 +9,7 @@ import Loader from "../../src/components/Loader";
 import Link from "next/link";
 import ProductCard from "../../src/components/ProductCard";
 import moment from "moment";
-import Button, { ButtonType } from "../../src/components/Button";
+import Button, { ButtonType } from "../../src/components/atoms/Button";
 import QuoteActions from "../../src/actions/quote";
 import { formatPrice } from "../../src/utils/misc";
 import { getColor } from "../../src/utils/quote";

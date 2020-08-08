@@ -2,7 +2,7 @@ import SortableTable from "./SortableTable";
 import { ProductSkuDetail, ProductInputInterface } from "../types/product";
 import CSSConstants from "../constants/CSSConstants";
 import { ErrorMessage, FieldArray, useFormikContext } from "formik";
-import Button from "./Button";
+import Button from "./atoms/Button";
 import { connect } from "react-redux";
 import UIActions from "../actions/ui";
 import FieldInput from "./FieldInput";

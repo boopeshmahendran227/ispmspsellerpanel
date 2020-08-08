@@ -5,7 +5,7 @@ import {
 } from "../types/quote";
 import { getQuoteStatusText, getColor } from "../../src/utils/quote";
 import CSSConstants from "../constants/CSSConstants";
-import Button, { ButtonType } from "./Button";
+import Button, { ButtonType } from "./atoms/Button";
 import _ from "lodash";
 import moment from "moment";
 import QuoteProduct from "./QuoteProduct";

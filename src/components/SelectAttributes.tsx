@@ -7,7 +7,7 @@ import {
 } from "../types/product";
 import Loader from "../../src/components/Loader";
 import MultiSelect from "../../src/components/MultiSelect";
-import Button from "../../src/components/Button";
+import Button from "./atoms/Button";
 import PageError from "./PageError";
 import { useFormikContext } from "formik";
 import _ from "lodash";

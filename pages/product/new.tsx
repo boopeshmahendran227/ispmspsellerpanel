@@ -1,4 +1,4 @@
-import Button, { ButtonType } from "../../src/components/Button";
+import Button, { ButtonType } from "../../src/components/atoms/Button";
 import FieldInput from "../../src/components/FieldInput";
 import FieldSelect from "../../src/components/FieldSelect";
 import FieldMultiSelect from "../../src/components/FieldMultiSelect";

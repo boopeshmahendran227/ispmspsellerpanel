@@ -3,7 +3,7 @@ import Link from "next/link";
 import SortableTable from "../../src/components/SortableTable";
 import RelativeImg from "../../src/components/RelativeImg";
 import Pagination from "../../src/components/Pagination";
-import Button from "../../src/components/Button";
+import Button from "../../src/components/atoms/Button";
 import { DraftMiniInterface } from "../../src/types/draft";
 import { PaginatedDataInterface } from "../../src/types/pagination";
 import PageHeader from "../../src/components/PageHeader";

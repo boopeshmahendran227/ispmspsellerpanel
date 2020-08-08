@@ -1,5 +1,5 @@
 import { Formik, Form } from "formik";
-import Button, { ButtonType } from "../../src/components/Button";
+import Button, { ButtonType } from "../../src/components/atoms/Button";
 import InputLabel from "../../src/components/InputLabel";
 import CouponActions from "../../src/actions/coupon";
 import { connect } from "react-redux";

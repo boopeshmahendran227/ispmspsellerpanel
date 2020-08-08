@@ -5,7 +5,7 @@ import { useState } from "react";
 import SearchBar from "../../src/components/SearchBar";
 import ActiveFilters from "../../src/components/ActiveFilters";
 import { PaginatedDataInterface } from "../../src/types/pagination";
-import Button from "../../src/components/Button";
+import Button from "../../src/components/atoms/Button";
 import WithAuth from "../../src/components/WithAuth";
 import useSWR from "swr";
 import { useMemo } from "react";

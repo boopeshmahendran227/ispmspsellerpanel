@@ -1,4 +1,4 @@
-import CSSConstants from "../constants/CSSConstants";
+import CSSConstants from "../../constants/CSSConstants";
 import classNames from "classnames";
 import Chroma from "chroma-js";
 
@@ -64,7 +64,6 @@ const Button = (props: ButtonProps) => {
           font-size: inherit;
           border: none;
           letter-spacing: 1px;
-          text-transform: uppercase;
           border-radius: 4px;
         }
         button:not(:disabled):not(.outlined):hover {

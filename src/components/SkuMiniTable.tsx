@@ -1,7 +1,7 @@
 import SkuMini from "./SkuMini";
 import SectionHeader from "./SectionHeader";
 import SectionCard from "./SectionCard";
-import Button from "./Button";
+import Button from "./atoms/Button";
 import Link from "next/link";
 
 interface SkuMiniTableProps {

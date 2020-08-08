@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Formik, Form, ArrayHelpers } from "formik";
 import FieldInput from "../../src/components/FieldInput";
 import FieldTextArea from "../../src/components/FieldTextArea";
-import Button from "../../src/components/Button";
+import Button from "./atoms/Button";
 import { AddAttributeInterface, AttributeType } from "../types/product";
 import { RootState } from "../reducers";
 import { getAttributeModalOpen } from "../selectors/ui";

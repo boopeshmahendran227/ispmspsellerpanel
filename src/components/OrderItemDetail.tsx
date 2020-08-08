@@ -1,7 +1,7 @@
 import ProductCard from "./ProductCard";
 import { OrderItemInterface, OrderStatus } from "../types/order";
 import CSSConstants from "../constants/CSSConstants";
-import Button, { ButtonType } from "./Button";
+import Button, { ButtonType } from "./atoms/Button";
 import { formatPrice, splitCamelCase } from "../utils/misc";
 import _ from "lodash";
 import { Fragment } from "react";

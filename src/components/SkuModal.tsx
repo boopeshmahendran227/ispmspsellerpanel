@@ -1,6 +1,6 @@
 import Modal from "./Modal";
 import { useState, useEffect } from "react";
-import Button, { ButtonType } from "../../src/components/Button";
+import Button, { ButtonType } from "./atoms/Button";
 import SelectAttributes from "./SelectAttributes";
 import SelectAttributeValues from "./SelectAttributeValues";
 import { getSkuModalOpen } from "../selectors/ui";

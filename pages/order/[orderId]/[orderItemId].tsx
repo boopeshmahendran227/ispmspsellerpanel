@@ -19,7 +19,7 @@ import ShippingInformationContainer from "../../../src/components/ShippingInform
 import OrderInformation from "../../../src/components/OrderInformation";
 import WithAuth from "../../../src/components/WithAuth";
 import { transformOrderItem } from "../../../src/transformers/orderItem";
-import Button from "../../../src/components/Button";
+import Button from "../../../src/components/atoms/Button";
 import BackLink from "../../../src/components/atoms/BackLink";
 
 interface DispatchProps {
