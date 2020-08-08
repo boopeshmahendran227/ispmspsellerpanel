@@ -43,9 +43,11 @@ const SkuProductInfo = (props: SkuProductInfoProps): JSX.Element => {
           </ImageContainer>
           <div>
             <strong>{productName}</strong>
-            <Link href="/product/[id]" as={`/product/${productId}`}>
-              <BackToProductLink>Back to product</BackToProductLink>
-            </Link>
+            <div>
+              <Link href="/product/[id]" as={`/product/${productId}`}>
+                <BackToProductLink>Back to product</BackToProductLink>
+              </Link>
+            </div>
           </div>
         </MainContainer>
       </Card>

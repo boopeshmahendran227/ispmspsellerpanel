@@ -10,7 +10,7 @@ import { Formik, Form } from "formik";
 import FieldNumInput from "../../../../src/components/FieldNumInput";
 import FieldInput from "../../../../src/components/FieldInput";
 import SkuProductInfo from "../../../../src/components/SkuProductInfo";
-import BackLink from "../../../../src/components/BackLink";
+import BackLink from "../../../../src/components/atoms/BackLink";
 import SectionHeader from "../../../../src/components/SectionHeader";
 import SectionCard from "../../../../src/components/SectionCard";
 import FieldMultiSelect from "../../../../src/components/FieldMultiSelect";

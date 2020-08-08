@@ -1,8 +1,8 @@
 import ImageUploading, { ImageType } from "./ImageUploading";
 import styled, { css } from "styled-components";
 import CSSConstants from "../constants/CSSConstants";
-import EditButton from "./EditButton";
-import DeleteButton from "./DeleteButton";
+import EditButton from "./atoms/EditButton";
+import DeleteButton from "./atoms/DeleteButton";
 import Lightbox from "./Lightbox";
 import { useLightbox } from "simple-react-lightbox";
 import { Maximize2 } from "react-feather";

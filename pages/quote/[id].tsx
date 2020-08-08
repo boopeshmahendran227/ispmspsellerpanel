@@ -10,7 +10,7 @@ import QuoteItemDetail from "../../src/components/QuoteItemDetail";
 import QuoteActions from "../../src/actions/quote";
 import PageError from "../../src/components/PageError";
 import WithAuth from "../../src/components/WithAuth";
-import BackLink from "../../src/components/BackLink";
+import BackLink from "../../src/components/atoms/BackLink";
 
 interface DispatchProps {
   rejectQuote: (quote: QuoteInterface) => void;

@@ -11,7 +11,7 @@ import Specification from "../../../src/components/Specification";
 import TierPrice from "../../../src/components/TierPrice";
 import FAQ from "../../../src/components/FAQ";
 import styled from "styled-components";
-import BackLink from "../../../src/components/BackLink";
+import BackLink from "../../../src/components/atoms/BackLink";
 import { ProductDetailInterface } from "../../../src/types/product";
 
 const Container = styled.div`

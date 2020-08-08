@@ -14,7 +14,7 @@ import FieldPriceInput from "../../src/components/FieldPriceInput";
 import FieldPercentageInput from "../../src/components/FieldPercentageInput";
 import FieldDatePicker from "../../src/components/FieldDatePicker";
 import moment from "moment";
-import BackLink from "../../src/components/BackLink";
+import BackLink from "../../src/components/atoms/BackLink";
 
 interface DispatchProps {
   createCoupon: (couponData: CouponRequestInterface) => void;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import CSSConstants from "../constants/CSSConstants";
+import CSSConstants from "../../constants/CSSConstants";
 import Link from "next/link";
 
 interface BackLinkProps {

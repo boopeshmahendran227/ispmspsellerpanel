@@ -1,5 +1,5 @@
 import { Trash2 } from "react-feather";
-import CSSConstants from "../constants/CSSConstants";
+import CSSConstants from "../../constants/CSSConstants";
 
 interface DeleteButtonProps {
   onClick: () => void;

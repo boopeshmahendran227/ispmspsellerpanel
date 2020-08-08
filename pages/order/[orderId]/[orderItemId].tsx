@@ -20,7 +20,7 @@ import OrderInformation from "../../../src/components/OrderInformation";
 import WithAuth from "../../../src/components/WithAuth";
 import { transformOrderItem } from "../../../src/transformers/orderItem";
 import Button from "../../../src/components/Button";
-import BackLink from "../../../src/components/BackLink";
+import BackLink from "../../../src/components/atoms/BackLink";
 
 interface DispatchProps {
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
