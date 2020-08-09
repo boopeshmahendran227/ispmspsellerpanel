@@ -13,7 +13,7 @@ import WithAuth from "components/WithAuth";
 import Button, { ButtonType } from "components/atoms/Button";
 import UpdateCreditsModal from "components/UpdateCreditsModal";
 import { connect } from "react-redux";
-import CreditActions from "../../src/actions/credit";
+import CreditActions from "actions/credit";
 
 interface DispatchProps {
   updateCredits: (invoice: InvoiceInterface) => void;

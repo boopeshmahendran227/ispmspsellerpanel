@@ -12,7 +12,7 @@ import SureModal from "components/SureModal";
 import ReasonModal from "components/ReasonModal";
 import SideNavBar from "components/SideNavBar";
 import TopNavBar from "components/TopNavBar";
-import LoginActions from "../src/actions/login";
+import LoginActions from "actions/login";
 import LoadingScreen from "components/LoadingScreen";
 import UpdateQuoteModal from "components/UpdateQuoteModal";
 import { isLoggedIn } from "../src/utils/login";

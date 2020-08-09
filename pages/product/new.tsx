@@ -11,7 +11,7 @@ import {
   TaxGroupInterface,
 } from "types/product";
 import { RootState } from "../../src/reducers";
-import ProductActions from "../../src/actions/product";
+import ProductActions from "actions/product";
 import { connect } from "react-redux";
 import { Formik, Form } from "formik";
 import useSWR from "swr";

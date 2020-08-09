@@ -7,7 +7,7 @@ import Loader from "components/Loader";
 import OrderItemDetail from "components/OrderItemDetail";
 import { formatAddress } from "../../../src/utils/misc";
 import { connect } from "react-redux";
-import OrderActions from "../../../src/actions/order";
+import OrderActions from "actions/order";
 import { OrderDetailInterface } from "types/order";
 import {
   getOrderStatusText,

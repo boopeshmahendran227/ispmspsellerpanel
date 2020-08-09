@@ -1,5 +1,5 @@
 import { OrderInterface, OrderItemInterface, OrderStatus } from "types/order";
-import OrderActions from "../../src/actions/order";
+import OrderActions from "actions/order";
 import { connect } from "react-redux";
 import CSSConstants from "../../src/constants/CSSConstants";
 import TabSection from "components/TabSection";

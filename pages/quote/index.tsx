@@ -10,7 +10,7 @@ import Link from "next/link";
 import ProductCard from "components/ProductCard";
 import moment from "moment";
 import Button, { ButtonType } from "components/atoms/Button";
-import QuoteActions from "../../src/actions/quote";
+import QuoteActions from "actions/quote";
 import { formatPrice } from "../../src/utils/misc";
 import { getColor } from "../../src/utils/quote";
 import PageError from "components/PageError";

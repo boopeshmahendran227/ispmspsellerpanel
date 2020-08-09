@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { QuoteInterface, QuoteDetailInterface } from "types/quote";
 import { getQuoteStatusText } from "../../src/utils/quote";
 import QuoteItemDetail from "components/QuoteItemDetail";
-import QuoteActions from "../../src/actions/quote";
+import QuoteActions from "actions/quote";
 import PageError from "components/PageError";
 import WithAuth from "components/WithAuth";
 import BackLink from "components/atoms/BackLink";
