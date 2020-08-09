@@ -13,7 +13,7 @@ import {
 import { RootState } from "../../src/reducers";
 import ProductActions from "actions/product";
 import { connect } from "react-redux";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import useSWR from "swr";
 import Loader from "components/Loader";
 import AttributeModal from "components/AttributeModal";
@@ -36,6 +36,7 @@ import FieldPriceInput from "components/FieldPriceInput";
 import listOfCountries from "../../src/data/listOfCountries";
 import FAQInput from "components/FAQInput";
 import TierPriceInput from "components/TierpriceInput";
+import Checkbox from "components/atoms/Checkbox";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -98,6 +99,7 @@ const AddProduct = (props: AddProductProps) => {
         <Formik
           innerRef={formikRef}
           initialValues={{
+            isActive: true,
             name: "",
             shortDescription: "",
             longDescription: "",
@@ -120,10 +122,21 @@ const AddProduct = (props: AddProductProps) => {
           onSubmit={onSubmit}
           validationSchema={ProductSchema}
         >
-          {({ resetForm, values }) => (
+          {({ resetForm, values, setFieldValue }) => (
             <Form>
               <SkuModal />
               <div className="gridContainer">
+                <InputLabel label="Is Active" />
+                <Field name="isActive">
+                  {({ field }) => (
+                    <Checkbox
+                      checked={values.isActive}
+                      onChange={(e) =>
+                        setFieldValue("isActive", e.target.checked)
+                      }
+                    />
+                  )}
+                </Field>
                 <InputLabel label="Name" />
                 <FieldInput name="name" />
                 <InputLabel label="Short Description" />

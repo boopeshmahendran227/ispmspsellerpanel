@@ -48,6 +48,7 @@ export type ProductActionType =
 
 export interface ProductInputInterface {
   name: string;
+  isActive: boolean;
   shortDescription: string;
   longDescription: string;
   specialDiscountValue: number;
