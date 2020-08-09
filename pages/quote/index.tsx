@@ -3,7 +3,7 @@ import CSSConstants from "../../src/constants/CSSConstants";
 import TabSection from "components/TabSection";
 import SortableTable from "components/SortableTable";
 import { QuoteInterface, QuoteStatus } from "types/quote";
-import { getQuoteStatusText } from "../../src/utils/quote";
+import { getQuoteStatusText } from "utils/quote";
 import useSWR from "swr";
 import Loader from "components/Loader";
 import Link from "next/link";
@@ -11,10 +11,10 @@ import ProductCard from "components/ProductCard";
 import moment from "moment";
 import Button, { ButtonType } from "components/atoms/Button";
 import QuoteActions from "actions/quote";
-import { formatPrice } from "../../src/utils/misc";
-import { getColor } from "../../src/utils/quote";
+import { formatPrice } from "utils/misc";
+import { getColor } from "utils/quote";
 import PageError from "components/PageError";
-import { getCustomerInfo } from "../../src/utils/customer";
+import { getCustomerInfo } from "utils/customer";
 import WithAuth from "components/WithAuth";
 
 interface DispatchProps {

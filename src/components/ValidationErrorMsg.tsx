@@ -1,4 +1,4 @@
-import { capitalizeFirstLetter } from "../utils/misc";
+import { capitalizeFirstLetter } from "utils/misc";
 
 interface ValidationErrorMsgProps {
   children: string;

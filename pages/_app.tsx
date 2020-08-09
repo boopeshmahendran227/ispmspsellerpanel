@@ -15,7 +15,7 @@ import TopNavBar from "components/TopNavBar";
 import LoginActions from "actions/login";
 import LoadingScreen from "components/LoadingScreen";
 import UpdateQuoteModal from "components/UpdateQuoteModal";
-import { isLoggedIn } from "../src/utils/login";
+import { isLoggedIn } from "utils/login";
 import { LoginState } from "types/login";
 import CSSConstants from "../src/constants/CSSConstants";
 

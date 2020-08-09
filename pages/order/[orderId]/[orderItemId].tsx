@@ -5,7 +5,7 @@ import useSWR from "swr";
 import { useRouter } from "next/router";
 import Loader from "components/Loader";
 import OrderItemDetail from "components/OrderItemDetail";
-import { formatAddress } from "../../../src/utils/misc";
+import { formatAddress } from "utils/misc";
 import { connect } from "react-redux";
 import OrderActions from "actions/order";
 import { OrderDetailInterface } from "types/order";
@@ -13,7 +13,7 @@ import {
   getOrderStatusText,
   getPaymentText,
   getPaymentModeColor,
-} from "../../../src/utils/order";
+} from "utils/order";
 import PageError from "components/PageError";
 import ShippingInformationContainer from "components/ShippingInformationContainer";
 import OrderInformation from "components/OrderInformation";

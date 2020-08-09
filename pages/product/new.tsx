@@ -19,7 +19,7 @@ import Loader from "components/Loader";
 import AttributeModal from "components/AttributeModal";
 import SkuModal from "components/SkuModal";
 import SpecificationInput from "components/SpecificationInput";
-import { flattenCategoryTree } from "../../src/utils/categoryTree";
+import { flattenCategoryTree } from "utils/categoryTree";
 import InputLabel from "components/InputLabel";
 import { getSkus } from "../../src/selectors/product";
 import SkuInputTable from "components/SkuInputTable";

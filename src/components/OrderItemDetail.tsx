@@ -2,11 +2,11 @@ import ProductCard from "./ProductCard";
 import { OrderItemInterface, OrderStatus } from "../types/order";
 import CSSConstants from "../constants/CSSConstants";
 import Button, { ButtonType } from "./atoms/Button";
-import { formatPrice, splitCamelCase } from "../utils/misc";
+import { formatPrice, splitCamelCase } from "utils/misc";
 import _ from "lodash";
 import { Fragment } from "react";
 import moment from "moment";
-import { getColor, getOrderStatusText } from "../utils/order";
+import { getColor, getOrderStatusText } from "utils/order";
 
 interface OrderItemDetailProps {
   orderItem: OrderItemInterface;

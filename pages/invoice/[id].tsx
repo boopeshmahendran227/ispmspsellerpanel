@@ -1,6 +1,6 @@
 import moment from "moment";
 import _ from "lodash";
-import { formatPrice, formatAddress, formatNumber } from "../../src/utils/misc";
+import { formatPrice, formatAddress, formatNumber } from "utils/misc";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import Loader from "components/Loader";

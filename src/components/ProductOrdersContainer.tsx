@@ -4,7 +4,7 @@ import { ProductOrderInterface, OrderItemCountMap } from "../types/order";
 import SortableTable from "./SortableTable";
 import ProductCard from "./ProductCard";
 import _ from "lodash";
-import { isPendingOrderStatus, isShippingOrderStatus } from "../utils/order";
+import { isPendingOrderStatus, isShippingOrderStatus } from "utils/order";
 import ErrorMsg from "./ErrorMsg";
 import CSSConstants from "../constants/CSSConstants";
 

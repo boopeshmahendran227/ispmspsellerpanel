@@ -7,7 +7,7 @@ import InvoiceStatusTag from "components/InvoiceStatusTag";
 import PageError from "components/PageError";
 import Loader from "components/Loader";
 import useSWR from "swr";
-import { formatPrice } from "../../src/utils/misc";
+import { formatPrice } from "utils/misc";
 import TabSection from "components/TabSection";
 import WithAuth from "components/WithAuth";
 import Button, { ButtonType } from "components/atoms/Button";

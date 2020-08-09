@@ -7,7 +7,7 @@ import { getCurrentQuote } from "../selectors/quote";
 import { getUpdateQuoteModalOpen } from "../selectors/ui";
 import ProductCard from "./ProductCard";
 import { Formik, Form, FieldArray } from "formik";
-import { formatPrice } from "../utils/misc";
+import { formatPrice } from "utils/misc";
 import UIActions from "../actions/ui";
 import QuoteActions from "../actions/quote";
 import * as Yup from "yup";

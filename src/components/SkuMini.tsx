@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { formatPrice } from "../utils/misc";
+import { formatPrice } from "utils/misc";
 import RelativeImg from "./RelativeImg";
 import CSSConstants from "../constants/CSSConstants";
 import styled from "styled-components";

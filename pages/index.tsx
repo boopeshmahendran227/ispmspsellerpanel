@@ -5,7 +5,7 @@ import Loader from "components/Loader";
 import PageError from "components/PageError";
 import WithAuth from "components/WithAuth";
 import moment from "moment";
-import { formatPrice } from "../src/utils/misc";
+import { formatPrice } from "utils/misc";
 
 const startDate = moment().subtract(7, "days").startOf("day");
 const endDate = moment().endOf("day");

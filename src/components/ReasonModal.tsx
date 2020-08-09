@@ -8,7 +8,7 @@ import { ReasonModalData } from "../types/ui";
 import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
 import RadioButton from "./RadioButton";
-import { splitCamelCase } from "../utils/misc";
+import { splitCamelCase } from "utils/misc";
 
 interface StateProps {
   data: ReasonModalData;

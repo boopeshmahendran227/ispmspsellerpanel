@@ -1,8 +1,8 @@
 import * as React from "react";
 import CSSConstants from "../constants/CSSConstants";
 import { ShowroomVisitInterface } from "../types/showroomVisit";
-import { convertTo12hour } from "../utils/misc";
-import { getCustomerInfo } from "../utils/customer";
+import { convertTo12hour } from "utils/misc";
+import { getCustomerInfo } from "utils/customer";
 
 interface ShowroomVisitCardProps {
   showroomVisit: ShowroomVisitInterface;

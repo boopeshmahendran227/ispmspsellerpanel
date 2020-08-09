@@ -5,7 +5,7 @@ import CSSConstants from "../../src/constants/CSSConstants";
 import TabSection from "components/TabSection";
 import Link from "next/link";
 import ProductCard from "components/ProductCard";
-import { formatPrice } from "../../src/utils/misc";
+import { formatPrice } from "utils/misc";
 import moment from "moment";
 import SortableTable from "components/SortableTable";
 import Button, { ButtonType } from "./atoms/Button";
@@ -18,10 +18,10 @@ import {
   isReturnedOrderStatus,
   isOpenOrderStatus,
   isDeliveredOrderStatus,
-} from "../../src/utils/order";
+} from "utils/order";
 import Pagination from "components/Pagination";
 import { PaginatedDataInterface } from "types/pagination";
-import { getCustomerInfo } from "../../src/utils/customer";
+import { getCustomerInfo } from "utils/customer";
 import ProductOrdersContainer from "components/ProductOrdersContainer";
 import Loader from "components/Loader";
 import WithAuth from "components/WithAuth";

@@ -17,7 +17,8 @@
     "paths": {
       "components/*": ["src/components/*"],
       "types/*": ["src/types/*"],
-      "actions/*": ["src/actions/*"]
+      "actions/*": ["src/actions/*"],
+      "utils/*": ["src/utils/*"]
     }
   },
   "exclude": ["node_modules"],

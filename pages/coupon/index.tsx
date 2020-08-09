@@ -4,7 +4,7 @@ import useSWR from "swr";
 import Loader from "components/Loader";
 import { CouponInterface } from "types/coupon";
 import PageError from "components/PageError";
-import { formatPrice } from "../../src/utils/misc";
+import { formatPrice } from "utils/misc";
 import Button from "components/atoms/Button";
 import PageHeader from "components/PageHeader";
 import WithAuth from "components/WithAuth";

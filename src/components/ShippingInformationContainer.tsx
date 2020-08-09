@@ -1,6 +1,6 @@
 import CSSConstants from "../constants/CSSConstants";
 import { OrderItemInterface } from "../types/order";
-import { isCompletedOrderStatus, isShippingOrderStatus } from "../utils/order";
+import { isCompletedOrderStatus, isShippingOrderStatus } from "utils/order";
 import moment from "moment";
 
 interface ShippingInformationContainerProps {

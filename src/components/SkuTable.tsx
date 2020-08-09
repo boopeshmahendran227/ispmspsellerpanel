@@ -2,7 +2,7 @@ import SortableTable from "./SortableTable";
 import { ProductSkuDetail } from "../types/product";
 import CSSConstants from "../constants/CSSConstants";
 import RelativeImg from "./RelativeImg";
-import { formatPrice } from "../utils/misc";
+import { formatPrice } from "utils/misc";
 import { DraftAttributeValuesInterface } from "../types/draft";
 
 interface SkuTableProps {

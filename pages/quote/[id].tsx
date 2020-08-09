@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import Loader from "components/Loader";
 import { connect } from "react-redux";
 import { QuoteInterface, QuoteDetailInterface } from "types/quote";
-import { getQuoteStatusText } from "../../src/utils/quote";
+import { getQuoteStatusText } from "utils/quote";
 import QuoteItemDetail from "components/QuoteItemDetail";
 import QuoteActions from "actions/quote";
 import PageError from "components/PageError";

@@ -1,7 +1,7 @@
 import { TestDriveInterface } from "../types/testdrive";
 import RelativeImg from "./RelativeImg";
 import moment from "moment";
-import { getCustomerInfo } from "../utils/customer";
+import { getCustomerInfo } from "utils/customer";
 
 interface TestDriveCardProps {
   testdrive: TestDriveInterface;

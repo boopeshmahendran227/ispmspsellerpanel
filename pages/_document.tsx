@@ -3,7 +3,7 @@
 
 // ./pages/_document.js
 import Document, { Html, Head, Main, NextScript } from "next/document";
-import { getAppInsightsKey } from "../src/utils/url";
+import { getAppInsightsKey } from "utils/url";
 import { ServerStyleSheet } from "styled-components";
 
 interface DocumentProps {
