@@ -1,11 +1,12 @@
-import RelativeImg from "./RelativeImg";
-import CSSConstants from "../constants/CSSConstants";
+import RelativeImg from "components/RelativeImg";
+import CSSConstants from "src/constants/CSSConstants";
 import Link from "next/link";
 import classNames from "classnames";
+import { ProductDetailSkuDetail } from "types/product";
 
 interface SkuListProps {
   productId: number;
-  skus: any[];
+  skus: ProductDetailSkuDetail[];
   currentSkuId: string;
 }
 

@@ -1,16 +1,18 @@
 import ReactSelect from "react-select";
-import { SelectOptionInterface } from "../types/product";
+import { SelectOptionInterface } from "types/product";
 
 interface SelectProps {
   value: SelectOptionInterface;
   onChange: (selectedOption: SelectOptionInterface) => void;
   options: SelectOptionInterface[];
+  disabled?: boolean;
 }
 
 const Select = (props: SelectProps) => {
   return (
     <div className="container">
       <ReactSelect
+        isDisabled={props.disabled}
         value={props.value}
         onChange={(values) => props.onChange(values || [])}
         options={props.options}

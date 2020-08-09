@@ -13,9 +13,10 @@ import SkuProductInfo from "components/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/SectionHeader";
 import SectionCard from "components/SectionCard";
-import FieldMultiSelect from "components/FieldMultiSelect";
 import ImageUploader from "components/ImageUploader";
 import { ProductDetailInterface } from "types/product";
+import _ from "lodash";
+import FieldSelect from "components/FieldSelect";
 
 const Sku = () => {
   const router = useRouter();
@@ -36,6 +37,8 @@ const Sku = () => {
   const currentSku = product.skuDetails.find(
     (sku) => sku.skuId === currentSkuId
   );
+
+  const attributes = product.attributeValues;
 
   return (
     <div className="container">
@@ -70,6 +73,13 @@ const Sku = () => {
               width: currentSku.width,
               height: currentSku.height,
               weight: currentSku.weight,
+              attributes: _.zipObject(
+                currentSku.attributeValueIds.map((item) => item.attributeId),
+                currentSku.attributeValueIds.map((item) => ({
+                  value: item.valueId,
+                  label: item.value,
+                }))
+              ),
             }}
             enableReinitialize={true}
             onSubmit={() => null}
@@ -78,8 +88,19 @@ const Sku = () => {
               <Form>
                 <SectionCard>
                   <SectionHeader>Options</SectionHeader>
-                  <label>Color</label>
-                  <FieldMultiSelect name="length" options={[]} />
+                  {attributes.map((attribute) => (
+                    <>
+                      <label>{attribute.attributeName}</label>
+                      <FieldSelect
+                        disabled={true}
+                        name={`attributes.${attribute.attributeId}`}
+                        options={attribute.attributeValues.map((value) => ({
+                          value: value.valueId,
+                          label: value.value,
+                        }))}
+                      />
+                    </>
+                  ))}
                 </SectionCard>
                 <ImageUploader />
                 <SectionCard>

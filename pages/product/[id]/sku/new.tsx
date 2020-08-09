@@ -13,13 +13,15 @@ import SkuProductInfo from "components/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/SectionHeader";
 import SectionCard from "components/SectionCard";
-import FieldMultiSelect from "components/FieldMultiSelect";
+import _ from "lodash";
+import { ProductDetailInterface } from "types/product";
+import FieldSelect from "components/FieldSelect";
 
 const Sku = () => {
   const router = useRouter();
-  const swr = useSWR(`/product/${router.query.id}`);
+  const swr = useSWR(`/product/seller/${router.query.id}`);
   const skuId: string = router.query.skuId as string;
-  const product = swr.data;
+  const product: ProductDetailInterface = swr.data;
 
   const error = swr.error;
 
@@ -30,6 +32,8 @@ const Sku = () => {
   if (!product) {
     return <Loader />;
   }
+
+  const attributes = product.attributeValues;
 
   return (
     <div className="container">
@@ -60,6 +64,14 @@ const Sku = () => {
               qty: 0,
               barCode: "",
               externalId: "",
+              length: "",
+              width: "",
+              height: "",
+              weight: "",
+              attributes: _.zipObject(
+                attributes.map((item) => item.attributeId),
+                null
+              ),
             }}
             onSubmit={() => null}
           >
@@ -67,8 +79,18 @@ const Sku = () => {
               <Form>
                 <SectionCard>
                   <SectionHeader>Options</SectionHeader>
-                  <label>Color</label>
-                  <FieldMultiSelect name="length" options={[]} />
+                  {attributes.map((attribute) => (
+                    <>
+                      <label>{attribute.attributeName}</label>
+                      <FieldSelect
+                        name={`attributes.${attribute.attributeId}`}
+                        options={attribute.attributeValues.map((value) => ({
+                          value: value.valueId,
+                          label: value.value,
+                        }))}
+                      />
+                    </>
+                  ))}
                 </SectionCard>
                 <SectionCard>
                   <SectionHeader>Pricing</SectionHeader>

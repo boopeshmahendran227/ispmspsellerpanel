@@ -84,7 +84,7 @@ export interface ProductDetailInterface {
   faqs: FAQInterface[];
 }
 
-interface ProductDetailSkuDetail {
+export interface ProductDetailSkuDetail {
   skuDetailId: number;
   ecosystemIds: string[];
   skuId: string;
