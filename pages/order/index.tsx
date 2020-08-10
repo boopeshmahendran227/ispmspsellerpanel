@@ -16,11 +16,9 @@ import OrdersContainer from "components/OrdersContainer";
 
 const Orders = () => {
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
-  const [selectedEcosystemId, setSelectedEcosystemId] = useState(null);
+  const [selectedEcosystemId, setSelectedEcosystemId] = useState("");
   const orderSWR = useSWR(
-    selectedEcosystemId
-      ? `/order?pageNumber=${currentPageNumber}&ecosystemids=${selectedEcosystemId}`
-      : `/order?pageNumber=${currentPageNumber}`
+    `/order?pageNumber=${currentPageNumber}&ecosystemids=${selectedEcosystemId}`
   );
 
   const orderData: PaginatedDataInterface<OrderInterface> = orderSWR.data;
@@ -39,7 +37,7 @@ const Orders = () => {
 
   const ecosystems: SelectOptionInterface[] = [
     {
-      value: null,
+      value: "",
       label: "All Ecosystems",
     },
     {

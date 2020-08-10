@@ -4,6 +4,7 @@ import { ChangeEvent } from "react";
  * Styles copied from https://codepen.io/andreasstorm/pen/yjLGGN
  */
 interface CheckboxProps {
+  label?: string;
   checked: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -24,6 +25,7 @@ const Checkbox = (props: CheckboxProps) => {
           <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
         </svg>
       </span>
+      {Boolean(props.label) && <span className="label">{props.label}</span>}
       <style jsx>{`
         .checkbox {
           display: none;
@@ -33,6 +35,15 @@ const Checkbox = (props: CheckboxProps) => {
           -webkit-user-select: none;
           user-select: none;
           cursor: pointer;
+        }
+        .label {
+          display: inline-block;
+          vertical-align: middle;
+          margin: 0.2em 0.4em;
+          transition: all 0.3s;
+        }
+        label:hover .label {
+          color: ${color};
         }
         .svgContainer {
           display: inline-block;

@@ -1,6 +1,5 @@
-import CSSConstants from "../../src/constants/CSSConstants";
 import Link from "next/link";
-import { ProductMiniInterface } from "types/product";
+import { ProductMiniInterface, SelectOptionInterface } from "types/product";
 import { useState } from "react";
 import SearchBar from "components/SearchBar";
 import ActiveFilters from "components/ActiveFilters";
@@ -12,31 +11,63 @@ import { useMemo } from "react";
 import PageError from "components/PageError";
 import ProductsContainer from "components/ProductsContainer";
 import PageHeader from "components/PageHeader";
+import { BusinessDataInterface } from "types/business";
+import Loader from "components/Loader";
+import EcosystemOption from "components/atoms/EcosystemOption";
+import Select from "components/Select";
+import Checkbox from "components/atoms/Checkbox";
 
 const Products = () => {
   const [searchText, setSearchText] = useState("");
+  const [selectedEcosystemId, setSelectedEcosystemId] = useState("Default");
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
+  const [showOnlySelf, setShowOnlySelf] = useState(false);
 
   const params = useMemo(
     () => ({
       method: "POST",
       data: {
-        showOnlySelf: false,
-        ecosystemId: "Default",
+        showOnlySelf: showOnlySelf,
+        ecosystemId: selectedEcosystemId,
         pageNumber: currentPageNumber,
         searchText: searchText,
       },
     }),
-    [searchText, currentPageNumber]
+    [searchText, currentPageNumber, selectedEcosystemId, showOnlySelf]
   );
 
-  const swr = useSWR(["/search/seller/product", params]);
-  const productData: PaginatedDataInterface<ProductMiniInterface> = swr.data;
-  const error = swr.error;
+  const productSWR = useSWR<PaginatedDataInterface<ProductMiniInterface>>([
+    "/search/seller/product",
+    params,
+  ]);
+  const businessSWR = useSWR<BusinessDataInterface>("/businesses/business");
+  const businessData: BusinessDataInterface | undefined = businessSWR.data;
+  const productData: PaginatedDataInterface<ProductMiniInterface> | undefined =
+    productSWR.data;
+  const error = productSWR.error || businessSWR.error;
 
   if (error) {
     return <PageError statusCode={error?.response.status} />;
   }
+
+  if (!businessData) {
+    return <Loader />;
+  }
+
+  const ecosystems: SelectOptionInterface[] = [
+    {
+      value: "Default",
+      label: "Istakapaza Default Marketplace",
+    },
+    ...businessData.ecosystems.map((ecosystem) => ({
+      value: ecosystem.ecosystem_id._id,
+      label: <EcosystemOption ecosystem={ecosystem} />,
+    })),
+  ];
+
+  const currentEcosystem =
+    ecosystems.find((ecosystem) => ecosystem.value == selectedEcosystemId) ??
+    ecosystems[0];
 
   return (
     <div className="container">
@@ -51,6 +82,18 @@ const Products = () => {
         clearFilters={() => setSearchText("")}
       />
       <SearchBar searchText={searchText} searchByText={setSearchText} />
+      <Select
+        value={currentEcosystem}
+        onChange={(ecosystem) =>
+          setSelectedEcosystemId(ecosystem.value as string)
+        }
+        options={ecosystems}
+      />
+      <Checkbox
+        checked={showOnlySelf}
+        onChange={(e) => setShowOnlySelf(e.target.checked)}
+        label="Show Only My Products"
+      />
       <ProductsContainer
         productData={productData}
         setCurrentPageNumber={setCurrentPageNumber}

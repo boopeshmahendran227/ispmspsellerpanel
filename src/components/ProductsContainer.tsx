@@ -8,7 +8,7 @@ import Link from "next/link";
 import { PaginatedDataInterface } from "../types/pagination";
 
 interface ProductsContainerProps {
-  productData: PaginatedDataInterface<ProductMiniInterface>;
+  productData: PaginatedDataInterface<ProductMiniInterface> | undefined;
   setCurrentPageNumber: (pageNumber: number) => void;
 }
 
