@@ -21,10 +21,40 @@ import FieldEcosystemMultiInput from "components/FieldEcosystemMultiInput";
 import { BusinessDataInterface } from "types/business";
 import { connect } from "react-redux";
 import SkuActions from "actions/sku";
+import { UpdateSkuInterface } from "types/sku";
+import Button from "components/atoms/Button";
+import * as Yup from "yup";
 
-interface DispatchProps {}
+interface DispatchProps {
+  updateSku: (sku: UpdateSkuInterface) => void;
+}
 
 type SkuProps = DispatchProps;
+
+const validationSchema = Yup.object({
+  skuDetailId: Yup.number().required().defined(),
+  price: Yup.number().required(),
+  boughtPrice: Yup.number().required(),
+  qty: Yup.number().required(),
+  barcodeIdentifier: Yup.string().nullable().defined(),
+  externalId: Yup.string().nullable().defined(),
+  length: Yup.number().nullable().defined(),
+  width: Yup.number().nullable().defined(),
+  height: Yup.number().nullable().defined(),
+  weight: Yup.number().nullable().defined(),
+  ecosystems: Yup.array()
+    .of(
+      Yup.object({
+        value: Yup.string().defined(),
+        label: Yup.string().defined(),
+      }).defined()
+    )
+    .min(1, "Atleast one ecosystem is required")
+    .required()
+    .defined(),
+}).defined();
+
+type InputInterface = Yup.InferType<typeof validationSchema>;
 
 const Sku = (props: SkuProps): JSX.Element => {
   const router = useRouter();
@@ -51,7 +81,12 @@ const Sku = (props: SkuProps): JSX.Element => {
 
   const attributes = product.attributeValues;
 
-  const handleSubmit = (values) => {};
+  const handleSubmit = (values: InputInterface) => {
+    props.updateSku({
+      ...values,
+      ecosystemIds: values.ecosystems.map((ecosystem) => ecosystem.value),
+    });
+  };
 
   return (
     <div className="container">
@@ -77,10 +112,11 @@ const Sku = (props: SkuProps): JSX.Element => {
         <div className="formContainer">
           <Formik
             initialValues={{
+              skuDetailId: currentSku.skuDetailId,
               price: currentSku.price,
               boughtPrice: currentSku.boughtPrice,
               qty: currentSku.qty,
-              barCode: currentSku.barCodeIdentifier,
+              barcodeIdentifier: currentSku.barCodeIdentifier,
               externalId: currentSku.externalId,
               length: currentSku.length,
               width: currentSku.width,
@@ -95,6 +131,7 @@ const Sku = (props: SkuProps): JSX.Element => {
                 }))
               ),
             }}
+            validationSchema={validationSchema}
             enableReinitialize={true}
             onSubmit={handleSubmit}
           >
@@ -129,7 +166,7 @@ const Sku = (props: SkuProps): JSX.Element => {
                   <label>Qty</label>
                   <FieldNumInput name="qty" />
                   <label>Bar Code</label>
-                  <FieldInput name="barCode" />
+                  <FieldInput name="barcodeIdentifier" />
                   <label>External Id</label>
                   <FieldInput name="externalId" />
                 </SectionCard>
@@ -152,6 +189,7 @@ const Sku = (props: SkuProps): JSX.Element => {
                   <label>Weight (in Kg)</label>
                   <FieldNumInput name="weight" />
                 </SectionCard>
+                <Button isSubmitButton={true}>Save</Button>
               </Form>
             )}
           </Formik>

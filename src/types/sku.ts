@@ -42,10 +42,10 @@ export interface UpdateSkuInterface {
   boughtPrice: number;
   qty: number;
   ecosystemIds: string[];
-  externalId: string;
-  barcodeIdentifier: string;
-  length: number;
-  height: number;
-  width: number;
-  weight: number;
+  externalId: string | null;
+  barcodeIdentifier: string | null;
+  length: number | null;
+  height: number | null;
+  width: number | null;
+  weight: number | null;
 }
