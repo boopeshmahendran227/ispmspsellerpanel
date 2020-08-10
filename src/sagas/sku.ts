@@ -8,10 +8,10 @@ import {
 } from "../constants/ActionTypes";
 import { takeEvery, all, call, put } from "redux-saga/effects";
 import api from "../api";
-import { EditSkuInterface } from "../types/sku";
+import { AddSkuAction, UpdateSkuAction } from "../types/sku";
 import _ from "lodash";
 
-function* addSku(action) {
+function* addSku(action: AddSkuAction) {
   try {
     const sku = action.sku;
     yield call(api, "/product/sku", {
@@ -24,7 +24,7 @@ function* addSku(action) {
   }
 }
 
-function* updateSku(action) {
+function* updateSku(action: UpdateSkuAction) {
   try {
     const sku = action.sku;
     yield call(api, "/product/sku", {

@@ -1,4 +1,18 @@
-export interface EditSkuInterface {
+import { UPDATE_SKU_REQUEST, ADD_SKU_REQUEST } from "src/constants/ActionTypes";
+
+export interface AddSkuAction {
+  type: typeof ADD_SKU_REQUEST;
+  sku: AddSkuInterface;
+}
+
+export interface UpdateSkuAction {
+  type: typeof UPDATE_SKU_REQUEST;
+  sku: UpdateSkuInterface;
+}
+
+export type SkuActionType = AddSkuAction | UpdateSkuAction;
+
+export interface AddSkuInterface {
   productId: number;
   skuId: string;
   price: number;
@@ -20,4 +34,18 @@ interface AttributeValueID {
   valueId: number;
   attributeName: string;
   value: string;
+}
+
+export interface UpdateSkuInterface {
+  skuDetailId: number;
+  price: number;
+  boughtPrice: number;
+  qty: number;
+  ecosystemIds: string[];
+  externalId: string;
+  barcodeIdentifier: string;
+  length: number;
+  height: number;
+  width: number;
+  weight: number;
 }

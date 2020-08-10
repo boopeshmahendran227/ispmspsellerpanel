@@ -2,12 +2,14 @@ import FieldMultiSelect from "./FieldMultiSelect";
 import EcosystemOption from "./atoms/EcosystemOption";
 import { BusinessDataInterface } from "types/business";
 
-interface EcosystemMultiInputProps {
+interface FieldEcosystemMultiInputProps {
   businessData: BusinessDataInterface;
   name: string;
 }
 
-const EcosystemMultiInput = (props: EcosystemMultiInputProps): JSX.Element => {
+const FieldEcosystemMultiInput = (
+  props: FieldEcosystemMultiInputProps
+): JSX.Element => {
   const { businessData } = props;
 
   return (
@@ -27,4 +29,4 @@ const EcosystemMultiInput = (props: EcosystemMultiInputProps): JSX.Element => {
   );
 };
 
-export default EcosystemMultiInput;
+export default FieldEcosystemMultiInput;

@@ -17,20 +17,31 @@ import ImageUploader from "components/ImageUploader";
 import { ProductDetailInterface } from "types/product";
 import _ from "lodash";
 import FieldSelect from "components/FieldSelect";
+import FieldEcosystemMultiInput from "components/FieldEcosystemMultiInput";
+import { BusinessDataInterface } from "types/business";
+import { connect } from "react-redux";
+import SkuActions from "actions/sku";
 
-const Sku = () => {
+interface DispatchProps {}
+
+type SkuProps = DispatchProps;
+
+const Sku = (props: SkuProps): JSX.Element => {
   const router = useRouter();
-  const swr = useSWR(`/product/seller/${router.query.id}`);
-  const currentSkuId: string = router.query.skuId as string;
-  const product: ProductDetailInterface = swr.data;
+  const productSwr = useSWR(`/product/seller/${router.query.id}`);
+  const businessSWR = useSWR("/businesses/business");
 
-  const error = swr.error;
+  const currentSkuId: string = router.query.skuId as string;
+  const product: ProductDetailInterface = productSwr.data;
+  const businessData: BusinessDataInterface = businessSWR.data;
+
+  const error = productSwr.error || businessSWR.error;
 
   if (error) {
     return <PageError statusCode={error.response?.status} />;
   }
 
-  if (!product) {
+  if (!product || !businessData) {
     return <Loader />;
   }
 
@@ -39,6 +50,8 @@ const Sku = () => {
   );
 
   const attributes = product.attributeValues;
+
+  const handleSubmit = (values) => {};
 
   return (
     <div className="container">
@@ -73,6 +86,7 @@ const Sku = () => {
               width: currentSku.width,
               height: currentSku.height,
               weight: currentSku.weight,
+              ecosystems: [],
               attributes: _.zipObject(
                 currentSku.attributeValueIds.map((item) => item.attributeId),
                 currentSku.attributeValueIds.map((item) => ({
@@ -82,7 +96,7 @@ const Sku = () => {
               ),
             }}
             enableReinitialize={true}
-            onSubmit={() => null}
+            onSubmit={handleSubmit}
           >
             {() => (
               <Form>
@@ -120,15 +134,23 @@ const Sku = () => {
                   <FieldInput name="externalId" />
                 </SectionCard>
                 <SectionCard>
+                  <SectionHeader>Visibility</SectionHeader>
+                  <label>Ecosystem</label>
+                  <FieldEcosystemMultiInput
+                    name="ecosystems"
+                    businessData={businessData}
+                  />
+                </SectionCard>
+                <SectionCard>
                   <SectionHeader>Dimensions</SectionHeader>
                   <label>Length (in cm)</label>
-                  <FieldInput name="length" />
+                  <FieldNumInput name="length" />
                   <label>Width (in cm)</label>
-                  <FieldInput name="width" />
+                  <FieldNumInput name="width" />
                   <label>Height (in cm)</label>
-                  <FieldInput name="height" />
+                  <FieldNumInput name="height" />
                   <label>Weight (in Kg)</label>
-                  <FieldInput name="weight" />
+                  <FieldNumInput name="weight" />
                 </SectionCard>
               </Form>
             )}
@@ -160,4 +182,10 @@ const Sku = () => {
   );
 };
 
-export default WithAuth(Sku);
+const mapDispatchToProps: DispatchProps = {
+  updateSku: SkuActions.updateSku,
+};
+
+export default WithAuth(
+  connect<null, DispatchProps>(null, mapDispatchToProps)(Sku)
+);
