@@ -8,7 +8,7 @@ import useSWR from "swr";
 import { BusinessDataInterface } from "types/business";
 import PageError from "components/PageError";
 import Loader from "components/Loader";
-import EcosystemOption from "components/EcosystemOption";
+import EcosystemOption from "components/atoms/EcosystemOption";
 import WithAuth from "components/WithAuth";
 import { useState } from "react";
 import _ from "lodash";

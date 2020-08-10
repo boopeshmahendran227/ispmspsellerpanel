@@ -30,7 +30,7 @@ import { CategoryTreeInterface } from "types/categoryTree";
 import Tooltip from "components/Tooltip";
 import PageHeader from "components/PageHeader";
 import { BusinessDataInterface } from "types/business";
-import EcosystemOption from "components/EcosystemOption";
+import FieldEcosystemMultiInput from "components/FieldEcosystemMultiInput";
 import WithAuth from "components/WithAuth";
 import FieldPriceInput from "components/FieldPriceInput";
 import listOfCountries from "../../src/data/listOfCountries";
@@ -165,18 +165,9 @@ const AddProduct = (props: AddProductProps) => {
                     }))}
                 />
                 <InputLabel label="Ecosystems" />
-                <FieldMultiSelect
+                <FieldEcosystemMultiInput
                   name="ecosystems"
-                  options={[
-                    {
-                      value: "Default",
-                      label: "Istakapaza Default Marketplace",
-                    },
-                    ...businessData.ecosystems.map((ecosystem) => ({
-                      value: ecosystem.ecosystem_id._id,
-                      label: <EcosystemOption ecosystem={ecosystem} />,
-                    })),
-                  ]}
+                  businessData={businessData}
                 />
                 <InputLabel label="Brand" />
                 <FieldSelect
