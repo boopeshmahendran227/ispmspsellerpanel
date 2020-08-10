@@ -42,15 +42,9 @@ const validationSchema = Yup.object({
   width: Yup.number().nullable().defined(),
   height: Yup.number().nullable().defined(),
   weight: Yup.number().nullable().defined(),
-  ecosystems: Yup.array()
-    .of(
-      Yup.object({
-        value: Yup.string().defined(),
-        label: Yup.string().defined(),
-      }).defined()
-    )
+  ecosystemIds: Yup.array()
+    .of(Yup.string().defined())
     .min(1, "Atleast one ecosystem is required")
-    .required()
     .defined(),
 }).defined();
 
@@ -79,13 +73,14 @@ const Sku = (props: SkuProps): JSX.Element => {
     (sku) => sku.skuId === currentSkuId
   );
 
+  if (!currentSku) {
+    return <PageError statusCode={404} />;
+  }
+
   const attributes = product.attributeValues;
 
   const handleSubmit = (values: InputInterface) => {
-    props.updateSku({
-      ...values,
-      ecosystemIds: values.ecosystems.map((ecosystem) => ecosystem.value),
-    });
+    props.updateSku(values);
   };
 
   return (
@@ -122,7 +117,7 @@ const Sku = (props: SkuProps): JSX.Element => {
               width: currentSku.width,
               height: currentSku.height,
               weight: currentSku.weight,
-              ecosystems: [],
+              ecosystemIds: currentSku.ecosystemIds,
               attributes: _.zipObject(
                 currentSku.attributeValueIds.map((item) => item.attributeId),
                 currentSku.attributeValueIds.map((item) => ({
@@ -174,7 +169,7 @@ const Sku = (props: SkuProps): JSX.Element => {
                   <SectionHeader>Visibility</SectionHeader>
                   <label>Ecosystem</label>
                   <FieldEcosystemMultiInput
-                    name="ecosystems"
+                    name="ecosystemIds"
                     businessData={businessData}
                   />
                 </SectionCard>
