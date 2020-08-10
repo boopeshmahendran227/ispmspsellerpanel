@@ -40,36 +40,30 @@ const SearchBar = (props: SearchBarProps) => {
   };
 
   return (
-    <div className="searchContainer">
-      <form onSubmit={onSubmit} ref={formRef}>
-        <input
-          ref={inputRef}
-          name="search"
-          autoComplete="off" // desperately tring to turn off autocompletion
-          placeholder="Search for products"
-          onChange={handleInputChange}
-          value={value}
-        />
-        {Boolean(value) && (
-          <button
-            type="button"
-            className="closeBtn"
-            onClick={handleCloseBtnClick}
-          >
-            <i className="fa fa-times" aria-hidden="true"></i>
-          </button>
-        )}
-        <div className="searchButtonContainer">
-          <button type="submit">
-            <i className="fa fa-search" aria-hidden="true"></i>
-          </button>
-        </div>
-      </form>
+    <form onSubmit={onSubmit} ref={formRef}>
+      <input
+        ref={inputRef}
+        name="search"
+        autoComplete="off" // desperately tring to turn off autocompletion
+        placeholder="Search for products"
+        onChange={handleInputChange}
+        value={value}
+      />
+      {Boolean(value) && (
+        <button
+          type="button"
+          className="closeBtn"
+          onClick={handleCloseBtnClick}
+        >
+          <i className="fa fa-times" aria-hidden="true"></i>
+        </button>
+      )}
+      <div className="searchButtonContainer">
+        <button type="submit">
+          <i className="fa fa-search" aria-hidden="true"></i>
+        </button>
+      </div>
       <style jsx>{`
-        .searchContainer {
-          margin: 1em;
-          margin-left: 0;
-        }
         form {
           width: 300px;
           display: inline-flex;
@@ -110,7 +104,7 @@ const SearchBar = (props: SearchBarProps) => {
           margin: 5px;
         }
       `}</style>
-    </div>
+    </form>
   );
 };
 
