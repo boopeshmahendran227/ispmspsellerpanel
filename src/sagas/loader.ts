@@ -31,6 +31,10 @@ import {
   UPDATE_CREDITS_REQUEST,
   UPDATE_CREDITS_SUCCESS,
   UPDATE_CREDITS_FAILURE,
+  ADD_SKU_REQUEST,
+  UPDATE_SKU_REQUEST,
+  ADD_SKU_FAILURE,
+  UPDATE_SKU_FAILURE,
 } from "../constants/ActionTypes";
 
 const openActionItems = [
@@ -44,6 +48,8 @@ const openActionItems = [
   LOGOUT_REQUEST,
   CREATE_COUPON_REQUEST,
   UPDATE_CREDITS_REQUEST,
+  ADD_SKU_REQUEST,
+  UPDATE_SKU_REQUEST,
 ];
 
 const closeActions = [
@@ -67,6 +73,8 @@ const closeActions = [
   CREATE_COUPON_FAILURE,
   UPDATE_CREDITS_SUCCESS,
   UPDATE_CREDITS_FAILURE,
+  ADD_SKU_FAILURE,
+  UPDATE_SKU_FAILURE,
 ];
 
 function* watchLoadingScreenShow() {

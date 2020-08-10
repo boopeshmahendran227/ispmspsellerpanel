@@ -1,6 +1,6 @@
-import CSSConstants from "../constants/CSSConstants";
+import CSSConstants from "../../constants/CSSConstants";
 import { useEffect } from "react";
-import { ToastDataInterface, ToastType } from "../types/toast";
+import { ToastDataInterface, ToastType } from "../../types/toast";
 import Chroma from "chroma-js";
 
 interface ToastProps {

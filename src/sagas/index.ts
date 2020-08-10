@@ -10,6 +10,7 @@ import ReasonSaga from "./reason";
 import LoginSaga from "./login";
 import CouponSaga from "./coupon";
 import CreditSaga from "./credit";
+import SkuSaga from "./sku";
 import { all, fork, spawn } from "redux-saga/effects";
 
 export default function* rootSaga() {
@@ -28,5 +29,6 @@ export default function* rootSaga() {
     fork(LoginSaga),
     fork(CouponSaga),
     fork(CreditSaga),
+    fork(SkuSaga),
   ]);
 }

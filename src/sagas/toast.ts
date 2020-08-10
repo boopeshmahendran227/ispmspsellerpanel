@@ -15,6 +15,10 @@ import {
   CREATE_COUPON_FAILURE,
   UPDATE_CREDITS_FAILURE,
   UPDATE_CREDITS_SUCCESS,
+  ADD_SKU_SUCCESS,
+  ADD_SKU_FAILURE,
+  UPDATE_SKU_SUCCESS,
+  UPDATE_SKU_FAILURE,
 } from "../constants/ActionTypes";
 import { put, take } from "redux-saga/effects";
 import ToastActions from "../actions/toast";
@@ -85,6 +89,22 @@ export const toasts = {
   [UPDATE_CREDITS_FAILURE]: {
     type: ToastType.error,
     msg: "Credits Updation Failed",
+  },
+  [ADD_SKU_SUCCESS]: {
+    type: ToastType.success,
+    msg: "Sku added successfully",
+  },
+  [ADD_SKU_FAILURE]: {
+    type: ToastType.error,
+    msg: "Sku addition failed. Please try again",
+  },
+  [UPDATE_SKU_SUCCESS]: {
+    type: ToastType.success,
+    msg: "Sku updated successfully",
+  },
+  [UPDATE_SKU_FAILURE]: {
+    type: ToastType.error,
+    msg: "Sku updation failed. Please try again",
   },
 };
 

@@ -121,13 +121,13 @@ const Sku = () => {
                 </SectionCard>
                 <SectionCard>
                   <SectionHeader>Dimensions</SectionHeader>
-                  <label>Length</label>
+                  <label>Length (in cm)</label>
                   <FieldInput name="length" />
-                  <label>Width</label>
+                  <label>Width (in cm)</label>
                   <FieldInput name="width" />
-                  <label>Height</label>
+                  <label>Height (in cm)</label>
                   <FieldInput name="height" />
-                  <label>Weight</label>
+                  <label>Weight (in Kg)</label>
                   <FieldInput name="weight" />
                 </SectionCard>
               </Form>

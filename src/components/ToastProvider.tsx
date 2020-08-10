@@ -1,5 +1,5 @@
 import React from "react";
-import Toast from "./Toast";
+import Toast from "./atoms/Toast";
 import Portal from "./Portal";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { connect } from "react-redux";
