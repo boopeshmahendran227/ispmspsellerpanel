@@ -16,8 +16,37 @@ import SectionCard from "components/SectionCard";
 import _ from "lodash";
 import { ProductDetailInterface } from "types/product";
 import FieldSelect from "components/FieldSelect";
+import { AddSkuInterface } from "types/sku";
+import * as Yup from "yup";
+import { connect } from "react-redux";
+import SkuActions from "actions/sku";
 
-const Sku = () => {
+interface DispatchProps {
+  addSku: (sku: AddSkuInterface) => void;
+}
+
+type SkuProps = DispatchProps;
+
+const validationSchema = Yup.object({
+  price: Yup.number().required(),
+  boughtPrice: Yup.number().required(),
+  qty: Yup.number().required(),
+  barcodeIdentifier: Yup.string().nullable().defined(),
+  externalId: Yup.string().nullable().defined(),
+  length: Yup.number().nullable().defined(),
+  width: Yup.number().nullable().defined(),
+  height: Yup.number().nullable().defined(),
+  weight: Yup.number().nullable().defined(),
+  attributes: Yup.object({}),
+  ecosystemIds: Yup.array()
+    .of(Yup.string().defined())
+    .min(1, "Atleast one ecosystem is required")
+    .defined(),
+}).defined();
+
+type InputInterface = Yup.InferType<typeof validationSchema>;
+
+const Sku = (props: SkuProps) => {
   const router = useRouter();
   const swr = useSWR(`/product/seller/${router.query.id}`);
   const skuId: string = router.query.skuId as string;
@@ -34,6 +63,10 @@ const Sku = () => {
   }
 
   const attributes = product.attributeValues;
+
+  const handleSubmit = (values: InputInterface) => {
+    props.addSku(values);
+  };
 
   return (
     <div className="container">
@@ -64,26 +97,28 @@ const Sku = () => {
               qty: 0,
               barCode: "",
               externalId: "",
-              length: "",
-              width: "",
-              height: "",
-              weight: "",
-              attributes: _.zipObject(
-                attributes.map((item) => item.attributeId),
-                null
-              ),
+              length: null,
+              width: null,
+              height: null,
+              weight: null,
+              attributes: attributes.map((attribute) => ({
+                attributeId: attribute.attributeId,
+                attributeName: attribute.attributeName,
+                valueId: "",
+                value: "",
+              })),
             }}
-            onSubmit={() => null}
+            onSubmit={handleSubmit}
           >
             {() => (
               <Form>
                 <SectionCard>
                   <SectionHeader>Options</SectionHeader>
-                  {attributes.map((attribute) => (
+                  {attributes.map((attribute, index) => (
                     <>
                       <label>{attribute.attributeName}</label>
                       <FieldSelect
-                        name={`attributes.${attribute.attributeId}`}
+                        name={`attributes.${index}.value`}
                         options={attribute.attributeValues.map((value) => ({
                           value: value.valueId,
                           label: value.value,
@@ -149,4 +184,10 @@ const Sku = () => {
   );
 };
 
-export default WithAuth(Sku);
+const mapDispatchToProps: DispatchProps = {
+  addSku: SkuActions.addSku,
+};
+
+export default WithAuth(
+  connect<null, DispatchProps>(null, mapDispatchToProps)(Sku)
+);

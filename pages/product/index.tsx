@@ -16,6 +16,23 @@ import Loader from "components/Loader";
 import EcosystemOption from "components/atoms/EcosystemOption";
 import Select from "components/Select";
 import Checkbox from "components/atoms/Checkbox";
+import styled from "styled-components";
+
+const FlexContainer = styled.div`
+  margin: 0.5em 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const FilterSection = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const EcosystemFilterContainer = styled.div`
+  min-width: 300px;
+`;
 
 const Products = () => {
   const [searchText, setSearchText] = useState("");
@@ -47,7 +64,7 @@ const Products = () => {
   const error = productSWR.error || businessSWR.error;
 
   if (error) {
-    return <PageError statusCode={error?.response.status} />;
+    return <PageError statusCode={error.response?.status} />;
   }
 
   if (!businessData) {
@@ -69,42 +86,55 @@ const Products = () => {
     ecosystems.find((ecosystem) => ecosystem.value == selectedEcosystemId) ??
     ecosystems[0];
 
+  const getAppliedFilters = (): string[] => {
+    const filters: string[] = [];
+
+    if (searchText) {
+      filters.push(searchText);
+    }
+    if (selectedEcosystemId) {
+      filters.push(("Ecosystem: " + currentEcosystem.value) as string);
+    }
+    if (showOnlySelf) {
+      filters.push("Only My Products");
+    }
+
+    return filters;
+  };
+
   return (
     <div className="container">
       <PageHeader>Products</PageHeader>
-      <div className="addProductContainer">
-        <Link href="/product/new">
-          <Button>Add Product</Button>
-        </Link>
-      </div>
+      <Link href="/product/new">
+        <Button>Add Product</Button>
+      </Link>
       <ActiveFilters
-        searchText={searchText}
+        appliedFilters={getAppliedFilters()}
         clearFilters={() => setSearchText("")}
       />
-      <SearchBar searchText={searchText} searchByText={setSearchText} />
-      <Select
-        value={currentEcosystem}
-        onChange={(ecosystem) =>
-          setSelectedEcosystemId(ecosystem.value as string)
-        }
-        options={ecosystems}
-      />
-      <Checkbox
-        checked={showOnlySelf}
-        onChange={(e) => setShowOnlySelf(e.target.checked)}
-        label="Show Only My Products"
-      />
+      <FlexContainer>
+        <SearchBar searchText={searchText} searchByText={setSearchText} />
+        <FilterSection>
+          <Checkbox
+            checked={showOnlySelf}
+            onChange={(e) => setShowOnlySelf(e.target.checked)}
+            label="Show Only My Products"
+          />
+          <EcosystemFilterContainer>
+            <Select
+              value={currentEcosystem}
+              onChange={(ecosystem) =>
+                setSelectedEcosystemId(ecosystem.value as string)
+              }
+              options={ecosystems}
+            />
+          </EcosystemFilterContainer>
+        </FilterSection>
+      </FlexContainer>
       <ProductsContainer
         productData={productData}
         setCurrentPageNumber={setCurrentPageNumber}
       />
-      <style jsx>{`
-        .addProductContainer {
-          text-align: right;
-          padding: 0.4em 3em;
-          font-size: 1rem;
-        }
-      `}</style>
     </div>
   );
 };
