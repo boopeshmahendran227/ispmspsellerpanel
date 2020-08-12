@@ -23,10 +23,7 @@ const ActiveFilters = (props: ActiveFiltersProps) => {
       </a>
       <style jsx>{`
         .container {
-          margin: 1em 0;
-          padding: 0.5em;
-          border-top: 1px solid ${CSSConstants.borderColor};
-          border-bottom: 1px solid ${CSSConstants.borderColor};
+          padding: 0.2em;
           display: flex;
           align-items: center;
         }

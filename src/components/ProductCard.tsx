@@ -10,7 +10,7 @@ interface MetaInfo {
 interface ProductCardProps {
   name: string;
   image: string;
-  metaInfo: MetaInfo[];
+  metaInfo?: MetaInfo[];
 }
 
 const ProductCard = (props: ProductCardProps) => {
@@ -23,7 +23,7 @@ const ProductCard = (props: ProductCardProps) => {
       <div className="contentContainer">
         <span className="name">{props.name}</span>
         <div className="metaInfoContainer">
-          {Boolean(metaInfo) &&
+          {Array.isArray(metaInfo) &&
             metaInfo.map((obj, index) => (
               <Fragment key={index}>
                 <span className="key">{obj.key}: </span>

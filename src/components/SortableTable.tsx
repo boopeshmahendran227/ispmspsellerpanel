@@ -110,6 +110,10 @@ const SortableTable = (props: SortableTableProps): JSX.Element => {
           width: 100%;
           overflow-x: auto;
         }
+        .sortableTable thead {
+          border-top: 1px solid #f0f0f0;
+          border-bottom: 1px solid #f0f0f0;
+        }
         .sortableTable th {
           cursor: pointer;
           text-align: center;
@@ -118,8 +122,8 @@ const SortableTable = (props: SortableTableProps): JSX.Element => {
           color: ${CSSConstants.secondaryTextColor};
         }
         /* Using :global selector to style child component - body */
-        .sortableTable tbody :global(tr:nth-child(odd)) {
-          background-color: #6565650f;
+        .sortableTable tbody :global(tr) {
+          border-bottom: 1px solid #f0f0f0;
         }
         .sortableTable th {
           position: relative;

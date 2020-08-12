@@ -4,7 +4,7 @@ import ShowroomVisitCard from "components/ShowroomVisitCard";
 import Loader from "./Loader";
 
 interface ShowroomVisitsContainerProps {
-  showroomVisits: ShowroomVisitInterface[];
+  showroomVisits: ShowroomVisitInterface[] | undefined;
   dateFilter: moment.Moment;
 }
 

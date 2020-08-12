@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from "react";
 import CSSConstants from "../constants/CSSConstants";
 import _ from "lodash";
+import { ChangeEvent } from "react";
 
 interface SearchBarProps {
   searchText: string;
@@ -8,48 +8,25 @@ interface SearchBarProps {
 }
 
 const SearchBar = (props: SearchBarProps) => {
-  const [value, setValue] = useState("");
-
-  const inputRef = useRef(null);
-  const formRef = useRef(null);
-
-  // Change value whenever searchText changes
-  useEffect(() => {
-    setValue(props.searchText);
-  }, [props.searchText]);
-
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setValue(value);
-  };
-
-  const handleCloseBtnClick = () => {
-    setValue("");
-  };
-
-  const handleSearch = (value) => {
-    inputRef.current.blur();
-
     props.searchByText(value);
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    handleSearch(value);
+  const handleCloseBtnClick = () => {
+    props.searchByText("");
   };
 
   return (
-    <form onSubmit={onSubmit} ref={formRef}>
+    <div className="container">
       <input
-        ref={inputRef}
         name="search"
         autoComplete="off" // desperately tring to turn off autocompletion
         placeholder="Search for products"
         onChange={handleInputChange}
-        value={value}
+        value={props.searchText}
       />
-      {Boolean(value) && (
+      {Boolean(props.searchText) && (
         <button
           type="button"
           className="closeBtn"
@@ -64,7 +41,7 @@ const SearchBar = (props: SearchBarProps) => {
         </button>
       </div>
       <style jsx>{`
-        form {
+        .container {
           width: 300px;
           display: inline-flex;
           border-radius: 0.5em;
@@ -104,7 +81,7 @@ const SearchBar = (props: SearchBarProps) => {
           margin: 5px;
         }
       `}</style>
-    </form>
+    </div>
   );
 };
 

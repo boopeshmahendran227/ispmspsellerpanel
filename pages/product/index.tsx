@@ -17,6 +17,8 @@ import EcosystemOption from "components/atoms/EcosystemOption";
 import Select from "components/Select";
 import Checkbox from "components/atoms/Checkbox";
 import styled from "styled-components";
+import PageHeaderContainer from "components/atoms/PageHeaderContainer";
+import PageContainer from "components/atoms/PageContainer";
 
 const FlexContainer = styled.div`
   margin: 0.5em 0;
@@ -36,7 +38,7 @@ const EcosystemFilterContainer = styled.div`
 
 const Products = () => {
   const [searchText, setSearchText] = useState("");
-  const [selectedEcosystemId, setSelectedEcosystemId] = useState("Default");
+  const [selectedEcosystemId, setSelectedEcosystemId] = useState("");
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const [showOnlySelf, setShowOnlySelf] = useState(false);
 
@@ -73,6 +75,10 @@ const Products = () => {
 
   const ecosystems: SelectOptionInterface[] = [
     {
+      value: "",
+      label: "All Ecosystems",
+    },
+    {
       value: "Default",
       label: "Istakapaza Default Marketplace",
     },
@@ -89,11 +95,8 @@ const Products = () => {
   const getAppliedFilters = (): string[] => {
     const filters: string[] = [];
 
-    if (searchText) {
-      filters.push(searchText);
-    }
     if (selectedEcosystemId) {
-      filters.push(("Ecosystem: " + currentEcosystem.value) as string);
+      filters.push(("Ecosystem: " + currentEcosystem.label) as string);
     }
     if (showOnlySelf) {
       filters.push("Only My Products");
@@ -103,15 +106,13 @@ const Products = () => {
   };
 
   return (
-    <div className="container">
-      <PageHeader>Products</PageHeader>
-      <Link href="/product/new">
-        <Button>Add Product</Button>
-      </Link>
-      <ActiveFilters
-        appliedFilters={getAppliedFilters()}
-        clearFilters={() => setSearchText("")}
-      />
+    <PageContainer>
+      <PageHeaderContainer>
+        <PageHeader>Products</PageHeader>
+        <Link href="/product/new">
+          <Button>Add Product</Button>
+        </Link>
+      </PageHeaderContainer>
       <FlexContainer>
         <SearchBar searchText={searchText} searchByText={setSearchText} />
         <FilterSection>
@@ -131,11 +132,18 @@ const Products = () => {
           </EcosystemFilterContainer>
         </FilterSection>
       </FlexContainer>
+      <ActiveFilters
+        appliedFilters={getAppliedFilters()}
+        clearFilters={() => {
+          setShowOnlySelf(false);
+          setSelectedEcosystemId("");
+        }}
+      />
       <ProductsContainer
         productData={productData}
         setCurrentPageNumber={setCurrentPageNumber}
       />
-    </div>
+    </PageContainer>
   );
 };
 

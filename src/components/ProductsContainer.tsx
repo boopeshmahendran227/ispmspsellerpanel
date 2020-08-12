@@ -1,11 +1,11 @@
 import { ProductMiniInterface } from "../types/product";
 import SortableTable from "components/SortableTable";
 import Pagination from "components/Pagination";
-import RelativeImg from "components/RelativeImg";
 import CSSConstants from "../../src/constants/CSSConstants";
 import Loader from "./Loader";
 import Link from "next/link";
 import { PaginatedDataInterface } from "../types/pagination";
+import ProductCard from "./ProductCard";
 
 interface ProductsContainerProps {
   productData: PaginatedDataInterface<ProductMiniInterface> | undefined;
@@ -15,21 +15,21 @@ interface ProductsContainerProps {
 const getTableHeaders = () => {
   return [
     {
-      name: "Product Id",
+      name: "Id",
       valueFunc: (product: ProductMiniInterface) => product.productId,
     },
     {
-      name: "Image",
+      name: "Product",
       valueFunc: (product: ProductMiniInterface) => null,
-    },
-    {
-      name: "Name",
-      valueFunc: (product: ProductMiniInterface) => product.productName,
     },
     {
       name: "Short Description",
       valueFunc: (product: ProductMiniInterface) =>
         product.productShortDescription,
+    },
+    {
+      name: "Status",
+      valueFunc: (product: ProductMiniInterface) => product.isActive,
     },
   ];
 };
@@ -40,19 +40,14 @@ const renderTableBody = (products: ProductMiniInterface[]) => {
       <tr>
         <td>{product.productId}</td>
         <td>
-          <div className="imageContainer">
-            <RelativeImg src={product.productImages[0]} />
-          </div>
+          <ProductCard
+            name={product.productName}
+            image={product.productImages[0]}
+          />
         </td>
-        <td>{product.productName}</td>
         <td>{product.productShortDescription}</td>
+        <td>{product.isActive ? "Active" : "Inactive"}</td>
         <style jsx>{`
-          .imageContainer {
-            display: inline-flex;
-            width: 5rem;
-            height: 5rem;
-            align-items: center;
-          }
           tr:hover {
             background-color: ${CSSConstants.hoverColor} !important;
             cursor: pointer;

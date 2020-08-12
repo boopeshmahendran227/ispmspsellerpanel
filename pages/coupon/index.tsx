@@ -10,6 +10,8 @@ import PageHeader from "components/PageHeader";
 import WithAuth from "components/WithAuth";
 import Link from "next/link";
 import moment from "moment";
+import PageHeaderContainer from "components/atoms/PageHeaderContainer";
+import PageContainer from "components/atoms/PageContainer";
 
 const getTableHeaders = () => {
   return [
@@ -69,9 +71,9 @@ const renderTableBody = (coupons: CouponInterface[]) => {
   ));
 };
 
-const Coupons = () => {
-  const swr = useSWR("/sellercoupon");
-  const coupons: CouponInterface[] = swr.data;
+const Coupons = (): JSX.Element => {
+  const swr = useSWR<CouponInterface[]>("/sellercoupon");
+  const coupons: CouponInterface[] | undefined = swr.data;
   const error = swr.error;
 
   if (error) {
@@ -82,13 +84,13 @@ const Coupons = () => {
   }
 
   return (
-    <div className="container">
-      <div className="headerContainer">
+    <PageContainer>
+      <PageHeaderContainer>
         <PageHeader>Seller Coupons</PageHeader>
         <Link href="/coupon/create">
           <Button>Create New Coupon</Button>
         </Link>
-      </div>
+      </PageHeaderContainer>
       <SortableTable
         initialSortData={{
           index: 1,
@@ -99,27 +101,7 @@ const Coupons = () => {
         emptyMsg="There are no coupons"
         body={renderTableBody}
       />
-      <style jsx>{`
-        .container {
-          padding: 1em;
-          margin: 1em auto;
-          background: ${CSSConstants.foregroundColor};
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-            0 1px 2px rgba(0, 0, 0, 0.24);
-        }
-        .headerContainer {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding-right: 1.6em;
-        }
-        @media (max-width: 800px) {
-          .container {
-            padding: 0;
-          }
-        }
-      `}</style>
-    </div>
+    </PageContainer>
   );
 };
 

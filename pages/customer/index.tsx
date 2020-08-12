@@ -1,4 +1,3 @@
-import CSSConstants from "../../src/constants/CSSConstants";
 import SortableTable from "components/SortableTable";
 import useSWR from "swr";
 import Loader from "components/Loader";
@@ -6,6 +5,8 @@ import PageError from "components/PageError";
 import PageHeader from "components/PageHeader";
 import { CustomerInterface } from "types/customer";
 import WithAuth from "components/WithAuth";
+import PageContainer from "components/atoms/PageContainer";
+import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 
 const Customers = () => {
   const getTableHeaders = () => {
@@ -35,20 +36,23 @@ const Customers = () => {
     ));
   };
 
-  const swr = useSWR("/order/customers");
-  const customers: CustomerInterface[] = swr.data;
+  const swr = useSWR<CustomerInterface[]>("/order/customers");
+  const customers: CustomerInterface[] | undefined = swr.data;
   const error = swr.error;
 
   if (error) {
     return <PageError statusCode={error.response?.status} />;
   }
+
   if (!customers) {
     return <Loader />;
   }
 
   return (
-    <div className="container">
-      <PageHeader>Customers</PageHeader>
+    <PageContainer>
+      <PageHeaderContainer>
+        <PageHeader>Customers</PageHeader>
+      </PageHeaderContainer>
       <SortableTable
         initialSortData={{
           index: 1,
@@ -59,25 +63,7 @@ const Customers = () => {
         emptyMsg="There are no customers"
         body={renderTableBody}
       />
-      <style jsx>{`
-        .container {
-          padding: 1em;
-          margin: 1em auto;
-          background: ${CSSConstants.foregroundColor};
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-            0 1px 2px rgba(0, 0, 0, 0.24);
-        }
-        header {
-          font-size: 1.5rem;
-          margin: 0.5em;
-        }
-        @media (max-width: 800px) {
-          .container {
-            padding: 0;
-          }
-        }
-      `}</style>
-    </div>
+    </PageContainer>
   );
 };
 
