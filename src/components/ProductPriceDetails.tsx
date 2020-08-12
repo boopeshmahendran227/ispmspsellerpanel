@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { formatPrice } from "utils/misc";
 import SectionHeader from "./atoms/SectionHeader";
 import SectionCard from "./SectionCard";
+import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
 
 const Grid = styled.div`
   display: grid;
@@ -26,7 +27,9 @@ const ProductPriceDetails = (props: ProductPriceDetailsProps): JSX.Element => {
 
   return (
     <SectionCard>
-      <SectionHeader>Price Details</SectionHeader>
+      <SectionHeaderContainer>
+        <SectionHeader>Price Details</SectionHeader>
+      </SectionHeaderContainer>
       <Grid>
         <Key>Min Price</Key>
         <Value>{formatPrice(minPrice)}</Value>
