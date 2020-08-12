@@ -12,6 +12,9 @@ import useSWR from "swr";
 import { useState } from "react";
 import PageError from "components/PageError";
 import Loader from "components/Loader";
+import PageContainer from "components/atoms/PageContainer";
+import PageHeaderContainer from "components/atoms/PageHeaderContainer";
+import PageBodyContainer from "components/atoms/PageBodyContainer";
 
 const Drafts = () => {
   const getTableHeaders = () => {
@@ -75,9 +78,12 @@ const Drafts = () => {
   };
 
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
-  const swr = useSWR(`/product/draft?pageNumber=${currentPageNumber}`);
+  const swr = useSWR<PaginatedDataInterface<DraftMiniInterface>>(
+    `/product/draft?pageNumber=${currentPageNumber}`
+  );
 
-  const draftData: PaginatedDataInterface<DraftMiniInterface> = swr.data;
+  const draftData: PaginatedDataInterface<DraftMiniInterface> | undefined =
+    swr.data;
   const error = swr.error;
 
   if (error) {
@@ -89,32 +95,29 @@ const Drafts = () => {
   }
 
   return (
-    <div className="container">
-      <PageHeader>Product Drafts</PageHeader>
-      <div className="addProductContainer">
-        <Link href="/product/new">
-          <Button>Add Product</Button>
-        </Link>
-      </div>
-      <SortableTable
-        initialSortData={{
-          index: 1,
-          isAsc: false,
-        }}
-        headers={getTableHeaders()}
-        data={draftData.results}
-        emptyMsg="No product Drafts found"
-        body={renderTableBody}
-      />
-      <Pagination data={draftData} onChange={setCurrentPageNumber} />
-      <style jsx>{`
-        .addProductContainer {
-          text-align: right;
-          padding: 0.4em 3em;
-          font-size: 1rem;
-        }
-      `}</style>
-    </div>
+    <PageContainer>
+      <PageHeaderContainer>
+        <PageHeader>Product Drafts</PageHeader>
+        <div>
+          <Link href="/product/new">
+            <Button>Add Product</Button>
+          </Link>
+        </div>
+      </PageHeaderContainer>
+      <PageBodyContainer>
+        <SortableTable
+          initialSortData={{
+            index: 1,
+            isAsc: false,
+          }}
+          headers={getTableHeaders()}
+          data={draftData.results}
+          emptyMsg="No product Drafts found"
+          body={renderTableBody}
+        />
+        <Pagination data={draftData} onChange={setCurrentPageNumber} />
+      </PageBodyContainer>
+    </PageContainer>
   );
 };
 
