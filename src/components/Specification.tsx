@@ -1,9 +1,10 @@
 import { SpecificationInterface } from "../types/product";
-import SectionHeader from "./SectionHeader";
+import SectionHeader from "./atoms/SectionHeader";
 import styled from "styled-components";
 import CSSConstants from "../constants/CSSConstants";
 import { Fragment } from "react";
 import SectionCard from "./SectionCard";
+import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
 
 interface SpecificationProps {
   specification: SpecificationInterface;
@@ -31,7 +32,9 @@ const Specification = (props: SpecificationProps) => {
 
   return (
     <SectionCard>
-      <SectionHeader>Specification</SectionHeader>
+      <SectionHeaderContainer>
+        <SectionHeader>Specification</SectionHeader>
+      </SectionHeaderContainer>
       <div>
         {specification.itemGroups.map((group) => (
           <div>

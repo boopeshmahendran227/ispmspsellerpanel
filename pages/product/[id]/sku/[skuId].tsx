@@ -11,7 +11,7 @@ import FieldNumInput from "components/FieldNumInput";
 import FieldInput from "components/FieldInput";
 import SkuProductInfo from "components/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
-import SectionHeader from "components/SectionHeader";
+import SectionHeader from "components/atoms/SectionHeader";
 import SectionCard from "components/SectionCard";
 import ImageUploader from "components/ImageUploader";
 import { ProductDetailInterface } from "types/product";

@@ -1,7 +1,8 @@
 import { FAQInterface } from "../types/product";
 import SectionCard from "./SectionCard";
-import SectionHeader from "./SectionHeader";
+import SectionHeader from "components/atoms/SectionHeader";
 import styled from "styled-components";
+import SectionHeaderContainer from "components/atoms/SectionHeaderContainer";
 
 const QAContainer = styled.div`
   margin: 0.4em 0;
@@ -32,9 +33,11 @@ const FAQ = (props: FAQProps) => {
 
   return (
     <SectionCard>
-      <SectionHeader>FAQs</SectionHeader>
+      <SectionHeaderContainer>
+        <SectionHeader>FAQs</SectionHeader>
+      </SectionHeaderContainer>
       <div>
-        {faqs.map((item, index) => (
+        {faqs.map((item) => (
           <QAContainer>
             <Question>{item.question}</Question>
             <Answer>{item.question}</Answer>

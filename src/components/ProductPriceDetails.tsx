@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { formatPrice } from "utils/misc";
-import SectionHeader from "./SectionHeader";
+import SectionHeader from "./atoms/SectionHeader";
 import SectionCard from "./SectionCard";
 
 const Grid = styled.div`

@@ -1,6 +1,7 @@
 import { TierPriceInterface } from "../types/product";
-import SectionHeader from "./SectionHeader";
+import SectionHeader from "./atoms/SectionHeader";
 import SectionCard from "./SectionCard";
+import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
 
 interface TierPriceProps {
   tierPrice: TierPriceInterface[];
@@ -15,7 +16,9 @@ const TierPrice = (props: TierPriceProps) => {
 
   return (
     <SectionCard>
-      <SectionHeader>Tier Price</SectionHeader>
+      <SectionHeaderContainer>
+        <SectionHeader>Tier Price</SectionHeader>
+      </SectionHeaderContainer>
       <ul>
         {tierPrice.map((item, index) => (
           <li key={index}>

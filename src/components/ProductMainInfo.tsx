@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import SectionHeader from "./SectionHeader";
+import SectionHeader from "./atoms/SectionHeader";
 import SectionCard from "./SectionCard";
+import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
 
 const Grid = styled.div`
   display: grid;
@@ -26,7 +27,9 @@ const ProductMainInfo = (props: ProductMainInfoProps): JSX.Element => {
 
   return (
     <SectionCard>
-      <SectionHeader>Main Details</SectionHeader>
+      <SectionHeaderContainer>
+        <SectionHeader>Main Details</SectionHeader>
+      </SectionHeaderContainer>
       <Grid>
         <Key>Name</Key>
         <Value>{name}</Value>

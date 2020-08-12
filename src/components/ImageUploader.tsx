@@ -13,7 +13,8 @@ import { useState } from "react";
 import ImageUploadErrorContainer from "./ImageUploadErrorContainer";
 import { ErrorsType } from "react-images-uploading";
 import SectionCard from "./SectionCard";
-import SectionHeader from "./SectionHeader";
+import SectionHeader from "./atoms/SectionHeader";
+import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
 
 const MAX_NUMBER = 10;
 const MAX_MB_FILESIZE = 5 * 1024 * 1024; // 5Mb
@@ -281,7 +282,9 @@ const ImageUploader = (props: ImageUploaderProps): JSX.Element => {
               Drop Images here
             </Dropbox>
             <HeaderContainer>
-              <SectionHeader>Images</SectionHeader>
+              <SectionHeaderContainer>
+                <SectionHeader>Images</SectionHeader>
+              </SectionHeaderContainer>
 
               {imageList.length > 0 && (
                 <RemoveAllButton

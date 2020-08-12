@@ -68,6 +68,9 @@ export interface ProductInputInterface {
 
 export interface ProductDetailInterface {
   id: number;
+  visibility: {
+    ecosystemIds: string[];
+  };
   name: string;
   shortDescription: string;
   longDescription: string;

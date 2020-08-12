@@ -35,7 +35,6 @@ const FieldEcosystemMultiInput = (
             error: Boolean(form.touched[props.name] && form.errors[props.name]),
           })}
         >
-          {console.log(field.value)}
           <div>
             <MultiSelect
               value={field.value.map((id: string) =>

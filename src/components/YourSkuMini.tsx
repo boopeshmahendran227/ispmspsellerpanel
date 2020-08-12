@@ -3,6 +3,7 @@ import { formatPrice } from "utils/misc";
 import RelativeImg from "./RelativeImg";
 import CSSConstants from "../constants/CSSConstants";
 import styled from "styled-components";
+import { ProductDetailSkuDetail } from "types/product";
 
 const Container = styled.div`
   padding: 0.8em;
@@ -38,12 +39,12 @@ const ContentContainer = styled.div`
   width: 80px;
 `;
 
-interface SkuMiniProps {
+interface YourSkuMiniProps {
   productId: number;
-  sku: any;
+  sku: ProductDetailSkuDetail;
 }
 
-const SkuMini = (props: SkuMiniProps): JSX.Element => {
+const YourSkuMini = (props: YourSkuMiniProps): JSX.Element => {
   const { sku } = props;
 
   return (
@@ -67,4 +68,4 @@ const SkuMini = (props: SkuMiniProps): JSX.Element => {
   );
 };
 
-export default SkuMini;
+export default YourSkuMini;
