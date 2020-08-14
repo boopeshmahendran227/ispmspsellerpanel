@@ -16,8 +16,23 @@ import { ProductDetailInterface } from "types/product";
 import YourSkuTable from "components/YourSkuTable";
 import OtherSkusTable from "components/OtherSkusTable";
 
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 1.5em;
+`;
+
+const FlexContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  & > div {
+    margin-bottom: 1.5em;
+  }
+`;
+
 const Container = styled.div`
-  max-width: 700px;
+  max-width: 900px;
   margin: auto;
 `;
 
@@ -46,23 +61,31 @@ const Product = () => {
         <BackLink href="/product">Products</BackLink>
         <PageHeader>{product.name}</PageHeader>
       </HeaderContainer>
-      <ProductMainInfo
-        name={product.name}
-        brand={product.brandName}
-        shortDescription={product.shortDescription}
-        longDescription={product.longDescription}
-      />
-      <ProductPriceDetails
-        minPrice={product.minPrice}
-        maxPrice={product.maxPrice}
-        specialDiscount={product.specialDiscount}
-      />
-      <ProductAvailability ecosystemsIds={product.visibility.ecosystemIds} />
-      <YourSkuTable skus={product.skuDetails} productId={product.id} />
-      <OtherSkusTable skus={product.unOwnedSkuDetails} />
+      <Grid>
+        <FlexContainer>
+          <ProductMainInfo
+            name={product.name}
+            brand={product.brandName}
+            shortDescription={product.shortDescription}
+            longDescription={product.longDescription}
+          />
+          <ProductPriceDetails
+            minPrice={product.minPrice}
+            maxPrice={product.maxPrice}
+            specialDiscount={product.specialDiscount}
+          />
+          <YourSkuTable skus={product.skuDetails} productId={product.id} />
+          <OtherSkusTable skus={product.unOwnedSkuDetails} />
+        </FlexContainer>
+        <FlexContainer>
+          <ProductAvailability
+            ecosystems={product.visibilityInfo.ecosystemDetail}
+          />
+          <TierPrice tierPrice={product.tierPrice} />
+          <FAQ faqs={product.faqs} />
+        </FlexContainer>
+      </Grid>
       {/* <Specification specification={product.specification} /> */}
-      <TierPrice tierPrice={product.tierPrice} />
-      <FAQ faqs={product.faqs} />
     </Container>
   );
 };

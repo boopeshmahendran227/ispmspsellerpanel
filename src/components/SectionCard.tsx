@@ -5,9 +5,7 @@ interface SectionCardProps {
   children: React.ReactNode;
 }
 
-const Container = styled.div`
-  margin-bottom: 1em;
-`;
+const Container = styled.div``;
 
 const SectionCard = (props: SectionCardProps): JSX.Element => {
   return (

@@ -66,10 +66,15 @@ export interface ProductInputInterface {
   ecosystems: SelectOptionInterface[];
 }
 
+export interface EcosystemDetailInterface {
+  id: string;
+  name: string;
+}
+
 export interface ProductDetailInterface {
   id: number;
-  visibility: {
-    ecosystemIds: string[];
+  visibilityInfo: {
+    ecosystemDetail: EcosystemDetailInterface[];
   };
   name: string;
   shortDescription: string;

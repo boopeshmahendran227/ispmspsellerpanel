@@ -5,6 +5,12 @@ import Link from "next/link";
 import { ProductDetailSkuDetail } from "types/product";
 import YourSkuMini from "components/YourSkuMini";
 import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
+import styled from "styled-components";
+
+const FlexContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 interface YourVariantsTableProps {
   productId: number;
@@ -17,11 +23,16 @@ const YourVariantsTable = (props: YourVariantsTableProps): JSX.Element => {
   return (
     <SectionCard>
       <SectionHeaderContainer>
-        <SectionHeader>Your Variants</SectionHeader>
+        <FlexContainer>
+          <SectionHeader>Your Variants</SectionHeader>
+          <Link
+            href="/product/[id]/sku/new"
+            as={`/product/${productId}/sku/new`}
+          >
+            <Button>Add Variant</Button>
+          </Link>
+        </FlexContainer>
       </SectionHeaderContainer>
-      <Link href="/product/[id]/sku/new" as={`/product/${productId}/sku/new`}>
-        <Button>Add Variant</Button>
-      </Link>
       {skus.map((sku) => (
         <YourSkuMini productId={productId} sku={sku} />
       ))}

@@ -5,10 +5,12 @@ import styled from "styled-components";
 import SectionHeaderContainer from "components/atoms/SectionHeaderContainer";
 
 const QAContainer = styled.div`
-  margin: 0.4em 0;
+  margin: 0.6em 0;
 `;
 
 const Question = styled.div`
+  margin: 0.4em 0;
+  font-weight: bold;
   &::before {
     content: "Q: ";
   }
