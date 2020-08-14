@@ -31,7 +31,8 @@ const Insight = () => {
   }
 
   return (
-    <div>
+    <div className="container">
+      <h2>Stats for Last 7 Days</h2>
       <MetricCard title="Total orders" value={summary.totalOrderCount} />
       <MetricCard title="Total Customers" value={summary.totalCustomers} />
       <MetricCard title="Total Quotes" value={summary.totalQuotes} />
@@ -40,6 +41,11 @@ const Insight = () => {
         value={formatPrice(summary.totalRevenue)}
       />
       <MetricCard title="Ecosystems" value={businessData.ecosystems.length} />
+      <style jsx>{`
+        .container {
+          margin: 1.5em 1em;
+        }
+      `}</style>
     </div>
   );
 };

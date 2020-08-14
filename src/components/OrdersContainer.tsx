@@ -28,7 +28,6 @@ import { PaginatedDataInterface } from "../../src/types/pagination";
 import { getCustomerInfo } from "../../src/utils/customer";
 import ProductOrdersContainer from "../../src/components/ProductOrdersContainer";
 import Loader from "../../src/components/Loader";
-import WithAuth from "../../src/components/WithAuth";
 import { transformOrderItem } from "../../src/transformers/orderItem";
 import _ from "lodash";
 
@@ -415,6 +414,7 @@ const mapDispatchToProps: DispatchProps = {
   cancelOrderItem: OrderActions.cancelOrderItem,
 };
 
-export default WithAuth(
-  connect<null, DispatchProps>(null, mapDispatchToProps)(OrdersContainer)
-);
+export default connect<null, DispatchProps>(
+  null,
+  mapDispatchToProps
+)(OrdersContainer);
