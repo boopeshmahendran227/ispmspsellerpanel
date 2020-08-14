@@ -230,15 +230,18 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
         </div>
         <div className="totalContainer">
           <div>
-            {formatPrice(orderItem.actualPriceWithoutTax)} x {orderItem.qty}
+            {formatPrice(orderItem.actualPriceWithoutTax / orderItem.qty)} x{" "}
+            {orderItem.qty}
           </div>
           <div className="value">
-            {formatPrice(orderItem.actualPriceWithoutTax * orderItem.qty)}
+            {formatPrice(orderItem.actualPriceWithoutTax)}
           </div>
           {_.map(orderItem.productSnapshot.discountSplit, (value, key) => (
             <Fragment key={key}>
               <div className="key">{splitCamelCase(key)}</div>
-              <div className="value">- {formatPrice(value)}</div>
+              <div className="value">
+                - {formatPrice(value * orderItem.qty)}
+              </div>
             </Fragment>
           ))}
           {orderItem.loanDetail && (
@@ -259,7 +262,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
             <Fragment key={index}>
               <div className="key">{taxSplit.taxName}:</div>
               <div className="value">
-                + {formatPrice(taxSplit.taxAmountPaid * orderItem.qty)}
+                + {formatPrice(taxSplit.taxAmountPaid)}
               </div>
             </Fragment>
           ))}
