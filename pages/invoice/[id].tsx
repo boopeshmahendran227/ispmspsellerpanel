@@ -39,7 +39,7 @@ const Invoice = () => {
   return (
     <section className="container">
       <div className="body">
-        <div className="title">Invoice</div>
+        <div className="title">Tax Invoice / Bill of Supply / Cash Memo</div>
         <section className="section sellerSection">
           <div>
             <div className="row">
@@ -64,6 +64,10 @@ const Invoice = () => {
             <div className="row invoiceNumber">
               <strong>Invoice No: </strong>
               {invoice.invoiceNumber}
+            </div>
+            <div className="row">
+              <strong>Order Id: </strong>
+              {invoice.order.id}
             </div>
             <div className="row date">
               <strong>Date: </strong>
@@ -230,16 +234,18 @@ const Invoice = () => {
           text-decoration: solid line-through ${CSSConstants.dangerColor};
         }
         .title {
-          font-size: 2.5rem;
+          font-size: 2rem;
           text-align: center;
           padding: 0.3em;
           font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 1px;
+          margin-bottom: 1em;
+          margin-top: 0.2em;
         }
         .row {
           display: grid;
-          grid-template-columns: 60px 150px;
+          grid-template-columns: 80px 150px;
           grid-column-gap: 0.3em;
           margin: 0.2em 0;
         }
