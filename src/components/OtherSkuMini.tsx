@@ -7,7 +7,6 @@ const Container = styled.div`
   padding: 0.8em 0;
   display: flex;
   justify-content: space-between;
-  cursor: pointer;
 `;
 
 const ImageContainer = styled.div`
