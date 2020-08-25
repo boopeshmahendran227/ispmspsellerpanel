@@ -11,10 +11,14 @@ import {
   SURE_MODAL_CANCEL_CLICKED,
   REASON_MODAL_SUBMIT_CLICKED,
   REASON_MODAL_CANCEL_CLICKED,
+  DELIVERY_CODE_MODAL_SUBMIT_CLICKED,
   SHOW_ATTRIBUTE_MODAL,
   HIDE_ATTRIBUTE_MODAL,
   SHOW_SKU_MODAL,
   HIDE_SKU_MODAL,
+  HIDE_DELIVERY_CODE_MODAL,
+  SHOW_DELIVERY_CODE_MODAL,
+  DELIVERY_CODE_MODAL_CANCEL_CLICKED,
   SHOW_UPDATE_CREDITS_MODAL,
   HIDE_UPDATE_CREDITS_MODAL,
 } from "../constants/ActionTypes";
@@ -78,6 +82,19 @@ const reasonModalCancelClicked = (): UIActionType => {
   };
 };
 
+const deliveryCodeModalSubmitClicked = (deliveryCode: string): UIActionType => {
+  return {
+    type: DELIVERY_CODE_MODAL_SUBMIT_CLICKED,
+    deliveryCode,
+  };
+};
+
+const deliveryCodeModalCancelClicked = (): UIActionType => {
+  return {
+    type: DELIVERY_CODE_MODAL_CANCEL_CLICKED,
+  };
+};
+
 const showLoadingScreen = (): UIActionType => {
   return {
     type: SHOW_LOADING_SCREEN,
@@ -126,6 +143,18 @@ const hideSkuModal = (): UIActionType => {
   };
 };
 
+const showDeliveryCodeModal = (): UIActionType => {
+  return {
+    type: SHOW_DELIVERY_CODE_MODAL,
+  };
+};
+
+const hideDeliveryCodeModal = (): UIActionType => {
+  return {
+    type: HIDE_DELIVERY_CODE_MODAL,
+  };
+};
+
 const showUpdateCreditsModal = (): UIActionType => {
   return {
     type: SHOW_UPDATE_CREDITS_MODAL,
@@ -145,6 +174,10 @@ export default {
   sureModalCancelClicked,
   reasonModalSubmitClicked,
   reasonModalCancelClicked,
+  deliveryCodeModalSubmitClicked,
+  deliveryCodeModalCancelClicked,
+  showDeliveryCodeModal,
+  hideDeliveryCodeModal,
   showLoadingScreen,
   hideLoadingScreen,
   showReasonModal,

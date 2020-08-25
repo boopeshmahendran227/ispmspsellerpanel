@@ -87,6 +87,7 @@ export interface OrderItemInterface {
     ];
   };
   metadata: {
+    deliveryCode?: string;
     shipmentFeePerSeller: number;
   };
   shipment: {
@@ -182,6 +183,7 @@ interface ChangeOrderItemStatusAction {
   orderItemId: number;
   orderItemStatus: string;
   reason: string;
+  deliveryCode: string;
 }
 
 interface ChangeOrderItemStatusSuccessAction {

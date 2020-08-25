@@ -32,6 +32,11 @@ const getSkuModalOpen = createSelector(
   (ui): boolean => ui.skuModalOpen
 );
 
+const getDeliveryCodeModalOpen = createSelector(
+  (state: RootState) => state.ui,
+  (ui): boolean => ui.deliveryCodeModalOpen
+);
+
 const getUpdateCreditsModalOpen = createSelector(
   (state: RootState) => state.ui,
   (ui): boolean => ui.updateCreditsModalOpen
@@ -44,5 +49,6 @@ export {
   getUpdateQuoteModalOpen,
   getAttributeModalOpen,
   getSkuModalOpen,
+  getDeliveryCodeModalOpen,
   getUpdateCreditsModalOpen,
 };

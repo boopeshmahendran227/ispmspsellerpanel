@@ -2,6 +2,7 @@ import { OrderInterface } from "../../src/types/order";
 import CSSConstants from "../../src/constants/CSSConstants";
 import Select from "../../src/components/Select";
 import { PaginatedDataInterface } from "../../src/types/pagination";
+import DeliveryCodeModal from "../../src/components/DeliveryCodeModal";
 import PageHeader from "../../src/components/PageHeader";
 import { SelectOptionInterface } from "../../src/types/product";
 import useSWR from "swr";
@@ -53,7 +54,9 @@ const Orders = () => {
   );
 
   return (
-    <div>
+    <div className="container">
+      {/* Modals */}
+      <DeliveryCodeModal />
       <div className="headerContainer">
         <PageHeader>Order Details</PageHeader>
         <div className="filterContainer">
