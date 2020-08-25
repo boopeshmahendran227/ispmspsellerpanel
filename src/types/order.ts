@@ -50,6 +50,8 @@ export interface OrderItemInterface {
   sellerName: string;
   actualUnitPrice: number;
   actualPriceWithoutTax: number;
+  actualPrice: number;
+  itemPrice: number;
   discountedPrice: number;
   productSnapshot: {
     productName: string;

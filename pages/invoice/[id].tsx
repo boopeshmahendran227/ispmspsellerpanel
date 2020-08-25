@@ -1,6 +1,11 @@
 import moment from "moment";
 import _ from "lodash";
-import { formatPrice, formatAddress, formatNumber } from "../../src/utils/misc";
+import {
+  formatPrice,
+  formatAddress,
+  formatNumber,
+  valueToPercentage,
+} from "../../src/utils/misc";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import Loader from "../../src/components/Loader";
@@ -100,10 +105,11 @@ const Invoice = () => {
                 <th>S.No</th>
                 <th>Name</th>
                 <th>Qty</th>
-                <th>Gross Amount</th>
-                <th>Tax</th>
+                <th>MRP</th>
                 <th>Discount</th>
-                <th>Final Price</th>
+                <th>Item Price</th>
+                <th>GST</th>
+                <th>Net Price</th>
               </tr>
             </thead>
             <tbody>
@@ -111,7 +117,7 @@ const Invoice = () => {
                 const productName = item.productSnapshot.productName;
                 const attributeValues = item.productSnapshot.attributeValues;
                 const tax = item.taxDetails.totalTaxPaid;
-                const price = item.actualPriceWithoutTax;
+                const mrp = item.actualPrice;
                 const discount = item.totalDiscount;
                 const finalAmount = item.discountedPrice;
 
@@ -138,7 +144,22 @@ const Invoice = () => {
                       </div>
                     </td>
                     <td>{formatNumber(item.qty)}</td>
-                    <td>{formatPrice(price)}</td>
+                    <td>{formatPrice(mrp)}</td>
+                    <td>
+                      {formatPrice(discount)} (
+                      {valueToPercentage(discount, mrp)}%)
+                      {item.loanDetail && (
+                        <div style={{ maxWidth: "180px", margin: "auto" }}>
+                          (
+                          <span>
+                            Includes Loan Availed From{" "}
+                            {item.loanDetail.providerName}:{" "}
+                          </span>
+                          {formatPrice(item.loanDetail.loanAmountChosen)})
+                        </div>
+                      )}
+                    </td>
+                    <td>{formatPrice(item.itemPrice)}</td>
                     <td className="tax">
                       {formatPrice(tax)}
                       <div className="taxSplitContainer">
@@ -153,19 +174,6 @@ const Invoice = () => {
                           </div>
                         ))}
                       </div>
-                    </td>
-                    <td>
-                      {formatPrice(discount)}
-                      {item.loanDetail && (
-                        <div style={{ maxWidth: "180px", margin: "auto" }}>
-                          (
-                          <span>
-                            Includes Loan Availed From{" "}
-                            {item.loanDetail.providerName}:{" "}
-                          </span>
-                          {formatPrice(item.loanDetail.loanAmountChosen)})
-                        </div>
-                      )}
                     </td>
                     <td>{formatPrice(finalAmount)}</td>
                   </tr>
