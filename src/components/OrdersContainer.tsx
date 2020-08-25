@@ -41,6 +41,7 @@ interface DispatchProps {
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
   markAsShipping: (orderId: number, orderItemId: number) => void;
   markAsProcessing: (orderId: number, orderItemId: number) => void;
+  markPackageReadyForCollection: (orderId: number, orderItemId: number) => void;
   approveCancelOrderItem: (orderId: number, orderItemId: number) => void;
   rejectCancelOrderItem: (orderId: number, orderItemId: number) => void;
   approveReturnOrderItem: (orderId: number, orderItemId: number) => void;
@@ -124,6 +125,27 @@ const OrdersContainer = (props: OrdersContainerProps) => {
           </>
         );
       case OrderStatus.SellerProcessing:
+        if (orderItem.isSelfPickup) {
+          return (
+            <>
+              <Button
+                type={ButtonType.success}
+                onClick={(e) =>
+                  handleClick(e, props.markPackageReadyForCollection)
+                }
+              >
+                Mark Package Ready For Collection
+              </Button>
+              <Button
+                type={ButtonType.danger}
+                onClick={(e) => handleClick(e, props.cancelOrderItem)}
+                outlined={true}
+              >
+                Cancel Order
+              </Button>
+            </>
+          );
+        }
         return (
           <>
             <Button
@@ -406,6 +428,7 @@ const OrdersContainer = (props: OrdersContainerProps) => {
 const mapDispatchToProps: DispatchProps = {
   markAsShippingComplete: OrderActions.markAsShippingComplete,
   markAsShipping: OrderActions.markAsShipping,
+  markPackageReadyForCollection: OrderActions.markPackageReadyForCollection,
   markAsProcessing: OrderActions.markAsProcessing,
   approveCancelOrderItem: OrderActions.approveCancelOrderItem,
   rejectCancelOrderItem: OrderActions.rejectCancelOrderItem,

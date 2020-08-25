@@ -25,6 +25,7 @@ import Button from "../../../src/components/Button";
 interface DispatchProps {
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
   markAsShipping: (orderId: number, orderItemId: number) => void;
+  markPackageReadyForCollection: (orderId: number, orderItemId: number) => void;
   markAsProcessing: (orderId: number, orderItemId: number) => void;
   approveCancelOrderItem: (orderId: number, orderItemId: number) => void;
   rejectCancelOrderItem: (orderId: number, orderItemId: number) => void;
@@ -100,6 +101,9 @@ const Order = (props: OrderProps) => {
               orderItem={orderItem}
               markAsShipping={props.markAsShipping}
               markAsShippingComplete={props.markAsShippingComplete}
+              markPackageReadyForCollection={
+                props.markPackageReadyForCollection
+              }
               markAsProcessing={props.markAsProcessing}
               approveCancelOrderItem={props.approveCancelOrderItem}
               rejectCancelOrderItem={props.rejectCancelOrderItem}
@@ -214,6 +218,7 @@ const Order = (props: OrderProps) => {
 const mapDispatchToProps: DispatchProps = {
   markAsShippingComplete: OrderActions.markAsShippingComplete,
   markAsShipping: OrderActions.markAsShipping,
+  markPackageReadyForCollection: OrderActions.markPackageReadyForCollection,
   approveCancelOrderItem: OrderActions.approveCancelOrderItem,
   rejectCancelOrderItem: OrderActions.rejectCancelOrderItem,
   approveReturnOrderItem: OrderActions.approveReturnOrderItem,

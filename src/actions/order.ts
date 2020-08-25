@@ -10,6 +10,7 @@ import {
   MARK_AS_SHIPPING,
   CANCEL_ORDER_ITEM,
   MARK_AS_PROCESSING,
+  MARK_PACKAGE_READY_FOR_COLLECTION,
 } from "../constants/ActionTypes";
 import { OrderActionType } from "../types/order";
 
@@ -118,6 +119,17 @@ const markAsShipping = (
   };
 };
 
+const markPackageReadyForCollection = (
+  orderId: number,
+  orderItemId: number
+): OrderActionType => {
+  return {
+    type: MARK_PACKAGE_READY_FOR_COLLECTION,
+    orderId,
+    orderItemId,
+  };
+};
+
 const markAsProcessing = (
   orderId: number,
   orderItemId: number
@@ -152,6 +164,7 @@ export default {
   rejectReturnOrderItem,
   markAsShippingComplete,
   markAsShipping,
+  markPackageReadyForCollection,
   markAsProcessing,
   cancelOrderItem,
 };

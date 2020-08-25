@@ -11,6 +11,7 @@ import { getColor, getOrderStatusText } from "../utils/order";
 interface OrderItemDetailProps {
   orderItem: OrderItemInterface;
   markAsShipping: (orderId: number, orderItemId: number) => void;
+  markPackageReadyForCollection: (orderId: number, orderItemId: number) => void;
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
   markAsProcessing: (orderId: number, orderItemId: number) => void;
   approveReturnOrderItem: (orderId: number, orderItemId: number) => void;
@@ -55,6 +56,35 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
           </>
         );
       case OrderStatus.SellerProcessing:
+        if (orderItem.isSelfPickup) {
+          return (
+            <>
+              <Button
+                type={ButtonType.success}
+                onClick={() =>
+                  props.markPackageReadyForCollection(
+                    props.orderItem.order.id,
+                    props.orderItem.id
+                  )
+                }
+              >
+                Mark Package Ready For Collection
+              </Button>
+              <Button
+                type={ButtonType.danger}
+                onClick={() =>
+                  props.cancelOrderItem(
+                    props.orderItem.order.id,
+                    props.orderItem.id
+                  )
+                }
+                outlined={true}
+              >
+                Cancel Order
+              </Button>
+            </>
+          );
+        }
         return (
           <>
             <Button

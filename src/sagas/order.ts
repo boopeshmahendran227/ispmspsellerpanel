@@ -8,6 +8,7 @@ import {
   MARK_AS_SHIPPING_REQUEST,
   CANCEL_ORDER_ITEM_REQUEST,
   MARK_AS_PROCESSING,
+  MARK_PACKAGE_READY_FOR_COLLECTION_REQUEST,
 } from "../constants/ActionTypes";
 import { takeEvery, all, call, put, take } from "redux-saga/effects";
 import api from "../api";
@@ -55,6 +56,8 @@ const status = {
   [APPROVE_RETURN_ORDER_ITEM_REQUEST]: OrderStatus.ReturnCompleted,
   [REJECT_RETURN_ORDER_ITEM_REQUEST]: OrderStatus.ReturnRejected,
   [MARK_AS_SHIPPING_REQUEST]: OrderStatus.Shipping,
+  [MARK_PACKAGE_READY_FOR_COLLECTION_REQUEST]:
+    OrderStatus.PackageReadyForCollection,
   [MARK_AS_SHIPPING_COMPLETE_REQUEST]: OrderStatus.ShippingCompleted,
   [CANCEL_ORDER_ITEM_REQUEST]: OrderStatus.CancelRequested,
   [MARK_AS_PROCESSING]: OrderStatus.SellerProcessing,
