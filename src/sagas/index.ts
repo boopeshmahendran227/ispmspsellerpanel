@@ -5,6 +5,7 @@ import ToastSaga from "./toast";
 import RealTimeNotificationSaga from "./realTimeNotification";
 import LoaderSaga from "./loader";
 import QuoteSaga from "./quote";
+import UISaga from "./ui";
 import SureConfirmationSaga from "./sureConfirmation";
 import ReasonSaga from "./reason";
 import LoginSaga from "./login";
@@ -25,6 +26,7 @@ export default function* rootSaga() {
     fork(QuoteSaga),
     fork(SureConfirmationSaga),
     fork(ReasonSaga),
+    fork(UISaga),
     fork(LoginSaga),
     fork(CouponSaga),
     fork(CreditSaga),

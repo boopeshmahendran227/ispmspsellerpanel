@@ -13,8 +13,8 @@ import {
   SURE_MODAL_CANCEL_CLICKED,
   REJECT_QUOTE,
   REJECT_QUOTE_REQUEST,
-  MARK_AS_SHIPPING_COMPLETE,
-  MARK_AS_SHIPPING_COMPLETE_REQUEST,
+  MARK_PACKAGE_READY_FOR_COLLECTION,
+  MARK_PACKAGE_READY_FOR_COLLECTION_REQUEST,
 } from "../constants/ActionTypes";
 import { take, all, put, race, call } from "redux-saga/effects";
 import UIActions from "../actions/ui";
@@ -96,16 +96,16 @@ function* markAsShipping() {
   }
 }
 
-function* markAsShippingComplete() {
+function* markPackageReadyForCollection() {
   while (true) {
-    const action = yield take(MARK_AS_SHIPPING_COMPLETE);
+    const action = yield take(MARK_PACKAGE_READY_FOR_COLLECTION);
     yield put(
       UIActions.showSureModal(
-        "Confirm Delivered",
-        `Are you sure you want to mark Order Item #${action.orderItemId} as Delivered?`
+        "Confirm Package Ready",
+        `Are you sure you want to mark Order Item #${action.orderItemId} as Ready for Collection?`
       )
     );
-    yield call(handleSure, action, MARK_AS_SHIPPING_COMPLETE_REQUEST);
+    yield call(handleSure, action, MARK_PACKAGE_READY_FOR_COLLECTION_REQUEST);
   }
 }
 
@@ -129,7 +129,7 @@ export default function* () {
     approveReturnOrderitem(),
     rejectReturnOrderItem(),
     markAsShipping(),
-    markAsShippingComplete(),
+    markPackageReadyForCollection(),
     rejectQuote(),
   ]);
 }

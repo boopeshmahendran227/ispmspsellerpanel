@@ -10,6 +10,7 @@ import {
   MARK_AS_SHIPPING,
   CANCEL_ORDER_ITEM,
   MARK_AS_PROCESSING,
+  MARK_PACKAGE_READY_FOR_COLLECTION,
 } from "../constants/ActionTypes";
 import { ProductAttributeValue } from "./product";
 import { OrderDiscountInterface } from "../types/discount";
@@ -50,7 +51,10 @@ export interface OrderItemInterface {
   sellerName: string;
   actualUnitPrice: number;
   actualPriceWithoutTax: number;
+  actualPrice: number;
+  itemPrice: number;
   discountedPrice: number;
+  isSelfPickup: boolean;
   productSnapshot: {
     productName: string;
     images: string[];
@@ -87,6 +91,7 @@ export interface OrderItemInterface {
     ];
   };
   metadata: {
+    deliveryCode?: string;
     shipmentFeePerSeller: number;
   };
   shipment: {
@@ -182,6 +187,7 @@ interface ChangeOrderItemStatusAction {
   orderItemId: number;
   orderItemStatus: string;
   reason: string;
+  deliveryCode: string;
 }
 
 interface ChangeOrderItemStatusSuccessAction {
@@ -232,6 +238,12 @@ interface MarkAsShippingAction {
   orderItemId: number;
 }
 
+interface MarkPackageReadyForCollectionAction {
+  type: typeof MARK_PACKAGE_READY_FOR_COLLECTION;
+  orderId: number;
+  orderItemId: number;
+}
+
 interface MarkAsProcessingAction {
   type: typeof MARK_AS_PROCESSING;
   orderId: number;
@@ -255,5 +267,6 @@ export type OrderActionType =
   | RejectReturnOrderItemAction
   | MarkAsShippingCompleteAction
   | MarkAsShippingAction
+  | MarkPackageReadyForCollectionAction
   | MarkAsProcessingAction
   | CancelOrderItemAction;

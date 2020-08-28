@@ -167,10 +167,10 @@ export interface ProductSkuDetail {
   qty: number;
   attributeValueIds: ProductAttributeValueId[];
   imageRelativePaths: string[];
-  length: string;
-  width: string;
-  height: string;
-  weight: string;
+  length: number;
+  width: number;
+  height: number;
+  weight: number;
   barCodeIdentifier: string;
   externalId: string;
 }

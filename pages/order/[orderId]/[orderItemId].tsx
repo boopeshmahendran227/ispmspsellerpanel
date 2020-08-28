@@ -16,6 +16,7 @@ import {
 } from "../../../src/utils/order";
 import PageError from "../../../src/components/PageError";
 import ShippingInformationContainer from "../../../src/components/ShippingInformationContainer";
+import DeliveryCodeModal from "../../../src/components/DeliveryCodeModal";
 import OrderInformation from "../../../src/components/OrderInformation";
 import WithAuth from "../../../src/components/WithAuth";
 import { transformOrderItem } from "../../../src/transformers/orderItem";
@@ -24,6 +25,7 @@ import Button from "../../../src/components/Button";
 interface DispatchProps {
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
   markAsShipping: (orderId: number, orderItemId: number) => void;
+  markPackageReadyForCollection: (orderId: number, orderItemId: number) => void;
   markAsProcessing: (orderId: number, orderItemId: number) => void;
   approveCancelOrderItem: (orderId: number, orderItemId: number) => void;
   rejectCancelOrderItem: (orderId: number, orderItemId: number) => void;
@@ -57,6 +59,7 @@ const Order = (props: OrderProps) => {
 
   return (
     <div className="container">
+      <DeliveryCodeModal />
       <Link href="/order">
         <a className="backBtn">
           <i className="icon fas fa-chevron-left"></i> Back to Orders
@@ -98,6 +101,9 @@ const Order = (props: OrderProps) => {
               orderItem={orderItem}
               markAsShipping={props.markAsShipping}
               markAsShippingComplete={props.markAsShippingComplete}
+              markPackageReadyForCollection={
+                props.markPackageReadyForCollection
+              }
               markAsProcessing={props.markAsProcessing}
               approveCancelOrderItem={props.approveCancelOrderItem}
               rejectCancelOrderItem={props.rejectCancelOrderItem}
@@ -212,6 +218,7 @@ const Order = (props: OrderProps) => {
 const mapDispatchToProps: DispatchProps = {
   markAsShippingComplete: OrderActions.markAsShippingComplete,
   markAsShipping: OrderActions.markAsShipping,
+  markPackageReadyForCollection: OrderActions.markPackageReadyForCollection,
   approveCancelOrderItem: OrderActions.approveCancelOrderItem,
   rejectCancelOrderItem: OrderActions.rejectCancelOrderItem,
   approveReturnOrderItem: OrderActions.approveReturnOrderItem,
