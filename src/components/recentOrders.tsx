@@ -5,13 +5,15 @@ import Link from "next/link";
 import ProductCard from "./ProductCard";
 import { transformOrderItem } from "../transformers/orderItem";
 import _ from "lodash";
+import moment from "moment";
+import { OrderInterface } from "../types/order";
 
-interface recentOrdersProps {
-  data?: any;
+interface RecentOrdersProps {
+  data: OrderInterface;
 }
 
-const RecentOrders = (props: recentOrdersProps): JSX.Element => {
-  const orderItems = _.chain(props.data.results)
+const RecentOrders = (props: RecentOrdersProps): JSX.Element => {
+  const orderItems = _.chain(props.data)
     .map((order) =>
       order.items.map((orderItem) => transformOrderItem(order, orderItem))
     )
@@ -40,16 +42,22 @@ const RecentOrders = (props: recentOrdersProps): JSX.Element => {
               {formatPrice(orderItem.actualPrice)}
             </td>
 
-            <td>{orderItem.order.qty}</td>
+            <td>{orderItem.qty}</td>
             <td>{orderItem.order.orderStatus}</td>
 
-            <td className="noWrapContainer">
-              {orderItem.order.createdDateTime.slice(0, 10)}
+            <td className="dateContainer">
+              {moment
+                .utc(orderItem.order.createdDateTime)
+                .local()
+                .format("MMMM Do YYYY")}
             </td>
 
             <style jsx>{`
               .noWrapContainer {
                 white-space: nowrap;
+              }
+              .dateContainer {
+                max-width: 5rem;
               }
 
               tr:hover {
@@ -59,7 +67,6 @@ const RecentOrders = (props: recentOrdersProps): JSX.Element => {
 
               tr {
                 border-top: 0.5px solid ${CSSConstants.borderColor};
-                border-bottom: 0.5px solid ${CSSConstants.borderColor};
               }
 
               td {
@@ -85,8 +92,9 @@ const RecentOrders = (props: recentOrdersProps): JSX.Element => {
           <th>Payment</th>
           <th> Date</th>
         </thead>
-        {renderTableBody()}
+        <tbody>{renderTableBody()}</tbody>
       </table>
+      <style jsx>{``}</style>
     </div>
   );
 };

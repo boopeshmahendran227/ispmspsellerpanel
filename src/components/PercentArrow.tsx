@@ -1,7 +1,10 @@
 import React from "react";
 import CSSConstants from "../constants/CSSConstants";
 
-const PercentageArrow = (props) => {
+interface PercentageArrowProps {
+  value: number;
+}
+const PercentageArrow = (props: PercentageArrowProps) => {
   return (
     <div>
       {props.value > 0 ? (

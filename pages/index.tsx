@@ -1,31 +1,37 @@
 import MetricCard from "../src/components/MetricCard";
 import { SummaryInterface } from "../src/types/insights";
 import useSWR from "swr";
-import { useState } from "react";
+import React, { useState } from "react";
 import Loader from "../src/components/Loader";
 import PageError from "../src/components/PageError";
 import WithAuth from "../src/components/WithAuth";
 import moment from "moment";
 import { formatPrice } from "../src/utils/misc";
 import CSSConstants from "../src/constants/CSSConstants";
-import MyResponsivePie from "../src/components/pieChart";
 import Select from "../src/components/Select";
 import { SelectOptionInterface } from "../src/types/product";
-import RecentOrders from "../src/components/recentOrders";
-import TopSold from "../src/components/TopSold";
+import RecentOrders from "../src/components/RecentOrders";
+import TopSold, { TopSoldItems } from "../src/components/TopSold";
 import PercentageArrow from "../src/components/PercentArrow";
-import { formatLineData } from "../src/components/lineChart";
-import { percentageDifference } from "../src/components/lineChart";
+import RevenueLineChart, {
+  formatLineData,
+} from "../src/components/RevenueLineChart";
+import { percentageDifference } from "../src/components/RevenueLineChart";
+import OrderCountPieChart from "../src/components/OrdersPieChart";
+import { OrderInterface } from "../src/types/order";
 
-import MyResponsiveLine from "../src/components/lineChart";
+enum PeriodState {
+  week,
+  year,
+}
 const filter: SelectOptionInterface[] = [
   {
-    value: "week",
+    value: PeriodState.week,
     label: "This week",
   },
 
   {
-    value: "year",
+    value: PeriodState.year,
     label: "This year",
   },
 ];
@@ -42,10 +48,10 @@ const Home = (): JSX.Element => {
   const endDate = moment().endOf("day");
 
   const orderSWR = useSWR("/order?pageSize=6");
-  const orderData = orderSWR.data;
+  const orderData: OrderInterface = orderSWR.data.results;
 
   const topSellingSWR = useSWR(
-    period.value == "week"
+    period.value === PeriodState.week
       ? `/reports/seller/topSelling?start=${weekStart
           .utc()
           .format()}&end=${endDate.utc().format()}`
@@ -53,10 +59,10 @@ const Home = (): JSX.Element => {
           .utc()
           .format()}&end=${endDate.utc().format()}`
   );
-  const topSelling = topSellingSWR.data;
+  const topSelling: TopSoldItems[] = topSellingSWR.data;
 
   const summarySWR = useSWR(
-    period.value == "week"
+    period.value === PeriodState.week
       ? `/reports/seller/summary?start=${weekStart
           .utc()
           .format()}&end=${endDate.utc().format()}`
@@ -140,15 +146,14 @@ const Home = (): JSX.Element => {
           value={formatPrice(summary.totalRevenue)}
         />
       </div>
-
       <div className="lineChartContainer">
         <h4 className="title">Revenue</h4>
         <PercentageArrow
           value={percentageDifference(formatLineData(monthlySales)[0].data)}
         />
         <div className="lineChart">
-          <MyResponsiveLine
-            data={monthlySales}
+          <RevenueLineChart
+            revenueData={monthlySales}
             intervel={roundOff(
               Math.round(
                 monthlySales
@@ -163,10 +168,9 @@ const Home = (): JSX.Element => {
         <h4 className="title">Orders</h4>
         {/* <PercentageArrow value={8} /> */}
         <div className="pieChart">
-          <MyResponsivePie data={summary} />
+          <OrderCountPieChart data={summary} />
         </div>
       </div>
-
       <div className="topSoldContainer">
         <h4 className="title">Top Sold</h4>
         <TopSold data={topSelling} />
@@ -175,7 +179,6 @@ const Home = (): JSX.Element => {
         <h4 className="title"> Recent Orders</h4>
         <RecentOrders data={orderData}></RecentOrders>
       </div>
-
       <style jsx>{`
         .gridContainer {
           display: grid;

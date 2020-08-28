@@ -21,6 +21,8 @@ const MetricCard = (props: MetricCardProps) => {
           box-shadow: 0 0 20px #00000014;
           width: 250px;
           height: 120px;
+          margin: 1em;
+          border-radius: 5%;
           margin-right: 1em;
         }
         .title {

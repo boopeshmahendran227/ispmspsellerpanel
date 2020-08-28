@@ -2,10 +2,20 @@ import React from "react";
 import RelativeImg from "./RelativeImg";
 import CSSConstants from "../constants/CSSConstants";
 
-interface topSoldProps {
-  data: any[];
+export interface TopSoldItems {
+  categoryName: string;
+  numberOfOrders: number;
+  productId: number;
+  productName: string;
+  qtySold: number;
+  rank: number;
+  revenue: number;
+  revenueShare: number;
 }
-const TopSold = (props: topSoldProps): JSX.Element => {
+export interface TopSoldProps {
+  data: TopSoldItems[];
+}
+const TopSold = (props: TopSoldProps): JSX.Element => {
   return (
     <div>
       <table>
