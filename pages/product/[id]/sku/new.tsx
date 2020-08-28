@@ -39,7 +39,18 @@ const validationSchema = Yup.object({
   width: Yup.number().nullable().defined(),
   height: Yup.number().nullable().defined(),
   weight: Yup.number().nullable().defined(),
-  attributes: Yup.object({}),
+  attributes: Yup.array()
+    .of(
+      Yup.object({
+        attributeId: Yup.number().defined(),
+        attributeName: Yup.string().defined(),
+        value: Yup.object({
+          value: Yup.number().defined(),
+          label: Yup.string().defined(),
+        }).defined(),
+      }).defined()
+    )
+    .defined(),
   ecosystemIds: Yup.array()
     .of(Yup.string().defined())
     .min(1, "Atleast one ecosystem is required")
@@ -84,7 +95,17 @@ const Sku = (props: SkuProps) => {
   const attributes = product.attributeValues;
 
   const handleSubmit = (values: InputInterface) => {
-    props.addSku(values);
+    props.addSku({
+      productId: product.id,
+      imageRelativePaths: [],
+      ...values,
+      attributeValueIds: values.attributes.map((attribute) => ({
+        attributeId: attribute.attributeId,
+        attributeName: attribute.attributeName,
+        valueId: attribute.value.value,
+        value: attribute.value.label,
+      })),
+    });
   };
 
   return (
@@ -123,8 +144,7 @@ const Sku = (props: SkuProps) => {
               attributes: attributes.map((attribute) => ({
                 attributeId: attribute.attributeId,
                 attributeName: attribute.attributeName,
-                valueId: "",
-                value: "",
+                value: null,
               })),
             }}
             onSubmit={handleSubmit}
@@ -168,11 +188,11 @@ const Sku = (props: SkuProps) => {
                     <label>Length</label>
                     <FieldNumInput name="length" />
                     <label>Width</label>
-                    <FieldInput name="width" />
+                    <FieldNumInput name="width" />
                     <label>Height</label>
-                    <FieldInput name="height" />
+                    <FieldNumInput name="height" />
                     <label>Weight</label>
-                    <FieldInput name="weight" />
+                    <FieldNumInput name="weight" />
                   </SectionCard>
                 </FlexColumnContainer>
                 <Button isSubmitButton={true}>Save</Button>
