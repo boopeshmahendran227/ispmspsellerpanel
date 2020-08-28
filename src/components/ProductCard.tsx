@@ -10,7 +10,7 @@ interface MetaInfo {
 interface ProductCardProps {
   name: string;
   image: string;
-  metaInfo: MetaInfo[];
+  metaInfo?: MetaInfo[];
 }
 
 const ProductCard = (props: ProductCardProps) => {

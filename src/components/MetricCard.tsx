@@ -1,7 +1,7 @@
 import CSSConstants from "../constants/CSSConstants";
 
 interface MetricCardProps {
-  title: string;
+  title: string | React.ReactNode;
   value: number | string;
   beforeContent?: string;
 }
@@ -22,6 +22,7 @@ const MetricCard = (props: MetricCardProps) => {
           width: 250px;
           height: 120px;
           margin: 1em;
+          border-radius: 5%;
         }
         .title {
           text-transform: capitalize;
