@@ -20,6 +20,8 @@ import { AddSkuInterface } from "types/sku";
 import * as Yup from "yup";
 import { connect } from "react-redux";
 import SkuActions from "actions/sku";
+import styled from "styled-components";
+import Button from "components/atoms/Button";
 
 interface DispatchProps {
   addSku: (sku: AddSkuInterface) => void;
@@ -45,6 +47,23 @@ const validationSchema = Yup.object({
 }).defined();
 
 type InputInterface = Yup.InferType<typeof validationSchema>;
+
+const FlexRowContainer = styled.div`
+  display: flex;
+
+  & > div {
+    margin-right: 0.6em;
+  }
+`;
+
+const FlexColumnContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  & > div {
+    margin-bottom: 1.5em;
+  }
+`;
 
 const Sku = (props: SkuProps) => {
   const router = useRouter();
@@ -76,7 +95,7 @@ const Sku = (props: SkuProps) => {
         </BackLink>
         <PageHeader>Add Variant</PageHeader>
       </div>
-      <div className="flexContainer">
+      <FlexRowContainer>
         <div>
           <SkuProductInfo
             productId={product.id}
@@ -112,53 +131,56 @@ const Sku = (props: SkuProps) => {
           >
             {() => (
               <Form>
-                <SectionCard>
-                  <SectionHeader>Options</SectionHeader>
-                  {attributes.map((attribute, index) => (
-                    <>
-                      <label>{attribute.attributeName}</label>
-                      <FieldSelect
-                        name={`attributes.${index}.value`}
-                        options={attribute.attributeValues.map((value) => ({
-                          value: value.valueId,
-                          label: value.value,
-                        }))}
-                      />
-                    </>
-                  ))}
-                </SectionCard>
-                <SectionCard>
-                  <SectionHeader>Pricing</SectionHeader>
-                  <label>Price</label>
-                  <FieldPriceInput name="price" />
-                  <label>Bought Price</label>
-                  <FieldPriceInput name="boughtPrice" />
-                </SectionCard>
-                <SectionCard>
-                  <SectionHeader>Inventory</SectionHeader>
-                  <label>Qty</label>
-                  <FieldNumInput name="qty" />
-                  <label>Bar Code</label>
-                  <FieldInput name="barCode" />
-                  <label>External Id</label>
-                  <FieldInput name="externalId" />
-                </SectionCard>
-                <SectionCard>
-                  <SectionHeader>Dimensions</SectionHeader>
-                  <label>Length</label>
-                  <FieldNumInput name="length" />
-                  <label>Width</label>
-                  <FieldInput name="width" />
-                  <label>Height</label>
-                  <FieldInput name="height" />
-                  <label>Weight</label>
-                  <FieldInput name="weight" />
-                </SectionCard>
+                <FlexColumnContainer>
+                  <SectionCard>
+                    <SectionHeader>Options</SectionHeader>
+                    {attributes.map((attribute, index) => (
+                      <>
+                        <label>{attribute.attributeName}</label>
+                        <FieldSelect
+                          name={`attributes.${index}.value`}
+                          options={attribute.attributeValues.map((value) => ({
+                            value: value.valueId,
+                            label: value.value,
+                          }))}
+                        />
+                      </>
+                    ))}
+                  </SectionCard>
+                  <SectionCard>
+                    <SectionHeader>Pricing</SectionHeader>
+                    <label>Price</label>
+                    <FieldPriceInput name="price" />
+                    <label>Bought Price</label>
+                    <FieldPriceInput name="boughtPrice" />
+                  </SectionCard>
+                  <SectionCard>
+                    <SectionHeader>Inventory</SectionHeader>
+                    <label>Qty</label>
+                    <FieldNumInput name="qty" />
+                    <label>Bar Code</label>
+                    <FieldInput name="barCode" />
+                    <label>External Id</label>
+                    <FieldInput name="externalId" />
+                  </SectionCard>
+                  <SectionCard>
+                    <SectionHeader>Dimensions</SectionHeader>
+                    <label>Length</label>
+                    <FieldNumInput name="length" />
+                    <label>Width</label>
+                    <FieldInput name="width" />
+                    <label>Height</label>
+                    <FieldInput name="height" />
+                    <label>Weight</label>
+                    <FieldInput name="weight" />
+                  </SectionCard>
+                </FlexColumnContainer>
+                <Button isSubmitButton={true}>Save</Button>
               </Form>
             )}
           </Formik>
         </div>
-      </div>
+      </FlexRowContainer>
       <style jsx>{`
         .container {
           max-width: 900px;
