@@ -1,6 +1,5 @@
 import {
   OrderInterface,
-  OrderItemInterface,
   OrderStatus,
   TransformedOrderItemInterface,
 } from "types/order";
@@ -29,7 +28,6 @@ import { PaginatedDataInterface } from "types/pagination";
 import { getCustomerInfo } from "utils/customer";
 import ProductOrdersContainer from "components/ProductOrdersContainer";
 import Loader from "components/Loader";
-import WithAuth from "components/WithAuth";
 import { transformOrderItem } from "../../src/transformers/orderItem";
 import _ from "lodash";
 
@@ -57,49 +55,52 @@ const OrdersContainer = (props: OrdersContainerProps) => {
     return [
       {
         name: "Order Id",
-        valueFunc: (orderItem: OrderItemInterface) => orderItem.id,
+        valueFunc: (orderItem: TransformedOrderItemInterface) => orderItem.id,
       },
       {
         name: "Item Id",
-        valueFunc: (orderItem: OrderItemInterface) => orderItem.id,
+        valueFunc: (orderItem: TransformedOrderItemInterface) => orderItem.id,
       },
       {
         name: "Customer",
-        valueFunc: (orderItem: OrderItemInterface) => null,
+        valueFunc: (orderItem: TransformedOrderItemInterface) => null,
       },
       {
         name: "Product",
-        valueFunc: (orderItem: OrderItemInterface) => null,
+        valueFunc: (orderItem: TransformedOrderItemInterface) => null,
       },
       {
         name: "Price",
-        valueFunc: (orderItem: OrderItemInterface) => orderItem.discountedPrice,
+        valueFunc: (orderItem: TransformedOrderItemInterface) =>
+          orderItem.discountedPrice,
       },
       {
         name: "Qty",
-        valueFunc: (orderItem: OrderItemInterface) => orderItem.qty,
+        valueFunc: (orderItem: TransformedOrderItemInterface) => orderItem.qty,
       },
       {
         name: "Payment",
-        valueFunc: (orderItem: OrderItemInterface) =>
+        valueFunc: (orderItem: TransformedOrderItemInterface) =>
           orderItem.order.paymentSplits[0].paymentMode,
       },
       {
         name: "Status",
-        valueFunc: (orderItem: OrderItemInterface) => orderItem.orderItemStatus,
+        valueFunc: (orderItem: TransformedOrderItemInterface) =>
+          orderItem.orderItemStatus,
       },
       {
         name: "Created",
-        valueFunc: (orderItem: OrderItemInterface) => orderItem.createdDateTime,
+        valueFunc: (orderItem: TransformedOrderItemInterface) =>
+          orderItem.createdDateTime,
       },
       {
         name: "Actions",
-        valueFunc: (orderItem: OrderItemInterface) => null,
+        valueFunc: (orderItem: TransformedOrderItemInterface) => null,
       },
     ];
   };
 
-  const getButtons = (orderItem: OrderItemInterface) => {
+  const getButtons = (orderItem: TransformedOrderItemInterface) => {
     const handleClick = (e, action) => {
       action(orderItem.order.id, orderItem.id);
       e.preventDefault();
@@ -219,7 +220,7 @@ const OrdersContainer = (props: OrdersContainerProps) => {
     return null;
   };
 
-  const renderTableBody = (orderItems: OrderItemInterface[]) => {
+  const renderTableBody = (orderItems: TransformedOrderItemInterface[]) => {
     return orderItems.map((orderItem) => (
       <Link
         key={orderItem.id}

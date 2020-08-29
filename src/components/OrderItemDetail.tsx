@@ -1,5 +1,5 @@
 import ProductCard from "./ProductCard";
-import { OrderItemInterface, OrderStatus } from "../types/order";
+import { OrderStatus, TransformedOrderItemInterface } from "../types/order";
 import CSSConstants from "../constants/CSSConstants";
 import Button, { ButtonType } from "./atoms/Button";
 import { formatPrice, splitCamelCase } from "utils/misc";
@@ -9,7 +9,7 @@ import moment from "moment";
 import { getColor, getOrderStatusText } from "utils/order";
 
 interface OrderItemDetailProps {
-  orderItem: OrderItemInterface;
+  orderItem: TransformedOrderItemInterface;
   markAsShipping: (orderId: number, orderItemId: number) => void;
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
   markAsProcessing: (orderId: number, orderItemId: number) => void;

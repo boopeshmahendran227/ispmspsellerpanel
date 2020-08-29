@@ -166,7 +166,7 @@ const Sku = (props: SkuProps): JSX.Element => {
                       </>
                     ))}
                   </SectionCard>
-                  <ImageUploader />
+                  {/* <ImageUploader /> */}
                   <SkuPricingInputContainer />
                   <SkuInventoryInputContainer />
                   <SectionCard>

@@ -8,7 +8,7 @@ export interface ImageType {
   file?: File;
   key?: string;
   onUpdate: () => void;
-  onRemove?: () => void;
+  onRemove: () => void;
 }
 
 export type ImageListType = Array<ImageType>;
@@ -144,12 +144,12 @@ const ImageUploading: React.FC<ImageUploadingPropsType> = ({
 
   const onStandardizeDataChange = (list: ImageListType): void => {
     if (onChange) {
-      const sData: ImageListType = list.map(
-        ({ key, onUpdate, onRemove, ...restOfItem }) => ({
-          ...restOfItem,
-        })
-      );
-      onChange(sData);
+      //   const sData: ImageListType = list.map(
+      //     ({ key, onUpdate, onRemove, ...restOfItem }) => ({
+      //       ...restOfItem,
+      //     })
+      //   );
+      //   onChange(sData);
     }
   };
 
@@ -268,7 +268,7 @@ const ImageUploading: React.FC<ImageUploadingPropsType> = ({
     e: React.ChangeEvent<HTMLInputElement>
   ): Promise<void> => {
     const { files } = e.target;
-    addFiles(files);
+    // addFiles(files);
   };
 
   const addFiles = async (files: FileList) => {

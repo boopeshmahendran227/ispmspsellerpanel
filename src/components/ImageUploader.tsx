@@ -250,11 +250,11 @@ const ImageUploader = (props: ImageUploaderProps): JSX.Element => {
   const { openLightbox } = useLightbox();
   const [showDropbox, setShowDropbox] = useState(false);
   const [isDropboxActive, setIsDropboxActive] = useState(false);
-  const [errorStrings, setErrorStrings] = useState([]);
+  const [errorStrings, setErrorStrings] = useState<string[]>([]);
 
   return (
     <SectionCard>
-      <ImageUploading
+      {/* <ImageUploading
         onChange={onChange}
         maxNumber={MAX_NUMBER}
         multiple
@@ -321,7 +321,7 @@ const ImageUploader = (props: ImageUploaderProps): JSX.Element => {
             </FlexContainer>
           </FileDrop>
         )}
-      </ImageUploading>
+      </ImageUploading> */}
     </SectionCard>
   );
 };
