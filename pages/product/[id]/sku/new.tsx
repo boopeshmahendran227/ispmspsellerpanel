@@ -24,6 +24,7 @@ import styled from "styled-components";
 import Button from "components/atoms/Button";
 import FieldEcosystemMultiInput from "components/FieldEcosystemMultiInput";
 import { BusinessDataInterface } from "types/business";
+import SkuDimensionsInputContainer from "components/SkuDimensionsInputContainer";
 
 interface DispatchProps {
   addSku: (sku: AddSkuInterface) => void;
@@ -119,7 +120,7 @@ const Sku = (props: SkuProps) => {
         <BackLink href="/product/[id]" as={`/product/${product.id}`}>
           Back to Product
         </BackLink>
-        <PageHeader>Add Variant</PageHeader>
+        <PageHeader>Add New Variant</PageHeader>
       </div>
       <FlexRowContainer>
         <div>
@@ -197,17 +198,7 @@ const Sku = (props: SkuProps) => {
                       businessData={businessData}
                     />
                   </SectionCard>
-                  <SectionCard>
-                    <SectionHeader>Dimensions</SectionHeader>
-                    <label>Length</label>
-                    <FieldNumInput name="length" />
-                    <label>Width</label>
-                    <FieldNumInput name="width" />
-                    <label>Height</label>
-                    <FieldNumInput name="height" />
-                    <label>Weight</label>
-                    <FieldNumInput name="weight" />
-                  </SectionCard>
+                  <SkuDimensionsInputContainer />
                 </FlexColumnContainer>
                 <Button isSubmitButton={true}>Save</Button>
               </Form>

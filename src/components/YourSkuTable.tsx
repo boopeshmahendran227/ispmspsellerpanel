@@ -29,7 +29,7 @@ const YourVariantsTable = (props: YourVariantsTableProps): JSX.Element => {
             href="/product/[id]/sku/new"
             as={`/product/${productId}/sku/new`}
           >
-            <Button>Add Variant</Button>
+            <Button>Add New Variant</Button>
           </Link>
         </FlexContainer>
       </SectionHeaderContainer>

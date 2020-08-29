@@ -25,6 +25,7 @@ import { UpdateSkuInterface } from "types/sku";
 import Button from "components/atoms/Button";
 import * as Yup from "yup";
 import styled from "styled-components";
+import SkuDimensionsInputContainer from "components/SkuDimensionsInputContainer";
 
 interface DispatchProps {
   updateSku: (sku: UpdateSkuInterface) => void;
@@ -192,17 +193,7 @@ const Sku = (props: SkuProps): JSX.Element => {
                       businessData={businessData}
                     />
                   </SectionCard>
-                  <SectionCard>
-                    <SectionHeader>Dimensions</SectionHeader>
-                    <label>Length (in cm)</label>
-                    <FieldNumInput name="length" />
-                    <label>Width (in cm)</label>
-                    <FieldNumInput name="width" />
-                    <label>Height (in cm)</label>
-                    <FieldNumInput name="height" />
-                    <label>Weight (in Kg)</label>
-                    <FieldNumInput name="weight" />
-                  </SectionCard>
+                  <SkuDimensionsInputContainer />
                 </FlexColumnContainer>
                 <Button isSubmitButton={true}>Save</Button>
               </Form>
