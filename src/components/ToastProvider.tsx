@@ -30,7 +30,10 @@ function ToastProvider(props: ToastProviderProps) {
           <TransitionGroup component={null}>
             {props.toasts.map((toast) => (
               <CSSTransition timeout={500} classNames="toast" key={toast.id}>
-                <Toast data={toast} remove={() => props.remove(toast.id)} />
+                <Toast
+                  data={toast}
+                  remove={() => toast.id && props.remove(toast.id)}
+                />
               </CSSTransition>
             ))}
           </TransitionGroup>
