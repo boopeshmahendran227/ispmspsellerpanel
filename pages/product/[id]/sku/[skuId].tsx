@@ -70,14 +70,14 @@ const FlexColumnContainer = styled.div`
 
 const Sku = (props: SkuProps): JSX.Element => {
   const router = useRouter();
-  const productSwr = useSWR(`/product/seller/${router.query.id}`);
+  const productSWR = useSWR(`/product/seller/${router.query.id}`);
   const businessSWR = useSWR("/businesses/business");
 
   const currentSkuId: string = router.query.skuId as string;
-  const product: ProductDetailInterface = productSwr.data;
+  const product: ProductDetailInterface = productSWR.data;
   const businessData: BusinessDataInterface = businessSWR.data;
 
-  const error = productSwr.error || businessSWR.error;
+  const error = productSWR.error || businessSWR.error;
 
   if (error) {
     return <PageError statusCode={error.response?.status} />;

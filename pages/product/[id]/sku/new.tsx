@@ -22,6 +22,8 @@ import { connect } from "react-redux";
 import SkuActions from "actions/sku";
 import styled from "styled-components";
 import Button from "components/atoms/Button";
+import FieldEcosystemMultiInput from "components/FieldEcosystemMultiInput";
+import { BusinessDataInterface } from "types/business";
 
 interface DispatchProps {
   addSku: (sku: AddSkuInterface) => void;
@@ -78,17 +80,20 @@ const FlexColumnContainer = styled.div`
 
 const Sku = (props: SkuProps) => {
   const router = useRouter();
-  const swr = useSWR(`/product/seller/${router.query.id}`);
-  const skuId: string = router.query.skuId as string;
-  const product: ProductDetailInterface = swr.data;
+  const productSWR = useSWR(`/product/seller/${router.query.id}`);
+  const businessSWR = useSWR(`/businesses/business`);
 
-  const error = swr.error;
+  const skuId: string = router.query.skuId as string;
+  const product: ProductDetailInterface = productSWR.data;
+  const businessData: BusinessDataInterface = businessSWR.data;
+
+  const error = productSWR.error || businessSWR.error;
 
   if (error) {
     return <PageError statusCode={error.response?.status} />;
   }
 
-  if (!product) {
+  if (!product || !businessData) {
     return <Loader />;
   }
 
@@ -141,6 +146,7 @@ const Sku = (props: SkuProps) => {
               width: null,
               height: null,
               weight: null,
+              ecosystemIds: [],
               attributes: attributes.map((attribute) => ({
                 attributeId: attribute.attributeId,
                 attributeName: attribute.attributeName,
@@ -182,6 +188,14 @@ const Sku = (props: SkuProps) => {
                     <FieldInput name="barCode" />
                     <label>External Id</label>
                     <FieldInput name="externalId" />
+                  </SectionCard>
+                  <SectionCard>
+                    <SectionHeader>Visibility</SectionHeader>
+                    <label>Ecosystem</label>
+                    <FieldEcosystemMultiInput
+                      name="ecosystemIds"
+                      businessData={businessData}
+                    />
                   </SectionCard>
                   <SectionCard>
                     <SectionHeader>Dimensions</SectionHeader>

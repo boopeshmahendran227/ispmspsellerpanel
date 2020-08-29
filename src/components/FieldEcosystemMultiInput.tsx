@@ -5,6 +5,7 @@ import { Field, ErrorMessage } from "formik";
 import classNames from "classnames";
 import CSSConstants from "../constants/CSSConstants";
 import MultiSelect from "./MultiSelect";
+import { SelectOptionInterface } from "types/product";
 
 interface FieldEcosystemMultiInputProps {
   businessData: BusinessDataInterface;
@@ -14,7 +15,7 @@ interface FieldEcosystemMultiInputProps {
 const FieldEcosystemMultiInput = (
   props: FieldEcosystemMultiInputProps
 ): JSX.Element => {
-  const { businessData } = props;
+  const { name, businessData } = props;
   const ecosystems = [
     {
       value: "Default",
@@ -27,7 +28,7 @@ const FieldEcosystemMultiInput = (
   ];
 
   return (
-    <Field name={props.name}>
+    <Field name={name}>
       {({ field, form }) => (
         <label
           className={classNames({
@@ -40,9 +41,9 @@ const FieldEcosystemMultiInput = (
               value={field.value.map((id: string) =>
                 ecosystems.find((ecosystem) => ecosystem.value === id)
               )}
-              onChange={(value) => {
+              onChange={(value: SelectOptionInterface[]) => {
                 field.onChange({
-                  target: { name, value: value },
+                  target: { name, value: value.map((value) => value.value) },
                 });
               }}
               options={ecosystems}
