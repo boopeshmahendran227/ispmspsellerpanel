@@ -6,13 +6,22 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import classNames from "classnames";
 
-interface MenuTreeItem {
+type MenuTreeItem = SubmenuMenuItem | NoSubmenuMenuItem;
+
+interface NoSubmenuMenuItem {
   name: string;
-  hasSubMenu?: boolean;
-  subMenuItems?: SubMenuItemInterface[];
-  href?: string;
+  hasSubMenu?: false;
+  href: string;
   matchFunc?: (path: string) => boolean;
   icon: React.ReactNode;
+}
+
+interface SubmenuMenuItem {
+  name: string;
+  hasSubMenu: true;
+  matchFunc?: (path: string) => boolean;
+  icon: React.ReactNode;
+  subMenuItems: SubMenuItemInterface[];
 }
 
 const menuTree: MenuTreeItem[] = [
@@ -103,7 +112,7 @@ const menuTree: MenuTreeItem[] = [
 ];
 
 const SideNavBar = () => {
-  const [currentOpenIndex, setCurrentOpenIndex] = useState(null);
+  const [currentOpenIndex, setCurrentOpenIndex] = useState<number | null>(null);
   const router = useRouter();
   const activePath = router.pathname;
 
