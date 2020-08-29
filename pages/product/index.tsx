@@ -88,6 +88,17 @@ const Products = () => {
     })),
   ];
 
+  const getEcosystemName = (id: string) => {
+    if (id === "Default") {
+      return "Istakapaza Default Marketplace";
+    }
+    const currentEcosystem = businessData.ecosystems.find(
+      (ecosystem) => ecosystem.ecosystem_id._id === selectedEcosystemId
+    );
+
+    return currentEcosystem?.ecosystem_id?.ecosystem_name;
+  };
+
   const currentEcosystem =
     ecosystems.find((ecosystem) => ecosystem.value == selectedEcosystemId) ??
     ecosystems[0];
@@ -96,7 +107,9 @@ const Products = () => {
     const filters: string[] = [];
 
     if (selectedEcosystemId) {
-      filters.push(("Ecosystem: " + currentEcosystem.label) as string);
+      filters.push(
+        ("Ecosystem: " + getEcosystemName(selectedEcosystemId)) as string
+      );
     }
     if (showOnlySelf) {
       filters.push("Only My Products");

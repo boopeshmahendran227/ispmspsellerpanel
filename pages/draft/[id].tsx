@@ -11,6 +11,16 @@ import PageError from "components/PageError";
 import WithAuth from "components/WithAuth";
 import ProductMainInfo from "components/ProductMainInfo";
 import ProductPriceDetails from "components/ProductPriceDetails";
+import styled from "styled-components";
+
+const FlexContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  & > div {
+    margin-bottom: 1.5em;
+  }
+`;
 
 const Draft = () => {
   const router = useRouter();
@@ -33,7 +43,7 @@ const Draft = () => {
         <span className="name">Draft #{draft.id}</span>
         <span className="status">{draft.status}</span>
       </header>
-      <div>
+      <FlexContainer>
         <ProductMainInfo
           name={draft.name}
           brand={draft.brandName}
@@ -52,7 +62,7 @@ const Draft = () => {
         <Specification specification={draft.specification} />
         <TierPrice tierPrice={draft.tierPrice} />
         <FAQ faqs={draft.faqs} />
-      </div>
+      </FlexContainer>
       <style jsx>{`
         .container {
           padding: 0.8em;

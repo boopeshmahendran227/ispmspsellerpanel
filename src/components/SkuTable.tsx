@@ -133,7 +133,6 @@ const SkuTable = (props: SkuTableProps) => {
       />
       <style jsx>{`
         .container {
-          margin: 3em 0;
           font-size: 1.1rem;
         }
         header {
