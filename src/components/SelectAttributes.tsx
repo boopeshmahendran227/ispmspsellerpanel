@@ -36,7 +36,7 @@ const SelectAttributes = (props: SelectAttributesProps) => {
   const values: ProductInputInterface = useFormikContext<
     ProductInputInterface
   >().values;
-  const defaultCategory: SelectOptionInterface = values.defaultCategory;
+  const defaultCategory: SelectOptionInterface | null = values.defaultCategory;
   const categories: SelectOptionInterface[] = values.categories;
 
   const allCategoryIds = _.compact([

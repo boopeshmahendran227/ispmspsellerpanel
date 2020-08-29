@@ -14,7 +14,7 @@ const Select = (props: SelectProps) => {
       <ReactSelect
         isDisabled={props.disabled}
         value={props.value}
-        onChange={(values) => props.onChange(values || [])}
+        onChange={(value: SelectOptionInterface) => props.onChange(value)}
         options={props.options}
       />
       <style jsx>{`
