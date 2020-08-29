@@ -139,14 +139,16 @@ const Sku = (props: SkuProps): JSX.Element => {
                 attributeId: attribute.attributeId,
                 attributeName: attribute.attributeName,
                 value: {
-                  value: currentSku.attributeValueIds.find(
-                    (attrVaueId) =>
-                      attrVaueId.attributeId === attribute.attributeId
-                  )?.valueId,
-                  label: currentSku.attributeValueIds.find(
-                    (attrVaueId) =>
-                      attrVaueId.attributeId === attribute.attributeId
-                  )?.value,
+                  value:
+                    currentSku.attributeValueIds.find(
+                      (attrVaueId) =>
+                        attrVaueId.attributeId === attribute.attributeId
+                    )?.valueId || attribute.attributeValues[0].valueId,
+                  label:
+                    currentSku.attributeValueIds.find(
+                      (attrVaueId) =>
+                        attrVaueId.attributeId === attribute.attributeId
+                    )?.value || attribute.attributeValues[0].value,
                 },
               })),
             }}
@@ -159,12 +161,12 @@ const Sku = (props: SkuProps): JSX.Element => {
                 <FlexColumnContainer>
                   <SectionCard>
                     <SectionHeader>Options</SectionHeader>
-                    {attributes.map((attribute) => (
+                    {attributes.map((attribute, index) => (
                       <>
                         <label>{attribute.attributeName}</label>
                         <FieldSelect
                           disabled={true}
-                          name={`attributes.${attribute.attributeId}.value`}
+                          name={`attributes.${index}.value`}
                           options={attribute.attributeValues.map((value) => ({
                             value: value.valueId,
                             label: value.value,
