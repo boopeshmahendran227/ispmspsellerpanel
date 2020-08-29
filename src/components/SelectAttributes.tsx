@@ -5,9 +5,9 @@ import {
   ProductInputInterface,
   SelectOptionInterface,
 } from "../types/product";
-import Loader from "../../src/components/Loader";
-import MultiSelect from "../../src/components/MultiSelect";
-import Button from "../../src/components/Button";
+import Loader from "components/Loader";
+import MultiSelect from "components/MultiSelect";
+import Button from "./atoms/Button";
 import PageError from "./PageError";
 import { useFormikContext } from "formik";
 import _ from "lodash";
@@ -36,7 +36,7 @@ const SelectAttributes = (props: SelectAttributesProps) => {
   const values: ProductInputInterface = useFormikContext<
     ProductInputInterface
   >().values;
-  const defaultCategory: SelectOptionInterface = values.defaultCategory;
+  const defaultCategory: SelectOptionInterface | null = values.defaultCategory;
   const categories: SelectOptionInterface[] = values.categories;
 
   const allCategoryIds = _.compact([

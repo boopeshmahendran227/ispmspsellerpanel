@@ -1,5 +1,5 @@
 import Modal from "./Modal";
-import Button from "./Button";
+import Button from "./atoms/Button";
 import { connect } from "react-redux";
 import { RootState } from "../reducers";
 import { Formik, Form } from "formik";
@@ -15,7 +15,7 @@ import FieldInput from "./FieldInput";
 
 interface StateProps {
   open: boolean;
-  currentInvoice: InvoiceInterface;
+  currentInvoice: InvoiceInterface | null;
 }
 
 interface DispatchProps {

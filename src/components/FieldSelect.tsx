@@ -8,6 +8,7 @@ import { SelectOptionInterface } from "../types/product";
 interface FieldSelectProps {
   name: string;
   options: SelectOptionInterface[];
+  disabled?: boolean;
 }
 
 const FieldSelect = (props: FieldSelectProps) => {
@@ -24,6 +25,7 @@ const FieldSelect = (props: FieldSelectProps) => {
         >
           <div className="selectContainer">
             <Select
+              disabled={props.disabled}
               value={field.value}
               onChange={(value) => {
                 field.onChange({

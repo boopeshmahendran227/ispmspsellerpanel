@@ -1,82 +1,162 @@
-import CSSConstants from "../../src/constants/CSSConstants";
 import Link from "next/link";
-import { ProductMiniInterface } from "../../src/types/product";
+import { ProductMiniInterface, SelectOptionInterface } from "types/product";
 import { useState } from "react";
-import SearchBar from "../../src/components/SearchBar";
-import ActiveFilters from "../../src/components/ActiveFilters";
-import { PaginatedDataInterface } from "../../src/types/pagination";
-import Button from "../../src/components/Button";
-import WithAuth from "../../src/components/WithAuth";
+import SearchBar from "components/SearchBar";
+import ActiveFilters from "components/ActiveFilters";
+import { PaginatedDataInterface } from "types/pagination";
+import Button from "components/atoms/Button";
+import WithAuth from "components/WithAuth";
 import useSWR from "swr";
 import { useMemo } from "react";
-import PageError from "../../src/components/PageError";
-import ProductsContainer from "../../src/components/ProductsContainer";
+import PageError from "components/PageError";
+import ProductsContainer from "components/ProductsContainer";
+import PageHeader from "components/PageHeader";
+import { BusinessDataInterface } from "types/business";
+import Loader from "components/Loader";
+import EcosystemOption from "components/atoms/EcosystemOption";
+import Select from "components/Select";
+import Checkbox from "components/atoms/Checkbox";
+import styled from "styled-components";
+import PageHeaderContainer from "components/atoms/PageHeaderContainer";
+import PageContainer from "components/atoms/PageContainer";
+
+const FlexContainer = styled.div`
+  margin: 0.5em 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const FilterSection = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const EcosystemFilterContainer = styled.div`
+  min-width: 300px;
+`;
 
 const Products = () => {
   const [searchText, setSearchText] = useState("");
+  const [selectedEcosystemId, setSelectedEcosystemId] = useState("");
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
+  const [showOnlySelf, setShowOnlySelf] = useState(false);
 
   const params = useMemo(
     () => ({
       method: "POST",
       data: {
-        searchText: searchText,
-        categoryId: 1,
+        showOnlySelf: showOnlySelf,
+        ecosystemId: selectedEcosystemId,
         pageNumber: currentPageNumber,
-        orderByPrice: 0,
-        attributeFilters: [],
-        brandId: [],
-        sellerIds: [],
+        searchText: searchText,
       },
     }),
-    [searchText, currentPageNumber]
+    [searchText, currentPageNumber, selectedEcosystemId, showOnlySelf]
   );
 
-  const swr = useSWR(["/product/search/seller", params]);
-  const productData: PaginatedDataInterface<ProductMiniInterface> = swr.data;
-  const error = swr.error;
+  const productSWR = useSWR<PaginatedDataInterface<ProductMiniInterface>>([
+    "/search/seller/product",
+    params,
+  ]);
+  const businessSWR = useSWR<BusinessDataInterface>("/businesses/business");
+  const businessData: BusinessDataInterface | undefined = businessSWR.data;
+  const productData: PaginatedDataInterface<ProductMiniInterface> | undefined =
+    productSWR.data;
+  const error = productSWR.error || businessSWR.error;
 
   if (error) {
-    return <PageError statusCode={error?.response.status} />;
+    return <PageError statusCode={error.response?.status} />;
   }
 
+  if (!businessData) {
+    return <Loader />;
+  }
+
+  const ecosystems: SelectOptionInterface[] = [
+    {
+      value: "",
+      label: "All Ecosystems",
+    },
+    {
+      value: "Default",
+      label: "Istakapaza Default Marketplace",
+    },
+    ...businessData.ecosystems.map((ecosystem) => ({
+      value: ecosystem.ecosystem_id._id,
+      label: <EcosystemOption ecosystem={ecosystem} />,
+    })),
+  ];
+
+  const getEcosystemName = (id: string) => {
+    if (id === "Default") {
+      return "Istakapaza Default Marketplace";
+    }
+    const currentEcosystem = businessData.ecosystems.find(
+      (ecosystem) => ecosystem.ecosystem_id._id === selectedEcosystemId
+    );
+
+    return currentEcosystem?.ecosystem_id?.ecosystem_name;
+  };
+
+  const currentEcosystem =
+    ecosystems.find((ecosystem) => ecosystem.value == selectedEcosystemId) ??
+    ecosystems[0];
+
+  const getAppliedFilters = (): string[] => {
+    const filters: string[] = [];
+
+    if (selectedEcosystemId) {
+      filters.push(
+        ("Ecosystem: " + getEcosystemName(selectedEcosystemId)) as string
+      );
+    }
+    if (showOnlySelf) {
+      filters.push("Only My Products");
+    }
+
+    return filters;
+  };
+
   return (
-    <div className="container">
-      <div className="addProductContainer">
+    <PageContainer>
+      <PageHeaderContainer>
+        <PageHeader>Products</PageHeader>
         <Link href="/product/new">
           <Button>Add Product</Button>
         </Link>
-      </div>
+      </PageHeaderContainer>
+      <FlexContainer>
+        <SearchBar searchText={searchText} searchByText={setSearchText} />
+        <FilterSection>
+          <Checkbox
+            checked={showOnlySelf}
+            onChange={(e) => setShowOnlySelf(e.target.checked)}
+            label="Show Only My Products"
+          />
+          <EcosystemFilterContainer>
+            <Select
+              value={currentEcosystem}
+              onChange={(ecosystem) =>
+                setSelectedEcosystemId(ecosystem.value as string)
+              }
+              options={ecosystems}
+            />
+          </EcosystemFilterContainer>
+        </FilterSection>
+      </FlexContainer>
       <ActiveFilters
-        searchText={searchText}
-        clearFilters={() => setSearchText("")}
+        appliedFilters={getAppliedFilters()}
+        clearFilters={() => {
+          setShowOnlySelf(false);
+          setSelectedEcosystemId("");
+        }}
       />
-      <SearchBar searchText={searchText} searchByText={setSearchText} />
       <ProductsContainer
         productData={productData}
         setCurrentPageNumber={setCurrentPageNumber}
       />
-      <style jsx>{`
-        .container {
-          padding: 1em;
-          margin: 1em auto;
-          font-size: 0.9rem;
-          background: ${CSSConstants.foregroundColor};
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-            0 1px 2px rgba(0, 0, 0, 0.24);
-        }
-        .addProductContainer {
-          text-align: right;
-          padding: 0.4em 3em;
-          font-size: 1rem;
-        }
-        @media (max-width: 800px) {
-          .container {
-            padding: 0;
-          }
-        }
-      `}</style>
-    </div>
+    </PageContainer>
   );
 };
 

@@ -48,44 +48,78 @@ export type ProductActionType =
 
 export interface ProductInputInterface {
   name: string;
+  isActive: boolean;
   shortDescription: string;
   longDescription: string;
   specialDiscountValue: number;
   minPrice: number;
   maxPrice: number;
-  brand: SelectOptionInterface;
-  countryOfOrigin: SelectOptionInterface;
+  brand: SelectOptionInterface | null;
+  countryOfOrigin: SelectOptionInterface | null;
   tierPrices: TierPriceInterface[];
   faqs: FAQInterface[];
   categories: SelectOptionInterface[];
-  defaultCategory: SelectOptionInterface;
+  defaultCategory: SelectOptionInterface | null;
   specification: SpecificationInterface;
   skus: ProductSkuDetail[];
-  taxGroup: SelectOptionInterface;
+  taxGroup: SelectOptionInterface | null;
   ecosystems: SelectOptionInterface[];
 }
 
-export interface ProductResponseInterface {
-  id: number;
+export interface EcosystemDetailInterface {
+  id: string;
   name: string;
-  brandName: string;
+}
+
+export interface ProductDetailInterface {
+  id: number;
+  visibilityInfo: {
+    ecosystemDetail: EcosystemDetailInterface[];
+  };
+  name: string;
   shortDescription: string;
   longDescription: string;
-  specialDiscount: number;
+  brandName: string;
   minPrice: number;
   maxPrice: number;
   productType: ProductType;
-  tierPrice: TierPriceInterface[];
+  specialDiscount: number;
+  attributeValues: ProductAttributeInterface[];
+  skuDetails: ProductDetailSkuDetail[];
+  unOwnedSkuDetails: ProductDetailSkuDetail[];
   specification: SpecificationInterface;
+  tierPrice: TierPriceInterface[];
   faqs: FAQInterface[];
-  skuDetails: ProductSkuDetail[];
-  attributeValues: ResponseAttributeValuesInterface[];
 }
 
-export interface ResponseAttributeValuesInterface {
+export interface ProductDetailSkuDetail {
+  skuDetailId: number;
+  ecosystemIds: string[];
+  skuId: string;
+  sellerId: string;
+  sellerName: string;
+  attributeValueIds: ProductAttributeValue[];
+  price: number;
+  boughtPrice: number;
+  qty: number;
+  length: number;
+  width: number;
+  height: number;
+  weight: number;
+  imageRelativePaths: string[];
+  externalId: string;
+  barCodeIdentifier: string;
+}
+
+interface ProductAttributeInterface {
   attributeId: number;
-  valueId: number;
   attributeName: string;
+  attributeType: AttributeType;
+  attributeValues: AttributeValue[];
+}
+
+interface AttributeValue {
+  valueId: number;
   value: string;
 }
 
@@ -141,14 +175,11 @@ export interface AddAttributeInterface {
 }
 
 export interface ProductMiniInterface {
-  id: number;
-  imageRelativePaths: string[];
-  name: string;
-  averageRating: number;
-  shortDescription: string;
-  price: number;
-  specialDiscount: number;
-  isBundle: boolean;
+  productId: number;
+  productName: string;
+  productShortDescription: string;
+  productImages: string[];
+  isActive: boolean;
 }
 
 export interface SelectedAttribute {
@@ -265,9 +296,7 @@ export const ProductSchema = Yup.object().shape({
     .min(1, "Atlease one sku is required"),
   tierPrices: Yup.array().of(
     Yup.object().shape({
-      minQty: Yup.number("Minimum Qty must be a number").positive(
-        "Minimum Qty must be lesser than 0"
-      ),
+      minQty: Yup.number().positive("Minimum Qty must be lesser than 0"),
       discountPercentage: Yup.number()
         .min(1, "Discount Percentage must be greater than 1")
         .max(100, "Discount Percentage should be less than 100"),

@@ -4,7 +4,7 @@ import { ProductOrderInterface, OrderItemCountMap } from "../types/order";
 import SortableTable from "./SortableTable";
 import ProductCard from "./ProductCard";
 import _ from "lodash";
-import { isPendingOrderStatus, isShippingOrderStatus } from "../utils/order";
+import { isPendingOrderStatus, isShippingOrderStatus } from "utils/order";
 import ErrorMsg from "./ErrorMsg";
 import CSSConstants from "../constants/CSSConstants";
 
@@ -48,7 +48,7 @@ const getTableHeaders = () => {
 const getOrderItemCount = (orderItemCount: OrderItemCountMap, filterFunc) => {
   return _.chain(orderItemCount)
     .pickBy((value, key) => filterFunc(key))
-    .map((item) => item.orderCount)
+    .map((item) => item?.orderCount || 0)
     .sum()
     .value();
 };
@@ -56,7 +56,7 @@ const getOrderItemCount = (orderItemCount: OrderItemCountMap, filterFunc) => {
 const getQty = (orderItemCount: OrderItemCountMap, filterFunc) => {
   return _.chain(orderItemCount)
     .pickBy((value, key) => filterFunc(key))
-    .map((item) => item.qty)
+    .map((item) => item?.qty || 0)
     .sum()
     .value();
 };

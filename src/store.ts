@@ -4,10 +4,14 @@ import createSagaMiddleware from "redux-saga";
 import reducer from "./reducers";
 import { composeWithDevTools } from "redux-devtools-extension";
 import rootSaga from "./sagas";
+import { MakeStoreOptions } from "next-redux-wrapper";
 
 const composeEnhancers = composeWithDevTools({});
 
-export function initializeStore(initialState = {}, { isServer, req = null }) {
+export function initializeStore(
+  initialState = {},
+  { isServer, req = undefined }: MakeStoreOptions
+) {
   const sagaMiddleware = createSagaMiddleware();
   const middleware = [sagaMiddleware];
   const store: any = createStore(

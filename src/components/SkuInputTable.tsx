@@ -2,7 +2,7 @@ import SortableTable from "./SortableTable";
 import { ProductSkuDetail, ProductInputInterface } from "../types/product";
 import CSSConstants from "../constants/CSSConstants";
 import { ErrorMessage, FieldArray, useFormikContext } from "formik";
-import Button from "./Button";
+import Button from "./atoms/Button";
 import { connect } from "react-redux";
 import UIActions from "../actions/ui";
 import FieldInput from "./FieldInput";
@@ -172,9 +172,9 @@ const SkuInputTable = (props: SkuInputTableProps) => {
 
   return (
     <div className="container">
-      <header>Skus</header>
+      <header>Variants</header>
       <div className="buttonContainer">
-        <Button onClick={props.showSkuModal}>Generate SKUs</Button>
+        <Button onClick={props.showSkuModal}>Generate Variants</Button>
       </div>
       {skus.length > 0 && (
         <SortableTable

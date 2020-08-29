@@ -1,4 +1,4 @@
-import { getProductImageUrl } from "../utils/url";
+import { getProductImageUrl } from "utils/url";
 
 interface RelativeImgProps {
   src: string;

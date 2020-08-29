@@ -1,7 +1,7 @@
-import Button, { ButtonType } from "../../src/components/Button";
-import FieldInput from "../../src/components/FieldInput";
-import FieldSelect from "../../src/components/FieldSelect";
-import FieldMultiSelect from "../../src/components/FieldMultiSelect";
+import Button, { ButtonType } from "components/atoms/Button";
+import FieldInput from "components/FieldInput";
+import FieldSelect from "components/FieldSelect";
+import FieldMultiSelect from "components/FieldMultiSelect";
 import {
   ProductSchema,
   BrandInterface,
@@ -9,33 +9,34 @@ import {
   ProductSkuDetail,
   ProductInputInterface,
   TaxGroupInterface,
-} from "../../src/types/product";
+} from "types/product";
 import { RootState } from "../../src/reducers";
-import ProductActions from "../../src/actions/product";
+import ProductActions from "actions/product";
 import { connect } from "react-redux";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import useSWR from "swr";
-import Loader from "../../src/components/Loader";
-import AttributeModal from "../../src/components/AttributeModal";
-import SkuModal from "../../src/components/SkuModal";
-import SpecificationInput from "../../src/components/SpecificationInput";
-import { flattenCategoryTree } from "../../src/utils/categoryTree";
-import InputLabel from "../../src/components/InputLabel";
+import Loader from "components/Loader";
+import AttributeModal from "components/AttributeModal";
+import SkuModal from "components/SkuModal";
+import SpecificationInput from "components/SpecificationInput";
+import { flattenCategoryTree } from "utils/categoryTree";
+import InputLabel from "components/InputLabel";
 import { getSkus } from "../../src/selectors/product";
-import SkuInputTable from "../../src/components/SkuInputTable";
-import FieldTextArea from "../../src/components/FieldTextArea";
+import SkuInputTable from "components/SkuInputTable";
+import FieldTextArea from "components/FieldTextArea";
 import { useRef, useEffect } from "react";
-import PageError from "../../src/components/PageError";
-import { CategoryTreeInterface } from "../../src/types/categoryTree";
-import Tooltip from "../../src/components/Tooltip";
-import PageHeader from "../../src/components/PageHeader";
-import { BusinessDataInterface } from "../../src/types/business";
-import EcosystemOption from "../../src/components/EcosystemOption";
-import WithAuth from "../../src/components/WithAuth";
-import FieldPriceInput from "../../src/components/FieldPriceInput";
+import PageError from "components/PageError";
+import { CategoryTreeInterface } from "types/categoryTree";
+import Tooltip from "components/Tooltip";
+import PageHeader from "components/PageHeader";
+import { BusinessDataInterface } from "types/business";
+import FieldEcosystemMultiInput from "components/FieldEcosystemMultiInput";
+import WithAuth from "components/WithAuth";
+import FieldPriceInput from "components/FieldPriceInput";
 import listOfCountries from "../../src/data/listOfCountries";
-import FAQInput from "../../src/components/FAQInput";
-import TierPriceInput from "../../src/components/TierpriceInput";
+import FAQInput from "components/FAQInput";
+import TierPriceInput from "components/TierpriceInput";
+import Checkbox from "components/atoms/Checkbox";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -98,6 +99,7 @@ const AddProduct = (props: AddProductProps) => {
         <Formik
           innerRef={formikRef}
           initialValues={{
+            isActive: true,
             name: "",
             shortDescription: "",
             longDescription: "",
@@ -120,10 +122,21 @@ const AddProduct = (props: AddProductProps) => {
           onSubmit={onSubmit}
           validationSchema={ProductSchema}
         >
-          {({ resetForm, values }) => (
+          {({ resetForm, values, setFieldValue }) => (
             <Form>
               <SkuModal />
               <div className="gridContainer">
+                <InputLabel label="Is Active" />
+                <Field name="isActive">
+                  {({ field }) => (
+                    <Checkbox
+                      checked={values.isActive}
+                      onChange={(e) =>
+                        setFieldValue("isActive", e.target.checked)
+                      }
+                    />
+                  )}
+                </Field>
                 <InputLabel label="Name" />
                 <FieldInput name="name" />
                 <InputLabel label="Short Description" />
@@ -152,18 +165,9 @@ const AddProduct = (props: AddProductProps) => {
                     }))}
                 />
                 <InputLabel label="Ecosystems" />
-                <FieldMultiSelect
+                <FieldEcosystemMultiInput
                   name="ecosystems"
-                  options={[
-                    {
-                      value: "Default",
-                      label: "Istakapaza Default Marketplace",
-                    },
-                    ...businessData.ecosystems.map((ecosystem) => ({
-                      value: ecosystem.ecosystem_id._id,
-                      label: <EcosystemOption ecosystem={ecosystem} />,
-                    })),
-                  ]}
+                  businessData={businessData}
                 />
                 <InputLabel label="Brand" />
                 <FieldSelect

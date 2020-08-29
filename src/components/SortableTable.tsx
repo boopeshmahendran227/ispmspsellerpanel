@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CSSConstants from "../constants/CSSConstants";
 import classNames from "classnames";
-import EmptyMsg from "./EmptyMsg";
+import EmptyMsg from "./atoms/EmptyMsg";
 import _ from "lodash";
 
 interface SortHeader {
@@ -104,10 +104,15 @@ const SortableTable = (props: SortableTableProps): JSX.Element => {
           overflow-y: hidden;
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
             0 1px 2px rgba(0, 0, 0, 0.24);
+          background: ${CSSConstants.foregroundColor};
         }
         .sortableTable {
           width: 100%;
           overflow-x: auto;
+        }
+        .sortableTable thead {
+          border-top: 1px solid #f0f0f0;
+          border-bottom: 1px solid #f0f0f0;
         }
         .sortableTable th {
           cursor: pointer;
@@ -117,8 +122,8 @@ const SortableTable = (props: SortableTableProps): JSX.Element => {
           color: ${CSSConstants.secondaryTextColor};
         }
         /* Using :global selector to style child component - body */
-        .sortableTable tbody :global(tr:nth-child(odd)) {
-          background-color: #6565650f;
+        .sortableTable tbody :global(tr) {
+          border-bottom: 1px solid #f0f0f0;
         }
         .sortableTable th {
           position: relative;

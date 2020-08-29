@@ -1,17 +1,20 @@
 import CSSConstants from "../../src/constants/CSSConstants";
 import Link from "next/link";
-import SortableTable from "../../src/components/SortableTable";
-import RelativeImg from "../../src/components/RelativeImg";
-import Pagination from "../../src/components/Pagination";
-import Button from "../../src/components/Button";
-import { DraftMiniInterface } from "../../src/types/draft";
-import { PaginatedDataInterface } from "../../src/types/pagination";
-import PageHeader from "../../src/components/PageHeader";
-import WithAuth from "../../src/components/WithAuth";
+import SortableTable from "components/SortableTable";
+import RelativeImg from "components/RelativeImg";
+import Pagination from "components/Pagination";
+import Button from "components/atoms/Button";
+import { DraftMiniInterface } from "types/draft";
+import { PaginatedDataInterface } from "types/pagination";
+import PageHeader from "components/PageHeader";
+import WithAuth from "components/WithAuth";
 import useSWR from "swr";
 import { useState } from "react";
-import PageError from "../../src/components/PageError";
-import Loader from "../../src/components/Loader";
+import PageError from "components/PageError";
+import Loader from "components/Loader";
+import PageContainer from "components/atoms/PageContainer";
+import PageHeaderContainer from "components/atoms/PageHeaderContainer";
+import PageBodyContainer from "components/atoms/PageBodyContainer";
 
 const Drafts = () => {
   const getTableHeaders = () => {
@@ -75,9 +78,12 @@ const Drafts = () => {
   };
 
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
-  const swr = useSWR(`/product/draft?pageNumber=${currentPageNumber}`);
+  const swr = useSWR<PaginatedDataInterface<DraftMiniInterface>>(
+    `/product/draft?pageNumber=${currentPageNumber}`
+  );
 
-  const draftData: PaginatedDataInterface<DraftMiniInterface> = swr.data;
+  const draftData: PaginatedDataInterface<DraftMiniInterface> | undefined =
+    swr.data;
   const error = swr.error;
 
   if (error) {
@@ -89,45 +95,29 @@ const Drafts = () => {
   }
 
   return (
-    <div className="container">
-      <div className="addProductContainer">
-        <Link href="/product/new">
-          <Button>Add Product</Button>
-        </Link>
-      </div>
-      <PageHeader>Product Drafts</PageHeader>
-      <SortableTable
-        initialSortData={{
-          index: 1,
-          isAsc: false,
-        }}
-        headers={getTableHeaders()}
-        data={draftData.results}
-        emptyMsg="No product Drafts found"
-        body={renderTableBody}
-      />
-      <Pagination data={draftData} onChange={setCurrentPageNumber} />
-      <style jsx>{`
-        .container {
-          padding: 1em;
-          margin: 1em auto;
-          font-size: 0.9rem;
-          background: ${CSSConstants.foregroundColor};
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-            0 1px 2px rgba(0, 0, 0, 0.24);
-        }
-        .addProductContainer {
-          text-align: right;
-          padding: 0.4em 3em;
-          font-size: 1rem;
-        }
-        @media (max-width: 800px) {
-          .container {
-            padding: 0;
-          }
-        }
-      `}</style>
-    </div>
+    <PageContainer>
+      <PageHeaderContainer>
+        <PageHeader>Product Drafts</PageHeader>
+        <div>
+          <Link href="/product/new">
+            <Button>Add Product</Button>
+          </Link>
+        </div>
+      </PageHeaderContainer>
+      <PageBodyContainer>
+        <SortableTable
+          initialSortData={{
+            index: 1,
+            isAsc: false,
+          }}
+          headers={getTableHeaders()}
+          data={draftData.results}
+          emptyMsg="No product Drafts found"
+          body={renderTableBody}
+        />
+        <Pagination data={draftData} onChange={setCurrentPageNumber} />
+      </PageBodyContainer>
+    </PageContainer>
   );
 };
 

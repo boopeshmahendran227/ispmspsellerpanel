@@ -1,15 +1,26 @@
-import { DraftResponseInterface } from "../../src/types/draft";
+import { DraftResponseInterface } from "types/draft";
 import useSWR from "swr";
-import Loader from "../../src/components/Loader";
-import SkuTable from "../../src/components/SkuTable";
+import Loader from "components/Loader";
+import SkuTable from "components/SkuTable";
 import { useRouter } from "next/router";
-import Specification from "../../src/components/Specification";
-import TierPrice from "../../src/components/TierPrice";
-import FAQ from "../../src/components/FAQ";
-import { formatPrice } from "../../src/utils/misc";
+import Specification from "components/Specification";
+import TierPrice from "components/TierPrice";
+import FAQ from "components/FAQ";
 import CSSConstants from "../../src/constants/CSSConstants";
-import PageError from "../../src/components/PageError";
-import WithAuth from "../../src/components/WithAuth";
+import PageError from "components/PageError";
+import WithAuth from "components/WithAuth";
+import ProductMainInfo from "components/ProductMainInfo";
+import ProductPriceDetails from "components/ProductPriceDetails";
+import styled from "styled-components";
+
+const FlexContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  & > div {
+    margin-bottom: 1.5em;
+  }
+`;
 
 const Draft = () => {
   const router = useRouter();
@@ -32,25 +43,18 @@ const Draft = () => {
         <span className="name">Draft #{draft.id}</span>
         <span className="status">{draft.status}</span>
       </header>
-      <div className="body">
-        <div className="gridContainer">
-          <div className="key">Name</div>
-          <div className="value">{draft.name}</div>
-          <div className="key">Product Type</div>
-          <div className="value">{draft.productType}</div>
-          <div className="key">Brand</div>
-          <div className="value">{draft.brandName}</div>
-          <div className="key">Short Description</div>
-          <div className="value">{draft.shortDescription}</div>
-          <div className="key">Long Description</div>
-          <div className="value">{draft.longDescription}</div>
-          <div className="key">Min Price</div>
-          <div className="value">{formatPrice(draft.minPrice)}</div>
-          <div className="key">Max Price</div>
-          <div className="value">{formatPrice(draft.maxPrice)}</div>
-          <div className="key">Special Discount</div>
-          <div className="value">{formatPrice(draft.specialDiscount)}</div>
-        </div>
+      <FlexContainer>
+        <ProductMainInfo
+          name={draft.name}
+          brand={draft.brandName}
+          shortDescription={draft.shortDescription}
+          longDescription={draft.longDescription}
+        />
+        <ProductPriceDetails
+          minPrice={draft.minPrice}
+          maxPrice={draft.maxPrice}
+          specialDiscount={draft.specialDiscount}
+        />
         <SkuTable
           attributeValues={draft.attributeValues}
           skus={draft.skuDetails}
@@ -58,29 +62,15 @@ const Draft = () => {
         <Specification specification={draft.specification} />
         <TierPrice tierPrice={draft.tierPrice} />
         <FAQ faqs={draft.faqs} />
-      </div>
+      </FlexContainer>
       <style jsx>{`
         .container {
-          padding: 0.5em;
+          padding: 0.8em;
         }
         header {
           font-size: 1.4rem;
-          margin: 0.7em;
+          margin: 0.7em 0;
           text-transform: uppercase;
-        }
-        .gridContainer {
-          display: grid;
-          grid-template-columns: 200px 500px;
-          grid-row-gap: 0.3em;
-          align-items: center;
-          font-size: 1.1rem;
-        }
-        .key {
-          font-weight: bold;
-        }
-        .body {
-          padding: 1em 2em;
-          background: white;
         }
         .status {
           border-radius: 2em;

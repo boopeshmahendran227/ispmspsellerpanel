@@ -87,6 +87,7 @@ const TopNavBar = (props: TopNavBarProps) => {
           animation: dragIn ease-in-out 0.5s;
         }
         .fixedContainer {
+          height: 60px;
           padding: 0.9em 1.3em;
           position: fixed;
           top: 0;

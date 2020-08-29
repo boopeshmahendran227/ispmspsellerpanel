@@ -1,5 +1,5 @@
 import Modal from "./Modal";
-import Button from "./Button";
+import Button from "./atoms/Button";
 import { connect } from "react-redux";
 import { RootState } from "../reducers";
 import { getReasonModalData } from "../selectors/ui";
@@ -8,7 +8,7 @@ import { ReasonModalData } from "../types/ui";
 import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
 import RadioButton from "./RadioButton";
-import { splitCamelCase } from "../utils/misc";
+import { splitCamelCase } from "utils/misc";
 
 interface StateProps {
   data: ReasonModalData;

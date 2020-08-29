@@ -1,5 +1,5 @@
 import { ProductDetailQuoteInterface } from "../types/quote";
-import { formatPrice } from "../utils/misc";
+import { formatPrice } from "utils/misc";
 import CSSConstants from "../constants/CSSConstants";
 import ProductCard from "./ProductCard";
 

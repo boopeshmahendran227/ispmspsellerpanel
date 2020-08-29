@@ -1,19 +1,21 @@
-import CSSConstants from "../../src/constants/CSSConstants";
-import PageHeader from "../../src/components/PageHeader";
-import SortableTable from "../../src/components/SortableTable";
-import { InvoiceInterface, InvoiceStatus } from "../../src/types/invoice";
+import PageHeader from "components/PageHeader";
+import SortableTable from "components/SortableTable";
+import { InvoiceInterface, InvoiceStatus } from "types/invoice";
 import moment from "moment";
-import InvoiceStatusTag from "../../src/components/InvoiceStatusTag";
-import PageError from "../../src/components/PageError";
-import Loader from "../../src/components/Loader";
+import InvoiceStatusTag from "components/InvoiceStatusTag";
+import PageError from "components/PageError";
+import Loader from "components/Loader";
 import useSWR from "swr";
-import { formatPrice } from "../../src/utils/misc";
-import TabSection from "../../src/components/TabSection";
-import WithAuth from "../../src/components/WithAuth";
-import Button, { ButtonType } from "../../src/components/Button";
-import UpdateCreditsModal from "../../src/components/UpdateCreditsModal";
+import { formatPrice } from "utils/misc";
+import TabSection from "components/TabSection";
+import WithAuth from "components/WithAuth";
+import Button, { ButtonType } from "components/atoms/Button";
+import UpdateCreditsModal from "components/UpdateCreditsModal";
 import { connect } from "react-redux";
-import CreditActions from "../../src/actions/credit";
+import CreditActions from "actions/credit";
+import PageContainer from "components/atoms/PageContainer";
+import PageBodyContainer from "components/atoms/PageBodyContainer";
+import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 
 interface DispatchProps {
   updateCredits: (invoice: InvoiceInterface) => void;
@@ -127,70 +129,64 @@ const CustomerInvoice = (props: CustomerInvoiceProps) => {
   };
 
   return (
-    <div className="container">
+    <PageContainer>
       <UpdateCreditsModal />
-      <PageHeader>Invoices</PageHeader>
-      <TabSection
-        headingList={[
-          `All Invoices (${invoiceList.length})`,
-          `Pending Invoices (${pendingInvoices.length})`,
-          `Paid Invoices (${paidInvoices.length})`,
-          `Cancelled Invoices (${cancelledInvoices.length})`,
-        ]}
-        contentList={[
-          <SortableTable
-            initialSortData={{
-              index: 2,
-              isAsc: false,
-            }}
-            headers={getTableHeaders()}
-            data={invoiceList}
-            emptyMsg="There are no invoices"
-            body={renderTableBody}
-          />,
-          <SortableTable
-            initialSortData={{
-              index: 2,
-              isAsc: false,
-            }}
-            headers={getTableHeaders()}
-            data={pendingInvoices}
-            emptyMsg="There are no pending invoices"
-            body={renderTableBody}
-          />,
-          <SortableTable
-            initialSortData={{
-              index: 2,
-              isAsc: false,
-            }}
-            headers={getTableHeaders()}
-            data={paidInvoices}
-            emptyMsg="There are no paid invoices"
-            body={renderTableBody}
-          />,
-          <SortableTable
-            initialSortData={{
-              index: 2,
-              isAsc: false,
-            }}
-            headers={getTableHeaders()}
-            data={cancelledInvoices}
-            emptyMsg="There are no cancelled invoices"
-            body={renderTableBody}
-          />,
-        ]}
-      />
-      <style jsx>{`
-        .container {
-          padding: 1em;
-          margin: 1em auto;
-          font-size: 0.9rem;
-          background: ${CSSConstants.foregroundColor};
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-            0 1px 2px rgba(0, 0, 0, 0.24);
-        }
-      `}</style>
-    </div>
+      <PageHeaderContainer>
+        <PageHeader>Invoices</PageHeader>
+      </PageHeaderContainer>
+      <PageBodyContainer>
+        <TabSection
+          headingList={[
+            `All Invoices (${invoiceList.length})`,
+            `Pending Invoices (${pendingInvoices.length})`,
+            `Paid Invoices (${paidInvoices.length})`,
+            `Cancelled Invoices (${cancelledInvoices.length})`,
+          ]}
+          contentList={[
+            <SortableTable
+              initialSortData={{
+                index: 2,
+                isAsc: false,
+              }}
+              headers={getTableHeaders()}
+              data={invoiceList}
+              emptyMsg="There are no invoices"
+              body={renderTableBody}
+            />,
+            <SortableTable
+              initialSortData={{
+                index: 2,
+                isAsc: false,
+              }}
+              headers={getTableHeaders()}
+              data={pendingInvoices}
+              emptyMsg="There are no pending invoices"
+              body={renderTableBody}
+            />,
+            <SortableTable
+              initialSortData={{
+                index: 2,
+                isAsc: false,
+              }}
+              headers={getTableHeaders()}
+              data={paidInvoices}
+              emptyMsg="There are no paid invoices"
+              body={renderTableBody}
+            />,
+            <SortableTable
+              initialSortData={{
+                index: 2,
+                isAsc: false,
+              }}
+              headers={getTableHeaders()}
+              data={cancelledInvoices}
+              emptyMsg="There are no cancelled invoices"
+              body={renderTableBody}
+            />,
+          ]}
+        />
+      </PageBodyContainer>
+    </PageContainer>
   );
 };
 

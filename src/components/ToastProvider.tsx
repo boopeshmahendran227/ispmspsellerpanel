@@ -1,5 +1,5 @@
 import React from "react";
-import Toast from "./Toast";
+import Toast from "./atoms/Toast";
 import Portal from "./Portal";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { connect } from "react-redux";
@@ -30,7 +30,10 @@ function ToastProvider(props: ToastProviderProps) {
           <TransitionGroup component={null}>
             {props.toasts.map((toast) => (
               <CSSTransition timeout={500} classNames="toast" key={toast.id}>
-                <Toast data={toast} remove={() => props.remove(toast.id)} />
+                <Toast
+                  data={toast}
+                  remove={() => toast.id && props.remove(toast.id)}
+                />
               </CSSTransition>
             ))}
           </TransitionGroup>

@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from "react";
 import CSSConstants from "../constants/CSSConstants";
 import _ from "lodash";
+import { ChangeEvent } from "react";
 
 interface SearchBarProps {
   searchText: string;
@@ -8,69 +8,40 @@ interface SearchBarProps {
 }
 
 const SearchBar = (props: SearchBarProps) => {
-  const [value, setValue] = useState("");
-
-  const inputRef = useRef(null);
-  const formRef = useRef(null);
-
-  // Change value whenever searchText changes
-  useEffect(() => {
-    setValue(props.searchText);
-  }, [props.searchText]);
-
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setValue(value);
-  };
-
-  const handleCloseBtnClick = () => {
-    setValue("");
-  };
-
-  const handleSearch = (value) => {
-    inputRef.current.blur();
-
     props.searchByText(value);
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    handleSearch(value);
+  const handleCloseBtnClick = () => {
+    props.searchByText("");
   };
 
   return (
-    <div className="searchContainer">
-      <form onSubmit={onSubmit} ref={formRef}>
-        <input
-          ref={inputRef}
-          name="search"
-          autoComplete="off" // desperately tring to turn off autocompletion
-          placeholder="Search for products"
-          onChange={handleInputChange}
-          value={value}
-        />
-        {Boolean(value) && (
-          <button
-            type="button"
-            className="closeBtn"
-            onClick={handleCloseBtnClick}
-          >
-            <i className="fa fa-times" aria-hidden="true"></i>
-          </button>
-        )}
-        <div className="searchButtonContainer">
-          <button type="submit">
-            <i className="fa fa-search" aria-hidden="true"></i>
-          </button>
-        </div>
-      </form>
+    <div className="container">
+      <input
+        name="search"
+        autoComplete="off" // desperately tring to turn off autocompletion
+        placeholder="Search for products"
+        onChange={handleInputChange}
+        value={props.searchText}
+      />
+      {Boolean(props.searchText) && (
+        <button
+          type="button"
+          className="closeBtn"
+          onClick={handleCloseBtnClick}
+        >
+          <i className="fa fa-times" aria-hidden="true"></i>
+        </button>
+      )}
+      <div className="searchButtonContainer">
+        <button type="submit">
+          <i className="fa fa-search" aria-hidden="true"></i>
+        </button>
+      </div>
       <style jsx>{`
-        .searchContainer {
-          margin: 1em;
-          margin-left: 0;
-        }
-        form {
+        .container {
           width: 300px;
           display: inline-flex;
           border-radius: 0.5em;

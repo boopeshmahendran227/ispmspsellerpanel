@@ -1,4 +1,4 @@
-import CSSConstants from "../constants/CSSConstants";
+import CSSConstants from "../../constants/CSSConstants";
 import classNames from "classnames";
 import Chroma from "chroma-js";
 
@@ -11,7 +11,6 @@ export enum ButtonType {
 }
 
 interface ButtonProps {
-  className?: string;
   type: ButtonType;
   onClick?: (e) => void;
   fullWidth?: boolean;
@@ -38,7 +37,6 @@ const getCurrentColor = (type: ButtonType) => {
 const Button = (props: ButtonProps) => {
   const classes = classNames({
     [props.type]: true,
-    [props.className]: true,
     outlined: props.outlined,
     fullWidth: props.fullWidth,
     ripple: true,
@@ -64,7 +62,6 @@ const Button = (props: ButtonProps) => {
           font-size: inherit;
           border: none;
           letter-spacing: 1px;
-          text-transform: uppercase;
           border-radius: 4px;
         }
         button:not(:disabled):not(.outlined):hover {
@@ -131,7 +128,6 @@ const Button = (props: ButtonProps) => {
 
 Button.defaultProps = {
   type: ButtonType.primary,
-  className: "",
   isSubmitButton: false,
   disabled: false,
   outlined: false,

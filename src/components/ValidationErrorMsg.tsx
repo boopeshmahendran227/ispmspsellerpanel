@@ -1,14 +1,14 @@
-import { capitalizeFirstLetter } from "../utils/misc";
+import { capitalizeFirstLetter } from "utils/misc";
 
 interface ValidationErrorMsgProps {
   children: string;
 }
 
-const ValidationErrorMsg = (props: ValidationErrorMsgProps) => {
+const ValidationErrorMsg = (props: ValidationErrorMsgProps): JSX.Element => {
   const { children } = props;
 
   if (typeof children !== "string") {
-    return null;
+    return <div></div>;
   }
 
   return (

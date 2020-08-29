@@ -1,19 +1,20 @@
 import { Formik, Form } from "formik";
-import Button, { ButtonType } from "../../src/components/Button";
-import InputLabel from "../../src/components/InputLabel";
-import CouponActions from "../../src/actions/coupon";
+import Button, { ButtonType } from "components/atoms/Button";
+import InputLabel from "components/InputLabel";
+import CouponActions from "actions/coupon";
 import { connect } from "react-redux";
-import WithAuth from "../../src/components/WithAuth";
+import WithAuth from "components/WithAuth";
 import {
   CouponInputInterface,
   CouponType,
   CouponRequestInterface,
-} from "../../src/types/coupon";
-import RadioButton from "../../src/components/RadioButton";
-import FieldPriceInput from "../../src/components/FieldPriceInput";
-import FieldPercentageInput from "../../src/components/FieldPercentageInput";
-import FieldDatePicker from "../../src/components/FieldDatePicker";
+} from "types/coupon";
+import RadioButton from "components/RadioButton";
+import FieldPriceInput from "components/FieldPriceInput";
+import FieldPercentageInput from "components/FieldPercentageInput";
+import FieldDatePicker from "components/FieldDatePicker";
 import moment from "moment";
+import BackLink from "components/atoms/BackLink";
 
 interface DispatchProps {
   createCoupon: (couponData: CouponRequestInterface) => void;
@@ -38,8 +39,8 @@ const CreateCoupon = (props: CreateCouponProps) => {
 
   return (
     <div className="container">
+      <BackLink href="/coupon">Back to Coupons</BackLink>
       <header>Create Coupon</header>
-
       <Formik
         initialValues={{
           type: CouponType.FixedAmount,
@@ -82,7 +83,7 @@ const CreateCoupon = (props: CreateCouponProps) => {
                   <div>
                     <RadioButton
                       label="Fixed Amount"
-                      value={null}
+                      value={""}
                       checked={values.type === CouponType.FixedAmount}
                       onChange={(value) =>
                         setFieldValue("type", CouponType.FixedAmount)
@@ -92,7 +93,7 @@ const CreateCoupon = (props: CreateCouponProps) => {
                   <div>
                     <RadioButton
                       label="Percentage"
-                      value={null}
+                      value={""}
                       checked={values.type === CouponType.Percentage}
                       onChange={(value) =>
                         setFieldValue("type", CouponType.Percentage)

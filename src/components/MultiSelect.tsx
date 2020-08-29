@@ -12,7 +12,9 @@ const MultiSelect = (props: MultiSelectProps) => {
     <div className="container">
       <Select
         value={props.value}
-        onChange={(values) => props.onChange(values || [])}
+        onChange={(values: SelectOptionInterface[]) =>
+          props.onChange(values || [])
+        }
         isMulti={true}
         options={props.options}
       />

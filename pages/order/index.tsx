@@ -1,27 +1,28 @@
-import { OrderInterface } from "../../src/types/order";
+import { OrderInterface } from "types/order";
+import Select from "components/Select";
+import { PaginatedDataInterface } from "types/pagination";
+import PageHeader from "components/PageHeader";
+import { SelectOptionInterface } from "types/product";
 import CSSConstants from "../../src/constants/CSSConstants";
-import Select from "../../src/components/Select";
-import { PaginatedDataInterface } from "../../src/types/pagination";
-import DeliveryCodeModal from "../../src/components/DeliveryCodeModal";
-import PageHeader from "../../src/components/PageHeader";
-import { SelectOptionInterface } from "../../src/types/product";
+import DeliveryCodeModal from "components/DeliveryCodeModal";
 import useSWR from "swr";
-import { BusinessDataInterface } from "../../src/types/business";
-import PageError from "../../src/components/PageError";
-import Loader from "../../src/components/Loader";
-import EcosystemOption from "../../src/components/EcosystemOption";
-import WithAuth from "../../src/components/WithAuth";
+import { BusinessDataInterface } from "types/business";
+import PageError from "components/PageError";
+import Loader from "components/Loader";
+import EcosystemOption from "components/atoms/EcosystemOption";
+import WithAuth from "components/WithAuth";
 import { useState } from "react";
 import _ from "lodash";
-import OrdersContainer from "../../src/components/OrdersContainer";
+import OrdersContainer from "components/OrdersContainer";
+import PageContainer from "components/atoms/PageContainer";
+import PageHeaderContainer from "components/atoms/PageHeaderContainer";
+import PageBodyContainer from "components/atoms/PageBodyContainer";
 
 const Orders = () => {
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
-  const [selectedEcosystemId, setSelectedEcosystemId] = useState(null);
+  const [selectedEcosystemId, setSelectedEcosystemId] = useState("");
   const orderSWR = useSWR(
-    selectedEcosystemId
-      ? `/order?pageNumber=${currentPageNumber}&ecosystemids=${selectedEcosystemId}`
-      : `/order?pageNumber=${currentPageNumber}`
+    `/order?pageNumber=${currentPageNumber}&ecosystemids=${selectedEcosystemId}`
   );
 
   const orderData: PaginatedDataInterface<OrderInterface> = orderSWR.data;
@@ -40,8 +41,12 @@ const Orders = () => {
 
   const ecosystems: SelectOptionInterface[] = [
     {
-      value: null,
+      value: "",
       label: "All Ecosystems",
+    },
+    {
+      value: "Default",
+      label: "Istakapaza Default Marketplace",
     },
     ...businessData.ecosystems.map((ecosystem) => ({
       value: ecosystem.ecosystem_id._id,
@@ -53,11 +58,15 @@ const Orders = () => {
     (ecosystem) => ecosystem.value === selectedEcosystemId
   );
 
+  if (!currentEcosystem) {
+    return <PageError statusCode={404} />;
+  }
+
   return (
-    <div className="container">
-      {/* Modals */}
+    <PageContainer>
+       {/* Modals */}
       <DeliveryCodeModal />
-      <div className="headerContainer">
+      <PageHeaderContainer>
         <PageHeader>Order Details</PageHeader>
         <div className="filterContainer">
           <Select
@@ -68,39 +77,20 @@ const Orders = () => {
             options={ecosystems}
           />
         </div>
-      </div>
-      <div className="container">
+      </PageHeaderContainer>
+      <PageBodyContainer>
         <OrdersContainer
           orderData={orderData}
           setCurrentPageNumber={setCurrentPageNumber}
           selectedEcosystemId={selectedEcosystemId}
         />
-      </div>
+      </PageBodyContainer>
       <style jsx>{`
-        .container {
-          padding: 1em 0;
-          margin: 1em auto;
-          font-size: 0.9rem;
-          background: ${CSSConstants.foregroundColor};
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-            0 1px 2px rgba(0, 0, 0, 0.24);
-        }
-        .headerContainer {
-          padding: 0.6em 1.3em;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
         .filterContainer {
           min-width: 300px;
         }
-        @media (max-width: 800px) {
-          .container {
-            padding: 0;
-          }
-        }
       `}</style>
-    </div>
+    </PageContainer>
   );
 };
 

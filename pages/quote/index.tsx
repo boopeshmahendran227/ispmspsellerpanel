@@ -1,21 +1,25 @@
 import { connect } from "react-redux";
 import CSSConstants from "../../src/constants/CSSConstants";
-import TabSection from "../../src/components/TabSection";
-import SortableTable from "../../src/components/SortableTable";
-import { QuoteInterface, QuoteStatus } from "../../src/types/quote";
-import { getQuoteStatusText } from "../../src/utils/quote";
+import TabSection from "components/TabSection";
+import SortableTable from "components/SortableTable";
+import { QuoteInterface, QuoteStatus } from "types/quote";
+import { getQuoteStatusText } from "utils/quote";
 import useSWR from "swr";
-import Loader from "../../src/components/Loader";
+import Loader from "components/Loader";
 import Link from "next/link";
-import ProductCard from "../../src/components/ProductCard";
+import ProductCard from "components/ProductCard";
 import moment from "moment";
-import Button, { ButtonType } from "../../src/components/Button";
-import QuoteActions from "../../src/actions/quote";
-import { formatPrice } from "../../src/utils/misc";
-import { getColor } from "../../src/utils/quote";
-import PageError from "../../src/components/PageError";
-import { getCustomerInfo } from "../../src/utils/customer";
-import WithAuth from "../../src/components/WithAuth";
+import Button, { ButtonType } from "components/atoms/Button";
+import QuoteActions from "actions/quote";
+import { formatPrice } from "utils/misc";
+import { getColor } from "utils/quote";
+import PageError from "components/PageError";
+import { getCustomerInfo } from "utils/customer";
+import WithAuth from "components/WithAuth";
+import PageContainer from "components/atoms/PageContainer";
+import PageHeader from "components/PageHeader";
+import PageHeaderContainer from "components/atoms/PageHeaderContainer";
+import PageBodyContainer from "components/atoms/PageBodyContainer";
 
 interface DispatchProps {
   updateQuote: (quote: QuoteInterface) => void;
@@ -250,95 +254,85 @@ const Quotes = (props: QuotesProps) => {
   );
 
   return (
-    <div className="container">
-      <TabSection
-        headingList={[
-          `All Quotes (${quotes.length})`,
-          `Open Quotes (${openQuotes.length})`,
-          `Responded Quotes (${respondedQuotes.length})`,
-          `Converted Quotes (${convertedQuotes.length})`,
-          `Rejected Quotes (${rejectedQuotes.length})`,
-          `Expired Quotes (${expiredQuotes.length})`,
-        ]}
-        contentList={[
-          <SortableTable
-            initialSortData={{
-              index: 1,
-              isAsc: false,
-            }}
-            headers={getTableHeaders()}
-            data={quotes}
-            emptyMsg="There are no quotes"
-            body={renderTableBody}
-          />,
-          <SortableTable
-            initialSortData={{
-              index: 1,
-              isAsc: false,
-            }}
-            headers={getTableHeaders()}
-            data={openQuotes}
-            emptyMsg="There are no open quotes"
-            body={renderTableBody}
-          />,
-          <SortableTable
-            initialSortData={{
-              index: 1,
-              isAsc: false,
-            }}
-            headers={getTableHeaders()}
-            data={respondedQuotes}
-            emptyMsg="There are no responded quotes"
-            body={renderTableBody}
-          />,
-          <SortableTable
-            initialSortData={{
-              index: 1,
-              isAsc: false,
-            }}
-            headers={getTableHeaders()}
-            data={convertedQuotes}
-            emptyMsg="There are no converted quotes"
-            body={renderTableBody}
-          />,
-          <SortableTable
-            initialSortData={{
-              index: 1,
-              isAsc: false,
-            }}
-            headers={getTableHeaders()}
-            data={rejectedQuotes}
-            emptyMsg="There are no rejected quotes"
-            body={renderTableBody}
-          />,
-          <SortableTable
-            initialSortData={{
-              index: 1,
-              isAsc: false,
-            }}
-            headers={getTableHeaders()}
-            data={expiredQuotes}
-            emptyMsg="There are no expired quotes"
-            body={renderTableBody}
-          />,
-        ]}
-      />
-      <style jsx>{`
-        .container {
-          padding: 1em 0;
-          margin: 1em auto;
-          font-size: 0.9rem;
-          background: ${CSSConstants.foregroundColor};
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-            0 1px 2px rgba(0, 0, 0, 0.24);
-        }
-        @media (max-width: 800px) {
-          .container {
-            padding: 0;
-          }
-        }
-      `}</style>
-    </div>
+    <PageContainer>
+      <PageHeaderContainer>
+        <PageHeader>Quotes</PageHeader>
+      </PageHeaderContainer>
+      <PageBodyContainer>
+        <TabSection
+          headingList={[
+            `All Quotes (${quotes.length})`,
+            `Open Quotes (${openQuotes.length})`,
+            `Responded Quotes (${respondedQuotes.length})`,
+            `Converted Quotes (${convertedQuotes.length})`,
+            `Rejected Quotes (${rejectedQuotes.length})`,
+            `Expired Quotes (${expiredQuotes.length})`,
+          ]}
+          contentList={[
+            <SortableTable
+              initialSortData={{
+                index: 1,
+                isAsc: false,
+              }}
+              headers={getTableHeaders()}
+              data={quotes}
+              emptyMsg="There are no quotes"
+              body={renderTableBody}
+            />,
+            <SortableTable
+              initialSortData={{
+                index: 1,
+                isAsc: false,
+              }}
+              headers={getTableHeaders()}
+              data={openQuotes}
+              emptyMsg="There are no open quotes"
+              body={renderTableBody}
+            />,
+            <SortableTable
+              initialSortData={{
+                index: 1,
+                isAsc: false,
+              }}
+              headers={getTableHeaders()}
+              data={respondedQuotes}
+              emptyMsg="There are no responded quotes"
+              body={renderTableBody}
+            />,
+            <SortableTable
+              initialSortData={{
+                index: 1,
+                isAsc: false,
+              }}
+              headers={getTableHeaders()}
+              data={convertedQuotes}
+              emptyMsg="There are no converted quotes"
+              body={renderTableBody}
+            />,
+            <SortableTable
+              initialSortData={{
+                index: 1,
+                isAsc: false,
+              }}
+              headers={getTableHeaders()}
+              data={rejectedQuotes}
+              emptyMsg="There are no rejected quotes"
+              body={renderTableBody}
+            />,
+            <SortableTable
+              initialSortData={{
+                index: 1,
+                isAsc: false,
+              }}
+              headers={getTableHeaders()}
+              data={expiredQuotes}
+              emptyMsg="There are no expired quotes"
+              body={renderTableBody}
+            />,
+          ]}
+        />
+      </PageBodyContainer>
+    </PageContainer>
   );
 };
 

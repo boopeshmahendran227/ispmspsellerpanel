@@ -1,10 +1,10 @@
 import { ShowroomVisitInterface } from "../types/showroomVisit";
-import EmptyMsg from "../../src/components/EmptyMsg";
-import ShowroomVisitCard from "../../src/components/ShowroomVisitCard";
+import EmptyMsg from "./atoms/EmptyMsg";
+import ShowroomVisitCard from "components/ShowroomVisitCard";
 import Loader from "./Loader";
 
 interface ShowroomVisitsContainerProps {
-  showroomVisits: ShowroomVisitInterface[];
+  showroomVisits: ShowroomVisitInterface[] | undefined;
   dateFilter: moment.Moment;
 }
 

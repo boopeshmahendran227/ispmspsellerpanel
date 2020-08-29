@@ -1,6 +1,6 @@
 import Modal from "./Modal";
 import { useState, useEffect } from "react";
-import Button, { ButtonType } from "../../src/components/Button";
+import Button, { ButtonType } from "./atoms/Button";
 import SelectAttributes from "./SelectAttributes";
 import SelectAttributeValues from "./SelectAttributeValues";
 import { getSkuModalOpen } from "../selectors/ui";
@@ -37,8 +37,12 @@ type SkuModalProps = StateProps & DispatchProps;
 const SkuModal = (props: SkuModalProps) => {
   const { open, onClose } = props;
   const [currentStep, setCurrentStep] = useState(0);
-  const [selectedAttributes, setSelectedAttributes] = useState([]);
-  const [selectedAttributeValues, setSelectedAttributeValues] = useState({});
+  const [selectedAttributes, setSelectedAttributes] = useState<
+    SelectedAttribute[]
+  >([]);
+  const [selectedAttributeValues, setSelectedAttributeValues] = useState<any>(
+    {}
+  );
 
   const steps = [
     <SelectAttributes

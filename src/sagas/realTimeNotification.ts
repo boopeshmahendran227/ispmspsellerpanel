@@ -6,7 +6,7 @@ import ToastActions from "../actions/toast";
 import NotificationActions from "../actions/notification";
 import { NotificationItemInterface } from "../types/notification";
 import { ToastType } from "../types/toast";
-import { getApiUrl } from "../utils/url";
+import { getApiUrl } from "utils/url";
 import { mutate } from "swr";
 
 function* createNotificationChannel() {

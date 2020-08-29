@@ -13,7 +13,7 @@ const constants = {
   outlineColor: "", // This is set down
   primaryTextColor: "#4d4d4d",
   secondaryTextColor: "#878787",
-  hoverColor: "", // This is set down
+  hoverColor: "#f9fafb",
   hoverTextColor: "", // This is set down
   lightPrimaryColor: "", // This is set down
   borderStyle: "", // This is set down
@@ -25,7 +25,6 @@ constants.lightPrimaryColor = Chroma(constants.primaryColor)
   .css();
 constants.borderStyle = `1px solid ${constants.borderColor}`;
 constants.hoverTextColor = constants.primaryColor;
-constants.hoverColor = Chroma(constants.primaryColor).brighten(3.2).css();
 constants.outlineColor = Chroma(constants.primaryColor).brighten(1.9).css();
 
 export default constants;
