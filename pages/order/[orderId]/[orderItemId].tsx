@@ -1,6 +1,5 @@
 import moment from "moment";
 import CSSConstants from "../../../src/constants/CSSConstants";
-import Link from "next/link";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import Loader from "components/Loader";
@@ -8,7 +7,10 @@ import OrderItemDetail from "components/OrderItemDetail";
 import { formatAddress } from "utils/misc";
 import { connect } from "react-redux";
 import OrderActions from "actions/order";
-import { OrderDetailInterface } from "types/order";
+import {
+  OrderDetailInterface,
+  TransformedOrderItemInterface,
+} from "types/order";
 import {
   getOrderStatusText,
   getPaymentText,
@@ -49,11 +51,17 @@ const Order = (props: OrderProps) => {
     return <Loader />;
   }
 
-  const orderItem = transformOrderItem(
+  const item = order.items.find(
+    (orderItem) => orderItem.id === Number(router.query.orderItemId)
+  );
+
+  if (!item) {
+    return <PageError statusCode={404} />;
+  }
+
+  const orderItem: TransformedOrderItemInterface = transformOrderItem(
     order,
-    order.items.find(
-      (orderItem) => orderItem.id === Number(router.query.orderItemId)
-    )
+    item
   );
 
   return (

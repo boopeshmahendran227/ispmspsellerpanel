@@ -1,4 +1,9 @@
-import { OrderInterface, OrderItemInterface, OrderStatus } from "types/order";
+import {
+  OrderInterface,
+  OrderItemInterface,
+  OrderStatus,
+  TransformedOrderItemInterface,
+} from "types/order";
 import OrderActions from "actions/order";
 import { connect } from "react-redux";
 import CSSConstants from "../../src/constants/CSSConstants";
@@ -305,7 +310,7 @@ const OrdersContainer = (props: OrdersContainerProps) => {
 
   const orders: OrderInterface[] = orderData.results;
 
-  const orderItems: OrderItemInterface[] = _.chain(orders)
+  const orderItems: TransformedOrderItemInterface[] = _.chain(orders)
     .map((order) =>
       order.items.map((orderItem) => transformOrderItem(order, orderItem))
     )

@@ -83,7 +83,7 @@ const CreateCoupon = (props: CreateCouponProps) => {
                   <div>
                     <RadioButton
                       label="Fixed Amount"
-                      value={null}
+                      value={""}
                       checked={values.type === CouponType.FixedAmount}
                       onChange={(value) =>
                         setFieldValue("type", CouponType.FixedAmount)
@@ -93,7 +93,7 @@ const CreateCoupon = (props: CreateCouponProps) => {
                   <div>
                     <RadioButton
                       label="Percentage"
-                      value={null}
+                      value={""}
                       checked={values.type === CouponType.Percentage}
                       onChange={(value) =>
                         setFieldValue("type", CouponType.Percentage)

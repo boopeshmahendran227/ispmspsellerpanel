@@ -1,6 +1,9 @@
-import { OrderItemInterface } from "../types/order";
+import { OrderInterface, TransformedOrderItemInterface } from "../types/order";
 
-const transformOrderItem = (order, orderItem): OrderItemInterface => {
+const transformOrderItem = (
+  order: OrderInterface,
+  orderItem
+): TransformedOrderItemInterface => {
   return {
     ...orderItem,
     order,
