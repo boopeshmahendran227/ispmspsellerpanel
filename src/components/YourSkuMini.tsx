@@ -10,7 +10,6 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   cursor: pointer;
-  border-top: 1px solid #f0f0f0;
   border-bottom: 1px solid #f0f0f0;
 `;
 
