@@ -17,8 +17,14 @@ interface YourVariantsTableProps {
   skus: ProductDetailSkuDetail[];
 }
 
-const YourVariantsTable = (props: YourVariantsTableProps): JSX.Element => {
+const YourVariantsTable = (
+  props: YourVariantsTableProps
+): JSX.Element | null => {
   const { productId, skus } = props;
+
+  if (skus.length === 0) {
+    return null;
+  }
 
   return (
     <SectionCard>

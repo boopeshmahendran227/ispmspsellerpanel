@@ -8,8 +8,12 @@ interface OtherSkusTableProps {
   skus: ProductDetailSkuDetail[];
 }
 
-const OtherSkusTable = (props: OtherSkusTableProps): JSX.Element => {
+const OtherSkusTable = (props: OtherSkusTableProps): JSX.Element | null => {
   const { skus } = props;
+
+  if (skus.length === 0) {
+    return null;
+  }
 
   return (
     <SectionCard>
