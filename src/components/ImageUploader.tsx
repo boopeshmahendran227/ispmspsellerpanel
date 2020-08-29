@@ -219,7 +219,7 @@ const ImageUploader = (props: ImageUploaderProps): JSX.Element => {
   };
 
   const onError = (errors: ErrorsType) => {
-    const errorStrings = [];
+    const errorStrings: string[] = [];
 
     if (errors.acceptType) {
       errorStrings.push(
@@ -272,7 +272,7 @@ const ImageUploader = (props: ImageUploaderProps): JSX.Element => {
             }}
             onDragOver={() => setIsDropboxActive(true)}
             onDragLeave={() => setIsDropboxActive(false)}
-            onDrop={(files) => {
+            onDrop={(files: FileList) => {
               addFiles(files);
               setShowDropbox(false);
               setIsDropboxActive(false);

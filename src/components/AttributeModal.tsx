@@ -40,7 +40,7 @@ export const attributeSchema = Yup.object().shape({
 
 const AttributeModal = (props: AttributeModalProps) => {
   const { open, categories } = props;
-  const resetFormRef = useRef(null);
+  const resetFormRef = useRef<any>();
 
   const onSubmit = (values: AddAttributeInterface, { resetForm }) => {
     props.addAttribute(values);

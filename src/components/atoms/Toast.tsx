@@ -37,7 +37,7 @@ const getToastColor = (type: ToastType) => {
 };
 
 const Toast = (props: ToastProps) => {
-  const header = getToastHeader(props.data.type, props.data.header);
+  const header = getToastHeader(props.data.type, props.data.header ?? "");
   const currentColor = getToastColor(props.data.type);
 
   useEffect(() => {

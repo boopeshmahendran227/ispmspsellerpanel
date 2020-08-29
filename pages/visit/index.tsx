@@ -65,7 +65,7 @@ const ShowroomVisits = () => {
             <div>
               <RadioButton
                 label="All Showrooms"
-                value={null}
+                value={""}
                 checked={showroomFilter === null}
                 onChange={handleShowroomChange}
               />
