@@ -15,7 +15,7 @@ import FieldInput from "./FieldInput";
 
 interface StateProps {
   open: boolean;
-  currentInvoice: InvoiceInterface;
+  currentInvoice: InvoiceInterface | null;
 }
 
 interface DispatchProps {

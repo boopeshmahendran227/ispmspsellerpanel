@@ -4,7 +4,7 @@ import { InvoiceInterface } from "../types/invoice";
 
 const getCurrentInvoice = createSelector(
   (state: RootState) => state.invoice,
-  (invoice): InvoiceInterface => invoice.currentInvoice
+  (invoice): InvoiceInterface | null => invoice.currentInvoice
 );
 
 export { getCurrentInvoice };

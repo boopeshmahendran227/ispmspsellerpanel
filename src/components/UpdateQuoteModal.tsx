@@ -16,7 +16,7 @@ import FieldPriceInput from "./FieldPriceInput";
 
 interface StateProps {
   open: boolean;
-  currentQuote: QuoteInterface;
+  currentQuote: QuoteInterface | null;
 }
 
 interface DispatchProps {
