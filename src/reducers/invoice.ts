@@ -3,7 +3,7 @@ import { SET_CURRENT_INVOICE } from "../constants/ActionTypes";
 import { InvoiceInterface, InvoiceActionType } from "../types/invoice";
 
 const getCurrentInvoice = (
-  state: InvoiceInterface = null,
+  state: InvoiceInterface | null = null,
   action: InvoiceActionType
 ) => {
   switch (action.type) {

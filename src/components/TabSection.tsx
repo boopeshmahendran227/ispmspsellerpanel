@@ -99,14 +99,14 @@ const TabSection = (props: TabSectionProps) => {
       <div className="contentContainer">{contents}</div>
       <style jsx>{`
         .headingContainer {
-          box-shadow: 0 1px 3px #00000029;
           display: flex;
+          border-bottom: 1px solid #f0f0f0;
         }
         .headings {
           display: flex;
           position: relative;
           list-style: none;
-          padding: 0;
+          padding: 0.3em 0;
           margin: 0;
         }
         .activeLine {

@@ -1,6 +1,6 @@
 import { DayPickerSingleDateController } from "react-dates";
 import moment from "moment";
-import BorderButton from "./BorderButton";
+import Button from "./atoms/Button";
 
 interface SingleDatePickerProps {
   onChange: (date: moment.Moment) => void;
@@ -28,14 +28,14 @@ const SingleDatePicker = (props: SingleDatePickerProps) => {
           const isActive = value.isSame(props.value, "date");
 
           return (
-            <BorderButton
-              isActive={isActive}
+            <Button
+              outlined={!isActive}
               onClick={() => {
                 props.onChange(value);
               }}
             >
               {text}
-            </BorderButton>
+            </Button>
           );
         })}
         <style jsx>{`

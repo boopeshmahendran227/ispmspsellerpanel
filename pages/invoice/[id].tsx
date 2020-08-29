@@ -8,11 +8,11 @@ import {
 } from "../../src/utils/misc";
 import useSWR from "swr";
 import { useRouter } from "next/router";
-import Loader from "../../src/components/Loader";
-import { OrderItemInterface, OrderStatus } from "../../src/types/order";
-import { InvoiceDetailInterface, InvoiceStatus } from "../../src/types/invoice";
-import WithAuth from "../../src/components/WithAuth";
-import PageError from "../../src/components/PageError";
+import Loader from "components/Loader";
+import { OrderItemInterface, OrderStatus } from "types/order";
+import { InvoiceDetailInterface, InvoiceStatus } from "types/invoice";
+import WithAuth from "components/WithAuth";
+import PageError from "components/PageError";
 import LogoIcon from "../../public/icons/logo.png";
 import CSSConstants from "../../src/constants/CSSConstants";
 import classNames from "classnames";

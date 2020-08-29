@@ -71,9 +71,10 @@ const getAttributeValueCombinations = (
   attributeValuesMap[attributeId].forEach((value: AttributeValueInterface) => {
     currentAttributeValueIds[index] = {
       attributeId: Number(attributeId),
-      attributeName: selectedAttributes.find(
-        (attribute) => attribute.attributeId === Number(attributeId)
-      )?.attributeName,
+      attributeName:
+        selectedAttributes.find(
+          (attribute) => attribute.attributeId === Number(attributeId)
+        )?.attributeName || "",
       value: value.value,
       valueId: value.id,
     };

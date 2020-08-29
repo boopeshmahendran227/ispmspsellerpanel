@@ -1,26 +1,27 @@
-import MetricCard from "../src/components/MetricCard";
-import { SummaryInterface } from "../src/types/insights";
+import MetricCard from "components/MetricCard";
+import { SummaryInterface } from "types/insights";
 import useSWR from "swr";
 import React, { useState } from "react";
-import Loader from "../src/components/Loader";
-import PageError from "../src/components/PageError";
-import WithAuth from "../src/components/WithAuth";
+import Loader from "components/Loader";
+import PageError from "components/PageError";
+import WithAuth from "components/WithAuth";
 import moment from "moment";
 import { formatPrice } from "../src/utils/misc";
 import CSSConstants from "../src/constants/CSSConstants";
-import Select from "../src/components/Select";
+import Select from "components/Select";
 import { SelectOptionInterface } from "../src/types/product";
-import RecentOrders from "../src/components/RecentOrders";
-import TopSold, { TopSoldItems } from "../src/components/TopSold";
-import PercentageArrow from "../src/components/PercentArrow";
+import RecentOrders from "components/RecentOrders";
+import TopSold, { TopSoldItems } from "components/TopSold";
+import PercentageArrow from "components/PercentArrow";
 import RevenueLineChart, {
   formatLineData,
   MonthlySalesInterface,
 } from "../src/components/RevenueLineChart";
-import { percentageDifference } from "../src/components/RevenueLineChart";
-import OrderCountPieChart from "../src/components/OrdersPieChart";
+import { percentageDifference } from "components/RevenueLineChart";
+import OrderCountPieChart from "components/OrdersPieChart";
 import { OrderInterface } from "../src/types/order";
 import { PaginatedDataInterface } from "../src/types/pagination";
+
 
 enum PeriodState {
   week,

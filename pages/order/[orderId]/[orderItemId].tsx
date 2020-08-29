@@ -1,26 +1,29 @@
 import moment from "moment";
 import CSSConstants from "../../../src/constants/CSSConstants";
-import Link from "next/link";
 import useSWR from "swr";
 import { useRouter } from "next/router";
-import Loader from "../../../src/components/Loader";
-import OrderItemDetail from "../../../src/components/OrderItemDetail";
-import { formatAddress } from "../../../src/utils/misc";
+import Loader from "components/Loader";
+import OrderItemDetail from "components/OrderItemDetail";
+import { formatAddress } from "utils/misc";
 import { connect } from "react-redux";
-import OrderActions from "../../../src/actions/order";
-import { OrderDetailInterface } from "../../../src/types/order";
+import OrderActions from "actions/order";
+import {
+  OrderDetailInterface,
+  TransformedOrderItemInterface,
+} from "types/order";
 import {
   getOrderStatusText,
   getPaymentText,
   getPaymentModeColor,
-} from "../../../src/utils/order";
-import PageError from "../../../src/components/PageError";
-import ShippingInformationContainer from "../../../src/components/ShippingInformationContainer";
-import DeliveryCodeModal from "../../../src/components/DeliveryCodeModal";
-import OrderInformation from "../../../src/components/OrderInformation";
-import WithAuth from "../../../src/components/WithAuth";
+} from "utils/order";
+import PageError from "components/PageError";
+import ShippingInformationContainer from "components/ShippingInformationContainer";
+import OrderInformation from "components/OrderInformation";
+import WithAuth from "components/WithAuth";
+import DeliveryCodeModal from "components/DeliveryCodeModal";
 import { transformOrderItem } from "../../../src/transformers/orderItem";
-import Button from "../../../src/components/Button";
+import Button from "components/atoms/Button";
+import BackLink from "components/atoms/BackLink";
 
 interface DispatchProps {
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
@@ -50,21 +53,23 @@ const Order = (props: OrderProps) => {
     return <Loader />;
   }
 
-  const orderItem = transformOrderItem(
+  const item = order.items.find(
+    (orderItem) => orderItem.id === Number(router.query.orderItemId)
+  );
+
+  if (!item) {
+    return <PageError statusCode={404} />;
+  }
+
+  const orderItem: TransformedOrderItemInterface = transformOrderItem(
     order,
-    order.items.find(
-      (orderItem) => orderItem.id === Number(router.query.orderItemId)
-    )
+    item
   );
 
   return (
     <div className="container">
       <DeliveryCodeModal />
-      <Link href="/order">
-        <a className="backBtn">
-          <i className="icon fas fa-chevron-left"></i> Back to Orders
-        </a>
-      </Link>
+      <BackLink href="/order">Back to Orders</BackLink>
       <header>
         <span className="id">
           #{order.id}-{orderItem.id}
@@ -164,7 +169,7 @@ const Order = (props: OrderProps) => {
           font-size: 1.6rem;
         }
         header {
-          margin-bottom: 1em;
+          margin: 1em 0;
         }
         .invoiceBtnContainer {
           margin: 0.5em 0;
@@ -203,12 +208,6 @@ const Order = (props: OrderProps) => {
           padding-bottom: 0.4em;
           padding-left: 0.8em;
           padding-right: 0.8em;
-        }
-        .backBtn {
-          display: inline-block;
-          cursor: pointer;
-          margin: 1em 0;
-          font-size: 1.1rem;
         }
       `}</style>
     </div>

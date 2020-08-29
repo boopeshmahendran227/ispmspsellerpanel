@@ -35,9 +35,9 @@ function* addProduct(action) {
         maxPrice: product.maxPrice,
         minPrice: product.minPrice,
         specialDiscountValue: product.specialDiscountValue,
-        brandId: product.brand.value,
-        countryOfOrigin: product.countryOfOrigin.value,
-        defaultCategoryId: product.defaultCategory.value,
+        brandId: product.brand?.value,
+        countryOfOrigin: product.countryOfOrigin?.value,
+        defaultCategoryId: product.defaultCategory?.value,
         parentCategoryIds: product.categories.map((category) => category.value),
         skuDetails: product.skus.map((sku) => ({
           ...sku,
@@ -66,7 +66,7 @@ function* addProduct(action) {
             }));
           })
           .flatten(),
-        taxGroupId: product.taxGroup.value,
+        taxGroupId: product.taxGroup?.value,
         productSpecificationDto: product.specification,
       },
     });

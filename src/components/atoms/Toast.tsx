@@ -1,6 +1,6 @@
-import CSSConstants from "../constants/CSSConstants";
+import CSSConstants from "../../constants/CSSConstants";
 import { useEffect } from "react";
-import { ToastDataInterface, ToastType } from "../types/toast";
+import { ToastDataInterface, ToastType } from "../../types/toast";
 import Chroma from "chroma-js";
 
 interface ToastProps {
@@ -37,7 +37,7 @@ const getToastColor = (type: ToastType) => {
 };
 
 const Toast = (props: ToastProps) => {
-  const header = getToastHeader(props.data.type, props.data.header);
+  const header = getToastHeader(props.data.type, props.data.header ?? "");
   const currentColor = getToastColor(props.data.type);
 
   useEffect(() => {

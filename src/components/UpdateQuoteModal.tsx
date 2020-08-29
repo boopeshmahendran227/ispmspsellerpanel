@@ -1,5 +1,5 @@
 import Modal from "./Modal";
-import Button from "./Button";
+import Button from "./atoms/Button";
 import { connect } from "react-redux";
 import { RootState } from "../reducers";
 import { QuoteInterface, QuoteItemUpdate } from "../types/quote";
@@ -7,7 +7,7 @@ import { getCurrentQuote } from "../selectors/quote";
 import { getUpdateQuoteModalOpen } from "../selectors/ui";
 import ProductCard from "./ProductCard";
 import { Formik, Form, FieldArray } from "formik";
-import { formatPrice } from "../utils/misc";
+import { formatPrice } from "utils/misc";
 import UIActions from "../actions/ui";
 import QuoteActions from "../actions/quote";
 import * as Yup from "yup";
@@ -16,7 +16,7 @@ import FieldPriceInput from "./FieldPriceInput";
 
 interface StateProps {
   open: boolean;
-  currentQuote: QuoteInterface;
+  currentQuote: QuoteInterface | null;
 }
 
 interface DispatchProps {

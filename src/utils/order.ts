@@ -1,4 +1,4 @@
-import { splitCamelCase } from "../utils/misc";
+import { splitCamelCase } from "utils/misc";
 import { OrderStatus } from "../types/order";
 import CSSConstants from "../constants/CSSConstants";
 import { PaymentMode } from "../types/invoice";

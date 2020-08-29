@@ -1,66 +1,60 @@
 import { ProductMiniInterface } from "../types/product";
-import SortableTable from "../../src/components/SortableTable";
-import Pagination from "../../src/components/Pagination";
-import RelativeImg from "../../src/components/RelativeImg";
+import SortableTable from "components/SortableTable";
+import Pagination from "components/Pagination";
 import CSSConstants from "../../src/constants/CSSConstants";
 import Loader from "./Loader";
+import Link from "next/link";
 import { PaginatedDataInterface } from "../types/pagination";
+import ProductCard from "./ProductCard";
 
 interface ProductsContainerProps {
-  productData: PaginatedDataInterface<ProductMiniInterface>;
+  productData: PaginatedDataInterface<ProductMiniInterface> | undefined;
   setCurrentPageNumber: (pageNumber: number) => void;
 }
 
 const getTableHeaders = () => {
   return [
     {
-      name: "Product Id",
-      valueFunc: (product: ProductMiniInterface) => product.id,
+      name: "Id",
+      valueFunc: (product: ProductMiniInterface) => product.productId,
     },
     {
-      name: "Image",
+      name: "Product",
       valueFunc: (product: ProductMiniInterface) => null,
     },
     {
-      name: "Name",
-      valueFunc: (product: ProductMiniInterface) => product.name,
-    },
-    {
-      name: "Average Rating",
-      valueFunc: (product: ProductMiniInterface) => product.averageRating,
-    },
-    {
       name: "Short Description",
-      valueFunc: (product: ProductMiniInterface) => product.shortDescription,
+      valueFunc: (product: ProductMiniInterface) =>
+        product.productShortDescription,
+    },
+    {
+      name: "Status",
+      valueFunc: (product: ProductMiniInterface) => product.isActive,
     },
   ];
 };
 
 const renderTableBody = (products: ProductMiniInterface[]) => {
   return products.map((product) => (
-    <tr>
-      <td>{product.id}</td>
-      <td>
-        <div className="imageContainer">
-          <RelativeImg src={product.imageRelativePaths[0]} />
-        </div>
-      </td>
-      <td>{product.name}</td>
-      <td>{product.averageRating}</td>
-      <td>{product.shortDescription}</td>
-      <style jsx>{`
-        .imageContainer {
-          display: inline-flex;
-          width: 5rem;
-          height: 5rem;
-          align-items: center;
-        }
-        tr:hover {
-          background-color: ${CSSConstants.hoverColor} !important;
-          cursor: pointer;
-        }
-      `}</style>
-    </tr>
+    <Link href="/product/[id]" as={`/product/${product.productId}`}>
+      <tr>
+        <td>{product.productId}</td>
+        <td>
+          <ProductCard
+            name={product.productName}
+            image={product.productImages[0]}
+          />
+        </td>
+        <td>{product.productShortDescription}</td>
+        <td>{product.isActive ? "Active" : "Inactive"}</td>
+        <style jsx>{`
+          tr:hover {
+            background-color: ${CSSConstants.hoverColor} !important;
+            cursor: pointer;
+          }
+        `}</style>
+      </tr>
+    </Link>
   ));
 };
 

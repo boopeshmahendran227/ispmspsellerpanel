@@ -6,7 +6,7 @@ import {
 import { takeLatest, all, call, put } from "redux-saga/effects";
 import api from "../api";
 import { destroyCookie } from "nookies";
-import { redirectToLogin } from "../utils/login";
+import { redirectToLogin } from "utils/login";
 
 function* logout() {
   try {

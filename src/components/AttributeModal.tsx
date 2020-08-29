@@ -1,9 +1,9 @@
 import Modal from "./Modal";
 import { connect } from "react-redux";
 import { Formik, Form, ArrayHelpers } from "formik";
-import FieldInput from "../../src/components/FieldInput";
-import FieldTextArea from "../../src/components/FieldTextArea";
-import Button from "../../src/components/Button";
+import FieldInput from "components/FieldInput";
+import FieldTextArea from "components/FieldTextArea";
+import Button from "./atoms/Button";
 import { AddAttributeInterface, AttributeType } from "../types/product";
 import { RootState } from "../reducers";
 import { getAttributeModalOpen } from "../selectors/ui";
@@ -40,7 +40,7 @@ export const attributeSchema = Yup.object().shape({
 
 const AttributeModal = (props: AttributeModalProps) => {
   const { open, categories } = props;
-  const resetFormRef = useRef(null);
+  const resetFormRef = useRef<any>();
 
   const onSubmit = (values: AddAttributeInterface, { resetForm }) => {
     props.addAttribute(values);

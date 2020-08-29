@@ -4,21 +4,29 @@
 import * as React from "react";
 import { createPortal } from "react-dom";
 
-export default class Portal extends React.Component {
-  state = {
-    newElement: null
+interface StateInterface {
+  newElement: Element | null;
+}
+
+export default class Portal extends React.Component<{}, StateInterface> {
+  state: StateInterface = {
+    newElement: null,
   };
-  portalRoot = null;
+  portalRoot: Element | null = null;
 
   componentDidMount = () => {
     const newElement = document.createElement("div");
     this.portalRoot = document.querySelector(".portalRoot");
-    this.portalRoot.appendChild(newElement);
+    if (this.portalRoot) {
+      this.portalRoot.appendChild(newElement);
+    }
     this.setState({ newElement });
   };
 
   componentWillUnmount = () => {
-    this.portalRoot.removeChild(this.state.newElement);
+    if (this.portalRoot && this.state.newElement) {
+      this.portalRoot.removeChild(this.state.newElement);
+    }
   };
 
   render = () => {

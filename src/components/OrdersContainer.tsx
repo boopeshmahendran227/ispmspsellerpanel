@@ -1,18 +1,18 @@
 import {
   OrderInterface,
-  OrderItemInterface,
   OrderStatus,
-} from "../../src/types/order";
-import OrderActions from "../../src/actions/order";
+  TransformedOrderItemInterface,
+} from "types/order";
+import OrderActions from "actions/order";
 import { connect } from "react-redux";
 import CSSConstants from "../../src/constants/CSSConstants";
-import TabSection from "../../src/components/TabSection";
+import TabSection from "components/TabSection";
 import Link from "next/link";
-import ProductCard from "../../src/components/ProductCard";
-import { formatPrice } from "../../src/utils/misc";
+import ProductCard from "components/ProductCard";
+import { formatPrice } from "utils/misc";
 import moment from "moment";
-import SortableTable from "../../src/components/SortableTable";
-import Button, { ButtonType } from "../../src/components/Button";
+import SortableTable from "components/SortableTable";
+import Button, { ButtonType } from "./atoms/Button";
 import {
   getColor,
   getOrderStatusText,
@@ -22,12 +22,12 @@ import {
   isReturnedOrderStatus,
   isOpenOrderStatus,
   isDeliveredOrderStatus,
-} from "../../src/utils/order";
-import Pagination from "../../src/components/Pagination";
-import { PaginatedDataInterface } from "../../src/types/pagination";
-import { getCustomerInfo } from "../../src/utils/customer";
-import ProductOrdersContainer from "../../src/components/ProductOrdersContainer";
-import Loader from "../../src/components/Loader";
+} from "utils/order";
+import Pagination from "components/Pagination";
+import { PaginatedDataInterface } from "types/pagination";
+import { getCustomerInfo } from "utils/customer";
+import ProductOrdersContainer from "components/ProductOrdersContainer";
+import Loader from "components/Loader";
 import { transformOrderItem } from "../../src/transformers/orderItem";
 import _ from "lodash";
 
@@ -56,49 +56,52 @@ const OrdersContainer = (props: OrdersContainerProps) => {
     return [
       {
         name: "Order Id",
-        valueFunc: (orderItem: OrderItemInterface) => orderItem.id,
+        valueFunc: (orderItem: TransformedOrderItemInterface) => orderItem.id,
       },
       {
         name: "Item Id",
-        valueFunc: (orderItem: OrderItemInterface) => orderItem.id,
+        valueFunc: (orderItem: TransformedOrderItemInterface) => orderItem.id,
       },
       {
         name: "Customer",
-        valueFunc: (orderItem: OrderItemInterface) => null,
+        valueFunc: (orderItem: TransformedOrderItemInterface) => null,
       },
       {
         name: "Product",
-        valueFunc: (orderItem: OrderItemInterface) => null,
+        valueFunc: (orderItem: TransformedOrderItemInterface) => null,
       },
       {
         name: "Price",
-        valueFunc: (orderItem: OrderItemInterface) => orderItem.discountedPrice,
+        valueFunc: (orderItem: TransformedOrderItemInterface) =>
+          orderItem.discountedPrice,
       },
       {
         name: "Qty",
-        valueFunc: (orderItem: OrderItemInterface) => orderItem.qty,
+        valueFunc: (orderItem: TransformedOrderItemInterface) => orderItem.qty,
       },
       {
         name: "Payment",
-        valueFunc: (orderItem: OrderItemInterface) =>
+        valueFunc: (orderItem: TransformedOrderItemInterface) =>
           orderItem.order.paymentSplits[0].paymentMode,
       },
       {
         name: "Status",
-        valueFunc: (orderItem: OrderItemInterface) => orderItem.orderItemStatus,
+        valueFunc: (orderItem: TransformedOrderItemInterface) =>
+          orderItem.orderItemStatus,
       },
       {
         name: "Created",
-        valueFunc: (orderItem: OrderItemInterface) => orderItem.createdDateTime,
+        valueFunc: (orderItem: TransformedOrderItemInterface) =>
+          orderItem.createdDateTime,
       },
       {
         name: "Actions",
-        valueFunc: (orderItem: OrderItemInterface) => null,
+        valueFunc: (orderItem: TransformedOrderItemInterface) => null,
       },
     ];
   };
 
-  const getButtons = (orderItem: OrderItemInterface) => {
+  const getButtons = (orderItem: TransformedOrderItemInterface) => {
     const handleClick = (e, action) => {
       action(orderItem.order.id, orderItem.id);
       e.preventDefault();
@@ -239,7 +242,7 @@ const OrdersContainer = (props: OrdersContainerProps) => {
     return null;
   };
 
-  const renderTableBody = (orderItems: OrderItemInterface[]) => {
+  const renderTableBody = (orderItems: TransformedOrderItemInterface[]) => {
     return orderItems.map((orderItem) => (
       <Link
         key={orderItem.id}
@@ -330,7 +333,7 @@ const OrdersContainer = (props: OrdersContainerProps) => {
 
   const orders: OrderInterface[] = orderData.results;
 
-  const orderItems: OrderItemInterface[] = _.chain(orders)
+  const orderItems: TransformedOrderItemInterface[] = _.chain(orders)
     .map((order) =>
       order.items.map((orderItem) => transformOrderItem(order, orderItem))
     )

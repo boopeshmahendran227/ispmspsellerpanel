@@ -44,7 +44,6 @@ export enum OrderStatus {
 
 export interface OrderItemInterface {
   id: number;
-  order?: OrderInterface;
   productId: number;
   skuId: string;
   sellerId: string;
@@ -109,6 +108,10 @@ export interface OrderItemInterface {
     };
   };
   createdDateTime: string;
+}
+
+export interface TransformedOrderItemInterface extends OrderItemInterface {
+  order: OrderInterface;
 }
 
 export interface OrderStatusHistoryItem {

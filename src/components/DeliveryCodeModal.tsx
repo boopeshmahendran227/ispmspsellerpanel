@@ -1,5 +1,5 @@
 import Modal from "./Modal";
-import Button from "./Button";
+import Button from "components/atoms/Button";
 import { connect } from "react-redux";
 import { RootState } from "../reducers";
 import { getDeliveryCodeModalOpen } from "../selectors/ui";

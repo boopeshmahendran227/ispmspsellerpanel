@@ -1,15 +1,14 @@
 import SortableTable from "./SortableTable";
-import {
-  ProductSkuDetail,
-  ResponseAttributeValuesInterface,
-} from "../types/product";
+import { ProductSkuDetail } from "../types/product";
 import CSSConstants from "../constants/CSSConstants";
 import RelativeImg from "./RelativeImg";
-import { formatPrice } from "../utils/misc";
+import { formatPrice } from "utils/misc";
+import { DraftAttributeValuesInterface } from "../types/draft";
+import { AttributeValueID } from "types/sku";
 
 interface SkuTableProps {
   skus: ProductSkuDetail[];
-  attributeValues: ResponseAttributeValuesInterface[];
+  attributeValues: DraftAttributeValuesInterface[];
 }
 
 const getTableHeaders = () => {
@@ -66,7 +65,7 @@ const getTableHeaders = () => {
 };
 
 const renderTableBody = (
-  attributeValues: ResponseAttributeValuesInterface[],
+  attributeValues: AttributeValueID[],
   skus: ProductSkuDetail[]
 ) => {
   const getAttributeName = (attributeId: number) => {
@@ -134,7 +133,6 @@ const SkuTable = (props: SkuTableProps) => {
       />
       <style jsx>{`
         .container {
-          margin: 3em 0;
           font-size: 1.1rem;
         }
         header {

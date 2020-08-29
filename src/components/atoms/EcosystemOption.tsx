@@ -1,5 +1,5 @@
-import { EcosystemDataInterface } from "../types/business";
-import CSSConstants from "../constants/CSSConstants";
+import { EcosystemDataInterface } from "../../types/business";
+import CSSConstants from "../../constants/CSSConstants";
 
 interface EcosystemOptionProps {
   ecosystem: EcosystemDataInterface;
