@@ -1,5 +1,7 @@
+import { OrderStatus } from "./order";
+
 export interface SummaryInterface {
-  orderCount: {};
+  orderCount: Record<OrderStatus, number>;
   totalOrderCount: number;
   totalRevenue: number;
   totalQuotes: number;
