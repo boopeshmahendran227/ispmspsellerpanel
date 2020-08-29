@@ -47,8 +47,8 @@ const validationSchema = Yup.object({
         attributeId: Yup.number().defined(),
         attributeName: Yup.string().defined(),
         value: Yup.object({
-          value: Yup.number(),
-          label: Yup.string(),
+          value: Yup.number().defined(),
+          label: Yup.string().defined(),
         }).defined(),
       }).defined()
     )
@@ -116,8 +116,8 @@ const Sku = (props: SkuProps) => {
       attributeValueIds: values.attributes.map((attribute) => ({
         attributeId: attribute.attributeId,
         attributeName: attribute.attributeName,
-        valueId: attribute.value?.value,
-        value: attribute.value?.label,
+        valueId: attribute.value.value,
+        value: attribute.value.label,
       })),
     });
   };
