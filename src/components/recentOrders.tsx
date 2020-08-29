@@ -6,10 +6,10 @@ import ProductCard from "./ProductCard";
 import { transformOrderItem } from "../transformers/orderItem";
 import _ from "lodash";
 import moment from "moment";
-import { OrderInterface } from "../types/order";
+import { OrderInterface, OrderItemInterface } from "../types/order";
 
 interface RecentOrdersProps {
-  data: OrderInterface;
+  data: OrderInterface[];
 }
 
 const RecentOrders = (props: RecentOrdersProps): JSX.Element => {

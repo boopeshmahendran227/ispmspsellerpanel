@@ -19,6 +19,7 @@ import RevenueLineChart, {
 import { percentageDifference } from "../src/components/RevenueLineChart";
 import OrderCountPieChart from "../src/components/OrdersPieChart";
 import { OrderInterface } from "../src/types/order";
+import { PaginatedDataInterface } from "../src/types/pagination";
 
 enum PeriodState {
   week,
@@ -48,7 +49,7 @@ const Home = (): JSX.Element => {
   const endDate = moment().endOf("day");
 
   const orderSWR = useSWR("/order?pageSize=6");
-  const orderData = orderSWR.data;
+  const orderData: PaginatedDataInterface<OrderInterface> = orderSWR.data;
 
   const topSellingSWR = useSWR(
     period.value === PeriodState.week
@@ -90,7 +91,7 @@ const Home = (): JSX.Element => {
   if (!summary || !orderData || !topSelling || !monthlySales) {
     return <Loader />;
   }
-
+  const orders: OrderInterface[] = orderData.results;
   return (
     <div className="gridContainer">
       <header>
@@ -177,7 +178,7 @@ const Home = (): JSX.Element => {
       </div>
       <div className="recentOrderContainer">
         <h4 className="title"> Recent Orders</h4>
-        <RecentOrders data={orderData.results}></RecentOrders>
+        <RecentOrders data={orders}></RecentOrders>
       </div>
       <style jsx>{`
         .gridContainer {
