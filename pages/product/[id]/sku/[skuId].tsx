@@ -135,13 +135,20 @@ const Sku = (props: SkuProps): JSX.Element => {
               height: currentSku.height,
               weight: currentSku.weight,
               ecosystemIds: currentSku.ecosystemIds,
-              attributes: _.zipObject(
-                currentSku.attributeValueIds.map((item) => item.attributeId),
-                currentSku.attributeValueIds.map((item) => ({
-                  value: item.valueId,
-                  label: item.value,
-                }))
-              ),
+              attributes: attributes.map((attribute) => ({
+                attributeId: attribute.attributeId,
+                attributeName: attribute.attributeName,
+                value: {
+                  value: currentSku.attributeValueIds.find(
+                    (attrVaueId) =>
+                      attrVaueId.attributeId === attribute.attributeId
+                  )?.valueId,
+                  label: currentSku.attributeValueIds.find(
+                    (attrVaueId) =>
+                      attrVaueId.attributeId === attribute.attributeId
+                  )?.value,
+                },
+              })),
             }}
             validationSchema={validationSchema}
             enableReinitialize={true}
@@ -157,7 +164,7 @@ const Sku = (props: SkuProps): JSX.Element => {
                         <label>{attribute.attributeName}</label>
                         <FieldSelect
                           disabled={true}
-                          name={`attributes.${attribute.attributeId}`}
+                          name={`attributes.${attribute.attributeId}.value`}
                           options={attribute.attributeValues.map((value) => ({
                             value: value.valueId,
                             label: value.value,

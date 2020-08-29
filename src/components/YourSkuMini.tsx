@@ -4,6 +4,7 @@ import RelativeImg from "./RelativeImg";
 import CSSConstants from "../constants/CSSConstants";
 import styled from "styled-components";
 import { ProductDetailSkuDetail } from "types/product";
+import { AttributeValueID } from "types/sku";
 
 const Container = styled.div`
   padding: 0.8em;
@@ -40,6 +41,15 @@ const ContentContainer = styled.div`
   width: 80px;
 `;
 
+const AttributeValues = styled.div`
+  margin-top: 0.4em;
+  color: ${CSSConstants.secondaryTextColor};
+`;
+
+const AttributeValue = styled.div`
+  margin-top: 0.2em;
+`;
+
 interface YourSkuMiniProps {
   productId: number;
   sku: ProductDetailSkuDetail;
@@ -58,7 +68,20 @@ const YourSkuMini = (props: YourSkuMiniProps): JSX.Element => {
           <ImageContainer>
             <RelativeImg src={sku.imageRelativePaths[0]} />
           </ImageContainer>
-          <SkuName>{sku.skuId}</SkuName>
+          <div>
+            <SkuName>{sku.skuId}</SkuName>
+            <AttributeValues>
+              {sku.attributeValueIds.map(
+                (attributeValueId: AttributeValueID) => (
+                  <AttributeValue>
+                    {attributeValueId.attributeName +
+                      ": " +
+                      attributeValueId.value}
+                  </AttributeValue>
+                )
+              )}
+            </AttributeValues>
+          </div>
         </MainContainer>
         <ContentContainer>
           <Price>{formatPrice(sku.price)}</Price>

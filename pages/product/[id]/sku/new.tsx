@@ -47,8 +47,8 @@ const validationSchema = Yup.object({
         attributeId: Yup.number().defined(),
         attributeName: Yup.string().defined(),
         value: Yup.object({
-          value: Yup.number().defined(),
-          label: Yup.string().defined(),
+          value: Yup.number(),
+          label: Yup.string(),
         }).defined(),
       }).defined()
     )
@@ -86,7 +86,6 @@ const Sku = (props: SkuProps) => {
   const product: ProductDetailInterface = productSWR.data;
   const businessData: BusinessDataInterface = businessSWR.data;
 
-  console.log(skuIdToCopyFrom);
   const error = productSWR.error || businessSWR.error;
 
   if (error) {
@@ -100,10 +99,8 @@ const Sku = (props: SkuProps) => {
   const skuToCopyFrom = product.unOwnedSkuDetails.find(
     (sku) => sku.skuId === skuIdToCopyFrom
   );
-  console.log(product.unOwnedSkuDetails);
-  console.log(skuToCopyFrom);
 
-  if (!skuToCopyFrom) {
+  if (skuIdToCopyFrom && !skuToCopyFrom) {
     return <PageError statusCode={404} />;
   }
 
@@ -147,26 +144,57 @@ const Sku = (props: SkuProps) => {
         </div>
         <div className="formContainer">
           <Formik
-            initialValues={{
-              price: 0,
-              boughtPrice: 0,
-              qty: 0,
-              barcodeIdentifier: "",
-              externalId: null,
-              length: null,
-              width: null,
-              height: null,
-              weight: null,
-              ecosystemIds: [],
-              attributes: attributes.map((attribute) => ({
-                attributeId: attribute.attributeId,
-                attributeName: attribute.attributeName,
-                value: {
-                  value: attribute.attributeValues[0].valueId,
-                  label: attribute.attributeValues[0].value,
-                },
-              })),
-            }}
+            initialValues={
+              skuToCopyFrom
+                ? {
+                    price: skuToCopyFrom.price,
+                    boughtPrice: skuToCopyFrom.boughtPrice,
+                    qty: skuToCopyFrom.qty,
+                    barcodeIdentifier: skuToCopyFrom.barCodeIdentifier,
+                    externalId: skuToCopyFrom.externalId,
+                    length: skuToCopyFrom.length,
+                    width: skuToCopyFrom.width,
+                    height: skuToCopyFrom.height,
+                    weight: skuToCopyFrom.weight,
+                    ecosystemIds: skuToCopyFrom.ecosystemIds,
+                    attributes: attributes.map((attribute) => ({
+                      attributeId: attribute.attributeId,
+                      attributeName: attribute.attributeName,
+                      value: {
+                        value:
+                          skuToCopyFrom.attributeValueIds.find(
+                            (attrVaueId) =>
+                              attrVaueId.attributeId === attribute.attributeId
+                          )?.valueId || attribute.attributeValues[0].valueId,
+                        label:
+                          skuToCopyFrom.attributeValueIds.find(
+                            (attrVaueId) =>
+                              attrVaueId.attributeId === attribute.attributeId
+                          )?.value || attribute.attributeValues[0].value,
+                      },
+                    })),
+                  }
+                : {
+                    price: 0,
+                    boughtPrice: 0,
+                    qty: 0,
+                    barcodeIdentifier: "",
+                    externalId: null,
+                    length: null,
+                    width: null,
+                    height: null,
+                    weight: null,
+                    ecosystemIds: [],
+                    attributes: attributes.map((attribute) => ({
+                      attributeId: attribute.attributeId,
+                      attributeName: attribute.attributeName,
+                      value: {
+                        value: attribute.attributeValues[0].valueId,
+                        label: attribute.attributeValues[0].value,
+                      },
+                    })),
+                  }
+            }
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
