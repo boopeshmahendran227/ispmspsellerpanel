@@ -48,7 +48,7 @@ const Home = (): JSX.Element => {
   const endDate = moment().endOf("day");
 
   const orderSWR = useSWR("/order?pageSize=6");
-  const orderData: OrderInterface = orderSWR.data.results;
+  const orderData = orderSWR.data;
 
   const topSellingSWR = useSWR(
     period.value === PeriodState.week
@@ -177,7 +177,7 @@ const Home = (): JSX.Element => {
       </div>
       <div className="recentOrderContainer">
         <h4 className="title"> Recent Orders</h4>
-        <RecentOrders data={orderData}></RecentOrders>
+        <RecentOrders data={orderData.results}></RecentOrders>
       </div>
       <style jsx>{`
         .gridContainer {
