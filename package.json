@@ -52,7 +52,7 @@
     "@types/react-redux": "^7.1.9",
     "@types/react-select": "^3.0.16",
     "@types/styled-components": "^5.1.2",
-    "@types/yup": "^0.29.4",
+    "@types/yup": "^0.29.6",
     "babel-plugin-styled-components": "^1.11.1",
     "cross-env": "^7.0.2",
     "typescript": "^3.9.2"

@@ -56,6 +56,10 @@ const Orders = () => {
     (ecosystem) => ecosystem.value === selectedEcosystemId
   );
 
+  if (!currentEcosystem) {
+    return <PageError statusCode={404} />;
+  }
+
   return (
     <PageContainer>
       <PageHeaderContainer>

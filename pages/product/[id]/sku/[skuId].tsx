@@ -45,8 +45,7 @@ const validationSchema = Yup.object({
   weight: Yup.number().nullable().defined(),
   ecosystemIds: Yup.array()
     .of(Yup.string().defined())
-    .min(1, "Atleast one ecosystem is required")
-    .defined(),
+    .min(1, "Atleast one ecosystem is required"),
 }).defined();
 
 type InputInterface = Yup.InferType<typeof validationSchema>;

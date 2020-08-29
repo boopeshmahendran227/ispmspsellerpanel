@@ -55,8 +55,7 @@ const validationSchema = Yup.object({
     .defined(),
   ecosystemIds: Yup.array()
     .of(Yup.string().defined())
-    .min(1, "Atleast one ecosystem is required")
-    .defined(),
+    .min(1, "Atleast one ecosystem is required"),
 }).defined();
 
 type InputInterface = Yup.InferType<typeof validationSchema>;
@@ -101,14 +100,14 @@ const Sku = (props: SkuProps) => {
 
   const handleSubmit = (values: InputInterface) => {
     props.addSku({
+      ...values,
       productId: product.id,
       imageRelativePaths: [],
-      ...values,
       attributeValueIds: values.attributes.map((attribute) => ({
         attributeId: attribute.attributeId,
         attributeName: attribute.attributeName,
-        valueId: attribute.value.value,
-        value: attribute.value.label,
+        valueId: attribute.value?.value,
+        value: attribute.value?.label,
       })),
     });
   };
@@ -140,8 +139,8 @@ const Sku = (props: SkuProps) => {
               price: 0,
               boughtPrice: 0,
               qty: 0,
-              barCode: "",
-              externalId: "",
+              barcodeIdentifier: "",
+              externalId: null,
               length: null,
               width: null,
               height: null,
@@ -150,9 +149,13 @@ const Sku = (props: SkuProps) => {
               attributes: attributes.map((attribute) => ({
                 attributeId: attribute.attributeId,
                 attributeName: attribute.attributeName,
-                value: null,
+                value: {
+                  value: attribute.attributeValues[0].valueId,
+                  label: attribute.attributeValues[0].value,
+                },
               })),
             }}
+            validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
             {() => (

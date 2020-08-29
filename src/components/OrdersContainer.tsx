@@ -416,6 +416,7 @@ const mapDispatchToProps: DispatchProps = {
   cancelOrderItem: OrderActions.cancelOrderItem,
 };
 
-export default WithAuth(
-  connect<null, DispatchProps>(null, mapDispatchToProps)(OrdersContainer)
-);
+export default connect<null, DispatchProps>(
+  null,
+  mapDispatchToProps
+)(OrdersContainer);

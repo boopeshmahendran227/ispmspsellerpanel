@@ -54,15 +54,15 @@ export interface ProductInputInterface {
   specialDiscountValue: number;
   minPrice: number;
   maxPrice: number;
-  brand: SelectOptionInterface;
-  countryOfOrigin: SelectOptionInterface;
+  brand: SelectOptionInterface | null;
+  countryOfOrigin: SelectOptionInterface | null;
   tierPrices: TierPriceInterface[];
   faqs: FAQInterface[];
   categories: SelectOptionInterface[];
-  defaultCategory: SelectOptionInterface;
+  defaultCategory: SelectOptionInterface | null;
   specification: SpecificationInterface;
   skus: ProductSkuDetail[];
-  taxGroup: SelectOptionInterface;
+  taxGroup: SelectOptionInterface | null;
   ecosystems: SelectOptionInterface[];
 }
 

@@ -17,15 +17,15 @@ export interface AddSkuInterface {
   price: number;
   boughtPrice: number;
   qty: number;
-  ecosystemIds: string[];
+  ecosystemIds?: string[] | undefined; // Todo: Fix this type
   attributeValueIds: AttributeValueID[];
   imageRelativePaths: string[];
-  externalId: string;
-  barcodeIdentifier: string;
-  length: number;
-  height: number;
-  width: number;
-  weight: number;
+  externalId: string | null;
+  barcodeIdentifier: string | null;
+  length: number | null;
+  height: number | null;
+  width: number | null;
+  weight: number | null;
 }
 
 interface AttributeValueID {
@@ -40,7 +40,7 @@ export interface UpdateSkuInterface {
   price: number;
   boughtPrice: number;
   qty: number;
-  ecosystemIds: string[];
+  ecosystemIds?: string[] | undefined; // Todo: Fix this type
   externalId: string | null;
   barcodeIdentifier: string | null;
   length: number | null;
