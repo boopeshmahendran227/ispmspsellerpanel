@@ -57,6 +57,10 @@ const SelectAttributeValues = (props: SelectAttributeValuesProps) => {
           (attribute) => attribute.id === selectedAttribute.attributeId
         );
 
+        if (!attribute) {
+          return null;
+        }
+
         const attributeValues = attribute.values || [];
 
         return (
