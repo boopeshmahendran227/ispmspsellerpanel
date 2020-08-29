@@ -20,7 +20,7 @@ const RecentOrders = (props: RecentOrdersProps): JSX.Element => {
     .flatten()
     .value();
 
-  const renderTableBody = () => {
+  const renderTableBody = (): JSX.Element => {
     return orderItems.map((orderItem) => {
       return (
         <Link
@@ -59,16 +59,13 @@ const RecentOrders = (props: RecentOrdersProps): JSX.Element => {
               .dateContainer {
                 max-width: 5rem;
               }
-
               tr:hover {
                 background-color: ${CSSConstants.hoverColor} !important;
                 cursor: pointer;
               }
-
               tr {
                 border-top: 0.5px solid ${CSSConstants.borderColor};
               }
-
               td {
                 padding: 1.5vh 1vw;
               }
@@ -94,7 +91,6 @@ const RecentOrders = (props: RecentOrdersProps): JSX.Element => {
         </thead>
         <tbody>{renderTableBody()}</tbody>
       </table>
-      <style jsx>{``}</style>
     </div>
   );
 };
