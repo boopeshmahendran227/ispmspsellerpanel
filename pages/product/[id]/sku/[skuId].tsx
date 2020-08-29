@@ -26,6 +26,7 @@ import Button from "components/atoms/Button";
 import * as Yup from "yup";
 import styled from "styled-components";
 import SkuDimensionsInputContainer from "components/SkuDimensionsInputContainer";
+import SkuInventoryInputContainer from "components/SkuInventoryInputContainer";
 
 interface DispatchProps {
   updateSku: (sku: UpdateSkuInterface) => void;
@@ -176,15 +177,7 @@ const Sku = (props: SkuProps): JSX.Element => {
                     <label>Bought Price</label>
                     <FieldPriceInput name="boughtPrice" />
                   </SectionCard>
-                  <SectionCard>
-                    <SectionHeader>Inventory</SectionHeader>
-                    <label>Qty</label>
-                    <FieldNumInput name="qty" />
-                    <label>Bar Code</label>
-                    <FieldInput name="barcodeIdentifier" />
-                    <label>External Id</label>
-                    <FieldInput name="externalId" />
-                  </SectionCard>
+                  <SkuInventoryInputContainer />
                   <SectionCard>
                     <SectionHeader>Visibility</SectionHeader>
                     <label>Ecosystem</label>

@@ -25,6 +25,7 @@ import Button from "components/atoms/Button";
 import FieldEcosystemMultiInput from "components/FieldEcosystemMultiInput";
 import { BusinessDataInterface } from "types/business";
 import SkuDimensionsInputContainer from "components/SkuDimensionsInputContainer";
+import SkuInventoryInputContainer from "components/SkuInventoryInputContainer";
 
 interface DispatchProps {
   addSku: (sku: AddSkuInterface) => void;
@@ -181,15 +182,7 @@ const Sku = (props: SkuProps) => {
                     <label>Bought Price</label>
                     <FieldPriceInput name="boughtPrice" />
                   </SectionCard>
-                  <SectionCard>
-                    <SectionHeader>Inventory</SectionHeader>
-                    <label>Qty</label>
-                    <FieldNumInput name="qty" />
-                    <label>Bar Code</label>
-                    <FieldInput name="barCode" />
-                    <label>External Id</label>
-                    <FieldInput name="externalId" />
-                  </SectionCard>
+                  <SkuInventoryInputContainer />
                   <SectionCard>
                     <SectionHeader>Visibility</SectionHeader>
                     <label>Ecosystem</label>
