@@ -131,16 +131,16 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
               <FieldNumInput name={`skus.${skuIndex}.qty`} />
             </td>
             <td>
-              <FieldInput name={`skus.${skuIndex}.length`} />
+              <FieldNumInput name={`skus.${skuIndex}.length`} />
             </td>
             <td>
-              <FieldInput name={`skus.${skuIndex}.width`} />
+              <FieldNumInput name={`skus.${skuIndex}.width`} />
             </td>
             <td>
-              <FieldInput name={`skus.${skuIndex}.height`} />
+              <FieldNumInput name={`skus.${skuIndex}.height`} />
             </td>
             <td>
-              <FieldInput name={`skus.${skuIndex}.weight`} />
+              <FieldNumInput name={`skus.${skuIndex}.weight`} />
             </td>
             <td>
               <FieldInput name={`skus.${skuIndex}.barCodeIdentifier`} />

@@ -29,7 +29,8 @@ const Home = (): JSX.Element => {
   }
 
   return (
-    <div>
+    <div className="container">
+      <h2>Stats for Last 7 Days</h2>
       <MetricCard title="Total orders" value={summary.totalOrderCount} />
       <MetricCard title="Total Customers" value={summary.totalCustomers} />
       <MetricCard title="Total Quotes" value={summary.totalQuotes} />
@@ -37,6 +38,11 @@ const Home = (): JSX.Element => {
         title="Total Revenue"
         value={formatPrice(summary.totalRevenue)}
       />
+      <style jsx>{`
+        .container {
+          margin: 1.5em 1em;
+        }
+      `}</style>
     </div>
   );
 };

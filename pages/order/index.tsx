@@ -3,6 +3,8 @@ import Select from "components/Select";
 import { PaginatedDataInterface } from "types/pagination";
 import PageHeader from "components/PageHeader";
 import { SelectOptionInterface } from "types/product";
+import CSSConstants from "../../src/constants/CSSConstants";
+import DeliveryCodeModal from "components/DeliveryCodeModal";
 import useSWR from "swr";
 import { BusinessDataInterface } from "types/business";
 import PageError from "components/PageError";
@@ -62,6 +64,8 @@ const Orders = () => {
 
   return (
     <PageContainer>
+       {/* Modals */}
+      <DeliveryCodeModal />
       <PageHeaderContainer>
         <PageHeader>Order Details</PageHeader>
         <div className="filterContainer">

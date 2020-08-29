@@ -20,6 +20,7 @@ import PageError from "components/PageError";
 import ShippingInformationContainer from "components/ShippingInformationContainer";
 import OrderInformation from "components/OrderInformation";
 import WithAuth from "components/WithAuth";
+import DeliveryCodeModal from "components/DeliveryCodeModal";
 import { transformOrderItem } from "../../../src/transformers/orderItem";
 import Button from "components/atoms/Button";
 import BackLink from "components/atoms/BackLink";
@@ -27,6 +28,7 @@ import BackLink from "components/atoms/BackLink";
 interface DispatchProps {
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
   markAsShipping: (orderId: number, orderItemId: number) => void;
+  markPackageReadyForCollection: (orderId: number, orderItemId: number) => void;
   markAsProcessing: (orderId: number, orderItemId: number) => void;
   approveCancelOrderItem: (orderId: number, orderItemId: number) => void;
   rejectCancelOrderItem: (orderId: number, orderItemId: number) => void;
@@ -66,6 +68,7 @@ const Order = (props: OrderProps) => {
 
   return (
     <div className="container">
+      <DeliveryCodeModal />
       <BackLink href="/order">Back to Orders</BackLink>
       <header>
         <span className="id">
@@ -103,6 +106,9 @@ const Order = (props: OrderProps) => {
               orderItem={orderItem}
               markAsShipping={props.markAsShipping}
               markAsShippingComplete={props.markAsShippingComplete}
+              markPackageReadyForCollection={
+                props.markPackageReadyForCollection
+              }
               markAsProcessing={props.markAsProcessing}
               approveCancelOrderItem={props.approveCancelOrderItem}
               rejectCancelOrderItem={props.rejectCancelOrderItem}
@@ -211,6 +217,7 @@ const Order = (props: OrderProps) => {
 const mapDispatchToProps: DispatchProps = {
   markAsShippingComplete: OrderActions.markAsShippingComplete,
   markAsShipping: OrderActions.markAsShipping,
+  markPackageReadyForCollection: OrderActions.markPackageReadyForCollection,
   approveCancelOrderItem: OrderActions.approveCancelOrderItem,
   rejectCancelOrderItem: OrderActions.rejectCancelOrderItem,
   approveReturnOrderItem: OrderActions.approveReturnOrderItem,

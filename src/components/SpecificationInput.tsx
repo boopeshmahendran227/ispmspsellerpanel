@@ -24,27 +24,29 @@ const SpecificationInput = () => {
       <FieldEditableArray
         name="specification.itemGroups"
         headers={[]}
-        renderInputRow={(index) => (
+        renderInputRow={(groupIndex) => (
           <div className="specGroupContainer">
             <div className="specGroupInput">
               <InputLabel label="Group name" />
-              <FieldInput name={`specification.itemGroups.${index}.name`} />
+              <FieldInput
+                name={`specification.itemGroups.${groupIndex}.name`}
+              />
             </div>
             <FieldEditableArray
               headers={["S.no", "Key", "Value"]}
-              name={`specification.itemGroups.${index}.items`}
+              name={`specification.itemGroups.${groupIndex}.items`}
               onAdd={handleAddSpecItem}
               renderInputRow={(index) => (
                 <>
                   <td>{index + 1}</td>
                   <td>
                     <FieldInput
-                      name={`specification.itemGroups.${index}.items.${index}.key`}
+                      name={`specification.itemGroups.${groupIndex}.items.${index}.key`}
                     />
                   </td>
                   <td>
                     <FieldInput
-                      name={`specification.itemGroups.${index}.items.${index}.value`}
+                      name={`specification.itemGroups.${groupIndex}.items.${index}.value`}
                     />
                   </td>
                 </>

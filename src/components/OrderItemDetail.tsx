@@ -11,6 +11,7 @@ import { getColor, getOrderStatusText } from "utils/order";
 interface OrderItemDetailProps {
   orderItem: TransformedOrderItemInterface;
   markAsShipping: (orderId: number, orderItemId: number) => void;
+  markPackageReadyForCollection: (orderId: number, orderItemId: number) => void;
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
   markAsProcessing: (orderId: number, orderItemId: number) => void;
   approveReturnOrderItem: (orderId: number, orderItemId: number) => void;
@@ -55,6 +56,35 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
           </>
         );
       case OrderStatus.SellerProcessing:
+        if (orderItem.isSelfPickup) {
+          return (
+            <>
+              <Button
+                type={ButtonType.success}
+                onClick={() =>
+                  props.markPackageReadyForCollection(
+                    props.orderItem.order.id,
+                    props.orderItem.id
+                  )
+                }
+              >
+                Mark Package Ready For Collection
+              </Button>
+              <Button
+                type={ButtonType.danger}
+                onClick={() =>
+                  props.cancelOrderItem(
+                    props.orderItem.order.id,
+                    props.orderItem.id
+                  )
+                }
+                outlined={true}
+              >
+                Cancel Order
+              </Button>
+            </>
+          );
+        }
         return (
           <>
             <Button
@@ -230,15 +260,18 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
         </div>
         <div className="totalContainer">
           <div>
-            {formatPrice(orderItem.actualPriceWithoutTax)} x {orderItem.qty}
+            {formatPrice(orderItem.actualPriceWithoutTax / orderItem.qty)} x{" "}
+            {orderItem.qty}
           </div>
           <div className="value">
-            {formatPrice(orderItem.actualPriceWithoutTax * orderItem.qty)}
+            {formatPrice(orderItem.actualPriceWithoutTax)}
           </div>
           {_.map(orderItem.productSnapshot.discountSplit, (value, key) => (
             <Fragment key={key}>
               <div className="key">{splitCamelCase(key)}</div>
-              <div className="value">- {formatPrice(value)}</div>
+              <div className="value">
+                - {formatPrice(value * orderItem.qty)}
+              </div>
             </Fragment>
           ))}
           {orderItem.loanDetail && (
@@ -259,7 +292,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
             <Fragment key={index}>
               <div className="key">{taxSplit.taxName}:</div>
               <div className="value">
-                + {formatPrice(taxSplit.taxAmountPaid * orderItem.qty)}
+                + {formatPrice(taxSplit.taxAmountPaid)}
               </div>
             </Fragment>
           ))}
