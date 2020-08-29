@@ -5,10 +5,7 @@ import PageHeader from "components/PageHeader";
 import WithAuth from "components/WithAuth";
 import { useRouter } from "next/router";
 import SkuList from "components/SkuList";
-import FieldPriceInput from "components/FieldPriceInput";
 import { Formik, Form } from "formik";
-import FieldNumInput from "components/FieldNumInput";
-import FieldInput from "components/FieldInput";
 import SkuProductInfo from "components/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/atoms/SectionHeader";
@@ -27,6 +24,7 @@ import * as Yup from "yup";
 import styled from "styled-components";
 import SkuDimensionsInputContainer from "components/SkuDimensionsInputContainer";
 import SkuInventoryInputContainer from "components/SkuInventoryInputContainer";
+import SkuPricingInputContainer from "components/SkuPricingInputContainer";
 
 interface DispatchProps {
   updateSku: (sku: UpdateSkuInterface) => void;
@@ -170,13 +168,7 @@ const Sku = (props: SkuProps): JSX.Element => {
                     ))}
                   </SectionCard>
                   <ImageUploader />
-                  <SectionCard>
-                    <SectionHeader>Pricing</SectionHeader>
-                    <label>Price</label>
-                    <FieldPriceInput name="price" />
-                    <label>Bought Price</label>
-                    <FieldPriceInput name="boughtPrice" />
-                  </SectionCard>
+                  <SkuPricingInputContainer />
                   <SkuInventoryInputContainer />
                   <SectionCard>
                     <SectionHeader>Visibility</SectionHeader>
