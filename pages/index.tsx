@@ -6,22 +6,21 @@ import Loader from "components/Loader";
 import PageError from "components/PageError";
 import WithAuth from "components/WithAuth";
 import moment from "moment";
-import { formatPrice } from "../src/utils/misc";
+import { formatPrice } from "utils/misc";
 import CSSConstants from "../src/constants/CSSConstants";
 import Select from "components/Select";
-import { SelectOptionInterface } from "../src/types/product";
+import { SelectOptionInterface } from "types/product";
 import RecentOrders from "components/RecentOrders";
 import TopSold, { TopSoldItems } from "components/TopSold";
 import PercentageArrow from "components/PercentArrow";
 import RevenueLineChart, {
   formatLineData,
   MonthlySalesInterface,
-} from "../src/components/RevenueLineChart";
+} from "components/RevenueLineChart";
 import { percentageDifference } from "components/RevenueLineChart";
 import OrderCountPieChart from "components/OrdersPieChart";
-import { OrderInterface } from "../src/types/order";
-import { PaginatedDataInterface } from "../src/types/pagination";
-
+import { OrderInterface } from "types/order";
+import { PaginatedDataInterface } from "types/pagination";
 
 enum PeriodState {
   week,
@@ -88,6 +87,7 @@ const Home = (): JSX.Element => {
     orderSWR.error ||
     topSellingSWR.error ||
     monthlySalesSWR.error;
+
   if (error) {
     return <PageError statusCode={error.response?.status} />;
   }
@@ -95,7 +95,9 @@ const Home = (): JSX.Element => {
   if (!summary || !orderData || !topSelling || !monthlySales) {
     return <Loader />;
   }
+
   const orders: OrderInterface[] = orderData.results;
+
   return (
     <div className="gridContainer">
       <header>
@@ -115,7 +117,7 @@ const Home = (): JSX.Element => {
         <MetricCard
           title={
             <span>
-              Total orders <i className="fa fa-chart-bar"></i>
+              Orders <i className="fa fa-chart-bar"></i>
             </span>
           }
           value={summary.totalOrderCount}
@@ -125,7 +127,7 @@ const Home = (): JSX.Element => {
         <MetricCard
           title={
             <span>
-              Customers <i className="fas fa-users"></i>
+              New Customers <i className="fas fa-users"></i>
             </span>
           }
           value={summary.totalCustomers}
@@ -135,7 +137,7 @@ const Home = (): JSX.Element => {
         <MetricCard
           title={
             <span>
-              Total Quotes <i className="fas fa-comments-dollar"></i>
+              Quotes <i className="fas fa-comments-dollar"></i>
             </span>
           }
           value={summary.totalQuotes}
@@ -171,7 +173,6 @@ const Home = (): JSX.Element => {
       </div>
       <div className="pieChartContainer">
         <h4 className="title">Orders</h4>
-        {/* <PercentageArrow value={8} /> */}
         <div className="pieChart">
           <OrderCountPieChart data={summary} />
         </div>
@@ -190,10 +191,10 @@ const Home = (): JSX.Element => {
           grid-template-columns: 1fr 1fr 1fr auto auto;
           grid-template-rows: 0.3fr 0.5fr 2fr auto;
           grid-template-areas:
-            " header header header header header  "
+            "header header header header header"
             "metric1 metric2 metric3 metric4 metric4"
-            "pieChart pieChart lineChart lineChart lineChart "
-            "recent recent recent recent topSold ";
+            "pieChart pieChart lineChart lineChart lineChart"
+            "recent recent recent recent topSold";
           grid-row-gap: 0.5em;
           grid-column-gap: 0.5em;
           margin-bottom: 1em;
@@ -220,10 +221,7 @@ const Home = (): JSX.Element => {
           grid-area: header;
           display: grid;
           grid-template-columns: 4fr 1fr;
-          background: ${CSSConstants.foregroundColor};
-          box-shadow: 0 0 20px #00000014;
           align-items: center;
-          border-radius: 1em;
           margin-top: 1em;
           padding-right: 1em;
         }
@@ -242,13 +240,11 @@ const Home = (): JSX.Element => {
         i {
           margin-left: 0.3em;
         }
-
         .title {
           margin: 0.5em 0;
           font-size: 1.7em;
           padding: 0 0.5em;
         }
-
         .lineChartContainer {
           grid-area: lineChart;
           background: ${CSSConstants.foregroundColor};
@@ -256,7 +252,6 @@ const Home = (): JSX.Element => {
           border-radius: 1em;
           margin-right: 1em;
         }
-
         .lineChart {
           background: ${CSSConstants.foregroundColor};
           height: 250px;
@@ -269,13 +264,11 @@ const Home = (): JSX.Element => {
           border-radius: 1em;
           margin: 0em 1em;
         }
-
         .pieChart {
           background: ${CSSConstants.foregroundColor};
           height: 250px;
           border-radius: 1em;
         }
-
         .recentOrderContainer {
           grid-area: recent;
           background: ${CSSConstants.foregroundColor};
