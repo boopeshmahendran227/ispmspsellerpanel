@@ -7,11 +7,15 @@ import { ProductDetailSkuDetail } from "types/product";
 interface SkuListProps {
   productId: number;
   skus: ProductDetailSkuDetail[];
-  currentSkuId: string;
+  currentSkuId?: string;
 }
 
-const SkuList = (props: SkuListProps): JSX.Element => {
+const SkuList = (props: SkuListProps): JSX.Element | null => {
   const { productId, skus } = props;
+
+  if (skus.length === 0) {
+    return null;
+  }
 
   return (
     <div className="container">

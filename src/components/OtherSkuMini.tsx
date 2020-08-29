@@ -2,6 +2,7 @@ import RelativeImg from "./RelativeImg";
 import styled from "styled-components";
 import { ProductDetailSkuDetail } from "types/product";
 import Button from "./atoms/Button";
+import Link from "next/link";
 
 const Container = styled.div`
   padding: 0.8em 0;
@@ -26,11 +27,12 @@ const SkuName = styled.div`
 `;
 
 interface OtherSkuMiniProps {
+  productId: number;
   sku: ProductDetailSkuDetail;
 }
 
 const OtherSkuMini = (props: OtherSkuMiniProps): JSX.Element => {
-  const { sku } = props;
+  const { productId, sku } = props;
 
   return (
     <Container>
@@ -41,7 +43,12 @@ const OtherSkuMini = (props: OtherSkuMiniProps): JSX.Element => {
         <SkuName>{sku.skuId}</SkuName>
       </MainContainer>
       <div>
-        <Button>Add to Your Variants</Button>
+        <Link
+          href="/product/[id]/sku/new"
+          as={`/product/${productId}/sku/new?copySkuId=${sku.skuId}`}
+        >
+          <Button>Add to Your Variants</Button>
+        </Link>
       </div>
     </Container>
   );

@@ -75,7 +75,10 @@ const Product = () => {
             specialDiscount={product.specialDiscount}
           />
           <YourSkuTable skus={product.skuDetails} productId={product.id} />
-          <OtherSkusTable skus={product.unOwnedSkuDetails} />
+          <OtherSkusTable
+            skus={product.unOwnedSkuDetails}
+            productId={product.id}
+          />
         </FlexContainer>
         <FlexContainer>
           <ProductAvailability

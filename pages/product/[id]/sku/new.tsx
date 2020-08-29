@@ -82,10 +82,11 @@ const Sku = (props: SkuProps) => {
   const productSWR = useSWR(`/product/seller/${router.query.id}`);
   const businessSWR = useSWR(`/businesses/business`);
 
-  const skuId: string = router.query.skuId as string;
+  const skuIdToCopyFrom: string = router.query.copySkuId as string;
   const product: ProductDetailInterface = productSWR.data;
   const businessData: BusinessDataInterface = businessSWR.data;
 
+  console.log(skuIdToCopyFrom);
   const error = productSWR.error || businessSWR.error;
 
   if (error) {
@@ -95,6 +96,18 @@ const Sku = (props: SkuProps) => {
   if (!product || !businessData) {
     return <Loader />;
   }
+
+  const skuToCopyFrom = product.unOwnedSkuDetails.find(
+    (sku) => sku.skuId === skuIdToCopyFrom
+  );
+  console.log(product.unOwnedSkuDetails);
+  console.log(skuToCopyFrom);
+
+  if (!skuToCopyFrom) {
+    return <PageError statusCode={404} />;
+  }
+
+  console.log(skuToCopyFrom);
 
   const attributes = product.attributeValues;
 
@@ -125,13 +138,12 @@ const Sku = (props: SkuProps) => {
           <SkuProductInfo
             productId={product.id}
             productName={product.name}
-            image={product.skuDetails[0].imageRelativePaths[0]}
+            image={
+              product.skuDetails[0]?.imageRelativePaths[0] ||
+              product.unOwnedSkuDetails[0]?.imageRelativePaths[0]
+            }
           />
-          <SkuList
-            productId={product.id}
-            skus={product.skuDetails}
-            currentSkuId={skuId}
-          />
+          <SkuList productId={product.id} skus={product.skuDetails} />
         </div>
         <div className="formContainer">
           <Formik

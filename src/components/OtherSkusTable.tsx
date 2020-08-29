@@ -5,11 +5,12 @@ import OtherSkuMini from "components/OtherSkuMini";
 import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
 
 interface OtherSkusTableProps {
+  productId: number;
   skus: ProductDetailSkuDetail[];
 }
 
 const OtherSkusTable = (props: OtherSkusTableProps): JSX.Element | null => {
-  const { skus } = props;
+  const { productId, skus } = props;
 
   if (skus.length === 0) {
     return null;
@@ -21,7 +22,7 @@ const OtherSkusTable = (props: OtherSkusTableProps): JSX.Element | null => {
         <SectionHeader>Other Seller's Variants</SectionHeader>
       </SectionHeaderContainer>
       {skus.map((sku) => (
-        <OtherSkuMini sku={sku} />
+        <OtherSkuMini key={sku.skuId} productId={productId} sku={sku} />
       ))}
     </SectionCard>
   );
