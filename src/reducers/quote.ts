@@ -3,7 +3,7 @@ import { SET_CURRENT_QUOTE } from "../constants/ActionTypes";
 import { QuoteInterface, QuoteActionType } from "../types/quote";
 
 const getCurrentQuote = (
-  state: QuoteInterface = null,
+  state: QuoteInterface | null = null,
   action: QuoteActionType
 ) => {
   switch (action.type) {
