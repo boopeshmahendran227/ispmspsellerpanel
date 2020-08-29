@@ -14,9 +14,14 @@ export const formatLineData = (data) => {
   }));
   return [{ id: "revenue", data: monthWiseRevenueList }];
 };
+export interface MonthlySalesInterface {
+  dateTime: Date;
+  month: string;
+  revenue: number;
+}
 interface RevenueDataProps {
-  revenueData: [];
-  intervel: number;
+  revenueData: MonthlySalesInterface[];
+  interval: number;
 }
 
 const RevenueLineChart = (props: RevenueDataProps) => (
@@ -49,15 +54,15 @@ const RevenueLineChart = (props: RevenueDataProps) => (
       tickPadding: 5,
       tickRotation: 0,
       tickValues: [
-        props.intervel,
-        2 * props.intervel,
-        3 * props.intervel,
-        4 * props.intervel,
-        5 * props.intervel,
-        6 * props.intervel,
-        7 * props.intervel,
-        8 * props.intervel,
-        9 * props.intervel,
+        props.interval,
+        2 * props.interval,
+        3 * props.interval,
+        4 * props.interval,
+        5 * props.interval,
+        6 * props.interval,
+        7 * props.interval,
+        8 * props.interval,
+        9 * props.interval,
       ],
       legend: "Revenue",
       legendOffset: -70,

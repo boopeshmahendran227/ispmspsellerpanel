@@ -15,6 +15,7 @@ import TopSold, { TopSoldItems } from "../src/components/TopSold";
 import PercentageArrow from "../src/components/PercentArrow";
 import RevenueLineChart, {
   formatLineData,
+  MonthlySalesInterface,
 } from "../src/components/RevenueLineChart";
 import { percentageDifference } from "../src/components/RevenueLineChart";
 import OrderCountPieChart from "../src/components/OrdersPieChart";
@@ -25,6 +26,7 @@ enum PeriodState {
   week,
   year,
 }
+
 const filter: SelectOptionInterface[] = [
   {
     value: PeriodState.week,
@@ -36,6 +38,7 @@ const filter: SelectOptionInterface[] = [
     label: "This year",
   },
 ];
+
 const roundOff = (num: number) => {
   const length = num.toString().length;
   return Math.pow(10, length) / 4;
@@ -77,7 +80,7 @@ const Home = (): JSX.Element => {
       .utc()
       .format()}&end=${endDate.utc().format()}`
   );
-  const monthlySales = monthlySalesSWR.data;
+  const monthlySales: MonthlySalesInterface[] = monthlySalesSWR.data;
 
   const error =
     summarySWR.error ||
@@ -155,7 +158,7 @@ const Home = (): JSX.Element => {
         <div className="lineChart">
           <RevenueLineChart
             revenueData={monthlySales}
-            intervel={roundOff(
+            interval={roundOff(
               Math.round(
                 monthlySales
                   .map((item) => item.revenue)

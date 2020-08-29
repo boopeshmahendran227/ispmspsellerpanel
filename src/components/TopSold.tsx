@@ -41,10 +41,6 @@ const TopSold = (props: TopSoldProps): JSX.Element => {
         </tbody>
       </table>
       <style jsx>{`
-        width: 100%;
-        justify-items: center;
-        padding: auto;
-
         .content {
           margin-left: 10px;
         }
