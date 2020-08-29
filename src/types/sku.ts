@@ -28,7 +28,7 @@ export interface AddSkuInterface {
   weight: number | null;
 }
 
-interface AttributeValueID {
+export interface AttributeValueID {
   attributeId: number;
   valueId: number;
   attributeName: string;

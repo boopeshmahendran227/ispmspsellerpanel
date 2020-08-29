@@ -4,6 +4,7 @@ import CSSConstants from "../constants/CSSConstants";
 import RelativeImg from "./RelativeImg";
 import { formatPrice } from "utils/misc";
 import { DraftAttributeValuesInterface } from "../types/draft";
+import { AttributeValueID } from "types/sku";
 
 interface SkuTableProps {
   skus: ProductSkuDetail[];
@@ -64,7 +65,7 @@ const getTableHeaders = () => {
 };
 
 const renderTableBody = (
-  attributeValues: ResponseAttributeValuesInterface[],
+  attributeValues: AttributeValueID[],
   skus: ProductSkuDetail[]
 ) => {
   const getAttributeName = (attributeId: number) => {

@@ -296,9 +296,7 @@ export const ProductSchema = Yup.object().shape({
     .min(1, "Atlease one sku is required"),
   tierPrices: Yup.array().of(
     Yup.object().shape({
-      minQty: Yup.number("Minimum Qty must be a number").positive(
-        "Minimum Qty must be lesser than 0"
-      ),
+      minQty: Yup.number().positive("Minimum Qty must be lesser than 0"),
       discountPercentage: Yup.number()
         .min(1, "Discount Percentage must be greater than 1")
         .max(100, "Discount Percentage should be less than 100"),
