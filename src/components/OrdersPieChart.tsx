@@ -8,6 +8,7 @@ import CSSConstants from "../constants/CSSConstants";
 import { SummaryInterface } from "../types/insights";
 import { OrderStatus } from "../types/order";
 import _ from "lodash";
+import Chroma from "chroma-js";
 
 const formatPieData = (data: Record<OrderStatus, number>) => {
   const findOrderCount = (map, filterFn) => {
@@ -69,7 +70,7 @@ const OrderCountPieChart = (props: PieChartProps) => {
         CSSConstants.successColor,
         CSSConstants.dangerColor,
         CSSConstants.primaryColor,
-      ]}
+      ].map((color) => Chroma(color).alpha(0.8))}
       theme={{
         labels: { text: { fontSize: "17px" } },
       }}
@@ -85,17 +86,9 @@ const OrderCountPieChart = (props: PieChartProps) => {
           translateX: 70,
           itemWidth: 120,
           itemHeight: 20,
-          itemTextColor: "#999",
+          itemTextColor: CSSConstants.primaryTextColor,
           symbolSize: 15,
           symbolShape: "circle",
-          effects: [
-            {
-              on: "hover",
-              style: {
-                itemTextColor: "#000",
-              },
-            },
-          ],
         },
       ]}
     />

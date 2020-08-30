@@ -1,5 +1,6 @@
 import { ResponsiveLine } from "@nivo/line";
 import moment from "moment";
+import CSSConstants from "../constants/CSSConstants";
 
 const formatLineData = (data) => {
   const monthWiseRevenueList = data.map((object) => ({
@@ -63,8 +64,7 @@ const RevenueLineChart = (props: RevenueDataProps) => (
       legendOffset: -70,
       legendPosition: "middle",
     }}
-    colors={{ scheme: "set2" }}
-    lineWidth={0}
+    colors={[CSSConstants.secondaryColor]}
     enableGridX={false}
     enableGridY={false}
     enablePoints={false}
@@ -76,34 +76,8 @@ const RevenueLineChart = (props: RevenueDataProps) => (
     pointLabelYOffset={-15}
     enableArea={true}
     areaBaselineValue={0}
-    areaOpacity={0.8}
+    areaOpacity={0.3}
     useMesh={true}
-    legends={[
-      {
-        anchor: "top-right",
-        direction: "column",
-        justify: false,
-        translateX: 10,
-        translateY: -40,
-        itemsSpacing: 3,
-        itemDirection: "left-to-right",
-        itemWidth: 80,
-        itemHeight: 20,
-        itemOpacity: 0.75,
-        symbolSize: 12,
-        symbolShape: "circle",
-        symbolBorderColor: "rgba(0, 0, 0, .5)",
-        effects: [
-          {
-            on: "hover",
-            style: {
-              itemBackground: "rgba(0, 0, 0, .03)",
-              itemOpacity: 1,
-            },
-          },
-        ],
-      },
-    ]}
   />
 );
 
