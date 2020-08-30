@@ -31,7 +31,7 @@ const MetricCard = (props: MetricCardProps) => {
           display: inline-block;
           background: ${CSSConstants.foregroundColor};
           box-shadow: 0 0 20px #00000014;
-          width: 245px;
+          min-width: 245px;
           margin: 1em;
           border-radius: 5%;
         }
