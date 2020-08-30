@@ -77,7 +77,9 @@ const OrderCountPieChart = (props: PieChartProps) => {
       borderWidth={1}
       borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
       animate={true}
-      enableRadialLabels={false}
+      innerRadius={0.5}
+      radialLabelsTextColor={CSSConstants.secondaryTextColor}
+      radialLabelsLinkColor={CSSConstants.borderColor}
       legends={[
         {
           anchor: "bottom-right",
