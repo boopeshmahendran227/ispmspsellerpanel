@@ -35,7 +35,7 @@ const validationSchema = Yup.object({
   price: Yup.number().required(),
   boughtPrice: Yup.number().required(),
   qty: Yup.number().required(),
-  barcodeIdentifier: Yup.string().nullable().defined(),
+  barcodeIdentifier: Yup.string().nullable(),
   externalId: Yup.string().nullable().defined(),
   length: Yup.number().nullable().defined(),
   width: Yup.number().nullable().defined(),
@@ -103,8 +103,6 @@ const Sku = (props: SkuProps) => {
   if (skuIdToCopyFrom && !skuToCopyFrom) {
     return <PageError statusCode={404} />;
   }
-
-  console.log(skuToCopyFrom);
 
   const attributes = product.attributeValues;
 
@@ -178,7 +176,7 @@ const Sku = (props: SkuProps) => {
                     price: 0,
                     boughtPrice: 0,
                     qty: 0,
-                    barcodeIdentifier: "",
+                    barcodeIdentifier: null,
                     externalId: null,
                     length: null,
                     width: null,
@@ -198,8 +196,9 @@ const Sku = (props: SkuProps) => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {() => (
+            {({ errors }) => (
               <Form>
+                {console.log(errors)}
                 <FlexColumnContainer>
                   <SectionCard>
                     <SectionHeader>Options</SectionHeader>

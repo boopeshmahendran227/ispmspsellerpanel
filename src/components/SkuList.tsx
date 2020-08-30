@@ -19,10 +19,11 @@ const SkuList = (props: SkuListProps): JSX.Element | null => {
 
   return (
     <div className="container">
-      <header>Variants</header>
+      <header>Your Variants</header>
       <div className="body">
         {skus.map((sku) => (
           <Link
+            key={sku.skuId}
             href="/product/[id]/sku/[skuId]"
             as={`/product/${productId}/sku/${sku.skuId}`}
           >

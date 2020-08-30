@@ -21,7 +21,7 @@ export interface AddSkuInterface {
   attributeValueIds: AttributeValueID[];
   imageRelativePaths: string[];
   externalId: string | null;
-  barcodeIdentifier: string | null;
+  barcodeIdentifier?: string | null;
   length: number | null;
   height: number | null;
   width: number | null;
