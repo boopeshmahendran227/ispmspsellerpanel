@@ -24,7 +24,7 @@ const getSkus = createSelector(
   getSelectedAttributes,
   (selectedAttributeValues, selectedAttributes): ProductSkuDetail[] => {
     // Return empty array for values if attribute id not present in the map
-    const results = [];
+    const results: ProductAttributeValueId[][] = [];
     getAttributeValueCombinations(
       selectedAttributeValues,
       selectedAttributes,
@@ -42,12 +42,12 @@ const getSkus = createSelector(
           qty: 0,
           attributeValueIds,
           imageRelativePaths: [],
-          length: "",
-          width: "",
-          height: "",
-          weight: "",
-          barCodeIdentifier: "",
-          externalId: "",
+          length: null,
+          width: null,
+          height: null,
+          weight: null,
+          barCodeIdentifier: null,
+          externalId: null,
         };
       }
     );

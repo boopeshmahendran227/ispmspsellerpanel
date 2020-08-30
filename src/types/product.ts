@@ -198,12 +198,12 @@ export interface ProductSkuDetail {
   qty: number;
   attributeValueIds: ProductAttributeValueId[];
   imageRelativePaths: string[];
-  length: number;
-  width: number;
-  height: number;
-  weight: number;
-  barCodeIdentifier: string;
-  externalId: string;
+  length: number | null;
+  width: number | null;
+  height: number | null;
+  weight: number | null;
+  barCodeIdentifier: string | null;
+  externalId: string | null;
 }
 
 export interface ProductAttributeValueId {
