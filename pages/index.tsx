@@ -9,7 +9,7 @@ import { formatPrice } from "utils/misc";
 import CSSConstants from "../src/constants/CSSConstants";
 import Select from "components/Select";
 import { SelectOptionInterface } from "types/product";
-import RecentOrders from "components/RecentOrders";
+import RecentOrderList from "components/RecentOrderList";
 import TopSold, { TopSoldItem } from "components/TopSold";
 import RevenueLineChart, {
   MonthlySalesInterface,
@@ -205,7 +205,7 @@ const Home = (): JSX.Element => {
         </div>
         <div className="recentOrderContainer">
           <div className="cardTitle"> Recent Orders</div>
-          <RecentOrders orders={orders}></RecentOrders>
+          <RecentOrderList orders={orders}></RecentOrderList>
         </div>
       </div>
       <style jsx>{`

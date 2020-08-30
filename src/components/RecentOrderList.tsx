@@ -61,11 +61,11 @@ const getTableHeaders = () => {
   ];
 };
 
-interface RecentOrdersProps {
+interface RecentOrderListProps {
   orders: OrderInterface[];
 }
 
-const RecentOrders = (props: RecentOrdersProps): JSX.Element => {
+const RecentOrderList = (props: RecentOrderListProps): JSX.Element => {
   const orderItems: TransformedOrderItemInterface[] = _.chain(props.orders)
     .map((order) =>
       order.items.map((orderItem) => transformOrderItem(order, orderItem))
@@ -173,4 +173,4 @@ const RecentOrders = (props: RecentOrdersProps): JSX.Element => {
     </div>
   );
 };
-export default RecentOrders;
+export default RecentOrderList;
