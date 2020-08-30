@@ -183,7 +183,7 @@ const Home = (): JSX.Element => {
       </div>
       <div className="recentOrderContainer">
         <h4 className="title"> Recent Orders</h4>
-        <RecentOrders data={orders}></RecentOrders>
+        <RecentOrders orders={orders}></RecentOrders>
       </div>
       <style jsx>{`
         .gridContainer {

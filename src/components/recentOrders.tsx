@@ -7,91 +7,162 @@ import { transformOrderItem } from "../transformers/orderItem";
 import _ from "lodash";
 import moment from "moment";
 import { OrderInterface, TransformedOrderItemInterface } from "../types/order";
+import SortableTable from "components/SortableTable";
+import { getCustomerInfo } from "utils/customer";
+import {
+  getPaymentModeColor,
+  getPaymentText,
+  getColor,
+  getOrderStatusText,
+} from "utils/order";
+
+const getTableHeaders = () => {
+  return [
+    {
+      name: "Order Id",
+      valueFunc: (orderItem: TransformedOrderItemInterface) => orderItem.id,
+    },
+    {
+      name: "Item Id",
+      valueFunc: (orderItem: TransformedOrderItemInterface) => orderItem.id,
+    },
+    {
+      name: "Customer",
+      valueFunc: (orderItem: TransformedOrderItemInterface) => null,
+    },
+    {
+      name: "Product",
+      valueFunc: (orderItem: TransformedOrderItemInterface) => null,
+    },
+    {
+      name: "Price",
+      valueFunc: (orderItem: TransformedOrderItemInterface) =>
+        orderItem.discountedPrice,
+    },
+    {
+      name: "Qty",
+      valueFunc: (orderItem: TransformedOrderItemInterface) => orderItem.qty,
+    },
+    {
+      name: "Payment",
+      valueFunc: (orderItem: TransformedOrderItemInterface) =>
+        orderItem.order.paymentSplits[0].paymentMode,
+    },
+    {
+      name: "Status",
+      valueFunc: (orderItem: TransformedOrderItemInterface) =>
+        orderItem.orderItemStatus,
+    },
+    {
+      name: "Created",
+      valueFunc: (orderItem: TransformedOrderItemInterface) =>
+        orderItem.createdDateTime,
+    },
+  ];
+};
 
 interface RecentOrdersProps {
-  data: OrderInterface[];
+  orders: OrderInterface[];
 }
 
 const RecentOrders = (props: RecentOrdersProps): JSX.Element => {
-  const orderItems: TransformedOrderItemInterface[] = _.chain(props.data)
+  const orderItems: TransformedOrderItemInterface[] = _.chain(props.orders)
     .map((order) =>
       order.items.map((orderItem) => transformOrderItem(order, orderItem))
     )
     .flatten()
     .value();
 
-  const renderTableBody = (): JSX.Element[] => {
-    return orderItems.map((orderItem) => {
-      return (
-        <Link
-          key={orderItem.id}
-          href="/order/[orderId]/[orderItemId]"
-          as={`/order/${orderItem.order.id}/${orderItem.id}`}
-        >
-          <tr key={orderItem.id}>
-            <td>{orderItem.order.id}</td>
-            <td>{orderItem.id}</td>
-            <td>{orderItem.order.customerName}</td>
-            <td>
+  const renderTableBody = (orderItems: TransformedOrderItemInterface[]) => {
+    return orderItems.map((orderItem) => (
+      <Link
+        key={orderItem.id}
+        href="/order/[orderId]/[orderItemId]"
+        as={`/order/${orderItem.order.id}/${orderItem.id}`}
+      >
+        <tr>
+          <td>{orderItem.order.id}</td>
+          <td>{orderItem.id}</td>
+          <td>{getCustomerInfo(orderItem.order)}</td>
+          <td>
+            <div className="productContainer">
               <ProductCard
                 name={orderItem.productSnapshot.productName}
                 image={orderItem.productSnapshot.images[0]}
+                metaInfo={[
+                  ...orderItem.productSnapshot.attributeValues.map(
+                    (attributeValue) => ({
+                      key: attributeValue.attributeName,
+                      value: attributeValue.value,
+                    })
+                  ),
+                  {
+                    key: "Product Id",
+                    value: orderItem.productId,
+                  },
+                  {
+                    key: "Sku Id",
+                    value: orderItem.skuId,
+                  },
+                  {
+                    key: "External Id",
+                    value: orderItem.productSnapshot.externalId,
+                  },
+                ]}
               />
-            </td>
-            <td className="noWrapContainer">
-              {formatPrice(orderItem.actualPrice)}
-            </td>
-
-            <td>{orderItem.qty}</td>
-            <td>{orderItem.order.orderStatus}</td>
-
-            <td className="dateContainer">
-              {moment
-                .utc(orderItem.order.createdDateTime)
-                .local()
-                .format("MMMM Do YYYY")}
-            </td>
-
-            <style jsx>{`
-              .noWrapContainer {
-                white-space: nowrap;
-              }
-              .dateContainer {
-                max-width: 5rem;
-              }
-              tr:hover {
-                background-color: ${CSSConstants.hoverColor} !important;
-                cursor: pointer;
-              }
-              tr {
-                border-top: 0.5px solid ${CSSConstants.borderColor};
-              }
-              td {
-                padding: 1.5vh 1vw;
-              }
-            `}</style>
-          </tr>
-        </Link>
-      );
-    });
+            </div>
+          </td>
+          <td>{formatPrice(orderItem.discountedPrice)}</td>
+          <td>{orderItem.qty}</td>
+          <td
+            style={{
+              color: getPaymentModeColor(
+                orderItem.order.paymentSplits[0].paymentMode
+              ),
+            }}
+          >
+            {getPaymentText(orderItem.order.paymentSplits[0].paymentMode)}
+          </td>
+          <td
+            style={{
+              color: getColor(orderItem.orderItemStatus),
+            }}
+            className="status"
+          >
+            {getOrderStatusText(orderItem.orderItemStatus)}
+          </td>
+          <td>
+            {moment
+              .utc(orderItem.createdDateTime)
+              .local()
+              .format("DD MMM YYYY")}
+          </td>
+          <style jsx>{`
+            .productContainer {
+              text-align: initial;
+              margin: 1.2em 0;
+            }
+            tr:hover {
+              background-color: ${CSSConstants.hoverColor} !important;
+              cursor: pointer;
+            }
+          `}</style>
+        </tr>
+      </Link>
+    ));
   };
 
   return (
-    <div>
-      <table>
-        <thead>
-          <th>Order ID</th>
-          <th>Item ID</th>
-          <th>Customer</th>
-          <th>Product</th>
-          <th>Price</th>
-          <th>Qty</th>
-          <th>Payment</th>
-          <th> Date</th>
-        </thead>
-        <tbody>{renderTableBody()}</tbody>
-      </table>
-    </div>
+    <SortableTable
+      initialSortData={{
+        index: 1,
+        isAsc: false,
+      }}
+      headers={getTableHeaders()}
+      data={orderItems}
+      emptyMsg="There are no recent orders"
+      body={renderTableBody}
+    />
   );
 };
 export default RecentOrders;
