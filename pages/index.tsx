@@ -22,6 +22,7 @@ import { OrderInterface } from "types/order";
 import { PaginatedDataInterface } from "types/pagination";
 import MetricCard from "components/MetricCard";
 import RoundedIcon from "components/atoms/RoundedIcon";
+import { BusinessDataInterface } from "types/business";
 
 enum PeriodState {
   week,
@@ -83,11 +84,15 @@ const Home = (): JSX.Element => {
   );
   const monthlySales: MonthlySalesInterface[] = monthlySalesSWR.data;
 
+  const businessSWR = useSWR("/businesses/business");
+  const businessData: BusinessDataInterface = businessSWR.data;
+
   const error =
     summarySWR.error ||
     orderSWR.error ||
     topSellingSWR.error ||
-    monthlySalesSWR.error;
+    monthlySalesSWR.error ||
+    businessSWR.error;
 
   if (error) {
     return <PageError statusCode={error.response?.status} />;
@@ -102,11 +107,8 @@ const Home = (): JSX.Element => {
   return (
     <div className="gridContainer">
       <header>
-        <h3 className="title">
-          <i className="fa fa-chart-area"></i> Analytics
-        </h3>
-
-        <div className="select">
+        <h3 className="title">Analytic Overview</h3>
+        <div className="selectContainer">
           <Select
             value={period}
             options={filter}
@@ -162,8 +164,20 @@ const Home = (): JSX.Element => {
           value={formatPrice(summary.totalRevenue)}
         />
       </div>
+      <div className="cardContainer5">
+        <MetricCard
+          title="Ecosystems"
+          icon={
+            <RoundedIcon
+              icon={<i className="fas fa-store"></i>}
+              color={CSSConstants.primaryColor}
+            />
+          }
+          value={businessData.ecosystems.length}
+        />
+      </div>
       <div className="lineChartContainer">
-        <h4 className="title">Revenue</h4>
+        <div className="cardTitle">Revenue</div>
         <PercentageArrow
           value={percentageDifference(formatLineData(monthlySales)[0].data)}
         />
@@ -181,31 +195,30 @@ const Home = (): JSX.Element => {
         </div>
       </div>
       <div className="pieChartContainer">
-        <h4 className="title">Orders</h4>
+        <div className="cardTitle">Orders</div>
         <div className="pieChart">
           <OrderCountPieChart data={summary} />
         </div>
       </div>
       <div className="topSoldContainer">
-        <h4 className="title">Top Sold</h4>
+        <div className="cardTitle">Top Sold</div>
         <TopSold data={topSelling} />
       </div>
       <div className="recentOrderContainer">
-        <h4 className="title"> Recent Orders</h4>
+        <div className="cardTitle"> Recent Orders</div>
         <RecentOrders orders={orders}></RecentOrders>
       </div>
       <style jsx>{`
         .gridContainer {
           display: grid;
-          grid-template-columns: 1fr 1fr 1fr auto auto;
+          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
           grid-template-rows: 0.3fr 0.5fr 2fr auto;
           grid-template-areas:
             "header header header header header"
-            "metric1 metric2 metric3 metric4 metric4"
+            "metric1 metric2 metric3 metric4 metric5"
             "pieChart pieChart lineChart lineChart lineChart"
             "recent recent recent recent topSold";
-          grid-row-gap: 0.5em;
-          grid-column-gap: 0.5em;
+          grid-gap: 1em;
           margin-bottom: 1em;
         }
         @media only screen and (max-width: 550px) {
@@ -228,11 +241,14 @@ const Home = (): JSX.Element => {
         }
         header {
           grid-area: header;
-          display: grid;
-          grid-template-columns: 4fr 1fr;
+          display: flex;
+          justify-content: space-between;
           align-items: center;
           margin-top: 1em;
           padding-right: 1em;
+        }
+        .selectContainer {
+          min-width: 150px;
         }
         .cardContainer1 {
           grid-area: metric1;
@@ -246,10 +262,20 @@ const Home = (): JSX.Element => {
         .cardContainer4 {
           grid-area: metric4;
         }
+        .cardContainer5 {
+          grid-area: metric5;
+        }
         .title {
-          margin: 0.5em 0;
-          font-size: 1.7em;
-          padding: 0 0.5em;
+          margin: 0.5em;
+          padding: 0.3em;
+          font-size: 1.7rem;
+        }
+        .cardTitle {
+          padding: 0.7em 1.1em;
+          font-size: 1.5rem;
+          font-weight: bold;
+          border-bottom: 1px solid #f0f0f0;
+          margin-bottom: 1em;
         }
         .lineChartContainer {
           grid-area: lineChart;
