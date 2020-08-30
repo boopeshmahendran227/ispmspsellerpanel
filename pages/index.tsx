@@ -275,7 +275,6 @@ const Home = (): JSX.Element => {
           font-size: 1.5rem;
           font-weight: bold;
           border-bottom: 1px solid #f0f0f0;
-          margin-bottom: 1em;
         }
         .lineChartContainer {
           grid-area: lineChart;

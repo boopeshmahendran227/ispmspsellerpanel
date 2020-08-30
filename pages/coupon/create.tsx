@@ -15,6 +15,7 @@ import FieldPercentageInput from "components/FieldPercentageInput";
 import FieldDatePicker from "components/FieldDatePicker";
 import moment from "moment";
 import BackLink from "components/atoms/BackLink";
+import CSSConstants from "../../src/constants/CSSConstants";
 
 interface DispatchProps {
   createCoupon: (couponData: CouponRequestInterface) => void;
@@ -137,6 +138,7 @@ const CreateCoupon = (props: CreateCouponProps) => {
           padding: 1.3em;
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
             0 1px 2px rgba(0, 0, 0, 0.24);
+          background: ${CSSConstants.foregroundColor};
         }
         header {
           margin-top: 0.5em;
