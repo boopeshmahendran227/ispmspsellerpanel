@@ -86,7 +86,7 @@ const Layout = (props: LayoutProps) => {
         }
         td,
         th {
-          padding: 0.5em;
+          padding: 0.35em;
         }
         @media only screen and (max-width: 1000px) {
           html,

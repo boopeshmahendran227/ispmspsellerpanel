@@ -114,6 +114,7 @@ const SortableTable = (props: SortableTableProps): JSX.Element => {
         }
         .sortableTable th {
           cursor: pointer;
+          min-width: 70px;
           text-align: center;
         }
         .sortableTable tbody {

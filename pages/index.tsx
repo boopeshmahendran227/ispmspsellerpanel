@@ -10,7 +10,7 @@ import CSSConstants from "../src/constants/CSSConstants";
 import Select from "components/Select";
 import { SelectOptionInterface } from "types/product";
 import RecentOrders from "components/RecentOrders";
-import TopSold, { TopSoldItems } from "components/TopSold";
+import TopSold, { TopSoldItem } from "components/TopSold";
 import RevenueLineChart, {
   MonthlySalesInterface,
 } from "components/RevenueLineChart";
@@ -20,6 +20,8 @@ import { PaginatedDataInterface } from "types/pagination";
 import MetricCard from "components/MetricCard";
 import RoundedIcon from "components/atoms/RoundedIcon";
 import { BusinessDataInterface } from "types/business";
+import PageHeaderContainer from "components/atoms/PageHeaderContainer";
+import PageHeader from "components/PageHeader";
 
 enum PeriodState {
   week,
@@ -62,7 +64,7 @@ const Home = (): JSX.Element => {
           .utc()
           .format()}&end=${endDate.utc().format()}`
   );
-  const topSelling: TopSoldItems[] = topSellingSWR.data;
+  const topSelling: TopSoldItem[] = topSellingSWR.data;
 
   const summarySWR = useSWR(
     period.value === PeriodState.week
@@ -102,9 +104,9 @@ const Home = (): JSX.Element => {
   const orders: OrderInterface[] = orderData.results;
 
   return (
-    <div className="gridContainer">
-      <header>
-        <h3 className="title">Analytic Overview</h3>
+    <div className="container">
+      <PageHeaderContainer>
+        <PageHeader>Analytic Overview</PageHeader>
         <div className="selectContainer">
           <Select
             value={period}
@@ -112,97 +114,104 @@ const Home = (): JSX.Element => {
             onChange={(value) => setPeriod(value)}
           />
         </div>
-      </header>
-      <div className="cardContainer1">
-        <MetricCard
-          title="Orders"
-          icon={
-            <RoundedIcon
-              icon={<i className="fa fa-shopping-cart" aria-hidden="true"></i>}
-              color={CSSConstants.secondaryColor}
-            />
-          }
-          value={summary.totalOrderCount}
-        />
-      </div>
-      <div className="cardContainer2">
-        <MetricCard
-          title="Customers"
-          icon={
-            <RoundedIcon
-              icon={<i className="fas fa-users"></i>}
-              color={CSSConstants.dangerColor}
-            />
-          }
-          value={summary.totalCustomers}
-        />
-      </div>
-      <div className="cardContainer3">
-        <MetricCard
-          title="Quotes"
-          icon={
-            <RoundedIcon
-              icon={<i className="fas fa-comments-dollar"></i>}
-              color={CSSConstants.warningColor}
-            />
-          }
-          value={summary.totalQuotes}
-        />
-      </div>
-      <div className="cardContainer4">
-        <MetricCard
-          title="Revenue"
-          icon={
-            <RoundedIcon
-              icon={<i className="fas fa-money-bill"></i>}
-              color={CSSConstants.successColor}
-            />
-          }
-          value={formatPrice(summary.totalRevenue)}
-        />
-      </div>
-      <div className="cardContainer5">
-        <MetricCard
-          title="Ecosystems"
-          icon={
-            <RoundedIcon
-              icon={<i className="fas fa-store"></i>}
-              color={CSSConstants.primaryColor}
-            />
-          }
-          value={businessData.ecosystems.length}
-        />
-      </div>
-      <div className="lineChartContainer">
-        <div className="cardTitle">Revenue</div>
-        <div className="lineChart">
-          <RevenueLineChart
-            revenueData={monthlySales}
-            interval={roundOff(
-              Math.round(
-                monthlySales
-                  .map((item) => item.revenue)
-                  .reduce((a, b) => (a > b ? a : b)) / 4
-              )
-            )}
+      </PageHeaderContainer>
+      <div className="gridContainer">
+        <div className="cardContainer1">
+          <MetricCard
+            title="Orders"
+            icon={
+              <RoundedIcon
+                icon={
+                  <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+                }
+                color={CSSConstants.secondaryColor}
+              />
+            }
+            value={summary.totalOrderCount}
           />
         </div>
-      </div>
-      <div className="pieChartContainer">
-        <div className="cardTitle">Orders</div>
-        <div className="pieChart">
-          <OrderCountPieChart data={summary} />
+        <div className="cardContainer2">
+          <MetricCard
+            title="Customers"
+            icon={
+              <RoundedIcon
+                icon={<i className="fas fa-users"></i>}
+                color={CSSConstants.dangerColor}
+              />
+            }
+            value={summary.totalCustomers}
+          />
+        </div>
+        <div className="cardContainer3">
+          <MetricCard
+            title="Quotes"
+            icon={
+              <RoundedIcon
+                icon={<i className="fas fa-comments-dollar"></i>}
+                color={CSSConstants.warningColor}
+              />
+            }
+            value={summary.totalQuotes}
+          />
+        </div>
+        <div className="cardContainer4">
+          <MetricCard
+            title="Revenue"
+            icon={
+              <RoundedIcon
+                icon={<i className="fas fa-money-bill"></i>}
+                color={CSSConstants.successColor}
+              />
+            }
+            value={formatPrice(summary.totalRevenue)}
+          />
+        </div>
+        <div className="cardContainer5">
+          <MetricCard
+            title="Ecosystems"
+            icon={
+              <RoundedIcon
+                icon={<i className="fas fa-store"></i>}
+                color={CSSConstants.primaryColor}
+              />
+            }
+            value={businessData.ecosystems.length}
+          />
+        </div>
+        <div className="lineChartContainer">
+          <div className="cardTitle">Revenue</div>
+          <div className="lineChart">
+            <RevenueLineChart
+              revenueData={monthlySales}
+              interval={roundOff(
+                Math.round(
+                  monthlySales
+                    .map((item) => item.revenue)
+                    .reduce((a, b) => (a > b ? a : b)) / 4
+                )
+              )}
+            />
+          </div>
+        </div>
+        <div className="pieChartContainer">
+          <div className="cardTitle">Orders</div>
+          <div className="pieChart">
+            <OrderCountPieChart data={summary} />
+          </div>
+        </div>
+        <div className="topSoldContainer">
+          <div className="cardTitle">Top Sold Products</div>
+          <TopSold data={topSelling} />
+        </div>
+        <div className="recentOrderContainer">
+          <div className="cardTitle"> Recent Orders</div>
+          <RecentOrders orders={orders}></RecentOrders>
         </div>
       </div>
-      <div className="topSoldContainer">
-        <div className="cardTitle">Top Sold Products</div>
-        <TopSold data={topSelling} />
-      </div>
-      <div className="recentOrderContainer">
-        <div className="cardTitle"> Recent Orders</div>
-        <RecentOrders orders={orders}></RecentOrders>
-      </div>
       <style jsx>{`
+        .container {
+          margin: 0.3em 1em;
+        }
         .gridContainer {
           display: grid;
           grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -211,7 +220,7 @@ const Home = (): JSX.Element => {
             "metric1 metric2 metric3 metric4 metric5"
             "pieChart pieChart lineChart lineChart lineChart"
             "recent recent recent topSold topSold";
-          grid-gap: 1em;
+          grid-gap: 2em;
           margin-bottom: 1em;
         }
         @media only screen and (max-width: 550px) {
@@ -232,14 +241,6 @@ const Home = (): JSX.Element => {
             margin-right: 2em;
           }
         }
-        header {
-          grid-area: header;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-top: 1em;
-          padding-right: 1em;
-        }
         .selectContainer {
           min-width: 150px;
         }
@@ -258,11 +259,6 @@ const Home = (): JSX.Element => {
         .cardContainer5 {
           grid-area: metric5;
         }
-        .title {
-          margin: 0.5em;
-          padding: 0.3em;
-          font-size: 1.7rem;
-        }
         .cardTitle {
           padding: 0.8em 1.1em;
           font-size: 1.5rem;
@@ -274,7 +270,6 @@ const Home = (): JSX.Element => {
           background: ${CSSConstants.foregroundColor};
           box-shadow: 0 0 20px #00000014;
           border-radius: 1em;
-          margin-right: 1em;
         }
         .lineChart {
           background: ${CSSConstants.foregroundColor};
@@ -286,7 +281,6 @@ const Home = (): JSX.Element => {
           background: ${CSSConstants.foregroundColor};
           box-shadow: 0 0 20px #00000014;
           border-radius: 1em;
-          margin: 0em 1em;
         }
         .pieChart {
           background: ${CSSConstants.foregroundColor};
@@ -298,14 +292,12 @@ const Home = (): JSX.Element => {
           background: ${CSSConstants.foregroundColor};
           box-shadow: 0 0 30px #00000014;
           border-radius: 1em;
-          margin: 1em 1em;
         }
         .topSoldContainer {
           grid-area: topSold;
           background: ${CSSConstants.foregroundColor};
           box-shadow: 0 0 30px #00000014;
           border-radius: 1em;
-          margin: 1em 1em 1em 0em;
         }
       `}</style>
     </div>

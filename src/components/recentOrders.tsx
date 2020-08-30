@@ -156,7 +156,7 @@ const RecentOrders = (props: RecentOrdersProps): JSX.Element => {
     <div className="container">
       <SortableTable
         initialSortData={{
-          index: 1,
+          index: 8,
           isAsc: false,
         }}
         headers={getTableHeaders()}

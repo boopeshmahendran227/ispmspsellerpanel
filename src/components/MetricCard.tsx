@@ -32,7 +32,6 @@ const MetricCard = (props: MetricCardProps) => {
           background: ${CSSConstants.foregroundColor};
           box-shadow: 0 0 20px #00000014;
           min-width: 245px;
-          margin: 1em;
           border-radius: 5%;
         }
         .iconContainer {
