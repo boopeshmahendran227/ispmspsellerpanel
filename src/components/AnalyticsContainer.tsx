@@ -105,7 +105,7 @@ const AnalyticsContainer = (props: AnalyticsContainerProps): JSX.Element => {
             icon={
               <RoundedIcon
                 icon={<i className="fas fa-users"></i>}
-                color={CSSConstants.dangerColor}
+                color={CSSConstants.warningColor}
               />
             }
             value={summary.totalCustomers}
@@ -117,7 +117,7 @@ const AnalyticsContainer = (props: AnalyticsContainerProps): JSX.Element => {
             icon={
               <RoundedIcon
                 icon={<i className="fas fa-comments-dollar"></i>}
-                color={CSSConstants.warningColor}
+                color={CSSConstants.dangerColor}
               />
             }
             value={summary.totalQuotes}
@@ -187,6 +187,7 @@ const AnalyticsContainer = (props: AnalyticsContainerProps): JSX.Element => {
             "pieChart pieChart lineChart lineChart lineChart"
             "recent recent recent topSold topSold";
           grid-gap: 1.7em;
+          margin-top: -1.7em;
           margin-bottom: 1em;
         }
         @media only screen and (max-width: 550px) {
