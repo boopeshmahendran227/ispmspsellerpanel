@@ -11,12 +11,9 @@ import Select from "components/Select";
 import { SelectOptionInterface } from "types/product";
 import RecentOrders from "components/RecentOrders";
 import TopSold, { TopSoldItems } from "components/TopSold";
-import PercentageArrow from "components/PercentArrow";
 import RevenueLineChart, {
-  formatLineData,
   MonthlySalesInterface,
 } from "components/RevenueLineChart";
-import { percentageDifference } from "components/RevenueLineChart";
 import OrderCountPieChart from "components/OrdersPieChart";
 import { OrderInterface } from "types/order";
 import { PaginatedDataInterface } from "types/pagination";
@@ -178,9 +175,6 @@ const Home = (): JSX.Element => {
       </div>
       <div className="lineChartContainer">
         <div className="cardTitle">Revenue</div>
-        <PercentageArrow
-          value={percentageDifference(formatLineData(monthlySales)[0].data)}
-        />
         <div className="lineChart">
           <RevenueLineChart
             revenueData={monthlySales}

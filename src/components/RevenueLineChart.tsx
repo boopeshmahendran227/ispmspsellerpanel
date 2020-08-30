@@ -1,24 +1,19 @@
 import { ResponsiveLine } from "@nivo/line";
+import moment from "moment";
 
-export const percentageDifference = (array) => {
-  const len = array.length;
-  const diff = Math.round(
-    ((array[len - 1].y - array[len - 2].y) / array[len - 2].y) * 100
-  );
-  return diff;
-};
-export const formatLineData = (data) => {
+const formatLineData = (data) => {
   const monthWiseRevenueList = data.map((object) => ({
-    x: object.month,
+    x: moment(object.dateTime).format("MMM"),
     y: object.revenue,
   }));
   return [{ id: "revenue", data: monthWiseRevenueList }];
 };
+
 export interface MonthlySalesInterface {
   dateTime: Date;
-  month: string;
   revenue: number;
 }
+
 interface RevenueDataProps {
   revenueData: MonthlySalesInterface[];
   interval: number;
