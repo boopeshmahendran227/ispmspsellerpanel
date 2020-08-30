@@ -1,19 +1,31 @@
 import CSSConstants from "../constants/CSSConstants";
+import styled from "styled-components";
 
 interface MetricCardProps {
-  title: string | React.ReactNode;
+  title: string;
   value: number | string;
-  beforeContent?: string;
+  icon: React.ReactNode;
 }
 
+const FlexContainer = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 1.2em;
+`;
+
 const MetricCard = (props: MetricCardProps) => {
+  const { icon } = props;
+
   return (
     <div className="card">
-      <div className="title">{props.title}</div>
-      <div className="content">
-        {props.beforeContent}
-        {props.value}
-      </div>
+      <FlexContainer>
+        <div className="iconContainer">{icon}</div>
+        <div className="contentContainer">
+          <div className="value">{props.value}</div>
+          <div className="title">{props.title}</div>
+        </div>
+      </FlexContainer>
       <style jsx>{`
         .card {
           display: inline-block;
@@ -25,23 +37,21 @@ const MetricCard = (props: MetricCardProps) => {
           border-radius: 5%;
           margin-right: 1em;
         }
+        .iconContainer {
+          margin-right: 1.1em;
+        }
         .title {
           text-transform: capitalize;
-          padding: 0.7em;
-          font-weight: bold;
-          font-size: 1.2rem;
+          font-size: 1.1rem;
+          margin-top: 0.2em;
+          color: ${CSSConstants.secondaryTextColor};
         }
-        .content {
-          padding: 0.5em;
-          font-size: 2rem;
+        .value {
+          font-size: 1.7rem;
         }
       `}</style>
     </div>
   );
-};
-
-MetricCard.defaultProps = {
-  beforeContent: "",
 };
 
 export default MetricCard;

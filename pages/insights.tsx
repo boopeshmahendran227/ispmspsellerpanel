@@ -7,6 +7,8 @@ import WithAuth from "components/WithAuth";
 import moment from "moment";
 import { SummaryInterface } from "types/insights";
 import { formatPrice } from "utils/misc";
+import RoundedIcon from "components/atoms/RoundedIcon";
+import CSSConstants from "../src/constants/CSSConstants";
 
 const startDate = moment().subtract(7, "days").startOf("day");
 const endDate = moment().endOf("day");
@@ -33,14 +35,56 @@ const Insight = () => {
   return (
     <div className="container">
       <h2>Stats for Last 7 Days</h2>
-      <MetricCard title="Total orders" value={summary.totalOrderCount} />
-      <MetricCard title="Total Customers" value={summary.totalCustomers} />
-      <MetricCard title="Total Quotes" value={summary.totalQuotes} />
       <MetricCard
-        title="Total Revenue"
+        title="Orders"
+        icon={
+          <RoundedIcon
+            icon={<i className="fa fa-shopping-cart" aria-hidden="true"></i>}
+            color={CSSConstants.secondaryColor}
+          />
+        }
+        value={summary.totalOrderCount}
+      />
+      <MetricCard
+        title="Customers"
+        icon={
+          <RoundedIcon
+            icon={<i className="fas fa-users"></i>}
+            color={CSSConstants.dangerColor}
+          />
+        }
+        value={summary.totalCustomers}
+      />
+      <MetricCard
+        title="Quotes"
+        icon={
+          <RoundedIcon
+            icon={<i className="fas fa-comments-dollar"></i>}
+            color={CSSConstants.warningColor}
+          />
+        }
+        value={summary.totalQuotes}
+      />
+      <MetricCard
+        title="Revenue"
+        icon={
+          <RoundedIcon
+            icon={<i className="fas fa-money-bill"></i>}
+            color={CSSConstants.successColor}
+          />
+        }
         value={formatPrice(summary.totalRevenue)}
       />
-      <MetricCard title="Ecosystems" value={businessData.ecosystems.length} />
+      <MetricCard
+        title="Ecosystems"
+        icon={
+          <RoundedIcon
+            icon={<i className="fas fa-store"></i>}
+            color={CSSConstants.primaryColor}
+          />
+        }
+        value={businessData.ecosystems.length}
+      />
       <style jsx>{`
         .container {
           margin: 1.5em 1em;

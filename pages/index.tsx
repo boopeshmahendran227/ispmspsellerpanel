@@ -1,4 +1,3 @@
-import MetricCard from "components/MetricCard";
 import { SummaryInterface } from "types/insights";
 import useSWR from "swr";
 import React, { useState } from "react";
@@ -21,6 +20,8 @@ import { percentageDifference } from "components/RevenueLineChart";
 import OrderCountPieChart from "components/OrdersPieChart";
 import { OrderInterface } from "types/order";
 import { PaginatedDataInterface } from "types/pagination";
+import MetricCard from "components/MetricCard";
+import RoundedIcon from "components/atoms/RoundedIcon";
 
 enum PeriodState {
   week,
@@ -115,40 +116,48 @@ const Home = (): JSX.Element => {
       </header>
       <div className="cardContainer1">
         <MetricCard
-          title={
-            <span>
-              Orders <i className="fa fa-chart-bar"></i>
-            </span>
+          title="Orders"
+          icon={
+            <RoundedIcon
+              icon={<i className="fa fa-shopping-cart" aria-hidden="true"></i>}
+              color={CSSConstants.secondaryColor}
+            />
           }
           value={summary.totalOrderCount}
         />
       </div>
       <div className="cardContainer2">
         <MetricCard
-          title={
-            <span>
-              New Customers <i className="fas fa-users"></i>
-            </span>
+          title="Customers"
+          icon={
+            <RoundedIcon
+              icon={<i className="fas fa-users"></i>}
+              color={CSSConstants.dangerColor}
+            />
           }
           value={summary.totalCustomers}
         />
       </div>
       <div className="cardContainer3">
         <MetricCard
-          title={
-            <span>
-              Quotes <i className="fas fa-comments-dollar"></i>
-            </span>
+          title="Quotes"
+          icon={
+            <RoundedIcon
+              icon={<i className="fas fa-comments-dollar"></i>}
+              color={CSSConstants.warningColor}
+            />
           }
           value={summary.totalQuotes}
         />
       </div>
       <div className="cardContainer4">
         <MetricCard
-          title={
-            <span>
-              Revenue <i className="fas fa-hand-holding-usd"></i>
-            </span>
+          title="Revenue"
+          icon={
+            <RoundedIcon
+              icon={<i className="fas fa-money-bill"></i>}
+              color={CSSConstants.successColor}
+            />
           }
           value={formatPrice(summary.totalRevenue)}
         />
@@ -236,9 +245,6 @@ const Home = (): JSX.Element => {
         }
         .cardContainer4 {
           grid-area: metric4;
-        }
-        i {
-          margin-left: 0.3em;
         }
         .title {
           margin: 0.5em 0;
