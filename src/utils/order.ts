@@ -27,7 +27,7 @@ const getOrderStatusText = (status: OrderStatus) => {
   switch (status) {
     case OrderStatus.PaymentSuccess:
     case OrderStatus.PaymentOnDelivery:
-      return "Order Created";
+      return "Created";
     case OrderStatus.Shipping:
       return "Shipping";
     case OrderStatus.ShippingCompleted:
@@ -45,9 +45,9 @@ const getOrderStatusText = (status: OrderStatus) => {
 const getPaymentText = (paymentMode: PaymentMode) => {
   switch (paymentMode) {
     case PaymentMode.Cash:
-      return "Cash on Delivery";
+      return "COD";
     case PaymentMode.Online:
-      return "Online Payment";
+      return "Online";
   }
   return splitCamelCase(paymentMode);
 };

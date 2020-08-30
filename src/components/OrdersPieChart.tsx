@@ -63,8 +63,6 @@ const OrderCountPieChart = (props: PieChartProps) => {
       data={formatPieData(props.data.orderCount)}
       margin={{ top: 40, right: 80, bottom: 80, left: 90 }}
       padAngle={0.5}
-      cornerRadius={5}
-      innerRadius={0.6}
       colors={[
         CSSConstants.secondaryColor,
         CSSConstants.warningColor,
