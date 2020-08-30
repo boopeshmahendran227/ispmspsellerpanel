@@ -7,3 +7,8 @@ export interface SummaryInterface {
   totalQuotes: number;
   totalCustomers: number;
 }
+
+export enum PeriodState {
+  week,
+  year,
+}
