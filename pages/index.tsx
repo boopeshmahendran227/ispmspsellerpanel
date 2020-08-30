@@ -195,7 +195,7 @@ const Home = (): JSX.Element => {
         </div>
       </div>
       <div className="topSoldContainer">
-        <div className="cardTitle">Top Sold</div>
+        <div className="cardTitle">Top Sold Products</div>
         <TopSold data={topSelling} />
       </div>
       <div className="recentOrderContainer">
@@ -206,12 +206,11 @@ const Home = (): JSX.Element => {
         .gridContainer {
           display: grid;
           grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-          grid-template-rows: 0.3fr 0.5fr 2fr auto;
           grid-template-areas:
             "header header header header header"
             "metric1 metric2 metric3 metric4 metric5"
             "pieChart pieChart lineChart lineChart lineChart"
-            "recent recent recent recent topSold";
+            "recent recent recent topSold topSold";
           grid-gap: 1em;
           margin-bottom: 1em;
         }
@@ -265,7 +264,7 @@ const Home = (): JSX.Element => {
           font-size: 1.7rem;
         }
         .cardTitle {
-          padding: 0.7em 1.1em;
+          padding: 0.8em 1.1em;
           font-size: 1.5rem;
           font-weight: bold;
           border-bottom: 1px solid #f0f0f0;

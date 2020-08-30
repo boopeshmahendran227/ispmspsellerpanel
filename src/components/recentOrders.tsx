@@ -54,7 +54,7 @@ const getTableHeaders = () => {
         orderItem.orderItemStatus,
     },
     {
-      name: "Created",
+      name: "Date",
       valueFunc: (orderItem: TransformedOrderItemInterface) =>
         orderItem.createdDateTime,
     },
@@ -153,16 +153,24 @@ const RecentOrders = (props: RecentOrdersProps): JSX.Element => {
   };
 
   return (
-    <SortableTable
-      initialSortData={{
-        index: 1,
-        isAsc: false,
-      }}
-      headers={getTableHeaders()}
-      data={orderItems}
-      emptyMsg="There are no recent orders"
-      body={renderTableBody}
-    />
+    <div className="container">
+      <SortableTable
+        initialSortData={{
+          index: 1,
+          isAsc: false,
+        }}
+        headers={getTableHeaders()}
+        data={orderItems}
+        emptyMsg="There are no recent orders"
+        body={renderTableBody}
+      />
+      <style jsx>{`
+        .container {
+          max-height: 500px;
+          overflow: auto;
+        }
+      `}</style>
+    </div>
   );
 };
 export default RecentOrders;

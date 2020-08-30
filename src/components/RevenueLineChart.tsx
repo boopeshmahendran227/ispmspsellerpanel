@@ -67,13 +67,13 @@ const RevenueLineChart = (props: RevenueDataProps) => (
     colors={[CSSConstants.secondaryColor]}
     enableGridX={false}
     enableGridY={false}
-    enablePoints={false}
     pointSize={10}
     pointColor={{ theme: "background" }}
     pointBorderWidth={2}
     pointBorderColor={{ from: "serieColor" }}
     pointLabel="y"
     pointLabelYOffset={-15}
+    enablePoints={true}
     enableArea={true}
     areaBaselineValue={0}
     areaOpacity={0.3}

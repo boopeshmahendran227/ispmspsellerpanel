@@ -1,8 +1,8 @@
 import React from "react";
-import RelativeImg from "./RelativeImg";
-import CSSConstants from "../constants/CSSConstants";
+import SortableTable from "components/SortableTable";
+import ProductCard from "components/ProductCard";
 
-export interface TopSoldItems {
+export interface TopSoldItem {
   categoryName: string;
   numberOfOrders: number;
   productId: number;
@@ -12,68 +12,58 @@ export interface TopSoldItems {
   revenue: number;
   revenueShare: number;
 }
+
 export interface TopSoldProps {
-  data: TopSoldItems[];
+  data: TopSoldItem[];
 }
+
+const renderTableBody = (data: TopSoldItem[]) => {
+  return data.map((item) => {
+    return (
+      <tr key={item.productId}>
+        <td className="productContainer">
+          <ProductCard
+            name={item.productName}
+            image={"qwoieru"}
+            metaInfo={[{ key: "Category", value: item.categoryName }]}
+          />
+        </td>
+        <td>{item.qtySold}</td>
+        <td>{item.numberOfOrders}</td>
+      </tr>
+    );
+  });
+};
+
+const getTableHeaders = () => {
+  return [
+    {
+      name: "Product",
+      valueFunc: (item: TopSoldItem) => item.productName,
+    },
+    {
+      name: "Sold Quantity",
+      valueFunc: (item: TopSoldItem) => item.qtySold,
+    },
+    {
+      name: "Order Count",
+      valueFunc: (item: TopSoldItem) => item.numberOfOrders,
+    },
+  ];
+};
+
 const TopSold = (props: TopSoldProps): JSX.Element => {
   return (
-    <div>
-      <table>
-        <tbody>
-          {props.data.map((item) => {
-            return (
-              <tr key={item.productId}>
-                <div className="content">
-                  <div className="productContainer">
-                    {/* <div className="imageContainer">
-              <RelativeImg src={result.items[0].productSnapshot.images[0]} />
-            </div> */}
-                    <p>
-                      <b>{item.productName}</b>
-                    </p>
-                  </div>
-                  <p className="category">{item.categoryName}</p>
-                  <p>{item.qtySold} Orders</p>
-                </div>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <style jsx>{`
-        .content {
-          margin-left: 10px;
-        }
-        p {
-          margin: 0.5rem;
-        }
-        .productContainer {
-          display: flex;
-          align-items: center;
-          justify-content: auto;
-        }
-
-        .imageContainer {
-          display: inline-flex;
-          width: 3rem;
-          height: 3rem;
-          align-items: center;
-          margin-top: 0.5rem;
-        }
-        .category {
-          color: ${CSSConstants.secondaryTextColor};
-        }
-
-        tr {
-          border-top: 0.5px solid ${CSSConstants.borderColor};
-        }
-
-        tr:hover {
-          background-color: ${CSSConstants.hoverColor} !important;
-          cursor: pointer;
-        }
-      `}</style>
-    </div>
+    <SortableTable
+      initialSortData={{
+        index: 1,
+        isAsc: false,
+      }}
+      headers={getTableHeaders()}
+      data={props.data}
+      emptyMsg="There are no orders"
+      body={renderTableBody}
+    />
   );
 };
 export default TopSold;

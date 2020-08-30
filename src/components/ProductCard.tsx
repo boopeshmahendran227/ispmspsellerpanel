@@ -46,6 +46,8 @@ const ProductCard = (props: ProductCardProps) => {
         .name {
           font-weight: 700;
           font-size: 1rem;
+          display: inline-block;
+          max-width: 150px;
           color: ${CSSConstants.primaryTextColor};
         }
         .metaInfoContainer {
@@ -53,7 +55,7 @@ const ProductCard = (props: ProductCardProps) => {
           color: ${CSSConstants.secondaryTextColor};
           font-size: 0.9rem;
           display: grid;
-          grid-template-columns: 120px 1fr;
+          grid-template-columns: 80px 1fr;
           grid-row-gap: 0.1em;
         }
         .metaInfoContainer .key {
