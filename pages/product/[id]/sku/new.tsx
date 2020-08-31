@@ -20,6 +20,7 @@ import SkuActions from "actions/sku";
 import styled from "styled-components";
 import Button from "components/atoms/Button";
 import FieldEcosystemMultiInput from "components/FieldEcosystemMultiInput";
+import FieldInput from "components/FieldInput";
 import { BusinessDataInterface } from "types/business";
 import SkuDimensionsInputContainer from "components/SkuDimensionsInputContainer";
 import SkuInventoryInputContainer from "components/SkuInventoryInputContainer";
@@ -32,6 +33,7 @@ interface DispatchProps {
 type SkuProps = DispatchProps;
 
 const validationSchema = Yup.object({
+  skuId: Yup.string().required(),
   price: Yup.number().required(),
   boughtPrice: Yup.number().required(),
   qty: Yup.number().required(),
@@ -145,6 +147,7 @@ const Sku = (props: SkuProps) => {
             initialValues={
               skuToCopyFrom
                 ? {
+                    skuId: skuToCopyFrom.skuId,
                     price: skuToCopyFrom.price,
                     boughtPrice: skuToCopyFrom.boughtPrice,
                     qty: skuToCopyFrom.qty,
@@ -173,6 +176,7 @@ const Sku = (props: SkuProps) => {
                     })),
                   }
                 : {
+                    skuId: "",
                     price: 0,
                     boughtPrice: 0,
                     qty: 0,
@@ -200,6 +204,13 @@ const Sku = (props: SkuProps) => {
               <Form>
                 {console.log(errors)}
                 <FlexColumnContainer>
+                  <SectionCard>
+                    <SectionHeader>Sku Details</SectionHeader>
+                    <div>
+                      <label>Sku Id</label>
+                      <FieldInput name="skuId" />
+                    </div>
+                  </SectionCard>
                   <SectionCard>
                     <SectionHeader>Options</SectionHeader>
                     {attributes.map((attribute, index) => (

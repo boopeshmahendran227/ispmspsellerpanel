@@ -76,7 +76,7 @@ const AnalyticsContainer = (props: AnalyticsContainerProps): JSX.Element => {
     return <PageError statusCode={error.response?.status} />;
   }
 
-  if (!summary || !orderData || !topSelling || !monthlySales) {
+  if (!summary || !orderData || !topSelling || !monthlySales || !businessData) {
     return <Loader />;
   }
 

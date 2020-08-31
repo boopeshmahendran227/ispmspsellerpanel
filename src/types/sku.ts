@@ -13,6 +13,7 @@ export interface UpdateSkuAction {
 export type SkuActionType = AddSkuAction | UpdateSkuAction;
 
 export interface AddSkuInterface {
+  skuId: string;
   productId: number;
   price: number;
   boughtPrice: number;
