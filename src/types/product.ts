@@ -46,6 +46,11 @@ export type ProductActionType =
   | SetSelectedAttributeValuesAction
   | AddProductAction;
 
+export interface ProductCloneInterface {
+  currentEcosystem: SelectOptionInterface;
+  sellerId: string;
+  targetEcosystem: SelectOptionInterface;
+}
 export interface ProductInputInterface {
   name: string;
   isActive: boolean;
