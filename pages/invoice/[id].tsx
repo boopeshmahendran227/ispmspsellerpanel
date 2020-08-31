@@ -106,7 +106,7 @@ const Invoice = () => {
                 <th>Name</th>
                 <th>Qty</th>
                 <th>MRP</th>
-                <th>Discount</th>
+                <th>Savings</th>
                 <th>Item Price</th>
                 <th>GST</th>
                 <th>Net Price</th>
