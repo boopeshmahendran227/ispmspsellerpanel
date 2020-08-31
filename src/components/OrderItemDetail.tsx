@@ -260,9 +260,12 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
         </div>
         <div className="totalContainer">
           <div>
-            {formatPrice(orderItem.actualPriceWithoutTax / orderItem.qty)} x{" "}
+            {formatPrice(orderItem.actualPrice / orderItem.qty)} x{" "}
             {orderItem.qty}
           </div>
+          <div className="key">MRP</div>
+          <div className="value mrp">{formatPrice(orderItem.actualPrice)}</div>
+          <div className="key">Item Price</div>
           <div className="value">
             {formatPrice(orderItem.actualPriceWithoutTax)}
           </div>
@@ -296,7 +299,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
               </div>
             </Fragment>
           ))}
-          <div className="key total">Total</div>
+          <div className="key total">Net Price</div>
           <div className="value total">
             {formatPrice(orderItem.discountedPrice)}
           </div>
@@ -359,6 +362,9 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
         .totalContainer .total {
           padding: 0.2em 0;
           font-weight: bold;
+        }
+        .mrp {
+          margin-bottom: 1.1em;
         }
         .buttonContainer {
           margin-top: 1em;
