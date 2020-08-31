@@ -5,6 +5,8 @@ import {
   ADD_ATTRIBUTE_SUCCESS,
   ADD_ATTRIBUTE_VALUE_SUCCESS,
   UPDATE_CREDITS_SUCCESS,
+  ADD_SKU_SUCCESS,
+  UPDATE_SKU_SUCCESS,
 } from "../constants/ActionTypes";
 import { take, all, call } from "redux-saga/effects";
 import { mutate, cache } from "swr";
@@ -16,6 +18,18 @@ function* refreshOrder() {
       cache
         .keys()
         .filter((key) => key.startsWith("/order"))
+        .map((key) => call(mutate, key))
+    );
+  }
+}
+
+function* refreshSku() {
+  while (true) {
+    yield take([ADD_SKU_SUCCESS, UPDATE_SKU_SUCCESS]);
+    yield all(
+      cache
+        .keys()
+        .filter((key) => key.startsWith("/product/seller"))
         .map((key) => call(mutate, key))
     );
   }
@@ -48,5 +62,6 @@ export default function* () {
     refreshQuote(),
     refreshAttributes(),
     refreshInvoice(),
+    refreshSku(),
   ]);
 }

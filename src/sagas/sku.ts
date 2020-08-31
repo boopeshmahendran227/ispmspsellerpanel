@@ -14,10 +14,14 @@ import _ from "lodash";
 function* addSku(action: AddSkuAction) {
   try {
     const sku = action.sku;
-    yield call(api, "/product/sku", {
+    const data = yield call(api, "/product/sku", {
       method: "POST",
       data: sku,
     });
+    if (!data.isSuccess) {
+      yield put({ type: ADD_SKU_FAILURE });
+      return;
+    }
     yield put({ type: ADD_SKU_SUCCESS });
   } catch (err) {
     yield put({ type: ADD_SKU_FAILURE });
