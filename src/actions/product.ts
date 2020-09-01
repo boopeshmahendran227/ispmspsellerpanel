@@ -13,6 +13,7 @@ import {
   SelectedAttribute,
   SelectedAttributeValuesMap,
   ProductInputInterface,
+  ProductCloneInterface,
 } from "../types/product";
 
 const addAttribute = (attribute: AddAttributeInterface): ProductActionType => {
@@ -58,7 +59,7 @@ const addProduct = (product: ProductInputInterface): ProductActionType => {
   };
 };
 
-const cloneProduct = (product) => {
+const cloneProduct = (product: ProductCloneInterface): ProductActionType => {
   return {
     type: CLONE_PRODUCT,
     product,

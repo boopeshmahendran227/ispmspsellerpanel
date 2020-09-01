@@ -127,7 +127,7 @@ const Products = () => {
             <Button>Add Product</Button>
           </Link>
           <Link href="/product/cloneProduct">
-            <Button>Clone Product</Button>
+            <Button>Clone Products</Button>
           </Link>
         </div>
       </PageHeaderContainer>

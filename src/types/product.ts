@@ -6,6 +6,7 @@ import {
   ADD_ATTRIBUTE_VALUE_REQUEST,
   ADD_PRODUCT_REQUEST,
   INIT_PRODUCT_CREATE,
+  CLONE_PRODUCT,
 } from "../constants/ActionTypes";
 
 interface AddAttributeAction {
@@ -38,19 +39,26 @@ interface InitProductCreateAction {
   type: typeof INIT_PRODUCT_CREATE;
 }
 
+interface CloneProductAction {
+  type: typeof CLONE_PRODUCT;
+  product: ProductCloneInterface;
+}
+
 export type ProductActionType =
   | InitProductCreateAction
   | AddAttributeAction
   | AddAttributeValueAction
   | SetSelectedAttributeAction
   | SetSelectedAttributeValuesAction
-  | AddProductAction;
+  | AddProductAction
+  | CloneProductAction;
 
 export interface ProductCloneInterface {
   currentEcosystem: SelectOptionInterface;
   sellerId: string;
   targetEcosystem: SelectOptionInterface;
 }
+
 export interface ProductInputInterface {
   name: string;
   isActive: boolean;

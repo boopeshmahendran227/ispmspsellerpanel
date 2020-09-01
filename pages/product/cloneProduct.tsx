@@ -33,14 +33,8 @@ const ProductSchema = Yup.object().shape({
     .required("Target ecosystem is required")
     .nullable(),
 });
+
 const CloneProduct = (props: CloneProductProps) => {
-  const onSubmit = (values) => {
-    props.cloneProduct({
-      currentEcosystem: values.currentEcosystem,
-      sellerId: values.sellerId,
-      targetEcosystem: values.targetEcosystem,
-    });
-  };
   const businessSWR = useSWR<BusinessDataInterface>("/businesses/business");
   const businessData: BusinessDataInterface | undefined = businessSWR.data;
 
@@ -48,6 +42,7 @@ const CloneProduct = (props: CloneProductProps) => {
   const sellerEcosystemData = sellerEcosystemSWR.data;
 
   const error = businessSWR.error || sellerEcosystemSWR.error;
+
   if (error) {
     return <PageError statusCode={error.response?.status} />;
   }
@@ -55,6 +50,14 @@ const CloneProduct = (props: CloneProductProps) => {
   if (!businessData || !sellerEcosystemData) {
     return <Loader />;
   }
+
+  const onSubmit = (values) => {
+    props.cloneProduct({
+      currentEcosystem: values.currentEcosystem,
+      sellerId: values.sellerId,
+      targetEcosystem: values.targetEcosystem,
+    });
+  };
 
   const targetEcosystems: SelectOptionInterface[] = [
     {
@@ -66,12 +69,14 @@ const CloneProduct = (props: CloneProductProps) => {
       label: <EcosystemOption ecosystem={ecosystem} />,
     })),
   ];
+
   const currentEcosystems: SelectOptionInterface[] = sellerEcosystemData.map(
     (ecosystem) => ({
       value: ecosystem.id,
       label: ecosystem.name,
     })
   );
+
   return (
     <PageContainer>
       <PageHeaderContainer>
@@ -124,6 +129,7 @@ const CloneProduct = (props: CloneProductProps) => {
     </PageContainer>
   );
 };
+
 const mapDispatchToProps: DispatchProps = {
   cloneProduct: ProductActions.cloneProduct,
 };
