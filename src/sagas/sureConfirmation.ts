@@ -15,6 +15,8 @@ import {
   REJECT_QUOTE_REQUEST,
   MARK_PACKAGE_READY_FOR_COLLECTION,
   MARK_PACKAGE_READY_FOR_COLLECTION_REQUEST,
+  CLONE_PRODUCT,
+  CLONE_PRODUCT_REQUEST,
 } from "../constants/ActionTypes";
 import { take, all, put, race, call } from "redux-saga/effects";
 import UIActions from "../actions/ui";
@@ -96,6 +98,19 @@ function* markAsShipping() {
   }
 }
 
+function* cloneProduct() {
+  while (true) {
+    const action = yield take(CLONE_PRODUCT);
+    yield put(
+      UIActions.showSureModal(
+        "Confirmation",
+        `Are you sure you want to Clone the products`
+      )
+    );
+    yield call(handleSure, action, CLONE_PRODUCT_REQUEST);
+  }
+}
+
 function* markPackageReadyForCollection() {
   while (true) {
     const action = yield take(MARK_PACKAGE_READY_FOR_COLLECTION);
@@ -131,5 +146,6 @@ export default function* () {
     markAsShipping(),
     markPackageReadyForCollection(),
     rejectQuote(),
+    cloneProduct(),
   ]);
 }

@@ -122,9 +122,14 @@ const Products = () => {
     <PageContainer>
       <PageHeaderContainer>
         <PageHeader>Products</PageHeader>
-        <Link href="/product/new">
-          <Button>Add Product</Button>
-        </Link>
+        <div>
+          <Link href="/product/new">
+            <Button>Add Product</Button>
+          </Link>
+          <Link href="/product/cloneProduct">
+            <Button>Clone Product</Button>
+          </Link>
+        </div>
       </PageHeaderContainer>
       <FlexContainer>
         <SearchBar searchText={searchText} searchByText={setSearchText} />

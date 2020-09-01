@@ -5,6 +5,7 @@ import {
   SET_SELECTED_ATTRIBUTE_VALUES_MAP,
   ADD_ATTRIBUTE_VALUE_REQUEST,
   INIT_PRODUCT_CREATE,
+  CLONE_PRODUCT,
 } from "../constants/ActionTypes";
 import {
   AddAttributeInterface,
@@ -57,6 +58,13 @@ const addProduct = (product: ProductInputInterface): ProductActionType => {
   };
 };
 
+const cloneProduct = (product) => {
+  return {
+    type: CLONE_PRODUCT,
+    product,
+  };
+};
+
 const initProductCreate = (): ProductActionType => {
   return {
     type: INIT_PRODUCT_CREATE,
@@ -70,4 +78,5 @@ export default {
   setSelectedAttributeValuesMap,
   addProduct,
   initProductCreate,
+  cloneProduct,
 };

@@ -19,6 +19,8 @@ import {
   ADD_SKU_FAILURE,
   UPDATE_SKU_SUCCESS,
   UPDATE_SKU_FAILURE,
+  CLONE_PRODUCT_FAILURE,
+  CLONE_PRODUCT_SUCCESS,
 } from "../constants/ActionTypes";
 import { put, take } from "redux-saga/effects";
 import ToastActions from "../actions/toast";
@@ -74,6 +76,15 @@ export const toasts = {
     type: ToastType.error,
     msg: "Product Draft Creation failed. Please try again",
   },
+  [CLONE_PRODUCT_SUCCESS]: {
+    type: ToastType.success,
+    msg: "Clone success",
+  },
+  [CLONE_PRODUCT_FAILURE]: {
+    type: ToastType.error,
+    msg: "clone failure",
+  },
+
   [CREATE_COUPON_SUCCESS]: {
     type: ToastType.success,
     msg: "Coupon Created Successfully",

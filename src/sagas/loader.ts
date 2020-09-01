@@ -37,6 +37,9 @@ import {
   UPDATE_SKU_SUCCESS,
   ADD_SKU_FAILURE,
   UPDATE_SKU_FAILURE,
+  CLONE_PRODUCT_REQUEST,
+  CLONE_PRODUCT_FAILURE,
+  CLONE_PRODUCT_SUCCESS,
 } from "../constants/ActionTypes";
 
 const openActionItems = [
@@ -52,6 +55,7 @@ const openActionItems = [
   UPDATE_CREDITS_REQUEST,
   ADD_SKU_REQUEST,
   UPDATE_SKU_REQUEST,
+  CLONE_PRODUCT_REQUEST,
 ];
 
 const closeActions = [
@@ -79,6 +83,8 @@ const closeActions = [
   UPDATE_SKU_SUCCESS,
   ADD_SKU_FAILURE,
   UPDATE_SKU_FAILURE,
+  CLONE_PRODUCT_FAILURE,
+  CLONE_PRODUCT_SUCCESS,
 ];
 
 function* watchLoadingScreenShow() {
