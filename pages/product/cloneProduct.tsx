@@ -21,7 +21,18 @@ import { connect } from "react-redux";
 interface DispatchProps {
   cloneProduct: (product: ProductCloneInterface) => void;
 }
+
 type CloneProductProps = DispatchProps;
+
+const ProductSchema = Yup.object().shape({
+  currentEcosystem: Yup.object()
+    .required("Current ecosystem is required")
+    .nullable(),
+  sellerId: Yup.string().required(),
+  targetEcosystem: Yup.object()
+    .required("Target ecosystem is required")
+    .nullable(),
+});
 const CloneProduct = (props: CloneProductProps) => {
   const onSubmit = (values) => {
     props.cloneProduct({
@@ -45,20 +56,7 @@ const CloneProduct = (props: CloneProductProps) => {
     return <Loader />;
   }
 
-  const ProductSchema = Yup.object().shape({
-    currentEcosystem: Yup.object()
-      .required("Current ecosystem is required")
-      .nullable(),
-    sellerId: Yup.string().required(),
-    targetEcosystem: Yup.object()
-      .required("Target ecosystem is required")
-      .nullable(),
-  });
   const targetEcosystems: SelectOptionInterface[] = [
-    {
-      value: "",
-      label: "All Ecosystems",
-    },
     {
       value: "Default",
       label: "Istakapaza Default Marketplace",
@@ -68,12 +66,12 @@ const CloneProduct = (props: CloneProductProps) => {
       label: <EcosystemOption ecosystem={ecosystem} />,
     })),
   ];
-  const currentEcosystems: SelectOptionInterface[] = [
-    ...sellerEcosystemData.map((ecosystem) => ({
+  const currentEcosystems: SelectOptionInterface[] = sellerEcosystemData.map(
+    (ecosystem) => ({
       value: ecosystem.id,
       label: ecosystem.name,
-    })),
-  ];
+    })
+  );
   return (
     <PageContainer>
       <PageHeaderContainer>
@@ -81,9 +79,9 @@ const CloneProduct = (props: CloneProductProps) => {
       </PageHeaderContainer>
       <Formik
         initialValues={{
-          currentEcosystem: [],
+          currentEcosystem: null,
           sellerId: "",
-          targetEcosystem: [],
+          targetEcosystem: null,
         }}
         onSubmit={onSubmit}
         validationSchema={ProductSchema}

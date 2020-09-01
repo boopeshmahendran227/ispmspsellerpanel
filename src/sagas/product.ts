@@ -80,18 +80,6 @@ function* addProduct(action) {
 }
 function* cloneProduct(action) {
   try {
-    // Todo: Move the product transformation to seperate module
-    const product: ProductInputInterface = action.product;
-    const selectedAttributeValues: SelectedAttributeValuesMap = yield select(
-      getSelectedAttributeValues
-    );
-
-    yield call(api, "/product/draft", {
-      method: "POST",
-      data: {
-        ...product,
-      },
-    });
     yield put({ type: CLONE_PRODUCT_SUCCESS });
   } catch (err) {
     yield put({ type: CLONE_PRODUCT_FAILURE });

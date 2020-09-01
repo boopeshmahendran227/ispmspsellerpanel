@@ -104,7 +104,7 @@ function* cloneProduct() {
     yield put(
       UIActions.showSureModal(
         "Confirmation",
-        `Are you sure you want to Confirm`
+        `Are you sure you want to Clone the products`
       )
     );
     yield call(handleSure, action, CLONE_PRODUCT_REQUEST);
