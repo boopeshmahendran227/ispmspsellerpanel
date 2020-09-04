@@ -19,6 +19,7 @@ import {
   SelectedAttributeValuesMap,
   AttributeValueInterface,
   AddAttributeInterface,
+  ProductCloneInterface,
 } from "../types/product";
 import { getSelectedAttributeValues } from "../selectors/product";
 import _ from "lodash";
@@ -80,6 +81,16 @@ function* addProduct(action) {
 }
 function* cloneProduct(action) {
   try {
+    const product: ProductCloneInterface = action.product;
+    yield call(api, "/productmigration/copy", {
+      method: "PUT",
+      params: {
+        fromEcosystemId: product.currentEcosystem.value,
+        fromSellerId: product.sellerId,
+        toEcosystemId: product.targetEcosystem.value,
+      },
+    });
+
     yield put({ type: CLONE_PRODUCT_SUCCESS });
   } catch (err) {
     yield put({ type: CLONE_PRODUCT_FAILURE });
