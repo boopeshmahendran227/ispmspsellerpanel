@@ -295,12 +295,12 @@ export const ProductSchema = Yup.object().shape({
           .typeError("Qty must be a number")
           .positive("Qty must be greater than 0")
           .required(),
-        length: Yup.string(),
-        width: Yup.string(),
-        height: Yup.string(),
-        weight: Yup.string(),
-        barCodeIdentifier: Yup.string(),
-        externalId: Yup.string(),
+        length: Yup.number().nullable(),
+        width: Yup.number().nullable(),
+        height: Yup.number().nullable(),
+        weight: Yup.number().nullable(),
+        barCodeIdentifier: Yup.string().nullable(),
+        externalId: Yup.string().nullable(),
         imageRelativePaths: Yup.array()
           .of(Yup.string())
           .min(1, "Each sku should contain atleast one image"),
@@ -326,12 +326,12 @@ export const ProductSchema = Yup.object().shape({
     itemGroups: Yup.array()
       .of(
         Yup.object().shape({
-          name: Yup.string().required(),
+          name: Yup.string().required("specification group is required"),
           items: Yup.array()
             .of(
               Yup.object().shape({
-                key: Yup.string().required(),
-                value: Yup.string().required(),
+                key: Yup.string().required("Key is required"),
+                value: Yup.string().required("Value is required"),
               })
             )
             .min(1, "Atleast one specification item is required"),
