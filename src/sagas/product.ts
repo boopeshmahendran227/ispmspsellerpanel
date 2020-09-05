@@ -40,6 +40,7 @@ function* addProduct(action) {
         minPrice: product.minPrice,
         specialDiscountValue: product.specialDiscountValue,
         brandId: product.brand?.value,
+        hsnCode: product.hsnCode,
         countryOfOrigin: product.countryOfOrigin?.value,
         defaultCategoryId: product.defaultCategory?.value,
         parentCategoryIds: product.categories.map((category) => category.value),
@@ -56,7 +57,7 @@ function* addProduct(action) {
         loanIds: [],
         upSellProductIds: [],
         crossSellProductIds: [],
-        ecosystemIds: product.ecosystems.map((ecosystem) => ecosystem.value),
+        ecosystemIds: product.ecosystems,
         productFaqs: product.faqs,
         allProductAttributeValueIds: _.chain(selectedAttributeValues)
           .keys()

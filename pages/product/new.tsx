@@ -103,6 +103,7 @@ const AddProduct = (props: AddProductProps) => {
             name: "",
             shortDescription: "",
             longDescription: "",
+            hsnCode: "",
             specialDiscountValue: 0,
             minPrice: 0,
             maxPrice: 0,
@@ -143,6 +144,8 @@ const AddProduct = (props: AddProductProps) => {
                 <FieldInput name="shortDescription" />
                 <InputLabel label="Long Description" />
                 <FieldTextArea name="longDescription" />
+                <InputLabel label="HSN Code" />
+                <FieldInput name="hsnCode" />
                 <InputLabel label="Main Category" />
                 <FieldSelect
                   name="defaultCategory"

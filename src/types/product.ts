@@ -64,6 +64,7 @@ export interface ProductInputInterface {
   isActive: boolean;
   shortDescription: string;
   longDescription: string;
+  hsnCode: string;
   specialDiscountValue: number;
   minPrice: number;
   maxPrice: number;
@@ -76,7 +77,7 @@ export interface ProductInputInterface {
   specification: SpecificationInterface;
   skus: ProductSkuDetail[];
   taxGroup: SelectOptionInterface | null;
-  ecosystems: SelectOptionInterface[];
+  ecosystems: string[];
 }
 
 export interface EcosystemDetailInterface {
@@ -260,6 +261,7 @@ export const ProductSchema = Yup.object().shape({
   name: Yup.string().required(),
   shortDescription: Yup.string().max(250).required(),
   longDescription: Yup.string().min(20).max(1000).required(),
+  hsnCode: Yup.string().required(),
   brand: Yup.object().required("Brand is required").nullable(),
   countryOfOrigin: Yup.object()
     .required("Country of origin is required")
@@ -269,7 +271,8 @@ export const ProductSchema = Yup.object().shape({
     .nullable(),
   specialDiscountValue: Yup.number()
     .typeError("Special discount value must be a number")
-    .required(),
+    .required()
+    .lessThan(Yup.ref("minPrice"), "Discount must be less than minimum price."),
   minPrice: Yup.number()
     .typeError("Min price must be a number")
     .positive("Min price must be greater than 0")
@@ -339,5 +342,5 @@ export const ProductSchema = Yup.object().shape({
       )
       .min(1, "Atleast one specification item group is required"),
   }),
-  ecosystems: Yup.array().of(Yup.object()).min(1),
+  ecosystems: Yup.array().of(Yup.string()).min(1),
 });
