@@ -64,6 +64,7 @@ export interface ProductInputInterface {
   isActive: boolean;
   shortDescription: string;
   longDescription: string;
+  hsnCode: string;
   specialDiscountValue: number;
   minPrice: number;
   maxPrice: number;
@@ -76,7 +77,7 @@ export interface ProductInputInterface {
   specification: SpecificationInterface;
   skus: ProductSkuDetail[];
   taxGroup: SelectOptionInterface | null;
-  ecosystems: SelectOptionInterface[];
+  ecosystems: string[];
 }
 
 export interface EcosystemDetailInterface {
@@ -260,6 +261,7 @@ export const ProductSchema = Yup.object().shape({
   name: Yup.string().required(),
   shortDescription: Yup.string().max(250).required(),
   longDescription: Yup.string().min(20).max(1000).required(),
+  hsnCode: Yup.string().required(),
   brand: Yup.object().required("Brand is required").nullable(),
   countryOfOrigin: Yup.object()
     .required("Country of origin is required")
@@ -269,7 +271,8 @@ export const ProductSchema = Yup.object().shape({
     .nullable(),
   specialDiscountValue: Yup.number()
     .typeError("Special discount value must be a number")
-    .required(),
+    .required()
+    .lessThan(Yup.ref("minPrice"), "Discount must be less than minimum price."),
   minPrice: Yup.number()
     .typeError("Min price must be a number")
     .positive("Min price must be greater than 0")
@@ -295,12 +298,12 @@ export const ProductSchema = Yup.object().shape({
           .typeError("Qty must be a number")
           .positive("Qty must be greater than 0")
           .required(),
-        length: Yup.string(),
-        width: Yup.string(),
-        height: Yup.string(),
-        weight: Yup.string(),
-        barCodeIdentifier: Yup.string(),
-        externalId: Yup.string(),
+        length: Yup.number().nullable(),
+        width: Yup.number().nullable(),
+        height: Yup.number().nullable(),
+        weight: Yup.number().nullable(),
+        barCodeIdentifier: Yup.string().nullable(),
+        externalId: Yup.string().nullable(),
         imageRelativePaths: Yup.array()
           .of(Yup.string())
           .min(1, "Each sku should contain atleast one image"),
@@ -326,12 +329,12 @@ export const ProductSchema = Yup.object().shape({
     itemGroups: Yup.array()
       .of(
         Yup.object().shape({
-          name: Yup.string().required(),
+          name: Yup.string().required("specification group is required"),
           items: Yup.array()
             .of(
               Yup.object().shape({
-                key: Yup.string().required(),
-                value: Yup.string().required(),
+                key: Yup.string().required("Key is required"),
+                value: Yup.string().required("Value is required"),
               })
             )
             .min(1, "Atleast one specification item is required"),
@@ -339,5 +342,5 @@ export const ProductSchema = Yup.object().shape({
       )
       .min(1, "Atleast one specification item group is required"),
   }),
-  ecosystems: Yup.array().of(Yup.object()).min(1),
+  ecosystems: Yup.array().of(Yup.string()).min(1),
 });
