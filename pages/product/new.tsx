@@ -19,14 +19,12 @@ import Loader from "components/Loader";
 import AttributeModal from "components/AttributeModal";
 import SkuModal from "components/SkuModal";
 import SpecificationInput from "components/SpecificationInput";
-import { flattenCategoryTree } from "utils/categoryTree";
 import InputLabel from "components/InputLabel";
 import { getSkus } from "../../src/selectors/product";
 import SkuInputTable from "components/SkuInputTable";
 import FieldTextArea from "components/FieldTextArea";
 import { useRef, useEffect } from "react";
 import PageError from "components/PageError";
-import { CategoryTreeInterface } from "types/categoryTree";
 import Tooltip from "components/Tooltip";
 import PageHeader from "components/PageHeader";
 import { BusinessDataInterface } from "types/business";
@@ -37,6 +35,7 @@ import listOfCountries from "../../src/data/listOfCountries";
 import FAQInput from "components/FAQInput";
 import TierPriceInput from "components/TierpriceInput";
 import Checkbox from "components/atoms/Checkbox";
+import { CategoryInterface } from "types/category";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -62,17 +61,16 @@ const AddProduct = (props: AddProductProps) => {
 
   const brandSWR = useSWR("/brand");
   const attributeSWR = useSWR("/attribute");
-  const categorySWR = useSWR("/category/tree");
+  const categorySWR = useSWR("/category/all");
   const taxSWR = useSWR("/tax/taxgroup");
   const businessSWR = useSWR("/businesses/business");
 
   const brands: BrandInterface[] = brandSWR.data;
   const attributes: AttributeInterface[] = attributeSWR.data;
-  const categoryTree: CategoryTreeInterface = categorySWR.data;
+  const categories: CategoryInterface[] = categorySWR.data;
   const taxGroups: TaxGroupInterface[] = taxSWR.data;
   const businessData: BusinessDataInterface = businessSWR.data;
 
-  const categories = flattenCategoryTree(categoryTree);
   const error =
     brandSWR.error ||
     attributeSWR.error ||
