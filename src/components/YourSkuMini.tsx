@@ -5,6 +5,7 @@ import CSSConstants from "../constants/CSSConstants";
 import styled from "styled-components";
 import { ProductDetailSkuDetail } from "types/product";
 import { AttributeValueID } from "types/sku";
+import Button from "./atoms/Button";
 
 const Container = styled.div`
   padding: 0.8em;
@@ -86,6 +87,7 @@ const YourSkuMini = (props: YourSkuMiniProps): JSX.Element => {
         <ContentContainer>
           <Price>{formatPrice(sku.price)}</Price>
           <Quantity>Qty: {sku.qty}</Quantity>
+          <Button onClick={() => null}>Edit</Button>
         </ContentContainer>
       </Container>
     </Link>
