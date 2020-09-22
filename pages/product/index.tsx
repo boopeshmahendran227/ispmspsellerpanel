@@ -78,10 +78,6 @@ const Products = () => {
       value: "",
       label: "All Ecosystems",
     },
-    {
-      value: "Default",
-      label: "Istakapaza Default Marketplace",
-    },
     ...businessData.ecosystems.map((ecosystem) => ({
       value: ecosystem.ecosystem_id._id,
       label: <EcosystemOption ecosystem={ecosystem} />,
@@ -89,9 +85,6 @@ const Products = () => {
   ];
 
   const getEcosystemName = (id: string) => {
-    if (id === "Default") {
-      return "Istakapaza Default Marketplace";
-    }
     const currentEcosystem = businessData.ecosystems.find(
       (ecosystem) => ecosystem.ecosystem_id._id === selectedEcosystemId
     );

@@ -59,16 +59,12 @@ const CloneProduct = (props: CloneProductProps) => {
     });
   };
 
-  const targetEcosystems: SelectOptionInterface[] = [
-    {
-      value: "Default",
-      label: "Istakapaza Default Marketplace",
-    },
-    ...businessData.ecosystems.map((ecosystem) => ({
+  const targetEcosystems: SelectOptionInterface[] = businessData.ecosystems.map(
+    (ecosystem) => ({
       value: ecosystem.ecosystem_id._id,
       label: <EcosystemOption ecosystem={ecosystem} />,
-    })),
-  ];
+    })
+  );
 
   const currentEcosystems: SelectOptionInterface[] = sellerEcosystemData.map(
     (ecosystem) => ({

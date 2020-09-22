@@ -16,16 +16,10 @@ const FieldEcosystemMultiInput = (
   props: FieldEcosystemMultiInputProps
 ): JSX.Element => {
   const { name, businessData } = props;
-  const ecosystems = [
-    {
-      value: "Default",
-      label: "Istakapaza Default Marketplace",
-    },
-    ...businessData.ecosystems.map((ecosystem) => ({
-      value: ecosystem.ecosystem_id._id,
-      label: <EcosystemOption ecosystem={ecosystem} />,
-    })),
-  ];
+  const ecosystems = businessData.ecosystems.map((ecosystem) => ({
+    value: ecosystem.ecosystem_id._id,
+    label: <EcosystemOption ecosystem={ecosystem} />,
+  }));
 
   return (
     <Field name={name}>
