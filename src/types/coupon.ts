@@ -1,4 +1,5 @@
 import { CREATE_COUPON_REQUEST } from "../constants/ActionTypes";
+import { SelectOptionInterface } from "./product";
 
 export interface CreateCouponAction {
   type: typeof CREATE_COUPON_REQUEST;
@@ -25,15 +26,19 @@ export interface CouponRequestInterface {
   minimumOrderAmount: number;
   startDate: string;
   endDate: string;
+  ecosystemId: string;
+  couponCode: string;
 }
 
 export interface CouponInputInterface {
+  couponCode: string;
   type: CouponType;
   discountValue: number;
   discountPercentage: number;
   minimumOrderAmount: number;
   startDate: moment.Moment;
   endDate: moment.Moment;
+  ecosystem?: SelectOptionInterface | null;
 }
 
 export interface CouponProductInputInterface {

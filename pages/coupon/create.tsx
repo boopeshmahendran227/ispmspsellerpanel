@@ -1,3 +1,5 @@
+import { useState } from "react";
+import useSWR from "swr";
 import { Formik, Form } from "formik";
 import Button, { ButtonType } from "components/atoms/Button";
 import InputLabel from "components/InputLabel";
@@ -15,7 +17,18 @@ import FieldPercentageInput from "components/FieldPercentageInput";
 import FieldDatePicker from "components/FieldDatePicker";
 import moment from "moment";
 import BackLink from "components/atoms/BackLink";
+import PageError from "components/PageError";
 import CSSConstants from "../../src/constants/CSSConstants";
+import {
+  EcosystemResponseInterface,
+  EcosystemDataInterface,
+} from "types/business";
+import Loader from "components/Loader";
+import { SelectOptionInterface } from "types/product";
+import EcosystemOption from "components/atoms/EcosystemOption";
+import FieldSelect from "components/FieldSelect";
+import FieldInput from "components/FieldInput";
+import api from "../../src/api";
 
 interface DispatchProps {
   createCoupon: (couponData: CouponRequestInterface) => void;
@@ -24,6 +37,27 @@ interface DispatchProps {
 type CreateCouponProps = DispatchProps;
 
 const CreateCoupon = (props: CreateCouponProps) => {
+  const [isCheckingCouponCode, setIsCheckingCouponCode] = useState(false);
+  const ecosystemSWR = useSWR("/businesses/ecosystems/all");
+  const ecosystemData: EcosystemResponseInterface = ecosystemSWR.data;
+
+  const error = ecosystemSWR.error;
+
+  if (error) {
+    return <PageError statusCode={error.response?.status} />;
+  }
+
+  if (!ecosystemData) {
+    return <Loader />;
+  }
+
+  const ecosystems: SelectOptionInterface[] = ecosystemData.map(
+    (ecosystem: EcosystemDataInterface) => ({
+      value: ecosystem._id,
+      label: <EcosystemOption ecosystem={ecosystem} />,
+    })
+  );
+
   const onSubmit = (values: CouponInputInterface) => {
     props.createCoupon({
       ...(values.type === CouponType.FixedAmount && {
@@ -32,10 +66,24 @@ const CreateCoupon = (props: CreateCouponProps) => {
       ...(values.type === CouponType.Percentage && {
         discountPercentage: values.discountPercentage,
       }),
+      couponCode: values.couponCode,
       minimumOrderAmount: values.minimumOrderAmount,
       startDate: values.startDate.format(),
       endDate: values.endDate.format(),
+      ecosystemId: values.ecosystem?.value as string,
     });
+  };
+
+  const validateCouponCode = async (couponCode: string) => {
+    setIsCheckingCouponCode(true);
+    const res: boolean = await api("/sellercoupon/check", {
+      method: "GET",
+      params: { couponcode: couponCode },
+    });
+
+    setIsCheckingCouponCode(false);
+
+    return res;
   };
 
   return (
@@ -44,15 +92,31 @@ const CreateCoupon = (props: CreateCouponProps) => {
       <header>Create Coupon</header>
       <Formik
         initialValues={{
+          couponCode: "",
           type: CouponType.FixedAmount,
           discountValue: 0,
           discountPercentage: 0,
           minimumOrderAmount: 0,
           startDate: moment(),
           endDate: moment(),
+          ecosystem: null,
         }}
-        validate={(values) => {
+        validate={async (values) => {
           const errors: any = {};
+
+          if (values.couponCode === "") {
+            errors.couponCode = "Coupon Code is required";
+          } else {
+            const isCouponCodeValid = await validateCouponCode(
+              values.couponCode
+            );
+
+            if (!isCouponCodeValid) {
+              errors.couponCode =
+                "Coupon Code already exists. Please enter another coupon code";
+            }
+          }
+
           if (values.type === CouponType.FixedAmount && !values.discountValue) {
             errors.discountValue = "Discount Value is required";
           }
@@ -68,6 +132,9 @@ const CreateCoupon = (props: CreateCouponProps) => {
           if (values.endDate === null) {
             errors.endDate = "End date cannot be a past date";
           }
+          if (values.ecosystem === null) {
+            errors.ecosystem = "Ecosystem is required";
+          }
           if (values.endDate.isBefore(values.startDate)) {
             errors.endDate = "End Date should be greater than start date";
           }
@@ -79,6 +146,15 @@ const CreateCoupon = (props: CreateCouponProps) => {
           <div className="formContainer">
             <Form>
               <div className="gridContainer">
+                <InputLabel label="Coupon Code" />
+                <div className="inputContainer">
+                  <FieldInput name="couponCode" />
+                  {isCheckingCouponCode && (
+                    <div className="couponLoader">
+                      <Loader loaderWidth="1rem" width="1rem" height="1rem" />
+                    </div>
+                  )}
+                </div>
                 <InputLabel label="Coupon Discount Type" />
                 <div className="discountTypeValuesContainer">
                   <div>
@@ -108,6 +184,8 @@ const CreateCoupon = (props: CreateCouponProps) => {
                 ) : (
                   <FieldPercentageInput name="discountPercentage" />
                 )}
+                <InputLabel label="Ecosystem" />
+                <FieldSelect name="ecosystem" options={ecosystems} />
                 <InputLabel label="Minimum Order Amount" />
                 <FieldPriceInput name="minimumOrderAmount" />
                 <InputLabel label="Valid From" />
@@ -116,7 +194,11 @@ const CreateCoupon = (props: CreateCouponProps) => {
                 <FieldDatePicker name="endDate" />
               </div>
               <div className="buttonContainer">
-                <Button type={ButtonType.success} isSubmitButton={true}>
+                <Button
+                  disabled={isCheckingCouponCode}
+                  type={ButtonType.success}
+                  isSubmitButton={true}
+                >
                   Submit
                 </Button>
                 <Button
@@ -139,6 +221,15 @@ const CreateCoupon = (props: CreateCouponProps) => {
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
             0 1px 2px rgba(0, 0, 0, 0.24);
           background: ${CSSConstants.foregroundColor};
+        }
+        .inputContainer {
+          position: relative;
+        }
+        .couponLoader {
+          position: absolute;
+          top: 50%;
+          right: 5%;
+          transform: translateY(-50%);
         }
         header {
           margin-top: 0.5em;

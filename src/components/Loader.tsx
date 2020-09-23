@@ -3,6 +3,7 @@ import * as React from "react";
 interface LoaderProps {
   width: string;
   height: string;
+  loaderWidth?: string;
 }
 
 const Loader = (props: LoaderProps) => {
@@ -19,7 +20,7 @@ const Loader = (props: LoaderProps) => {
           overflow: hidden;
         }
         .loader {
-          width: 2rem;
+          width: ${props.loaderWidth ?? "2rem"};
         }
       `}</style>
     </div>
@@ -27,6 +28,7 @@ const Loader = (props: LoaderProps) => {
 };
 
 Loader.defaultProps = {
+  loaderWidth: null,
   width: "100%",
   height: "200px",
 };
