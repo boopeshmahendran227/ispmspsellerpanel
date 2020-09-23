@@ -11,7 +11,10 @@ import { useMemo } from "react";
 import PageError from "components/PageError";
 import ProductsContainer from "components/ProductsContainer";
 import PageHeader from "components/PageHeader";
-import { BusinessDataInterface } from "types/business";
+import {
+  EcosystemResponseInterface,
+  EcosystemDataInterface,
+} from "types/business";
 import Loader from "components/Loader";
 import EcosystemOption from "components/atoms/EcosystemOption";
 import Select from "components/Select";
@@ -59,8 +62,11 @@ const Products = () => {
     "/search/seller/product",
     params,
   ]);
-  const businessSWR = useSWR<BusinessDataInterface>("/businesses/business");
-  const businessData: BusinessDataInterface | undefined = businessSWR.data;
+  const businessSWR = useSWR<EcosystemResponseInterface>(
+    "/businesses/ecosystems/all"
+  );
+  const ecosystemData: EcosystemResponseInterface | undefined =
+    businessSWR.data;
   const productData: PaginatedDataInterface<ProductMiniInterface> | undefined =
     productSWR.data;
   const error = productSWR.error || businessSWR.error;
@@ -69,7 +75,7 @@ const Products = () => {
     return <PageError statusCode={error.response?.status} />;
   }
 
-  if (!businessData) {
+  if (!ecosystemData) {
     return <Loader />;
   }
 
@@ -78,18 +84,18 @@ const Products = () => {
       value: "",
       label: "All Ecosystems",
     },
-    ...businessData.ecosystems.map((ecosystem) => ({
-      value: ecosystem.ecosystem_id._id,
+    ...ecosystemData.map((ecosystem: EcosystemDataInterface) => ({
+      value: ecosystem._id,
       label: <EcosystemOption ecosystem={ecosystem} />,
     })),
   ];
 
   const getEcosystemName = (id: string) => {
-    const currentEcosystem = businessData.ecosystems.find(
-      (ecosystem) => ecosystem.ecosystem_id._id === selectedEcosystemId
+    const currentEcosystem = ecosystemData.find(
+      (ecosystem) => ecosystem._id === selectedEcosystemId
     );
 
-    return currentEcosystem?.ecosystem_id?.ecosystem_name;
+    return currentEcosystem?.ecosystem_name;
   };
 
   const currentEcosystem =

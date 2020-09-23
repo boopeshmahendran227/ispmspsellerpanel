@@ -10,11 +10,11 @@ const EcosystemOption = (props: EcosystemOptionProps) => {
   return (
     <span className="ecosystemOptionName">
       <span className="contentContainer">
-        <span>{ecosystem.ecosystem_id.ecosystem_name}</span>
-        <span className="ecoUrl">{ecosystem.ecosystem_id.ecosystem_url}</span>
+        <span>{ecosystem.ecosystem_name}</span>
+        <span className="ecoUrl">{ecosystem.ecosystem_url[0]}</span>
       </span>
       <span className="iconContainer">
-        {ecosystem.ecosystem_id.mode === "PRIVATE" ? (
+        {ecosystem.mode === "PRIVATE" ? (
           <i className="privateIcon fa fa-lock" aria-hidden="true"></i>
         ) : (
           <i className="publicIcon fas fa-users"></i>

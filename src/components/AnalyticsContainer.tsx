@@ -10,7 +10,7 @@ import useSWR from "swr";
 import { PaginatedDataInterface } from "types/pagination";
 import { OrderInterface } from "types/order";
 import { SummaryInterface, PeriodState } from "types/insights";
-import { BusinessDataInterface } from "types/business";
+import { EcosystemResponseInterface } from "types/business";
 import PageError from "./PageError";
 import Loader from "./Loader";
 import moment from "moment";
@@ -62,8 +62,8 @@ const AnalyticsContainer = (props: AnalyticsContainerProps): JSX.Element => {
   );
   const monthlySales: MonthlySalesInterface[] = monthlySalesSWR.data;
 
-  const businessSWR = useSWR("/businesses/business");
-  const businessData: BusinessDataInterface = businessSWR.data;
+  const businessSWR = useSWR("/businesses/ecosystems/all");
+  const ecosystemData: EcosystemResponseInterface = businessSWR.data;
 
   const error =
     summarySWR.error ||
@@ -76,7 +76,13 @@ const AnalyticsContainer = (props: AnalyticsContainerProps): JSX.Element => {
     return <PageError statusCode={error.response?.status} />;
   }
 
-  if (!summary || !orderData || !topSelling || !monthlySales || !businessData) {
+  if (
+    !summary ||
+    !orderData ||
+    !topSelling ||
+    !monthlySales ||
+    !ecosystemData
+  ) {
     return <Loader />;
   }
 
@@ -144,7 +150,7 @@ const AnalyticsContainer = (props: AnalyticsContainerProps): JSX.Element => {
                 color={CSSConstants.primaryColor}
               />
             }
-            value={businessData.ecosystems.length}
+            value={ecosystemData.length}
           />
         </div>
         <div className="lineChartContainer">

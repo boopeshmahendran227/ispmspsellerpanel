@@ -1,12 +1,8 @@
-export interface BusinessDataInterface {
-  ecosystems: EcosystemDataInterface[];
-}
+export type EcosystemResponseInterface = EcosystemDataInterface[];
 
 export interface EcosystemDataInterface {
-  ecosystem_id: {
-    ecosystem_name: string;
-    ecosystem_url: string;
-    _id: string;
-    mode: string;
-  };
+  _id: string;
+  ecosystem_name: string;
+  ecosystem_url: string[];
+  mode: string;
 }

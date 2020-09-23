@@ -27,7 +27,7 @@ import { useRef, useEffect } from "react";
 import PageError from "components/PageError";
 import Tooltip from "components/Tooltip";
 import PageHeader from "components/PageHeader";
-import { BusinessDataInterface } from "types/business";
+import { EcosystemResponseInterface } from "types/business";
 import FieldEcosystemMultiInput from "components/FieldEcosystemMultiInput";
 import WithAuth from "components/WithAuth";
 import FieldPriceInput from "components/FieldPriceInput";
@@ -63,13 +63,13 @@ const AddProduct = (props: AddProductProps) => {
   const attributeSWR = useSWR("/attribute");
   const categorySWR = useSWR("/category/all");
   const taxSWR = useSWR("/tax/taxgroup");
-  const businessSWR = useSWR("/businesses/business");
+  const businessSWR = useSWR("/businesses/ecosystems/all");
 
   const brands: BrandInterface[] = brandSWR.data;
   const attributes: AttributeInterface[] = attributeSWR.data;
   const categories: CategoryInterface[] = categorySWR.data;
   const taxGroups: TaxGroupInterface[] = taxSWR.data;
-  const businessData: BusinessDataInterface = businessSWR.data;
+  const ecosystemData: EcosystemResponseInterface = businessSWR.data;
 
   const error =
     brandSWR.error ||
@@ -82,7 +82,7 @@ const AddProduct = (props: AddProductProps) => {
     return <PageError statusCode={error.response?.status} />;
   }
 
-  if (!brands || !attributes || !categories || !taxGroups || !businessData) {
+  if (!brands || !attributes || !categories || !taxGroups || !ecosystemData) {
     return <Loader />;
   }
 
@@ -168,7 +168,7 @@ const AddProduct = (props: AddProductProps) => {
                 <InputLabel label="Ecosystems" />
                 <FieldEcosystemMultiInput
                   name="ecosystems"
-                  businessData={businessData}
+                  ecosystemData={ecosystemData}
                 />
                 <InputLabel label="Brand" />
                 <FieldSelect

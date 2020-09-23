@@ -1,5 +1,5 @@
 import EcosystemOption from "./atoms/EcosystemOption";
-import { BusinessDataInterface } from "types/business";
+import { EcosystemResponseInterface } from "types/business";
 import ValidationErrorMsg from "./ValidationErrorMsg";
 import { Field, ErrorMessage } from "formik";
 import classNames from "classnames";
@@ -8,16 +8,16 @@ import MultiSelect from "./MultiSelect";
 import { SelectOptionInterface } from "types/product";
 
 interface FieldEcosystemMultiInputProps {
-  businessData: BusinessDataInterface;
+  ecosystemData: EcosystemResponseInterface;
   name: string;
 }
 
 const FieldEcosystemMultiInput = (
   props: FieldEcosystemMultiInputProps
 ): JSX.Element => {
-  const { name, businessData } = props;
-  const ecosystems = businessData.ecosystems.map((ecosystem) => ({
-    value: ecosystem.ecosystem_id._id,
+  const { name, ecosystemData } = props;
+  const ecosystems = ecosystemData.map((ecosystem) => ({
+    value: ecosystem._id,
     label: <EcosystemOption ecosystem={ecosystem} />,
   }));
 

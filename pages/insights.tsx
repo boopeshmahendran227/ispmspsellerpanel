@@ -2,7 +2,7 @@ import MetricCard from "components/MetricCard";
 import useSWR from "swr";
 import Loader from "components/Loader";
 import PageError from "components/PageError";
-import { BusinessDataInterface } from "types/business";
+import { EcosystemResponseInterface } from "types/business";
 import WithAuth from "components/WithAuth";
 import moment from "moment";
 import { SummaryInterface } from "types/insights";
@@ -18,9 +18,9 @@ const Insight = () => {
       .utc()
       .format()}&end=${endDate.utc().format()}`
   );
-  const businessSWR = useSWR("/businesses/business");
+  const businessSWR = useSWR("/businesses/ecosystems/all");
   const summary: SummaryInterface = summarySWR.data;
-  const businessData: BusinessDataInterface = businessSWR.data;
+  const ecosystemData: EcosystemResponseInterface = businessSWR.data;
 
   const error = summarySWR.error || businessSWR.error;
 
@@ -28,7 +28,7 @@ const Insight = () => {
     return <PageError statusCode={error.response?.status} />;
   }
 
-  if (!summary || !businessData) {
+  if (!summary || !ecosystemData) {
     return <Loader />;
   }
 
@@ -83,7 +83,7 @@ const Insight = () => {
             color={CSSConstants.primaryColor}
           />
         }
-        value={businessData.ecosystems.length}
+        value={ecosystemData.length}
       />
       <style jsx>{`
         .container {

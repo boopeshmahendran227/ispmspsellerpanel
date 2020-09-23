@@ -21,7 +21,7 @@ import styled from "styled-components";
 import Button from "components/atoms/Button";
 import FieldEcosystemMultiInput from "components/FieldEcosystemMultiInput";
 import FieldInput from "components/FieldInput";
-import { BusinessDataInterface } from "types/business";
+import { EcosystemResponseInterface } from "types/business";
 import SkuDimensionsInputContainer from "components/SkuDimensionsInputContainer";
 import SkuInventoryInputContainer from "components/SkuInventoryInputContainer";
 import SkuPricingInputContainer from "components/SkuPricingInputContainer";
@@ -82,11 +82,11 @@ const FlexColumnContainer = styled.div`
 const Sku = (props: SkuProps) => {
   const router = useRouter();
   const productSWR = useSWR(`/product/seller/${router.query.id}`);
-  const businessSWR = useSWR(`/businesses/business`);
+  const businessSWR = useSWR(`/businesses/ecosystems/all`);
 
   const skuIdToCopyFrom: string = router.query.copySkuId as string;
   const product: ProductDetailInterface = productSWR.data;
-  const businessData: BusinessDataInterface = businessSWR.data;
+  const ecosystemData: EcosystemResponseInterface = businessSWR.data;
 
   const error = productSWR.error || businessSWR.error;
 
@@ -94,7 +94,7 @@ const Sku = (props: SkuProps) => {
     return <PageError statusCode={error.response?.status} />;
   }
 
-  if (!product || !businessData) {
+  if (!product || !ecosystemData) {
     return <Loader />;
   }
 
@@ -233,7 +233,7 @@ const Sku = (props: SkuProps) => {
                     <label>Ecosystem</label>
                     <FieldEcosystemMultiInput
                       name="ecosystemIds"
-                      businessData={businessData}
+                      ecosystemData={ecosystemData}
                     />
                   </SectionCard>
                   <SkuDimensionsInputContainer />

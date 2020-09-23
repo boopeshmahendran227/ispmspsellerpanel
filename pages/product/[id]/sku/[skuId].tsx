@@ -15,7 +15,7 @@ import { ProductDetailInterface } from "types/product";
 import _ from "lodash";
 import FieldSelect from "components/FieldSelect";
 import FieldEcosystemMultiInput from "components/FieldEcosystemMultiInput";
-import { BusinessDataInterface } from "types/business";
+import { EcosystemResponseInterface } from "types/business";
 import { connect } from "react-redux";
 import SkuActions from "actions/sku";
 import { UpdateSkuInterface } from "types/sku";
@@ -70,11 +70,11 @@ const FlexColumnContainer = styled.div`
 const Sku = (props: SkuProps): JSX.Element => {
   const router = useRouter();
   const productSWR = useSWR(`/product/seller/${router.query.id}`);
-  const businessSWR = useSWR("/businesses/business");
+  const businessSWR = useSWR("/businesses/ecosystems/all");
 
   const currentSkuId: string = router.query.skuId as string;
   const product: ProductDetailInterface = productSWR.data;
-  const businessData: BusinessDataInterface = businessSWR.data;
+  const ecosystemData: EcosystemResponseInterface = businessSWR.data;
 
   const error = productSWR.error || businessSWR.error;
 
@@ -82,7 +82,7 @@ const Sku = (props: SkuProps): JSX.Element => {
     return <PageError statusCode={error.response?.status} />;
   }
 
-  if (!product || !businessData) {
+  if (!product || !ecosystemData) {
     return <Loader />;
   }
 
@@ -183,7 +183,7 @@ const Sku = (props: SkuProps): JSX.Element => {
                     <label>Ecosystem</label>
                     <FieldEcosystemMultiInput
                       name="ecosystemIds"
-                      businessData={businessData}
+                      ecosystemData={ecosystemData}
                     />
                   </SectionCard>
                   <SkuDimensionsInputContainer />

@@ -5,7 +5,10 @@ import PageHeader from "components/PageHeader";
 import { SelectOptionInterface } from "types/product";
 import DeliveryCodeModal from "components/DeliveryCodeModal";
 import useSWR from "swr";
-import { BusinessDataInterface } from "types/business";
+import {
+  EcosystemDataInterface,
+  EcosystemResponseInterface,
+} from "types/business";
 import PageError from "components/PageError";
 import Loader from "components/Loader";
 import EcosystemOption from "components/atoms/EcosystemOption";
@@ -26,15 +29,15 @@ const Orders = () => {
 
   const orderData: PaginatedDataInterface<OrderInterface> = orderSWR.data;
 
-  const businessSWR = useSWR("/businesses/business");
-  const businessData: BusinessDataInterface = businessSWR.data;
+  const businessSWR = useSWR("/businesses/ecosystems/all");
+  const ecosystemData: EcosystemResponseInterface = businessSWR.data;
   const error = businessSWR.error || orderSWR.error;
 
   if (error) {
     return <PageError statusCode={error.response?.status} />;
   }
 
-  if (!businessData) {
+  if (!ecosystemData) {
     return <Loader />;
   }
 
@@ -43,8 +46,8 @@ const Orders = () => {
       value: "",
       label: "All Ecosystems",
     },
-    ...businessData.ecosystems.map((ecosystem) => ({
-      value: ecosystem.ecosystem_id._id,
+    ...ecosystemData.map((ecosystem: EcosystemDataInterface) => ({
+      value: ecosystem._id,
       label: <EcosystemOption ecosystem={ecosystem} />,
     })),
   ];

@@ -10,7 +10,7 @@ import * as Yup from "yup";
 import Button, { ButtonType } from "components/atoms/Button";
 import EcosystemOption from "components/atoms/EcosystemOption";
 import useSWR from "swr";
-import { BusinessDataInterface } from "types/business";
+import { EcosystemResponseInterface } from "types/business";
 import PageError from "components/PageError";
 import Loader from "components/Loader";
 import { SelectOptionInterface, ProductCloneInterface } from "types/product";
@@ -35,8 +35,11 @@ const ProductSchema = Yup.object().shape({
 });
 
 const CloneProduct = (props: CloneProductProps) => {
-  const businessSWR = useSWR<BusinessDataInterface>("/businesses/business");
-  const businessData: BusinessDataInterface | undefined = businessSWR.data;
+  const businessSWR = useSWR<EcosystemResponseInterface>(
+    "/businesses/ecosystems/all"
+  );
+  const ecosystemData: EcosystemResponseInterface | undefined =
+    businessSWR.data;
 
   const sellerEcosystemSWR = useSWR("/ecosystem/seller");
   const sellerEcosystemData = sellerEcosystemSWR.data;
@@ -47,7 +50,7 @@ const CloneProduct = (props: CloneProductProps) => {
     return <PageError statusCode={error.response?.status} />;
   }
 
-  if (!businessData || !sellerEcosystemData) {
+  if (!ecosystemData || !sellerEcosystemData) {
     return <Loader />;
   }
 
@@ -59,9 +62,9 @@ const CloneProduct = (props: CloneProductProps) => {
     });
   };
 
-  const targetEcosystems: SelectOptionInterface[] = businessData.ecosystems.map(
+  const targetEcosystems: SelectOptionInterface[] = ecosystemData.map(
     (ecosystem) => ({
-      value: ecosystem.ecosystem_id._id,
+      value: ecosystem._id,
       label: <EcosystemOption ecosystem={ecosystem} />,
     })
   );
