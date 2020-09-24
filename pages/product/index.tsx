@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ProductMiniInterface, SelectOptionInterface } from "types/product";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SearchBar from "components/SearchBar";
 import ActiveFilters from "components/ActiveFilters";
 import { PaginatedDataInterface } from "types/pagination";
@@ -57,6 +57,11 @@ const Products = () => {
     }),
     [searchText, currentPageNumber, selectedEcosystemId, showOnlySelf]
   );
+
+  useEffect(() => {
+    // Reset current page to 1 whenever filter changes
+    setCurrentPageNumber(1);
+  }, [searchText, selectedEcosystemId, showOnlySelf]);
 
   const productSWR = useSWR<PaginatedDataInterface<ProductMiniInterface>>([
     "/search/seller/product",
