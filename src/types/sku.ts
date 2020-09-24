@@ -42,8 +42,8 @@ export interface UpdateSkuInterface {
   boughtPrice: number;
   qty: number;
   ecosystemIds?: string[] | undefined; // Todo: Fix this type
-  externalId: string | null;
-  barcodeIdentifier: string | null;
+  externalId?: string | null;
+  barcodeIdentifier?: string | null;
   length: number | null;
   height: number | null;
   width: number | null;

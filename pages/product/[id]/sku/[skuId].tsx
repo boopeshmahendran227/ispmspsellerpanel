@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import useSWR from "swr";
 import Loader from "components/Loader";
 import PageError from "components/PageError";
@@ -37,8 +38,8 @@ const validationSchema = Yup.object({
   price: Yup.number().required(),
   boughtPrice: Yup.number().required(),
   qty: Yup.number().required(),
-  barcodeIdentifier: Yup.string().nullable(),
-  externalId: Yup.string().nullable(),
+  barcodeIdentifier: Yup.string().nullable().notRequired(),
+  externalId: Yup.string().nullable().notRequired(),
   length: Yup.number().nullable().defined(),
   width: Yup.number().nullable().defined(),
   height: Yup.number().nullable().defined(),
@@ -162,7 +163,7 @@ const Sku = (props: SkuProps): JSX.Element => {
                   <SectionCard>
                     <SectionHeader>Options</SectionHeader>
                     {attributes.map((attribute, index) => (
-                      <>
+                      <Fragment key={index}>
                         <label>{attribute.attributeName}</label>
                         <FieldSelect
                           disabled={true}
@@ -172,7 +173,7 @@ const Sku = (props: SkuProps): JSX.Element => {
                             label: value.value,
                           }))}
                         />
-                      </>
+                      </Fragment>
                     ))}
                   </SectionCard>
                   {/* <ImageUploader /> */}
