@@ -218,6 +218,8 @@ export interface ProductSkuDetail {
   weight: number | null;
   barCodeIdentifier: string | null;
   externalId: string | null;
+  specialDiscount: number;
+  specialDiscountPercentage: number;
 }
 
 export interface ProductAttributeValueId {
@@ -304,6 +306,15 @@ export const ProductSchema = Yup.object().shape({
         weight: Yup.number().nullable(),
         barCodeIdentifier: Yup.string().nullable(),
         externalId: Yup.string().nullable(),
+        specialDiscount: Yup.number().lessThan(
+          Yup.ref("price"),
+          "Discount must be less than price."
+        ),
+        specialDiscountPercentage: Yup.number()
+          .max(100)
+          .typeError(
+            "Special discount percentage must be less than or equal to 100"
+          ),
         imageRelativePaths: Yup.array()
           .of(Yup.string())
           .min(1, "Each sku should contain atleast one image"),

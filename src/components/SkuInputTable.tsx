@@ -9,7 +9,7 @@ import FieldInput from "./FieldInput";
 import ValidationErrorMsg from "./ValidationErrorMsg";
 import FieldNumInput from "./FieldNumInput";
 import FieldPriceInput from "./FieldPriceInput";
-
+import FieldPercentageInput from "./FieldPercentageInput";
 interface DispatchProps {
   showSkuModal: () => void;
 }
@@ -65,6 +65,14 @@ const getTableHeaders = () => {
     {
       name: "External Id",
       valueFunc: (sku: ProductSkuDetail) => sku.externalId,
+    },
+    {
+      name: "Special Discount Price",
+      valueFunc: (sku: ProductSkuDetail) => sku.specialDiscount,
+    },
+    {
+      name: "Special Discount Percentage",
+      valueFunc: (sku: ProductSkuDetail) => sku.specialDiscountPercentage,
     },
   ];
 };
@@ -147,6 +155,14 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
             </td>
             <td>
               <FieldInput name={`skus.${skuIndex}.externalId`} />
+            </td>
+            <td>
+              <FieldPriceInput name={`skus.${skuIndex}.specialDiscount`} />
+            </td>
+            <td>
+              <FieldPercentageInput
+                name={`skus.${skuIndex}.specialDiscountPercentage`}
+              />
             </td>
             <style jsx>{`
               .imageInputContainer a {

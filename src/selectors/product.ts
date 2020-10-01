@@ -48,6 +48,8 @@ const getSkus = createSelector(
           weight: null,
           barCodeIdentifier: null,
           externalId: null,
+          specialDiscount: 0,
+          specialDiscountPercentage: 0,
         };
       }
     );
