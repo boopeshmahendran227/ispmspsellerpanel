@@ -1,4 +1,4 @@
-import Modal from "./Modal";
+import Modal from "./molecules/Modal";
 import Button from "./atoms/Button";
 import { connect } from "react-redux";
 import { RootState } from "../reducers";
@@ -6,12 +6,12 @@ import { Formik, Form } from "formik";
 import UIActions from "../actions/ui";
 import CreditActions from "../actions/credit";
 import InputLabel from "./InputLabel";
-import FieldPriceInput from "./FieldPriceInput";
+import FieldPriceInput from "./molecules/FieldPriceInput";
 import { InvoiceInterface, PaymentMode } from "../types/invoice";
 import { getCurrentInvoice } from "../selectors/invoice";
 import { getUpdateCreditsModalOpen } from "../selectors/ui";
-import FieldSelect from "./FieldSelect";
-import FieldInput from "./FieldInput";
+import FieldSelect from "./molecules/FieldSelect";
+import FieldInput from "./molecules/FieldInput";
 
 interface StateProps {
   open: boolean;

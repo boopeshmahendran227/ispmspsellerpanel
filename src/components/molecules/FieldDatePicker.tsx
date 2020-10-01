@@ -1,6 +1,6 @@
 import { Field, ErrorMessage } from "formik";
-import ValidationErrorMsg from "../components/ValidationErrorMsg";
-import DatePicker from "../components/DatePicker";
+import ValidationErrorMsg from "../atoms/ValidationErrorMsg";
+import DatePicker from "./DatePicker";
 
 interface FieldDatePickerProps {
   name: string;

@@ -7,7 +7,7 @@ import {
 } from "formik";
 import CSSConstants from "../constants/CSSConstants";
 import _ from "lodash";
-import ValidationErrorMsg from "./ValidationErrorMsg";
+import ValidationErrorMsg from "./atoms/ValidationErrorMsg";
 
 interface FieldEditableArrayProps {
   headers: string[];

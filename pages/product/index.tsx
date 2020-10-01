@@ -1,23 +1,23 @@
 import Link from "next/link";
 import { ProductMiniInterface, SelectOptionInterface } from "types/product";
 import { useState, useEffect } from "react";
-import SearchBar from "components/SearchBar";
-import ActiveFilters from "components/ActiveFilters";
+import SearchBar from "components/molecules/SearchBar";
+import ActiveFilters from "components/atoms/ActiveFilters";
 import { PaginatedDataInterface } from "types/pagination";
 import Button from "components/atoms/Button";
 import WithAuth from "components/WithAuth";
 import useSWR from "swr";
 import { useMemo } from "react";
-import PageError from "components/PageError";
+import PageError from "components/atoms/PageError";
 import ProductsContainer from "components/ProductsContainer";
 import PageHeader from "components/PageHeader";
 import {
   EcosystemResponseInterface,
   EcosystemDataInterface,
 } from "types/business";
-import Loader from "components/Loader";
+import Loader from "components/atoms/Loader";
 import EcosystemOption from "components/atoms/EcosystemOption";
-import Select from "components/Select";
+import Select from "components/atoms/Select";
 import Checkbox from "components/atoms/Checkbox";
 import styled from "styled-components";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";

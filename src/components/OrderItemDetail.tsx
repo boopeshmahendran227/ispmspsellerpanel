@@ -1,4 +1,4 @@
-import ProductCard from "./ProductCard";
+import ProductCard from "./molecules/ProductCard";
 import { OrderStatus, TransformedOrderItemInterface } from "../types/order";
 import CSSConstants from "../constants/CSSConstants";
 import Button, { ButtonType } from "./atoms/Button";

@@ -1,9 +1,9 @@
 import CSSConstants from "../../src/constants/CSSConstants";
 import SortableTable from "components/SortableTable";
 import useSWR from "swr";
-import Loader from "components/Loader";
+import Loader from "components/atoms/Loader";
 import { CouponInterface } from "types/coupon";
-import PageError from "components/PageError";
+import PageError from "components/atoms/PageError";
 import { formatPrice } from "utils/misc";
 import Button from "components/atoms/Button";
 import PageHeader from "components/PageHeader";

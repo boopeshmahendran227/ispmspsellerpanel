@@ -1,7 +1,7 @@
 import * as React from "react";
-import NotificationCard from "./NotificationCard";
-import PageError from "./PageError";
-import Loader from "./Loader";
+import NotificationCard from "./molecules/NotificationCard";
+import PageError from "./atoms/PageError";
+import Loader from "./atoms/Loader";
 import EmptyMsg from "./atoms/EmptyMsg";
 import _ from "lodash";
 import useSWR from "swr";

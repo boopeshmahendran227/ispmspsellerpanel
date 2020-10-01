@@ -1,6 +1,6 @@
-import ValidationErrorMsg from "./ValidationErrorMsg";
+import ValidationErrorMsg from "../atoms/ValidationErrorMsg";
 import { Field, ErrorMessage } from "formik";
-import CSSConstants from "../constants/CSSConstants";
+import CSSConstants from "../../constants/CSSConstants";
 import classNames from "classnames";
 
 interface FieldTextAreaProps {

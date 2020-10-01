@@ -1,6 +1,6 @@
 import React from "react";
 import SortableTable from "components/SortableTable";
-import ProductCard from "components/ProductCard";
+import ProductCard from "components/molecules/ProductCard";
 
 export interface TopSoldItem {
   categoryName: string;

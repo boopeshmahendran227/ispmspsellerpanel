@@ -1,8 +1,8 @@
 import TestDriveCard from "components/TestDriveCard";
 import { TestDriveInterface } from "types/testdrive";
-import Loader from "components/Loader";
+import Loader from "components/atoms/Loader";
 import useSWR from "swr";
-import PageError from "components/PageError";
+import PageError from "components/atoms/PageError";
 import PageHeader from "components/PageHeader";
 import _ from "lodash";
 import WithAuth from "components/WithAuth";

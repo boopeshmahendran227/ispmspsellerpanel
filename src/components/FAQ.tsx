@@ -1,5 +1,5 @@
 import { FAQInterface } from "../types/product";
-import SectionCard from "./SectionCard";
+import SectionCard from "./atoms/SectionCard";
 import SectionHeader from "components/atoms/SectionHeader";
 import styled from "styled-components";
 import SectionHeaderContainer from "components/atoms/SectionHeaderContainer";

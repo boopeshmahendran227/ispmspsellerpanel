@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import CSSConstants from "../../src/constants/CSSConstants";
 import TabSection from "components/TabSection";
 import Link from "next/link";
-import ProductCard from "components/ProductCard";
+import ProductCard from "components/molecules/ProductCard";
 import { formatPrice } from "utils/misc";
 import moment from "moment";
 import SortableTable from "components/SortableTable";
@@ -23,11 +23,11 @@ import {
   isOpenOrderStatus,
   isDeliveredOrderStatus,
 } from "utils/order";
-import Pagination from "components/Pagination";
+import Pagination from "components/atoms/Pagination";
 import { PaginatedDataInterface } from "types/pagination";
 import { getCustomerInfo } from "utils/customer";
 import ProductOrdersContainer from "components/ProductOrdersContainer";
-import Loader from "components/Loader";
+import Loader from "components/atoms/Loader";
 import { transformOrderItem } from "../../src/transformers/orderItem";
 import _ from "lodash";
 

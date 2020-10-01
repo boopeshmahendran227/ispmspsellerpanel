@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import SectionHeader from "./atoms/SectionHeader";
-import SectionCard from "./SectionCard";
+import SectionCard from "./atoms/SectionCard";
 import CSSConstants from "../constants/CSSConstants";
 import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
 import { EcosystemDetailInterface } from "types/product";

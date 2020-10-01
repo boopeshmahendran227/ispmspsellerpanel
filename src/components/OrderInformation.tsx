@@ -1,6 +1,6 @@
 import CSSConstants from "../constants/CSSConstants";
 import { OrderInterface } from "../types/order";
-import OrderSummary from "./OrderSummary";
+import OrderSummary from "./atoms/OrderSummary";
 
 interface OrderInformationProps {
   order: OrderInterface;

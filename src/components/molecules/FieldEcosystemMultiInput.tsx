@@ -1,10 +1,10 @@
-import EcosystemOption from "./atoms/EcosystemOption";
+import EcosystemOption from "../atoms/EcosystemOption";
 import { EcosystemResponseInterface } from "types/business";
-import ValidationErrorMsg from "./ValidationErrorMsg";
+import ValidationErrorMsg from "../atoms/ValidationErrorMsg";
 import { Field, ErrorMessage } from "formik";
 import classNames from "classnames";
-import CSSConstants from "../constants/CSSConstants";
-import MultiSelect from "./MultiSelect";
+import CSSConstants from "../../constants/CSSConstants";
+import MultiSelect from "../MultiSelect";
 import { SelectOptionInterface } from "types/product";
 
 interface FieldEcosystemMultiInputProps {

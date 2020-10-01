@@ -1,4 +1,4 @@
-import Modal from "./Modal";
+import Modal from "./molecules/Modal";
 import Button from "components/atoms/Button";
 import { connect } from "react-redux";
 import { RootState } from "../reducers";
@@ -6,7 +6,7 @@ import { getDeliveryCodeModalOpen } from "../selectors/ui";
 import UIActions from "../actions/ui";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
-import FieldInput from "../../src/components/FieldInput";
+import FieldInput from "./molecules/FieldInput";
 import CSSConstants from "../../src/constants/CSSConstants";
 
 interface StateProps {

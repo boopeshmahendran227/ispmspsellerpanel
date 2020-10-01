@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { RootState } from "../reducers";
 import { getLoginState } from "../selectors/login";
 import { LoginState } from "../types/login";
-import AuthWall from "./AuthWall";
+import AuthWall from "./molecules/AuthWall";
 
 interface StateProps {
   loginState: LoginState;

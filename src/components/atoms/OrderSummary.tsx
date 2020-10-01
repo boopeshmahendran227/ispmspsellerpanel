@@ -1,7 +1,7 @@
-import { OrderInterface } from "../types/order";
+import { OrderInterface } from "../../types/order";
 import _ from "lodash";
 import { formatPrice } from "utils/misc";
-import CSSConstants from "../constants/CSSConstants";
+import CSSConstants from "../../constants/CSSConstants";
 
 interface OrderSummaryProps {
   order: OrderInterface;

@@ -2,13 +2,13 @@ import moment from "moment";
 import CSSConstants from "../../src/constants/CSSConstants";
 import useSWR from "swr";
 import { useRouter } from "next/router";
-import Loader from "components/Loader";
+import Loader from "components/atoms/Loader";
 import { connect } from "react-redux";
 import { QuoteInterface, QuoteDetailInterface } from "types/quote";
 import { getQuoteStatusText } from "utils/quote";
 import QuoteItemDetail from "components/QuoteItemDetail";
 import QuoteActions from "actions/quote";
-import PageError from "components/PageError";
+import PageError from "components/atoms/PageError";
 import WithAuth from "components/WithAuth";
 import BackLink from "components/atoms/BackLink";
 

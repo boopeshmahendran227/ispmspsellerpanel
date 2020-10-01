@@ -1,7 +1,7 @@
 import { ShowroomVisitInterface } from "../types/showroomVisit";
 import EmptyMsg from "./atoms/EmptyMsg";
 import ShowroomVisitCard from "components/ShowroomVisitCard";
-import Loader from "./Loader";
+import Loader from "./atoms/Loader";
 
 interface ShowroomVisitsContainerProps {
   showroomVisits: ShowroomVisitInterface[] | undefined;

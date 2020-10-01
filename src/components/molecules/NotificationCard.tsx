@@ -1,7 +1,7 @@
-import CSSConstants from "../constants/CSSConstants";
+import CSSConstants from "../../constants/CSSConstants";
 import _ from "lodash";
 import moment from "moment";
-import { NotificationItemInterface } from "../types/notification";
+import { NotificationItemInterface } from "../../types/notification";
 
 interface NotificationCardProps {
   notification: NotificationItemInterface;

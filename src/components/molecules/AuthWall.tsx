@@ -1,9 +1,9 @@
-import { RootState } from "../reducers";
-import { getLoginState } from "../selectors/login";
+import { RootState } from "../../reducers";
+import { getLoginState } from "../../selectors/login";
 import { connect } from "react-redux";
-import Logo from "./Logo";
-import { LoginState } from "../types/login";
-import Loader from "./Loader";
+import Logo from "../atoms/Logo";
+import { LoginState } from "../../types/login";
+import Loader from "../atoms/Loader";
 import classNames from "classnames";
 
 interface StateProps {

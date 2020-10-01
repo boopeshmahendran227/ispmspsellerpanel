@@ -1,7 +1,7 @@
 import Button, { ButtonType } from "components/atoms/Button";
-import FieldInput from "components/FieldInput";
-import FieldSelect from "components/FieldSelect";
-import FieldMultiSelect from "components/FieldMultiSelect";
+import FieldInput from "components/molecules/FieldInput";
+import FieldSelect from "components/molecules/FieldSelect";
+import FieldMultiSelect from "components/molecules/FieldMultiSelect";
 import {
   ProductSchema,
   BrandInterface,
@@ -15,22 +15,22 @@ import ProductActions from "actions/product";
 import { connect } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import useSWR from "swr";
-import Loader from "components/Loader";
+import Loader from "components/atoms/Loader";
 import AttributeModal from "components/AttributeModal";
 import SkuModal from "components/SkuModal";
 import SpecificationInput from "components/SpecificationInput";
 import InputLabel from "components/InputLabel";
 import { getSkus } from "../../src/selectors/product";
 import SkuInputTable from "components/SkuInputTable";
-import FieldTextArea from "components/FieldTextArea";
+import FieldTextArea from "components/molecules/FieldTextArea";
 import { useRef, useEffect } from "react";
-import PageError from "components/PageError";
-import Tooltip from "components/Tooltip";
+import PageError from "components/atoms/PageError";
+import Tooltip from "components/atoms/Tooltip";
 import PageHeader from "components/PageHeader";
 import { EcosystemResponseInterface } from "types/business";
-import FieldEcosystemMultiInput from "components/FieldEcosystemMultiInput";
+import FieldEcosystemMultiInput from "components/molecules/FieldEcosystemMultiInput";
 import WithAuth from "components/WithAuth";
-import FieldPriceInput from "components/FieldPriceInput";
+import FieldPriceInput from "components/molecules/FieldPriceInput";
 import listOfCountries from "../../src/data/listOfCountries";
 import FAQInput from "components/FAQInput";
 import TierPriceInput from "components/TierpriceInput";

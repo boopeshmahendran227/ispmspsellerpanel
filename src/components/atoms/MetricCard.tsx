@@ -1,4 +1,4 @@
-import CSSConstants from "../constants/CSSConstants";
+import CSSConstants from "../../constants/CSSConstants";
 import styled from "styled-components";
 
 interface MetricCardProps {

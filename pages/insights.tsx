@@ -1,7 +1,7 @@
-import MetricCard from "components/MetricCard";
+import MetricCard from "components/atoms/MetricCard";
 import useSWR from "swr";
-import Loader from "components/Loader";
-import PageError from "components/PageError";
+import Loader from "components/atoms/Loader";
+import PageError from "components/atoms/PageError";
 import { EcosystemResponseInterface } from "types/business";
 import WithAuth from "components/WithAuth";
 import moment from "moment";

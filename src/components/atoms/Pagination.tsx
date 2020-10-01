@@ -1,8 +1,8 @@
-import CSSConstants from "../constants/CSSConstants";
+import CSSConstants from "../../constants/CSSConstants";
 import classNames from "classnames";
 import Chroma from "chroma-js";
 import _ from "lodash";
-import { PaginationDataInterface } from "../types/pagination";
+import { PaginationDataInterface } from "../../types/pagination";
 
 interface PaginationProps {
   data: PaginationDataInterface;

@@ -1,7 +1,7 @@
 import SortableTable from "components/SortableTable";
 import useSWR from "swr";
-import Loader from "components/Loader";
-import PageError from "components/PageError";
+import Loader from "components/atoms/Loader";
+import PageError from "components/atoms/PageError";
 import PageHeader from "components/PageHeader";
 import { CustomerInterface } from "types/customer";
 import WithAuth from "components/WithAuth";

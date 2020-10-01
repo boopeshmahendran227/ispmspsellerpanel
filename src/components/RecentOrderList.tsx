@@ -2,7 +2,7 @@ import React from "react";
 import CSSConstants from "../constants/CSSConstants";
 import { formatPrice } from "../utils/misc";
 import Link from "next/link";
-import ProductCard from "./ProductCard";
+import ProductCard from "./molecules/ProductCard";
 import { transformOrderItem } from "../transformers/orderItem";
 import _ from "lodash";
 import moment from "moment";

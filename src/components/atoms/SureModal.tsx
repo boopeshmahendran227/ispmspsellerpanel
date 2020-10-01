@@ -1,11 +1,11 @@
-import Modal from "./Modal";
-import Button from "./atoms/Button";
+import Modal from "../molecules/Modal";
+import Button from "./Button";
 import { connect } from "react-redux";
-import { RootState } from "../reducers";
-import { getSureModalData } from "../selectors/ui";
-import UIActions from "../actions/ui";
-import { SureModalData } from "../types/ui";
-import CSSConstants from "../constants/CSSConstants";
+import { RootState } from "../../reducers";
+import { getSureModalData } from "../../selectors/ui";
+import UIActions from "../../actions/ui";
+import { SureModalData } from "../../types/ui";
+import CSSConstants from "../../constants/CSSConstants";
 
 interface StateProps {
   data: SureModalData;

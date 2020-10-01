@@ -3,7 +3,7 @@ import SectionHeader from "./atoms/SectionHeader";
 import styled from "styled-components";
 import CSSConstants from "../constants/CSSConstants";
 import { Fragment } from "react";
-import SectionCard from "./SectionCard";
+import SectionCard from "./atoms/SectionCard";
 import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
 
 interface SpecificationProps {

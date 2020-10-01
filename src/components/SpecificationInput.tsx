@@ -1,6 +1,6 @@
 import InputLabel from "./InputLabel";
 import CSSConstants from "../constants/CSSConstants";
-import FieldInput from "./FieldInput";
+import FieldInput from "./molecules/FieldInput";
 import FieldEditableArray from "./FieldEditableArray";
 
 const SpecificationInput = () => {

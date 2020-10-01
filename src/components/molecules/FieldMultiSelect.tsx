@@ -1,9 +1,9 @@
-import ValidationErrorMsg from "./ValidationErrorMsg";
+import ValidationErrorMsg from "../atoms/ValidationErrorMsg";
 import { Field, ErrorMessage } from "formik";
 import classNames from "classnames";
-import CSSConstants from "../constants/CSSConstants";
-import MultiSelect from "./MultiSelect";
-import { SelectOptionInterface } from "../types/product";
+import CSSConstants from "../../constants/CSSConstants";
+import MultiSelect from "../MultiSelect";
+import { SelectOptionInterface } from "../../types/product";
 
 interface FieldMultiSelectProps {
   name: string;

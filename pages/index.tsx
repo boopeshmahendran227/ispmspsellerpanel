@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import WithAuth from "components/WithAuth";
-import Select from "components/Select";
+import Select from "components/atoms/Select";
 import { SelectOptionInterface } from "types/product";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageHeader from "components/PageHeader";

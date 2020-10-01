@@ -1,14 +1,14 @@
 import * as React from "react";
 import moment from "moment";
-import SingleDatePicker from "components/SingleDatePicker";
-import RadioButton from "components/RadioButton";
+import SingleDatePicker from "components/molecules/SingleDatePicker";
+import RadioButton from "components/atoms/RadioButton";
 import _ from "lodash";
 import { ShowroomInterface, ShowroomVisitInterface } from "types/showroomVisit";
 import WithAuth from "components/WithAuth";
 import useSWR from "swr";
 import { useState } from "react";
-import PageError from "components/PageError";
-import Loader from "components/Loader";
+import PageError from "components/atoms/PageError";
+import Loader from "components/atoms/Loader";
 import ShowroomVisitsContainer from "components/ShowroomVisitsContainer";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageHeader from "components/PageHeader";

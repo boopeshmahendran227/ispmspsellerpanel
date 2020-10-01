@@ -1,7 +1,7 @@
 /**
  * Styles copied from https://codepen.io/andreasstorm/pen/NwyQEX
  */
-import CSSConstants from "../constants/CSSConstants";
+import CSSConstants from "../../constants/CSSConstants";
 
 interface RadioButtonProps {
   name?: string;

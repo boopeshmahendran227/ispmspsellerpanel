@@ -1,6 +1,6 @@
 import RelativeImg from "./RelativeImg";
 import Link from "next/link";
-import Card from "./Card";
+import Card from "./atoms/Card";
 import CSSConstants from "../constants/CSSConstants";
 import styled from "styled-components";
 

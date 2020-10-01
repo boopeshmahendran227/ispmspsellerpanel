@@ -2,7 +2,7 @@ import moment from "moment";
 import CSSConstants from "../../../src/constants/CSSConstants";
 import useSWR from "swr";
 import { useRouter } from "next/router";
-import Loader from "components/Loader";
+import Loader from "components/atoms/Loader";
 import OrderItemDetail from "components/OrderItemDetail";
 import { formatAddress } from "utils/misc";
 import { connect } from "react-redux";
@@ -16,7 +16,7 @@ import {
   getPaymentText,
   getPaymentModeColor,
 } from "utils/order";
-import PageError from "components/PageError";
+import PageError from "components/atoms/PageError";
 import ShippingInformationContainer from "components/ShippingInformationContainer";
 import OrderInformation from "components/OrderInformation";
 import WithAuth from "components/WithAuth";

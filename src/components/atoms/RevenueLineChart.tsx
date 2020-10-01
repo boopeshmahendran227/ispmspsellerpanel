@@ -1,6 +1,6 @@
 import { ResponsiveLine } from "@nivo/line";
 import moment from "moment";
-import CSSConstants from "../constants/CSSConstants";
+import CSSConstants from "../../constants/CSSConstants";
 import { formatPrice } from "utils/misc";
 
 const formatLineData = (data) => {

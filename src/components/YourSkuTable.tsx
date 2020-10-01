@@ -1,5 +1,5 @@
 import SectionHeader from "components/atoms/SectionHeader";
-import SectionCard from "components/SectionCard";
+import SectionCard from "components/atoms/SectionCard";
 import Button from "components/atoms/Button";
 import Link from "next/link";
 import { ProductDetailSkuDetail } from "types/product";

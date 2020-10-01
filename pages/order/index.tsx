@@ -1,5 +1,5 @@
 import { OrderInterface } from "types/order";
-import Select from "components/Select";
+import Select from "components/atoms/Select";
 import { PaginatedDataInterface } from "types/pagination";
 import PageHeader from "components/PageHeader";
 import { SelectOptionInterface } from "types/product";
@@ -9,8 +9,8 @@ import {
   EcosystemDataInterface,
   EcosystemResponseInterface,
 } from "types/business";
-import PageError from "components/PageError";
-import Loader from "components/Loader";
+import PageError from "components/atoms/PageError";
+import Loader from "components/atoms/Loader";
 import EcosystemOption from "components/atoms/EcosystemOption";
 import WithAuth from "components/WithAuth";
 import { useState } from "react";

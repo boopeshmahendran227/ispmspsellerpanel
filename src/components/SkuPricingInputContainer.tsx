@@ -1,6 +1,6 @@
-import SectionCard from "components/SectionCard";
+import SectionCard from "components/atoms/SectionCard";
 import SectionHeader from "components/atoms/SectionHeader";
-import FieldPriceInput from "components/FieldPriceInput";
+import FieldPriceInput from "components/molecules/FieldPriceInput";
 import styled from "styled-components";
 
 const Grid = styled.div`

@@ -1,8 +1,8 @@
-import MetricCard from "./MetricCard";
+import MetricCard from "./atoms/MetricCard";
 import RoundedIcon from "./atoms/RoundedIcon";
 import { formatPrice } from "utils/misc";
-import RevenueLineChart, { MonthlySalesInterface } from "./RevenueLineChart";
-import OrderCountPieChart from "./OrdersPieChart";
+import RevenueLineChart, { MonthlySalesInterface } from "./atoms/RevenueLineChart";
+import OrderCountPieChart from "./atoms/OrdersPieChart";
 import TopSold, { TopSoldItem } from "./TopSold";
 import RecentOrderList from "./RecentOrderList";
 import CSSConstants from "../constants/CSSConstants";
@@ -11,8 +11,8 @@ import { PaginatedDataInterface } from "types/pagination";
 import { OrderInterface } from "types/order";
 import { SummaryInterface, PeriodState } from "types/insights";
 import { EcosystemResponseInterface } from "types/business";
-import PageError from "./PageError";
-import Loader from "./Loader";
+import PageError from "./atoms/PageError";
+import Loader from "./atoms/Loader";
 import moment from "moment";
 
 const roundOff = (num: number) => {

@@ -1,4 +1,4 @@
-import Modal from "./Modal";
+import Modal from "./molecules/Modal";
 import { useState, useEffect } from "react";
 import Button, { ButtonType } from "./atoms/Button";
 import SelectAttributes from "./SelectAttributes";

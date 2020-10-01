@@ -1,8 +1,8 @@
-import Modal from "./Modal";
+import Modal from "./molecules/Modal";
 import { connect } from "react-redux";
 import { Formik, Form, ArrayHelpers } from "formik";
-import FieldInput from "components/FieldInput";
-import FieldTextArea from "components/FieldTextArea";
+import FieldInput from "components/molecules/FieldInput";
+import FieldTextArea from "components/molecules/FieldTextArea";
 import Button from "./atoms/Button";
 import { AddAttributeInterface, AttributeType } from "../types/product";
 import { RootState } from "../reducers";
@@ -13,7 +13,7 @@ import InputLabel from "./InputLabel";
 import * as Yup from "yup";
 import { useRef } from "react";
 import { CategoryInterface } from "../types/category";
-import FieldMultiSelect from "./FieldMultiSelect";
+import FieldMultiSelect from "./molecules/FieldMultiSelect";
 import FieldEditableArray from "./FieldEditableArray";
 
 interface StateProps {

@@ -12,7 +12,7 @@ import { FileDrop } from "react-file-drop";
 import { useState } from "react";
 import ImageUploadErrorContainer from "./ImageUploadErrorContainer";
 import { ErrorsType } from "react-images-uploading";
-import SectionCard from "./SectionCard";
+import SectionCard from "./atoms/SectionCard";
 import SectionHeader from "./atoms/SectionHeader";
 import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
 

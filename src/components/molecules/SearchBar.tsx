@@ -1,4 +1,4 @@
-import CSSConstants from "../constants/CSSConstants";
+import CSSConstants from "../../constants/CSSConstants";
 import _ from "lodash";
 import { ChangeEvent } from "react";
 

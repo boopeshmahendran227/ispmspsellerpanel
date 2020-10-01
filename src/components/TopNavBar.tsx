@@ -8,7 +8,7 @@ import { getUnreadNotificationCount } from "../selectors/notification";
 import NotificationActions from "../actions/notification";
 import LoginActions from "../actions/login";
 import classNames from "classnames";
-import Logo from "./Logo";
+import Logo from "./atoms/Logo";
 
 interface StateProps {
   unreadNotificationCount: number;

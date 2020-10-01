@@ -1,12 +1,12 @@
 import { ResponsivePie } from "@nivo/pie";
-import { isDeliveredOrderStatus } from "../utils/order";
-import { isReturnedOrderStatus } from "../utils/order";
-import { isCancelledOrderStatus } from "../utils/order";
-import { isShippingOrderStatus } from "../utils/order";
-import { isPendingOrderStatus } from "../utils/order";
-import CSSConstants from "../constants/CSSConstants";
-import { SummaryInterface } from "../types/insights";
-import { OrderStatus } from "../types/order";
+import { isDeliveredOrderStatus } from "../../utils/order";
+import { isReturnedOrderStatus } from "../../utils/order";
+import { isCancelledOrderStatus } from "../../utils/order";
+import { isShippingOrderStatus } from "../../utils/order";
+import { isPendingOrderStatus } from "../../utils/order";
+import CSSConstants from "../../constants/CSSConstants";
+import { SummaryInterface } from "../../types/insights";
+import { OrderStatus } from "../../types/order";
 import _ from "lodash";
 import Chroma from "chroma-js";
 

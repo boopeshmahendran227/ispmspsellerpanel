@@ -1,7 +1,7 @@
 import { ProductDetailQuoteInterface } from "../types/quote";
 import { formatPrice } from "utils/misc";
 import CSSConstants from "../constants/CSSConstants";
-import ProductCard from "./ProductCard";
+import ProductCard from "./molecules/ProductCard";
 
 interface QuoteProductProps {
   productDetail: ProductDetailQuoteInterface;

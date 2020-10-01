@@ -5,10 +5,10 @@ import {
   ProductInputInterface,
   SelectOptionInterface,
 } from "../types/product";
-import Loader from "components/Loader";
+import Loader from "components/atoms/Loader";
 import MultiSelect from "components/MultiSelect";
 import Button from "./atoms/Button";
-import PageError from "./PageError";
+import PageError from "./atoms/PageError";
 import { useFormikContext } from "formik";
 import _ from "lodash";
 

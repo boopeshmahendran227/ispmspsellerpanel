@@ -1,5 +1,5 @@
 import SectionHeader from "components/atoms/SectionHeader";
-import SectionCard from "components/SectionCard";
+import SectionCard from "components/atoms/SectionCard";
 import { ProductDetailSkuDetail } from "types/product";
 import OtherSkuMini from "components/OtherSkuMini";
 import SectionHeaderContainer from "./atoms/SectionHeaderContainer";

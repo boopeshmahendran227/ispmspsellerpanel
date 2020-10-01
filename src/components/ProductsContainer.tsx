@@ -1,11 +1,11 @@
 import { ProductMiniInterface } from "../types/product";
 import SortableTable from "components/SortableTable";
-import Pagination from "components/Pagination";
+import Pagination from "components/atoms/Pagination";
 import CSSConstants from "../../src/constants/CSSConstants";
-import Loader from "./Loader";
+import Loader from "./atoms/Loader";
 import Link from "next/link";
 import { PaginatedDataInterface } from "../types/pagination";
-import ProductCard from "./ProductCard";
+import ProductCard from "./molecules/ProductCard";
 
 interface ProductsContainerProps {
   productData: PaginatedDataInterface<ProductMiniInterface> | undefined;

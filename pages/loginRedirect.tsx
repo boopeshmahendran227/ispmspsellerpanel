@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Loader from "components/Loader";
+import Loader from "components/atoms/Loader";
 import { useRouter } from "next/router";
 import { setCookie } from "nookies";
 

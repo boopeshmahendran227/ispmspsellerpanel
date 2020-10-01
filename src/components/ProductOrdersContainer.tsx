@@ -1,11 +1,11 @@
 import useSWR from "swr";
-import Loader from "./Loader";
+import Loader from "./atoms/Loader";
 import { ProductOrderInterface, OrderItemCountMap } from "../types/order";
 import SortableTable from "./SortableTable";
-import ProductCard from "./ProductCard";
+import ProductCard from "./molecules/ProductCard";
 import _ from "lodash";
 import { isPendingOrderStatus, isShippingOrderStatus } from "utils/order";
-import ErrorMsg from "./ErrorMsg";
+import ErrorMsg from "./atoms/ErrorMsg";
 import CSSConstants from "../constants/CSSConstants";
 
 const isOpenOrderStatus = (key) =>

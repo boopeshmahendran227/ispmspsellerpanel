@@ -1,5 +1,5 @@
-import RelativeImg from "./RelativeImg";
-import CSSConstants from "../constants/CSSConstants";
+import RelativeImg from "../RelativeImg";
+import CSSConstants from "../../constants/CSSConstants";
 import { Fragment } from "react";
 
 interface MetaInfo {

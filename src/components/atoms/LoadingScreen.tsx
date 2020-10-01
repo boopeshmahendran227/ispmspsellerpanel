@@ -1,8 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { RootState } from "../reducers";
-import CSSConstants from "../constants/CSSConstants";
-import { getLoadingScreenOpen } from "../selectors/ui";
+import { RootState } from "../../reducers";
+import CSSConstants from "../../constants/CSSConstants";
+import { getLoadingScreenOpen } from "../../selectors/ui";
 
 interface StateProps {
   open: boolean;
