@@ -98,6 +98,7 @@ export interface ProductDetailInterface {
   maxPrice: number;
   productType: ProductType;
   specialDiscount: number;
+  specialDiscountPercentage: number;
   attributeValues: ProductAttributeInterface[];
   skuDetails: ProductDetailSkuDetail[];
   unOwnedSkuDetails: ProductDetailSkuDetail[];
@@ -107,6 +108,8 @@ export interface ProductDetailInterface {
 }
 
 export interface ProductDetailSkuDetail {
+  specialDiscount: number;
+  specialDiscountPercentage: number;
   skuDetailId: number;
   ecosystemIds: string[];
   skuId: string;
@@ -354,4 +357,5 @@ export const ProductSchema = Yup.object().shape({
       .min(1, "Atleast one specification item group is required"),
   }),
   ecosystems: Yup.array().of(Yup.string()).min(1),
+  categories: Yup.array().of(Yup.string()).min(1, "other Category is required"),
 });

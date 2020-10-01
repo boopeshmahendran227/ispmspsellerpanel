@@ -26,6 +26,8 @@ import styled from "styled-components";
 import SkuDimensionsInputContainer from "components/SkuDimensionsInputContainer";
 import SkuInventoryInputContainer from "components/SkuInventoryInputContainer";
 import SkuPricingInputContainer from "components/SkuPricingInputContainer";
+import FieldNumInput from "components/FieldNumInput";
+import FieldPercentageInput from "components/FieldPercentageInput";
 
 interface DispatchProps {
   updateSku: (sku: UpdateSkuInterface) => void;
@@ -34,6 +36,8 @@ interface DispatchProps {
 type SkuProps = DispatchProps;
 
 const validationSchema = Yup.object({
+  specialDiscount: Yup.number().required(),
+  specialDiscountPercentage: Yup.number().required().max(100),
   skuDetailId: Yup.number().required().defined(),
   price: Yup.number().required(),
   boughtPrice: Yup.number().required(),
@@ -66,6 +70,12 @@ const FlexColumnContainer = styled.div`
   & > div {
     margin-bottom: 1.5em;
   }
+`;
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1em;
 `;
 
 const Sku = (props: SkuProps): JSX.Element => {
@@ -136,6 +146,8 @@ const Sku = (props: SkuProps): JSX.Element => {
               height: currentSku.height,
               weight: currentSku.weight,
               ecosystemIds: currentSku.ecosystemIds,
+              specialDiscount: currentSku.specialDiscount,
+              specialDiscountPercentage: currentSku.specialDiscountPercentage,
               attributes: attributes.map((attribute) => ({
                 attributeId: attribute.attributeId,
                 attributeName: attribute.attributeName,
@@ -178,6 +190,19 @@ const Sku = (props: SkuProps): JSX.Element => {
                   </SectionCard>
                   {/* <ImageUploader /> */}
                   <SkuPricingInputContainer />
+                  <SectionCard>
+                    <SectionHeader>Special Discount</SectionHeader>
+                    <Grid>
+                      <div>
+                        <label>SpecialDiscountPrice</label>
+                        <FieldNumInput name="specialDiscount" />
+                      </div>
+                      <div>
+                        <label>SpecialDiscountPercentage</label>
+                        <FieldPercentageInput name="specialDiscountPercentage" />
+                      </div>
+                    </Grid>
+                  </SectionCard>
                   <SkuInventoryInputContainer />
                   <SectionCard>
                     <SectionHeader>Visibility</SectionHeader>
