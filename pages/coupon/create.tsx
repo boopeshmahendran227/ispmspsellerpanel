@@ -2,7 +2,7 @@ import { useState } from "react";
 import useSWR from "swr";
 import { Formik, Form } from "formik";
 import Button, { ButtonType } from "components/atoms/Button";
-import InputLabel from "components/InputLabel";
+import InputLabel from "components/atoms/InputLabel";
 import CouponActions from "actions/coupon";
 import { connect } from "react-redux";
 import WithAuth from "components/WithAuth";

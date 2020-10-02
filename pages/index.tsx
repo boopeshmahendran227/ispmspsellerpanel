@@ -3,8 +3,8 @@ import WithAuth from "components/WithAuth";
 import Select from "components/atoms/Select";
 import { SelectOptionInterface } from "types/product";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
-import PageHeader from "components/PageHeader";
-import AnalyticsContainer from "components/AnalyticsContainer";
+import PageHeader from "components/atoms/PageHeader";
+import AnalyticsContainer from "components/template/AnalyticsContainer";
 import { PeriodState } from "types/insights";
 
 const filter: SelectOptionInterface[] = [

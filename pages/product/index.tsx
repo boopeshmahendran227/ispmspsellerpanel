@@ -9,8 +9,8 @@ import WithAuth from "components/WithAuth";
 import useSWR from "swr";
 import { useMemo } from "react";
 import PageError from "components/atoms/PageError";
-import ProductsContainer from "components/ProductsContainer";
-import PageHeader from "components/PageHeader";
+import ProductsContainer from "components/molecules/ProductsContainer";
+import PageHeader from "components/atoms/PageHeader";
 import {
   EcosystemResponseInterface,
   EcosystemDataInterface,

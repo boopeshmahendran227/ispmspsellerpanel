@@ -1,11 +1,11 @@
 import React from "react";
 import PageContainer from "components/atoms/PageContainer";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
-import PageHeader from "components/PageHeader";
+import PageHeader from "components/atoms/PageHeader";
 import { Formik, Form } from "formik";
 import FieldInput from "components/molecules/FieldInput";
 import FieldSelect from "components/molecules/FieldSelect";
-import InputLabel from "components/InputLabel";
+import InputLabel from "components/atoms/InputLabel";
 import * as Yup from "yup";
 import Button, { ButtonType } from "components/atoms/Button";
 import EcosystemOption from "components/atoms/EcosystemOption";

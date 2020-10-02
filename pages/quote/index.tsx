@@ -7,7 +7,7 @@ import { getQuoteStatusText } from "utils/quote";
 import useSWR from "swr";
 import Loader from "components/atoms/Loader";
 import Link from "next/link";
-import ProductCard from "components/molecules/ProductCard";
+import ProductCard from "components/atoms/ProductCard";
 import moment from "moment";
 import Button, { ButtonType } from "components/atoms/Button";
 import QuoteActions from "actions/quote";
@@ -17,7 +17,7 @@ import PageError from "components/atoms/PageError";
 import { getCustomerInfo } from "utils/customer";
 import WithAuth from "components/WithAuth";
 import PageContainer from "components/atoms/PageContainer";
-import PageHeader from "components/PageHeader";
+import PageHeader from "components/atoms/PageHeader";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageBodyContainer from "components/atoms/PageBodyContainer";
 

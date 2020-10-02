@@ -5,7 +5,7 @@ import { RootState } from "../reducers";
 import { Formik, Form } from "formik";
 import UIActions from "../actions/ui";
 import CreditActions from "../actions/credit";
-import InputLabel from "./InputLabel";
+import InputLabel from "./atoms/InputLabel";
 import FieldPriceInput from "./molecules/FieldPriceInput";
 import { InvoiceInterface, PaymentMode } from "../types/invoice";
 import { getCurrentInvoice } from "../selectors/invoice";

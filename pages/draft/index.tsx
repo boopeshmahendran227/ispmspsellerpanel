@@ -6,7 +6,7 @@ import Pagination from "components/atoms/Pagination";
 import Button from "components/atoms/Button";
 import { DraftMiniInterface } from "types/draft";
 import { PaginatedDataInterface } from "types/pagination";
-import PageHeader from "components/PageHeader";
+import PageHeader from "components/atoms/PageHeader";
 import WithAuth from "components/WithAuth";
 import useSWR from "swr";
 import { useState } from "react";

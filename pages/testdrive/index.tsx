@@ -3,7 +3,7 @@ import { TestDriveInterface } from "types/testdrive";
 import Loader from "components/atoms/Loader";
 import useSWR from "swr";
 import PageError from "components/atoms/PageError";
-import PageHeader from "components/PageHeader";
+import PageHeader from "components/atoms/PageHeader";
 import _ from "lodash";
 import WithAuth from "components/WithAuth";
 import PageContainer from "components/atoms/PageContainer";

@@ -11,7 +11,7 @@ import PageError from "components/atoms/PageError";
 import Loader from "components/atoms/Loader";
 import ShowroomVisitsContainer from "components/ShowroomVisitsContainer";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
-import PageHeader from "components/PageHeader";
+import PageHeader from "components/atoms/PageHeader";
 
 const ShowroomVisits = () => {
   const [showroomFilter, setShowroomFilter] = useState(null);

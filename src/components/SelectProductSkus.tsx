@@ -1,6 +1,6 @@
 import Button from "./atoms/Button";
 import { FieldArray, useFormikContext, ErrorMessage } from "formik";
-import InputLabel from "./InputLabel";
+import InputLabel from "./atoms/InputLabel";
 import FieldInput from "./molecules/FieldInput";
 import ValidationErrorMsg from "./atoms/ValidationErrorMsg";
 import {

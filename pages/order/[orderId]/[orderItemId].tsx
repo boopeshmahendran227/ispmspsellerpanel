@@ -3,7 +3,7 @@ import CSSConstants from "../../../src/constants/CSSConstants";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import Loader from "components/atoms/Loader";
-import OrderItemDetail from "components/OrderItemDetail";
+import OrderItemDetail from "components/molecules/OrderItemDetail";
 import { formatAddress } from "utils/misc";
 import { connect } from "react-redux";
 import OrderActions from "actions/order";
@@ -17,10 +17,10 @@ import {
   getPaymentModeColor,
 } from "utils/order";
 import PageError from "components/atoms/PageError";
-import ShippingInformationContainer from "components/ShippingInformationContainer";
-import OrderInformation from "components/OrderInformation";
+import ShippingInformationContainer from "components/molecules/ShippingInformationContainer";
+import OrderInformation from "components/molecules/OrderInformation";
 import WithAuth from "components/WithAuth";
-import DeliveryCodeModal from "components/DeliveryCodeModal";
+import DeliveryCodeModal from "components/molecules/DeliveryCodeModal";
 import { transformOrderItem } from "../../../src/transformers/orderItem";
 import Button from "components/atoms/Button";
 import BackLink from "components/atoms/BackLink";

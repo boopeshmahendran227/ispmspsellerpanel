@@ -1,7 +1,7 @@
-import InputLabel from "./InputLabel";
+import InputLabel from "./atoms/InputLabel";
 import CSSConstants from "../constants/CSSConstants";
 import FieldInput from "./molecules/FieldInput";
-import FieldEditableArray from "./FieldEditableArray";
+import FieldEditableArray from "./molecules/FieldEditableArray";
 
 const SpecificationInput = () => {
   const handleAddSpecGroup = (arrayHelpers) => {

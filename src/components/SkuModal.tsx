@@ -1,7 +1,7 @@
 import Modal from "./molecules/Modal";
 import { useState, useEffect } from "react";
 import Button, { ButtonType } from "./atoms/Button";
-import SelectAttributes from "./SelectAttributes";
+import SelectAttributes from "./molecules/SelectAttributes";
 import SelectAttributeValues from "./SelectAttributeValues";
 import { getSkuModalOpen } from "../selectors/ui";
 import { connect } from "react-redux";

@@ -4,7 +4,7 @@ import ValidationErrorMsg from "../atoms/ValidationErrorMsg";
 import { Field, ErrorMessage } from "formik";
 import classNames from "classnames";
 import CSSConstants from "../../constants/CSSConstants";
-import MultiSelect from "../MultiSelect";
+import MultiSelect from "../atoms/MultiSelect";
 import { SelectOptionInterface } from "types/product";
 
 interface FieldEcosystemMultiInputProps {

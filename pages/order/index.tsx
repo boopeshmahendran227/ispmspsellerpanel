@@ -1,9 +1,9 @@
 import { OrderInterface } from "types/order";
 import Select from "components/atoms/Select";
 import { PaginatedDataInterface } from "types/pagination";
-import PageHeader from "components/PageHeader";
+import PageHeader from "components/atoms/PageHeader";
 import { SelectOptionInterface } from "types/product";
-import DeliveryCodeModal from "components/DeliveryCodeModal";
+import DeliveryCodeModal from "components/molecules/DeliveryCodeModal";
 import useSWR from "swr";
 import {
   EcosystemDataInterface,
@@ -15,7 +15,7 @@ import EcosystemOption from "components/atoms/EcosystemOption";
 import WithAuth from "components/WithAuth";
 import { useState } from "react";
 import _ from "lodash";
-import OrdersContainer from "components/OrdersContainer";
+import OrdersContainer from "components/molecules/OrdersContainer";
 import PageContainer from "components/atoms/PageContainer";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageBodyContainer from "components/atoms/PageBodyContainer";

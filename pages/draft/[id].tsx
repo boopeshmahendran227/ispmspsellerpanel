@@ -5,12 +5,12 @@ import SkuTable from "components/SkuTable";
 import { useRouter } from "next/router";
 import Specification from "components/Specification";
 import TierPrice from "components/TierPrice";
-import FAQ from "components/FAQ";
+import FAQ from "components/molecules/FAQ";
 import CSSConstants from "../../src/constants/CSSConstants";
 import PageError from "components/atoms/PageError";
 import WithAuth from "components/WithAuth";
-import ProductMainInfo from "components/ProductMainInfo";
-import ProductPriceDetails from "components/ProductPriceDetails";
+import ProductMainInfo from "components/molecules/ProductMainInfo";
+import ProductPriceDetails from "components/molecules/ProductPriceDetails";
 import styled from "styled-components";
 
 const FlexContainer = styled.div`

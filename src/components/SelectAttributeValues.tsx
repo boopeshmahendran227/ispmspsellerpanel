@@ -7,8 +7,8 @@ import {
 import useSWR from "swr";
 import Loader from "components/atoms/Loader";
 import CSSConstants from "../../src/constants/CSSConstants";
-import MultiSelect from "./MultiSelect";
-import CreateAttributeValue from "./CreateAttributeValue";
+import MultiSelect from "./atoms/MultiSelect";
+import CreateAttributeValue from "./molecules/CreateAttributeValue";
 import PageError from "./atoms/PageError";
 
 interface SelectAttributeValuesProps {

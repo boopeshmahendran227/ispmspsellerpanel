@@ -1,8 +1,8 @@
-import PageHeader from "components/PageHeader";
+import PageHeader from "components/atoms/PageHeader";
 import SortableTable from "components/SortableTable";
 import { InvoiceInterface, InvoiceStatus } from "types/invoice";
 import moment from "moment";
-import InvoiceStatusTag from "components/InvoiceStatusTag";
+import InvoiceStatusTag from "components/atoms/InvoiceStatusTag";
 import PageError from "components/atoms/PageError";
 import Loader from "components/atoms/Loader";
 import useSWR from "swr";

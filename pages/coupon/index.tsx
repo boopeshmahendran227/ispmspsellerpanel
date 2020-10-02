@@ -6,7 +6,7 @@ import { CouponInterface } from "types/coupon";
 import PageError from "components/atoms/PageError";
 import { formatPrice } from "utils/misc";
 import Button from "components/atoms/Button";
-import PageHeader from "components/PageHeader";
+import PageHeader from "components/atoms/PageHeader";
 import WithAuth from "components/WithAuth";
 import Link from "next/link";
 import moment from "moment";

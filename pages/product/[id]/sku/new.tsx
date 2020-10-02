@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import Loader from "components/atoms/Loader";
 import PageError from "components/atoms/PageError";
-import PageHeader from "components/PageHeader";
+import PageHeader from "components/atoms/PageHeader";
 import WithAuth from "components/WithAuth";
 import { useRouter } from "next/router";
 import SkuList from "components/SkuList";

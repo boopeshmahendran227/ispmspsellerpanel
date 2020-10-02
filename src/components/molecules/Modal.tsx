@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import classNames from "classnames";
 import CSSConstants from "../../constants/CSSConstants";
-import Portal from "../Portal";
+import Portal from "../atoms/Portal";
 
 interface ModalProps {
   open: boolean;
