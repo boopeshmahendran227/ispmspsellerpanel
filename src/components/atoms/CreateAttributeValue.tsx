@@ -1,7 +1,7 @@
 import ProductActions from "../../actions/product";
 import { connect } from "react-redux";
 import { useState } from "react";
-import Button from "../atoms/Button";
+import Button from "./Button";
 import CSSConstants from "../../constants/CSSConstants";
 import classNames from "classnames";
 

@@ -4,12 +4,12 @@ import SingleDatePicker from "components/molecules/SingleDatePicker";
 import RadioButton from "components/atoms/RadioButton";
 import _ from "lodash";
 import { ShowroomInterface, ShowroomVisitInterface } from "types/showroomVisit";
-import WithAuth from "components/WithAuth";
+import WithAuth from "components/atoms/WithAuth";
 import useSWR from "swr";
 import { useState } from "react";
 import PageError from "components/atoms/PageError";
 import Loader from "components/atoms/Loader";
-import ShowroomVisitsContainer from "components/ShowroomVisitsContainer";
+import ShowroomVisitsContainer from "components/molecules/ShowroomVisitsContainer";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageHeader from "components/atoms/PageHeader";
 

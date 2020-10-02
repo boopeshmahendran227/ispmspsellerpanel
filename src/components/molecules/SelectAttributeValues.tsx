@@ -3,13 +3,13 @@ import {
   SelectedAttribute,
   AttributeValueInterface,
   SelectedAttributeValuesMap,
-} from "../types/product";
+} from "../../types/product";
 import useSWR from "swr";
 import Loader from "components/atoms/Loader";
-import CSSConstants from "../../src/constants/CSSConstants";
-import MultiSelect from "./atoms/MultiSelect";
-import CreateAttributeValue from "./molecules/CreateAttributeValue";
-import PageError from "./atoms/PageError";
+import CSSConstants from "../../constants/CSSConstants";
+import MultiSelect from "../atoms/MultiSelect";
+import CreateAttributeValue from "../atoms/CreateAttributeValue";
+import PageError from "../atoms/PageError";
 
 interface SelectAttributeValuesProps {
   selectedAttributes: SelectedAttribute[];

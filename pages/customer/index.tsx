@@ -1,10 +1,10 @@
-import SortableTable from "components/SortableTable";
+import SortableTable from "components/atoms/SortableTable";
 import useSWR from "swr";
 import Loader from "components/atoms/Loader";
 import PageError from "components/atoms/PageError";
 import PageHeader from "components/atoms/PageHeader";
 import { CustomerInterface } from "types/customer";
-import WithAuth from "components/WithAuth";
+import WithAuth from "components/atoms/WithAuth";
 import PageContainer from "components/atoms/PageContainer";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 

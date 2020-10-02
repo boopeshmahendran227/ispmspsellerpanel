@@ -1,4 +1,4 @@
-import RelativeImg from "components/RelativeImg";
+import RelativeImg from "components/atoms/RelativeImg";
 import CSSConstants from "src/constants/CSSConstants";
 import Link from "next/link";
 import classNames from "classnames";

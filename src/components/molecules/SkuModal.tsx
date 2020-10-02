@@ -1,23 +1,23 @@
-import Modal from "./molecules/Modal";
+import Modal from "./Modal";
 import { useState, useEffect } from "react";
-import Button, { ButtonType } from "./atoms/Button";
-import SelectAttributes from "./molecules/SelectAttributes";
+import Button, { ButtonType } from "../atoms/Button";
+import SelectAttributes from "./SelectAttributes";
 import SelectAttributeValues from "./SelectAttributeValues";
-import { getSkuModalOpen } from "../selectors/ui";
+import { getSkuModalOpen } from "../../selectors/ui";
 import { connect } from "react-redux";
-import UIActions from "../actions/ui";
-import ProductActions from "../actions/product";
-import { RootState } from "../reducers";
+import UIActions from "../../actions/ui";
+import ProductActions from "../../actions/product";
+import { RootState } from "../../reducers";
 import {
   SelectedAttribute,
   AttributeValueInterface,
   SelectedAttributeValuesMap,
-} from "../types/product";
+} from "../../types/product";
 import _ from "lodash";
 import {
   getSelectedAttributeValues,
   getSelectedAttributes,
-} from "../selectors/product";
+} from "../../selectors/product";
 
 interface StateProps {
   selectedAttributes: SelectedAttribute[];

@@ -3,7 +3,7 @@ import useSWR from "swr";
 import Loader from "components/atoms/Loader";
 import PageError from "components/atoms/PageError";
 import { EcosystemResponseInterface } from "types/business";
-import WithAuth from "components/WithAuth";
+import WithAuth from "components/atoms/WithAuth";
 import moment from "moment";
 import { SummaryInterface } from "types/insights";
 import { formatPrice } from "utils/misc";

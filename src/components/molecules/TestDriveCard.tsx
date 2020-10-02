@@ -1,5 +1,5 @@
-import { TestDriveInterface } from "../types/testdrive";
-import RelativeImg from "./RelativeImg";
+import { TestDriveInterface } from "../../types/testdrive";
+import RelativeImg from "../atoms/RelativeImg";
 import moment from "moment";
 import { getCustomerInfo } from "utils/customer";
 

@@ -15,7 +15,7 @@ import PageError from "components/atoms/PageError";
 import Loader from "components/atoms/Loader";
 import { SelectOptionInterface, ProductCloneInterface } from "types/product";
 import ProductActions from "actions/product";
-import WithAuth from "components/WithAuth";
+import WithAuth from "components/atoms/WithAuth";
 import { connect } from "react-redux";
 
 interface DispatchProps {

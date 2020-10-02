@@ -1,5 +1,5 @@
 import CSSConstants from "../../src/constants/CSSConstants";
-import SortableTable from "components/SortableTable";
+import SortableTable from "components/atoms/SortableTable";
 import useSWR from "swr";
 import Loader from "components/atoms/Loader";
 import { CouponInterface } from "types/coupon";
@@ -7,7 +7,7 @@ import PageError from "components/atoms/PageError";
 import { formatPrice } from "utils/misc";
 import Button from "components/atoms/Button";
 import PageHeader from "components/atoms/PageHeader";
-import WithAuth from "components/WithAuth";
+import WithAuth from "components/atoms/WithAuth";
 import Link from "next/link";
 import moment from "moment";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";

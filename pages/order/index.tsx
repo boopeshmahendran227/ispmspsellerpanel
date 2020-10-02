@@ -12,7 +12,7 @@ import {
 import PageError from "components/atoms/PageError";
 import Loader from "components/atoms/Loader";
 import EcosystemOption from "components/atoms/EcosystemOption";
-import WithAuth from "components/WithAuth";
+import WithAuth from "components/atoms/WithAuth";
 import { useState } from "react";
 import _ from "lodash";
 import OrdersContainer from "components/molecules/OrdersContainer";

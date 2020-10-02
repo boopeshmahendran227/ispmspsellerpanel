@@ -6,12 +6,12 @@ import {
 import OrderActions from "actions/order";
 import { connect } from "react-redux";
 import CSSConstants from "../../constants/CSSConstants";
-import TabSection from "components/TabSection";
+import TabSection from "components/atoms/TabSection";
 import Link from "next/link";
 import ProductCard from "components/atoms/ProductCard";
 import { formatPrice } from "utils/misc";
 import moment from "moment";
-import SortableTable from "components/SortableTable";
+import SortableTable from "components/atoms/SortableTable";
 import Button, { ButtonType } from "../atoms/Button";
 import {
   getColor,

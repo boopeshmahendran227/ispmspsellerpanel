@@ -19,7 +19,7 @@ import {
 import PageError from "components/atoms/PageError";
 import ShippingInformationContainer from "components/molecules/ShippingInformationContainer";
 import OrderInformation from "components/molecules/OrderInformation";
-import WithAuth from "components/WithAuth";
+import WithAuth from "components/atoms/WithAuth";
 import DeliveryCodeModal from "components/molecules/DeliveryCodeModal";
 import { transformOrderItem } from "../../../src/transformers/orderItem";
 import Button from "components/atoms/Button";

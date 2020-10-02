@@ -1,5 +1,5 @@
 import React from "react";
-import SortableTable from "components/SortableTable";
+import SortableTable from "components/atoms/SortableTable";
 import ProductCard from "components/atoms/ProductCard";
 
 export interface TopSoldItem {

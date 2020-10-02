@@ -3,8 +3,8 @@ import SectionCard from "components/atoms/SectionCard";
 import Button from "components/atoms/Button";
 import Link from "next/link";
 import { ProductDetailSkuDetail } from "types/product";
-import YourSkuMini from "components/YourSkuMini";
-import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
+import YourSkuMini from "components/molecules/YourSkuMini";
+import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
 import styled from "styled-components";
 
 const FlexContainer = styled.div`

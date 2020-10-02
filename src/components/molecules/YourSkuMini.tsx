@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { formatPrice } from "utils/misc";
-import RelativeImg from "./RelativeImg";
-import CSSConstants from "../constants/CSSConstants";
+import RelativeImg from "../atoms/RelativeImg";
+import CSSConstants from "../../constants/CSSConstants";
 import styled from "styled-components";
 import { ProductDetailSkuDetail } from "types/product";
 import { AttributeValueID } from "types/sku";
-import Button from "./atoms/Button";
+import Button from "../atoms/Button";
 
 const Container = styled.div`
   padding: 0.8em;

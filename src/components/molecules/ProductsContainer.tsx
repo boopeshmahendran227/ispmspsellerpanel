@@ -1,5 +1,5 @@
 import { ProductMiniInterface } from "../../types/product";
-import SortableTable from "components/SortableTable";
+import SortableTable from "components/atoms/SortableTable";
 import Pagination from "components/atoms/Pagination";
 import CSSConstants from "../../constants/CSSConstants";
 import Loader from "../atoms/Loader";

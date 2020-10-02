@@ -1,4 +1,4 @@
-import ImageUploading, { ImageType } from "../ImageUploading";
+import ImageUploading, { ImageType } from "../molecules/ImageUploading";
 import styled, { css } from "styled-components";
 import CSSConstants from "../../constants/CSSConstants";
 import EditButton from "./EditButton";

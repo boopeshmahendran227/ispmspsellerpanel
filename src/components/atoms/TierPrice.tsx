@@ -1,7 +1,7 @@
-import { TierPriceInterface } from "../types/product";
-import SectionHeader from "./atoms/SectionHeader";
-import SectionCard from "./atoms/SectionCard";
-import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
+import { TierPriceInterface } from "../../types/product";
+import SectionHeader from "./SectionHeader";
+import SectionCard from "./SectionCard";
+import SectionHeaderContainer from "./SectionHeaderContainer";
 
 interface TierPriceProps {
   tierPrice: TierPriceInterface[];

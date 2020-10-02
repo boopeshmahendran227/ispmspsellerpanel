@@ -1,13 +1,13 @@
 import CSSConstants from "../../src/constants/CSSConstants";
 import Link from "next/link";
-import SortableTable from "components/SortableTable";
-import RelativeImg from "components/RelativeImg";
+import SortableTable from "components/atoms/SortableTable";
+import RelativeImg from "components/atoms/RelativeImg";
 import Pagination from "components/atoms/Pagination";
 import Button from "components/atoms/Button";
 import { DraftMiniInterface } from "types/draft";
 import { PaginatedDataInterface } from "types/pagination";
 import PageHeader from "components/atoms/PageHeader";
-import WithAuth from "components/WithAuth";
+import WithAuth from "components/atoms/WithAuth";
 import useSWR from "swr";
 import { useState } from "react";
 import PageError from "components/atoms/PageError";

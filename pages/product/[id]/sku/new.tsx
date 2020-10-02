@@ -2,11 +2,11 @@ import useSWR from "swr";
 import Loader from "components/atoms/Loader";
 import PageError from "components/atoms/PageError";
 import PageHeader from "components/atoms/PageHeader";
-import WithAuth from "components/WithAuth";
+import WithAuth from "components/atoms/WithAuth";
 import { useRouter } from "next/router";
-import SkuList from "components/SkuList";
+import SkuList from "components/molecules/SkuList";
 import { Formik, Form } from "formik";
-import SkuProductInfo from "components/SkuProductInfo";
+import SkuProductInfo from "components/atoms/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/atoms/SectionHeader";
 import SectionCard from "components/atoms/SectionCard";
@@ -22,9 +22,9 @@ import Button from "components/atoms/Button";
 import FieldEcosystemMultiInput from "components/molecules/FieldEcosystemMultiInput";
 import FieldInput from "components/molecules/FieldInput";
 import { EcosystemResponseInterface } from "types/business";
-import SkuDimensionsInputContainer from "components/SkuDimensionsInputContainer";
-import SkuInventoryInputContainer from "components/SkuInventoryInputContainer";
-import SkuPricingInputContainer from "components/SkuPricingInputContainer";
+import SkuDimensionsInputContainer from "components/molecules/SkuDimensionsInputContainer";
+import SkuInventoryInputContainer from "components/organism/SkuInventoryInputContainer";
+import SkuPricingInputContainer from "components/organism/SkuPricingInputContainer";
 
 interface DispatchProps {
   addSku: (sku: AddSkuInterface) => void;

@@ -5,7 +5,7 @@ import SearchBar from "components/molecules/SearchBar";
 import ActiveFilters from "components/atoms/ActiveFilters";
 import { PaginatedDataInterface } from "types/pagination";
 import Button from "components/atoms/Button";
-import WithAuth from "components/WithAuth";
+import WithAuth from "components/atoms/WithAuth";
 import useSWR from "swr";
 import { useMemo } from "react";
 import PageError from "components/atoms/PageError";

@@ -3,7 +3,7 @@ import RoundedIcon from "../atoms/RoundedIcon";
 import { formatPrice } from "utils/misc";
 import RevenueLineChart, { MonthlySalesInterface } from "../atoms/RevenueLineChart";
 import OrderCountPieChart from "../atoms/OrdersPieChart";
-import TopSold, { TopSoldItem } from "../TopSold";
+import TopSold, { TopSoldItem } from "../molecules/TopSold";
 import RecentOrderList from "../molecules/RecentOrderList";
 import CSSConstants from "../../constants/CSSConstants";
 import useSWR from "swr";

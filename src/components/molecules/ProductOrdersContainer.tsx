@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import Loader from "../atoms/Loader";
 import { ProductOrderInterface, OrderItemCountMap } from "../../types/order";
-import SortableTable from "../SortableTable";
+import SortableTable from "../atoms/SortableTable";
 import ProductCard from "../atoms/ProductCard";
 import _ from "lodash";
 import { isPendingOrderStatus, isShippingOrderStatus } from "utils/order";

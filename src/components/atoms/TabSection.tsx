@@ -1,6 +1,6 @@
 import * as React from "react";
 import classNames from "classnames";
-import CSSConstants from "../constants/CSSConstants";
+import CSSConstants from "../../constants/CSSConstants";
 import { useState } from "react";
 
 interface TabSectionProps {

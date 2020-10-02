@@ -1,14 +1,14 @@
-import SortableTable from "./SortableTable";
-import { ProductSkuDetail, ProductInputInterface } from "../types/product";
-import CSSConstants from "../constants/CSSConstants";
+import SortableTable from "../atoms/SortableTable";
+import { ProductSkuDetail, ProductInputInterface } from "../../types/product";
+import CSSConstants from "../../constants/CSSConstants";
 import { ErrorMessage, FieldArray, useFormikContext } from "formik";
-import Button from "./atoms/Button";
+import Button from "../atoms/Button";
 import { connect } from "react-redux";
-import UIActions from "../actions/ui";
-import FieldInput from "./molecules/FieldInput";
-import ValidationErrorMsg from "./atoms/ValidationErrorMsg";
-import FieldNumInput from "./molecules/FieldNumInput";
-import FieldPriceInput from "./molecules/FieldPriceInput";
+import UIActions from "../../actions/ui";
+import FieldInput from "./FieldInput";
+import ValidationErrorMsg from "../atoms/ValidationErrorMsg";
+import FieldNumInput from "./FieldNumInput";
+import FieldPriceInput from "./FieldPriceInput";
 
 interface DispatchProps {
   showSkuModal: () => void;

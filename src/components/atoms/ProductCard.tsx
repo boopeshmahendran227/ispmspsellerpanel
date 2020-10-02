@@ -1,4 +1,4 @@
-import RelativeImg from "../RelativeImg";
+import RelativeImg from "./RelativeImg";
 import CSSConstants from "../../constants/CSSConstants";
 import { Fragment } from "react";
 

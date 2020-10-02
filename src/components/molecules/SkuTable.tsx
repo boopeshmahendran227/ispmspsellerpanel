@@ -1,9 +1,9 @@
-import SortableTable from "./SortableTable";
-import { ProductSkuDetail } from "../types/product";
-import CSSConstants from "../constants/CSSConstants";
-import RelativeImg from "./RelativeImg";
+import SortableTable from "../atoms/SortableTable";
+import { ProductSkuDetail } from "../../types/product";
+import CSSConstants from "../../constants/CSSConstants";
+import RelativeImg from "../atoms/RelativeImg";
 import { formatPrice } from "utils/misc";
-import { DraftAttributeValuesInterface } from "../types/draft";
+import { DraftAttributeValuesInterface } from "../../types/draft";
 import { AttributeValueID } from "types/sku";
 
 interface SkuTableProps {

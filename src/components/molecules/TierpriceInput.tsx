@@ -1,8 +1,8 @@
 import { ArrayHelpers } from "formik";
-import FieldNumInput from "./molecules/FieldNumInput";
-import FieldPercentageInput from "./molecules/FieldPercentageInput";
-import FieldEditableArray from "./molecules/FieldEditableArray";
-import CSSConstants from "../constants/CSSConstants";
+import FieldNumInput from "./FieldNumInput";
+import FieldPercentageInput from "./FieldPercentageInput";
+import FieldEditableArray from "./FieldEditableArray";
+import CSSConstants from "../../constants/CSSConstants";
 
 const TierPriceInput = () => {
   const addTierPrice = (arrayHelpers: ArrayHelpers) => {

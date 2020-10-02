@@ -1,7 +1,7 @@
 import RelativeImg from "./RelativeImg";
 import Link from "next/link";
-import Card from "./atoms/Card";
-import CSSConstants from "../constants/CSSConstants";
+import Card from "./Card";
+import CSSConstants from "../../constants/CSSConstants";
 import styled from "styled-components";
 
 interface SkuProductInfoProps {

@@ -1,11 +1,11 @@
-import TestDriveCard from "components/TestDriveCard";
+import TestDriveCard from "components/molecules/TestDriveCard";
 import { TestDriveInterface } from "types/testdrive";
 import Loader from "components/atoms/Loader";
 import useSWR from "swr";
 import PageError from "components/atoms/PageError";
 import PageHeader from "components/atoms/PageHeader";
 import _ from "lodash";
-import WithAuth from "components/WithAuth";
+import WithAuth from "components/atoms/WithAuth";
 import PageContainer from "components/atoms/PageContainer";
 import PageBodyContainer from "components/atoms/PageBodyContainer";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";

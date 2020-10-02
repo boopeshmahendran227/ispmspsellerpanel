@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import CSSConstants from "../../src/constants/CSSConstants";
-import TabSection from "components/TabSection";
-import SortableTable from "components/SortableTable";
+import TabSection from "components/atoms/TabSection";
+import SortableTable from "components/atoms/SortableTable";
 import { QuoteInterface, QuoteStatus } from "types/quote";
 import { getQuoteStatusText } from "utils/quote";
 import useSWR from "swr";
@@ -15,7 +15,7 @@ import { formatPrice } from "utils/misc";
 import { getColor } from "utils/quote";
 import PageError from "components/atoms/PageError";
 import { getCustomerInfo } from "utils/customer";
-import WithAuth from "components/WithAuth";
+import WithAuth from "components/atoms/WithAuth";
 import PageContainer from "components/atoms/PageContainer";
 import PageHeader from "components/atoms/PageHeader";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";

@@ -1,4 +1,4 @@
-import RelativeImg from "../RelativeImg";
+import RelativeImg from "../atoms/RelativeImg";
 import styled from "styled-components";
 import { ProductDetailSkuDetail } from "types/product";
 import Button from "../atoms/Button";

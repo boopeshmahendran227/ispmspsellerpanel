@@ -1,10 +1,10 @@
-import { SpecificationInterface } from "../types/product";
-import SectionHeader from "./atoms/SectionHeader";
+import { SpecificationInterface } from "../../types/product";
+import SectionHeader from "../atoms/SectionHeader";
 import styled from "styled-components";
-import CSSConstants from "../constants/CSSConstants";
+import CSSConstants from "../../constants/CSSConstants";
 import { Fragment } from "react";
-import SectionCard from "./atoms/SectionCard";
-import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
+import SectionCard from "../atoms/SectionCard";
+import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
 
 interface SpecificationProps {
   specification: SpecificationInterface;

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import CSSConstants from "../constants/CSSConstants";
+import CSSConstants from "../../constants/CSSConstants";
 import classNames from "classnames";
-import EmptyMsg from "./atoms/EmptyMsg";
+import EmptyMsg from "./EmptyMsg";
 import _ from "lodash";
 
 interface SortHeader {

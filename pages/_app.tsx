@@ -14,7 +14,7 @@ import SideNavBar from "components/organism/SideNavBar";
 import TopNavBar from "components/organism/TopNavBar";
 import LoginActions from "actions/login";
 import LoadingScreen from "components/atoms/LoadingScreen";
-import UpdateQuoteModal from "components/UpdateQuoteModal";
+import UpdateQuoteModal from "components/molecules/UpdateQuoteModal";
 import { isLoggedIn } from "utils/login";
 import { LoginState } from "types/login";
 import CSSConstants from "../src/constants/CSSConstants";

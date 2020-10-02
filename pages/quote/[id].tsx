@@ -9,7 +9,7 @@ import { getQuoteStatusText } from "utils/quote";
 import QuoteItemDetail from "components/molecules/QuoteItemDetail";
 import QuoteActions from "actions/quote";
 import PageError from "components/atoms/PageError";
-import WithAuth from "components/WithAuth";
+import WithAuth from "components/atoms/WithAuth";
 import BackLink from "components/atoms/BackLink";
 
 interface DispatchProps {

@@ -5,7 +5,7 @@ import Button, { ButtonType } from "components/atoms/Button";
 import InputLabel from "components/atoms/InputLabel";
 import CouponActions from "actions/coupon";
 import { connect } from "react-redux";
-import WithAuth from "components/WithAuth";
+import WithAuth from "components/atoms/WithAuth";
 import {
   CouponInputInterface,
   CouponType,

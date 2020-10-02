@@ -2,18 +2,18 @@ import useSWR from "swr";
 import Loader from "components/atoms/Loader";
 import PageError from "components/atoms/PageError";
 import PageHeader from "components/atoms/PageHeader";
-import WithAuth from "components/WithAuth";
+import WithAuth from "components/atoms/WithAuth";
 import { useRouter } from "next/router";
 import ProductMainInfo from "components/molecules/ProductMainInfo";
 import ProductPriceDetails from "components/molecules/ProductPriceDetails";
 import ProductAvailability from "components/molecules/ProductAvailability";
-import Specification from "components/Specification";
-import TierPrice from "components/TierPrice";
+import Specification from "components/molecules/Specification";
+import TierPrice from "components/atoms/TierPrice";
 import FAQ from "components/molecules/FAQ";
 import styled from "styled-components";
 import BackLink from "components/atoms/BackLink";
 import { ProductDetailInterface } from "types/product";
-import YourSkuTable from "components/YourSkuTable";
+import YourSkuTable from "components/molecules/YourSkuTable";
 import OtherSkusTable from "components/molecules/OtherSkusTable";
 
 const Grid = styled.div`

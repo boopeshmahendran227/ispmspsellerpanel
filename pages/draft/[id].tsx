@@ -1,14 +1,14 @@
 import { DraftResponseInterface } from "types/draft";
 import useSWR from "swr";
 import Loader from "components/atoms/Loader";
-import SkuTable from "components/SkuTable";
+import SkuTable from "components/molecules/SkuTable";
 import { useRouter } from "next/router";
-import Specification from "components/Specification";
-import TierPrice from "components/TierPrice";
+import Specification from "components/molecules/Specification";
+import TierPrice from "components/atoms/TierPrice";
 import FAQ from "components/molecules/FAQ";
 import CSSConstants from "../../src/constants/CSSConstants";
 import PageError from "components/atoms/PageError";
-import WithAuth from "components/WithAuth";
+import WithAuth from "components/atoms/WithAuth";
 import ProductMainInfo from "components/molecules/ProductMainInfo";
 import ProductPriceDetails from "components/molecules/ProductPriceDetails";
 import styled from "styled-components";
