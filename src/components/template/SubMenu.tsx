@@ -3,7 +3,7 @@ import classNames from "classnames";
 import Chroma from "chroma-js";
 
 // images
-import CloseIcon from "../../public/icons/close.svg";
+import CloseIcon from "../../../public/icons/close.svg";
 import Link from "next/link";
 
 export interface SubMenuItemInterface {
