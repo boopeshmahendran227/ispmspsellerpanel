@@ -38,7 +38,6 @@ function* addProduct(action) {
         ...product,
         maxPrice: product.maxPrice,
         minPrice: product.minPrice,
-        specialDiscountValue: product.specialDiscountValue,
         brandId: product.brand?.value,
         hsnCode: product.hsnCode,
         countryOfOrigin: product.countryOfOrigin?.value,

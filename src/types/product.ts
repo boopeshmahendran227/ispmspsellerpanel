@@ -65,7 +65,6 @@ export interface ProductInputInterface {
   shortDescription: string;
   longDescription: string;
   hsnCode: string;
-  specialDiscountValue: number;
   minPrice: number;
   maxPrice: number;
   brand: SelectOptionInterface | null;
@@ -274,10 +273,6 @@ export const ProductSchema = Yup.object().shape({
   defaultCategory: Yup.object()
     .required("Default Category is required")
     .nullable(),
-  specialDiscountValue: Yup.number()
-    .typeError("Special discount value must be a number")
-    .required()
-    .lessThan(Yup.ref("minPrice"), "Discount must be less than minimum price."),
   minPrice: Yup.number()
     .typeError("Min price must be a number")
     .positive("Min price must be greater than 0")

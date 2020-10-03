@@ -102,7 +102,6 @@ const AddProduct = (props: AddProductProps) => {
             shortDescription: "",
             longDescription: "",
             hsnCode: "",
-            specialDiscountValue: 0,
             minPrice: 0,
             maxPrice: 0,
             brand: null,
@@ -186,13 +185,6 @@ const AddProduct = (props: AddProductProps) => {
                     label: country,
                   }))}
                 />
-                <InputLabel label="Special Discount Value" />
-                <Tooltip
-                  trigger="focus"
-                  tooltip="This discount value will always be applied"
-                >
-                  <FieldPriceInput name="specialDiscountValue" />
-                </Tooltip>
                 <InputLabel label="Min Price" />
                 <Tooltip
                   trigger="focus"
