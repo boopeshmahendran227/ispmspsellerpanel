@@ -1,20 +1,20 @@
-import ImageUploading, { ImageType } from "../molecules/ImageUploading";
+import ImageUploading, { ImageType } from "../atoms/ImageUploading";
 import styled, { css } from "styled-components";
 import CSSConstants from "../../constants/CSSConstants";
-import EditButton from "./EditButton";
-import DeleteButton from "./DeleteButton";
-import Lightbox from "./Lightbox";
+import EditButton from "../atoms/EditButton";
+import DeleteButton from "../atoms/DeleteButton";
+import Lightbox from "../atoms/Lightbox";
 import { useLightbox } from "simple-react-lightbox";
 import { Maximize2 } from "react-feather";
 import UIActions from "../../actions/ui";
 import { connect } from "react-redux";
 import { FileDrop } from "react-file-drop";
 import { useState } from "react";
-import ImageUploadErrorContainer from "../molecules/ImageUploadErrorContainer";
+import ImageUploadErrorContainer from "./ImageUploadErrorContainer";
 import { ErrorsType } from "react-images-uploading";
-import SectionCard from "./SectionCard";
-import SectionHeader from "./SectionHeader";
-import SectionHeaderContainer from "./SectionHeaderContainer";
+import SectionCard from "../atoms/SectionCard";
+import SectionHeader from "../atoms/SectionHeader";
+import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
 
 const MAX_NUMBER = 10;
 const MAX_MB_FILESIZE = 5 * 1024 * 1024; // 5Mb

@@ -1,6 +1,6 @@
 import * as React from "react";
 import moment from "moment";
-import SingleDatePicker from "components/molecules/SingleDatePicker";
+import SingleDatePicker from "components/atoms/SingleDatePicker";
 import RadioButton from "components/atoms/RadioButton";
 import _ from "lodash";
 import { ShowroomInterface, ShowroomVisitInterface } from "types/showroomVisit";

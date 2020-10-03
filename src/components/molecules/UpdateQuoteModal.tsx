@@ -1,4 +1,4 @@
-import Modal from "./Modal";
+import Modal from "../atoms/Modal";
 import Button from "../atoms/Button";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers";
@@ -12,7 +12,7 @@ import UIActions from "../../actions/ui";
 import QuoteActions from "../../actions/quote";
 import * as Yup from "yup";
 import InputLabel from "../atoms/InputLabel";
-import FieldPriceInput from "./FieldPriceInput";
+import FieldPriceInput from "../atoms/FieldPriceInput";
 
 interface StateProps {
   open: boolean;

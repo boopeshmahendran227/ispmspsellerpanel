@@ -1,7 +1,7 @@
-import RelativeImg from "../atoms/RelativeImg";
+import RelativeImg from "./RelativeImg";
 import styled from "styled-components";
 import { ProductDetailSkuDetail } from "types/product";
-import Button from "../atoms/Button";
+import Button from "./Button";
 import Link from "next/link";
 import { AttributeValueID } from "types/sku";
 import CSSConstants from "../../constants/CSSConstants";

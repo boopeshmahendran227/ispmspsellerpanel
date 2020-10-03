@@ -1,8 +1,8 @@
-import Modal from "./Modal";
+import Modal from "../atoms/Modal";
 import { connect } from "react-redux";
 import { Formik, Form, ArrayHelpers } from "formik";
-import FieldInput from "components/molecules/FieldInput";
-import FieldTextArea from "components/molecules/FieldTextArea";
+import FieldInput from "components/atoms/FieldInput";
+import FieldTextArea from "components/atoms/FieldTextArea";
 import Button from "../atoms/Button";
 import { AddAttributeInterface, AttributeType } from "../../types/product";
 import { RootState } from "../../reducers";

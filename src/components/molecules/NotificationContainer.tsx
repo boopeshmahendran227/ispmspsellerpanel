@@ -1,5 +1,5 @@
 import * as React from "react";
-import NotificationCard from "./NotificationCard";
+import NotificationCard from "../atoms/NotificationCard";
 import PageError from "../atoms/PageError";
 import Loader from "../atoms/Loader";
 import EmptyMsg from "../atoms/EmptyMsg";

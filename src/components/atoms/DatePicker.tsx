@@ -1,6 +1,6 @@
 import { SingleDatePicker } from "react-dates";
 import moment from "moment";
-import Button from "../atoms/Button";
+import Button from "./Button";
 import { useState } from "react";
 
 interface DatePickerProps {

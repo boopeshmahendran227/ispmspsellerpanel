@@ -1,14 +1,21 @@
 import { Field, ErrorMessage, useFormikContext } from "formik";
 import classNames from "classnames";
-import ValidationErrorMsg from "../atoms/ValidationErrorMsg";
+import ValidationErrorMsg from "./ValidationErrorMsg";
 import CSSConstants from "../../constants/CSSConstants";
+import { useState } from "react";
 
-interface FieldPercentageInputProps {
+interface FieldPriceInputProps {
   name: string;
+  metaInfo?: string;
 }
 
-const FieldPercentageInput = (props: FieldPercentageInputProps) => {
+const FieldPriceInput = (props: FieldPriceInputProps) => {
   const { setFieldValue } = useFormikContext();
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
 
   const handleBlur = (e, fieldName) => {
     // Remove non numeric characters
@@ -16,6 +23,7 @@ const FieldPercentageInput = (props: FieldPercentageInputProps) => {
     const numValue = Number(value);
 
     setFieldValue(fieldName, numValue);
+    setIsFocused(false);
   };
 
   return (
@@ -28,13 +36,18 @@ const FieldPercentageInput = (props: FieldPercentageInputProps) => {
           })}
         >
           <div className="inputContainer">
+            <span className="prefix">₹ </span>
             <input
               type="text"
               {...field}
+              value={isFocused ? field.value : field.value?.toLocaleString()}
               onBlur={(e) => handleBlur(e, field.name)}
+              onFocus={handleFocus}
             />
-            <span className="suffix"> %</span>
           </div>
+          {Boolean(props.metaInfo) && (
+            <div className="metaContainer">{props.metaInfo}</div>
+          )}
           <div className="errorContainer">
             <ErrorMessage component={ValidationErrorMsg} name={props.name} />
           </div>
@@ -50,6 +63,11 @@ const FieldPercentageInput = (props: FieldPercentageInputProps) => {
             .inputContainer:focus-within {
               border: 1px solid ${CSSConstants.primaryColor};
             }
+            .prefix {
+              min-width: 20px;
+              text-align: center;
+              color: ${CSSConstants.secondaryTextColor};
+            }
             input {
               padding: 0.6em;
               width: 100%;
@@ -59,10 +77,10 @@ const FieldPercentageInput = (props: FieldPercentageInputProps) => {
             input:focus {
               border: none;
             }
-            .suffix {
-              min-width: 20px;
-              text-align: center;
+            .metaContainer {
               color: ${CSSConstants.secondaryTextColor};
+              font-size: 0.8rem;
+              max-width: 200px;
             }
           `}</style>
         </label>
@@ -71,4 +89,4 @@ const FieldPercentageInput = (props: FieldPercentageInputProps) => {
   );
 };
 
-export default FieldPercentageInput;
+export default FieldPriceInput;

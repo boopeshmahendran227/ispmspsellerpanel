@@ -1,13 +1,13 @@
 import Button from "../atoms/Button";
 import { FieldArray, useFormikContext, ErrorMessage } from "formik";
 import InputLabel from "../atoms/InputLabel";
-import FieldInput from "./FieldInput";
+import FieldInput from "../atoms/FieldInput";
 import ValidationErrorMsg from "../atoms/ValidationErrorMsg";
 import {
   CouponInputInterface,
   CouponProductInputInterface,
 } from "../../types/coupon";
-import FieldNumInput from "./FieldNumInput";
+import FieldNumInput from "../atoms/FieldNumInput";
 
 const SelectProductSkus = () => {
   const values: CouponInputInterface = useFormikContext<CouponInputInterface>()

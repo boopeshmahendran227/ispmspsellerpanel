@@ -1,7 +1,7 @@
 import Link from "next/link";
 import CSSConstants from "../../constants/CSSConstants";
 import Chroma from "chroma-js";
-import SubMenu, { SubMenuItemInterface } from "../molecules/SubMenu";
+import SubMenu, { SubMenuItemInterface } from "./SubMenu";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import classNames from "classnames";

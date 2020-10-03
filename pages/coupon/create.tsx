@@ -12,8 +12,8 @@ import {
   CouponRequestInterface,
 } from "types/coupon";
 import RadioButton from "components/atoms/RadioButton";
-import FieldPriceInput from "components/molecules/FieldPriceInput";
-import FieldPercentageInput from "components/molecules/FieldPercentageInput";
+import FieldPriceInput from "components/atoms/FieldPriceInput";
+import FieldPercentageInput from "components/atoms/FieldPercentageInput";
 import FieldDatePicker from "components/molecules/FieldDatePicker";
 import moment from "moment";
 import BackLink from "components/atoms/BackLink";
@@ -27,7 +27,7 @@ import Loader from "components/atoms/Loader";
 import { SelectOptionInterface } from "types/product";
 import EcosystemOption from "components/atoms/EcosystemOption";
 import FieldSelect from "components/molecules/FieldSelect";
-import FieldInput from "components/molecules/FieldInput";
+import FieldInput from "components/atoms/FieldInput";
 import api from "../../src/api";
 
 interface DispatchProps {

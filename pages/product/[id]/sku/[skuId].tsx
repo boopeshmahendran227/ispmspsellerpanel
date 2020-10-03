@@ -11,7 +11,7 @@ import SkuProductInfo from "components/atoms/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/atoms/SectionHeader";
 import SectionCard from "components/atoms/SectionCard";
-import ImageUploader from "components/atoms/ImageUploader";
+import ImageUploader from "components/molecules/ImageUploader";
 import { ProductDetailInterface } from "types/product";
 import _ from "lodash";
 import FieldSelect from "components/molecules/FieldSelect";
@@ -24,8 +24,8 @@ import Button from "components/atoms/Button";
 import * as Yup from "yup";
 import styled from "styled-components";
 import SkuDimensionsInputContainer from "components/molecules/SkuDimensionsInputContainer";
-import SkuInventoryInputContainer from "components/organism/SkuInventoryInputContainer";
-import SkuPricingInputContainer from "components/organism/SkuPricingInputContainer";
+import SkuInventoryInputContainer from "components/molecules/SkuInventoryInputContainer";
+import SkuPricingInputContainer from "components/molecules/SkuPricingInputContainer";
 
 interface DispatchProps {
   updateSku: (sku: UpdateSkuInterface) => void;

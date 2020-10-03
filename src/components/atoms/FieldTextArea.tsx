@@ -1,4 +1,4 @@
-import ValidationErrorMsg from "../atoms/ValidationErrorMsg";
+import ValidationErrorMsg from "./ValidationErrorMsg";
 import { Field, ErrorMessage } from "formik";
 import CSSConstants from "../../constants/CSSConstants";
 import classNames from "classnames";

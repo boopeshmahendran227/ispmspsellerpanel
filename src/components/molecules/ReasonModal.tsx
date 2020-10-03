@@ -1,4 +1,4 @@
-import Modal from "./Modal";
+import Modal from "../atoms/Modal";
 import Button from "../atoms/Button";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers";

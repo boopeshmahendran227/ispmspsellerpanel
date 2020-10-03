@@ -1,6 +1,6 @@
 import { DayPickerSingleDateController } from "react-dates";
 import moment from "moment";
-import Button from "../atoms/Button";
+import Button from "./Button";
 
 interface SingleDatePickerProps {
   onChange: (date: moment.Moment) => void;

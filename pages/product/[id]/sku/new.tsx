@@ -20,11 +20,11 @@ import SkuActions from "actions/sku";
 import styled from "styled-components";
 import Button from "components/atoms/Button";
 import FieldEcosystemMultiInput from "components/molecules/FieldEcosystemMultiInput";
-import FieldInput from "components/molecules/FieldInput";
+import FieldInput from "components/atoms/FieldInput";
 import { EcosystemResponseInterface } from "types/business";
 import SkuDimensionsInputContainer from "components/molecules/SkuDimensionsInputContainer";
-import SkuInventoryInputContainer from "components/organism/SkuInventoryInputContainer";
-import SkuPricingInputContainer from "components/organism/SkuPricingInputContainer";
+import SkuInventoryInputContainer from "components/molecules/SkuInventoryInputContainer";
+import SkuPricingInputContainer from "components/molecules/SkuPricingInputContainer";
 
 interface DispatchProps {
   addSku: (sku: AddSkuInterface) => void;

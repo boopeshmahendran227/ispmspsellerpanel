@@ -1,7 +1,7 @@
 import SectionHeader from "components/atoms/SectionHeader";
 import SectionCard from "components/atoms/SectionCard";
 import { ProductDetailSkuDetail } from "types/product";
-import OtherSkuMini from "components/molecules/OtherSkuMini";
+import OtherSkuMini from "components/atoms/OtherSkuMini";
 import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
 
 interface OtherSkusTableProps {

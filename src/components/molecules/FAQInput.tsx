@@ -1,4 +1,4 @@
-import FieldTextArea from "./FieldTextArea";
+import FieldTextArea from "../atoms/FieldTextArea";
 import FieldEditableArray from "./FieldEditableArray";
 import { ArrayHelpers } from "formik";
 import CSSConstants from "../../constants/CSSConstants";

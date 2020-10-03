@@ -1,21 +1,12 @@
-import { Field, ErrorMessage, useFormikContext } from "formik";
+import { Field, ErrorMessage } from "formik";
 import classNames from "classnames";
-import ValidationErrorMsg from "../atoms/ValidationErrorMsg";
+import ValidationErrorMsg from "./ValidationErrorMsg";
 
-interface FieldNumInputProps {
+interface FieldInputProps {
   name: string;
 }
 
-const FieldNumInput = (props: FieldNumInputProps) => {
-  const { setFieldValue } = useFormikContext();
-
-  const handleBlur = (e, fieldName) => {
-    // Remove non numeric characters
-    const value = e.target.value.replace(/[^\d\.]/gi, "");
-
-    setFieldValue(fieldName, Number(value));
-  };
-
+const FieldInput = (props: FieldInputProps) => {
   return (
     <Field name={props.name}>
       {({ field, form }) => (
@@ -25,11 +16,7 @@ const FieldNumInput = (props: FieldNumInputProps) => {
             error: Boolean(form.touched[props.name] && form.errors[props.name]),
           })}
         >
-          <input
-            type="text"
-            {...field}
-            onBlur={(e) => handleBlur(e, field.name)}
-          />
+          <input type="text" {...field} />
           <div className="errorContainer">
             <ErrorMessage component={ValidationErrorMsg} name={props.name} />
           </div>
@@ -50,4 +37,4 @@ const FieldNumInput = (props: FieldNumInputProps) => {
   );
 };
 
-export default FieldNumInput;
+export default FieldInput;

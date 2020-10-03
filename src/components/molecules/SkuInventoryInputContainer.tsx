@@ -1,7 +1,7 @@
 import SectionCard from "components/atoms/SectionCard";
 import SectionHeader from "components/atoms/SectionHeader";
-import FieldNumInput from "components/molecules/FieldNumInput";
-import FieldInput from "components/molecules/FieldInput";
+import FieldNumInput from "components/atoms/FieldNumInput";
+import FieldInput from "components/atoms/FieldInput";
 import styled from "styled-components";
 
 const Grid = styled.div`

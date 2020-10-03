@@ -5,10 +5,10 @@ import { ErrorMessage, FieldArray, useFormikContext } from "formik";
 import Button from "../atoms/Button";
 import { connect } from "react-redux";
 import UIActions from "../../actions/ui";
-import FieldInput from "./FieldInput";
+import FieldInput from "../atoms/FieldInput";
 import ValidationErrorMsg from "../atoms/ValidationErrorMsg";
-import FieldNumInput from "./FieldNumInput";
-import FieldPriceInput from "./FieldPriceInput";
+import FieldNumInput from "../atoms/FieldNumInput";
+import FieldPriceInput from "../atoms/FieldPriceInput";
 
 interface DispatchProps {
   showSkuModal: () => void;

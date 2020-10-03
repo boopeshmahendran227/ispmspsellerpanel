@@ -3,7 +3,7 @@ import PageContainer from "components/atoms/PageContainer";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageHeader from "components/atoms/PageHeader";
 import { Formik, Form } from "formik";
-import FieldInput from "components/molecules/FieldInput";
+import FieldInput from "components/atoms/FieldInput";
 import FieldSelect from "components/molecules/FieldSelect";
 import InputLabel from "components/atoms/InputLabel";
 import * as Yup from "yup";

@@ -1,6 +1,6 @@
 import { ArrayHelpers } from "formik";
-import FieldNumInput from "./FieldNumInput";
-import FieldPercentageInput from "./FieldPercentageInput";
+import FieldNumInput from "../atoms/FieldNumInput";
+import FieldPercentageInput from "../atoms/FieldPercentageInput";
 import FieldEditableArray from "./FieldEditableArray";
 import CSSConstants from "../../constants/CSSConstants";
 

@@ -13,7 +13,7 @@ import FAQ from "components/molecules/FAQ";
 import styled from "styled-components";
 import BackLink from "components/atoms/BackLink";
 import { ProductDetailInterface } from "types/product";
-import YourSkuTable from "components/molecules/YourSkuTable";
+import YourSkuTable from "components/organism/YourSkuTable";
 import OtherSkusTable from "components/molecules/OtherSkusTable";
 
 const Grid = styled.div`
