@@ -1,7 +1,7 @@
 import { AddressInterface } from "../types/order";
 
 const formatPrice = (price: number) => {
-  return "₹ " + price;
+  return "₹ " + price.toLocaleString("en-IN");
 };
 
 const capitalizeFirstLetter = (str) => {

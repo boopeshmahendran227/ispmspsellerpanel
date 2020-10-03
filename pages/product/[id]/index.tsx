@@ -72,7 +72,6 @@ const Product = () => {
           <ProductPriceDetails
             minPrice={product.minPrice}
             maxPrice={product.maxPrice}
-            specialDiscount={product.specialDiscount}
           />
           <YourSkuTable skus={product.skuDetails} productId={product.id} />
           <OtherSkusTable
