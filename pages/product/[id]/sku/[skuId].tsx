@@ -194,11 +194,11 @@ const Sku = (props: SkuProps): JSX.Element => {
                     <SectionHeader>Special Discount</SectionHeader>
                     <Grid>
                       <div>
-                        <label>SpecialDiscountPrice</label>
+                        <label>Special Discount Price</label>
                         <FieldNumInput name="specialDiscount" />
                       </div>
                       <div>
-                        <label>SpecialDiscountPercentage</label>
+                        <label>Special Discount Percentage</label>
                         <FieldPercentageInput name="specialDiscountPercentage" />
                       </div>
                     </Grid>

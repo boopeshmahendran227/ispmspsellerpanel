@@ -96,8 +96,6 @@ export interface ProductDetailInterface {
   minPrice: number;
   maxPrice: number;
   productType: ProductType;
-  specialDiscount: number;
-  specialDiscountPercentage: number;
   attributeValues: ProductAttributeInterface[];
   skuDetails: ProductDetailSkuDetail[];
   unOwnedSkuDetails: ProductDetailSkuDetail[];
