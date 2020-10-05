@@ -20,10 +20,25 @@ const roundOff = (num: number) => {
   return Math.pow(10, length) / 4;
 };
 
-const weekStart = moment().subtract(7, "days").startOf("day");
-const yearStart = moment().subtract(1, "years").startOf("day");
-const halfYearStart = moment().subtract(6, "months").startOf("day");
-const endDate = moment().endOf("day");
+const getFilterData = (period: PeriodState): moment.Moment[] => {
+  switch (period) {
+    case PeriodState.week:
+      return [
+        moment().subtract(7, "days").startOf("day"),
+        moment().endOf("day"),
+      ];
+    case PeriodState.lastMonth:
+      return [
+        moment().subtract(1, "months").startOf("day"),
+        moment().endOf("day"),
+      ];
+    case PeriodState.last3Months:
+      return [
+        moment().subtract(3, "months").startOf("day"),
+        moment().endOf("day"),
+      ];
+  }
+};
 
 interface AnalyticsContainerProps {
   period: PeriodState;
@@ -34,31 +49,27 @@ const AnalyticsContainer = (props: AnalyticsContainerProps): JSX.Element => {
   const orderSWR = useSWR("/order?pageSize=6");
   const orderData: PaginatedDataInterface<OrderInterface> = orderSWR.data;
 
+  const [startDate, endDate] = getFilterData(period);
+
   const topSellingSWR = useSWR(
-    period === PeriodState.week
-      ? `/reports/seller/topSelling?start=${weekStart
-          .utc()
-          .format()}&end=${endDate.utc().format()}`
-      : `/reports/seller/topSelling?start=${yearStart
-          .utc()
-          .format()}&end=${endDate.utc().format()}`
+    `/reports/seller/topSelling?start=${startDate
+      .utc()
+      .format()}&end=${endDate.utc().format()}`
   );
   const topSelling: TopSoldItem[] = topSellingSWR.data;
 
   const summarySWR = useSWR(
-    period === PeriodState.week
-      ? `/reports/seller/summary?start=${weekStart
-          .utc()
-          .format()}&end=${endDate.utc().format()}`
-      : `/reports/seller/summary?start=${yearStart
-          .utc()
-          .format()}&end=${endDate.utc().format()}`
+    `/reports/seller/summary?start=${startDate
+      .utc()
+      .format()}&end=${endDate.utc().format()}`
   );
   const summary: SummaryInterface = summarySWR.data;
   const monthlySalesSWR = useSWR(
-    `/reports/seller/monthlysales?start=${halfYearStart
+    `/reports/seller/monthlysales?start=${moment()
+      .subtract(6, "months")
+      .startOf("day")
       .utc()
-      .format()}&end=${endDate.utc().format()}`
+      .format()}&end=${moment().endOf("day").utc().format()}`
   );
   const monthlySales: MonthlySalesInterface[] = monthlySalesSWR.data;
 

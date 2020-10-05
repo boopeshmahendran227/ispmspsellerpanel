@@ -10,5 +10,6 @@ export interface SummaryInterface {
 
 export enum PeriodState {
   week,
-  year,
+  lastMonth,
+  last3Months,
 }

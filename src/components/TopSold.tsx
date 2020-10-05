@@ -11,6 +11,7 @@ export interface TopSoldItem {
   rank: number;
   revenue: number;
   revenueShare: number;
+  images: string[];
 }
 
 export interface TopSoldProps {
@@ -24,7 +25,7 @@ const renderTableBody = (data: TopSoldItem[]) => {
         <td className="productContainer">
           <ProductCard
             name={item.productName}
-            image={"qwoieru"}
+            image={item.images[0]}
             metaInfo={[{ key: "Category", value: item.categoryName }]}
           />
         </td>
@@ -61,7 +62,7 @@ const TopSold = (props: TopSoldProps): JSX.Element => {
       }}
       headers={getTableHeaders()}
       data={props.data}
-      emptyMsg="There are no orders"
+      emptyMsg="There are no orders in the selected time period"
       body={renderTableBody}
     />
   );
