@@ -1,17 +1,17 @@
 import Card from "./Card";
-import styled from "styled-components";
+import {Box} from "@chakra-ui/core";
 
 interface SectionCardProps {
   children: React.ReactNode;
 }
 
-const Container = styled.div``;
+
 
 const SectionCard = (props: SectionCardProps): JSX.Element => {
   return (
-    <Container>
+    <Box>
       <Card>{props.children}</Card>
-    </Container>
+    </Box>
   );
 };
 

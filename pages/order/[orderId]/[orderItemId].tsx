@@ -24,7 +24,7 @@ import DeliveryCodeModal from "components/molecules/DeliveryCodeModal";
 import { transformOrderItem } from "../../../src/transformers/orderItem";
 import Button from "components/atoms/Button";
 import BackLink from "components/atoms/BackLink";
-
+import { Box, Heading, Grid, Divider } from "@chakra-ui/core";
 interface DispatchProps {
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
   markAsShipping: (orderId: number, orderItemId: number) => void;
@@ -67,10 +67,10 @@ const Order = (props: OrderProps) => {
   );
 
   return (
-    <div className="container">
+    <Box my="1em" mx="auto" maxW="1100px">
       <DeliveryCodeModal />
       <BackLink href="/order">Back to Orders</BackLink>
-      <header>
+      <Heading as="h6" size="md">
         <span className="id">
           #{order.id}-{orderItem.id}
         </span>{" "}
@@ -93,15 +93,15 @@ const Order = (props: OrderProps) => {
         >
           {getPaymentText(orderItem.order.paymentSplits[0].paymentMode)}
         </span>
-      </header>
-      <div className="invoiceBtnContainer">
+      </Heading>
+      <Box className="invoiceBtnContainer">
         <Button onClick={() => window.open(`/invoice/${orderItem.id}`)}>
           View Invoice
         </Button>
-      </div>
-      <div className="flexContainer">
-        <div className="col1">
-          <section className="itemContainer">
+      </Box>
+      <Grid templateColumns="1fr 300px" gap="1em">
+        <Box flex="1">
+          <section>
             <OrderItemDetail
               orderItem={orderItem}
               markAsShipping={props.markAsShipping}
@@ -117,41 +117,41 @@ const Order = (props: OrderProps) => {
               cancelOrderItem={props.cancelOrderItem}
             />
           </section>
-          <div>
+          <Box>
             <ShippingInformationContainer orderItem={orderItem} />
-          </div>
-        </div>
-        <div className="col2">
+          </Box>
+        </Box>
+        <Box>
           <section className="customerContainer">
-            <div className="header">Customer Information</div>
-            <div className="row">
-              <div className="name">Name</div>
-              <div className="value">
-                {order.customerName || "Name Not Available"}
-              </div>
+            <Heading as="h6" size="md" m="1em 0.5em">
+              Customer Information
+            </Heading>
+
+            <div className="name">Name</div>
+            <div className="value">
+              {order.customerName || "Name Not Available"}
             </div>
+            <Divider />
             {Boolean(order.customerPhone) && (
-              <div className="row">
+              <>
                 <div className="name">Phone</div>
                 <div className="value">{order.customerPhone}</div>
-              </div>
+                <Divider />
+              </>
             )}
-            <div className="row">
-              <div className="name">Billing Address</div>
-              <div className="value">{formatAddress(order.billingAddress)}</div>
-            </div>
-            <div className="row">
-              <div className="name">Shipping Address</div>
-              <div className="value">
-                {formatAddress(order.shippingAddress)}
-              </div>
-            </div>
+
+            <div className="name">Billing Address</div>
+            <div className="value">{formatAddress(order.billingAddress)}</div>
+            <Divider />
+
+            <div className="name">Shipping Address</div>
+            <div className="value">{formatAddress(order.shippingAddress)}</div>
           </section>
-          <div>
+          <Box>
             <OrderInformation order={order} />
-          </div>
-        </div>
-      </div>
+          </Box>
+        </Box>
+      </Grid>
       <style jsx>{`
         .container {
           margin: 1em auto;
@@ -210,7 +210,7 @@ const Order = (props: OrderProps) => {
           padding-right: 0.8em;
         }
       `}</style>
-    </div>
+    </Box>
   );
 };
 

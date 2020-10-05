@@ -19,6 +19,8 @@ import { isLoggedIn } from "utils/login";
 import { LoginState } from "types/login";
 import CSSConstants from "../src/constants/CSSConstants";
 
+import { ThemeProvider, CSSReset } from "@chakra-ui/core";
+import { customTheme } from "../public/theme/theme";
 // Add all third-party CSS here
 import "@fortawesome/fontawesome-free/css/all.css";
 import "react-dates/initialize";
@@ -69,41 +71,44 @@ function MyApp(props) {
   }
 
   return (
-    <SWRConfig value={swrConfigData}>
-      <Provider store={store}>
-        <ToastProvider>
-          <LoadingScreen />
-          <UpdateQuoteModal />
-          <ReasonModal />
-          <SureModal />
-          <Layout>
-            <main>
-              <TopNavBar />
-              <div className="sideNavBarContainer">
-                <SideNavBar />
-              </div>
-              <div className="bodyContainer">
-                <Component {...pageProps} />
-              </div>
-              <style jsx>{`
-                .sideNavBarContainer {
-                  position: fixed;
-                  top: 0;
-                  left: 0;
-                  height: 100%;
-                  width: ${CSSConstants.sideNavBarWidth};
-                  z-index: 1;
-                }
-                .bodyContainer {
-                  margin-left: calc(${CSSConstants.sideNavBarWidth} + 0.7em);
-                  margin-right: 0.7em;
-                }
-              `}</style>
-            </main>
-          </Layout>
-        </ToastProvider>
-      </Provider>
-    </SWRConfig>
+    <ThemeProvider theme={customTheme}>
+      <CSSReset />
+      <SWRConfig value={swrConfigData}>
+        <Provider store={store}>
+          <ToastProvider>
+            <LoadingScreen />
+            <UpdateQuoteModal />
+            <ReasonModal />
+            <SureModal />
+            <Layout>
+              <main>
+                <TopNavBar />
+                <div className="sideNavBarContainer">
+                  <SideNavBar />
+                </div>
+                <div className="bodyContainer">
+                  <Component {...pageProps} />
+                </div>
+                <style jsx>{`
+                  .sideNavBarContainer {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    height: 100%;
+                    width: ${CSSConstants.sideNavBarWidth};
+                    z-index: 1;
+                  }
+                  .bodyContainer {
+                    margin-left: calc(${CSSConstants.sideNavBarWidth} + 0.7em);
+                    margin-right: 0.7em;
+                  }
+                `}</style>
+              </main>
+            </Layout>
+          </ToastProvider>
+        </Provider>
+      </SWRConfig>
+    </ThemeProvider>
   );
 }
 

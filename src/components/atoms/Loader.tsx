@@ -1,34 +1,28 @@
+import { Flex, Spinner } from "@chakra-ui/core";
 import * as React from "react";
-
+import CSSConstants from "../../constants/CSSConstants";
 interface LoaderProps {
   width: string;
   height: string;
   loaderWidth?: string;
+  size: "xs" | "sm" | "md" | "lg" | "xl" | undefined;
 }
 
 const Loader = (props: LoaderProps) => {
   return (
-    <div className="container">
-      <img className="loader" src="/icons/loader.svg" />
-      <style jsx>{`
-        .container {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: ${props.width};
-          height: ${props.height};
-          overflow: hidden;
-        }
-        .loader {
-          width: ${props.loaderWidth ?? "2rem"};
-        }
-      `}</style>
-    </div>
+    <Flex justify="center" align="center" w={props.width} h={props.height}>
+      <Spinner
+        size={props.size}
+        thickness={props.loaderWidth}
+        color={CSSConstants.primaryColor}
+      />
+    </Flex>
   );
 };
 
 Loader.defaultProps = {
-  loaderWidth: null,
+  size: "xl",
+  loaderWidth: "4px",
   width: "100%",
   height: "200px",
 };

@@ -2,18 +2,7 @@ import styled from "styled-components";
 import SectionHeader from "../atoms/SectionHeader";
 import SectionCard from "../atoms/SectionCard";
 import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  grid-gap: 0.4em;
-`;
-
-const Key = styled.div`
-  font-weight: bold;
-`;
-
-const Value = styled.div``;
+import { Box, Grid } from "@chakra-ui/core";
 
 interface ProductMainInfoProps {
   name: string;
@@ -30,15 +19,15 @@ const ProductMainInfo = (props: ProductMainInfoProps): JSX.Element => {
       <SectionHeaderContainer>
         <SectionHeader>Main Details</SectionHeader>
       </SectionHeaderContainer>
-      <Grid>
-        <Key>Name</Key>
-        <Value>{name}</Value>
-        <Key>Brand</Key>
-        <Value>{brand}</Value>
-        <Key>Short Description</Key>
-        <Value>{shortDescription}</Value>
-        <Key>Long Description</Key>
-        <Value>{longDescription}</Value>
+      <Grid template-columns="200px 1fr" gap="0.4em">
+        <Box fontWeight="bold">Name</Box>
+        <Box>{name}</Box>
+        <Box fontWeight="bold">Brand</Box>
+        <Box>{brand}</Box>
+        <Box fontWeight="bold">Short Description</Box>
+        <Box>{shortDescription}</Box>
+        <Box fontWeight="bold">Long Description</Box>
+        <Box>{longDescription}</Box>
       </Grid>
     </SectionCard>
   );

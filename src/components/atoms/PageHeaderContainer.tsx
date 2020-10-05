@@ -1,14 +1,12 @@
-import styled from "styled-components";
-
+import { Flex } from "@chakra-ui/core";
 interface PageHeaderContainerProps {
   children: React.ReactNode;
 }
 
-const PageHeaderContainer = styled.div<PageHeaderContainerProps>`
-  padding: 0.3em 0.2em;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
+const PageHeaderContainer = (props: PageHeaderContainerProps) => (
+  <Flex px="0.3em" py="0.2em" justify="space-between" align="center">
+    {props.children}
+  </Flex>
+);
 
 export default PageHeaderContainer;

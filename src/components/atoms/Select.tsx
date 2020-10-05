@@ -1,6 +1,6 @@
 import ReactSelect from "react-select";
 import { SelectOptionInterface } from "types/product";
-
+import { Box } from "@chakra-ui/core";
 interface SelectProps {
   value: SelectOptionInterface;
   onChange: (selectedOption: SelectOptionInterface) => void;
@@ -10,19 +10,14 @@ interface SelectProps {
 
 const Select = (props: SelectProps) => {
   return (
-    <div className="container">
+    <Box className="container" mx="0.9em" my="0">
       <ReactSelect
         isDisabled={props.disabled}
         value={props.value}
         onChange={(value: SelectOptionInterface) => props.onChange(value)}
         options={props.options}
       />
-      <style jsx>{`
-        .container {
-          margin: 0.9em 0;
-        }
-      `}</style>
-    </div>
+    </Box>
   );
 };
 

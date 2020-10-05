@@ -19,11 +19,10 @@ const Value = styled.div``;
 interface ProductPriceDetailsProps {
   minPrice: number;
   maxPrice: number;
-  specialDiscount: number;
 }
 
 const ProductPriceDetails = (props: ProductPriceDetailsProps): JSX.Element => {
-  const { minPrice, maxPrice, specialDiscount } = props;
+  const { minPrice, maxPrice } = props;
 
   return (
     <SectionCard>
@@ -35,8 +34,6 @@ const ProductPriceDetails = (props: ProductPriceDetailsProps): JSX.Element => {
         <Value>{formatPrice(minPrice)}</Value>
         <Key>Max Price</Key>
         <Value>{formatPrice(maxPrice)}</Value>
-        <Key>Special Discount</Key>
-        <Value>{formatPrice(specialDiscount)}</Value>
       </Grid>
     </SectionCard>
   );

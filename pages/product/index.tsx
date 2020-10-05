@@ -19,25 +19,9 @@ import Loader from "components/atoms/Loader";
 import EcosystemOption from "components/atoms/EcosystemOption";
 import Select from "components/atoms/Select";
 import Checkbox from "components/atoms/Checkbox";
-import styled from "styled-components";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageContainer from "components/atoms/PageContainer";
-
-const FlexContainer = styled.div`
-  margin: 0.5em 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const FilterSection = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const EcosystemFilterContainer = styled.div`
-  min-width: 300px;
-`;
+import { Flex, Box } from "@chakra-ui/core";
 
 const Products = () => {
   const [searchText, setSearchText] = useState("");
@@ -126,24 +110,24 @@ const Products = () => {
     <PageContainer>
       <PageHeaderContainer>
         <PageHeader>Products</PageHeader>
-        <div>
+        <Box>
           <Link href="/product/new">
             <Button>Add Product</Button>
           </Link>
           <Link href="/product/cloneProduct">
             <Button>Clone Products</Button>
           </Link>
-        </div>
+        </Box>
       </PageHeaderContainer>
-      <FlexContainer>
+      <Flex my="0.5em" mx="0" align="center" justify="space-between">
         <SearchBar searchText={searchText} searchByText={setSearchText} />
-        <FilterSection>
+        <Flex align="center">
           <Checkbox
             checked={showOnlySelf}
             onChange={(e) => setShowOnlySelf(e.target.checked)}
             label="Show Only My Products"
           />
-          <EcosystemFilterContainer>
+          <Box minW="300px">
             <Select
               value={currentEcosystem}
               onChange={(ecosystem) =>
@@ -151,9 +135,9 @@ const Products = () => {
               }
               options={ecosystems}
             />
-          </EcosystemFilterContainer>
-        </FilterSection>
-      </FlexContainer>
+          </Box>
+        </Flex>
+      </Flex>
       <ActiveFilters
         appliedFilters={getAppliedFilters()}
         clearFilters={() => {

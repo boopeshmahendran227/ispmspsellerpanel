@@ -151,7 +151,7 @@ const CreateCoupon = (props: CreateCouponProps) => {
                   <FieldInput name="couponCode" />
                   {isCheckingCouponCode && (
                     <div className="couponLoader">
-                      <Loader loaderWidth="1rem" width="1rem" height="1rem" />
+                      <Loader size="xs" loaderWidth="2px" />
                     </div>
                   )}
                 </div>

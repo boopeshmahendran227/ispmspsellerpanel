@@ -19,6 +19,7 @@ import OrdersContainer from "components/molecules/OrdersContainer";
 import PageContainer from "components/atoms/PageContainer";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageBodyContainer from "components/atoms/PageBodyContainer";
+import { Box } from "@chakra-ui/core";
 
 const Orders = () => {
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
@@ -66,7 +67,7 @@ const Orders = () => {
       <DeliveryCodeModal />
       <PageHeaderContainer>
         <PageHeader>Order Details</PageHeader>
-        <div className="filterContainer">
+        <Box minW="300px">
           <Select
             value={currentEcosystem}
             onChange={(ecosystem) =>
@@ -74,7 +75,7 @@ const Orders = () => {
             }
             options={ecosystems}
           />
-        </div>
+        </Box>
       </PageHeaderContainer>
       <PageBodyContainer>
         <OrdersContainer
@@ -83,11 +84,6 @@ const Orders = () => {
           selectedEcosystemId={selectedEcosystemId}
         />
       </PageBodyContainer>
-      <style jsx>{`
-        .filterContainer {
-          min-width: 300px;
-        }
-      `}</style>
     </PageContainer>
   );
 };

@@ -17,6 +17,7 @@ import { SelectOptionInterface, ProductCloneInterface } from "types/product";
 import ProductActions from "actions/product";
 import WithAuth from "components/atoms/WithAuth";
 import { connect } from "react-redux";
+import { Box, Grid } from "@chakra-ui/core";
 
 interface DispatchProps {
   cloneProduct: (product: ProductCloneInterface) => void;
@@ -92,7 +93,7 @@ const CloneProduct = (props: CloneProductProps) => {
       >
         {({ values }) => (
           <Form>
-            <div className="gridContainer">
+            <Grid templateColumns=" 200px 300px" alignItems="center">
               <InputLabel label="Current Ecosystem" />
               <FieldSelect
                 name="currentEcosystem"
@@ -103,28 +104,15 @@ const CloneProduct = (props: CloneProductProps) => {
               <FieldInput name="sellerId" />
               <InputLabel label="Target Ecosystem" />
               <FieldSelect name="targetEcosystem" options={targetEcosystems} />
-            </div>
-            <div className="buttonContainer">
+            </Grid>
+            <Box pt="1em" pb=" 0.4em" fontSize="1.1rem" ml="400px">
               <Button type={ButtonType.success} isSubmitButton={true}>
                 Submit
               </Button>
-            </div>
+            </Box>
           </Form>
         )}
       </Formik>
-      <style jsx>{`
-        .gridContainer {
-          display: grid;
-          grid-template-columns: 200px 300px;
-          align-items: center;
-        }
-        .buttonContainer {
-          padding-top: 1em;
-          padding-bottom: 0.4em;
-          font-size: 1.1rem;
-          margin-left: 400px;
-        }
-      `}</style>
     </PageContainer>
   );
 };

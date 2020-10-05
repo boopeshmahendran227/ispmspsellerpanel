@@ -15,6 +15,7 @@ import Loader from "components/atoms/Loader";
 import PageContainer from "components/atoms/PageContainer";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageBodyContainer from "components/atoms/PageBodyContainer";
+import { Box } from "@chakra-ui/core";
 
 const Drafts = () => {
   const getTableHeaders = () => {
@@ -52,21 +53,15 @@ const Drafts = () => {
         <tr>
           <td>{product.id}</td>
           <td>
-            <div className="imageContainer">
+            <Box display="inline-flex" w="5rem" h="5rem" alignItems="center">
               <RelativeImg src={product.imageRelativePaths[0]} />
-            </div>
+            </Box>
           </td>
           <td>{product.name}</td>
           <td>{product.averageRating}</td>
           <td>{product.shortDescription}</td>
           <td>{product.status}</td>
           <style jsx>{`
-            .imageContainer {
-              display: inline-flex;
-              width: 5rem;
-              height: 5rem;
-              align-items: center;
-            }
             tr:hover {
               background-color: ${CSSConstants.hoverColor} !important;
               cursor: pointer;

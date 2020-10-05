@@ -26,6 +26,7 @@ import styled from "styled-components";
 import SkuDimensionsInputContainer from "components/molecules/SkuDimensionsInputContainer";
 import SkuInventoryInputContainer from "components/molecules/SkuInventoryInputContainer";
 import SkuPricingInputContainer from "components/molecules/SkuPricingInputContainer";
+import { Box,Text } from "@chakra-ui/core";
 
 interface DispatchProps {
   updateSku: (sku: UpdateSkuInterface) => void;
@@ -102,15 +103,15 @@ const Sku = (props: SkuProps): JSX.Element => {
   };
 
   return (
-    <div className="container">
-      <div className="headerContainer">
+    <Box maxW="900px" m="auto">
+      <Box m="1.3rem 0">
         <BackLink href="/product/[id]" as={`/product/${product.id}`}>
           Back to Product
         </BackLink>
         <PageHeader>{currentSkuId}</PageHeader>
-      </div>
+      </Box>
       <FlexRowContainer>
-        <div>
+        <Box>
           <SkuProductInfo
             productId={product.id}
             productName={product.name}
@@ -121,8 +122,8 @@ const Sku = (props: SkuProps): JSX.Element => {
             skus={product.skuDetails}
             currentSkuId={currentSkuId}
           />
-        </div>
-        <div className="formContainer">
+        </Box>
+        <Box flex="1" mb="1em" ml="1em">
           <Formik
             initialValues={{
               skuDetailId: currentSku.skuDetailId,
@@ -181,7 +182,9 @@ const Sku = (props: SkuProps): JSX.Element => {
                   <SkuInventoryInputContainer />
                   <SectionCard>
                     <SectionHeader>Visibility</SectionHeader>
-                    <label>Ecosystem</label>
+                    <Text mt="0.3em" display="inline-block">
+                      Ecosystem
+                    </Text>
                     <FieldEcosystemMultiInput
                       name="ecosystemIds"
                       ecosystemData={ecosystemData}
@@ -193,30 +196,14 @@ const Sku = (props: SkuProps): JSX.Element => {
               </Form>
             )}
           </Formik>
-        </div>
+        </Box>
       </FlexRowContainer>
       <style jsx>{`
-        .container {
-          max-width: 900px;
-          margin: auto;
-        }
-        .headerContainer {
-          margin: 1.3em 0;
-        }
         .flexContainer {
           display: flex;
         }
-        .formContainer {
-          flex: 1;
-          margin-bottom: 1em;
-          margin-left: 1em;
-        }
-        label {
-          margin-top: 0.3em;
-          display: inline-block;
-        }
       `}</style>
-    </div>
+    </Box>
   );
 };
 

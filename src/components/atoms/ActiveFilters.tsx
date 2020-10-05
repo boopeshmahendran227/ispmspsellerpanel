@@ -1,4 +1,5 @@
 import CSSConstants from "../../constants/CSSConstants";
+import { Flex, Box, Button } from "@chakra-ui/core";
 
 interface ActiveFiltersProps {
   appliedFilters: string[];
@@ -13,36 +14,22 @@ const ActiveFilters = (props: ActiveFiltersProps) => {
   }
 
   return (
-    <div className="container">
+    <Flex align="center" p="0.2em">
       <header>Active Filters:</header>
       {appliedFilters.map((filter) => (
-        <div className="filter">{filter}</div>
+        <Box m="0.6em" fontWeight="bold">
+          {filter}
+        </Box>
       ))}
-      <a className="clearAllBtn" onClick={props.clearFilters}>
+      <Button
+        variant="link"
+        fontWeight="bold"
+        color={CSSConstants.secondaryColor}
+        onClick={props.clearFilters}
+      >
         Clear all
-      </a>
-      <style jsx>{`
-        .container {
-          padding: 0.2em;
-          display: flex;
-          align-items: center;
-        }
-        .filter {
-          font-weight: bold;
-          margin: 0.6em;
-        }
-        .filter::before {
-          content: "'";
-        }
-        .filter::after {
-          content: "'";
-        }
-        .clearAllBtn {
-          font-weight: bold;
-          color: ${CSSConstants.secondaryColor};
-        }
-      `}</style>
-    </div>
+      </Button>
+    </Flex>
   );
 };
 

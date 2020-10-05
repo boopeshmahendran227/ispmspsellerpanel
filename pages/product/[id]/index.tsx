@@ -10,35 +10,11 @@ import ProductAvailability from "components/molecules/ProductAvailability";
 import Specification from "components/molecules/Specification";
 import TierPrice from "components/atoms/TierPrice";
 import FAQ from "components/molecules/FAQ";
-import styled from "styled-components";
 import BackLink from "components/atoms/BackLink";
 import { ProductDetailInterface } from "types/product";
 import YourSkuTable from "components/organism/YourSkuTable";
 import OtherSkusTable from "components/molecules/OtherSkusTable";
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-gap: 1.5em;
-`;
-
-const FlexContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  & > div {
-    margin-bottom: 1.5em;
-  }
-`;
-
-const Container = styled.div`
-  max-width: 900px;
-  margin: auto;
-`;
-
-const HeaderContainer = styled.div`
-  margin: 2em 0;
-`;
+import { Box, Grid, Stack, Flex } from "@chakra-ui/core";
 
 const Product = () => {
   const router = useRouter();
@@ -56,40 +32,54 @@ const Product = () => {
   }
 
   return (
-    <Container>
-      <HeaderContainer>
+    <Box maxW="900px" margin="auto">
+      <Box m="2em 0">
         <BackLink href="/product">Products</BackLink>
         <PageHeader>{product.name}</PageHeader>
-      </HeaderContainer>
-      <Grid>
-        <FlexContainer>
-          <ProductMainInfo
-            name={product.name}
-            brand={product.brandName}
-            shortDescription={product.shortDescription}
-            longDescription={product.longDescription}
-          />
-          <ProductPriceDetails
-            minPrice={product.minPrice}
-            maxPrice={product.maxPrice}
-            specialDiscount={product.specialDiscount}
-          />
-          <YourSkuTable skus={product.skuDetails} productId={product.id} />
-          <OtherSkusTable
-            skus={product.unOwnedSkuDetails}
-            productId={product.id}
-          />
-        </FlexContainer>
-        <FlexContainer>
-          <ProductAvailability
-            ecosystems={product.visibilityInfo.ecosystemDetail}
-          />
-          <TierPrice tierPrice={product.tierPrice} />
-          <FAQ faqs={product.faqs} />
-        </FlexContainer>
+      </Box>
+
+      <Grid templateColumns="2fr 1fr" gap="1.5em">
+        <Stack spacing={5}>
+          <Box>
+            <ProductMainInfo
+              name={product.name}
+              brand={product.brandName}
+              shortDescription={product.shortDescription}
+              longDescription={product.longDescription}
+            />
+          </Box>
+          <Box>
+            <ProductPriceDetails
+              minPrice={product.minPrice}
+              maxPrice={product.maxPrice}
+            />
+          </Box>
+          <Box>
+            <YourSkuTable skus={product.skuDetails} productId={product.id} />
+          </Box>
+          <Box>
+            <OtherSkusTable
+              skus={product.unOwnedSkuDetails}
+              productId={product.id}
+            />
+          </Box>
+        </Stack>
+        <Stack spacing={5}>
+          <Box>
+            <ProductAvailability
+              ecosystems={product.visibilityInfo.ecosystemDetail}
+            />
+          </Box>
+          <Box>
+            <TierPrice tierPrice={product.tierPrice} />
+          </Box>
+          <Box>
+            <FAQ faqs={product.faqs} />
+          </Box>
+        </Stack>
       </Grid>
       {/* <Specification specification={product.specification} /> */}
-    </Container>
+    </Box>
   );
 };
 

@@ -36,6 +36,7 @@ import FAQInput from "components/molecules/FAQInput";
 import TierPriceInput from "components/molecules/TierpriceInput";
 import Checkbox from "components/atoms/Checkbox";
 import { CategoryInterface } from "types/category";
+import { Grid, Box } from "@chakra-ui/core";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -91,9 +92,9 @@ const AddProduct = (props: AddProductProps) => {
   };
 
   return (
-    <div className="container">
+    <Box p="0 1em">
       <PageHeader>Add Product</PageHeader>
-      <div className="formContainer">
+      <Box maxW="1200px" m="auto">
         <Formik
           innerRef={formikRef}
           initialValues={{
@@ -124,7 +125,13 @@ const AddProduct = (props: AddProductProps) => {
           {({ resetForm, values, setFieldValue }) => (
             <Form>
               <SkuModal />
-              <div className="gridContainer">
+              <Grid
+                templateColumns="200px 1fr"
+                alignItems="center"
+                fontSize="1.1rem"
+                maxW=" 700px"
+                margin="auto"
+              >
                 <InputLabel label="Is Active" />
                 <Field name="isActive">
                   {({ field }) => (
@@ -210,12 +217,12 @@ const AddProduct = (props: AddProductProps) => {
                     label: taxGroup.description,
                   }))}
                 />
-              </div>
+              </Grid>
               <SkuInputTable />
               <TierPriceInput />
               <FAQInput />
               <SpecificationInput />
-              <div className="buttonContainer">
+              <Box textAlign="center" fontSize="1.2rem" mb="1em">
                 <Button type={ButtonType.success} isSubmitButton={true}>
                   Submit
                 </Button>
@@ -226,40 +233,13 @@ const AddProduct = (props: AddProductProps) => {
                 >
                   Clear
                 </Button>
-              </div>
+              </Box>
             </Form>
           )}
         </Formik>
         <AttributeModal categories={categories} />
-      </div>
-      <style jsx>{`
-        .container {
-          padding: 0 1em;
-        }
-        header {
-          font-size: 1.4rem;
-          margin: 1em;
-          text-transform: uppercase;
-        }
-        .gridContainer {
-          display: grid;
-          grid-template-columns: 200px 1fr;
-          align-items: center;
-          font-size: 1.1rem;
-          max-width: 700px;
-          margin: auto;
-        }
-        .formContainer {
-          max-width: 1200px;
-          margin: auto;
-        }
-        .buttonContainer {
-          text-align: center;
-          font-size: 1.2rem;
-          margin-bottom: 1em;
-        }
-      `}</style>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

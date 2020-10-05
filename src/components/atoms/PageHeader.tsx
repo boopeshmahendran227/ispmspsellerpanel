@@ -1,19 +1,13 @@
+import { Heading } from "@chakra-ui/core";
 interface PageHeaderProps {
   children: React.ReactNode;
 }
 
 const PageHeader = (props: PageHeaderProps) => {
   return (
-    <header>
-      {props.children}
-      <style jsx>{`
-        header {
-          font-size: 1.5rem;
-          margin: 0.5em 0;
-          font-weight: bold;
-        }
-      `}</style>
-    </header>
+    <Heading mx="0.5em" my="0">
+      {props.children}{" "}
+    </Heading>
   );
 };
 
