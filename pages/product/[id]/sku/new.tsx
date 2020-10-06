@@ -25,6 +25,9 @@ import { EcosystemResponseInterface } from "types/business";
 import SkuDimensionsInputContainer from "components/molecules/SkuDimensionsInputContainer";
 import SkuInventoryInputContainer from "components/molecules/SkuInventoryInputContainer";
 import SkuPricingInputContainer from "components/molecules/SkuPricingInputContainer";
+import React from "react";
+import FieldNumInput from "components/atoms/FieldNumInput";
+import FieldPercentageInput from "components/atoms/FieldPercentageInput";
 
 interface DispatchProps {
   addSku: (sku: AddSkuInterface) => void;
@@ -33,6 +36,8 @@ interface DispatchProps {
 type SkuProps = DispatchProps;
 
 const validationSchema = Yup.object({
+  specialDiscount: Yup.number(),
+  specialDiscountPercentage: Yup.number().max(100),
   skuId: Yup.string().required(),
   price: Yup.number().required(),
   boughtPrice: Yup.number().required(),
@@ -77,6 +82,12 @@ const FlexColumnContainer = styled.div`
   & > div {
     margin-bottom: 1.5em;
   }
+`;
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1em;
 `;
 
 const Sku = (props: SkuProps) => {
@@ -158,6 +169,9 @@ const Sku = (props: SkuProps) => {
                     height: skuToCopyFrom.height,
                     weight: skuToCopyFrom.weight,
                     ecosystemIds: skuToCopyFrom.ecosystemIds,
+                    specialDiscount: skuToCopyFrom.specialDiscount,
+                    specialDiscountPercentage:
+                      skuToCopyFrom.specialDiscountPercentage,
                     attributes: attributes.map((attribute) => ({
                       attributeId: attribute.attributeId,
                       attributeName: attribute.attributeName,
@@ -187,6 +201,8 @@ const Sku = (props: SkuProps) => {
                     height: null,
                     weight: null,
                     ecosystemIds: [],
+                    specialDiscount: 0,
+                    specialDiscountPercentage: 0,
                     attributes: attributes.map((attribute) => ({
                       attributeId: attribute.attributeId,
                       attributeName: attribute.attributeName,
@@ -202,7 +218,6 @@ const Sku = (props: SkuProps) => {
           >
             {({ errors }) => (
               <Form>
-                {console.log(errors)}
                 <FlexColumnContainer>
                   <SectionCard>
                     <SectionHeader>Sku Details</SectionHeader>
@@ -227,6 +242,19 @@ const Sku = (props: SkuProps) => {
                     ))}
                   </SectionCard>
                   <SkuPricingInputContainer />
+                  <SectionCard>
+                    <SectionHeader>Special Discount</SectionHeader>
+                    <Grid>
+                      <div>
+                        <label>Special Discount Price</label>
+                        <FieldNumInput name="specialDiscount" />
+                      </div>
+                      <div>
+                        <label>Special Discount Percentage</label>
+                        <FieldPercentageInput name="specialDiscountPercentage" />
+                      </div>
+                    </Grid>
+                  </SectionCard>
                   <SkuInventoryInputContainer />
                   <SectionCard>
                     <SectionHeader>Visibility</SectionHeader>

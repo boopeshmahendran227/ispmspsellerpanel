@@ -65,7 +65,6 @@ export interface ProductInputInterface {
   shortDescription: string;
   longDescription: string;
   hsnCode: string;
-  specialDiscountValue: number;
   minPrice: number;
   maxPrice: number;
   brand: SelectOptionInterface | null;
@@ -97,7 +96,6 @@ export interface ProductDetailInterface {
   minPrice: number;
   maxPrice: number;
   productType: ProductType;
-  specialDiscount: number;
   attributeValues: ProductAttributeInterface[];
   skuDetails: ProductDetailSkuDetail[];
   unOwnedSkuDetails: ProductDetailSkuDetail[];
@@ -107,6 +105,8 @@ export interface ProductDetailInterface {
 }
 
 export interface ProductDetailSkuDetail {
+  specialDiscount: number;
+  specialDiscountPercentage: number;
   skuDetailId: number;
   ecosystemIds: string[];
   skuId: string;
@@ -218,6 +218,8 @@ export interface ProductSkuDetail {
   weight: number | null;
   barCodeIdentifier: string | null;
   externalId: string | null;
+  specialDiscount: number;
+  specialDiscountPercentage: number;
 }
 
 export interface ProductAttributeValueId {
@@ -269,10 +271,6 @@ export const ProductSchema = Yup.object().shape({
   defaultCategory: Yup.object()
     .required("Default Category is required")
     .nullable(),
-  specialDiscountValue: Yup.number()
-    .typeError("Special discount value must be a number")
-    .required()
-    .lessThan(Yup.ref("minPrice"), "Discount must be less than minimum price."),
   minPrice: Yup.number()
     .typeError("Min price must be a number")
     .positive("Min price must be greater than 0")
@@ -304,6 +302,15 @@ export const ProductSchema = Yup.object().shape({
         weight: Yup.number().nullable(),
         barCodeIdentifier: Yup.string().nullable(),
         externalId: Yup.string().nullable(),
+        specialDiscount: Yup.number().lessThan(
+          Yup.ref("price"),
+          "Discount must be less than price."
+        ),
+        specialDiscountPercentage: Yup.number()
+          .max(100)
+          .typeError(
+            "Special discount percentage must be less than or equal to 100"
+          ),
         imageRelativePaths: Yup.array()
           .of(Yup.string())
           .min(1, "Each sku should contain atleast one image"),
@@ -343,4 +350,5 @@ export const ProductSchema = Yup.object().shape({
       .min(1, "Atleast one specification item group is required"),
   }),
   ecosystems: Yup.array().of(Yup.string()).min(1),
+  categories: Yup.array().of(Yup.string()).min(1, "other Category is required"),
 });

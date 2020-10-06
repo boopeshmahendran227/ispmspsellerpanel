@@ -9,7 +9,7 @@ import FieldInput from "../atoms/FieldInput";
 import ValidationErrorMsg from "../atoms/ValidationErrorMsg";
 import FieldNumInput from "../atoms/FieldNumInput";
 import FieldPriceInput from "../atoms/FieldPriceInput";
-
+import FieldPercentageInput from "../atoms/FieldPercentageInput";
 interface DispatchProps {
   showSkuModal: () => void;
 }
@@ -65,6 +65,14 @@ const getTableHeaders = () => {
     {
       name: "External Id",
       valueFunc: (sku: ProductSkuDetail) => sku.externalId,
+    },
+    {
+      name: "Special Discount Price",
+      valueFunc: (sku: ProductSkuDetail) => sku.specialDiscount,
+    },
+    {
+      name: "Special Discount Percentage",
+      valueFunc: (sku: ProductSkuDetail) => sku.specialDiscountPercentage,
     },
   ];
 };
@@ -147,6 +155,14 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
             </td>
             <td>
               <FieldInput name={`skus.${skuIndex}.externalId`} />
+            </td>
+            <td>
+              <FieldPriceInput name={`skus.${skuIndex}.specialDiscount`} />
+            </td>
+            <td>
+              <FieldPercentageInput
+                name={`skus.${skuIndex}.specialDiscountPercentage`}
+              />
             </td>
             <style jsx>{`
               .imageInputContainer a {

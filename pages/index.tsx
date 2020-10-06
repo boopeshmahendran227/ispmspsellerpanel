@@ -12,10 +12,13 @@ const filter: SelectOptionInterface[] = [
     value: PeriodState.week,
     label: "This week",
   },
-
   {
-    value: PeriodState.year,
-    label: "This year",
+    value: PeriodState.lastMonth,
+    label: "This month",
+  },
+  {
+    value: PeriodState.last3Months,
+    label: "Last 3 months",
   },
 ];
 

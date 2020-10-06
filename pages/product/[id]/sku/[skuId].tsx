@@ -11,7 +11,6 @@ import SkuProductInfo from "components/atoms/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/atoms/SectionHeader";
 import SectionCard from "components/atoms/SectionCard";
-import ImageUploader from "components/molecules/ImageUploader";
 import { ProductDetailInterface } from "types/product";
 import _ from "lodash";
 import FieldSelect from "components/molecules/FieldSelect";
@@ -27,6 +26,8 @@ import SkuDimensionsInputContainer from "components/molecules/SkuDimensionsInput
 import SkuInventoryInputContainer from "components/molecules/SkuInventoryInputContainer";
 import SkuPricingInputContainer from "components/molecules/SkuPricingInputContainer";
 import { Box,Text } from "@chakra-ui/core";
+import FieldNumInput from "components/atoms/FieldNumInput"
+import FieldPercentageInput from "components/atoms/FieldPercentageInput"
 
 interface DispatchProps {
   updateSku: (sku: UpdateSkuInterface) => void;
@@ -35,6 +36,8 @@ interface DispatchProps {
 type SkuProps = DispatchProps;
 
 const validationSchema = Yup.object({
+  specialDiscount: Yup.number().required(),
+  specialDiscountPercentage: Yup.number().required().max(100),
   skuDetailId: Yup.number().required().defined(),
   price: Yup.number().required(),
   boughtPrice: Yup.number().required(),
@@ -67,6 +70,12 @@ const FlexColumnContainer = styled.div`
   & > div {
     margin-bottom: 1.5em;
   }
+`;
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1em;
 `;
 
 const Sku = (props: SkuProps): JSX.Element => {
@@ -137,6 +146,8 @@ const Sku = (props: SkuProps): JSX.Element => {
               height: currentSku.height,
               weight: currentSku.weight,
               ecosystemIds: currentSku.ecosystemIds,
+              specialDiscount: currentSku.specialDiscount,
+              specialDiscountPercentage: currentSku.specialDiscountPercentage,
               attributes: attributes.map((attribute) => ({
                 attributeId: attribute.attributeId,
                 attributeName: attribute.attributeName,
@@ -179,6 +190,19 @@ const Sku = (props: SkuProps): JSX.Element => {
                   </SectionCard>
                   {/* <ImageUploader /> */}
                   <SkuPricingInputContainer />
+                  <SectionCard>
+                    <SectionHeader>Special Discount</SectionHeader>
+                    <Grid>
+                      <div>
+                        <label>Special Discount Price</label>
+                        <FieldNumInput name="specialDiscount" />
+                      </div>
+                      <div>
+                        <label>Special Discount Percentage</label>
+                        <FieldPercentageInput name="specialDiscountPercentage" />
+                      </div>
+                    </Grid>
+                  </SectionCard>
                   <SkuInventoryInputContainer />
                   <SectionCard>
                     <SectionHeader>Visibility</SectionHeader>

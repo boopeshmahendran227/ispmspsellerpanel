@@ -13,7 +13,6 @@ export interface DraftMiniInterface {
   averageRating: number;
   shortDescription: string;
   price: number;
-  specialDiscount: number;
   isBundle: boolean;
   status: string;
 }
@@ -24,7 +23,6 @@ export interface DraftResponseInterface {
   brandName: string;
   shortDescription: string;
   longDescription: string;
-  specialDiscount: number;
   minPrice: number;
   maxPrice: number;
   productType: ProductType;

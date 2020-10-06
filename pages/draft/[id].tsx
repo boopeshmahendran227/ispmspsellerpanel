@@ -53,7 +53,6 @@ const Draft = () => {
         <ProductPriceDetails
           minPrice={draft.minPrice}
           maxPrice={draft.maxPrice}
-          specialDiscount={draft.specialDiscount}
         />
         <SkuTable
           attributeValues={draft.attributeValues}

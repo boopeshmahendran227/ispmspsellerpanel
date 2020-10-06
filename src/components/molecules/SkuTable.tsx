@@ -61,6 +61,14 @@ const getTableHeaders = () => {
       name: "External Id",
       valueFunc: (sku: ProductSkuDetail) => sku.externalId,
     },
+    {
+      name: "Special Discount Price",
+      valueFunc: (sku: ProductSkuDetail) => sku.specialDiscount,
+    },
+    {
+      name: "Special Discount Percentage",
+      valueFunc: (sku: ProductSkuDetail) => sku.specialDiscountPercentage,
+    },
   ];
 };
 
@@ -111,6 +119,8 @@ const renderTableBody = (
       <td>{sku.weight}</td>
       <td>{sku.barCodeIdentifier}</td>
       <td>{sku.externalId}</td>
+      <td>{sku.specialDiscount}</td>
+      <td>{sku.specialDiscountPercentage}</td>
     </tr>
   ));
 };
