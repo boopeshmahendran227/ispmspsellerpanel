@@ -29,7 +29,7 @@ const ProductAvailability = (props: ProductAvailabilityProps): JSX.Element => {
         <SubText>Available on {ecosystems.length} ecosystems</SubText>
       </SectionHeaderContainer>
       {ecosystems.map((ecosystem) => (
-        <EcosystemName>{ecosystem.name}</EcosystemName>
+        <EcosystemName key={ecosystem.id}>{ecosystem.name}</EcosystemName>
       ))}
     </SectionCard>
   );

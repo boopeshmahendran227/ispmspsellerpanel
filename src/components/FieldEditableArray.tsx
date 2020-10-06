@@ -41,7 +41,7 @@ const FieldEditableArray = (props: FieldEditableArrayProps) => {
               </thead>
               <tbody>
                 {dataList.map((item, index) => (
-                  <tr>
+                  <tr key={index}>
                     {props.renderInputRow(index)}
                     <td className="deleteContainer">
                       <button

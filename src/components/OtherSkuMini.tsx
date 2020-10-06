@@ -55,7 +55,7 @@ const OtherSkuMini = (props: OtherSkuMiniProps): JSX.Element => {
           <SkuName>{sku.skuId}</SkuName>
           <AttributeValues>
             {sku.attributeValueIds.map((attributeValueId: AttributeValueID) => (
-              <AttributeValue>
+              <AttributeValue key={attributeValueId.attributeId}>
                 {attributeValueId.attributeName + ": " + attributeValueId.value}
               </AttributeValue>
             ))}
