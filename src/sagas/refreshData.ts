@@ -7,6 +7,7 @@ import {
   UPDATE_CREDITS_SUCCESS,
   ADD_SKU_SUCCESS,
   UPDATE_SKU_SUCCESS,
+  UPDATE_TIER_PRICE_SUCCESS,
 } from "../constants/ActionTypes";
 import { take, all, call } from "redux-saga/effects";
 import { mutate, cache } from "swr";
@@ -23,9 +24,13 @@ function* refreshOrder() {
   }
 }
 
-function* refreshSku() {
+function* refreshProduct() {
   while (true) {
-    yield take([ADD_SKU_SUCCESS, UPDATE_SKU_SUCCESS]);
+    yield take([
+      ADD_SKU_SUCCESS,
+      UPDATE_SKU_SUCCESS,
+      UPDATE_TIER_PRICE_SUCCESS,
+    ]);
     yield all(
       cache
         .keys()
@@ -62,6 +67,6 @@ export default function* () {
     refreshQuote(),
     refreshAttributes(),
     refreshInvoice(),
-    refreshSku(),
+    refreshProduct(),
   ]);
 }

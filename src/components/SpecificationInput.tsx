@@ -2,6 +2,8 @@ import InputLabel from "./InputLabel";
 import CSSConstants from "../constants/CSSConstants";
 import FieldInput from "./FieldInput";
 import FieldEditableArray from "./FieldEditableArray";
+import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
+import SectionHeader from "./atoms/SectionHeader";
 
 const SpecificationInput = () => {
   const handleAddSpecGroup = (arrayHelpers) => {
@@ -20,7 +22,9 @@ const SpecificationInput = () => {
 
   return (
     <div className="container">
-      <header>Specification</header>
+      <SectionHeaderContainer>
+        <SectionHeader>Specification</SectionHeader>
+      </SectionHeaderContainer>
       <FieldEditableArray
         name="specification.itemGroups"
         headers={[]}

@@ -11,6 +11,9 @@ import {
   CLONE_PRODUCT_REQUEST,
   CLONE_PRODUCT_SUCCESS,
   CLONE_PRODUCT_FAILURE,
+  UPDATE_TIER_PRICE_SUCCESS,
+  UPDATE_TIER_PRICE_FAILURE,
+  UPDATE_TIER_PRICE_REQUEST,
 } from "../constants/ActionTypes";
 import { takeEvery, all, call, put, select } from "redux-saga/effects";
 import api from "../api";
@@ -20,6 +23,7 @@ import {
   AttributeValueInterface,
   AddAttributeInterface,
   ProductCloneInterface,
+  UpdateTierPriceAction,
 } from "../types/product";
 import { getSelectedAttributeValues } from "../selectors/product";
 import _ from "lodash";
@@ -79,6 +83,7 @@ function* addProduct(action) {
     yield put({ type: ADD_PRODUCT_FAILURE });
   }
 }
+
 function* cloneProduct(action) {
   try {
     const product: ProductCloneInterface = action.product;
@@ -94,6 +99,18 @@ function* cloneProduct(action) {
     yield put({ type: CLONE_PRODUCT_SUCCESS });
   } catch (err) {
     yield put({ type: CLONE_PRODUCT_FAILURE });
+  }
+}
+
+function* updateTierPrice(action: UpdateTierPriceAction) {
+  try {
+    yield call(api, `/product/${action.productId}/tierprice`, {
+      method: "PUT",
+      data: action.tierPrices,
+    });
+    yield put({ type: UPDATE_TIER_PRICE_SUCCESS });
+  } catch (err) {
+    yield put({ type: UPDATE_TIER_PRICE_FAILURE });
   }
 }
 
@@ -145,11 +162,16 @@ function* watchCloneProduct() {
   yield takeEvery(CLONE_PRODUCT_REQUEST, cloneProduct);
 }
 
+function* watchUpdateTierPrice() {
+  yield takeEvery(UPDATE_TIER_PRICE_REQUEST, updateTierPrice);
+}
+
 export default function* () {
   yield all([
     watchAddProduct(),
     watchAddAttribute(),
     watchAddAttributeValue(),
     watchCloneProduct(),
+    watchUpdateTierPrice(),
   ]);
 }

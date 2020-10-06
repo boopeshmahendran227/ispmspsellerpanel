@@ -2,6 +2,8 @@ import FieldTextArea from "./FieldTextArea";
 import FieldEditableArray from "./FieldEditableArray";
 import { ArrayHelpers } from "formik";
 import CSSConstants from "../constants/CSSConstants";
+import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
+import SectionHeader from "./atoms/SectionHeader";
 
 const FAQInput = () => {
   const addFaq = (arrayHelpers: ArrayHelpers) => {
@@ -25,8 +27,10 @@ const FAQInput = () => {
     );
   };
   return (
-    <>
-      <header>FAQ</header>
+    <div className="container">
+      <SectionHeaderContainer>
+        <SectionHeader>FAQ</SectionHeader>
+      </SectionHeaderContainer>
       <FieldEditableArray
         headers={["S.no", "Question", "Answer"]}
         name="faqs"
@@ -35,6 +39,9 @@ const FAQInput = () => {
         label="FAQ"
       />
       <style jsx>{`
+        .container {
+          margin-top: 3em;
+        }
         header {
           font-weight: bold;
           font-size: 1.3rem;
@@ -43,7 +50,7 @@ const FAQInput = () => {
           margin-bottom: 1em;
         }
       `}</style>
-    </>
+    </div>
   );
 };
 

@@ -10,6 +10,8 @@ import ValidationErrorMsg from "./ValidationErrorMsg";
 import FieldNumInput from "./FieldNumInput";
 import FieldPriceInput from "./FieldPriceInput";
 import FieldPercentageInput from "./FieldPercentageInput";
+import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
+import SectionHeader from "./atoms/SectionHeader";
 interface DispatchProps {
   showSkuModal: () => void;
 }
@@ -188,7 +190,9 @@ const SkuInputTable = (props: SkuInputTableProps) => {
 
   return (
     <div className="container">
-      <header>Variants</header>
+      <SectionHeaderContainer>
+        <SectionHeader>Variants</SectionHeader>
+      </SectionHeaderContainer>
       <div className="buttonContainer">
         <Button onClick={props.showSkuModal}>Generate Variants</Button>
       </div>

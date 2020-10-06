@@ -3,6 +3,8 @@ import FieldNumInput from "./FieldNumInput";
 import FieldPercentageInput from "./FieldPercentageInput";
 import FieldEditableArray from "./FieldEditableArray";
 import CSSConstants from "../constants/CSSConstants";
+import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
+import SectionHeader from "./atoms/SectionHeader";
 
 const TierPriceInput = () => {
   const addTierPrice = (arrayHelpers: ArrayHelpers) => {
@@ -30,7 +32,9 @@ const TierPriceInput = () => {
 
   return (
     <div className="container">
-      <header>Tier Price</header>
+      <SectionHeaderContainer>
+        <SectionHeader>Tier Price</SectionHeader>
+      </SectionHeaderContainer>
       <FieldEditableArray
         headers={["S.no", "MinQty", "Discount Percentage"]}
         name="tierPrices"
@@ -39,9 +43,6 @@ const TierPriceInput = () => {
         label="Tier Price"
       />
       <style jsx>{`
-        .container {
-          margin-bottom: 3em;
-        }
         header {
           font-weight: bold;
           font-size: 1.3rem;

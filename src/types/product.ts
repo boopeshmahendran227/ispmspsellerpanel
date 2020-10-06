@@ -7,6 +7,7 @@ import {
   ADD_PRODUCT_REQUEST,
   INIT_PRODUCT_CREATE,
   CLONE_PRODUCT,
+  UPDATE_TIER_PRICE_REQUEST,
 } from "../constants/ActionTypes";
 
 interface AddAttributeAction {
@@ -44,6 +45,12 @@ interface CloneProductAction {
   product: ProductCloneInterface;
 }
 
+export interface UpdateTierPriceAction {
+  type: typeof UPDATE_TIER_PRICE_REQUEST;
+  productId: number;
+  tierPrices: TierPriceInterface[];
+}
+
 export type ProductActionType =
   | InitProductCreateAction
   | AddAttributeAction
@@ -51,7 +58,8 @@ export type ProductActionType =
   | SetSelectedAttributeAction
   | SetSelectedAttributeValuesAction
   | AddProductAction
-  | CloneProductAction;
+  | CloneProductAction
+  | UpdateTierPriceAction;
 
 export interface ProductCloneInterface {
   currentEcosystem: SelectOptionInterface;
