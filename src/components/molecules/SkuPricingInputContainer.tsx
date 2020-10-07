@@ -1,27 +1,21 @@
 import SectionCard from "components/atoms/SectionCard";
 import SectionHeader from "components/atoms/SectionHeader";
 import FieldPriceInput from "components/atoms/FieldPriceInput";
-import styled from "styled-components";
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 1em;
-`;
+import { Grid, Box, FormLabel } from "@chakra-ui/core";
 
 const SkuPricingInputContainer = (): JSX.Element => {
   return (
     <SectionCard>
       <SectionHeader>Pricing</SectionHeader>
-      <Grid>
-        <div>
-          <label>Price</label>
+      <Grid templateColumns="1fr 1fr" gap="1em">
+        <Box>
+          <FormLabel>Price</FormLabel>
           <FieldPriceInput name="price" />
-        </div>
-        <div>
-          <label>Bought Price</label>
+        </Box>
+        <Box>
+          <FormLabel>Bought Price</FormLabel>
           <FieldPriceInput name="boughtPrice" />
-        </div>
+        </Box>
       </Grid>
     </SectionCard>
   );

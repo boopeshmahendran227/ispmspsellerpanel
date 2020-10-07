@@ -1,4 +1,3 @@
-import Modal from "../atoms/Modal";
 import { useState, useEffect } from "react";
 import Button, { ButtonType } from "../atoms/Button";
 import SelectAttributes from "./SelectAttributes";
@@ -18,6 +17,15 @@ import {
   getSelectedAttributeValues,
   getSelectedAttributes,
 } from "../../selectors/product";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  Box,
+} from "@chakra-ui/core";
 
 interface StateProps {
   selectedAttributes: SelectedAttribute[];
@@ -114,57 +122,44 @@ const SkuModal = (props: SkuModalProps) => {
   }, [props.open]);
 
   return (
-    <Modal open={open} onClose={onClose}>
-      <div className="container">
-        <header>Create SKUs</header>
-        <div className="stepContainer">{steps[currentStep]}</div>
-        <div className="buttonContainer">
-          <Button
-            type={ButtonType.primary}
-            onClick={() => setCurrentStep(currentStep - 1)}
-            disabled={getBackButtonDisabled()}
-            outlined={true}
-          >
-            Back
-          </Button>
-          {currentStep === 0 && (
+    <Modal isOpen={open} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent minW="500px" minH="500px" borderRadius="16px">
+        <ModalHeader>Create SKUs</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody p="1em">
+          <Box>{steps[currentStep]}</Box>
+
+          <Box textAlign="center" className="buttonContainer">
             <Button
               type={ButtonType.primary}
-              onClick={() => setCurrentStep(currentStep + 1)}
-              disabled={getNextButtonDisabled()}
+              onClick={() => setCurrentStep(currentStep - 1)}
+              disabled={getBackButtonDisabled()}
+              outlined={true}
             >
-              Next
+              Back
             </Button>
-          )}
-          {currentStep === 1 && (
-            <Button
-              type={ButtonType.primary}
-              onClick={handleGenerate}
-              disabled={getCreateDisabled()}
-            >
-              Create
-            </Button>
-          )}
-        </div>
-      </div>
-      <style jsx>{`
-        .container {
-          min-width: 500px;
-          min-height: 500px;
-        }
-        header {
-          font-size: 1.3rem;
-          font-weight: bold;
-        }
-        header,
-        .stepContainer {
-          padding: 1em;
-        }
-        .buttonContainer {
-          padding: 1em;
-          text-align: center;
-        }
-      `}</style>
+            {currentStep === 0 && (
+              <Button
+                type={ButtonType.primary}
+                onClick={() => setCurrentStep(currentStep + 1)}
+                disabled={getNextButtonDisabled()}
+              >
+                Next
+              </Button>
+            )}
+            {currentStep === 1 && (
+              <Button
+                type={ButtonType.primary}
+                onClick={handleGenerate}
+                disabled={getCreateDisabled()}
+              >
+                Create
+              </Button>
+            )}
+          </Box>
+        </ModalBody>
+      </ModalContent>
     </Modal>
   );
 };

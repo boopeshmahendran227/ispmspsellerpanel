@@ -20,7 +20,7 @@ import { LoginState } from "types/login";
 import CSSConstants from "../src/constants/CSSConstants";
 
 import { ThemeProvider, CSSReset } from "@chakra-ui/core";
-import { customTheme } from "../public/theme/theme";
+import { customTheme } from "../src/theme/theme";
 // Add all third-party CSS here
 import "@fortawesome/fontawesome-free/css/all.css";
 import "react-dates/initialize";
@@ -60,13 +60,16 @@ function MyApp(props) {
   // We don't need navbar for invoice page
   if (["/invoice"].some((str) => router.pathname.includes(str))) {
     return (
-      <SWRConfig value={swrConfigData}>
-        <Provider store={store}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </Provider>
-      </SWRConfig>
+      <ThemeProvider>
+        <CSSReset />
+        <SWRConfig value={swrConfigData}>
+          <Provider store={store}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </Provider>
+        </SWRConfig>
+      </ThemeProvider>
     );
   }
 

@@ -1,4 +1,3 @@
-import Modal from "../atoms/Modal";
 import { connect } from "react-redux";
 import { Formik, Form, ArrayHelpers } from "formik";
 import FieldInput from "components/atoms/FieldInput";
@@ -15,7 +14,15 @@ import { useRef } from "react";
 import { CategoryInterface } from "../../types/category";
 import FieldMultiSelect from "./FieldMultiSelect";
 import FieldEditableArray from "./FieldEditableArray";
-
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  Grid,
+} from "@chakra-ui/core";
 interface StateProps {
   open: boolean;
 }
@@ -54,26 +61,31 @@ const AttributeModal = (props: AttributeModalProps) => {
   };
 
   return (
-    <Modal open={open} onClose={onClose}>
-      <div className="container">
-        <header>Create New Attribute</header>
-
-        <Formik
-          initialValues={{
-            name: "",
-            description: "",
-            values: [],
-            attributeType: AttributeType.Default,
-            associatedCategories: [],
-          }}
-          validationSchema={attributeSchema}
-          onSubmit={onSubmit}
-        >
-          {({ resetForm }) => (
-            <div className="formContainer">
+    <Modal isOpen={open} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent minW="500px" minH="500px" borderRadius="16px">
+        <ModalHeader>Create New Attribute</ModalHeader>
+        <ModalCloseButton />{" "}
+        <ModalBody>
+          <Formik
+            initialValues={{
+              name: "",
+              description: "",
+              values: [],
+              attributeType: AttributeType.Default,
+              associatedCategories: [],
+            }}
+            validationSchema={attributeSchema}
+            onSubmit={onSubmit}
+          >
+            {({ resetForm }) => (
               <Form>
                 {(resetFormRef.current = resetForm)}
-                <div className="gridContainer">
+                <Grid
+                  templateColumns="200px 1fr"
+                  alignItems="center"
+                  className="gridContainer"
+                >
                   <InputLabel label="Name" />
                   <FieldInput name="name" />
                   <InputLabel label="Associated Categories" />
@@ -103,35 +115,13 @@ const AttributeModal = (props: AttributeModalProps) => {
                     )}
                     label="Value"
                   />
-                </div>
-                <div>
-                  <Button isSubmitButton={true}>Submit</Button>
-                </div>
+                </Grid>
+                <Button isSubmitButton={true}>Submit</Button>
               </Form>
-            </div>
-          )}
-        </Formik>
-      </div>
-      <style jsx>{`
-        header {
-          margin: 1em 0;
-          font-weight: bold;
-          font-size: 1.3rem;
-          text-transform: uppercase;
-        }
-        .container {
-          margin: 1em;
-          min-width: 270px;
-        }
-        .addValueButtonContainer {
-          font-size: 0.9rem;
-        }
-        .gridContainer {
-          display: grid;
-          grid-template-columns: 200px 1fr;
-          align-items: center;
-        }
-      `}</style>
+            )}
+          </Formik>
+        </ModalBody>
+      </ModalContent>
     </Modal>
   );
 };

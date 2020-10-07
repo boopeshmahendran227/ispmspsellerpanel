@@ -22,7 +22,7 @@ const FieldDatePicker = (props: FieldDatePickerProps) => {
           <ErrorMessage component={ValidationErrorMsg} name={field.name} />
           <style jsx>{`
             .container {
-              margin: 0.5em 0;
+              margin: 0.3em 0;
             }
           `}</style>
         </span>

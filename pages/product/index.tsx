@@ -18,10 +18,9 @@ import {
 import Loader from "components/atoms/Loader";
 import EcosystemOption from "components/atoms/EcosystemOption";
 import Select from "components/atoms/Select";
-import Checkbox from "components/atoms/Checkbox";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageContainer from "components/atoms/PageContainer";
-import { Flex, Box } from "@chakra-ui/core";
+import { Flex, Box, Checkbox } from "@chakra-ui/core";
 
 const Products = () => {
   const [searchText, setSearchText] = useState("");
@@ -123,10 +122,11 @@ const Products = () => {
         <SearchBar searchText={searchText} searchByText={setSearchText} />
         <Flex align="center">
           <Checkbox
-            checked={showOnlySelf}
+            isChecked={showOnlySelf}
             onChange={(e) => setShowOnlySelf(e.target.checked)}
-            label="Show Only My Products"
-          />
+          >
+            Show Only My Products
+          </Checkbox>
           <Box minW="300px">
             <Select
               value={currentEcosystem}

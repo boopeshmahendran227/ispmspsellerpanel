@@ -9,6 +9,7 @@ import WithAuth from "components/atoms/WithAuth";
 import PageContainer from "components/atoms/PageContainer";
 import PageBodyContainer from "components/atoms/PageBodyContainer";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
+import { Box } from "@chakra-ui/core";
 
 const Testdrives = () => {
   const swr = useSWR<TestDriveInterface[]>("/testdrive");
@@ -29,11 +30,11 @@ const Testdrives = () => {
         <PageHeader>Test Drives ({testdrives.length})</PageHeader>
       </PageHeaderContainer>
       <PageBodyContainer>
-        <div className="body">
+        <Box>
           {testdrives.map((testdrive, index) => (
             <TestDriveCard key={index} testdrive={testdrive} />
           ))}
-        </div>
+        </Box>
       </PageBodyContainer>
     </PageContainer>
   );

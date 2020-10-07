@@ -2,6 +2,7 @@ import { TestDriveInterface } from "../../types/testdrive";
 import RelativeImg from "../atoms/RelativeImg";
 import moment from "moment";
 import { getCustomerInfo } from "utils/customer";
+import { Box, Flex } from "@chakra-ui/core";
 
 interface TestDriveCardProps {
   testdrive: TestDriveInterface;
@@ -10,58 +11,34 @@ interface TestDriveCardProps {
 const TestDriveCard = (props: TestDriveCardProps) => {
   const { testdrive } = props;
   return (
-    <div className="container">
-      <div className="imageContainer">
+    <Flex
+      box-shadow="0 1px 3px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.24)"
+      m="1em 0"
+    >
+      <Box w="100px" h="100px" mr="0.5em">
         <RelativeImg src={testdrive.images[0]} />
-      </div>
-      <div className="contentContainer">
-        <div className="customerContainer">
+      </Box>
+      <Box p="0.4em">
+        <Box m="0.3em 0">
           <i className="fas fa-user"></i>
-          <span className="customerName">
+          <Box as="span" fontWeight="semibold">
             Customer {getCustomerInfo(testdrive)}
-          </span>
-        </div>{" "}
-        <div className="productContainer">
+          </Box>
+        </Box>{" "}
+        <Box m="0.3em 0">
           <i className="fa fa-motorcycle" aria-hidden="true"></i>
-          Test drive requested for{" "}
-          <span className="productName">
+          Test drive requested for
+          <Box as="span" fontWeight="semibold">
             {testdrive.productName} ({"#" + testdrive.productId})
-          </span>{" "}
+          </Box>{" "}
           on{" "}
-          <span className="date">
+          <Box as="span" fontWeight="semibold">
             {moment(testdrive.requestedDate).format("MMM D, YYYY")}
-          </span>
-        </div>
-      </div>
-      <style jsx>{`
-        .container {
-          display: flex;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-            0 1px 2px rgba(0, 0, 0, 0.24);
-          margin: 1em 0;
-        }
-        .contentContainer {
-          padding: 0.4em;
-        }
-        .imageContainer {
-          width: 100px;
-          height: 100px;
-          margin-right: 0.5em;
-        }
-        i {
-          margin: 0.3em;
-        }
-        .customerContainer,
-        .productContainer {
-          margin: 0.3em 0;
-        }
-        .customerName,
-        .productName,
-        .date {
-          font-weight: 700;
-        }
-      `}</style>
-    </div>
+          </Box>
+        </Box>
+      </Box>
+    </Flex>
   );
 };
 

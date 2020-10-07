@@ -5,6 +5,7 @@ import RelativeImg from "../atoms/RelativeImg";
 import { formatPrice } from "utils/misc";
 import { DraftAttributeValuesInterface } from "../../types/draft";
 import { AttributeValueID } from "types/sku";
+import { Box, Divider, Heading } from "@chakra-ui/core";
 
 interface SkuTableProps {
   skus: ProductSkuDetail[];
@@ -129,8 +130,11 @@ const SkuTable = (props: SkuTableProps) => {
   const { skus } = props;
 
   return (
-    <div className="container">
-      <header>Skus</header>
+    <Box className="container" fontSize="1.1rem">
+      <Heading size="lg" p="0.3rem">
+        Skus
+      </Heading>
+      <Divider borderWidth="2px" borderColor={CSSConstants.borderColor} />
       <SortableTable
         initialSortData={{
           index: 0,
@@ -141,19 +145,7 @@ const SkuTable = (props: SkuTableProps) => {
         emptyMsg=""
         body={renderTableBody.bind(null, props.attributeValues)}
       />
-      <style jsx>{`
-        .container {
-          font-size: 1.1rem;
-        }
-        header {
-          font-weight: bold;
-          font-size: 1.3rem;
-          border-bottom: 1px solid ${CSSConstants.borderColor};
-          padding: 0.3em;
-          margin-bottom: 1em;
-        }
-      `}</style>
-    </div>
+    </Box>
   );
 };
 

@@ -2,6 +2,7 @@ import { TierPriceInterface } from "../../types/product";
 import SectionHeader from "./SectionHeader";
 import SectionCard from "./SectionCard";
 import SectionHeaderContainer from "./SectionHeaderContainer";
+import { List, ListItem } from "@chakra-ui/core";
 
 interface TierPriceProps {
   tierPrice: TierPriceInterface[];
@@ -19,13 +20,13 @@ const TierPrice = (props: TierPriceProps) => {
       <SectionHeaderContainer>
         <SectionHeader>Tier Price</SectionHeader>
       </SectionHeaderContainer>
-      <ul>
+      <List spacing={3}>
         {tierPrice.map((item, index) => (
-          <li key={index}>
+          <ListItem key={index}>
             Buy {item.minQty} Nos at {item.discountPercentage}% off
-          </li>
+          </ListItem>
         ))}
-      </ul>
+      </List>
     </SectionCard>
   );
 };

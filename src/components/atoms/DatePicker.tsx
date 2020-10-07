@@ -2,6 +2,7 @@ import { SingleDatePicker } from "react-dates";
 import moment from "moment";
 import Button from "./Button";
 import { useState } from "react";
+import { Box } from "@chakra-ui/core";
 
 interface DatePickerProps {
   onChange: (date: moment.Moment) => void;
@@ -24,7 +25,7 @@ const presets = [
 const DatePicker = (props: DatePickerProps) => {
   const renderDatePresets = () => {
     return (
-      <div className="buttonPanel">
+      <Box p="0.6em" className="buttonPanel">
         {presets.map(({ text, value }) => {
           const isActive = value.isSame(props.value, "date");
 
@@ -39,12 +40,7 @@ const DatePicker = (props: DatePickerProps) => {
             </Button>
           );
         })}
-        <style jsx>{`
-          .buttonPanel {
-            padding: 0.6em;
-          }
-        `}</style>
-      </div>
+      </Box>
     );
   };
 

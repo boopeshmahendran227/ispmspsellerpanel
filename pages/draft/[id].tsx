@@ -11,16 +11,7 @@ import PageError from "components/atoms/PageError";
 import WithAuth from "components/atoms/WithAuth";
 import ProductMainInfo from "components/molecules/ProductMainInfo";
 import ProductPriceDetails from "components/molecules/ProductPriceDetails";
-import styled from "styled-components";
-
-const FlexContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  & > div {
-    margin-bottom: 1.5em;
-  }
-`;
+import { Box, Heading, Stack } from "@chakra-ui/core";
 
 const Draft = () => {
   const router = useRouter();
@@ -38,22 +29,40 @@ const Draft = () => {
   }
 
   return (
-    <div className="container">
-      <header>
-        <span className="name">Draft #{draft.id}</span>
-        <span className="status">{draft.status}</span>
-      </header>
-      <FlexContainer>
-        <ProductMainInfo
-          name={draft.name}
-          brand={draft.brandName}
-          shortDescription={draft.shortDescription}
-          longDescription={draft.longDescription}
-        />
-        <ProductPriceDetails
-          minPrice={draft.minPrice}
-          maxPrice={draft.maxPrice}
-        />
+    <Box p="0.8em">
+      <Heading as="h6" size="md" margin="0.7em 0" textTransform="uppercase">
+        <Box as="span" className="name">
+          Draft #{draft.id}
+        </Box>
+        <Box
+          as="span"
+          borderRadius="2em"
+          display="inline-block"
+          background={CSSConstants.primaryColor}
+          p="0.2em 0.5em"
+          color="white"
+          m="0 0.3em"
+          fontSize="1rem"
+          textTransform="initial"
+        >
+          {draft.status}
+        </Box>
+      </Heading>
+      <Stack spacing={3}>
+        <Box>
+          <ProductMainInfo
+            name={draft.name}
+            brand={draft.brandName}
+            shortDescription={draft.shortDescription}
+            longDescription={draft.longDescription}
+          />
+        </Box>
+        <Box>
+          <ProductPriceDetails
+            minPrice={draft.minPrice}
+            maxPrice={draft.maxPrice}
+          />
+        </Box>
         <SkuTable
           attributeValues={draft.attributeValues}
           skus={draft.skuDetails}
@@ -61,28 +70,8 @@ const Draft = () => {
         <Specification specification={draft.specification} />
         <TierPrice tierPrice={draft.tierPrice} />
         <FAQ faqs={draft.faqs} />
-      </FlexContainer>
-      <style jsx>{`
-        .container {
-          padding: 0.8em;
-        }
-        header {
-          font-size: 1.4rem;
-          margin: 0.7em 0;
-          text-transform: uppercase;
-        }
-        .status {
-          border-radius: 2em;
-          display: inline-block;
-          background: ${CSSConstants.primaryColor};
-          padding: 0.2em 0.5em;
-          color: white;
-          margin: 0 0.3em;
-          font-size: 1rem;
-          text-transform: initial;
-        }
-      `}</style>
-    </div>
+      </Stack>
+    </Box>
   );
 };
 

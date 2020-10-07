@@ -1,5 +1,5 @@
 import CSSConstants from "../../constants/CSSConstants";
-import { Flex, Box, Button } from "@chakra-ui/core";
+import { Flex, Box, Button, Heading } from "@chakra-ui/core";
 
 interface ActiveFiltersProps {
   appliedFilters: string[];
@@ -15,7 +15,7 @@ const ActiveFilters = (props: ActiveFiltersProps) => {
 
   return (
     <Flex align="center" p="0.2em">
-      <header>Active Filters:</header>
+      <Heading size="md">Active Filters:</Heading>
       {appliedFilters.map((filter) => (
         <Box m="0.6em" fontWeight="bold">
           {filter}

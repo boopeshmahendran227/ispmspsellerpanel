@@ -29,6 +29,7 @@ import EcosystemOption from "components/atoms/EcosystemOption";
 import FieldSelect from "components/molecules/FieldSelect";
 import FieldInput from "components/atoms/FieldInput";
 import api from "../../src/api";
+import { Box, Heading, Grid } from "@chakra-ui/core";
 
 interface DispatchProps {
   createCoupon: (couponData: CouponRequestInterface) => void;
@@ -87,9 +88,26 @@ const CreateCoupon = (props: CreateCouponProps) => {
   };
 
   return (
-    <div className="container">
+    <Box
+      maxW="700px"
+      m="2em auto"
+      p="1.3em"
+      boxShadow="0 1px 3px rgba(0, 0, 0, 0.12),
+      0 1px 2px rgba(0, 0, 0, 0.24)"
+      bg={CSSConstants.foregroundColor}
+    >
       <BackLink href="/coupon">Back to Coupons</BackLink>
-      <header>Create Coupon</header>
+      <Heading
+        as="h6"
+        size="xl"
+        mt="0.5em"
+        mb="1em"
+        fontWeight="bold"
+        fontSize="1.3rem"
+        textTransform="uppercase"
+      >
+        Create Coupon
+      </Heading>
       <Formik
         initialValues={{
           couponCode: "",
@@ -143,21 +161,26 @@ const CreateCoupon = (props: CreateCouponProps) => {
         onSubmit={onSubmit}
       >
         {({ setFieldValue, values, resetForm }) => (
-          <div className="formContainer">
+          <Box className="formContainer">
             <Form>
-              <div className="gridContainer">
+              <Grid templateColumns="200px 300px" alignItems="center">
                 <InputLabel label="Coupon Code" />
-                <div className="inputContainer">
+                <Box position="relative">
                   <FieldInput name="couponCode" />
                   {isCheckingCouponCode && (
-                    <div className="couponLoader">
+                    <Box
+                      position="absolute"
+                      top="50%"
+                      right="5%"
+                      transform="translateY(-50%)"
+                    >
                       <Loader size="xs" loaderWidth="2px" />
-                    </div>
+                    </Box>
                   )}
-                </div>
+                </Box>
                 <InputLabel label="Coupon Discount Type" />
-                <div className="discountTypeValuesContainer">
-                  <div>
+                <Box className="discountTypeValuesContainer">
+                  <Box>
                     <RadioButton
                       label="Fixed Amount"
                       value={""}
@@ -166,8 +189,8 @@ const CreateCoupon = (props: CreateCouponProps) => {
                         setFieldValue("type", CouponType.FixedAmount)
                       }
                     />
-                  </div>
-                  <div>
+                  </Box>
+                  <Box>
                     <RadioButton
                       label="Percentage"
                       value={""}
@@ -176,8 +199,8 @@ const CreateCoupon = (props: CreateCouponProps) => {
                         setFieldValue("type", CouponType.Percentage)
                       }
                     />
-                  </div>
-                </div>
+                  </Box>
+                </Box>
                 <InputLabel label="Discount Value" />
                 {values.type === CouponType.FixedAmount ? (
                   <FieldPriceInput name="discountValue" />
@@ -192,8 +215,8 @@ const CreateCoupon = (props: CreateCouponProps) => {
                 <FieldDatePicker name="startDate" />
                 <InputLabel label="Valid Till" />
                 <FieldDatePicker name="endDate" />
-              </div>
-              <div className="buttonContainer">
+              </Grid>
+              <Box pt="1em" pb="0.4em" fontSize="1.1rem">
                 <Button
                   disabled={isCheckingCouponCode}
                   type={ButtonType.success}
@@ -208,57 +231,12 @@ const CreateCoupon = (props: CreateCouponProps) => {
                 >
                   Clear
                 </Button>
-              </div>
+              </Box>
             </Form>
-          </div>
+          </Box>
         )}
       </Formik>
-      <style jsx>{`
-        .container {
-          max-width: 700px;
-          margin: 2em auto;
-          padding: 1.3em;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-            0 1px 2px rgba(0, 0, 0, 0.24);
-          background: ${CSSConstants.foregroundColor};
-        }
-        .inputContainer {
-          position: relative;
-        }
-        .couponLoader {
-          position: absolute;
-          top: 50%;
-          right: 5%;
-          transform: translateY(-50%);
-        }
-        header {
-          margin-top: 0.5em;
-          margin-bottom: 1em;
-          font-weight: bold;
-          font-size: 1.3rem;
-          text-transform: uppercase;
-        }
-        .addValueButtonContainer {
-          font-size: 0.9rem;
-        }
-        .gridContainer {
-          display: grid;
-          grid-template-columns: 200px 300px;
-          align-items: center;
-        }
-        .categoriesLabel {
-          font-weight: bold;
-          font-size: 1.2rem;
-          padding: 0.3em;
-          margin-bottom: 0.7em;
-        }
-        .buttonContainer {
-          padding-top: 1em;
-          padding-bottom: 0.4em;
-          font-size: 1.1rem;
-        }
-      `}</style>
-    </div>
+    </Box>
   );
 };
 
