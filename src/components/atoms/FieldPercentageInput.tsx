@@ -1,7 +1,11 @@
 import { Field, ErrorMessage, useFormikContext } from "formik";
-import classNames from "classnames";
 import ValidationErrorMsg from "./ValidationErrorMsg";
-import CSSConstants from "../../constants/CSSConstants";
+import {
+  FormControl,
+  Input,
+  InputGroup,
+  InputRightElement,
+} from "@chakra-ui/core";
 
 interface FieldPercentageInputProps {
   name: string;
@@ -21,51 +25,16 @@ const FieldPercentageInput = (props: FieldPercentageInputProps) => {
   return (
     <Field name={props.name}>
       {({ field, form }) => (
-        <label
-          className={classNames({
-            container: true,
-            error: Boolean(form.touched[props.name] && form.errors[props.name]),
-          })}
+        <FormControl
+          isInvalid={form.errors[props.name] && form.touched[props.name]}
+          p="0.3em 0"
         >
-          <div className="inputContainer">
-            <input
-              type="text"
-              {...field}
-              onBlur={(e) => handleBlur(e, field.name)}
-            />
-            <span className="suffix"> %</span>
-          </div>
-          <div className="errorContainer">
-            <ErrorMessage component={ValidationErrorMsg} name={props.name} />
-          </div>
-          <style jsx>{`
-            .inputContainer {
-              margin: 0.3em 0;
-              width: 100%;
-              font-size: 1.1rem;
-              border: 1px solid ${CSSConstants.borderColor};
-              display: inline-flex;
-              align-items: center;
-            }
-            .inputContainer:focus-within {
-              border: 1px solid ${CSSConstants.primaryColor};
-            }
-            input {
-              padding: 0.6em;
-              width: 100%;
-              border: none;
-              margin: 0;
-            }
-            input:focus {
-              border: none;
-            }
-            .suffix {
-              min-width: 20px;
-              text-align: center;
-              color: ${CSSConstants.secondaryTextColor};
-            }
-          `}</style>
-        </label>
+          <InputGroup>
+            <InputRightElement children="%" />
+            <Input {...field} onBlur={(e) => handleBlur(e, field.name)} />
+          </InputGroup>
+          <ErrorMessage component={ValidationErrorMsg} name={props.name} />
+        </FormControl>
       )}
     </Field>
   );

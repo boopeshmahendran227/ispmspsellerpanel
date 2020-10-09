@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import SectionHeader from "../atoms/SectionHeader";
 import SectionCard from "../atoms/SectionCard";
 import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
@@ -19,7 +18,7 @@ const ProductMainInfo = (props: ProductMainInfoProps): JSX.Element => {
       <SectionHeaderContainer>
         <SectionHeader>Main Details</SectionHeader>
       </SectionHeaderContainer>
-      <Grid template-columns="200px 1fr" gap="0.4em">
+      <Grid templateColumns="200px 1fr" gap="0.4em">
         <Box fontWeight="bold">Name</Box>
         <Box>{name}</Box>
         <Box fontWeight="bold">Brand</Box>

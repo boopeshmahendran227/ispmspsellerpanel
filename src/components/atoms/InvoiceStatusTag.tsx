@@ -1,21 +1,22 @@
 import CSSConstants from "../../constants/CSSConstants";
 import Chroma from "chroma-js";
 import { InvoiceStatus } from "../../types/invoice";
+import { Tag, TagLabel, Box } from "@chakra-ui/core";
 
 const getCurrentColor = (status: InvoiceStatus) => {
   switch (status) {
     case InvoiceStatus.Draft:
-      return CSSConstants.disabledColor;
+      return "disabledColorVariant";
     case InvoiceStatus.Issued:
-      return CSSConstants.lightPrimaryColor;
+      return "lightPrimaryColorVariant";
     case InvoiceStatus.Pending:
     case InvoiceStatus.Partial:
     case InvoiceStatus.Overdue:
-      return CSSConstants.warningColor;
+      return "warningColorVariant";
     case InvoiceStatus.Paid:
-      return CSSConstants.successColor;
+      return "successColorVariant";
     case InvoiceStatus.Cancelled:
-      return CSSConstants.dangerColor;
+      return "dangerColorVariant";
   }
 };
 
@@ -28,21 +29,17 @@ const InvoiceStatusTag = (props: InvoiceStatusTagProps) => {
   const currentColor = getCurrentColor(status);
 
   return (
-    <div className="container">
+    <Tag
+      variant="subtle"
+      rounded="full"
+      size="lg"
+      variantColor={currentColor}
+      fontWeight="bold"
+      p="0.5rem 1rem"
+      m="1rem 0"
+    >
       {status === InvoiceStatus.Paid ? "Paid / COD" : status}
-      <style jsx>{`
-        .container {
-          padding: 0.5em 1.1em;
-          margin: 0.9em 0;
-          font-weight: bold;
-          background: ${Chroma(currentColor).alpha(0.2).css()};
-          color: ${currentColor};
-          border-radius: 25px;
-          display: inline-block;
-          min-width: 100px;
-        }
-      `}</style>
-    </div>
+    </Tag>
   );
 };
 

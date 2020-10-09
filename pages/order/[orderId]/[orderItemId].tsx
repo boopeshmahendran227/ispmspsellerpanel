@@ -22,9 +22,17 @@ import OrderInformation from "components/molecules/OrderInformation";
 import WithAuth from "components/atoms/WithAuth";
 import DeliveryCodeModal from "components/molecules/DeliveryCodeModal";
 import { transformOrderItem } from "../../../src/transformers/orderItem";
-import Button from "components/atoms/Button";
 import BackLink from "components/atoms/BackLink";
-import { Box, Heading, Grid, Divider } from "@chakra-ui/core";
+import {
+  Box,
+  Heading,
+  Grid,
+  Divider,
+  Stack,
+  Tag,
+  Button,
+} from "@chakra-ui/core";
+
 interface DispatchProps {
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
   markAsShipping: (orderId: number, orderItemId: number) => void;
@@ -36,6 +44,14 @@ interface DispatchProps {
   rejectReturnOrderItem: (orderId: number, orderItemId: number) => void;
   cancelOrderItem: (orderId: number, orderItemId: number) => void;
 }
+
+const Name = (props) => (
+  <Box fontWeight="bold" p="0.4em 0.8em" mt="0.4em">
+    {props.children}
+  </Box>
+);
+
+const Value = (props) => <Box p="0.4em 0.8em">{props.children}</Box>;
 
 type OrderProps = DispatchProps;
 
@@ -70,146 +86,98 @@ const Order = (props: OrderProps) => {
     <Box my="1em" mx="auto" maxW="1100px">
       <DeliveryCodeModal />
       <BackLink href="/order">Back to Orders</BackLink>
-      <Heading as="h6" size="md">
-        <span className="id">
-          #{order.id}-{orderItem.id}
-        </span>{" "}
-        <span className="time">
-          {moment
-            .utc(order.createdDateTime)
-            .local()
-            .format("MMMM Do YYYY h:mm a")}
-        </span>{" "}
-        <span className="status">
-          {getOrderStatusText(orderItem.orderItemStatus)}
-        </span>
-        <span
-          style={{
-            backgroundColor: getPaymentModeColor(
-              orderItem.order.paymentSplits[0].paymentMode
-            ),
-          }}
-          className="paymentMode"
+      <Stack isInline spacing={3} m="1em 0">
+        <Heading size="lg">
+          <Box as="span">
+            #{order.id}-{orderItem.id}
+          </Box>
+          <Box
+            as="span"
+            fontSize="md"
+            color="secondaryTextColor"
+            fontWeight="normal"
+          >
+            {moment
+              .utc(order.createdDateTime)
+              .local()
+              .format("MMMM Do YYYY h:mm a")}
+          </Box>{" "}
+        </Heading>
+        <Box>
+          <Tag
+            variant="solid"
+            rounded="full"
+            size="md"
+            variantColor="primaryColorVariant"
+          >
+            {getOrderStatusText(orderItem.orderItemStatus)}
+          </Tag>
+        </Box>
+        <Tag
+          variant="solid"
+          rounded="full"
+          size="md"
+          variantColor={getPaymentModeColor(
+            orderItem.order.paymentSplits[0].paymentMode
+          )}
         >
           {getPaymentText(orderItem.order.paymentSplits[0].paymentMode)}
-        </span>
-      </Heading>
-      <Box className="invoiceBtnContainer">
-        <Button onClick={() => window.open(`/invoice/${orderItem.id}`)}>
-          View Invoice
-        </Button>
-      </Box>
+        </Tag>
+      </Stack>
+      <Button
+        m="0.5rem 0"
+        variantColor="primaryColorVariant"
+        size="md"
+        onClick={() => window.open(`/invoice/${orderItem.id}`)}
+      >
+        View Invoice
+      </Button>
       <Grid templateColumns="1fr 300px" gap="1em">
         <Box flex="1">
-          <section>
-            <OrderItemDetail
-              orderItem={orderItem}
-              markAsShipping={props.markAsShipping}
-              markAsShippingComplete={props.markAsShippingComplete}
-              markPackageReadyForCollection={
-                props.markPackageReadyForCollection
-              }
-              markAsProcessing={props.markAsProcessing}
-              approveCancelOrderItem={props.approveCancelOrderItem}
-              rejectCancelOrderItem={props.rejectCancelOrderItem}
-              approveReturnOrderItem={props.approveReturnOrderItem}
-              rejectReturnOrderItem={props.rejectReturnOrderItem}
-              cancelOrderItem={props.cancelOrderItem}
-            />
-          </section>
+          <OrderItemDetail
+            orderItem={orderItem}
+            markAsShipping={props.markAsShipping}
+            markAsShippingComplete={props.markAsShippingComplete}
+            markPackageReadyForCollection={props.markPackageReadyForCollection}
+            markAsProcessing={props.markAsProcessing}
+            approveCancelOrderItem={props.approveCancelOrderItem}
+            rejectCancelOrderItem={props.rejectCancelOrderItem}
+            approveReturnOrderItem={props.approveReturnOrderItem}
+            rejectReturnOrderItem={props.rejectReturnOrderItem}
+            cancelOrderItem={props.cancelOrderItem}
+          />
           <Box>
             <ShippingInformationContainer orderItem={orderItem} />
           </Box>
         </Box>
-        <Box>
-          <section className="customerContainer">
-            <Heading as="h6" size="md" m="1em 0.5em">
+        <Stack spacing={4}>
+          <Box bg="foregroundColor" border={CSSConstants.borderStyle}>
+            <Heading size="lg" m="1em 0.5em">
               Customer Information
             </Heading>
-
-            <div className="name">Name</div>
-            <div className="value">
-              {order.customerName || "Name Not Available"}
-            </div>
+            <Name>Name</Name>
+            <Value>{order.customerName || "Name Not Available"}</Value>
             <Divider />
             {Boolean(order.customerPhone) && (
               <>
-                <div className="name">Phone</div>
-                <div className="value">{order.customerPhone}</div>
+                <Name>Phone</Name>
+                <Value>{order.customerPhone}</Value>
                 <Divider />
               </>
             )}
-
-            <div className="name">Billing Address</div>
-            <div className="value">{formatAddress(order.billingAddress)}</div>
+            <Name>Billing Address</Name>
+            <Value className="value">
+              {formatAddress(order.billingAddress)}
+            </Value>
             <Divider />
-
-            <div className="name">Shipping Address</div>
-            <div className="value">{formatAddress(order.shippingAddress)}</div>
-          </section>
+            <Name>Shipping Address</Name>
+            <Value>{formatAddress(order.shippingAddress)}</Value>
+          </Box>
           <Box>
             <OrderInformation order={order} />
           </Box>
-        </Box>
+        </Stack>
       </Grid>
-      <style jsx>{`
-        .container {
-          margin: 1em auto;
-          max-width: 1100px;
-        }
-        .flexContainer {
-          display: grid;
-          grid-template-columns: 1fr 300px;
-          grid-gap: 1em;
-        }
-        .col1 {
-          flex: 1;
-        }
-        header .id {
-          font-size: 1.6rem;
-        }
-        header {
-          margin: 1em 0;
-        }
-        .invoiceBtnContainer {
-          margin: 0.5em 0;
-        }
-        .time {
-          color: ${CSSConstants.secondaryTextColor};
-        }
-        .status,
-        .paymentMode {
-          border-radius: 2em;
-          display: inline-block;
-          background: ${CSSConstants.primaryColor};
-          padding: 0.2em 0.7em;
-          color: white;
-          margin: 0 0.3em;
-        }
-        .customerContainer {
-          background: ${CSSConstants.foregroundColor};
-          border: ${CSSConstants.borderStyle};
-        }
-        .customerContainer .header {
-          font-weight: bold;
-          font-size: 1.3rem;
-          padding: 0.3em 0.5em;
-          margin: 0.4em 0;
-        }
-        .row {
-          border-bottom: ${CSSConstants.borderStyle};
-        }
-        .name {
-          padding: 0.8em;
-          margin-top: 0.4em;
-          font-weight: bold;
-        }
-        .value {
-          padding-bottom: 0.4em;
-          padding-left: 0.8em;
-          padding-right: 0.8em;
-        }
-      `}</style>
     </Box>
   );
 };

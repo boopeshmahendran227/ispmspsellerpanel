@@ -3,6 +3,7 @@ import FieldNumInput from "../atoms/FieldNumInput";
 import FieldPercentageInput from "../atoms/FieldPercentageInput";
 import FieldEditableArray from "./FieldEditableArray";
 import CSSConstants from "../../constants/CSSConstants";
+import { Box, Heading, Divider } from "@chakra-ui/core";
 
 const TierPriceInput = () => {
   const addTierPrice = (arrayHelpers: ArrayHelpers) => {
@@ -29,8 +30,9 @@ const TierPriceInput = () => {
   };
 
   return (
-    <div className="container">
-      <header>Tier Price</header>
+    <Box mb="3em">
+      <Heading size="lg">Tier Price</Heading>
+      <Divider borderWidth="3px" />
       <FieldEditableArray
         headers={["S.no", "MinQty", "Discount Percentage"]}
         name="tierPrices"
@@ -38,19 +40,7 @@ const TierPriceInput = () => {
         renderInputRow={renderTierPriceRow}
         label="Tier Price"
       />
-      <style jsx>{`
-        .container {
-          margin-bottom: 3em;
-        }
-        header {
-          font-weight: bold;
-          font-size: 1.3rem;
-          border-bottom: 1px solid ${CSSConstants.borderColor};
-          padding: 0.3em;
-          margin-bottom: 1em;
-        }
-      `}</style>
-    </div>
+    </Box>
   );
 };
 

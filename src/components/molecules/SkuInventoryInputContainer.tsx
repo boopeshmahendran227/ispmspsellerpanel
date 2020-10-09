@@ -2,31 +2,25 @@ import SectionCard from "components/atoms/SectionCard";
 import SectionHeader from "components/atoms/SectionHeader";
 import FieldNumInput from "components/atoms/FieldNumInput";
 import FieldInput from "components/atoms/FieldInput";
-import styled from "styled-components";
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 1em;
-`;
+import { Grid, Box, FormLabel } from "@chakra-ui/core";
 
 const SkuInventoryInputContainer = (): JSX.Element => {
   return (
     <SectionCard>
       <SectionHeader>Inventory</SectionHeader>
-      <Grid>
-        <div>
-          <label>Qty</label>
+      <Grid templateColumns="1fr 1fr" gap="1em">
+        <Box>
+          <FormLabel>Qty</FormLabel>
           <FieldNumInput name="qty" />
-        </div>
-        <div>
-          <label>Bar Code</label>
+        </Box>
+        <Box>
+          <FormLabel>Bar Code</FormLabel>
           <FieldInput name="barCode" />
-        </div>
-        <div>
+        </Box>
+        <Box>
           <label>External Id</label>
           <FieldInput name="externalId" />
-        </div>
+        </Box>
       </Grid>
     </SectionCard>
   );

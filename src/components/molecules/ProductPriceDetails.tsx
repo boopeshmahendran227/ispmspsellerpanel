@@ -1,20 +1,8 @@
-import styled from "styled-components";
 import { formatPrice } from "utils/misc";
 import SectionHeader from "../atoms/SectionHeader";
 import SectionCard from "../atoms/SectionCard";
 import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  grid-gap: 0.4em;
-`;
-
-const Key = styled.div`
-  font-weight: bold;
-`;
-
-const Value = styled.div``;
+import { Grid, Box } from "@chakra-ui/core";
 
 interface ProductPriceDetailsProps {
   minPrice: number;
@@ -29,11 +17,11 @@ const ProductPriceDetails = (props: ProductPriceDetailsProps): JSX.Element => {
       <SectionHeaderContainer>
         <SectionHeader>Price Details</SectionHeader>
       </SectionHeaderContainer>
-      <Grid>
-        <Key>Min Price</Key>
-        <Value>{formatPrice(minPrice)}</Value>
-        <Key>Max Price</Key>
-        <Value>{formatPrice(maxPrice)}</Value>
+      <Grid templateColumns="200px 1fr" gap="0.4em">
+        <Box fontWeight="bold">Min Price</Box>
+        <Box>{formatPrice(minPrice)}</Box>
+        <Box fontWeight="bold">Max Price</Box>
+        <Box>{formatPrice(maxPrice)}</Box>
       </Grid>
     </SectionCard>
   );

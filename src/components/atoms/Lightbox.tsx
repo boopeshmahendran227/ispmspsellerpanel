@@ -1,5 +1,6 @@
 import { SRLWrapper } from "simple-react-lightbox";
 import { ImageType } from "react-images-uploading";
+import { Box, Image, Link } from "@chakra-ui/core";
 
 interface LightboxProps {
   images: ImageType[];
@@ -10,13 +11,13 @@ const Lightbox = (props: LightboxProps): JSX.Element => {
 
   return (
     <SRLWrapper>
-      <div>
+      <Box>
         {images.map((image) => (
-          <a key={image.key}>
-            <img src={image.dataURL} style={{ display: "none" }} />
-          </a>
+          <Link key={image.key}>
+            <Image src={image.dataURL} style={{ display: "none" }} />
+          </Link>
         ))}
-      </div>
+      </Box>
     </SRLWrapper>
   );
 };

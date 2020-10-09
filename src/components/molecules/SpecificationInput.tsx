@@ -1,7 +1,7 @@
 import InputLabel from "../atoms/InputLabel";
-import CSSConstants from "../../constants/CSSConstants";
 import FieldInput from "../atoms/FieldInput";
 import FieldEditableArray from "./FieldEditableArray";
+import { Box, Heading, Divider, Grid } from "@chakra-ui/core";
 
 const SpecificationInput = () => {
   const handleAddSpecGroup = (arrayHelpers) => {
@@ -19,19 +19,20 @@ const SpecificationInput = () => {
   };
 
   return (
-    <div className="container">
-      <header>Specification</header>
+    <Box m="3em 0" fontSize="1.1rem">
+      <Heading size="lg">Specification</Heading>
+      <Divider borderWidth="3px" />
       <FieldEditableArray
         name="specification.itemGroups"
         headers={[]}
         renderInputRow={(groupIndex) => (
-          <div className="specGroupContainer">
-            <div className="specGroupInput">
+          <Box ml="0.3em" className="specGroupContainer">
+            <Grid templateColumns="200px 200px" alignItems="center">
               <InputLabel label="Group name" />
               <FieldInput
                 name={`specification.itemGroups.${groupIndex}.name`}
               />
-            </div>
+            </Grid>
             <FieldEditableArray
               headers={["S.no", "Key", "Value"]}
               name={`specification.itemGroups.${groupIndex}.items`}
@@ -53,34 +54,12 @@ const SpecificationInput = () => {
               )}
               label="Specification Item"
             />
-          </div>
+          </Box>
         )}
         onAdd={handleAddSpecGroup}
         label="Specification Group"
       />
-      <style jsx>{`
-        .container {
-          margin: 3em 0;
-          font-size: 1.1rem;
-        }
-        header {
-          font-weight: bold;
-          font-size: 1.3rem;
-          border-bottom: 1px solid ${CSSConstants.borderColor};
-          padding: 0.3em;
-          margin-bottom: 1em;
-        }
-        .specGroupContainer {
-          margin-left: 3em;
-        }
-        .specGroupInput {
-          display: grid;
-          grid-template-columns: 200px 200px;
-          align-items: center;
-          font-size: 1.1rem;
-        }
-      `}</style>
-    </div>
+    </Box>
   );
 };
 

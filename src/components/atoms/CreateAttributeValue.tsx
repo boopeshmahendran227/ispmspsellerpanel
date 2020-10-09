@@ -4,6 +4,7 @@ import { useState } from "react";
 import Button from "./Button";
 import CSSConstants from "../../constants/CSSConstants";
 import classNames from "classnames";
+import { Flex, Input, Link } from "@chakra-ui/core";
 
 interface DispatchProps {
   addAttributeValue: (attributeId: number, value: string) => void;
@@ -29,19 +30,19 @@ const CreateAttributeValue = (props: CreateAttributeValueProps) => {
   });
 
   return (
-    <div className="container">
+    <Flex alignItems="center" className="container">
       <a className={classes} onClick={() => setShowInput(true)}>
         Create New Value
       </a>
       {showInput && (
-        <div className="inputContainer">
-          <input
+        <Flex alignItems="center" ml="0.5rem">
+          <Input
             type="text"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-          ></input>
+          />
           <Button onClick={handleAdd}>Add</Button>
-        </div>
+        </Flex>
       )}
       <style jsx>{`
         a {
@@ -53,12 +54,8 @@ const CreateAttributeValue = (props: CreateAttributeValueProps) => {
           font-weight: bold;
           color: ${CSSConstants.primaryTextColor};
         }
-        .inputContainer {
-          display: flex;
-          align-items: center;
-        }
       `}</style>
-    </div>
+    </Flex>
   );
 };
 

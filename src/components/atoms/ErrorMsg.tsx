@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Flex, Box } from "@chakra-ui/core";
 
 interface ErrorMsgProps {
   text?: string;
@@ -6,23 +7,14 @@ interface ErrorMsgProps {
 
 const ErrorMsg = (props: ErrorMsgProps) => {
   return (
-    <div className="container">
-      <span>{props.text}</span>
-      <style jsx>{`
-        .container {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          min-height: 200px;
-        }
-      `}</style>
-    </div>
+    <Flex direction="column" justify="center" alignItems="center" minH="200px">
+      <Box as="span">{props.text}</Box>
+    </Flex>
   );
 };
 
 ErrorMsg.defaultProps = {
-  text: "Something is not right. Please try again"
+  text: "Something is not right. Please try again",
 };
 
 export default ErrorMsg;

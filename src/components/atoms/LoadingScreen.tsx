@@ -3,6 +3,15 @@ import { connect } from "react-redux";
 import { RootState } from "../../reducers";
 import CSSConstants from "../../constants/CSSConstants";
 import { getLoadingScreenOpen } from "../../selectors/ui";
+import {
+  Box,
+  Drawer,
+  DrawerBody,
+  DrawerOverlay,
+  DrawerContent,
+  Flex,
+} from "@chakra-ui/core";
+import Loader from "./Loader";
 
 interface StateProps {
   open: boolean;
@@ -16,28 +25,19 @@ const LoadingScreen = (props: LoadingScreenProps) => {
   }
 
   return (
-    <div className="container">
-      <img className="loader" src="/icons/loader.svg" />
-      <div className="msg">Processing...Please wait</div>
-      <style jsx>{`
-        .container {
-          position: fixed;
-          background: white;
-          z-index: 10001;
-          width: 100%;
-          height: 100vh;
-          opacity: 0.8;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          color: ${CSSConstants.primaryColor};
-        }
-        .loader {
-          width: 2rem;
-        }
-      `}</style>
-    </div>
+    <Drawer isOpen={props.open} placement="top" size="full" isFullHeight>
+      <DrawerOverlay />
+      <DrawerContent background="rgba(255, 255, 255, 0.8)">
+        <DrawerBody>
+          <Flex direction="column" h="100%" justify="center">
+            <Loader />
+            <Box textAlign="center" color={CSSConstants.primaryColor}>
+              Processing...Please wait
+            </Box>
+          </Flex>
+        </DrawerBody>
+      </DrawerContent>
+    </Drawer>
   );
 };
 

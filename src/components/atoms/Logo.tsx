@@ -1,30 +1,24 @@
 import Link from "next/link";
 import LogoIcon from "../../../public/icons/logo2.png";
-
+import { Image, Box, Link as ChakraLink } from "@chakra-ui/core";
 const Logo = () => {
   return (
     <Link href="/">
-      <a className="container">
-        <img className="logo" src={LogoIcon} />
-        &nbsp;<span> Sellers</span>
-        <style jsx>{`
-          .container {
-            font-size: 1.5rem;
-            font-family: "Roboto";
-            color: #202649;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-          }
-          span {
-            font-size: 2rem;
-            font-weight: 300;
-          }
-          .logo {
-            height: 2.2rem;
-          }
-        `}</style>
-      </a>
+      <ChakraLink
+        fontSize="1.5rem"
+        fontFamily="Roboto"
+        color="#202649"
+        textDecoration="none"
+        display="flex"
+        alignItems="center"
+        _hover={{ textDecoration: "none" }}
+      >
+        <Image h="2.2rem" className="logo" src={LogoIcon} />
+        &nbsp;
+        <Box as="span" fontSize="2.2rem" fontWeight="500">
+          Sellers
+        </Box>
+      </ChakraLink>
     </Link>
   );
 };

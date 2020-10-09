@@ -25,7 +25,7 @@ const presets = [
 const DatePicker = (props: DatePickerProps) => {
   const renderDatePresets = () => {
     return (
-      <Box p="0.6em" className="buttonPanel">
+      <Box p="0.6em">
         {presets.map(({ text, value }) => {
           const isActive = value.isSame(props.value, "date");
 

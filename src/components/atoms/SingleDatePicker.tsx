@@ -1,6 +1,7 @@
 import { DayPickerSingleDateController } from "react-dates";
 import moment from "moment";
 import Button from "./Button";
+import { Box } from "@chakra-ui/core";
 
 interface SingleDatePickerProps {
   onChange: (date: moment.Moment) => void;
@@ -23,7 +24,7 @@ const presets = [
 const SingleDatePicker = (props: SingleDatePickerProps) => {
   const renderDatePresets = () => {
     return (
-      <div className="buttonPanel">
+      <Box p="0.6em">
         {presets.map(({ text, value }) => {
           const isActive = value.isSame(props.value, "date");
 
@@ -38,12 +39,7 @@ const SingleDatePicker = (props: SingleDatePickerProps) => {
             </Button>
           );
         })}
-        <style jsx>{`
-          .buttonPanel {
-            padding: 0.6em;
-          }
-        `}</style>
-      </div>
+      </Box>
     );
   };
 
