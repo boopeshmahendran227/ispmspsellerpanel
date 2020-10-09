@@ -40,7 +40,7 @@ const YourVariantsTable = (
         </FlexContainer>
       </SectionHeaderContainer>
       {skus.map((sku) => (
-        <YourSkuMini productId={productId} sku={sku} />
+        <YourSkuMini key={sku.skuId} productId={productId} sku={sku} />
       ))}
     </SectionCard>
   );

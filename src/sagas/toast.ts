@@ -21,6 +21,8 @@ import {
   UPDATE_SKU_FAILURE,
   CLONE_PRODUCT_FAILURE,
   CLONE_PRODUCT_SUCCESS,
+  UPDATE_TIER_PRICE_SUCCESS,
+  UPDATE_TIER_PRICE_FAILURE,
 } from "../constants/ActionTypes";
 import { put, take } from "redux-saga/effects";
 import ToastActions from "../actions/toast";
@@ -116,6 +118,14 @@ export const toasts = {
   [UPDATE_SKU_FAILURE]: {
     type: ToastType.error,
     msg: "Sku updation failed. Please try again",
+  },
+  [UPDATE_TIER_PRICE_SUCCESS]: {
+    type: ToastType.success,
+    msg: "Tier Price updated successfully",
+  },
+  [UPDATE_TIER_PRICE_FAILURE]: {
+    type: ToastType.error,
+    msg: "Tier Price updation failed. Please try again",
   },
 };
 

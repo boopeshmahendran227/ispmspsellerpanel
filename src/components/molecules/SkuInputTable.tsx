@@ -4,12 +4,14 @@ import CSSConstants from "../../constants/CSSConstants";
 import { ErrorMessage, FieldArray, useFormikContext } from "formik";
 import Button from "../atoms/Button";
 import { connect } from "react-redux";
-import UIActions from "../../actions/ui";
-import FieldInput from "../atoms/FieldInput";
-import ValidationErrorMsg from "../atoms/ValidationErrorMsg";
-import FieldNumInput from "../atoms/FieldNumInput";
-import FieldPriceInput from "../atoms/FieldPriceInput";
-import FieldPercentageInput from "../atoms/FieldPercentageInput";
+import UIActions from "../actions/ui";
+import FieldInput from "./FieldInput";
+import ValidationErrorMsg from "./ValidationErrorMsg";
+import FieldNumInput from "./FieldNumInput";
+import FieldPriceInput from "./FieldPriceInput";
+import FieldPercentageInput from "./FieldPercentageInput";
+import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
+import SectionHeader from "./atoms/SectionHeader";
 interface DispatchProps {
   showSkuModal: () => void;
 }
@@ -188,7 +190,9 @@ const SkuInputTable = (props: SkuInputTableProps) => {
 
   return (
     <div className="container">
-      <header>Variants</header>
+      <SectionHeaderContainer>
+        <SectionHeader>Variants</SectionHeader>
+      </SectionHeaderContainer>
       <div className="buttonContainer">
         <Button onClick={props.showSkuModal}>Generate Variants</Button>
       </div>

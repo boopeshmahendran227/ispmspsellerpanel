@@ -40,6 +40,9 @@ import {
   CLONE_PRODUCT_REQUEST,
   CLONE_PRODUCT_FAILURE,
   CLONE_PRODUCT_SUCCESS,
+  UPDATE_TIER_PRICE_REQUEST,
+  UPDATE_TIER_PRICE_FAILURE,
+  UPDATE_TIER_PRICE_SUCCESS,
 } from "../constants/ActionTypes";
 
 const openActionItems = [
@@ -56,6 +59,7 @@ const openActionItems = [
   ADD_SKU_REQUEST,
   UPDATE_SKU_REQUEST,
   CLONE_PRODUCT_REQUEST,
+  UPDATE_TIER_PRICE_REQUEST,
 ];
 
 const closeActions = [
@@ -85,6 +89,8 @@ const closeActions = [
   UPDATE_SKU_FAILURE,
   CLONE_PRODUCT_FAILURE,
   CLONE_PRODUCT_SUCCESS,
+  UPDATE_TIER_PRICE_SUCCESS,
+  UPDATE_TIER_PRICE_FAILURE,
 ];
 
 function* watchLoadingScreenShow() {

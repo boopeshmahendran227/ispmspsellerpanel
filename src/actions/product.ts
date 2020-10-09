@@ -6,6 +6,7 @@ import {
   ADD_ATTRIBUTE_VALUE_REQUEST,
   INIT_PRODUCT_CREATE,
   CLONE_PRODUCT,
+  UPDATE_TIER_PRICE_REQUEST,
 } from "../constants/ActionTypes";
 import {
   AddAttributeInterface,
@@ -14,6 +15,7 @@ import {
   SelectedAttributeValuesMap,
   ProductInputInterface,
   ProductCloneInterface,
+  TierPriceInterface,
 } from "../types/product";
 
 const addAttribute = (attribute: AddAttributeInterface): ProductActionType => {
@@ -72,6 +74,17 @@ const initProductCreate = (): ProductActionType => {
   };
 };
 
+const updateTierPrice = (
+  productId: number,
+  tierPrices: TierPriceInterface[]
+): ProductActionType => {
+  return {
+    type: UPDATE_TIER_PRICE_REQUEST,
+    productId,
+    tierPrices,
+  };
+};
+
 export default {
   addAttribute,
   addAttributeValue,
@@ -80,4 +93,5 @@ export default {
   addProduct,
   initProductCreate,
   cloneProduct,
+  updateTierPrice,
 };

@@ -48,6 +48,7 @@ const validationSchema = Yup.object({
   width: Yup.number().nullable().defined(),
   height: Yup.number().nullable().defined(),
   weight: Yup.number().nullable().defined(),
+  minOrderQty: Yup.number().nullable().defined(),
   attributes: Yup.array()
     .of(
       Yup.object({
@@ -172,6 +173,7 @@ const Sku = (props: SkuProps) => {
                     specialDiscount: skuToCopyFrom.specialDiscount,
                     specialDiscountPercentage:
                       skuToCopyFrom.specialDiscountPercentage,
+                    minOrderQty: skuToCopyFrom.minOrderQty,
                     attributes: attributes.map((attribute) => ({
                       attributeId: attribute.attributeId,
                       attributeName: attribute.attributeName,
@@ -203,6 +205,7 @@ const Sku = (props: SkuProps) => {
                     ecosystemIds: [],
                     specialDiscount: 0,
                     specialDiscountPercentage: 0,
+                    minOrderQty: 1,
                     attributes: attributes.map((attribute) => ({
                       attributeId: attribute.attributeId,
                       attributeName: attribute.attributeName,

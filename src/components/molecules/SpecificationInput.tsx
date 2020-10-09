@@ -1,7 +1,9 @@
 import InputLabel from "../atoms/InputLabel";
 import FieldInput from "../atoms/FieldInput";
 import FieldEditableArray from "./FieldEditableArray";
-import { Box, Heading, Divider, Grid } from "@chakra-ui/core";
+import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
+import SectionHeader from "./atoms/SectionHeader";
+import { Box, Grid } from "@chakra-ui/core";
 
 const SpecificationInput = () => {
   const handleAddSpecGroup = (arrayHelpers) => {
@@ -19,9 +21,10 @@ const SpecificationInput = () => {
   };
 
   return (
-    <Box m="3em 0" fontSize="1.1rem">
-      <Heading size="lg">Specification</Heading>
-      <Divider borderWidth="3px" />
+    <Box m="0.3em 0" fontSize="1.1rem">
+      <SectionHeaderContainer>
+        <SectionHeader>Specification</SectionHeader>
+      </SectionHeaderContainer>
       <FieldEditableArray
         name="specification.itemGroups"
         headers={[]}

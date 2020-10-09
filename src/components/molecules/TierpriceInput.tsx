@@ -2,9 +2,9 @@ import { ArrayHelpers } from "formik";
 import FieldNumInput from "../atoms/FieldNumInput";
 import FieldPercentageInput from "../atoms/FieldPercentageInput";
 import FieldEditableArray from "./FieldEditableArray";
-import CSSConstants from "../../constants/CSSConstants";
-import { Box, Heading, Divider } from "@chakra-ui/core";
-
+import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
+import SectionHeader from "./atoms/SectionHeader";
+import{Box}from "@chakra-ui/core"
 const TierPriceInput = () => {
   const addTierPrice = (arrayHelpers: ArrayHelpers) => {
     arrayHelpers.push({
@@ -30,9 +30,10 @@ const TierPriceInput = () => {
   };
 
   return (
-    <Box mb="3em">
-      <Heading size="lg">Tier Price</Heading>
-      <Divider borderWidth="3px" />
+    <Box mb="0.3em">
+      <SectionHeaderContainer>
+        <SectionHeader>Tier Price</SectionHeader>
+      </SectionHeaderContainer>
       <FieldEditableArray
         headers={["S.no", "MinQty", "Discount Percentage"]}
         name="tierPrices"

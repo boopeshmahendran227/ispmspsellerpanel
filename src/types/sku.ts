@@ -48,4 +48,5 @@ export interface UpdateSkuInterface {
   height: number | null;
   width: number | null;
   weight: number | null;
+  minOrderQty: number | null;
 }
