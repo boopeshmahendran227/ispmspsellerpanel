@@ -1,51 +1,27 @@
 import useSWR from "swr";
 import Loader from "components/atoms/Loader";
-import PageError from"../../../src/components/atoms/PageError";
+import PageError from "../../../src/components/atoms/PageError";
 import PageHeader from "../../../src/components/atoms/PageHeader";
 import WithAuth from "components/atoms/WithAuth";
 import { useRouter } from "next/router";
-import ProductMainInfo from "components/ProductMainInfo";
-import ProductPriceDetails from "components/ProductPriceDetails";
-import ProductAvailability from "components/ProductAvailability";
-import TierPrice from "components/TierPrice";
-import FAQ from "components/FAQ";
+import ProductMainInfo from "../../../src/components/molecules/ProductMainInfo";
+import ProductPriceDetails from "../../../src/components/molecules/ProductPriceDetails";
+import ProductAvailability from "../../../src/components/molecules/ProductAvailability";
+import TierPrice from "../../../src/components/molecules/TierPrice";
+import FAQ from "../../../src/components/molecules/FAQ";
 import styled from "styled-components";
 import BackLink from "components/atoms/BackLink";
 import { ProductDetailInterface, TierPriceInterface } from "types/product";
-import YourSkuTable from "components/YourSkuTable";
-import OtherSkusTable from "components/OtherSkusTable";
-import TierPriceInput from "components/TierpriceInput";
+import YourSkuTable from "../../../src/components/organism/YourSkuTable";
+import OtherSkusTable from "../../../src/components/molecules/OtherSkusTable";
+import TierPriceInput from "../../../src/components/molecules/TierpriceInput";
 import { Formik, Form } from "formik";
-import SectionCard from "components/SectionCard";
+import SectionCard from "../../../src/components/atoms/SectionCard";
 import Button from "components/atoms/Button";
 import * as Yup from "yup";
 import ProductActions from "actions/product";
 import { connect } from "react-redux";
-import{Box}from "@chakra-ui/core";
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-gap: 1.5em;
-`;
-
-const FlexContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  & > div {
-    margin-bottom: 1.5em;
-  }
-`;
-
-const Container = styled.div`
-  max-width: 900px;
-  margin: auto;
-`;
-
-const HeaderContainer = styled.div`
-  margin: 2em 0;
-`;
+import { Box, Grid, Stack } from "@chakra-ui/core";
 
 interface DispatchProps {
   updateTierPrice: (
@@ -104,47 +80,57 @@ const Product = (props: ProductProps) => {
         <BackLink href="/product">Products</BackLink>
         <PageHeader>{product.name}</PageHeader>
       </Box>
-      <Grid>
-        <FlexContainer>
-          <ProductMainInfo
-            name={product.name}
-            brand={product.brandName}
-            shortDescription={product.shortDescription}
-            longDescription={product.longDescription}
-          />
-          <ProductPriceDetails
-            minPrice={product.minPrice}
-            maxPrice={product.maxPrice}
-          />
-          <SectionCard>
-            <Formik
-              initialValues={{
-                tierPrices: product.tierPrice,
-              }}
-              onSubmit={onSubmit}
-              validationSchema={validationSchema}
-            >
-              {() => (
-                <Form>
-                  <TierPriceInput />
-                  <Button isSubmitButton={true}>SAVE</Button>
-                </Form>
-              )}
-            </Formik>
-          </SectionCard>
-          <YourSkuTable skus={product.skuDetails} productId={product.id} />
-          <OtherSkusTable
-            skus={product.unOwnedSkuDetails}
-            productId={product.id}
-          />
-        </FlexContainer>
-        <FlexContainer>
+      <Grid templateColumns="2fr 1fr" gridGap="1.5em">
+        <Stack spacing={3}>
+          <Box>
+            <ProductMainInfo
+              name={product.name}
+              brand={product.brandName}
+              shortDescription={product.shortDescription}
+              longDescription={product.longDescription}
+            />
+          </Box>
+          <Box>
+            <ProductPriceDetails
+              minPrice={product.minPrice}
+              maxPrice={product.maxPrice}
+            />
+          </Box>
+          <Box>
+            <SectionCard>
+              <Formik
+                initialValues={{
+                  tierPrices: product.tierPrice,
+                }}
+                onSubmit={onSubmit}
+                validationSchema={validationSchema}
+              >
+                {() => (
+                  <Form>
+                    <TierPriceInput />
+                    <Button isSubmitButton={true}>SAVE</Button>
+                  </Form>
+                )}
+              </Formik>
+            </SectionCard>
+          </Box>
+          <Box>
+            <YourSkuTable skus={product.skuDetails} productId={product.id} />
+          </Box>
+          <Box>
+            <OtherSkusTable
+              skus={product.unOwnedSkuDetails}
+              productId={product.id}
+            />
+          </Box>
+        </Stack>
+        <Stack>
           <ProductAvailability
             ecosystems={product.visibilityInfo.ecosystemDetail}
           />
           <TierPrice tierPrice={product.tierPrice} />
           <FAQ faqs={product.faqs} />
-        </FlexContainer>
+        </Stack>
       </Grid>
       {/* <Specification specification={product.specification} /> */}
     </Box>

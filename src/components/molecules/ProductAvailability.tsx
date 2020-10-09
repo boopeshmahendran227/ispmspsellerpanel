@@ -20,7 +20,7 @@ const ProductAvailability = (props: ProductAvailabilityProps): JSX.Element => {
         </Box>
       </SectionHeaderContainer>
       {ecosystems.map((ecosystem) => (
-        <Box textTransform="capitalize" m="0.5em 0">
+        <Box textTransform="capitalize" m="0.5em 0" key={ecosystem.id}>
           {ecosystem.name}
         </Box>
       ))}

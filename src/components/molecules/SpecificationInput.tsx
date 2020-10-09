@@ -1,8 +1,8 @@
 import InputLabel from "../atoms/InputLabel";
 import FieldInput from "../atoms/FieldInput";
 import FieldEditableArray from "./FieldEditableArray";
-import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
-import SectionHeader from "./atoms/SectionHeader";
+import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
+import SectionHeader from "../atoms/SectionHeader";
 import { Box, Grid } from "@chakra-ui/core";
 
 const SpecificationInput = () => {

@@ -1,16 +1,16 @@
 import { Fragment } from "react";
 import useSWR from "swr";
 import Loader from "components/atoms/Loader";
-import PageError from "components/atoms/PageError";
-import PageHeader from "components/atoms/PageHeader";
+import PageError from "../../../../src/components/atoms/PageError";
+import PageHeader from "../../../../src/components/atoms/PageHeader";
 import WithAuth from "components/atoms/WithAuth";
 import { useRouter } from "next/router";
-import SkuList from "components/molecules/SkuList";
+import SkuList from "../../../../src/components/molecules/SkuList";
 import { Formik, Form } from "formik";
 import SkuProductInfo from "components/atoms/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/atoms/SectionHeader";
-import SectionCard from "components/atoms/SectionCard";
+import SectionCard from "../../../../src/components/atoms/SectionCard";
 import { ProductDetailInterface } from "types/product";
 import _ from "lodash";
 import FieldSelect from "components/molecules/FieldSelect";
@@ -22,12 +22,12 @@ import { UpdateSkuInterface } from "types/sku";
 import Button from "components/atoms/Button";
 import * as Yup from "yup";
 import styled from "styled-components";
-import SkuDimensionsInputContainer from "components/molecules/SkuDimensionsInputContainer";
+import SkuDimensionsInputContainer from "../../../../src/components/molecules/SkuDimensionsInputContainer";
 import SkuInventoryInputContainer from "components/molecules/SkuInventoryInputContainer";
 import SkuPricingInputContainer from "components/molecules/SkuPricingInputContainer";
-import { Box,Text } from "@chakra-ui/core";
-import FieldNumInput from "components/atoms/FieldNumInput"
-import FieldPercentageInput from "components/atoms/FieldPercentageInput"
+import { Box, Text, Stack, Grid, FormLabel } from "@chakra-ui/core";
+import FieldNumInput from "../../../../src/components/atoms/FieldNumInput";
+import FieldPercentageInput from "components/atoms/FieldPercentageInput";
 
 interface DispatchProps {
   updateSku: (sku: UpdateSkuInterface) => void;
@@ -55,29 +55,6 @@ const validationSchema = Yup.object({
 }).defined();
 
 type InputInterface = Yup.InferType<typeof validationSchema>;
-
-const FlexRowContainer = styled.div`
-  display: flex;
-
-  & > div {
-    margin-right: 0.6em;
-  }
-`;
-
-const FlexColumnContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  & > div {
-    margin-bottom: 1.5em;
-  }
-`;
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 1em;
-`;
 
 const Sku = (props: SkuProps): JSX.Element => {
   const router = useRouter();
@@ -120,7 +97,7 @@ const Sku = (props: SkuProps): JSX.Element => {
         </BackLink>
         <PageHeader>{currentSkuId}</PageHeader>
       </Box>
-      <FlexRowContainer>
+      <Stack direction="row" spacing={3}>
         <Box>
           <SkuProductInfo
             productId={product.id}
@@ -173,7 +150,7 @@ const Sku = (props: SkuProps): JSX.Element => {
           >
             {() => (
               <Form>
-                <FlexColumnContainer>
+                <Stack>
                   <SectionCard>
                     <SectionHeader>Options</SectionHeader>
                     {attributes.map((attribute, index) => (
@@ -194,15 +171,15 @@ const Sku = (props: SkuProps): JSX.Element => {
                   <SkuPricingInputContainer />
                   <SectionCard>
                     <SectionHeader>Special Discount</SectionHeader>
-                    <Grid>
-                      <div>
-                        <label>Special Discount Price</label>
+                    <Grid templateColumns="1fr 1fr" grid-gap="1em">
+                      <Box>
+                        <FormLabel>Special Discount Price</FormLabel>
                         <FieldNumInput name="specialDiscount" />
-                      </div>
-                      <div>
-                        <label>Special Discount Percentage</label>
+                      </Box>
+                      <Box>
+                        <FormLabel>Special Discount Percentage</FormLabel>
                         <FieldPercentageInput name="specialDiscountPercentage" />
-                      </div>
+                      </Box>
                     </Grid>
                   </SectionCard>
                   <SkuInventoryInputContainer />
@@ -217,18 +194,13 @@ const Sku = (props: SkuProps): JSX.Element => {
                     />
                   </SectionCard>
                   <SkuDimensionsInputContainer />
-                </FlexColumnContainer>
+                </Stack>
                 <Button isSubmitButton={true}>Save</Button>
               </Form>
             )}
           </Formik>
         </Box>
-      </FlexRowContainer>
-      <style jsx>{`
-        .flexContainer {
-          display: flex;
-        }
-      `}</style>
+      </Stack>
     </Box>
   );
 };

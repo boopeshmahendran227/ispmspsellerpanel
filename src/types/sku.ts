@@ -27,6 +27,7 @@ export interface AddSkuInterface {
   height: number | null;
   width: number | null;
   weight: number | null;
+  minOrderQty: number | null;
 }
 
 export interface AttributeValueID {

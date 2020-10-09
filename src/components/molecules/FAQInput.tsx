@@ -1,9 +1,9 @@
 import FieldTextArea from "../atoms/FieldTextArea";
 import FieldEditableArray from "./FieldEditableArray";
 import { ArrayHelpers } from "formik";
-import CSSConstants from "../constants/CSSConstants";
-import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
-import SectionHeader from "./atoms/SectionHeader";
+import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
+import SectionHeader from "../atoms/SectionHeader";
+import { Box } from "@chakra-ui/core";
 
 const FAQInput = () => {
   const addFaq = (arrayHelpers: ArrayHelpers) => {
@@ -27,7 +27,7 @@ const FAQInput = () => {
     );
   };
   return (
-    <div className="container">
+    <Box mt="3em">
       <SectionHeaderContainer>
         <SectionHeader>FAQ</SectionHeader>
       </SectionHeaderContainer>
@@ -38,19 +38,7 @@ const FAQInput = () => {
         renderInputRow={renderFaqRow}
         label="FAQ"
       />
-      <style jsx>{`
-        .container {
-          margin-top: 3em;
-        }
-        header {
-          font-weight: bold;
-          font-size: 1.3rem;
-          border-bottom: 1px solid ${CSSConstants.borderColor};
-          padding: 0.3em;
-          margin-bottom: 1em;
-        }
-      `}</style>
-    </div>
+    </Box>
   );
 };
 

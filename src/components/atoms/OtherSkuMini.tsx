@@ -2,7 +2,7 @@ import RelativeImg from "./RelativeImg";
 import { ProductDetailSkuDetail } from "types/product";
 import Link from "next/link";
 import { AttributeValueID } from "types/sku";
-import { Box, Flex, Button } from "@chakra-ui/core";
+import { Flex, Box, Button } from "@chakra-ui/core";
 
 interface OtherSkuMiniProps {
   productId: number;
@@ -14,7 +14,7 @@ const OtherSkuMini = (props: OtherSkuMiniProps): JSX.Element => {
 
   return (
     <Flex p="0.8em 0" justify="space-between">
-      <Flex alignItems="flex-start">
+      <Flex mt="0.2em">
         <Box w="60px" h="80px" textAlign="center" mr="0.2em">
           <RelativeImg src={sku.imageRelativePaths[0]} />
         </Box>
@@ -22,7 +22,7 @@ const OtherSkuMini = (props: OtherSkuMiniProps): JSX.Element => {
           <Box fontWeight="bold">{sku.skuId}</Box>
           <Box mt="0.4em" color="secondaryTextColor">
             {sku.attributeValueIds.map((attributeValueId: AttributeValueID) => (
-              <Box mt="0.2em">
+              <Box mt="0.2em" key={attributeValueId.attributeId}>
                 {attributeValueId.attributeName + ": " + attributeValueId.value}
               </Box>
             ))}

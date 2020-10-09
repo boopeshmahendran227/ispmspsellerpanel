@@ -4,14 +4,16 @@ import CSSConstants from "../../constants/CSSConstants";
 import { ErrorMessage, FieldArray, useFormikContext } from "formik";
 import Button from "../atoms/Button";
 import { connect } from "react-redux";
-import UIActions from "../actions/ui";
-import FieldInput from "./FieldInput";
-import ValidationErrorMsg from "./ValidationErrorMsg";
-import FieldNumInput from "./FieldNumInput";
-import FieldPriceInput from "./FieldPriceInput";
-import FieldPercentageInput from "./FieldPercentageInput";
-import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
-import SectionHeader from "./atoms/SectionHeader";
+import UIActions from "../../actions/ui";
+import FieldInput from "../atoms/FieldInput";
+import ValidationErrorMsg from "../atoms/ValidationErrorMsg";
+import FieldNumInput from "../atoms/FieldNumInput";
+import FieldPriceInput from "../atoms/FieldPriceInput";
+import FieldPercentageInput from "../atoms/FieldPercentageInput";
+import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
+import SectionHeader from "../atoms/SectionHeader";
+import { Box } from "@chakra-ui/core";
+
 interface DispatchProps {
   showSkuModal: () => void;
 }
@@ -186,16 +188,17 @@ const SkuInputTable = (props: SkuInputTableProps) => {
   const values: ProductInputInterface = useFormikContext<
     ProductInputInterface
   >().values;
+
   const skus = values.skus;
 
   return (
-    <div className="container">
+    <Box m="3em 0" fontSize="1.1rem">
       <SectionHeaderContainer>
         <SectionHeader>Variants</SectionHeader>
       </SectionHeaderContainer>
-      <div className="buttonContainer">
+      <Box>
         <Button onClick={props.showSkuModal}>Generate Variants</Button>
-      </div>
+      </Box>
       {skus.length > 0 && (
         <SortableTable
           initialSortData={{
@@ -209,20 +212,7 @@ const SkuInputTable = (props: SkuInputTableProps) => {
         />
       )}
       <ErrorMessage component={ValidationErrorMsg} name="skus" />
-      <style jsx>{`
-        .container {
-          margin: 3em 0;
-          font-size: 1.1rem;
-        }
-        header {
-          font-weight: bold;
-          font-size: 1.3rem;
-          border-bottom: 1px solid ${CSSConstants.borderColor};
-          padding: 0.3em;
-          margin-bottom: 1em;
-        }
-      `}</style>
-    </div>
+    </Box>
   );
 };
 
