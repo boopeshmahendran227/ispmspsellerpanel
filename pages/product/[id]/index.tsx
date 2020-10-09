@@ -8,7 +8,7 @@ import ProductMainInfo from "components/molecules/ProductMainInfo";
 import ProductPriceDetails from "components/molecules/ProductPriceDetails";
 import ProductAvailability from "components/molecules/ProductAvailability";
 import Specification from "components/molecules/Specification";
-import TierPrice from "components/atoms/TierPrice";
+import TierPrice from "components/molecules/TierPrice";
 import FAQ from "components/molecules/FAQ";
 import BackLink from "components/atoms/BackLink";
 import { ProductDetailInterface } from "types/product";

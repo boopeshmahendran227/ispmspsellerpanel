@@ -7,10 +7,13 @@ import {
 } from "../../types/product";
 import Loader from "components/atoms/Loader";
 import MultiSelect from "components/atoms/MultiSelect";
-import Button from "../atoms/Button";
 import PageError from "../atoms/PageError";
 import { useFormikContext } from "formik";
 import _ from "lodash";
+import { Box, Button } from "@chakra-ui/core";
+import React from "react";
+import PageHeaderContainer from "components/atoms/PageHeaderContainer";
+import PageHeader from "components/atoms/PageHeader";
 
 interface SelectAttributesProps {
   selectedAttributes: SelectedAttribute[];
@@ -77,36 +80,24 @@ const SelectAttributes = (props: SelectAttributesProps) => {
   };
 
   return (
-    <div className="container">
-      <header>
-        Step 1: Select Attributes
-        <div className="buttonContainer">
-          <Button onClick={() => props.showAttributeModal()}>
-            Create New Attribute
-          </Button>
-        </div>
-      </header>
-      <div className="selectContainer">
+    <Box>
+      <PageHeaderContainer>
+        <PageHeader> Step 1: Select Attributes</PageHeader>
+        <Button
+          variantColor="primaryColorVariant"
+          onClick={() => props.showAttributeModal()}
+        >
+          Create New Attribute
+        </Button>
+      </PageHeaderContainer>
+      <Box>
         <MultiSelect
           value={selectedOption}
           onChange={handleChange}
           options={attributeOptions}
         />
-      </div>
-      <style jsx>{`
-        header {
-          font-size: 1.2rem;
-          font-weight: bold;
-          margin-bottom: 1em;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-        .buttonContainer {
-          font-size: 0.9rem;
-        }
-      `}</style>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

@@ -6,10 +6,11 @@ import {
 } from "../../types/product";
 import useSWR from "swr";
 import Loader from "components/atoms/Loader";
-import CSSConstants from "../../constants/CSSConstants";
 import MultiSelect from "../atoms/MultiSelect";
 import CreateAttributeValue from "../atoms/CreateAttributeValue";
 import PageError from "../atoms/PageError";
+import { Box, Text } from "@chakra-ui/core";
+import PageHeader from "components/atoms/PageHeader";
 
 interface SelectAttributeValuesProps {
   selectedAttributes: SelectedAttribute[];
@@ -46,12 +47,12 @@ const SelectAttributeValues = (props: SelectAttributeValuesProps) => {
   };
 
   return (
-    <div className="container">
-      <header>Step 2: Select Attribute Values </header>
-      <div className="subHeader">
+    <Box>
+      <PageHeader>Step 2: Select Attribute Values </PageHeader>
+      <Text>
         Select values from each attribute to include in the product. Each unique
         combination of values creates a unique Product SKUs
-      </div>
+      </Text>
       {props.selectedAttributes.map((selectedAttribute) => {
         const attribute = attributes.find(
           (attribute) => attribute.id === selectedAttribute.attributeId
@@ -64,8 +65,10 @@ const SelectAttributeValues = (props: SelectAttributeValuesProps) => {
         const attributeValues = attribute.values || [];
 
         return (
-          <div className="attributeContainer">
-            <div className="name">{attribute.name}</div>
+          <Box border="1px" borderColor="borderColor" p="0.7em" m=" 1em 0">
+            <Box fontSize="1.1rem" fontWeight="bold">
+              {attribute.name}
+            </Box>
             <MultiSelect
               value={props.selectedAttributeValues[
                 attribute.id
@@ -77,26 +80,10 @@ const SelectAttributeValues = (props: SelectAttributeValuesProps) => {
               }))}
             />
             <CreateAttributeValue attributeId={attribute.id} />
-          </div>
+          </Box>
         );
       })}
-      <style jsx>{`
-        header {
-          font-size: 1.2rem;
-          font-weight: bold;
-          margin-bottom: 1em;
-        }
-        .attributeContainer {
-          border: 1px solid ${CSSConstants.borderColor};
-          padding: 0.7em;
-          margin: 1em 0;
-        }
-        .attributeContainer .name {
-          font-size: 1.1rem;
-          font-weight: bold;
-        }
-      `}</style>
-    </div>
+    </Box>
   );
 };
 

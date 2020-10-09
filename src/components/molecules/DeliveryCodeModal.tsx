@@ -1,5 +1,3 @@
-import Modal from "../atoms/Modal";
-import Button from "components/atoms/Button";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers";
 import { getDeliveryCodeModalOpen } from "../../selectors/ui";
@@ -7,7 +5,17 @@ import UIActions from "../../actions/ui";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import FieldInput from "../atoms/FieldInput";
-import CSSConstants from "../../constants/CSSConstants";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  Box,
+  Button,
+  Heading,
+} from "@chakra-ui/core";
 
 interface StateProps {
   open: boolean;
@@ -27,58 +35,38 @@ const DeliveryCodeModal = (props: DeliveryCodeModalProps) => {
   };
 
   return (
-    <Modal open={props.open} onClose={props.onCancel}>
-      <div className="container">
-        <header>Delivery Code</header>
-        <div className="subHeader">
-          Enter Delivery Code to Mark as Delivered
-        </div>
-        <Formik
-          initialValues={{
-            deliveryCode: "",
-          }}
-          onSubmit={handleSubmit}
-          validationSchema={Yup.object().shape({
-            deliveryCode: Yup.string().required("Delivery Code is required"),
-          })}
-          enableReinitialize={true}
-        >
-          {() => (
-            <Form>
-              <div className="gridContainer">
+    <Modal isOpen={props.open} onClose={props.onCancel} size="sm" isCentered>
+      <ModalOverlay />
+      <ModalContent borderRadius="16px">
+        <ModalHeader>Delivery Code</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <Heading color="secondaryTextColor" size="sm">
+            Enter Delivery Code to Mark as Delivered
+          </Heading>
+          <Formik
+            initialValues={{
+              deliveryCode: "",
+            }}
+            onSubmit={handleSubmit}
+            validationSchema={Yup.object().shape({
+              deliveryCode: Yup.string().required("Delivery Code is required"),
+            })}
+            enableReinitialize={true}
+          >
+            {() => (
+              <Form>
                 <FieldInput name="deliveryCode" />
-              </div>
-              <div>
-                <Button isSubmitButton={true}>Submit</Button>
-              </div>
-            </Form>
-          )}
-        </Formik>
-      </div>
-      <style jsx>{`
-        header {
-          margin: 1em 0;
-          font-weight: bold;
-          font-size: 1.3rem;
-          text-transform: uppercase;
-        }
-        .subHeader {
-          font-weight: 500;
-          font-size: 1.1rem;
-          margin: 0.3em 0;
-          color: ${CSSConstants.secondaryTextColor};
-        }
-        .container {
-          margin: 1em;
-          min-width: 270px;
-        }
-        .gridContainer {
-          display: grid;
-          grid-template-columns: 200px 1fr;
-          align-items: center;
-          font-size: 1.1rem;
-        }
-      `}</style>
+                <Box textAlign="center">
+                  <Button type="submit" variantColor="primaryColorVariant">
+                    Submit
+                  </Button>
+                </Box>
+              </Form>
+            )}
+          </Formik>
+        </ModalBody>
+      </ModalContent>
     </Modal>
   );
 };

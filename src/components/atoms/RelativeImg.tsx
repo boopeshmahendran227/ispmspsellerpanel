@@ -1,4 +1,5 @@
 import { getProductImageUrl } from "utils/url";
+import { Image } from "@chakra-ui/core";
 
 interface RelativeImgProps {
   src: string;
@@ -8,17 +9,13 @@ const RelativeImg = (props: RelativeImgProps) => {
   const src = getProductImageUrl(props.src);
 
   return (
-    <>
-      <img src={src} />
-      <style jsx>{`
-        img {
-          display: inline-block;
-          max-width: 100%;
-          max-height: 100%;
-          object-fit: contain;
-        }
-      `}</style>
-    </>
+    <Image
+      display="inline-block"
+      maxW="100%"
+      maxH="100%"
+      objectFit="contain"
+      src={src}
+    />
   );
 };
 

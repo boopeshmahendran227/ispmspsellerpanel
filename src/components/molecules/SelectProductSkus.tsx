@@ -8,6 +8,7 @@ import {
   CouponProductInputInterface,
 } from "../../types/coupon";
 import FieldNumInput from "../atoms/FieldNumInput";
+import { Grid, Box } from "@chakra-ui/core";
 
 const SelectProductSkus = () => {
   const values: CouponInputInterface = useFormikContext<CouponInputInterface>()
@@ -36,16 +37,20 @@ const SelectProductSkus = () => {
   };
 
   return (
-    <div className="container">
+    <Box m="0.3 0">
       <header>Products</header>
       <FieldArray
         name="products"
         render={(arrayHelpers) => (
-          <div className="inputContainer">
+          <Box className="inputContainer">
             {products.length > 0 &&
               products.map((product, productIndex) => (
-                <div className="productContainer">
-                  <div className="productInput">
+                <Box m="1em 5em">
+                  <Grid
+                    templateColumns="200px 200px 100px"
+                    alignItems="center"
+                    fontSize="1.1rem"
+                  >
                     <InputLabel label="Product Id" />
                     <FieldNumInput
                       name={`products.${productIndex}.productId`}
@@ -58,7 +63,7 @@ const SelectProductSkus = () => {
                     >
                       <i className="fa fa-trash" aria-hidden="true" />
                     </button>
-                  </div>
+                  </Grid>
                   <FieldArray
                     name={`products.${productIndex}.skuIds`}
                     render={(arrayHelpers) => (
@@ -99,13 +104,13 @@ const SelectProductSkus = () => {
                             </tbody>
                           </table>
                         )}
-                        <div className="buttonContainer">
+                        <Box className="buttonContainer">
                           <Button onClick={() => handleAddSku(arrayHelpers)}>
                             {product.skuIds.length === 0
                               ? "Add SKUs"
                               : "Add one more SKU"}
                           </Button>
-                        </div>
+                        </Box>
                       </>
                     )}
                   />
@@ -113,14 +118,14 @@ const SelectProductSkus = () => {
                     component={ValidationErrorMsg}
                     name={`products.${productIndex}.skuIds`}
                   />
-                </div>
+                </Box>
               ))}
-            <div className="buttonContainer">
+            <Box className="buttonContainer">
               <Button onClick={() => handleAddProduct(arrayHelpers)}>
                 {products.length === 0 ? "Add Product" : "Add one more Product"}
               </Button>
-            </div>
-          </div>
+            </Box>
+          </Box>
         )}
       />
       <ErrorMessage component={ValidationErrorMsg} name={`products`} />
@@ -144,7 +149,7 @@ const SelectProductSkus = () => {
           font-size: 1.1rem;
         }
       `}</style>
-    </div>
+    </Box>
   );
 };
 

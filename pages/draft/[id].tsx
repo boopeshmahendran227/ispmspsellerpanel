@@ -4,7 +4,7 @@ import Loader from "components/atoms/Loader";
 import SkuTable from "components/molecules/SkuTable";
 import { useRouter } from "next/router";
 import Specification from "components/molecules/Specification";
-import TierPrice from "components/atoms/TierPrice";
+import TierPrice from "components/molecules/TierPrice";
 import FAQ from "components/molecules/FAQ";
 import CSSConstants from "../../src/constants/CSSConstants";
 import PageError from "components/atoms/PageError";

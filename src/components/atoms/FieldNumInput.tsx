@@ -1,6 +1,7 @@
 import { Field, ErrorMessage, useFormikContext } from "formik";
 import classNames from "classnames";
 import ValidationErrorMsg from "./ValidationErrorMsg";
+import { FormControl, Input } from "@chakra-ui/core";
 
 interface FieldNumInputProps {
   name: string;
@@ -19,32 +20,13 @@ const FieldNumInput = (props: FieldNumInputProps) => {
   return (
     <Field name={props.name}>
       {({ field, form }) => (
-        <label
-          className={classNames({
-            container: true,
-            error: Boolean(form.touched[props.name] && form.errors[props.name]),
-          })}
+        <FormControl
+          isInvalid={form.errors[props.name] && form.touched[props.name]}
+          p="0.3em 0"
         >
-          <input
-            type="text"
-            {...field}
-            onBlur={(e) => handleBlur(e, field.name)}
-          />
-          <div className="errorContainer">
-            <ErrorMessage component={ValidationErrorMsg} name={props.name} />
-          </div>
-          <style jsx>{`
-            .container {
-              margin: 0.3em 0;
-              width: 100%;
-              font-size: 1.1rem;
-            }
-            input {
-              padding: 0.6em;
-              width: 100%;
-            }
-          `}</style>
-        </label>
+          <Input {...field} onBlur={(e) => handleBlur(e, field.name)} />
+          <ErrorMessage component={ValidationErrorMsg} name={props.name} />
+        </FormControl>
       )}
     </Field>
   );

@@ -2,6 +2,7 @@ import CSSConstants from "../../constants/CSSConstants";
 import _ from "lodash";
 import moment from "moment";
 import { NotificationItemInterface } from "../../types/notification";
+import { Box, Grid, Heading } from "@chakra-ui/core";
 
 interface NotificationCardProps {
   notification: NotificationItemInterface;
@@ -9,45 +10,25 @@ interface NotificationCardProps {
 
 const NotificationCard = (props: NotificationCardProps) => {
   return (
-    <section className="container">
-      <div className="iconContainer">
+    <Grid
+      margin="0.5em 0"
+      p="1em"
+      bg="white"
+      templateColumns="50px auto"
+      borderBottom={CSSConstants.borderStyle}
+      boxShadow="0 1px 3px rgba(0, 0, 0, 0.12),0 1px 2px rgba(0, 0, 0, 0.24)"
+    >
+      <Box fontSize="1.9rem">
         <i className="far fa-envelope"></i>
-      </div>
-      <div className="contentContainer">
-        <header>{props.notification.subject}</header>
-        <div className="message">{props.notification.message}</div>
-        <div className="time">
+      </Box>
+      <Box>
+        <Heading size="md">{props.notification.subject}</Heading>
+        <Box mb="0.4em">{props.notification.message}</Box>
+        <Box color="gray" fontSize="0.9em">
           {moment.utc(props.notification.createdDateTime).local().fromNow()}
-        </div>
-      </div>
-      <style jsx>{`
-        .container {
-          margin: 0.5em 0;
-          padding: 1em;
-          background: #fff;
-          display: grid;
-          grid-template-columns: 50px auto;
-          border-bottom: ${CSSConstants.borderStyle};
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-            0 1px 2px rgba(0, 0, 0, 0.24);
-        }
-        .iconContainer {
-          font-size: 1.9em;
-        }
-        header {
-          font-size: 1.2rem;
-          font-weight: bold;
-          margin-bottom: 0.2em;
-        }
-        .message {
-          margin-bottom: 0.4em;
-        }
-        .time {
-          font-size: 0.9em;
-          color: grey;
-        }
-      `}</style>
-    </section>
+        </Box>
+      </Box>
+    </Grid>
   );
 };
 

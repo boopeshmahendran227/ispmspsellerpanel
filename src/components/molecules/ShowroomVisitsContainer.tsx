@@ -2,7 +2,7 @@ import { ShowroomVisitInterface } from "../../types/showroomVisit";
 import EmptyMsg from "../atoms/EmptyMsg";
 import ShowroomVisitCard from "components/atoms/ShowroomVisitCard";
 import Loader from "../atoms/Loader";
-
+import { Box } from "@chakra-ui/core";
 interface ShowroomVisitsContainerProps {
   showroomVisits: ShowroomVisitInterface[] | undefined;
   dateFilter: moment.Moment;
@@ -22,20 +22,19 @@ const ShowroomVisitsContainer = (props: ShowroomVisitsContainerProps) => {
       )}
       {showroomVisits && showroomVisits.length > 0 && (
         <>
-          <div className="date">{dateFilter.format("dddd, MMMM DD")}</div>
+          <Box
+            textTransform="uppercase"
+            fontWeight="bold"
+            margin="1em 0"
+            fontSize="0.8rem"
+          >
+            {dateFilter.format("dddd, MMMM DD")}
+          </Box>
           {showroomVisits.map((showroomVisit) => (
             <ShowroomVisitCard showroomVisit={showroomVisit} />
           ))}
         </>
       )}
-      <style jsx>{`
-        .date {
-          text-transform: uppercase;
-          font-weight: bold;
-          margin: 1em 0;
-          font-size: 0.8rem;
-        }
-      `}</style>
     </>
   );
 };

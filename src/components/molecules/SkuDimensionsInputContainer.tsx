@@ -1,35 +1,30 @@
 import SectionCard from "components/atoms/SectionCard";
 import SectionHeader from "components/atoms/SectionHeader";
 import FieldNumInput from "components/atoms/FieldNumInput";
-import styled from "styled-components";
+import { Box,Grid ,FormLabel} from "@chakra-ui/core";
 
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 1em;
-`;
 
 const SkuDimensionsInputContainer = (): JSX.Element => {
   return (
     <SectionCard>
       <SectionHeader>Dimesions</SectionHeader>
-      <Grid>
-        <div>
-          <label>Length (in cm)</label>
+      <Grid templateColumns="1fr 1fr" gap="1em">
+        <Box>
+          <FormLabel>Length (in cm)</FormLabel>
           <FieldNumInput name="length" />
-        </div>
-        <div>
-          <label>Width (in cm)</label>
+        </Box>
+        <Box>
+          <FormLabel>Width (in cm)</FormLabel>
           <FieldNumInput name="width" />
-        </div>
-        <div>
-          <label>Height (in cm)</label>
+        </Box>
+        <Box>
+          <FormLabel>Height (in cm)</FormLabel>
           <FieldNumInput name="height" />
-        </div>
-        <div>
-          <label>Weight (in Kg)</label>
+        </Box>
+        <Box>
+          <FormLabel>Weight (in Kg)</FormLabel>
           <FieldNumInput name="weight" />
-        </div>
+        </Box>
       </Grid>
     </SectionCard>
   );

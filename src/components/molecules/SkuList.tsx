@@ -3,6 +3,7 @@ import CSSConstants from "src/constants/CSSConstants";
 import Link from "next/link";
 import classNames from "classnames";
 import { ProductDetailSkuDetail } from "types/product";
+import { Box, Heading, Flex } from "@chakra-ui/core";
 
 interface SkuListProps {
   productId: number;
@@ -18,63 +19,41 @@ const SkuList = (props: SkuListProps): JSX.Element | null => {
   }
 
   return (
-    <div className="container">
-      <header>Your Variants</header>
-      <div className="body">
+    <Box
+      w="300px"
+      bg="foregroundColor"
+      m="1em 0"
+      border="1px"
+      borderColor="borderColor"
+    >
+      <Heading size="lg" bg="hoverColor" p="1.1em 0.9em">
+        Your Variants
+      </Heading>
+      <Box maxH="300px" overflowY="auto">
         {skus.map((sku) => (
           <Link
             key={sku.skuId}
             href="/product/[id]/sku/[skuId]"
             as={`/product/${productId}/sku/${sku.skuId}`}
           >
-            <div
-              className={classNames("sku", {
-                active: props.currentSkuId === sku.skuId,
-              })}
+            <Flex
+              p="0.5em"
+              borderTop="1px"
+              borderTopColor="borderColor"
+              cursor="pointer"
+              transition="all 0.3s"
+              bg={props.currentSkuId === sku.skuId ? "secondaryColor" : ""}
+              color={props.currentSkuId === sku.skuId ? "white" : ""}
             >
-              <div className="imageContainer">
+              <Box w="50px" h="50px" m="0.3em">
                 <RelativeImg src={sku.imageRelativePaths[0]} />
-              </div>
+              </Box>
               {sku.skuId}
-            </div>
+            </Flex>
           </Link>
         ))}
-      </div>
-      <style jsx>{`
-        .container {
-          width: 300px;
-          background: ${CSSConstants.foregroundColor};
-          margin: 1em 0;
-          border: ${CSSConstants.borderStyle};
-        }
-        header {
-          padding: 1.1em 0.9em;
-          font-size: 1.2rem;
-          font-weight: bold;
-          background: ${CSSConstants.hoverColor};
-        }
-        .body {
-          max-height: 300px;
-          overflow-y: auto;
-        }
-        .sku {
-          display: flex;
-          padding: 0.5em;
-          border-top: ${CSSConstants.borderStyle};
-          cursor: pointer;
-          transition: all 0.3s;
-        }
-        .sku.active {
-          background: ${CSSConstants.secondaryColor};
-          color: white;
-        }
-        .imageContainer {
-          width: 50px;
-          height: 50px;
-          margin: 0.3em;
-        }
-      `}</style>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

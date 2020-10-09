@@ -2,6 +2,9 @@ import CSSConstants from "../../constants/CSSConstants";
 import { OrderItemInterface } from "../../types/order";
 import { isCompletedOrderStatus, isShippingOrderStatus } from "utils/order";
 import moment from "moment";
+import { Box, Flex, Link } from "@chakra-ui/core";
+import React from "react";
+import PageHeader from "components/atoms/PageHeader";
 
 interface ShippingInformationContainerProps {
   orderItem: OrderItemInterface;
@@ -20,16 +23,28 @@ const ShippingInformationContainer = (
   }
 
   return (
-    <div className="container">
-      <div className="headerContainer">
-        <header>Shipping Information</header>
-        <a href={orderItem.shipment.shiprocketResponse?.label_url}>
+    <Box border="1px" borderColor="borderColor" p="1em" m="2em 0" bg="white">
+      <Flex align="baseline">
+        <PageHeader>Shipping Information</PageHeader>
+        <Link
+          color="secondaryColor"
+          display="inline-block"
+          margin="0 0.5em;"
+          textDecoration="underline"
+          href={orderItem.shipment.shiprocketResponse?.label_url}
+        >
           Download Shipping Label
-        </a>
-        <a href={orderItem.shipment.shiprocketResponse?.manifest_url}>
+        </Link>
+        <Link
+          color="secondaryColor"
+          display="inline-block"
+          margin="0 0.5em;"
+          textDecoration="underline"
+          href={orderItem.shipment.shiprocketResponse?.manifest_url}
+        >
           Download Manifest
-        </a>
-      </div>
+        </Link>
+      </Flex>
       <table>
         <tr>
           <td className="key"> Provider Name:</td>
@@ -53,32 +68,11 @@ const ShippingInformationContainer = (
         </tr>
       </table>
       <style jsx>{`
-        .container {
-          border: ${CSSConstants.borderStyle};
-          padding: 1em;
-          margin: 2em 0;
-          background: white;
-        }
-        .headerContainer {
-          display: flex;
-          align-items: baseline;
-        }
-        header {
-          font-weight: bold;
-          font-size: 1.3rem;
-          margin-bottom: 0.9em;
-        }
-        a {
-          color: ${CSSConstants.secondaryColor};
-          display: inline-block;
-          margin: 0 0.5em;
-          text-decoration: underline;
-        }
         .key {
           color: ${CSSConstants.secondaryTextColor};
         }
       `}</style>
-    </div>
+    </Box>
   );
 };
 

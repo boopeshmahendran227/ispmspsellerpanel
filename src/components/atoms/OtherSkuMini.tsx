@@ -1,41 +1,8 @@
 import RelativeImg from "./RelativeImg";
-import styled from "styled-components";
 import { ProductDetailSkuDetail } from "types/product";
-import Button from "./Button";
 import Link from "next/link";
 import { AttributeValueID } from "types/sku";
-import CSSConstants from "../../constants/CSSConstants";
-
-const Container = styled.div`
-  padding: 0.8em 0;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const ImageContainer = styled.div`
-  width: 60px;
-  height: 80px;
-  text-align: center;
-  margin-right: 0.2em;
-`;
-
-const MainContainer = styled.div`
-  display: flex;
-  align-items: flex-start;
-`;
-
-const SkuName = styled.div`
-  font-weight: bold;
-`;
-
-const AttributeValues = styled.div`
-  margin-top: 0.4em;
-  color: ${CSSConstants.secondaryTextColor};
-`;
-
-const AttributeValue = styled.div`
-  margin-top: 0.2em;
-`;
+import { Box, Flex, Button } from "@chakra-ui/core";
 
 interface OtherSkuMiniProps {
   productId: number;
@@ -46,31 +13,33 @@ const OtherSkuMini = (props: OtherSkuMiniProps): JSX.Element => {
   const { productId, sku } = props;
 
   return (
-    <Container>
-      <MainContainer>
-        <ImageContainer>
+    <Flex p="0.8em 0" justify="space-between">
+      <Flex alignItems="flex-start">
+        <Box w="60px" h="80px" textAlign="center" mr="0.2em">
           <RelativeImg src={sku.imageRelativePaths[0]} />
-        </ImageContainer>
-        <div>
-          <SkuName>{sku.skuId}</SkuName>
-          <AttributeValues>
+        </Box>
+        <Box>
+          <Box fontWeight="bold">{sku.skuId}</Box>
+          <Box mt="0.4em" color="secondaryTextColor">
             {sku.attributeValueIds.map((attributeValueId: AttributeValueID) => (
-              <AttributeValue>
+              <Box mt="0.2em">
                 {attributeValueId.attributeName + ": " + attributeValueId.value}
-              </AttributeValue>
+              </Box>
             ))}
-          </AttributeValues>
-        </div>
-      </MainContainer>
-      <div>
+          </Box>
+        </Box>
+      </Flex>
+      <Box>
         <Link
           href={`/product/[id]/sku/new?copySkuId=${sku.skuId}`}
           as={`/product/${productId}/sku/new?copySkuId=${sku.skuId}`}
         >
-          <Button>Add to Your Variants</Button>
+          <Button variantColor="primaryColorVariant">
+            Add to Your Variants
+          </Button>
         </Link>
-      </div>
-    </Container>
+      </Box>
+    </Flex>
   );
 };
 

@@ -5,27 +5,11 @@ import CSSConstants from "../../constants/CSSConstants";
 import { Fragment } from "react";
 import SectionCard from "../atoms/SectionCard";
 import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
+import { Box, Grid, Heading } from "@chakra-ui/core";
 
 interface SpecificationProps {
   specification: SpecificationInterface;
 }
-
-const GroupName = styled.div`
-  font-weight: bold;
-  font-size: 1.1rem;
-`;
-
-const SpecGrid = styled.div`
-  margin: 0.5em 0;
-  display: grid;
-  grid-template-columns: 200px 1fr;
-`;
-
-const Key = styled.div`
-  color: ${CSSConstants.secondaryTextColor};
-`;
-
-const Value = styled.div``;
 
 const Specification = (props: SpecificationProps) => {
   const { specification } = props;
@@ -35,23 +19,23 @@ const Specification = (props: SpecificationProps) => {
       <SectionHeaderContainer>
         <SectionHeader>Specification</SectionHeader>
       </SectionHeaderContainer>
-      <div>
+      <Box>
         {specification.itemGroups.map((group) => (
-          <div>
-            <GroupName>{group.name}</GroupName>
+          <Box>
+            <Heading size="lg">{group.name}</Heading>
             {group.items.length > 0 && (
-              <SpecGrid>
+              <Grid m="0.5em 0" templateColumns="200px 1fr">
                 {group.items.map((item, itemIndex) => (
                   <Fragment key={itemIndex}>
-                    <Key>{item.key}</Key>
-                    <Value>{item.value}</Value>
+                    <Box color="secondaryTextColor">{item.key}</Box>
+                    <Box>{item.value}</Box>
                   </Fragment>
                 ))}
-              </SpecGrid>
+              </Grid>
             )}
-          </div>
+          </Box>
         ))}
-      </div>
+      </Box>
     </SectionCard>
   );
 };

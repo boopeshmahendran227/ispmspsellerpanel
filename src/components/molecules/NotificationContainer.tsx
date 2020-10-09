@@ -7,6 +7,7 @@ import _ from "lodash";
 import useSWR from "swr";
 import { NotificationItemInterface } from "../../types/notification";
 import moment from "moment";
+import {Box}from"@chakra-ui/core";
 
 const Notifications = () => {
   const swr = useSWR("/notification");
@@ -28,7 +29,7 @@ const Notifications = () => {
   ).reverse();
 
   return (
-    <div className="container">
+    <Box p="0.5em" className="container">
       {!sortedNotifications ||
         (Boolean(!sortedNotifications.length) && (
           <EmptyMsg msg="No Notifications" />
@@ -36,12 +37,7 @@ const Notifications = () => {
       {sortedNotifications.map((notification, index) => (
         <NotificationCard key={index} notification={notification} />
       ))}
-      <style jsx>{`
-        .container {
-          padding: 0.5em;
-        }
-      `}</style>
-    </div>
+    </Box>
   );
 };
 

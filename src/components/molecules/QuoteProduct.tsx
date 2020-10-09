@@ -1,7 +1,7 @@
 import { ProductDetailQuoteInterface } from "../../types/quote";
 import { formatPrice } from "utils/misc";
-import CSSConstants from "../../constants/CSSConstants";
 import ProductCard from "../atoms/ProductCard";
+import { Flex, Box } from "@chakra-ui/core";
 
 interface QuoteProductProps {
   productDetail: ProductDetailQuoteInterface;
@@ -11,8 +11,8 @@ const QuoteProduct = (props: QuoteProductProps) => {
   const { productDetail } = props;
 
   return (
-    <div className="container">
-      <section className="productContainer">
+    <Flex m="0.5em" p="0.5em" justify="space-between">
+      <Box>
         <ProductCard
           name={productDetail.productDetails.name}
           image={productDetail.productDetails.imageRelativePaths[0]}
@@ -44,60 +44,36 @@ const QuoteProduct = (props: QuoteProductProps) => {
             },
           ]}
         />
-      </section>
-      <section className="requestedPrice">
-        <div className="name">Requested Quote</div>
-        <div className="value">
+      </Box>
+      <Box fontSize="0.9rem" lineHeight="1.4">
+        <Box fontSize="1.1rem" color="warningColor">
+          Requested Quote
+        </Box>
+        <Box>
           {formatPrice(productDetail.price / productDetail.qty)} x{" "}
           {productDetail.qty} = {formatPrice(productDetail.price)}
-        </div>
-      </section>
-      <section className="respondedPrice">
-        <div className="name">Responded Quote</div>
-        <div className="value">
+        </Box>
+      </Box>
+      <Box fontSize="0.9rem" lineHeight="1.4">
+        <Box fontSize="1.1rem" color="successColor">
+          Responded Quote
+        </Box>
+        <Box>
           {productDetail.updatedQuote ? (
-            <div>
+            <Box>
               {formatPrice(
                 productDetail.updatedQuote.totalDiscountedPrice /
                   productDetail.qty
               )}{" "}
               x {productDetail.qty} ={" "}
               {formatPrice(productDetail.updatedQuote.totalDiscountedPrice)}
-            </div>
+            </Box>
           ) : (
-            <div className="notRespondedMsg">Not yet Responded</div>
+            <Box>Not yet Responded</Box>
           )}
-        </div>
-      </section>
-      <style jsx>{`
-        .container {
-          padding: 0.5em;
-          margin: 0.5em;
-          display: flex;
-        }
-        .requestedPrice,
-        .respondedPrice {
-          font-size: 0.9rem;
-          line-height: 1.4;
-        }
-        .requestedPrice .name,
-        .respondedPrice .name {
-          font-size: 1.1rem;
-        }
-        .requestedPrice .name {
-          color: ${CSSConstants.warningColor};
-        }
-        .respondedPrice .name {
-          color: ${CSSConstants.successColor};
-        }
-        @media (min-width: 800px) {
-          .container {
-            display: flex;
-            justify-content: space-between;
-          }
-        }
-      `}</style>
-    </div>
+        </Box>
+      </Box>
+    </Flex>
   );
 };
 

@@ -2,6 +2,7 @@ import { OrderInterface } from "../../types/order";
 import _ from "lodash";
 import { formatPrice } from "utils/misc";
 import CSSConstants from "../../constants/CSSConstants";
+import { Grid, Box } from "@chakra-ui/core";
 
 interface OrderSummaryProps {
   order: OrderInterface;
@@ -11,52 +12,42 @@ const OrderSummary = (props: OrderSummaryProps) => {
   const { order } = props;
 
   return (
-    <div className="grid">
-      <span className="key">Sub Total</span>
-      <span className="value">
+    <Grid templateColumns="100px 100px" fontSize="md" fontWeight="normal">
+      <Box as="span" m="0.1em 0" fontWeight="bold">
+        Sub Total
+      </Box>
+      <Box as="span" textAlign="right">
         {formatPrice(
           _.chain(order.items)
             .map((item) => item.discountedPrice)
             .sum()
             .value()
         )}
-      </span>
-      <span className="key">Shipping Fee</span>
-      <span className="value">
+      </Box>
+      <Box as="span" fontWeight="bold">
+        Shipping Fee
+      </Box>
+      <Box as="span" textAlign="right">
         {" "}
         + {formatPrice(order.metadata.shipmentFee)}
-      </span>
+      </Box>
       {order.discountSplits.map((discount) => (
         <>
-          <span className="key discount">{discount.discountType}</span>
-          <span className="value discount">
+          <Box as="span" fontWeight="bold" color="successColor">
+            {discount.discountType}
+          </Box>
+          <Box as="span" textAlign="right" color="successColor">
             - {formatPrice(discount.discountAmount)}
-          </span>
+          </Box>
         </>
       ))}
-      <span className="key total">Net Total</span>
-      <span className="value total">{formatPrice(order.totalPrice)}</span>
-      <style jsx>{`
-        .grid {
-          display: grid;
-          grid-template-columns: 100px 100px;
-        }
-        .key {
-          margin: 0.1em 0;
-          font-weight: bold;
-        }
-        .value {
-          text-align: right;
-        }
-        .total {
-          margin: 0.6em 0;
-          font-size: 1.1rem;
-        }
-        .discount {
-          color: ${CSSConstants.successColor};
-        }
-      `}</style>
-    </div>
+      <Box as="span" margin="0.6em 0" fontWeight="bold">
+        Net Total
+      </Box>
+      <Box as="span" textAlign="right" margin="0.6em 0">
+        {formatPrice(order.totalPrice)}
+      </Box>
+    </Grid>
   );
 };
 
