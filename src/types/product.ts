@@ -131,6 +131,7 @@ export interface ProductDetailSkuDetail {
   imageRelativePaths: string[];
   externalId: string;
   barCodeIdentifier: string;
+  minOrderQty: number;
 }
 
 interface ProductAttributeInterface {

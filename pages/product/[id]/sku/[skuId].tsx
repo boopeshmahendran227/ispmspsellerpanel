@@ -48,6 +48,7 @@ const validationSchema = Yup.object({
   width: Yup.number().nullable().defined(),
   height: Yup.number().nullable().defined(),
   weight: Yup.number().nullable().defined(),
+  minOrderQty: Yup.number().nullable().defined(),
   ecosystemIds: Yup.array()
     .of(Yup.string().defined())
     .min(1, "Atleast one ecosystem is required"),
@@ -148,6 +149,7 @@ const Sku = (props: SkuProps): JSX.Element => {
               ecosystemIds: currentSku.ecosystemIds,
               specialDiscount: currentSku.specialDiscount,
               specialDiscountPercentage: currentSku.specialDiscountPercentage,
+              minOrderQty: currentSku.minOrderQty,
               attributes: attributes.map((attribute) => ({
                 attributeId: attribute.attributeId,
                 attributeName: attribute.attributeName,

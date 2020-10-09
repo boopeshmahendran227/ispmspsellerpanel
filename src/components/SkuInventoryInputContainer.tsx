@@ -20,6 +20,10 @@ const SkuInventoryInputContainer = (): JSX.Element => {
           <FieldNumInput name="qty" />
         </div>
         <div>
+          <label>Minimum Order Quantity</label>
+          <FieldNumInput name="minOrderQty" />
+        </div>
+        <div>
           <label>Bar Code</label>
           <FieldInput name="barCode" />
         </div>
