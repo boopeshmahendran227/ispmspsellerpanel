@@ -61,9 +61,9 @@ const AttributeModal = (props: AttributeModalProps) => {
   };
 
   return (
-    <Modal isOpen={open} onClose={onClose}>
+    <Modal isOpen={open} onClose={onClose} size="lg" scrollBehavior="inside">
       <ModalOverlay />
-      <ModalContent minW="500px" minH="500px" borderRadius="16px">
+      <ModalContent borderRadius="16px">
         <ModalHeader>Create New Attribute</ModalHeader>
         <ModalCloseButton />{" "}
         <ModalBody>

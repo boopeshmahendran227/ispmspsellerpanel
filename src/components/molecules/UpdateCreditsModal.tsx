@@ -1,4 +1,3 @@
-import Modal from "../atoms/Modal";
 import Button from "../atoms/Button";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers";
@@ -12,6 +11,16 @@ import { getCurrentInvoice } from "../../selectors/invoice";
 import { getUpdateCreditsModalOpen } from "../../selectors/ui";
 import FieldSelect from "./FieldSelect";
 import FieldInput from "../atoms/FieldInput";
+import {
+  Box,
+  Grid,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/core";
 
 interface StateProps {
   open: boolean;
@@ -51,7 +60,7 @@ const UpdateCreditsModal = (props: UpdateCreditsModalProps) => {
   if (!currentInvoice) {
     // Return empty modal
     return (
-      <Modal open={props.open} onClose={props.onClose}>
+      <Modal isOpen={props.open} onClose={props.onClose}>
         <div></div>
       </Modal>
     );
@@ -73,70 +82,53 @@ const UpdateCreditsModal = (props: UpdateCreditsModalProps) => {
   };
 
   return (
-    <Modal open={props.open} onClose={props.onClose}>
-      <div className="container">
-        <header>
+    <Modal isOpen={props.open} onClose={props.onClose} size="md">
+      <ModalOverlay />
+      <ModalContent borderRadius="16px">
+        <ModalHeader>
           Record Credit Payment For Invoice #{currentInvoice.invoiceId}
-        </header>
-        <Formik
-          initialValues={{
-            creditsPaid: 0,
-            paymentMode: paymentOptions[0],
-            paymentReferenceId: "",
-          }}
-          onSubmit={onSubmit}
-          validate={(values) => {
-            const errors: any = {};
-            const { creditsPaid } = values;
+        </ModalHeader>
+        <ModalCloseButton />
+        <ModalBody p="1em">
+          <Formik
+            initialValues={{
+              creditsPaid: 0,
+              paymentMode: paymentOptions[0],
+              paymentReferenceId: "",
+            }}
+            onSubmit={onSubmit}
+            validate={(values) => {
+              const errors: any = {};
+              const { creditsPaid } = values;
 
-            if (creditsPaid > currentInvoice.creditAmountPending) {
-              errors.creditsPaid =
-                "Paid Credits should be less than or equal to pending amount";
-            }
-            return errors;
-          }}
-        >
-          {() => (
-            <Form>
-              <div className="gridContainer">
-                <InputLabel label="Paid Credits" />
-                <FieldPriceInput name="creditsPaid" />
-                <InputLabel label="Payment Mode" />
-                <FieldSelect name="paymentMode" options={paymentOptions} />
-                <InputLabel label="Payment Reference Id" />
-                <FieldInput name="paymentReferenceId" />
-              </div>
-              <div className="buttonContainer">
-                <Button isSubmitButton={true}>Update Pending Credits</Button>
-                <Button outlined={true} onClick={handleCancelClicked}>
-                  Cancel
-                </Button>
-              </div>
-            </Form>
-          )}
-        </Formik>
-      </div>
-      <style jsx>{`
-        .container {
-          margin: 1em;
-          min-width: 450px;
-        }
-        header {
-          margin: 1em 0;
-          font-weight: bold;
-          font-size: 1.3rem;
-          text-transform: uppercase;
-        }
-        .gridContainer {
-          display: grid;
-          grid-template-columns: 200px 300px;
-          align-items: center;
-        }
-        .buttonContainer {
-          margin-top: 1em;
-          text-align: right;
-        }
-      `}</style>
+              if (creditsPaid > currentInvoice.creditAmountPending) {
+                errors.creditsPaid =
+                  "Paid Credits should be less than or equal to pending amount";
+              }
+              return errors;
+            }}
+          >
+            {() => (
+              <Form>
+                <Grid templateColumns="200px 300px" alignItems="center">
+                  <InputLabel label="Paid Credits" />
+                  <FieldPriceInput name="creditsPaid" />
+                  <InputLabel label="Payment Mode" />
+                  <FieldSelect name="paymentMode" options={paymentOptions} />
+                  <InputLabel label="Payment Reference Id" />
+                  <FieldInput name="paymentReferenceId" />
+                </Grid>
+                <Box mt="1em" textAlign="right">
+                  <Button isSubmitButton={true}>Update Pending Credits</Button>
+                  <Button outlined={true} onClick={handleCancelClicked}>
+                    Cancel
+                  </Button>
+                </Box>
+              </Form>
+            )}
+          </Formik>
+        </ModalBody>
+      </ModalContent>
     </Modal>
   );
 };

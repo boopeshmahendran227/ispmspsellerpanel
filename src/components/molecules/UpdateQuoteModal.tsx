@@ -1,5 +1,3 @@
-import Modal from "../atoms/Modal";
-import Button from "../atoms/Button";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers";
 import { QuoteInterface, QuoteItemUpdate } from "../../types/quote";
@@ -13,6 +11,18 @@ import QuoteActions from "../../actions/quote";
 import * as Yup from "yup";
 import InputLabel from "../atoms/InputLabel";
 import FieldPriceInput from "../atoms/FieldPriceInput";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  Box,
+  Button,
+  ButtonGroup,
+  Grid,
+} from "@chakra-ui/core";
 
 interface StateProps {
   open: boolean;
@@ -45,7 +55,7 @@ const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
   if (!currentQuote) {
     // Return empty modal
     return (
-      <Modal open={props.open} onClose={props.onClose}>
+      <Modal isOpen={props.open} onClose={props.onClose}>
         <div></div>
       </Modal>
     );
@@ -68,94 +78,105 @@ const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
   };
 
   return (
-    <Modal open={props.open} onClose={props.onClose}>
-      <div className="container">
-        <header>Update Quote</header>
-        <Formik
-          initialValues={{
-            quoteItems: currentQuote.productDetails.map(
-              (productDetail): QuoteItemUpdate => ({
-                productId: productDetail.productId,
-                skuId: productDetail.skuId,
-                finalTotalPrice: productDetail.price,
-              })
-            ),
-          }}
-          onSubmit={onSubmit}
-          validationSchema={validationSchema}
-          enableReinitialize={true}
-        >
-          {({ values }) => (
-            <Form>
-              <div className="quotesContainer">
-                <FieldArray
-                  name="quoteItems"
-                  render={() => (
-                    <div>
-                      {currentQuote.productDetails.map(
-                        (productDetail, index) => (
-                          <div>
-                            <ProductCard
-                              name={productDetail.productDetails.name}
-                              image={
-                                productDetail.productDetails
-                                  .imageRelativePaths[0]
-                              }
-                              metaInfo={[
-                                ...productDetail.productDetails.attributeValueIds.map(
-                                  (attributeValue) => ({
-                                    key: attributeValue.attributeName,
-                                    value: attributeValue.value,
-                                  })
-                                ),
-                                {
-                                  key: "Product Id",
-                                  value: productDetail.productId,
-                                },
-                                {
-                                  key: "Sku Id",
-                                  value: productDetail.skuId,
-                                },
-                                {
-                                  key: "Qty",
-                                  value: productDetail.qty,
-                                },
-                              ]}
-                            />
-                            <div className="gridContainer">
-                              <InputLabel label="Updated Total Quote Value" />
-                              <FieldPriceInput
-                                name={`quoteItems[${index}].finalTotalPrice`}
-                                metaInfo={`(${formatPrice(
-                                  values.quoteItems[index].finalTotalPrice /
-                                    productDetail.qty
-                                )} x ${productDetail.qty} =
+    <Modal isOpen={props.open} onClose={props.onClose}>
+      <ModalOverlay />
+      <ModalContent borderRadius="16px">
+        <ModalHeader>Update Quote</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody p="1em">
+          <Formik
+            initialValues={{
+              quoteItems: currentQuote.productDetails.map(
+                (productDetail): QuoteItemUpdate => ({
+                  productId: productDetail.productId,
+                  skuId: productDetail.skuId,
+                  finalTotalPrice: productDetail.price,
+                })
+              ),
+            }}
+            onSubmit={onSubmit}
+            validationSchema={validationSchema}
+            enableReinitialize={true}
+          >
+            {({ values }) => (
+              <Form>
+                <Box>
+                  <FieldArray
+                    name="quoteItems"
+                    render={() => (
+                      <Box>
+                        {currentQuote.productDetails.map(
+                          (productDetail, index) => (
+                            <Box>
+                              <ProductCard
+                                name={productDetail.productDetails.name}
+                                image={
+                                  productDetail.productDetails
+                                    .imageRelativePaths[0]
+                                }
+                                metaInfo={[
+                                  ...productDetail.productDetails.attributeValueIds.map(
+                                    (attributeValue) => ({
+                                      key: attributeValue.attributeName,
+                                      value: attributeValue.value,
+                                    })
+                                  ),
+                                  {
+                                    key: "Product Id",
+                                    value: productDetail.productId,
+                                  },
+                                  {
+                                    key: "Sku Id",
+                                    value: productDetail.skuId,
+                                  },
+                                  {
+                                    key: "Qty",
+                                    value: productDetail.qty,
+                                  },
+                                ]}
+                              />
+                              <Grid
+                                templateColumns="200px 1fr"
+                                margin="0.3em 0"
+                              >
+                                <InputLabel label="Updated Total Quote Value" />
+                                <FieldPriceInput
+                                  name={`quoteItems[${index}].finalTotalPrice`}
+                                  metaInfo={`(${formatPrice(
+                                    values.quoteItems[index].finalTotalPrice /
+                                      productDetail.qty
+                                  )} x ${productDetail.qty} =
                             ${formatPrice(
                               Number(values.quoteItems[index].finalTotalPrice)
                             )})
                               `}
-                              />
-                            </div>
-                          </div>
-                        )
-                      )}
-                    </div>
-                  )}
-                />
-              </div>
-              <div className="buttonContainer">
-                <Button isSubmitButton={true}>
-                  Update Quote and notify customer
-                </Button>
-                <Button outlined={true} onClick={handleCancelClicked}>
-                  Cancel
-                </Button>
-              </div>
-            </Form>
-          )}
-        </Formik>
-      </div>
-      <style jsx>{`
+                                />
+                              </Grid>
+                            </Box>
+                          )
+                        )}
+                      </Box>
+                    )}
+                  />
+                </Box>
+                <ButtonGroup>
+                  <Button type="submit" variantColor="primaryColorVariant">
+                    Update Quote and notify customer
+                  </Button>
+                  <Button
+                    variant="outline"
+                    variantColor="successColorVariant"
+                    onClick={handleCancelClicked}
+                  >
+                    Cancel
+                  </Button>
+                </ButtonGroup>
+              </Form>
+            )}
+          </Formik>
+        </ModalBody>
+
+        {/* <style jsx>{`
         header {
           margin: 1em 0;
           font-weight: bold;
@@ -175,7 +196,8 @@ const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
           grid-template-columns: 200px 1fr;
           margin: 0.3em 0;
         }
-      `}</style>
+      `}</style> */}
+      </ModalContent>
     </Modal>
   );
 };

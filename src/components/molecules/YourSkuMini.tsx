@@ -1,55 +1,9 @@
 import Link from "next/link";
 import { formatPrice } from "utils/misc";
 import RelativeImg from "../atoms/RelativeImg";
-import CSSConstants from "../../constants/CSSConstants";
-import styled from "styled-components";
 import { ProductDetailSkuDetail } from "types/product";
 import { AttributeValueID } from "types/sku";
-import Button from "../atoms/Button";
-
-const Container = styled.div`
-  padding: 0.8em;
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-  border-bottom: 1px solid #f0f0f0;
-`;
-
-const ImageContainer = styled.div`
-  width: 80px;
-  height: 80px;
-  margin: 0.4em;
-  padding: 0.3em;
-`;
-
-const MainContainer = styled.div`
-  display: flex;
-`;
-
-const SkuName = styled.div`
-  font-weight: bold;
-`;
-
-const Quantity = styled.div`
-  color: ${CSSConstants.secondaryTextColor};
-`;
-
-const Price = styled.div`
-  font-size: 1.1rem;
-`;
-
-const ContentContainer = styled.div`
-  width: 80px;
-`;
-
-const AttributeValues = styled.div`
-  margin-top: 0.4em;
-  color: ${CSSConstants.secondaryTextColor};
-`;
-
-const AttributeValue = styled.div`
-  margin-top: 0.2em;
-`;
+import { Flex, Box,Button } from "@chakra-ui/core";
 
 interface YourSkuMiniProps {
   productId: number;
@@ -64,32 +18,37 @@ const YourSkuMini = (props: YourSkuMiniProps): JSX.Element => {
       href="/product/[id]/sku/[skuId]"
       as={`/product/${props.productId}/sku/${sku.skuId}`}
     >
-      <Container>
-        <MainContainer>
-          <ImageContainer>
+      <Flex
+        p="0.8em"
+        justify="space-between"
+        cursor="pointer"
+        borderBottom="1px solid #f0f0f0"
+      >
+        <Flex>
+          <Box w="80px" h="80px" m="0.4em" p="0.3em">
             <RelativeImg src={sku.imageRelativePaths[0]} />
-          </ImageContainer>
-          <div>
-            <SkuName>{sku.skuId}</SkuName>
-            <AttributeValues>
+          </Box>
+          <Box>
+            <Box fontWeight="bold">{sku.skuId}</Box>
+            <Box mt="0.4em" color="secondaryTextColor">
               {sku.attributeValueIds.map(
                 (attributeValueId: AttributeValueID) => (
-                  <AttributeValue>
+                  <Box mt="0.2em">
                     {attributeValueId.attributeName +
                       ": " +
                       attributeValueId.value}
-                  </AttributeValue>
+                  </Box>
                 )
               )}
-            </AttributeValues>
-          </div>
-        </MainContainer>
-        <ContentContainer>
-          <Price>{formatPrice(sku.price)}</Price>
-          <Quantity>Qty: {sku.qty}</Quantity>
-          <Button onClick={() => null}>Edit</Button>
-        </ContentContainer>
-      </Container>
+            </Box>
+          </Box>
+        </Flex>
+        <Box w="80px">
+          <Box fontSize="1.1rem">{formatPrice(sku.price)}</Box>
+          <Box color="secondaryTextColor">Qty: {sku.qty}</Box>
+          <Button variantColor="primaryColorVariant" onClick={() => null}>Edit</Button>
+        </Box>
+      </Flex>
     </Link>
   );
 };
