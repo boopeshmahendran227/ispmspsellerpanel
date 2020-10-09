@@ -1,15 +1,15 @@
 import useSWR from "swr";
 import Loader from "components/atoms/Loader";
-import PageError from "components/atoms/PageError";
-import PageHeader from "components/atoms/PageHeader";
+import PageError from "../../../../src/components/atoms/PageError";
+import PageHeader from "../../../../src/components/atoms/PageHeader";
 import WithAuth from "components/atoms/WithAuth";
 import { useRouter } from "next/router";
-import SkuList from "components/molecules/SkuList";
+import SkuList from "../../../../src/components/molecules/SkuList";
 import { Formik, Form } from "formik";
 import SkuProductInfo from "components/atoms/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/atoms/SectionHeader";
-import SectionCard from "components/atoms/SectionCard";
+import SectionCard from "../../../../src/components/atoms/SectionCard";
 import _ from "lodash";
 import { ProductDetailInterface } from "types/product";
 import FieldSelect from "components/molecules/FieldSelect";
@@ -22,11 +22,11 @@ import Button from "components/atoms/Button";
 import FieldEcosystemMultiInput from "components/molecules/FieldEcosystemMultiInput";
 import FieldInput from "components/atoms/FieldInput";
 import { EcosystemResponseInterface } from "types/business";
-import SkuDimensionsInputContainer from "components/molecules/SkuDimensionsInputContainer";
+import SkuDimensionsInputContainer from "../../../../src/components/molecules/SkuDimensionsInputContainer";
 import SkuInventoryInputContainer from "components/molecules/SkuInventoryInputContainer";
 import SkuPricingInputContainer from "components/molecules/SkuPricingInputContainer";
 import React from "react";
-import FieldNumInput from "components/atoms/FieldNumInput";
+import FieldNumInput from "../../../../src/components/atoms/FieldNumInput";
 import FieldPercentageInput from "components/atoms/FieldPercentageInput";
 
 interface DispatchProps {
