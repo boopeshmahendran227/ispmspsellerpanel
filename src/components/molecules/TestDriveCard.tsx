@@ -11,22 +11,18 @@ interface TestDriveCardProps {
 const TestDriveCard = (props: TestDriveCardProps) => {
   const { testdrive } = props;
   return (
-    <Flex
-      box-shadow="0 1px 3px rgba(0, 0, 0, 0.12),
-    0 1px 2px rgba(0, 0, 0, 0.24)"
-      m="1em 0"
-    >
-      <Box w="100px" h="100px" mr="0.5em">
+    <Flex boxShadow="sm" my={2}>
+      <Box w="100px" h="100px" mr={2}>
         <RelativeImg src={testdrive.images[0]} />
       </Box>
-      <Box p="0.4em">
-        <Box m="0.3em 0">
+      <Box p={3}>
+        <Box my={2}>
           <i className="fas fa-user"></i>
           <Box as="span" fontWeight="semibold">
             Customer {getCustomerInfo(testdrive)}
           </Box>
         </Box>{" "}
-        <Box m="0.3em 0">
+        <Box my={2}>
           <i className="fa fa-motorcycle" aria-hidden="true"></i>
           Test drive requested for
           <Box as="span" fontWeight="semibold">

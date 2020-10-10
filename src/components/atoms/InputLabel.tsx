@@ -1,4 +1,3 @@
-import CSSConstants from "../../constants/CSSConstants";
 import { FormLabel } from "@chakra-ui/core";
 
 interface InputLabelProps {
@@ -9,7 +8,7 @@ const InputLabel = (props: InputLabelProps) => {
   return (
     <FormLabel
       textAlign="right"
-      color={CSSConstants.secondaryTextColor}
+      color="secondaryTextColor"
       minW="200px"
     >
       {props.label}:

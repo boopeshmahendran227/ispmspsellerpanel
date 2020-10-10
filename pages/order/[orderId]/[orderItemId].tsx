@@ -1,5 +1,4 @@
 import moment from "moment";
-import CSSConstants from "../../../src/constants/CSSConstants";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import Loader from "components/atoms/Loader";
@@ -46,12 +45,12 @@ interface DispatchProps {
 }
 
 const Name = (props) => (
-  <Box fontWeight="bold" p="0.4em 0.8em" mt="0.4em">
+  <Box fontWeight="bold" py={2} px={4} mt={2}>
     {props.children}
   </Box>
 );
 
-const Value = (props) => <Box p="0.4em 0.8em">{props.children}</Box>;
+const Value = (props) => <Box  py={2} px={4}>{props.children}</Box>;
 
 type OrderProps = DispatchProps;
 

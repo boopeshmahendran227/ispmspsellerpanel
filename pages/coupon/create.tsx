@@ -17,7 +17,6 @@ import FieldDatePicker from "components/molecules/FieldDatePicker";
 import moment from "moment";
 import BackLink from "components/atoms/BackLink";
 import PageError from "components/atoms/PageError";
-import CSSConstants from "../../src/constants/CSSConstants";
 import {
   EcosystemResponseInterface,
   EcosystemDataInterface,

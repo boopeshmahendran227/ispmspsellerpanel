@@ -1,4 +1,3 @@
-import CSSConstants from "../../constants/CSSConstants";
 import styled from "styled-components";
 import { Box, Flex } from "@chakra-ui/core";
 
@@ -21,20 +20,20 @@ const MetricCard = (props: MetricCardProps) => {
   return (
     <Box
       display="inline-block"
-      bg={CSSConstants.foregroundColor}
-      boxShadow="0 0 20px #00000014"
+      bg="foregroundColor"
+      boxShadow="md"
       w="100%"
       borderRadius="5%"
     >
       <Flex alignItems="center" h="100%" padding="1.2em">
-        <Box mr="1.1em">{icon}</Box>
+        <Box mr={3}>{icon}</Box>
         <Box>
-          <Box fontSize="1.7rem">{props.value}</Box>
+          <Box fontSize="lg">{props.value}</Box>
           <Box
             textTransform="capitalize"
-            fontSize="1.1rem"
-            mt="0.2em"
-            color={CSSConstants.secondaryTextColor}
+            fontSize="md"
+            mt={1}
+            color="secondaryTextColor"
           >
             {props.title}
           </Box>

@@ -5,7 +5,7 @@ interface SectionHeaderInterface {
   children: React.ReactNode;
 }
 const SectionHeader = (props: SectionHeaderInterface) => (
-  <Box fontWeight="bold" fontSize="xl" mb={1}>
+  <Box fontWeight="bold" fontSize="lg" mb={1}>
     {props.children}
   </Box>
 );

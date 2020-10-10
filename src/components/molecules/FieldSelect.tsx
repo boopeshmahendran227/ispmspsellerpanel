@@ -1,10 +1,8 @@
 import Select from "../atoms/Select";
 import ValidationErrorMsg from "../atoms/ValidationErrorMsg";
 import { Field, ErrorMessage } from "formik";
-import classNames from "classnames";
-import CSSConstants from "../../constants/CSSConstants";
 import { SelectOptionInterface } from "../../types/product";
-import { Box, FormControl } from "@chakra-ui/core";
+import { FormControl } from "@chakra-ui/core";
 
 interface FieldSelectProps {
   name: string;

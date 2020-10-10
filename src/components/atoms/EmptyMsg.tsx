@@ -1,5 +1,4 @@
-import CSSConstants from "../../constants/CSSConstants";
-import { Box } from "@chakra-ui/core";
+import { Box, Heading } from "@chakra-ui/core";
 
 interface EmptyMsgProps {
   icon?: React.ReactNode;
@@ -8,21 +7,17 @@ interface EmptyMsgProps {
 
 const EmptyMsg = (props: EmptyMsgProps) => {
   return (
-    <Box p="2em" textAlign="center">
-      <Box
-        fontSize="2.5rem"
-        color={CSSConstants.secondaryTextColor}
-        opacity={0.7}
-      >
+    <Box p={2} textAlign="center">
+      <Box fontSize="xl" color="secondaryTextColor" opacity={0.7}>
         {props.icon}
       </Box>
-      <h3 className="msg" dangerouslySetInnerHTML={{ __html: props.msg }} />
-      <style jsx>{`
-        .msg {
-          font-weight: 500;
-          color: ${CSSConstants.secondaryTextColor};
-        }
-      `}</style>
+      <Heading
+        as="h3"
+        size="md"
+        fontWeight="semibold"
+        color="secondaryTextColor"
+        dangerouslySetInnerHTML={{ __html: props.msg }}
+      />
     </Box>
   );
 };

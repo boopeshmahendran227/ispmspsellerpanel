@@ -1,12 +1,11 @@
 import ProductCard from "../atoms/ProductCard";
 import { OrderStatus, TransformedOrderItemInterface } from "../../types/order";
-import CSSConstants from "../../constants/CSSConstants";
-import Button, { ButtonType } from "../atoms/Button";
 import { formatPrice, splitCamelCase } from "utils/misc";
 import _ from "lodash";
 import { Fragment } from "react";
 import moment from "moment";
 import { getColor, getOrderStatusText } from "utils/order";
+import { Button, Box, Grid, ButtonGroup } from "@chakra-ui/core";
 
 interface OrderItemDetailProps {
   orderItem: TransformedOrderItemInterface;
@@ -24,14 +23,16 @@ interface OrderItemDetailProps {
 const OrderItemDetail = (props: OrderItemDetailProps) => {
   const { orderItem } = props;
 
+  const Key = (props) => <Box gridColumn="2">{props.children}</Box>;
+
   const getButtons = () => {
     switch (orderItem.orderItemStatus) {
       case OrderStatus.PaymentSuccess:
       case OrderStatus.PaymentOnDelivery:
         return (
-          <>
+          <ButtonGroup spacing={3}>
             <Button
-              type={ButtonType.success}
+              variantColor="successColorVariant"
               onClick={() =>
                 props.markAsProcessing(
                   props.orderItem.order.id,
@@ -42,25 +43,25 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
               Mark as Processing
             </Button>
             <Button
-              type={ButtonType.danger}
               onClick={() =>
                 props.cancelOrderItem(
                   props.orderItem.order.id,
                   props.orderItem.id
                 )
               }
-              outlined={true}
+              variant="outline"
+              variantColor="dangerColorVariant"
             >
               Cancel Order
             </Button>
-          </>
+          </ButtonGroup>
         );
       case OrderStatus.SellerProcessing:
         if (orderItem.isSelfPickup) {
           return (
-            <>
+            <ButtonGroup spacing={3}>
               <Button
-                type={ButtonType.success}
+                variantColor="successColorVariant"
                 onClick={() =>
                   props.markPackageReadyForCollection(
                     props.orderItem.order.id,
@@ -71,24 +72,24 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
                 Mark Package Ready For Collection
               </Button>
               <Button
-                type={ButtonType.danger}
+                variant="outline"
+                variantColor="dangerColorVariant"
                 onClick={() =>
                   props.cancelOrderItem(
                     props.orderItem.order.id,
                     props.orderItem.id
                   )
                 }
-                outlined={true}
               >
                 Cancel Order
               </Button>
-            </>
+            </ButtonGroup>
           );
         }
         return (
-          <>
+          <ButtonGroup spacing={3}>
             <Button
-              type={ButtonType.success}
+              variantColor="successColorVariant"
               onClick={() =>
                 props.markAsShipping(
                   props.orderItem.order.id,
@@ -99,24 +100,24 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
               Mark as Shipping
             </Button>
             <Button
-              type={ButtonType.danger}
               onClick={() =>
                 props.cancelOrderItem(
                   props.orderItem.order.id,
                   props.orderItem.id
                 )
               }
-              outlined={true}
+              variant="outline"
+              variantColor="dangerColorVariant"
             >
               Cancel Order
             </Button>
-          </>
+          </ButtonGroup>
         );
       case OrderStatus.PackageReadyForCollection:
         return (
-          <>
+          <ButtonGroup spacing={3}>
             <Button
-              type={ButtonType.success}
+              variantColor="successColorVariant"
               onClick={() =>
                 props.markAsShippingComplete(
                   props.orderItem.order.id,
@@ -127,24 +128,24 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
               Mark as Delivered & Cash Received
             </Button>
             <Button
-              type={ButtonType.danger}
               onClick={() =>
                 props.cancelOrderItem(
                   props.orderItem.order.id,
                   props.orderItem.id
                 )
               }
-              outlined={true}
+              variant="outline"
+              variantColor="dangerColorVariant"
             >
               Cancel Order
             </Button>
-          </>
+          </ButtonGroup>
         );
       case OrderStatus.Shipping:
         return (
-          <>
+          <ButtonGroup spacing={3}>
             <Button
-              type={ButtonType.success}
+              variantColor="successColorVariant"
               onClick={() =>
                 props.markAsShippingComplete(
                   props.orderItem.order.id,
@@ -161,16 +162,16 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
                   props.orderItem.id
                 )
               }
-              type={ButtonType.danger}
-              outlined={true}
+              variant="outline"
+              variantColor="dangerColorVariant"
             >
               Cancel Order
             </Button>
-          </>
+          </ButtonGroup>
         );
       case OrderStatus.CancelRequested:
         return (
-          <>
+          <ButtonGroup spacing={3}>
             <Button
               onClick={() =>
                 props.approveCancelOrderItem(
@@ -178,7 +179,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
                   props.orderItem.id
                 )
               }
-              type={ButtonType.success}
+              variantColor="successColorVariant"
             >
               Approve Cancel Request
             </Button>
@@ -189,16 +190,16 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
                   props.orderItem.id
                 )
               }
-              outlined={true}
-              type={ButtonType.danger}
+              variant="outline"
+              variantColor="dangerColorVariant"
             >
               Reject Cancel Request
             </Button>
-          </>
+          </ButtonGroup>
         );
       case OrderStatus.ReturnRequested:
         return (
-          <>
+          <ButtonGroup spacing={3}>
             <Button
               onClick={() =>
                 props.approveReturnOrderItem(
@@ -206,7 +207,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
                   props.orderItem.id
                 )
               }
-              type={ButtonType.success}
+              variantColor="successColorVariant"
             >
               Approve Return Request
             </Button>
@@ -217,12 +218,12 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
                   props.orderItem.id
                 )
               }
-              type={ButtonType.danger}
-              outlined={true}
+              variant="outline"
+              variantColor="dangerColorVariant"
             >
               Reject Return Request
             </Button>
-          </>
+          </ButtonGroup>
         );
     }
     return null;
@@ -238,9 +239,29 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
     ];
 
   return (
-    <div className="container">
-      <section className="itemContainer">
-        <div className="productContainer">
+    <Box
+      border="1px"
+      bg="foregroundColor"
+      borderColor={color}
+      maxW=" 1000px"
+      w="100%"
+      m="auto"
+      mb={3}
+    >
+      <Box textAlign="right" p={3} fontSize="lg" color={color}>
+        <Box as="span">{orderText}</Box>
+        <Box as="span">
+          {" "}
+          {moment
+
+            .utc(latestStatus.createdDateTime)
+            .local()
+            .format("MMM DD YYYY")}
+        </Box>
+      </Box>
+
+      <Box pt={1} px={1}>
+        <Box p={2}>
           <ProductCard
             name={orderItem.productSnapshot.productName}
             image={orderItem.productSnapshot.images[0]}
@@ -251,129 +272,67 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
               })
             )}
           />
-          <div className="info">
-            <div className="key">Product Id: </div>
-            <div className="value">{orderItem.productId}</div>
-            <div className="key">SKU: </div>
-            <div className="value">{orderItem.skuId}</div>
-          </div>
-        </div>
-        <div className="totalContainer">
-          <div>
+          <Grid templateColumns="100px 100px" color="secondaryTextColor">
+            <Box fontWeight="bold">Product Id: </Box>
+            <Box>{orderItem.productId}</Box>
+            <Box fontWeight="bold">SKU: </Box>
+            <Box>{orderItem.skuId}</Box>
+          </Grid>
+        </Box>
+        <Grid
+          templateColumns="150px 150px 120px"
+          maxW="420px"
+          ml="auto"
+          mt="-1.2rem"
+        >
+          <Box>
             {formatPrice(orderItem.actualPrice / orderItem.qty)} x{" "}
             {orderItem.qty}
-          </div>
-          <div className="key">MRP</div>
-          <div className="value mrp">{formatPrice(orderItem.actualPrice)}</div>
-          <div className="key">Item Price</div>
-          <div className="value">
-            {formatPrice(orderItem.actualPriceWithoutTax)}
-          </div>
+          </Box>
+
+          <Key>MRP</Key>
+          <Box mb={2}>{formatPrice(orderItem.actualPrice)}</Box>
+
+          <Key>Item Price</Key>
+          <Box>{formatPrice(orderItem.actualPriceWithoutTax)}</Box>
           {_.map(orderItem.productSnapshot.discountSplit, (value, key) => (
             <Fragment key={key}>
-              <div className="key">{splitCamelCase(key)}</div>
-              <div className="value">
-                - {formatPrice(value * orderItem.qty)}
-              </div>
+              <Key>{splitCamelCase(key)}</Key>
+              <Box>- {formatPrice(value * orderItem.qty)}</Box>
             </Fragment>
           ))}
           {orderItem.loanDetail && (
             <Fragment>
-              <div className="key">
-                Loan ({orderItem.loanDetail.providerName})
-              </div>
-              <div className="value">
-                - {formatPrice(orderItem.loanDetail.loanAmountChosen)}
-              </div>
-              <div className="key">Loan Processing Fee</div>
-              <div className="value">
-                + {formatPrice(orderItem.loanDetail.loanProcessingFee)}
-              </div>
+              <Key>Loan ({orderItem.loanDetail.providerName})</Key>
+              <Box>- {formatPrice(orderItem.loanDetail.loanAmountChosen)}</Box>
+              <Key>Loan Processing Fee</Key>
+              <Box>+ {formatPrice(orderItem.loanDetail.loanProcessingFee)}</Box>
             </Fragment>
           )}
           {orderItem.taxDetails.taxSplits.map((taxSplit, index) => (
             <Fragment key={index}>
-              <div className="key">{taxSplit.taxName}:</div>
-              <div className="value">
-                + {formatPrice(taxSplit.taxAmountPaid)}
-              </div>
+              <Key>{taxSplit.taxName}:</Key>
+              <Box>+ {formatPrice(taxSplit.taxAmountPaid)}</Box>
             </Fragment>
           ))}
-          <div className="key total">Net Price</div>
-          <div className="value total">
-            {formatPrice(orderItem.discountedPrice)}
-          </div>
-        </div>
-      </section>
+
+          <Key>
+            {" "}
+            <Box fontWeight="bold" py={2}>
+              Net Price
+            </Box>
+          </Key>
+
+          <Box py={2}>{formatPrice(orderItem.discountedPrice)}</Box>
+          <Box></Box>
+        </Grid>
+      </Box>
       {Boolean(buttons) && (
-        <section className="buttonContainer">{buttons}</section>
+        <Box mt={2} borderTop="1px" borderColor={color} p={2} textAlign="right">
+          {buttons}
+        </Box>
       )}
-      <style jsx>{`
-        .container {
-          border: 1px solid ${CSSConstants.borderColor};
-          background: ${CSSConstants.foregroundColor};
-          border-color: ${color};
-          max-width: 800px;
-          margin: auto;
-          margin-bottom: 1em;
-          position: relative;
-        }
-        .productContainer {
-          padding: 0.5em;
-        }
-        .container::before {
-          content: "${orderText} on 
-          ${moment
-            .utc(latestStatus.createdDateTime)
-            .local()
-            .format("MMM DD YYYY")}";
-          color: ${color};
-          position: absolute;
-          top: 1em;
-          right: 1em;
-          font-size: 1.2rem;
-        }
-        .itemContainer {
-          padding: 0.4em 0.8em;
-        }
-        .info {
-          display: grid;
-          grid-template-columns: 100px 100px;
-          color: ${CSSConstants.secondaryTextColor};
-        }
-        .info .key {
-          font-weight: bold;
-        }
-        .totalContainer {
-          display: grid;
-          grid-template-columns: 150px 150px 120px;
-          max-width: 420px;
-          margin-left: auto;
-          margin-top: -1.2rem;
-        }
-        .totalContainer .key {
-          grid-column: 2;
-          padding: 0.07em 0;
-        }
-        .totalContainer .value {
-          grid-column: 3;
-          padding: 0.07em 0;
-        }
-        .totalContainer .total {
-          padding: 0.2em 0;
-          font-weight: bold;
-        }
-        .mrp {
-          margin-bottom: 1.1em;
-        }
-        .buttonContainer {
-          margin-top: 1em;
-          border-top: 1px solid ${color};
-          padding: 0.5em;
-          text-align: right;
-        }
-      `}</style>
-    </div>
+    </Box>
   );
 };
 

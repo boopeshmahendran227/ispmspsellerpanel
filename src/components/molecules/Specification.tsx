@@ -1,7 +1,5 @@
 import { SpecificationInterface } from "../../types/product";
 import SectionHeader from "../atoms/SectionHeader";
-import styled from "styled-components";
-import CSSConstants from "../../constants/CSSConstants";
 import { Fragment } from "react";
 import SectionCard from "../atoms/SectionCard";
 import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
@@ -22,7 +20,7 @@ const Specification = (props: SpecificationProps) => {
       <Box>
         {specification.itemGroups.map((group) => (
           <Box>
-            <Heading size="lg">{group.name}</Heading>
+            <Heading size="sm">{group.name}</Heading>
             {group.items.length > 0 && (
               <Grid m="0.5em 0" templateColumns="200px 1fr">
                 {group.items.map((item, itemIndex) => (

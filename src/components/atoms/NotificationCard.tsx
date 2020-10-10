@@ -1,4 +1,3 @@
-import CSSConstants from "../../constants/CSSConstants";
 import _ from "lodash";
 import moment from "moment";
 import { NotificationItemInterface } from "../../types/notification";
@@ -11,20 +10,21 @@ interface NotificationCardProps {
 const NotificationCard = (props: NotificationCardProps) => {
   return (
     <Grid
-      margin="0.5em 0"
-      p="1em"
+      my={2}
+      p={3}
       bg="white"
       templateColumns="50px auto"
-      borderBottom={CSSConstants.borderStyle}
-      boxShadow="0 1px 3px rgba(0, 0, 0, 0.12),0 1px 2px rgba(0, 0, 0, 0.24)"
+      borderBottom="1px"
+      borderColor="borderColor"
+      boxShadow="md"
     >
-      <Box fontSize="1.9rem">
+      <Box fontSize="md">
         <i className="far fa-envelope"></i>
       </Box>
       <Box>
         <Heading size="md">{props.notification.subject}</Heading>
-        <Box mb="0.4em">{props.notification.message}</Box>
-        <Box color="gray" fontSize="0.9em">
+        <Box mb="md">{props.notification.message}</Box>
+        <Box color="gray" fontSize="sm">
           {moment.utc(props.notification.createdDateTime).local().fromNow()}
         </Box>
       </Box>

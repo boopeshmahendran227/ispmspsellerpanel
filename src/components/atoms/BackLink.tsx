@@ -1,4 +1,3 @@
-import CSSConstants from "../../constants/CSSConstants";
 import Link from "next/link";
 import { PseudoBox } from "@chakra-ui/core";
 
@@ -14,9 +13,9 @@ const BackLink = (props: BackLinkProps): JSX.Element => {
       <PseudoBox
         as="a"
         display="block"
-        color={CSSConstants.secondaryTextColor}
+        color="secondaryTextColor"
         transition="all 0.3s"
-        _hover={{ color: `${CSSConstants.primaryTextColor}` }}
+        _hover={{ color: "primaryTextColor" }}
       >
         <i className="icon fas fa-chevron-left" /> {props.children}
       </PseudoBox>

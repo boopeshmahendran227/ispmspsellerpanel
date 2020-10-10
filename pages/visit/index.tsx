@@ -12,6 +12,7 @@ import Loader from "components/atoms/Loader";
 import ShowroomVisitsContainer from "components/molecules/ShowroomVisitsContainer";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageHeader from "components/atoms/PageHeader";
+import { Box, Grid, Heading, Divider } from "@chakra-ui/core";
 
 const ShowroomVisits = () => {
   const [showroomFilter, setShowroomFilter] = useState(null);
@@ -46,8 +47,8 @@ const ShowroomVisits = () => {
   };
 
   return (
-    <div className="container">
-      <div>
+    <Grid templateColumns="1fr auto" gap={2} p={5} maxW="1200px" m="auto">
+      <Box>
         <PageHeaderContainer>
           <PageHeader>Showroom Visits</PageHeader>
         </PageHeaderContainer>
@@ -55,23 +56,30 @@ const ShowroomVisits = () => {
           showroomVisits={showroomVisits}
           dateFilter={dateFilter}
         />
-      </div>
-      <div className="filterContainer">
+      </Box>
+      <Box>
         <SingleDatePicker onChange={handleDateChange} value={dateFilter} />
-
-        <div className="showroomFilterContainer">
-          <header>Showrooms</header>
-          <div className="body">
-            <div>
+        <Box
+          bg="white"
+          boxShadow="md"
+          borderRadius="md"
+          className="showroomFilterContainer"
+        >
+          <Heading size="sm" py={2} px={4}>
+            Showrooms
+          </Heading>
+          <Divider />
+          <Box py={2} px={4}>
+            <Box>
               <RadioButton
                 label="All Showrooms"
                 value={""}
                 checked={showroomFilter === null}
                 onChange={handleShowroomChange}
               />
-            </div>
+            </Box>
             {showrooms.map((showroom, index) => (
-              <div key={index}>
+              <Box key={index}>
                 <RadioButton
                   key={index}
                   label={showroom.name}
@@ -79,40 +87,12 @@ const ShowroomVisits = () => {
                   checked={showroomFilter === showroom.id}
                   onChange={handleShowroomChange}
                 />
-              </div>
+              </Box>
             ))}
-          </div>
-        </div>
-      </div>
-      <style jsx>{`
-        .container {
-          display: grid;
-          grid-template-columns: 1fr auto;
-          grid-gap: 5em;
-          padding: 2em;
-          max-width: 1200px;
-          margin: auto;
-        }
-        .showroomFilterContainer {
-          background: white;
-          margin-top: 2em;
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05),
-            0 0 0 1px rgba(0, 0, 0, 0.07);
-          border-radius: 0.2em;
-        }
-        .showroomFilterContainer header {
-          font-weight: bold;
-          border-bottom: 1px solid #f0f0f0;
-        }
-        .showroomFilterContainer header,
-        .showroomFilterContainer .body {
-          padding: 0.8em 1.7em;
-        }
-        .filterContainer {
-          padding: 2em;
-        }
-      `}</style>
-    </div>
+          </Box>
+        </Box>
+      </Box>
+    </Grid>
   );
 };
 

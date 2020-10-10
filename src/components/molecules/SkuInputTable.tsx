@@ -1,6 +1,5 @@
 import SortableTable from "../atoms/SortableTable";
 import { ProductSkuDetail, ProductInputInterface } from "../../types/product";
-import CSSConstants from "../../constants/CSSConstants";
 import { ErrorMessage, FieldArray, useFormikContext } from "formik";
 import Button from "../atoms/Button";
 import { connect } from "react-redux";

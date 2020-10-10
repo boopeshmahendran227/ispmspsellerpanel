@@ -30,11 +30,9 @@ const Testdrives = () => {
         <PageHeader>Test Drives ({testdrives.length})</PageHeader>
       </PageHeaderContainer>
       <PageBodyContainer>
-        <Box>
-          {testdrives.map((testdrive, index) => (
-            <TestDriveCard key={index} testdrive={testdrive} />
-          ))}
-        </Box>
+        {testdrives.map((testdrive, index) => (
+          <TestDriveCard key={index} testdrive={testdrive} />
+        ))}
       </PageBodyContainer>
     </PageContainer>
   );

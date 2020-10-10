@@ -9,7 +9,6 @@ import Loader from "components/atoms/Loader";
 import Link from "next/link";
 import ProductCard from "components/atoms/ProductCard";
 import moment from "moment";
-import Button, { ButtonType } from "components/atoms/Button";
 import QuoteActions from "actions/quote";
 import { formatPrice } from "utils/misc";
 import { getColor } from "utils/quote";
@@ -20,6 +19,7 @@ import PageContainer from "components/atoms/PageContainer";
 import PageHeader from "components/atoms/PageHeader";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageBodyContainer from "components/atoms/PageBodyContainer";
+import { Button, ButtonGroup } from "@chakra-ui/core";
 
 interface DispatchProps {
   updateQuote: (quote: QuoteInterface) => void;
@@ -109,21 +109,24 @@ const Quotes = (props: QuotesProps) => {
     switch (quote.status) {
       case QuoteStatus.SellerResponsePending:
         return (
-          <>
+          <ButtonGroup spacing={1}>
             <Button
-              type={ButtonType.success}
+              my={2}
+              size="sm"
+              variantColor="successColorVariant"
               onClick={(e) => handleClick(e, props.updateQuote)}
             >
               Respond To Quote
             </Button>
             <Button
-              type={ButtonType.danger}
+              size="sm"
+              variantColor="dangerColorVariant"
+              variant="outline"
               onClick={(e) => handleClick(e, props.rejectQuote)}
-              outlined={true}
             >
               Reject Quote
             </Button>
-          </>
+          </ButtonGroup>
         );
     }
     return null;

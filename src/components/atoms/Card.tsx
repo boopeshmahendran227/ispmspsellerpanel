@@ -1,4 +1,3 @@
-import CSSConstants from "../../constants/CSSConstants";
 import { Box } from "@chakra-ui/core";
 
 interface CardProps {
@@ -7,11 +6,7 @@ interface CardProps {
 
 const Card = (props: CardProps): JSX.Element => {
   return (
-    <Box
-      bg={CSSConstants.foregroundColor}
-      border={CSSConstants.borderStyle}
-      p="1em"
-    >
+    <Box bg="foregroundColor" border="1px" borderColor="borderColor" p={2}>
       {props.children}
     </Box>
   );

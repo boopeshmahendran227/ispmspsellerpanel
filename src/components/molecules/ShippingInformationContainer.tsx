@@ -2,9 +2,8 @@ import CSSConstants from "../../constants/CSSConstants";
 import { OrderItemInterface } from "../../types/order";
 import { isCompletedOrderStatus, isShippingOrderStatus } from "utils/order";
 import moment from "moment";
-import { Box, Flex, Link } from "@chakra-ui/core";
+import { Box, Flex, Link, Heading } from "@chakra-ui/core";
 import React from "react";
-import PageHeader from "components/atoms/PageHeader";
 
 interface ShippingInformationContainerProps {
   orderItem: OrderItemInterface;
@@ -23,13 +22,13 @@ const ShippingInformationContainer = (
   }
 
   return (
-    <Box border="1px" borderColor="borderColor" p="1em" m="2em 0" bg="white">
+    <Box border="1px" borderColor="borderColor" p={3} my={5} bg="white">
       <Flex align="baseline">
-        <PageHeader>Shipping Information</PageHeader>
+        <Heading size="md">Shipping Information</Heading>
         <Link
           color="secondaryColor"
           display="inline-block"
-          margin="0 0.5em;"
+          mx={2}
           textDecoration="underline"
           href={orderItem.shipment.shiprocketResponse?.label_url}
         >
@@ -38,7 +37,7 @@ const ShippingInformationContainer = (
         <Link
           color="secondaryColor"
           display="inline-block"
-          margin="0 0.5em;"
+          mx={2}
           textDecoration="underline"
           href={orderItem.shipment.shiprocketResponse?.manifest_url}
         >

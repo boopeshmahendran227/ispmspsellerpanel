@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import Specification from "components/molecules/Specification";
 import TierPrice from "components/molecules/TierPrice";
 import FAQ from "components/molecules/FAQ";
-import CSSConstants from "../../src/constants/CSSConstants";
 import PageError from "components/atoms/PageError";
 import WithAuth from "components/atoms/WithAuth";
 import ProductMainInfo from "components/molecules/ProductMainInfo";

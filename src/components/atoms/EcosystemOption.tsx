@@ -20,7 +20,7 @@ const EcosystemOption = (props: EcosystemOptionProps) => {
           )}
         </Box>
       </Flex>
-      <Text fontSize="0.8rem" color={CSSConstants.secondaryTextColor}>
+      <Text fontSize="xs" color="secondaryTextColor">
         {ecosystem.ecosystem_url[0]}
       </Text>
       <style jsx>{`

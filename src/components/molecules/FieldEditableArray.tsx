@@ -1,4 +1,3 @@
-import Button from "../atoms/Button";
 import {
   FieldArray,
   ErrorMessage,
@@ -8,6 +7,7 @@ import {
 import CSSConstants from "../../constants/CSSConstants";
 import _ from "lodash";
 import ValidationErrorMsg from "../atoms/ValidationErrorMsg";
+import { Button, Box } from "@chakra-ui/core";
 
 interface FieldEditableArrayProps {
   headers: string[];
@@ -30,8 +30,8 @@ const FieldEditableArray = (props: FieldEditableArrayProps) => {
     <FieldArray
       name={props.name}
       render={(arrayHelpers) => (
-        <div className="container">
-          <div className="inputContainer">
+        <Box my={3}>
+          <Box>
             <table>
               <thead>
                 <tr>
@@ -55,29 +55,24 @@ const FieldEditableArray = (props: FieldEditableArrayProps) => {
                 ))}
               </tbody>
             </table>
-            <div className="buttonContainer">
-              <Button onClick={() => props.onAdd(arrayHelpers)}>
+            <Box>
+              <Button
+                variantColor="primaryColorVariant"
+                onClick={() => props.onAdd(arrayHelpers)}
+              >
                 {dataList.length === 0
                   ? `Add ${props.label}`
                   : `Add one more ${props.label}`}
               </Button>
-            </div>
+            </Box>
             <ErrorMessage component={ValidationErrorMsg} name={props.name} />
-          </div>
+          </Box>
           <style jsx>{`
-            .container {
-              margin: 1em 0;
-              font-size: 1.1rem;
-            }
-            .deleteContainer {
-              padding: 1em 0.3em;
-              vertical-align: top;
-            }
             .fa-trash:hover {
               color: ${CSSConstants.warningColor};
             }
           `}</style>
-        </div>
+        </Box>
       )}
     />
   );

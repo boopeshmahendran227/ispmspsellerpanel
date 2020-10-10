@@ -1,7 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers";
-import CSSConstants from "../../constants/CSSConstants";
 import { getLoadingScreenOpen } from "../../selectors/ui";
 import {
   Box,
@@ -31,7 +30,7 @@ const LoadingScreen = (props: LoadingScreenProps) => {
         <DrawerBody>
           <Flex direction="column" h="100%" justify="center">
             <Loader />
-            <Box textAlign="center" color={CSSConstants.primaryColor}>
+            <Box textAlign="center" color="primaryColor">
               Processing...Please wait
             </Box>
           </Flex>

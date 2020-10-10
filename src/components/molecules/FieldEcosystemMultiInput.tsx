@@ -2,10 +2,9 @@ import EcosystemOption from "../atoms/EcosystemOption";
 import { EcosystemResponseInterface } from "types/business";
 import ValidationErrorMsg from "../atoms/ValidationErrorMsg";
 import { Field, ErrorMessage } from "formik";
-import classNames from "classnames";
-import CSSConstants from "../../constants/CSSConstants";
 import MultiSelect from "../atoms/MultiSelect";
 import { SelectOptionInterface } from "types/product";
+import { FormControl } from "@chakra-ui/core";
 
 interface FieldEcosystemMultiInputProps {
   ecosystemData: EcosystemResponseInterface;
@@ -24,37 +23,23 @@ const FieldEcosystemMultiInput = (
   return (
     <Field name={name}>
       {({ field, form }) => (
-        <label
-          className={classNames({
-            container: true,
-            error: Boolean(form.touched[props.name] && form.errors[props.name]),
-          })}
+        <FormControl
+          isInvalid={form.errors[props.name] && form.touched[props.name]}
+          my={3}
         >
-          <div>
-            <MultiSelect
-              value={field.value.map((id: string) =>
-                ecosystems.find((ecosystem) => ecosystem.value === id)
-              )}
-              onChange={(value: SelectOptionInterface[]) => {
-                field.onChange({
-                  target: { name, value: value.map((value) => value.value) },
-                });
-              }}
-              options={ecosystems}
-            />
-          </div>
-          <div className="errorContainer">
-            <ErrorMessage component={ValidationErrorMsg} name={props.name} />
-          </div>
-          <style jsx>{`
-            .container {
-              margin: 0.3em 0;
-            }
-            .container.error {
-              color: ${CSSConstants.dangerColor};
-            }
-          `}</style>
-        </label>
+          <MultiSelect
+            value={field.value.map((id: string) =>
+              ecosystems.find((ecosystem) => ecosystem.value === id)
+            )}
+            onChange={(value: SelectOptionInterface[]) => {
+              field.onChange({
+                target: { name, value: value.map((value) => value.value) },
+              });
+            }}
+            options={ecosystems}
+          />
+          <ErrorMessage component={ValidationErrorMsg} name={props.name} />
+        </FormControl>
       )}
     </Field>
   );

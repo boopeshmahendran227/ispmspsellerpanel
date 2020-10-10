@@ -4,11 +4,11 @@ import {
   QuoteInterface,
 } from "../../types/quote";
 import { getQuoteStatusText, getColor } from "utils/quote";
-import CSSConstants from "../../constants/CSSConstants";
-import Button, { ButtonType } from "../atoms/Button";
 import _ from "lodash";
 import moment from "moment";
 import QuoteProduct from "./QuoteProduct";
+import { Button, Box, Divider, ButtonGroup } from "@chakra-ui/core";
+import React from "react";
 
 interface QuoteItemDetailProps {
   quote: QuoteDetailInterface;
@@ -28,21 +28,21 @@ const QuoteItemDetail = (props: QuoteItemDetailProps) => {
     switch (quote.status) {
       case QuoteStatus.SellerResponsePending:
         return (
-          <>
+          <ButtonGroup spacing={3}>
             <Button
-              type={ButtonType.success}
+              variantColor="successColorVariant"
               onClick={(e) => handleClick(e, props.updateQuote)}
             >
               Respond To Quote
             </Button>
             <Button
-              type={ButtonType.danger}
+              variant="outline"
+              variantColor="dangerColorVariant"
               onClick={(e) => handleClick(e, props.rejectQuote)}
-              outlined={true}
             >
               Reject Quote
             </Button>
-          </>
+          </ButtonGroup>
         );
     }
     return null;
@@ -55,57 +55,42 @@ const QuoteItemDetail = (props: QuoteItemDetailProps) => {
   const latestStatus = quote.statusHistories[quote.statusHistories.length - 1];
 
   return (
-    <div className="container">
-      <section className="itemContainer">
-        <div className="productContainer">
-          {quote.productDetails.map((productDetail) => (
-            <QuoteProduct
-              key={productDetail.id}
-              productDetail={productDetail}
-            />
-          ))}
-        </div>
-      </section>
-      {Boolean(buttons) && (
-        <section className="buttonContainer">{buttons}</section>
-      )}
-      <style jsx>{`
-        .container {
-          border: 1px solid ${CSSConstants.borderColor};
-          background: ${CSSConstants.foregroundColor};
-          border-color: ${color};
-          max-width: 800px;
-          margin: auto;
-          margin-bottom: 1em;
-          position: relative;
-        }
-        .productContainer {
-          padding: 0 0.5em;
-          padding-top: 3em;
-        }
-        .container::before {
-          content: "${statusText} on 
-          ${moment
+    <Box
+      border="1px"
+      bg="foregroundColor"
+      borderColor={color}
+      maxW=" 1000px"
+      w="100%"
+      m="auto"
+      mb={3}
+    >
+      <Box textAlign="right" p={3} fontSize="lg" color={color}>
+        <Box as="span">{statusText}</Box>
+        <Box as="span">
+          {" "}
+          {moment
+
             .utc(latestStatus.createdDateTime)
             .local()
-            .format("MMM DD YYYY")}";
-          color: ${color};
-          position: absolute;
-          top: 1em;
-          right: 1em;
-          font-size: 1.2rem;
-        }
-        .itemContainer {
-          padding: 0.4em 0.8em;
-        }
-        .buttonContainer {
-          margin-top: 1em;
-          border-top: 1px solid ${color};
-          padding: 0.5em;
-          text-align: right;
-        }
-      `}</style>
-    </div>
+            .format("MMM DD YYYY")}
+        </Box>
+      </Box>
+
+      <Box pt={5} px={1}>
+        {quote.productDetails.map((productDetail) => (
+          <QuoteProduct key={productDetail.id} productDetail={productDetail} />
+        ))}
+      </Box>
+
+      {Boolean(buttons) && (
+        <>
+          <Divider borderColor={color} />
+          <Box mt={3} p={2} textAlign="right">
+            {buttons}
+          </Box>
+        </>
+      )}
+    </Box>
   );
 };
 

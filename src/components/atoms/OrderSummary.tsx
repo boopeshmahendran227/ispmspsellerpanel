@@ -1,7 +1,6 @@
 import { OrderInterface } from "../../types/order";
 import _ from "lodash";
 import { formatPrice } from "utils/misc";
-import CSSConstants from "../../constants/CSSConstants";
 import { Grid, Box } from "@chakra-ui/core";
 
 interface OrderSummaryProps {
@@ -13,7 +12,7 @@ const OrderSummary = (props: OrderSummaryProps) => {
 
   return (
     <Grid templateColumns="100px 100px" fontSize="md" fontWeight="normal">
-      <Box as="span" m="0.1em 0" fontWeight="bold">
+      <Box as="span" my={2} fontWeight="bold">
         Sub Total
       </Box>
       <Box as="span" textAlign="right">
@@ -41,10 +40,10 @@ const OrderSummary = (props: OrderSummaryProps) => {
           </Box>
         </>
       ))}
-      <Box as="span" margin="0.6em 0" fontWeight="bold">
+      <Box as="span" my={3} fontWeight="bold">
         Net Total
       </Box>
-      <Box as="span" textAlign="right" margin="0.6em 0">
+      <Box as="span" textAlign="right" my={3}>
         {formatPrice(order.totalPrice)}
       </Box>
     </Grid>
