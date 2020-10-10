@@ -12,7 +12,6 @@ import ProductCard from "components/atoms/ProductCard";
 import { formatPrice } from "utils/misc";
 import moment from "moment";
 import SortableTable from "components/atoms/SortableTable";
-import Button, { ButtonType } from "../atoms/Button";
 import {
   getColor,
   getOrderStatusText,
@@ -30,6 +29,7 @@ import ProductOrdersContainer from "components/molecules/ProductOrdersContainer"
 import Loader from "components/atoms/Loader";
 import { transformOrderItem } from "../../transformers/orderItem";
 import _ from "lodash";
+import { Button, ButtonGroup } from "@chakra-ui/core";
 
 interface OwnProps {
   orderData: PaginatedDataInterface<OrderInterface>;
@@ -111,132 +111,147 @@ const OrdersContainer = (props: OrdersContainerProps) => {
       case OrderStatus.PaymentSuccess:
       case OrderStatus.PaymentOnDelivery:
         return (
-          <>
+          <ButtonGroup spacing={3}>
             <Button
-              type={ButtonType.success}
+              size="sm"
+              variantColor="successColorVariant"
               onClick={(e) => handleClick(e, props.markAsProcessing)}
             >
               Mark as Processing
             </Button>
             <Button
-              type={ButtonType.danger}
+              size="sm"
+              variantColor="dangerColorVariant"
+              variant="outline"
               onClick={(e) => handleClick(e, props.cancelOrderItem)}
-              outlined={true}
             >
               Cancel Order
             </Button>
-          </>
+          </ButtonGroup>
         );
       case OrderStatus.SellerProcessing:
         if (orderItem.isSelfPickup) {
           return (
-            <>
+            <ButtonGroup spacing={3}>
               <Button
-                type={ButtonType.success}
+                variantColor="successColorVariant"
                 onClick={(e) =>
                   handleClick(e, props.markPackageReadyForCollection)
                 }
+                size="sm"
               >
                 Mark Package Ready For Collection
               </Button>
               <Button
-                type={ButtonType.danger}
+                size="sm"
+                variantColor="dangerColorVariant"
+                variant="outline"
                 onClick={(e) => handleClick(e, props.cancelOrderItem)}
-                outlined={true}
               >
                 Cancel Order
               </Button>
-            </>
+            </ButtonGroup>
           );
         }
         return (
-          <>
+          <ButtonGroup spacing={3}>
             <Button
-              type={ButtonType.success}
+              variantColor="successColorVariant"
               onClick={(e) => handleClick(e, props.markAsShipping)}
+              size="sm"
             >
               Mark as Shipping
             </Button>
             <Button
-              type={ButtonType.danger}
+              size="sm"
+              variantColor="dangerColorVariant"
+              variant="outline"
               onClick={(e) => handleClick(e, props.cancelOrderItem)}
-              outlined={true}
             >
               Cancel Order
             </Button>
-          </>
+          </ButtonGroup>
         );
       case OrderStatus.PackageReadyForCollection:
         return (
-          <>
+          <ButtonGroup spacing={3}>
             <Button
-              type={ButtonType.success}
+              variantColor="successColorVariant"
               onClick={(e) => handleClick(e, props.markAsShippingComplete)}
+              my={2}
+              size="sm"
             >
               Mark as Delivered & Cash Received
             </Button>
             <Button
-              type={ButtonType.danger}
+              size="sm"
+              variantColor="dangerColorVariant"
+              variant="outline"
               onClick={(e) => handleClick(e, props.cancelOrderItem)}
-              outlined={true}
             >
               Cancel Order
             </Button>
-          </>
+          </ButtonGroup>
         );
       case OrderStatus.Shipping:
         return (
-          <>
+          <ButtonGroup spacing={3}>
             <Button
-              type={ButtonType.success}
+              size="sm"
+              variantColor="successColorVariant"
               onClick={(e) => handleClick(e, props.markAsShippingComplete)}
             >
               Mark as Delivered
             </Button>
             <Button
+              size="sm"
               onClick={(e) => handleClick(e, props.cancelOrderItem)}
-              type={ButtonType.danger}
-              outlined={true}
+              variantColor="dangerColorVariant"
+              variant="outline"
             >
               Cancel Order
             </Button>
-          </>
+          </ButtonGroup>
         );
       case OrderStatus.CancelRequested:
         return (
-          <>
+          <ButtonGroup spacing={3}>
             <Button
+              size="sm"
               onClick={(e) => handleClick(e, props.approveCancelOrderItem)}
-              type={ButtonType.success}
+              variantColor="successColorVariant"
             >
               Approve Cancel Request
             </Button>
             <Button
+              size="sm"
               onClick={(e) => handleClick(e, props.rejectCancelOrderItem)}
-              outlined={true}
-              type={ButtonType.danger}
+              variantColor="dangerColorVariant"
+              variant="outline"
             >
               Reject Cancel Request
             </Button>
-          </>
+          </ButtonGroup>
         );
       case OrderStatus.ReturnRequested:
         return (
-          <>
+          <ButtonGroup spacing={3}>
             <Button
+              size="sm"
               onClick={(e) => handleClick(e, props.approveReturnOrderItem)}
-              type={ButtonType.success}
+              variantColor="successColorVariant"
             >
               Approve Return Request
             </Button>
             <Button
+              size="sm"
               onClick={(e) => handleClick(e, props.rejectReturnOrderItem)}
-              type={ButtonType.danger}
-              outlined={true}
+              variantColor="dangerColorVariant"
+              variant="outline"
             >
               Reject Return Request
             </Button>
-          </>
+          </ButtonGroup>
         );
     }
     return null;

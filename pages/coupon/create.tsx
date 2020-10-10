@@ -1,7 +1,6 @@
 import { useState } from "react";
 import useSWR from "swr";
 import { Formik, Form } from "formik";
-import Button, { ButtonType } from "components/atoms/Button";
 import InputLabel from "components/atoms/InputLabel";
 import CouponActions from "actions/coupon";
 import { connect } from "react-redux";
@@ -29,7 +28,7 @@ import EcosystemOption from "components/atoms/EcosystemOption";
 import FieldSelect from "components/molecules/FieldSelect";
 import FieldInput from "components/atoms/FieldInput";
 import api from "../../src/api";
-import { Box, Heading, Grid } from "@chakra-ui/core";
+import { Box, Heading, Grid, Button, ButtonGroup } from "@chakra-ui/core";
 
 interface DispatchProps {
   createCoupon: (couponData: CouponRequestInterface) => void;
@@ -90,20 +89,19 @@ const CreateCoupon = (props: CreateCouponProps) => {
   return (
     <Box
       maxW="700px"
-      m="2em auto"
-      p="1.3em"
-      boxShadow="0 1px 3px rgba(0, 0, 0, 0.12),
-      0 1px 2px rgba(0, 0, 0, 0.24)"
-      bg={CSSConstants.foregroundColor}
+      mx="auto"
+      my={10}
+      p={6}
+      boxShadow="md"
+      bg="foregroundColor"
     >
       <BackLink href="/coupon">Back to Coupons</BackLink>
       <Heading
-        as="h6"
         size="xl"
-        mt="0.5em"
-        mb="1em"
+        mt={3}
+        mb={4}
         fontWeight="bold"
-        fontSize="1.3rem"
+        fontSize="xl"
         textTransform="uppercase"
       >
         Create Coupon
@@ -161,7 +159,7 @@ const CreateCoupon = (props: CreateCouponProps) => {
         onSubmit={onSubmit}
       >
         {({ setFieldValue, values, resetForm }) => (
-          <Box className="formContainer">
+          <Box>
             <Form>
               <Grid templateColumns="200px 300px" alignItems="center">
                 <InputLabel label="Coupon Code" />
@@ -207,31 +205,32 @@ const CreateCoupon = (props: CreateCouponProps) => {
                 ) : (
                   <FieldPercentageInput name="discountPercentage" />
                 )}
-                <InputLabel label="Ecosystem" />
-                <FieldSelect name="ecosystem" options={ecosystems} />
                 <InputLabel label="Minimum Order Amount" />
                 <FieldPriceInput name="minimumOrderAmount" />
+                <InputLabel label="Ecosystem" />
+                <FieldSelect name="ecosystem" options={ecosystems} />
                 <InputLabel label="Valid From" />
                 <FieldDatePicker name="startDate" />
                 <InputLabel label="Valid Till" />
                 <FieldDatePicker name="endDate" />
               </Grid>
-              <Box pt="1em" pb="0.4em" fontSize="1.1rem">
+              <ButtonGroup spacing={4}>
                 <Button
-                  disabled={isCheckingCouponCode}
-                  type={ButtonType.success}
-                  isSubmitButton={true}
+                  isDisabled={isCheckingCouponCode}
+                  type="submit"
+                  variantColor="successColorVariant"
                 >
                   Submit
                 </Button>
                 <Button
-                  type={ButtonType.danger}
-                  onClick={resetForm}
-                  outlined={true}
+                  variant="outline"
+                  onClick={() => resetForm}
+                  type="reset"
+                  variantColor="dangerColorVariant"
                 >
                   Clear
                 </Button>
-              </Box>
+              </ButtonGroup>
             </Form>
           </Box>
         )}

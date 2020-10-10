@@ -1,9 +1,8 @@
 import ValidationErrorMsg from "../atoms/ValidationErrorMsg";
 import { Field, ErrorMessage } from "formik";
-import classNames from "classnames";
-import CSSConstants from "../../constants/CSSConstants";
 import MultiSelect from "../atoms/MultiSelect";
 import { SelectOptionInterface } from "../../types/product";
+import { Box, FormControl } from "@chakra-ui/core";
 
 interface FieldMultiSelectProps {
   name: string;
@@ -16,13 +15,10 @@ const FieldMultiSelect = (props: FieldMultiSelectProps) => {
   return (
     <Field name={name}>
       {({ field, form }) => (
-        <label
-          className={classNames({
-            container: true,
-            error: Boolean(form.touched[props.name] && form.errors[props.name]),
-          })}
+        <FormControl
+          isInvalid={form.errors[props.name] && form.touched[props.name]}
         >
-          <div className="selectContainer">
+          <Box className="selectContainer">
             <MultiSelect
               value={field.value}
               onChange={(value) => {
@@ -32,19 +28,9 @@ const FieldMultiSelect = (props: FieldMultiSelectProps) => {
               }}
               options={props.options}
             />
-          </div>
-          <div className="errorContainer">
-            <ErrorMessage component={ValidationErrorMsg} name={props.name} />
-          </div>
-          <style jsx>{`
-            .container {
-              margin: 0.3em 0;
-            }
-            .container.error {
-              color: ${CSSConstants.dangerColor};
-            }
-          `}</style>
-        </label>
+          </Box>
+          <ErrorMessage component={ValidationErrorMsg} name={props.name} />
+        </FormControl>
       )}
     </Field>
   );

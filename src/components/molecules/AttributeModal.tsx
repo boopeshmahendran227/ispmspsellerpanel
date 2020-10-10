@@ -63,7 +63,7 @@ const AttributeModal = (props: AttributeModalProps) => {
   return (
     <Modal isOpen={open} onClose={onClose} size="lg" scrollBehavior="inside">
       <ModalOverlay />
-      <ModalContent borderRadius="16px">
+      <ModalContent borderRadius={10}>
         <ModalHeader>Create New Attribute</ModalHeader>
         <ModalCloseButton />{" "}
         <ModalBody>

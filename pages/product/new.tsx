@@ -1,4 +1,3 @@
-import Button, { ButtonType } from "components/atoms/Button";
 import FieldInput from "components/atoms/FieldInput";
 import FieldSelect from "components/molecules/FieldSelect";
 import FieldMultiSelect from "components/molecules/FieldMultiSelect";
@@ -36,7 +35,7 @@ import FAQInput from "components/molecules/FAQInput";
 import TierPriceInput from "components/molecules/TierpriceInput";
 import Checkbox from "components/atoms/Checkbox";
 import { CategoryInterface } from "types/category";
-import { Grid, Box } from "@chakra-ui/core";
+import { Grid, Box, Button, ButtonGroup } from "@chakra-ui/core";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -92,7 +91,7 @@ const AddProduct = (props: AddProductProps) => {
   };
 
   return (
-    <Box p="0 1em">
+    <Box px={2}>
       <PageHeader>Add Product</PageHeader>
       <Box maxW="1200px" m="auto">
         <Formik
@@ -127,7 +126,7 @@ const AddProduct = (props: AddProductProps) => {
               <Grid
                 templateColumns="200px 1fr"
                 alignItems="center"
-                fontSize="1.1rem"
+                fontSize="md"
                 maxW=" 700px"
                 margin="auto"
               >
@@ -150,6 +149,15 @@ const AddProduct = (props: AddProductProps) => {
                 <FieldTextArea name="longDescription" />
                 <InputLabel label="HSN Code" />
                 <FieldInput name="hsnCode" />
+                <InputLabel label="Min Price" />
+                <Tooltip
+                  trigger="focus"
+                  tooltip="Minimum price after all discounts"
+                >
+                  <FieldPriceInput name="minPrice" />
+                </Tooltip>
+                <InputLabel label="Max Price" />
+                <FieldPriceInput name="maxPrice" />
                 <InputLabel label="Main Category" />
                 <FieldSelect
                   name="defaultCategory"
@@ -192,15 +200,7 @@ const AddProduct = (props: AddProductProps) => {
                     label: country,
                   }))}
                 />
-                <InputLabel label="Min Price" />
-                <Tooltip
-                  trigger="focus"
-                  tooltip="Minimum price after all discounts"
-                >
-                  <FieldPriceInput name="minPrice" />
-                </Tooltip>
-                <InputLabel label="Max Price" />
-                <FieldPriceInput name="maxPrice" />
+
                 <InputLabel label="Tax Group" />
                 <FieldSelect
                   name="taxGroup"
@@ -214,18 +214,30 @@ const AddProduct = (props: AddProductProps) => {
               <TierPriceInput />
               <FAQInput />
               <SpecificationInput />
-              <Box textAlign="center" fontSize="1.2rem" mb="1em">
-                <Button type={ButtonType.success} isSubmitButton={true}>
+              <ButtonGroup
+                spacing={4}
+                textAlign="center"
+                m="auto"
+                mb={10}
+                width="full"
+              >
+                <Button
+                  size="lg"
+                  type="submit"
+                  variantColor="successColorVariant"
+                >
                   Submit
                 </Button>
                 <Button
-                  onClick={resetForm}
-                  type={ButtonType.success}
-                  outlined={true}
+                  size="lg"
+                  onClick={() => resetForm}
+                  type="reset"
+                  variant="outline"
+                  variantColor="sucessColorVariant"
                 >
                   Clear
                 </Button>
-              </Box>
+              </ButtonGroup>
             </Form>
           )}
         </Formik>

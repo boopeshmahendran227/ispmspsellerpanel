@@ -1,11 +1,25 @@
 import { theme } from "@chakra-ui/core";
 import Chroma from "chroma-js";
+
 export const customTheme = {
   ...theme,
   fonts: {
     body: "Lato, sans-serif",
     heading: "Lato, serif",
     mono: "Menlo, monospace",
+  },
+  fontSizes: {
+    xs: "0.75rem",
+    sm: "0.875rem",
+    md: "1rem",
+    lg: "1.25rem",
+    xl: "1.5rem",
+    "2xl": "2rem",
+    "3xl": "2.5rem",
+    "4xl": "3.5rem",
+    "5xl": "4.5rem",
+    "6xl": "5.5rem",
+    "7xl": "6rem",
   },
   colors: {
     ...theme.colors,
@@ -117,17 +131,13 @@ export const customTheme = {
 
   },
 
-  sideNavBarWidth: "80px",
-  border: {
-    borderStyle: "",
-  },
-  borderStyle:"1px solid red"
+
 }
 
 customTheme.colors.lightPrimaryColor = Chroma(customTheme.colors.primaryColor)
   .brighten(0.4)
   .css();
-customTheme.border.borderStyle = `1px solid ${customTheme.colors.borderColor}`;
+
 customTheme.colors.hoverTextColor = customTheme.colors.primaryColor;
 customTheme.colors.outlineColor = Chroma(customTheme.colors.primaryColor).brighten(1.9).css();
 

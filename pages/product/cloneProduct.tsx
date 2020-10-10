@@ -7,7 +7,6 @@ import FieldInput from "components/atoms/FieldInput";
 import FieldSelect from "components/molecules/FieldSelect";
 import InputLabel from "components/atoms/InputLabel";
 import * as Yup from "yup";
-import Button, { ButtonType } from "components/atoms/Button";
 import EcosystemOption from "components/atoms/EcosystemOption";
 import useSWR from "swr";
 import { EcosystemResponseInterface } from "types/business";
@@ -17,7 +16,8 @@ import { SelectOptionInterface, ProductCloneInterface } from "types/product";
 import ProductActions from "actions/product";
 import WithAuth from "components/atoms/WithAuth";
 import { connect } from "react-redux";
-import { Box, Grid } from "@chakra-ui/core";
+import { Box, Grid, Button } from "@chakra-ui/core";
+import PageBodyContainer from "components/atoms/PageBodyContainer";
 
 interface DispatchProps {
   cloneProduct: (product: ProductCloneInterface) => void;
@@ -78,10 +78,18 @@ const CloneProduct = (props: CloneProductProps) => {
   );
 
   return (
-    <PageContainer>
+    <Box
+      maxW="600px"
+      mx="auto"
+      my={10}
+      p={6}
+      boxShadow="md"
+      bg="foregroundColor"
+    >
       <PageHeaderContainer>
         <PageHeader>Product Clone</PageHeader>
       </PageHeaderContainer>
+
       <Formik
         initialValues={{
           currentEcosystem: null,
@@ -106,14 +114,14 @@ const CloneProduct = (props: CloneProductProps) => {
               <FieldSelect name="targetEcosystem" options={targetEcosystems} />
             </Grid>
             <Box pt="1em" pb=" 0.4em" fontSize="1.1rem" ml="400px">
-              <Button type={ButtonType.success} isSubmitButton={true}>
+              <Button type="submit" variantColor="successColorVariant">
                 Submit
               </Button>
             </Box>
           </Form>
         )}
       </Formik>
-    </PageContainer>
+    </Box>
   );
 };
 

@@ -9,13 +9,13 @@ import useSWR from "swr";
 import { formatPrice } from "utils/misc";
 import TabSection from "components/atoms/TabSection";
 import WithAuth from "components/atoms/WithAuth";
-import Button, { ButtonType } from "components/atoms/Button";
 import UpdateCreditsModal from "components/molecules/UpdateCreditsModal";
 import { connect } from "react-redux";
 import CreditActions from "actions/credit";
 import PageContainer from "components/atoms/PageContainer";
 import PageBodyContainer from "components/atoms/PageBodyContainer";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
+import { Button } from "@chakra-ui/core";
 
 interface DispatchProps {
   updateCredits: (invoice: InvoiceInterface) => void;
@@ -109,7 +109,7 @@ const CustomerInvoice = (props: CustomerInvoiceProps) => {
             invoice.status
           ) && (
             <Button
-              type={ButtonType.success}
+              variantColor="successColorVariant"
               onClick={(e) => {
                 props.updateCredits(invoice);
                 e.stopPropagation();

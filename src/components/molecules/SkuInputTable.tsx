@@ -12,7 +12,7 @@ import FieldPriceInput from "../atoms/FieldPriceInput";
 import FieldPercentageInput from "../atoms/FieldPercentageInput";
 import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
 import SectionHeader from "../atoms/SectionHeader";
-import { Box } from "@chakra-ui/core";
+import { Box,Divider } from "@chakra-ui/core";
 
 interface DispatchProps {
   showSkuModal: () => void;
@@ -192,9 +192,10 @@ const SkuInputTable = (props: SkuInputTableProps) => {
   const skus = values.skus;
 
   return (
-    <Box m="3em 0" fontSize="1.1rem">
+    <Box my={3}  fontSize="md">
       <SectionHeaderContainer>
         <SectionHeader>Variants</SectionHeader>
+        <Divider  borderColor="borderColor.500" />
       </SectionHeaderContainer>
       <Box>
         <Button onClick={props.showSkuModal}>Generate Variants</Button>

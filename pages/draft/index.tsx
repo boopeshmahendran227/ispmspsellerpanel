@@ -3,7 +3,6 @@ import Link from "next/link";
 import SortableTable from "components/atoms/SortableTable";
 import RelativeImg from "components/atoms/RelativeImg";
 import Pagination from "components/atoms/Pagination";
-import Button from "components/atoms/Button";
 import { DraftMiniInterface } from "types/draft";
 import { PaginatedDataInterface } from "types/pagination";
 import PageHeader from "components/atoms/PageHeader";
@@ -15,7 +14,7 @@ import Loader from "components/atoms/Loader";
 import PageContainer from "components/atoms/PageContainer";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageBodyContainer from "components/atoms/PageBodyContainer";
-import { Box } from "@chakra-ui/core";
+import { Box, Button } from "@chakra-ui/core";
 
 const Drafts = () => {
   const getTableHeaders = () => {
@@ -93,11 +92,11 @@ const Drafts = () => {
     <PageContainer>
       <PageHeaderContainer>
         <PageHeader>Product Drafts</PageHeader>
-        <div>
+        <Box>
           <Link href="/product/new">
-            <Button>Add Product</Button>
+            <Button variantColor="primaryColorVariant">Add Product</Button>
           </Link>
-        </div>
+        </Box>
       </PageHeaderContainer>
       <PageBodyContainer>
         <SortableTable

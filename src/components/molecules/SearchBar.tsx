@@ -1,6 +1,7 @@
 import CSSConstants from "../../constants/CSSConstants";
 import _ from "lodash";
 import { ChangeEvent } from "react";
+import { Box, Button } from "@chakra-ui/core";
 
 interface SearchBarProps {
   searchText: string;
@@ -18,7 +19,18 @@ const SearchBar = (props: SearchBarProps) => {
   };
 
   return (
-    <div className="container">
+    <Box
+      width="300px"
+      display="inline-flex"
+      borderRadius={5}
+      overflow="hidden"
+      bg="#fff"
+      border="1px solid #f5f5f6"
+      transition="all 0.3s"
+      fontSize="md"
+      boxShadow="sm"
+      px={5}
+    >
       <input
         name="search"
         autoComplete="off" // desperately tring to turn off autocompletion
@@ -70,6 +82,7 @@ const SearchBar = (props: SearchBarProps) => {
           border: none;
           outline: none;
           box-shadow: none;
+          padding: "5rem"
         }
         input:focus {
           border: none;
@@ -81,7 +94,7 @@ const SearchBar = (props: SearchBarProps) => {
           margin: 5px;
         }
       `}</style>
-    </div>
+    </Box>
   );
 };
 

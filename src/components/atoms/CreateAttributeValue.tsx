@@ -1,10 +1,7 @@
 import ProductActions from "../../actions/product";
 import { connect } from "react-redux";
 import { useState } from "react";
-import Button from "./Button";
-import CSSConstants from "../../constants/CSSConstants";
-import classNames from "classnames";
-import { Flex, Input, Link } from "@chakra-ui/core";
+import { Flex, Input, Button, Link } from "@chakra-ui/core";
 
 interface DispatchProps {
   addAttributeValue: (attributeId: number, value: string) => void;
@@ -25,36 +22,29 @@ const CreateAttributeValue = (props: CreateAttributeValueProps) => {
     setShowInput(false);
   };
 
-  const classes = classNames({
-    active: showInput,
-  });
-
   return (
-    <Flex alignItems="center" className="container">
-      <a className={classes} onClick={() => setShowInput(true)}>
+    <Flex alignItems="center">
+      <Link
+        color={showInput ? "primaryTextColor" : "primaryColor"}
+        fontWeight={showInput ? "bold" : "normal"}
+        cursor="default"
+        onClick={() => setShowInput(true)}
+      >
         Create New Value
-      </a>
+      </Link>
       {showInput && (
-        <Flex alignItems="center" ml="0.5rem">
+        <Flex alignItems="center">
           <Input
+            mx={4}
             type="text"
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
-          <Button onClick={handleAdd}>Add</Button>
+          <Button variantColor="primaryColorVariant" onClick={handleAdd}>
+            Add
+          </Button>
         </Flex>
       )}
-      <style jsx>{`
-        a {
-          text-decoration: underline;
-          color: ${CSSConstants.primaryColor};
-        }
-        a.active {
-          text-decoration: none;
-          font-weight: bold;
-          color: ${CSSConstants.primaryTextColor};
-        }
-      `}</style>
     </Flex>
   );
 };

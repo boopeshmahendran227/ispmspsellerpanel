@@ -3,7 +3,7 @@ import FieldEditableArray from "./FieldEditableArray";
 import { ArrayHelpers } from "formik";
 import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
 import SectionHeader from "../atoms/SectionHeader";
-import { Box } from "@chakra-ui/core";
+import { Box, Divider } from "@chakra-ui/core";
 
 const FAQInput = () => {
   const addFaq = (arrayHelpers: ArrayHelpers) => {
@@ -27,9 +27,10 @@ const FAQInput = () => {
     );
   };
   return (
-    <Box mt="3em">
+    <Box mt={3} fontSize="md">
       <SectionHeaderContainer>
         <SectionHeader>FAQ</SectionHeader>
+        <Divider borderColor="borderColor.500" />
       </SectionHeaderContainer>
       <FieldEditableArray
         headers={["S.no", "Question", "Answer"]}

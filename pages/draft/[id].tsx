@@ -29,20 +29,18 @@ const Draft = () => {
   }
 
   return (
-    <Box p="0.8em">
-      <Heading as="h6" size="md" margin="0.7em 0" textTransform="uppercase">
-        <Box as="span" className="name">
-          Draft #{draft.id}
-        </Box>
+    <Box p={2}>
+      <Heading size="md" my={5} textTransform="uppercase">
+        <Box as="span">Draft #{draft.id}</Box>
         <Box
           as="span"
-          borderRadius="2em"
+          borderRadius={2}
           display="inline-block"
-          background={CSSConstants.primaryColor}
-          p="0.2em 0.5em"
+          background="primaryColor"
+          px={4}
+          py={2}
           color="white"
-          m="0 0.3em"
-          fontSize="1rem"
+          my={3}
           textTransform="initial"
         >
           {draft.status}

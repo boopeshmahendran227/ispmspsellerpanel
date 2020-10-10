@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import SearchBar from "components/molecules/SearchBar";
 import ActiveFilters from "components/atoms/ActiveFilters";
 import { PaginatedDataInterface } from "types/pagination";
-import Button from "components/atoms/Button";
 import WithAuth from "components/atoms/WithAuth";
 import useSWR from "swr";
 import { useMemo } from "react";
@@ -20,7 +19,7 @@ import EcosystemOption from "components/atoms/EcosystemOption";
 import Select from "components/atoms/Select";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageContainer from "components/atoms/PageContainer";
-import { Flex, Box, Checkbox } from "@chakra-ui/core";
+import { Flex, Box, Checkbox, Button, Stack, Input } from "@chakra-ui/core";
 
 const Products = () => {
   const [searchText, setSearchText] = useState("");
@@ -108,17 +107,21 @@ const Products = () => {
   return (
     <PageContainer>
       <PageHeaderContainer>
-        <PageHeader>Products</PageHeader>
-        <Box>
-          <Link href="/product/new">
-            <Button>Add Product</Button>
-          </Link>
-          <Link href="/product/cloneProduct">
-            <Button>Clone Products</Button>
-          </Link>
-        </Box>
+        <PageHeader>Products </PageHeader>
+        <Stack direction="row" spacing={3}>
+          <Box>
+            <Link href="/product/new">
+              <Button variantColor="primaryColorVariant">Add Product</Button>
+            </Link>
+          </Box>
+          <Box>
+            <Link href="/product/cloneProduct">
+              <Button variantColor="primaryColorVariant">Clone Products</Button>
+            </Link>
+          </Box>
+        </Stack>
       </PageHeaderContainer>
-      <Flex my="0.5em" mx="0" align="center" justify="space-between">
+      <Flex my={5} align="center" justify="space-between">
         <SearchBar searchText={searchText} searchByText={setSearchText} />
         <Flex align="center">
           <Checkbox

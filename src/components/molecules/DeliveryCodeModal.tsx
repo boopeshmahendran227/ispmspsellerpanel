@@ -37,7 +37,7 @@ const DeliveryCodeModal = (props: DeliveryCodeModalProps) => {
   return (
     <Modal isOpen={props.open} onClose={props.onCancel} size="sm" isCentered>
       <ModalOverlay />
-      <ModalContent borderRadius="16px">
+      <ModalContent borderRadius={10}>
         <ModalHeader>Delivery Code</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
@@ -57,7 +57,7 @@ const DeliveryCodeModal = (props: DeliveryCodeModalProps) => {
             {() => (
               <Form>
                 <FieldInput name="deliveryCode" />
-                <Box textAlign="center">
+                <Box textAlign="center" my={3}>
                   <Button type="submit" variantColor="primaryColorVariant">
                     Submit
                   </Button>

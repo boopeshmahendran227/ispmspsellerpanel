@@ -4,6 +4,7 @@ import { Field, ErrorMessage } from "formik";
 import classNames from "classnames";
 import CSSConstants from "../../constants/CSSConstants";
 import { SelectOptionInterface } from "../../types/product";
+import { Box, FormControl } from "@chakra-ui/core";
 
 interface FieldSelectProps {
   name: string;
@@ -17,36 +18,23 @@ const FieldSelect = (props: FieldSelectProps) => {
   return (
     <Field name={name}>
       {({ field, form }) => (
-        <div
-          className={classNames({
-            container: true,
-            error: Boolean(form.touched[props.name] && form.errors[props.name]),
-          })}
+        <FormControl
+          isInvalid={form.errors[props.name] && form.touched[props.name]}
+          py={3}
         >
-          <div className="selectContainer">
-            <Select
-              disabled={props.disabled}
-              value={field.value}
-              onChange={(value) => {
-                field.onChange({
-                  target: { name, value: value },
-                });
-              }}
-              options={props.options}
-            />
-          </div>
-          <div className="errorContainer">
-            <ErrorMessage component={ValidationErrorMsg} name={props.name} />
-          </div>
-          <style jsx>{`
-            .container {
-              margin: 0.3em 0;
-            }
-            .container.error {
-              color: ${CSSConstants.dangerColor};
-            }
-          `}</style>
-        </div>
+          <Select
+            disabled={props.disabled}
+            value={field.value}
+            onChange={(value) => {
+              field.onChange({
+                target: { name, value: value },
+              });
+            }}
+            options={props.options}
+          />
+
+          <ErrorMessage component={ValidationErrorMsg} name={props.name} />
+        </FormControl>
       )}
     </Field>
   );

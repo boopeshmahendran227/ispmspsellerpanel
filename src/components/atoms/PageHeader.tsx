@@ -5,7 +5,7 @@ interface PageHeaderProps {
 
 const PageHeader = (props: PageHeaderProps) => {
   return (
-    <Heading m="0.5em 0" size="md">
+    <Heading my={5} size="lg">
       {props.children}{" "}
     </Heading>
   );

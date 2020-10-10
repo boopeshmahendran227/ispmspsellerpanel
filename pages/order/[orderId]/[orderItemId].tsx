@@ -83,10 +83,10 @@ const Order = (props: OrderProps) => {
   );
 
   return (
-    <Box my="1em" mx="auto" maxW="1100px">
+    <Box my={10} mx="auto" maxW="1100px">
       <DeliveryCodeModal />
       <BackLink href="/order">Back to Orders</BackLink>
-      <Stack isInline spacing={3} m="1em 0">
+      <Stack isInline spacing={3} my={4} align="baseline">
         <Heading size="lg">
           <Box as="span">
             #{order.id}-{orderItem.id}
@@ -125,14 +125,14 @@ const Order = (props: OrderProps) => {
         </Tag>
       </Stack>
       <Button
-        m="0.5rem 0"
+        my={5}
         variantColor="primaryColorVariant"
         size="md"
         onClick={() => window.open(`/invoice/${orderItem.id}`)}
       >
         View Invoice
       </Button>
-      <Grid templateColumns="1fr 300px" gap="1em">
+      <Grid templateColumns="1fr 300px" gap={5}>
         <Box flex="1">
           <OrderItemDetail
             orderItem={orderItem}
@@ -151,8 +151,8 @@ const Order = (props: OrderProps) => {
           </Box>
         </Box>
         <Stack spacing={4}>
-          <Box bg="foregroundColor" border={CSSConstants.borderStyle}>
-            <Heading size="lg" m="1em 0.5em">
+          <Box bg="foregroundColor" border="1px" borderColor="#ccc">
+            <Heading size="md" my={4} mx={3}>
               Customer Information
             </Heading>
             <Name>Name</Name>
@@ -166,9 +166,7 @@ const Order = (props: OrderProps) => {
               </>
             )}
             <Name>Billing Address</Name>
-            <Value className="value">
-              {formatAddress(order.billingAddress)}
-            </Value>
+            <Value>{formatAddress(order.billingAddress)}</Value>
             <Divider />
             <Name>Shipping Address</Name>
             <Value>{formatAddress(order.shippingAddress)}</Value>

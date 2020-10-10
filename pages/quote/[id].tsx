@@ -11,6 +11,7 @@ import QuoteActions from "actions/quote";
 import PageError from "components/atoms/PageError";
 import WithAuth from "components/atoms/WithAuth";
 import BackLink from "components/atoms/BackLink";
+import { Box, Grid, Heading } from "@chakra-ui/core";
 
 interface DispatchProps {
   rejectQuote: (quote: QuoteInterface) => void;
@@ -34,9 +35,9 @@ const Quote = (props: QuoteProps) => {
   }
 
   return (
-    <div className="container">
+    <Box my={1} mx="auto" maxW="1100px">
       <BackLink href="/quote">Back to Quotes</BackLink>
-      <header>
+      <Heading size="md">
         <span className="id">#{quote.id}</span>{" "}
         <span className="time">
           {moment
@@ -45,7 +46,7 @@ const Quote = (props: QuoteProps) => {
             .format("MMMM Do YYYY h:mm a")}
         </span>{" "}
         <span className="status">{getQuoteStatusText(quote.status)}</span>
-      </header>
+      </Heading>
       <div className="flexContainer">
         <div className="col1">
           <section className="itemContainer">
@@ -133,7 +134,7 @@ const Quote = (props: QuoteProps) => {
           font-size: 1.1rem;
         }
       `}</style>
-    </div>
+    </Box>
   );
 };
 

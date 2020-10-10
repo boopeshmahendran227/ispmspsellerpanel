@@ -12,7 +12,7 @@ const FieldTextArea = (props: FieldTextAreaProps) => {
       {({ field, form }) => (
         <FormControl
           isInvalid={form.errors[props.name] && form.touched[props.name]}
-          p="0.3em 0"
+          py={3}
         >
           <Textarea rows={6} cols={40} {...field} resize="vertical" />
           <ErrorMessage component={ValidationErrorMsg} name={props.name} />

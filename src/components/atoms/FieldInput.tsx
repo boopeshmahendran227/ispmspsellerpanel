@@ -12,7 +12,7 @@ const FieldInput = (props: FieldInputProps) => {
       {({ field, form }) => (
         <FormControl
           isInvalid={form.errors[props.name] && form.touched[props.name]}
-          p="0.3em 0"
+          py={3}
         >
           <Input {...field} />
           <ErrorMessage component={ValidationErrorMsg} name={props.name} />

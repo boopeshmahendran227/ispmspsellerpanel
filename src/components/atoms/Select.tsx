@@ -10,7 +10,7 @@ interface SelectProps {
 
 const Select = (props: SelectProps) => {
   return (
-    <Box className="container" mx="0.9em" my="0">
+    <Box w="100%">
       <ReactSelect
         isDisabled={props.disabled}
         value={props.value}

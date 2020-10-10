@@ -9,7 +9,7 @@ import Loader from "components/atoms/Loader";
 import MultiSelect from "../atoms/MultiSelect";
 import CreateAttributeValue from "../atoms/CreateAttributeValue";
 import PageError from "../atoms/PageError";
-import { Box, Text } from "@chakra-ui/core";
+import { Box, Text, Heading } from "@chakra-ui/core";
 import PageHeader from "components/atoms/PageHeader";
 
 interface SelectAttributeValuesProps {
@@ -65,10 +65,10 @@ const SelectAttributeValues = (props: SelectAttributeValuesProps) => {
         const attributeValues = attribute.values || [];
 
         return (
-          <Box border="1px" borderColor="borderColor" p="0.7em" m=" 1em 0">
-            <Box fontSize="1.1rem" fontWeight="bold">
+          <Box p={2} my={5}>
+            <Heading as="h3" fontSize="lg" fontWeight="bold">
               {attribute.name}
-            </Box>
+            </Heading>
             <MultiSelect
               value={props.selectedAttributeValues[
                 attribute.id

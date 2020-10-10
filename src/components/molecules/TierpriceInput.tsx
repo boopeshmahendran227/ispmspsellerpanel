@@ -4,7 +4,9 @@ import FieldPercentageInput from "../atoms/FieldPercentageInput";
 import FieldEditableArray from "./FieldEditableArray";
 import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
 import SectionHeader from "../atoms/SectionHeader";
-import { Box } from "@chakra-ui/core";
+import { Box, Divider } from "@chakra-ui/core";
+import React from "react";
+
 const TierPriceInput = () => {
   const addTierPrice = (arrayHelpers: ArrayHelpers) => {
     arrayHelpers.push({
@@ -30,9 +32,10 @@ const TierPriceInput = () => {
   };
 
   return (
-    <Box mb="0.3em">
+    <Box mb={3}>
       <SectionHeaderContainer>
         <SectionHeader>Tier Price</SectionHeader>
+        <Divider borderColor="borderColor.500" />
       </SectionHeaderContainer>
       <FieldEditableArray
         headers={["S.no", "MinQty", "Discount Percentage"]}

@@ -10,10 +10,10 @@ import MultiSelect from "components/atoms/MultiSelect";
 import PageError from "../atoms/PageError";
 import { useFormikContext } from "formik";
 import _ from "lodash";
-import { Box, Button } from "@chakra-ui/core";
+import { Box, Button, Heading} from "@chakra-ui/core";
 import React from "react";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
-import PageHeader from "components/atoms/PageHeader";
+
 
 interface SelectAttributesProps {
   selectedAttributes: SelectedAttribute[];
@@ -82,7 +82,7 @@ const SelectAttributes = (props: SelectAttributesProps) => {
   return (
     <Box>
       <PageHeaderContainer>
-        <PageHeader> Step 1: Select Attributes</PageHeader>
+        <Heading size="md"> Step 1: Select Attributes</Heading>
         <Button
           variantColor="primaryColorVariant"
           onClick={() => props.showAttributeModal()}
