@@ -1,6 +1,7 @@
 import { Field, ErrorMessage } from "formik";
 import ValidationErrorMsg from "../atoms/ValidationErrorMsg";
 import DatePicker from "../atoms/DatePicker";
+import { Box } from "@chakra-ui/core";
 
 interface FieldDatePickerProps {
   name: string;
@@ -10,7 +11,7 @@ const FieldDatePicker = (props: FieldDatePickerProps) => {
   return (
     <Field name={props.name}>
       {({ field }) => (
-        <span className="container">
+        <Box as="span" my={2} className="container">
           <DatePicker
             value={field.value}
             onChange={(value) => {
@@ -20,12 +21,7 @@ const FieldDatePicker = (props: FieldDatePickerProps) => {
             }}
           />
           <ErrorMessage component={ValidationErrorMsg} name={field.name} />
-          <style jsx>{`
-            .container {
-              margin: 0.3em 0;
-            }
-          `}</style>
-        </span>
+        </Box>
       )}
     </Field>
   );

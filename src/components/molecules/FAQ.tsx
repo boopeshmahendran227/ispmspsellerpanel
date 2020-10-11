@@ -3,24 +3,21 @@ import SectionCard from "../atoms/SectionCard";
 import SectionHeader from "components/atoms/SectionHeader";
 import styled from "styled-components";
 import SectionHeaderContainer from "components/atoms/SectionHeaderContainer";
+import { Box, PseudoBox } from "@chakra-ui/core";
 
-const QAContainer = styled.div`
-  margin: 0.6em 0;
-`;
+// const QAContainer = styled.div`
+//   margin: 0.6em 0;
+// `;
 
-const Question = styled.div`
-  margin: 0.4em 0;
-  font-weight: bold;
-  &::before {
-    content: "Q: ";
-  }
-`;
+const Question = (props) => (
+  <PseudoBox my={2} fontWeight="bold" _before={{ content: "Q: " }}>
+    {props.children}
+  </PseudoBox>
+);
 
-const Answer = styled.div`
-  &::before {
-    content: "A: ";
-  }
-`;
+const Answer = (props) => (
+  <PseudoBox _before={{ content: "A: " }}>{props.children}</PseudoBox>
+);
 
 interface FAQProps {
   faqs: FAQInterface[];
@@ -38,14 +35,14 @@ const FAQ = (props: FAQProps) => {
       <SectionHeaderContainer>
         <SectionHeader>FAQs</SectionHeader>
       </SectionHeaderContainer>
-      <div>
+      <Box>
         {faqs.map((item) => (
-          <QAContainer>
+          <Box my={2}>
             <Question>{item.question}</Question>
             <Answer>{item.question}</Answer>
-          </QAContainer>
+          </Box>
         ))}
-      </div>
+      </Box>
     </SectionCard>
   );
 };

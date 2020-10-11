@@ -13,12 +13,16 @@ import BackLink from "components/atoms/BackLink";
 import { Box, Grid, Stack, Heading, Tag, Flex, Divider } from "@chakra-ui/core";
 
 const Name = (props) => (
-  <Box fontWeight="bold" p="0.4em 0.8em" mt="0.4em">
+  <Box fontWeight="bold" py={2} px={4} mt={2}>
     {props.children}
   </Box>
 );
 
-const Value = (props) => <Box p="0.4em 0.8em">{props.children}</Box>;
+const Value = (props) => (
+  <Box py={2} px={4}>
+    {props.children}
+  </Box>
+);
 
 interface DispatchProps {
   rejectQuote: (quote: QuoteInterface) => void;

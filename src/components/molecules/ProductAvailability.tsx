@@ -15,7 +15,7 @@ const ProductAvailability = (props: ProductAvailabilityProps): JSX.Element => {
     <SectionCard>
       <SectionHeaderContainer>
         <SectionHeader>Availability</SectionHeader>
-        <Box m="0.4em 0" color="secondaryTextColor">
+        <Box my={2} color="secondaryTextColor">
           Available on {ecosystems.length} ecosystems
         </Box>
       </SectionHeaderContainer>

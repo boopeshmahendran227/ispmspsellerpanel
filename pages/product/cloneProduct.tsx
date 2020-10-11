@@ -1,5 +1,4 @@
 import React from "react";
-import PageContainer from "components/atoms/PageContainer";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageHeader from "components/atoms/PageHeader";
 import { Formik, Form } from "formik";
@@ -17,7 +16,6 @@ import ProductActions from "actions/product";
 import WithAuth from "components/atoms/WithAuth";
 import { connect } from "react-redux";
 import { Box, Grid, Button } from "@chakra-ui/core";
-import PageBodyContainer from "components/atoms/PageBodyContainer";
 
 interface DispatchProps {
   cloneProduct: (product: ProductCloneInterface) => void;

@@ -2,7 +2,6 @@ import { connect } from "react-redux";
 import { Formik, Form, ArrayHelpers } from "formik";
 import FieldInput from "components/atoms/FieldInput";
 import FieldTextArea from "components/atoms/FieldTextArea";
-import Button from "../atoms/Button";
 import { AddAttributeInterface, AttributeType } from "../../types/product";
 import { RootState } from "../../reducers";
 import { getAttributeModalOpen } from "../../selectors/ui";
@@ -22,6 +21,7 @@ import {
   ModalBody,
   ModalCloseButton,
   Grid,
+  Button,
 } from "@chakra-ui/core";
 interface StateProps {
   open: boolean;
@@ -116,7 +116,9 @@ const AttributeModal = (props: AttributeModalProps) => {
                     label="Value"
                   />
                 </Grid>
-                <Button isSubmitButton={true}>Submit</Button>
+                <Button type="submit" variantColor="primaryColorVariant">
+                  Submit
+                </Button>
               </Form>
             )}
           </Formik>

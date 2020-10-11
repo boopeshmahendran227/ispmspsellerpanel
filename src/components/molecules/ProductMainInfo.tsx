@@ -18,7 +18,7 @@ const ProductMainInfo = (props: ProductMainInfoProps): JSX.Element => {
       <SectionHeaderContainer>
         <SectionHeader>Main Details</SectionHeader>
       </SectionHeaderContainer>
-      <Grid templateColumns="200px 1fr" gap="0.4em">
+      <Grid templateColumns="200px 1fr" gap={2}>
         <Box fontWeight="bold">Name</Box>
         <Box>{name}</Box>
         <Box fontWeight="bold">Brand</Box>

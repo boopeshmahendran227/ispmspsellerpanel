@@ -33,9 +33,8 @@ import FieldPriceInput from "components/atoms/FieldPriceInput";
 import listOfCountries from "../../src/data/listOfCountries";
 import FAQInput from "components/molecules/FAQInput";
 import TierPriceInput from "components/molecules/TierpriceInput";
-import Checkbox from "components/atoms/Checkbox";
 import { CategoryInterface } from "types/category";
-import { Grid, Box, Button, ButtonGroup } from "@chakra-ui/core";
+import { Grid, Box, Button, ButtonGroup,Checkbox } from "@chakra-ui/core";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -134,7 +133,7 @@ const AddProduct = (props: AddProductProps) => {
                 <Field name="isActive">
                   {({ field }) => (
                     <Checkbox
-                      checked={values.isActive}
+                      isChecked={values.isActive}
                       onChange={(e) =>
                         setFieldValue("isActive", e.target.checked)
                       }

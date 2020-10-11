@@ -1,27 +1,25 @@
 import useSWR from "swr";
 import Loader from "components/atoms/Loader";
-import PageError from "../../../src/components/atoms/PageError";
-import PageHeader from "../../../src/components/atoms/PageHeader";
+import PageError from "components/atoms/PageError";
+import PageHeader from "components/atoms/PageHeader";
 import WithAuth from "components/atoms/WithAuth";
 import { useRouter } from "next/router";
-import ProductMainInfo from "../../../src/components/molecules/ProductMainInfo";
-import ProductPriceDetails from "../../../src/components/molecules/ProductPriceDetails";
-import ProductAvailability from "../../../src/components/molecules/ProductAvailability";
-import TierPrice from "../../../src/components/molecules/TierPrice";
-import FAQ from "../../../src/components/molecules/FAQ";
-import styled from "styled-components";
+import ProductMainInfo from "components/molecules/ProductMainInfo";
+import ProductPriceDetails from "components/molecules/ProductPriceDetails";
+import ProductAvailability from "components/molecules/ProductAvailability";
+import TierPrice from "components/molecules/TierPrice";
+import FAQ from "components/molecules/FAQ";
 import BackLink from "components/atoms/BackLink";
 import { ProductDetailInterface, TierPriceInterface } from "types/product";
-import YourSkuTable from "../../../src/components/organism/YourSkuTable";
-import OtherSkusTable from "../../../src/components/molecules/OtherSkusTable";
-import TierPriceInput from "../../../src/components/molecules/TierpriceInput";
+import YourSkuTable from "components/organism/YourSkuTable";
+import OtherSkusTable from "components/molecules/OtherSkusTable";
+import TierPriceInput from "components/molecules/TierpriceInput";
 import { Formik, Form } from "formik";
-import SectionCard from "../../../src/components/atoms/SectionCard";
-import Button from "components/atoms/Button";
+import SectionCard from "components/atoms/SectionCard";
 import * as Yup from "yup";
 import ProductActions from "actions/product";
 import { connect } from "react-redux";
-import { Box, Grid, Stack } from "@chakra-ui/core";
+import { Box, Grid, Stack, Button } from "@chakra-ui/core";
 
 interface DispatchProps {
   updateTierPrice: (
@@ -76,11 +74,11 @@ const Product = (props: ProductProps) => {
 
   return (
     <Box maxW="900px" margin="auto">
-      <Box m="2em 0">
+      <Box my={3}>
         <BackLink href="/product">Products</BackLink>
         <PageHeader>{product.name}</PageHeader>
       </Box>
-      <Grid templateColumns="2fr 1fr" gridGap="1.5em">
+      <Grid templateColumns="2fr 1fr" gridGap={2}>
         <Stack spacing={3}>
           <Box>
             <ProductMainInfo
@@ -108,7 +106,9 @@ const Product = (props: ProductProps) => {
                 {() => (
                   <Form>
                     <TierPriceInput />
-                    <Button isSubmitButton={true}>SAVE</Button>
+                    <Button type="submit" variantColor="primaryColorVariant">
+                      SAVE
+                    </Button>
                   </Form>
                 )}
               </Formik>

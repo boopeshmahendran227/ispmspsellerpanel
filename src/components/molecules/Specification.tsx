@@ -22,7 +22,7 @@ const Specification = (props: SpecificationProps) => {
           <Box>
             <Heading size="sm">{group.name}</Heading>
             {group.items.length > 0 && (
-              <Grid m="0.5em 0" templateColumns="200px 1fr">
+              <Grid my={2} templateColumns="200px 1fr">
                 {group.items.map((item, itemIndex) => (
                   <Fragment key={itemIndex}>
                     <Box color="secondaryTextColor">{item.key}</Box>

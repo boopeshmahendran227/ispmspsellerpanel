@@ -56,7 +56,7 @@ const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
     // Return empty modal
     return (
       <Modal isOpen={props.open} onClose={props.onClose}>
-        <div></div>
+        <Box></Box>
       </Modal>
     );
   }

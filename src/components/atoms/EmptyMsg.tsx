@@ -12,8 +12,7 @@ const EmptyMsg = (props: EmptyMsgProps) => {
         {props.icon}
       </Box>
       <Heading
-        as="h3"
-        size="md"
+        size="sm"
         fontWeight="semibold"
         color="secondaryTextColor"
         dangerouslySetInnerHTML={{ __html: props.msg }}

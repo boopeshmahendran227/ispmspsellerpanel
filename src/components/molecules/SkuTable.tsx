@@ -130,8 +130,8 @@ const SkuTable = (props: SkuTableProps) => {
   const { skus } = props;
 
   return (
-    <Box className="container" fontSize="1.1rem">
-      <Heading size="md" p="0.3rem">
+    <Box className="container" fontSize="md">
+      <Heading size="md" p={2}>
         Skus
       </Heading>
       <Divider borderWidth="2px" borderColor={CSSConstants.borderColor} />

@@ -127,10 +127,11 @@ const Products = () => {
           <Checkbox
             isChecked={showOnlySelf}
             onChange={(e) => setShowOnlySelf(e.target.checked)}
+            
           >
             Show Only My Products
           </Checkbox>
-          <Box minW="300px">
+          <Box minW="300px" mx={3}>
             <Select
               value={currentEcosystem}
               onChange={(ecosystem) =>

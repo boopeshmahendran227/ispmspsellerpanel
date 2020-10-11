@@ -6,7 +6,7 @@ interface CardProps {
 
 const Card = (props: CardProps): JSX.Element => {
   return (
-    <Box bg="foregroundColor" border="1px" borderColor="borderColor" p={2}>
+    <Box bg="foregroundColor" border="1px" borderColor="borderColor" py={3} px={5}>
       {props.children}
     </Box>
   );

@@ -29,7 +29,7 @@ const Notifications = () => {
   ).reverse();
 
   return (
-    <Box p="0.5em" className="container">
+    <Box p={2}>
       {!sortedNotifications ||
         (Boolean(!sortedNotifications.length) && (
           <EmptyMsg msg="No Notifications" />

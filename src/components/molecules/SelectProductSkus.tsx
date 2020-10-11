@@ -1,4 +1,3 @@
-import Button from "../atoms/Button";
 import { FieldArray, useFormikContext, ErrorMessage } from "formik";
 import InputLabel from "../atoms/InputLabel";
 import FieldInput from "../atoms/FieldInput";
@@ -8,7 +7,7 @@ import {
   CouponProductInputInterface,
 } from "../../types/coupon";
 import FieldNumInput from "../atoms/FieldNumInput";
-import { Grid, Box } from "@chakra-ui/core";
+import { Grid, Box, Heading, Button } from "@chakra-ui/core";
 
 const SelectProductSkus = () => {
   const values: CouponInputInterface = useFormikContext<CouponInputInterface>()
@@ -37,8 +36,10 @@ const SelectProductSkus = () => {
   };
 
   return (
-    <Box m="0.3 0">
-      <header>Products</header>
+    <Box my={1}>
+      <Heading size="md" p={1} mb={2}>
+        Products
+      </Heading>
       <FieldArray
         name="products"
         render={(arrayHelpers) => (
@@ -49,20 +50,21 @@ const SelectProductSkus = () => {
                   <Grid
                     templateColumns="200px 200px 100px"
                     alignItems="center"
-                    fontSize="1.1rem"
+                    fontSize="md"
                   >
                     <InputLabel label="Product Id" />
                     <FieldNumInput
                       name={`products.${productIndex}.productId`}
                     />
-                    <button
+                    <Button
+                      variantColor="primaryColorVariant"
                       type="button"
                       onClick={() =>
                         handleDeleteProduct(arrayHelpers, productIndex)
                       }
                     >
                       <i className="fa fa-trash" aria-hidden="true" />
-                    </button>
+                    </Button>
                   </Grid>
                   <FieldArray
                     name={`products.${productIndex}.skuIds`}
@@ -87,7 +89,8 @@ const SelectProductSkus = () => {
                                     />
                                   </td>
                                   <td>
-                                    <button
+                                    <Button
+                                      variantColor="primaryColorVariant"
                                       type="button"
                                       onClick={() =>
                                         handleDeleteSku(arrayHelpers, skuIndex)
@@ -97,15 +100,18 @@ const SelectProductSkus = () => {
                                         className="fa fa-trash"
                                         aria-hidden="true"
                                       />
-                                    </button>
+                                    </Button>
                                   </td>
                                 </tr>
                               ))}
                             </tbody>
                           </table>
                         )}
-                        <Box className="buttonContainer">
-                          <Button onClick={() => handleAddSku(arrayHelpers)}>
+                        <Box>
+                          <Button
+                            variantColor="primaryColorVariant"
+                            onClick={() => handleAddSku(arrayHelpers)}
+                          >
                             {product.skuIds.length === 0
                               ? "Add SKUs"
                               : "Add one more SKU"}
@@ -120,8 +126,11 @@ const SelectProductSkus = () => {
                   />
                 </Box>
               ))}
-            <Box className="buttonContainer">
-              <Button onClick={() => handleAddProduct(arrayHelpers)}>
+            <Box>
+              <Button
+                variantColor="primaryColorVariant"
+                onClick={() => handleAddProduct(arrayHelpers)}
+              >
                 {products.length === 0 ? "Add Product" : "Add one more Product"}
               </Button>
             </Box>
@@ -129,26 +138,6 @@ const SelectProductSkus = () => {
         )}
       />
       <ErrorMessage component={ValidationErrorMsg} name={`products`} />
-      <style jsx>{`
-        .container {
-          margin: 3em 0;
-        }
-        header {
-          font-weight: bold;
-          font-size: 1.2rem;
-          padding: 0.3em;
-          margin-bottom: 0.7em;
-        }
-        .productContainer {
-          margin: 1em 5em;
-        }
-        .productInput {
-          display: grid;
-          grid-template-columns: 200px 200px 100px;
-          align-items: center;
-          font-size: 1.1rem;
-        }
-      `}</style>
     </Box>
   );
 };

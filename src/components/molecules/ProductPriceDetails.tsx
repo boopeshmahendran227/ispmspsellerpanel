@@ -17,7 +17,7 @@ const ProductPriceDetails = (props: ProductPriceDetailsProps): JSX.Element => {
       <SectionHeaderContainer>
         <SectionHeader>Price Details</SectionHeader>
       </SectionHeaderContainer>
-      <Grid templateColumns="200px 1fr" gap="0.4em">
+      <Grid templateColumns="200px 1fr" gap={2}>
         <Box fontWeight="bold">Min Price</Box>
         <Box>{formatPrice(minPrice)}</Box>
         <Box fontWeight="bold">Max Price</Box>

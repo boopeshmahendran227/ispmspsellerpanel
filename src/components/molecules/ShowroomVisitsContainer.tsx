@@ -3,6 +3,7 @@ import EmptyMsg from "../atoms/EmptyMsg";
 import ShowroomVisitCard from "components/atoms/ShowroomVisitCard";
 import Loader from "../atoms/Loader";
 import { Box } from "@chakra-ui/core";
+
 interface ShowroomVisitsContainerProps {
   showroomVisits: ShowroomVisitInterface[] | undefined;
   dateFilter: moment.Moment;
@@ -22,12 +23,7 @@ const ShowroomVisitsContainer = (props: ShowroomVisitsContainerProps) => {
       )}
       {showroomVisits && showroomVisits.length > 0 && (
         <>
-          <Box
-            textTransform="uppercase"
-            fontWeight="bold"
-            margin="1em 0"
-            fontSize="0.8rem"
-          >
+          <Box textTransform="uppercase" fontWeight="bold" my={3} fontSize="sm">
             {dateFilter.format("dddd, MMMM DD")}
           </Box>
           {showroomVisits.map((showroomVisit) => (

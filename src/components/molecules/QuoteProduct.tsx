@@ -1,7 +1,7 @@
 import { ProductDetailQuoteInterface } from "../../types/quote";
 import { formatPrice } from "utils/misc";
 import ProductCard from "../atoms/ProductCard";
-import { Flex, Box,Stack } from "@chakra-ui/core";
+import { Flex, Box, Stack } from "@chakra-ui/core";
 
 interface QuoteProductProps {
   productDetail: ProductDetailQuoteInterface;

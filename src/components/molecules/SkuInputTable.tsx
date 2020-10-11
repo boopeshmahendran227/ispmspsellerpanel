@@ -1,7 +1,6 @@
 import SortableTable from "../atoms/SortableTable";
 import { ProductSkuDetail, ProductInputInterface } from "../../types/product";
 import { ErrorMessage, FieldArray, useFormikContext } from "formik";
-import Button from "../atoms/Button";
 import { connect } from "react-redux";
 import UIActions from "../../actions/ui";
 import FieldInput from "../atoms/FieldInput";
@@ -11,7 +10,7 @@ import FieldPriceInput from "../atoms/FieldPriceInput";
 import FieldPercentageInput from "../atoms/FieldPercentageInput";
 import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
 import SectionHeader from "../atoms/SectionHeader";
-import { Box,Divider } from "@chakra-ui/core";
+import { Box, Divider, Button } from "@chakra-ui/core";
 
 interface DispatchProps {
   showSkuModal: () => void;
@@ -191,13 +190,13 @@ const SkuInputTable = (props: SkuInputTableProps) => {
   const skus = values.skus;
 
   return (
-    <Box my={3}  fontSize="md">
+    <Box my={3} fontSize="md">
       <SectionHeaderContainer>
         <SectionHeader>Variants</SectionHeader>
-        <Divider  borderColor="borderColor.500" />
+        <Divider borderColor="borderColor.500" />
       </SectionHeaderContainer>
       <Box>
-        <Button onClick={props.showSkuModal}>Generate Variants</Button>
+        <Button variantColor="primaryColorVariant" onClick={props.showSkuModal}>Generate Variants</Button>
       </Box>
       {skus.length > 0 && (
         <SortableTable

@@ -7,7 +7,7 @@ const SkuPricingInputContainer = (): JSX.Element => {
   return (
     <SectionCard>
       <SectionHeader>Pricing</SectionHeader>
-      <Grid templateColumns="1fr 1fr" gap="1em">
+      <Grid templateColumns="1fr 1fr" gap={2}>
         <Box>
           <FormLabel>Price</FormLabel>
           <FieldPriceInput name="price" />

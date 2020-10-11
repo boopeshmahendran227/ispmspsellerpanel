@@ -1,4 +1,3 @@
-import CSSConstants from "../../constants/CSSConstants";
 import moment from "moment";
 import { useState, useEffect } from "react";
 import NotificationBar from "./NotificationBar";

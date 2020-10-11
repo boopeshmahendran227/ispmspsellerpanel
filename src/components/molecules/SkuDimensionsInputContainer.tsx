@@ -8,7 +8,7 @@ const SkuDimensionsInputContainer = (): JSX.Element => {
   return (
     <SectionCard>
       <SectionHeader>Dimesions</SectionHeader>
-      <Grid templateColumns="1fr 1fr" gap="1em">
+      <Grid templateColumns="1fr 1fr" gap={3}>
         <Box>
           <FormLabel>Length (in cm)</FormLabel>
           <FieldNumInput name="length" />

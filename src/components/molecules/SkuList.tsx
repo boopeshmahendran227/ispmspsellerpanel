@@ -20,11 +20,11 @@ const SkuList = (props: SkuListProps): JSX.Element | null => {
     <Box
       w="300px"
       bg="foregroundColor"
-      m="1em 0"
+      my={3}
       border="1px"
       borderColor="borderColor"
     >
-      <Heading size="lg" bg="hoverColor" p="1.1em 0.9em">
+      <Heading size="md" bg="hoverColor" py={2} px={1}>
         Your Variants
       </Heading>
       <Box maxH="300px" overflowY="auto">
@@ -35,7 +35,7 @@ const SkuList = (props: SkuListProps): JSX.Element | null => {
             as={`/product/${productId}/sku/${sku.skuId}`}
           >
             <Flex
-              p="0.5em"
+              p={1}
               borderTop="1px"
               borderTopColor="borderColor"
               cursor="pointer"
@@ -43,7 +43,7 @@ const SkuList = (props: SkuListProps): JSX.Element | null => {
               bg={props.currentSkuId === sku.skuId ? "secondaryColor" : ""}
               color={props.currentSkuId === sku.skuId ? "white" : ""}
             >
-              <Box w="50px" h="50px" m="0.3em">
+              <Box w="50px" h="50px" m={1}>
                 <RelativeImg src={sku.imageRelativePaths[0]} />
               </Box>
               {sku.skuId}

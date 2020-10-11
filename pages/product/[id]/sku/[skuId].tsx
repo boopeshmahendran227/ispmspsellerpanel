@@ -1,16 +1,16 @@
 import { Fragment } from "react";
 import useSWR from "swr";
 import Loader from "components/atoms/Loader";
-import PageError from "../../../../src/components/atoms/PageError";
-import PageHeader from "../../../../src/components/atoms/PageHeader";
+import PageError from "components/atoms/PageError";
+import PageHeader from "components/atoms/PageHeader";
 import WithAuth from "components/atoms/WithAuth";
 import { useRouter } from "next/router";
-import SkuList from "../../../../src/components/molecules/SkuList";
+import SkuList from "components/molecules/SkuList";
 import { Formik, Form } from "formik";
 import SkuProductInfo from "components/atoms/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/atoms/SectionHeader";
-import SectionCard from "../../../../src/components/atoms/SectionCard";
+import SectionCard from "components/atoms/SectionCard";
 import { ProductDetailInterface } from "types/product";
 import _ from "lodash";
 import FieldSelect from "components/molecules/FieldSelect";
@@ -21,12 +21,11 @@ import SkuActions from "actions/sku";
 import { UpdateSkuInterface } from "types/sku";
 import Button from "components/atoms/Button";
 import * as Yup from "yup";
-import styled from "styled-components";
-import SkuDimensionsInputContainer from "../../../../src/components/molecules/SkuDimensionsInputContainer";
+import SkuDimensionsInputContainer from "components/molecules/SkuDimensionsInputContainer";
 import SkuInventoryInputContainer from "components/molecules/SkuInventoryInputContainer";
 import SkuPricingInputContainer from "components/molecules/SkuPricingInputContainer";
 import { Box, Text, Stack, Grid, FormLabel } from "@chakra-ui/core";
-import FieldNumInput from "../../../../src/components/atoms/FieldNumInput";
+import FieldNumInput from "components/atoms/FieldNumInput";
 import FieldPercentageInput from "components/atoms/FieldPercentageInput";
 
 interface DispatchProps {
@@ -91,7 +90,7 @@ const Sku = (props: SkuProps): JSX.Element => {
 
   return (
     <Box maxW="900px" m="auto">
-      <Box m="1.3rem 0">
+      <Box my={3}>
         <BackLink href="/product/[id]" as={`/product/${product.id}`}>
           Back to Product
         </BackLink>
@@ -110,7 +109,7 @@ const Sku = (props: SkuProps): JSX.Element => {
             currentSkuId={currentSkuId}
           />
         </Box>
-        <Box flex="1" mb="1em" ml="1em">
+        <Box flex="1" mb={3} ml={3}>
           <Formik
             initialValues={{
               skuDetailId: currentSku.skuDetailId,
@@ -171,7 +170,7 @@ const Sku = (props: SkuProps): JSX.Element => {
                   <SkuPricingInputContainer />
                   <SectionCard>
                     <SectionHeader>Special Discount</SectionHeader>
-                    <Grid templateColumns="1fr 1fr" grid-gap="1em">
+                    <Grid templateColumns="1fr 1fr" gap={2}>
                       <Box>
                         <FormLabel>Special Discount Price</FormLabel>
                         <FieldNumInput name="specialDiscount" />
@@ -185,7 +184,7 @@ const Sku = (props: SkuProps): JSX.Element => {
                   <SkuInventoryInputContainer />
                   <SectionCard>
                     <SectionHeader>Visibility</SectionHeader>
-                    <Text mt="0.3em" display="inline-block">
+                    <Text mt={1} display="inline-block">
                       Ecosystem
                     </Text>
                     <FieldEcosystemMultiInput
