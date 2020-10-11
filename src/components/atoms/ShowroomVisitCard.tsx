@@ -3,6 +3,7 @@ import CSSConstants from "../../constants/CSSConstants";
 import { ShowroomVisitInterface } from "../../types/showroomVisit";
 import { convertTo12hour } from "utils/misc";
 import { getCustomerInfo } from "utils/customer";
+import { Grid, Box, Flex, Divider } from "@chakra-ui/core";
 
 interface ShowroomVisitCardProps {
   showroomVisit: ShowroomVisitInterface;
@@ -12,55 +13,61 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
   const { showroomVisit } = props;
 
   return (
-    <section className="container">
-      <div className="timing">
+    <Grid templateColumns="auto 1fr" gap={3} my={2}>
+      <Box
+        color="secondaryTextColor"
+        fontWeight="bold"
+        textAlign="center"
+        className="timing"
+      >
         <div className="startTime">
           {convertTo12hour(showroomVisit.startTime)}
         </div>
-        <hr />
+        <Divider
+          bg="none"
+          borderLeft="1px"
+          borderRight="1px"
+          borderStyle="dashed"
+          borderColor="primaryColor"
+          h={5}
+          mx="auto"
+          my={1}
+        />
         <div className="endTime">{convertTo12hour(showroomVisit.endTime)}</div>
-      </div>
-      <div className="card">
-        <div className="info">
-          <div className="customer">
-            <span className="customerName">
+      </Box>
+      <Flex
+        py={3}
+        px={2}
+        borderLeft="4px"
+        roundedTopLeft={3}
+        roundedBottomRight={3}
+        borderColor="primaryColor"
+        alignItems="center"
+      >
+        <Box className="info">
+          <Box className="customer">
+            <Box as="span" fontWeight="bold" className="customerName">
               Customer {getCustomerInfo(showroomVisit)}
-            </span>{" "}
+            </Box>{" "}
             has booked
             <br /> a visit for{" "}
-            <span className="showroomName">
+            <Box as="span" fontWeight="bold" className="showroomName">
               {showroomVisit.showroomDetails.name}
-            </span>
-          </div>
-        </div>
-        <div className="state">Booked</div>
-      </div>
+            </Box>
+          </Box>
+        </Box>
+        <Box
+          py={1}
+          px={3}
+          color={"primaryColor"}
+          fontWeight="bold"
+          textTransform="uppercase"
+          ml="auto"
+        >
+          Booked
+        </Box>
+      </Flex>
       <style jsx>{`
-        .container {
-          display: grid;
-          grid-template-columns: auto 1fr;
-          grid-gap: 1.5em;
-          margin: 1.2em 0;
-        }
-        .card {
-          padding: 1em 2em;
-          margin-bottom: 1em;
-          display: flex;
-          align-items: center;
-          background: rgba(172, 198, 255, 0.15);
-          border-left: 4px solid ${CSSConstants.primaryColor};
-          border-top-right-radius: 3em;
-          border-bottom-right-radius: 3em;
-        }
-        .customerName,
-        .showroomName {
-          font-weight: bold;
-        }
-        .timing {
-          color: rgba(0, 0, 0, 0.8);
-          font-weight: bold;
-          text-align: center;
-        }
         .startTime::after,
         .endTime::before {
           content: "";
@@ -81,15 +88,8 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
           height: 2.3rem;
           margin: 3px auto;
         }
-        .state {
-          padding: 0.3em 0.5em;
-          color: ${CSSConstants.primaryColor};
-          font-weight: bold;
-          text-transform: uppercase;
-          margin-left: auto;
-        }
       `}</style>
-    </section>
+    </Grid>
   );
 };
 

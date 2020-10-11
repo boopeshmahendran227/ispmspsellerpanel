@@ -7,8 +7,8 @@ import { RootState } from "../../reducers";
 import { getUnreadNotificationCount } from "../../selectors/notification";
 import NotificationActions from "../../actions/notification";
 import LoginActions from "../../actions/login";
-import classNames from "classnames";
 import Logo from "../atoms/Logo";
+import { Box, Flex, Link } from "@chakra-ui/core";
 
 interface StateProps {
   unreadNotificationCount: number;
@@ -41,19 +41,30 @@ const TopNavBar = (props: TopNavBarProps) => {
     props.logout();
   };
 
-  const classes = classNames({
-    notificationLink: true,
-    animate: props.unreadNotificationCount > 0,
-  });
-
   return (
-    <div className="container">
-      <div className="fixedContainer">
-        <div className="logoContainer">
+    <Box height={"60px"} className="container">
+      <Flex
+        height="60px"
+        px={5}
+        py={2}
+        position="fixed"
+        top="0"
+        left="0"
+        zIndex={10}
+        alignItems="center"
+        right="0"
+        bg="foregroundColor"
+        boxShadow="md"
+        className="fixedContainer"
+      >
+        <Box flex="1" className="logoContainer">
           <Logo />
-        </div>
-        <a
-          className={classes}
+        </Box>
+        <Link
+          fontSize="md"
+          mx={4}
+          position="relative"
+          cursor="pointer"
           key={
             props.unreadNotificationCount
           } /* Retrigger animation when count changes */
@@ -61,116 +72,42 @@ const TopNavBar = (props: TopNavBarProps) => {
         >
           <i className="fas fa-bell"></i>
           {Boolean(props.unreadNotificationCount) && (
-            <span className="notificationCount">
+            <Box
+              as="span"
+              position="absolute"
+              top="0"
+              right="0"
+              borderRadius="full"
+              bg="dangerColor"
+              color="foregroundColor"
+              w={2}
+              h={2}
+              lineHeight={2}
+              fontSize="sm"
+              textAlign="center"
+              transform="translate(30%, -30%)"
+            >
               {props.unreadNotificationCount}
-            </span>
+            </Box>
           )}
-        </a>
-        <div className="timeContainer">
+        </Link>
+        <Box>
           <i className="far fa-clock" aria-hidden={true}></i>
-          <span className="time">{time.format("MMM D, hh:mm a")}</span>
-        </div>
-        <div className="logoutContainer">
-          <a onClick={handleLogout}>
-            <i className="fas fa-sign-out-alt" aria-hidden={true}></i>
-            Logout
-          </a>
-        </div>
+          <Box as="span" display="inline-block" className="time">
+            {time.format("MMM D, hh:mm a")}
+          </Box>
+        </Box>
+        <Box mx={3}>
+          <Link onClick={handleLogout}>
+            <i className="fas fa-sign-out-alt" aria-hidden={true}></i> Logout
+          </Link>
+        </Box>
         <NotificationBar
           open={notificationBarOpen}
           onClose={() => setNotificationBarOpen(false)}
         />
-      </div>
-      <style jsx>{`
-        .container {
-          height: 60px;
-          animation: dragIn ease-in-out 0.5s;
-        }
-        .fixedContainer {
-          height: 60px;
-          padding: 0.9em 1.3em;
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          z-index: 10;
-          display: flex;
-          align-items: center;
-          background: ${CSSConstants.foregroundColor};
-          box-shadow: 0 0 20px #00000014;
-        }
-        .logoContainer {
-          flex: 1;
-        }
-        .time {
-          display: inline-block;
-          padding: 0.3em;
-        }
-        .logoutContainer {
-          margin: 0 0.5em;
-        }
-        .logoutContainer i {
-          margin: 0 0.2em;
-        }
-        .notificationLink {
-          font-size: 1.3rem;
-          margin: 0 0.8em;
-          position: relative;
-          cursor: pointer;
-        }
-        .notificationCount {
-          position: absolute;
-          top: 0;
-          right: 0;
-          border-radius: 100%;
-          background-color: ${CSSConstants.dangerColor};
-          color: ${CSSConstants.foregroundColor};
-          transform: translate(30%, -30%);
-          width: 1.1rem;
-          height: 1.1rem;
-          line-height: 1.1rem;
-          font-size: 0.7rem;
-          text-align: center;
-        }
-        .notificationLink.animate i {
-          animation: ring 1.5s ease;
-        }
-        @keyframes ring {
-          0% {
-            transform: rotate(35deg);
-          }
-          12.5% {
-            transform: rotate(-30deg);
-          }
-          25% {
-            transform: rotate(25deg);
-          }
-          37.5% {
-            transform: rotate(-20deg);
-          }
-          50% {
-            transform: rotate(15deg);
-          }
-          62.5% {
-            transform: rotate(-10deg);
-          }
-          75% {
-            transform: rotate(5deg);
-          }
-          100% {
-            transform: rotate(0deg);
-          }
-        }
-        @keyframes dragIn {
-          0% {
-            transform: translateY(-100px);
-          }
-          100% {
-            transform: translateY(0px);
-          }
-        }
-      `}</style>
-    </div>
+      </Flex>
+    </Box>
   );
 };
 

@@ -23,9 +23,9 @@ const MetricCard = (props: MetricCardProps) => {
       bg="foregroundColor"
       boxShadow="md"
       w="100%"
-      borderRadius="5%"
+      borderRadius={8}
     >
-      <Flex alignItems="center" h="100%" padding="1.2em">
+      <Flex alignItems="center" h="100%" padding={5}>
         <Box mr={3}>{icon}</Box>
         <Box>
           <Box fontSize="lg">{props.value}</Box>

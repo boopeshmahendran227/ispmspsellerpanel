@@ -1,10 +1,8 @@
 import Link from "next/link";
-import CSSConstants from "../../constants/CSSConstants";
-import Chroma from "chroma-js";
 import SubMenu, { SubMenuItemInterface } from "./SubMenu";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import classNames from "classnames";
+import { Box, List, ListItem, PseudoBox } from "@chakra-ui/core";
 
 type MenuTreeItem = SubmenuMenuItem | NoSubmenuMenuItem;
 
@@ -135,14 +133,37 @@ const SideNavBar = () => {
   const activeIndex = getCurrentActiveIndex();
 
   return (
-    <nav>
-      <div className="navigation">
-        <ul>
+    <Box
+      as="nav"
+      position="absolute"
+      top="60px"
+      left="0"
+      w="100%"
+      h="100%"
+      bg="primaryColor"
+      color="white"
+      boxShadow="md"
+      fontSize="sm"
+    >
+      <Box w="full">
+        <List styleType="none">
           {menuTree.map((item, index) => (
-            <li key={index}>
+            <ListItem key={index}>
               {item.hasSubMenu ? (
-                <a
-                  className={classNames({ active: index === activeIndex })}
+                <PseudoBox
+                  as="a"
+                  _hover={{ bg: "lightPrimaryColor" }}
+                  display="flex"
+                  flexDirection="column"
+                  textAlign="center"
+                  w="full"
+                  fontSize="lg"
+                  fontWeight="400"
+                  py={4}
+                  px={1}
+                  transition="all 0.3s"
+                  bg={index === activeIndex ? "lightPrimaryColor" : ""}
+                  borderLeft={index === activeIndex ? "2px solid white" : ""}
                   onClick={() =>
                     setCurrentOpenIndex(
                       currentOpenIndex !== index ? index : null
@@ -150,23 +171,39 @@ const SideNavBar = () => {
                   }
                 >
                   {item.icon}
-                  <span>{item.name}</span>
-                </a>
+                  <Box as="span" fontSize="md">
+                    {item.name}
+                  </Box>
+                </PseudoBox>
               ) : (
                 <Link href={item.href} key={index}>
-                  <a
-                    className={classNames({ active: index === activeIndex })}
+                  <PseudoBox
+                    as="a"
+                    _hover={{ bg: "lightPrimaryColor" }}
+                    display="flex"
+                    flexDirection="column"
+                    textAlign="center"
+                    w="full"
+                    fontSize="lg"
+                    fontWeight="400"
+                    py={4}
+                    px={1}
+                    transition="all 0.3s"
+                    bg={index === activeIndex ? "lightPrimaryColor" : ""}
+                    borderLeft={index === activeIndex ? "2px solid white" : ""}
                     onClick={() => setCurrentOpenIndex(null)}
                   >
                     {item.icon}
-                    <span>{item.name}</span>
-                  </a>
+                    <Box as="span" fontSize="md">
+                      {item.name}
+                    </Box>
+                  </PseudoBox>
                 </Link>
               )}
-            </li>
+            </ListItem>
           ))}
-        </ul>
-      </div>
+        </List>
+      </Box>
       {menuTree.map(
         (item, index) =>
           item.hasSubMenu && (
@@ -179,64 +216,7 @@ const SideNavBar = () => {
             />
           )
       )}
-      <style jsx>
-        {`
-          nav {
-            position: absolute;
-            top: 60px;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: ${CSSConstants.primaryColor};
-            color: white;
-            box-shadow: 0 3px 6px #00000029;
-            animation: dragIn ease-in-out 0.5s;
-          }
-          .navigation {
-            width: 100%;
-          }
-          .navigation ul {
-            list-style: none;
-            display: flex;
-            width: 100%;
-            padding: 0;
-            margin: 0;
-            flex-direction: column;
-          }
-          a {
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-            width: 100%;
-            padding: 0.9em 0.5em;
-            transition: all 0.3s;
-            text-decoration: none;
-            font-size: 0.9rem;
-          }
-          a :global(i) {
-            font-size: 1.3rem;
-            margin: 0.3em;
-          }
-          .navigation a.active {
-            background: ${CSSConstants.lightPrimaryColor};
-            border-left: 2px solid white;
-          }
-          .navigation a:hover {
-            background: ${Chroma(CSSConstants.primaryColor)
-              .brighten(0.4)
-              .css()};
-          }
-          @keyframes dragIn {
-            0% {
-              transform: translateX(-100px);
-            }
-            100% {
-              transform: translateX(0px);
-            }
-          }
-        `}
-      </style>
-    </nav>
+    </Box>
   );
 };
 

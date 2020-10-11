@@ -9,6 +9,7 @@ import { SummaryInterface } from "types/insights";
 import { formatPrice } from "utils/misc";
 import RoundedIcon from "components/atoms/RoundedIcon";
 import CSSConstants from "../src/constants/CSSConstants";
+import { Box, Heading, Stack } from "@chakra-ui/core";
 
 const startDate = moment().subtract(7, "days").startOf("day");
 const endDate = moment().endOf("day");
@@ -33,64 +34,73 @@ const Insight = () => {
   }
 
   return (
-    <div className="container">
-      <h2>Stats for Last 7 Days</h2>
-      <MetricCard
-        title="Orders"
-        icon={
-          <RoundedIcon
-            icon={<i className="fa fa-shopping-cart" aria-hidden="true"></i>}
-            color={CSSConstants.secondaryColor}
+    <Box mx={2} my={4} className="container">
+      <Heading size="md">Stats for Last 7 Days</Heading>
+      <Stack spacing={3}>
+        <Box>
+          <MetricCard
+            title="Orders"
+            icon={
+              <RoundedIcon
+                icon={
+                  <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+                }
+                color={CSSConstants.secondaryColor}
+              />
+            }
+            value={summary.totalOrderCount}
           />
-        }
-        value={summary.totalOrderCount}
-      />
-      <MetricCard
-        title="Customers"
-        icon={
-          <RoundedIcon
-            icon={<i className="fas fa-users"></i>}
-            color={CSSConstants.dangerColor}
+        </Box>
+        <Box>
+          <MetricCard
+            title="Customers"
+            icon={
+              <RoundedIcon
+                icon={<i className="fas fa-users"></i>}
+                color={CSSConstants.dangerColor}
+              />
+            }
+            value={summary.totalCustomers}
           />
-        }
-        value={summary.totalCustomers}
-      />
-      <MetricCard
-        title="Quotes"
-        icon={
-          <RoundedIcon
-            icon={<i className="fas fa-comments-dollar"></i>}
-            color={CSSConstants.warningColor}
+        </Box>
+        <Box>
+          <MetricCard
+            title="Quotes"
+            icon={
+              <RoundedIcon
+                icon={<i className="fas fa-comments-dollar"></i>}
+                color={CSSConstants.warningColor}
+              />
+            }
+            value={summary.totalQuotes}
           />
-        }
-        value={summary.totalQuotes}
-      />
-      <MetricCard
-        title="Revenue"
-        icon={
-          <RoundedIcon
-            icon={<i className="fas fa-money-bill"></i>}
-            color={CSSConstants.successColor}
+        </Box>
+        <Box>
+          <MetricCard
+            title="Revenue"
+            icon={
+              <RoundedIcon
+                icon={<i className="fas fa-money-bill"></i>}
+                color={CSSConstants.successColor}
+              />
+            }
+            value={formatPrice(summary.totalRevenue)}
           />
-        }
-        value={formatPrice(summary.totalRevenue)}
-      />
-      <MetricCard
-        title="Ecosystems"
-        icon={
-          <RoundedIcon
-            icon={<i className="fas fa-store"></i>}
-            color={CSSConstants.primaryColor}
+        </Box>
+        <Box>
+          <MetricCard
+            title="Ecosystems"
+            icon={
+              <RoundedIcon
+                icon={<i className="fas fa-store"></i>}
+                color={CSSConstants.primaryColor}
+              />
+            }
+            value={ecosystemData.length}
           />
-        }
-        value={ecosystemData.length}
-      />
-      <style jsx>{`
-        .container {
-          margin: 1.5em 1em;
-        }
-      `}</style>
-    </div>
+        </Box>
+      </Stack>
+    </Box>
   );
 };
 

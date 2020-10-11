@@ -1,11 +1,21 @@
-import Modal from "./Modal";
-import Button from "./Button";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers";
 import { getSureModalData } from "../../selectors/ui";
 import UIActions from "../../actions/ui";
 import { SureModalData } from "../../types/ui";
-import CSSConstants from "../../constants/CSSConstants";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  Grid,
+  Button,
+  Box,
+  ButtonGroup,
+} from "@chakra-ui/core";
+import React from "react";
 
 interface StateProps {
   data: SureModalData;
@@ -28,37 +38,29 @@ const SureModal = (props: SureModalProps) => {
   };
 
   return (
-    <Modal open={props.data.open} onClose={props.onCancelClicked}>
-      <div className="container">
-        <header>{props.data.header}</header>
-        <div className="body">{props.data.body}</div>
-        <div className="note">(Note: This action is irreversible)</div>
-        <div className="buttonContainer">
-          <Button onClick={handleSureClicked}>Yes, Sure</Button>
-          <Button outlined={true} onClick={handleCancelClicked}>
-            No, Close
-          </Button>
-        </div>
-      </div>
-      <style jsx>{`
-        header {
-          margin: 1em 0;
-          font-weight: bold;
-          font-size: 1.3rem;
-          text-transform: uppercase;
-        }
-        .container {
-          margin: 1em;
-          min-width: 270px;
-        }
-        .buttonContainer {
-          text-align: right;
-        }
-        .note {
-          margin: 0.4em 0;
-          color: ${CSSConstants.dangerColor};
-        }
-      `}</style>
+    <Modal isOpen={props.data.open} onClose={props.onCancelClicked} isCentered>
+      <ModalOverlay />
+      <ModalContent borderRadius={10}>
+        <ModalHeader>{props.data.header}</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <Box>{props.data.body}</Box>
+          <Box color="dangerColor" my={2}>
+            (Note: This action is irreversible)
+          </Box>
+          <ButtonGroup textAlign="center" spacing={3} my={3}>
+            <Button
+              variantColor="primaryColorVariant"
+              onClick={handleSureClicked}
+            >
+              Yes, Sure
+            </Button>
+            <Button variant="outline" onClick={handleCancelClicked}>
+              No, Close
+            </Button>
+          </ButtonGroup>
+        </ModalBody>
+      </ModalContent>
     </Modal>
   );
 };

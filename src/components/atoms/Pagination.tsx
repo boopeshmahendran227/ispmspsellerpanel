@@ -3,6 +3,7 @@ import classNames from "classnames";
 import Chroma from "chroma-js";
 import _ from "lodash";
 import { PaginationDataInterface } from "../../types/pagination";
+import { Box, Button } from "@chakra-ui/core";
 
 interface PaginationProps {
   data: PaginationDataInterface;
@@ -33,94 +34,45 @@ const Pagination = (props: PaginationProps) => {
       page: true,
       active: value === i,
     });
+
     return (
-      <div key={i} className={classes}>
-        <button type="button" onClick={() => handleClick(i)}>
+      <Box display="inline-block" mx={1} key={i}>
+        <Button
+          variantColor={value === i ? "primaryColorVariant" : ""}
+          color={value === i ? "white" : ""}
+          type="button"
+          size="xs"
+          transition="all 0.3s"
+          onClick={() => handleClick(i)}
+        >
           {i}
-        </button>
-        <style jsx>{`
-          .page {
-            display: inline-block;
-            margin: 0 0.1em;
-          }
-          button {
-            display: inline-block;
-            border: none;
-            font-size: 0.9rem;
-            border-radius: 0.3em;
-            min-width: 2em;
-            min-height: 2em;
-            outline: none;
-            transition: all 0.3s;
-          }
-          button:hover {
-            background: ${Chroma(CSSConstants.primaryColor).brighten(2).css()};
-            color: white;
-          }
-          .page.active button {
-            background: ${CSSConstants.primaryColor};
-            color: white;
-          }
-        `}</style>
-      </div>
+        </Button>
+      </Box>
     );
   });
 
-  const prevButtonClasses = classNames({
-    prevButton: true,
-    hide: value <= 1,
-  });
-
-  const nextButtonClasses = classNames({
-    nextButton: true,
-    hide: value >= totalNumberOfPages,
-  });
-
   return (
-    <div className="container">
-      <button type="button" className={prevButtonClasses} onClick={goToPrev}>
+    <Box w="100%" textAlign="center" my={3}>
+      <Button
+        variant="outline"
+        type="button"
+        fontWeight="500"
+        display={value <= 1 ? "none" : "inline-block"}
+        onClick={goToPrev}
+      >
         <i className="fas fa-chevron-left"></i> Previous
-      </button>
-      <div className="pageContainer">{pages}</div>
-      <button type="button" className={nextButtonClasses} onClick={goToNext}>
+      </Button>
+      <Box display="inline-block">{pages}</Box>
+      <Button
+        variant="outline"
+        type="button"
+        fontWeight="500"
+        display={value >= totalNumberOfPages ? "none" : "inline-block"}
+        onClick={goToNext}
+      >
         Next <i className="fas fa-chevron-right"></i>
-      </button>
-      <style jsx>{`
-        .container {
-          width: 100%;
-          text-align: center;
-          margin: 1em 0;
-        }
-        .prevButton,
-        .nextButton {
-          transition: all 0.3s;
-          opacity: 1;
-          pointer-events: auto;
-          padding: 9px 15px;
-          border-radius: 0.2em;
-          border: 1px solid #d4d5d9;
-          margin: 0 3em;
-          font-weight: 500;
-        }
-        .prevButton:hover,
-        .nextButton:hover {
-          border: 1px solid ${CSSConstants.primaryColor};
-        }
-        .prevButton.hide,
-        .nextButton.hide {
-          opacity: 0;
-          pointer-events: none;
-        }
-        .pageContainer {
-          display: inline-block;
-        }
-        @media (max-width: 800px) {
-          .pageContainer {
-            display: none;
-          }
-        }
-      `}</style>
-    </div>
+      </Button>
+    </Box>
   );
 };
 
