@@ -113,75 +113,76 @@ const AnalyticsContainer = (props: AnalyticsContainerProps): JSX.Element => {
 
   return (
     <Grid
-      templateColumns="repeat(5, 1fr)"
-      templateRows="1fr 3fr 5fr"
-      gap={5}
-      mt="-1.7em"
+      w="100%"
+      templateColumns={["1fr 1fr", "repeat(5, 1fr)"]}
+      templateRows={["100px 100px 100px repeat(7,2fr)", "1fr 3fr 4fr"]}
+      gap={[3, 5]}
+      mt="1.7em"
       mb={3}
     >
-      <Box gridRow="1/2" gridColumn="1/2">
+      <Box gridRow={["1/2", "1/2"]} gridColumn={["1/2", "1/2"]}>
         <MetricCard
           title="Orders"
           icon={
             <RoundedIcon
               icon={<i className="fa fa-shopping-cart" aria-hidden="true"></i>}
-              color={CSSConstants.secondaryColor}
+              color="secondaryColorVariant"
             />
           }
           value={summary.totalOrderCount}
         />
       </Box>
-      <Box gridRow="1/2" gridColumn="2/3">
+      <Box gridRow={["1/2", "1/2"]} gridColumn={["2/3", "2/3"]}>
         <MetricCard
           title="Customers"
           icon={
             <RoundedIcon
               icon={<i className="fas fa-users"></i>}
-              color={CSSConstants.warningColor}
+              color="warningColorVariant"
             />
           }
           value={summary.totalCustomers}
         />
       </Box>
-      <Box gridRow="1/2" gridColumn="3/4">
+      <Box gridRow={["2/3", "1/2"]} gridColumn={["1/2", "3/4"]}>
         <MetricCard
           title="Quotes"
           icon={
             <RoundedIcon
               icon={<i className="fas fa-comments-dollar"></i>}
-              color={CSSConstants.dangerColor}
+              color="dangerColorVariant"
             />
           }
           value={summary.totalQuotes}
         />
       </Box>
-      <Box gridRow="1/2" gridColumn="4/5">
+      <Box gridRow={["2/3", "1/2"]} gridColumn={["2/3", "4/5"]}>
         <MetricCard
           title="Revenue"
           icon={
             <RoundedIcon
               icon={<i className="fas fa-money-bill"></i>}
-              color={CSSConstants.successColor}
+              color="successColorVariant"
             />
           }
           value={formatPrice(summary.totalRevenue)}
         />
       </Box>
-      <Box gridRow="1/2" gridColumn="5/6">
+      <Box gridRow={["3/4", "1/2"]} gridColumn={["1/3", "5/6"]}>
         <MetricCard
           title="Ecosystems"
           icon={
             <RoundedIcon
               icon={<i className="fas fa-store"></i>}
-              color={CSSConstants.primaryColor}
+              color={"primaryColorVariant"}
             />
           }
           value={ecosystemData.length}
         />
       </Box>
       <Box
-        gridRow="2/3"
-        gridColumn="3/6"
+        gridRow={["4/6", "2/3"]}
+        gridColumn={["1/3", "3/6"]}
         bg="foregroundColor"
         rounded={10}
         boxShadow="md"
@@ -199,7 +200,7 @@ const AnalyticsContainer = (props: AnalyticsContainerProps): JSX.Element => {
         />
       </Box>
       <Box
-        gridRow="2/3"
+        gridRow={["6/8", "2/3"]}
         gridColumn="1/3"
         bg="foregroundColor"
         rounded={10}
@@ -209,8 +210,8 @@ const AnalyticsContainer = (props: AnalyticsContainerProps): JSX.Element => {
         <OrderCountPieChart data={summary} />
       </Box>
       <Box
-        gridRow="3/4"
-        gridColumn="4/6"
+        gridRow={["8/9", "3/4"]}
+        gridColumn={["1/3", "4/6"]}
         bg="foregroundColor"
         rounded={10}
         boxShadow="md"
@@ -219,8 +220,8 @@ const AnalyticsContainer = (props: AnalyticsContainerProps): JSX.Element => {
         <TopSold data={topSelling} />
       </Box>
       <Box
-        gridRow="3/4"
-        gridColumn="1/4"
+        gridRow={["9/11", "3/4"]}
+        gridColumn={["1/3", "1/4"]}
         bg="foregroundColor"
         rounded={10}
         boxShadow="md"

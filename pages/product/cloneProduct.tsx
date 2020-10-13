@@ -79,7 +79,7 @@ const CloneProduct = (props: CloneProductProps) => {
     <Box
       maxW="600px"
       mx="auto"
-      my={10}
+      my={[1, 10]}
       p={6}
       boxShadow="md"
       bg="foregroundColor"
@@ -99,7 +99,7 @@ const CloneProduct = (props: CloneProductProps) => {
       >
         {({ values }) => (
           <Form>
-            <Grid templateColumns=" 200px 300px" alignItems="center">
+            <Grid templateColumns={["1fr", " 200px 300px"]} alignItems="center">
               <InputLabel label="Current Ecosystem" />
               <FieldSelect
                 name="currentEcosystem"
@@ -111,8 +111,8 @@ const CloneProduct = (props: CloneProductProps) => {
               <InputLabel label="Target Ecosystem" />
               <FieldSelect name="targetEcosystem" options={targetEcosystems} />
             </Grid>
-            <Box pt="1em" pb=" 0.4em" fontSize="1.1rem" ml="400px">
-              <Button type="submit" variantColor="successColorVariant">
+            <Box pt={1} pb={1} fontSize="md" textAlign="right">
+              <Button type="submit"  variantColor="successColorVariant">
                 Submit
               </Button>
             </Box>

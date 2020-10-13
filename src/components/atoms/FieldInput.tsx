@@ -12,9 +12,9 @@ const FieldInput = (props: FieldInputProps) => {
       {({ field, form }) => (
         <FormControl
           isInvalid={form.errors[props.name] && form.touched[props.name]}
-          py={3}
+          py={[1, 3]}
         >
-          <Input {...field} />
+          <Input {...field} minW="60px" px={[0, 1]} />
           <ErrorMessage component={ValidationErrorMsg} name={props.name} />
         </FormControl>
       )}

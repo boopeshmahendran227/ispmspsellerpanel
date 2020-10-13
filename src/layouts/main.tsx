@@ -33,7 +33,7 @@ const Layout = (props: LayoutProps) => {
         body {
           padding: 0;
           margin: 0;
-          font-size: 15px;
+      
           background: ${CSSConstants.backgroundColor};
           font-family: "Lato", sans-serif;
           -webkit-tap-highlight-color: rgba(
@@ -88,12 +88,7 @@ const Layout = (props: LayoutProps) => {
         th {
           padding: 0.35em;
         }
-        @media only screen and (max-width: 1000px) {
-          html,
-          body {
-            font-size: 14px;
-          }
-        }
+        
       `}</style>
     </div>
   );

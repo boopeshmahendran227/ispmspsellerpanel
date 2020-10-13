@@ -14,7 +14,7 @@ const TabSection = (props: TabSectionProps) => {
     <Tabs onChange={(index) => setTabIndex(index)}>
       <TabList>
         {props.headingList.map((heading) => (
-          <Tab>{heading}</Tab>
+          <Tab fontSize={["xs","md"]}>{heading}</Tab>
         ))}
       </TabList>
       <TabPanels>

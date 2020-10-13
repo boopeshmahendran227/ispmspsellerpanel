@@ -4,7 +4,14 @@ interface PageHeaderContainerProps {
 }
 
 const PageHeaderContainer = (props: PageHeaderContainerProps) => (
-  <Flex px={1} py={2} justify="space-between" align="center" mb={2}>
+  <Flex
+    px={1}
+    py={2}
+    justify="space-between"
+    align={["flex-start", "center"]}
+    mb={2}
+    direction={["column", "row"]}
+  >
     {props.children}
   </Flex>
 );

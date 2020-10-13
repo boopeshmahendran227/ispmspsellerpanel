@@ -123,7 +123,7 @@ const SkuModal = (props: SkuModalProps) => {
   }, [props.open]);
 
   return (
-    <Modal isOpen={open} onClose={onClose} size="lg">
+    <Modal isOpen={open} onClose={onClose} size={["xs","lg"]}>
       <ModalOverlay />
       <ModalContent borderRadius={10}>
         <ModalHeader>Create SKUs</ModalHeader>

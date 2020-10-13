@@ -6,7 +6,10 @@ import ProductCard from "../atoms/ProductCard";
 import { transformOrderItem } from "../../transformers/orderItem";
 import _ from "lodash";
 import moment from "moment";
-import { OrderInterface, TransformedOrderItemInterface } from "../../types/order";
+import {
+  OrderInterface,
+  TransformedOrderItemInterface,
+} from "../../types/order";
 import SortableTable from "components/atoms/SortableTable";
 import { getCustomerInfo } from "utils/customer";
 import {

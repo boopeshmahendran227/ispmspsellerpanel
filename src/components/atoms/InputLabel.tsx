@@ -7,7 +7,7 @@ interface InputLabelProps {
 const InputLabel = (props: InputLabelProps) => {
   return (
     <FormLabel
-      textAlign="right"
+      textAlign={["left", "right"]}
       color="secondaryTextColor"
       minW="200px"
     >

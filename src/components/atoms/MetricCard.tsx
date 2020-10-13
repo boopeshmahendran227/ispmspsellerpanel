@@ -7,13 +7,6 @@ interface MetricCardProps {
   icon: React.ReactNode;
 }
 
-const FlexContainer = styled.div`
-  display: flex;
-  align-items: center;
-  height: 100%;
-  padding: 1.2em;
-`;
-
 const MetricCard = (props: MetricCardProps) => {
   const { icon } = props;
 

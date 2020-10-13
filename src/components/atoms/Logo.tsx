@@ -5,17 +5,20 @@ const Logo = () => {
   return (
     <Link href="/">
       <ChakraLink
-        fontSize="1.5rem"
-        fontFamily="Roboto"
         color="#202649"
         textDecoration="none"
         display="flex"
         alignItems="center"
         _hover={{ textDecoration: "none" }}
       >
-        <Image h="2.2rem" className="logo" src={LogoIcon} />
+        <Image h={["1.1rem", "2.2rem"]} className="logo" src={LogoIcon} />
         &nbsp;
-        <Box as="span" fontSize="2.2rem" fontWeight="500">
+        <Box
+          as="span"
+          fontSize={["1rem", "1.9rem"]}
+          fontWeight="500"
+          fontFamily="Roboto"
+        >
           Sellers
         </Box>
       </ChakraLink>

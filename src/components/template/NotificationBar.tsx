@@ -3,6 +3,16 @@ import classNames from "classnames";
 import CSSConstants from "../../constants/CSSConstants";
 import NotificationContainer from "../molecules/NotificationContainer";
 
+import {
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+} from "@chakra-ui/core";
+
 interface NotificationBarProps {
   open: boolean;
   onClose: () => void;
@@ -19,8 +29,20 @@ const NotificationBar = (props: NotificationBarProps) => {
   });
 
   return (
-    <section className={classes} onClick={props.onClose}>
-      <div className="sideNavContainer" onClick={blockClicks}>
+    <Drawer
+      isOpen={props.open}
+      placement="right"
+      onClose={props.onClose}
+    >
+      <DrawerOverlay />
+      <DrawerContent>
+        <DrawerHeader>Notifications</DrawerHeader>
+        <DrawerCloseButton />
+        <DrawerBody>
+          <NotificationContainer />
+        </DrawerBody>
+      </DrawerContent>
+      {/* <div className="sideNavContainer" onClick={blockClicks}>
         <div className="container">
           <header>
             <h2>Notifications</h2>
@@ -95,8 +117,8 @@ const NotificationBar = (props: NotificationBarProps) => {
           top: 0;
           background: ${CSSConstants.foregroundColor};
         }
-      `}</style>
-    </section>
+      `}</style> */}
+    </Drawer>
   );
 };
 

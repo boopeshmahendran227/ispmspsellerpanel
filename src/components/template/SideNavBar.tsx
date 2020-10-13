@@ -136,7 +136,7 @@ const SideNavBar = () => {
     <Box
       as="nav"
       position="absolute"
-      top="60px"
+      top="0"
       left="0"
       w="100%"
       h="100%"

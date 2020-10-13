@@ -123,7 +123,7 @@ const AddProduct = (props: AddProductProps) => {
             <Form>
               <SkuModal />
               <Grid
-                templateColumns="200px 1fr"
+                templateColumns={["1fr","200px 1fr"]}
                 alignItems="center"
                 fontSize="md"
                 maxW=" 700px"

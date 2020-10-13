@@ -34,7 +34,7 @@ const Insight = () => {
   }
 
   return (
-    <Box mx={2} my={4} className="container">
+    <Box mx={2} my={4}>
       <Heading size="md">Stats for Last 7 Days</Heading>
       <Stack spacing={3}>
         <Box>

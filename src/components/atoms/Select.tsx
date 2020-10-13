@@ -10,7 +10,7 @@ interface SelectProps {
 
 const Select = (props: SelectProps) => {
   return (
-    <Box w="100%">
+    <Box w="100%" fontSize={["xs", "md"]}>
       <ReactSelect
         isDisabled={props.disabled}
         value={props.value}

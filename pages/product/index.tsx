@@ -19,7 +19,7 @@ import EcosystemOption from "components/atoms/EcosystemOption";
 import Select from "components/atoms/Select";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageContainer from "components/atoms/PageContainer";
-import { Flex, Box, Checkbox, Button, Stack, Input } from "@chakra-ui/core";
+import { Flex, Box, Checkbox, Button, Stack } from "@chakra-ui/core";
 
 const Products = () => {
   const [searchText, setSearchText] = useState("");
@@ -108,7 +108,7 @@ const Products = () => {
     <PageContainer>
       <PageHeaderContainer>
         <PageHeader>Products </PageHeader>
-        <Stack direction="row" spacing={3}>
+        <Stack direction="row" spacing={[5, 3]}>
           <Box>
             <Link href="/product/new">
               <Button variantColor="primaryColorVariant">Add Product</Button>
@@ -116,22 +116,41 @@ const Products = () => {
           </Box>
           <Box>
             <Link href="/product/cloneProduct">
-              <Button variantColor="primaryColorVariant">Clone Products</Button>
+              <Button
+                variantColor="primaryColorVariant"
+               
+              >
+                Clone Products
+              </Button>
             </Link>
           </Box>
         </Stack>
       </PageHeaderContainer>
-      <Flex my={5} align="center" justify="space-between">
-        <SearchBar searchText={searchText} searchByText={setSearchText} />
-        <Flex align="center">
+      <Stack
+        spacing={3}
+        my={5}
+        flexDirection={["column", "row"]}
+        justify="space-between"
+      >
+        <Box textAlign="center">
+          <SearchBar searchText={searchText} searchByText={setSearchText} />
+        </Box>
+        <Stack
+          spacing={3}
+          flexDirection={["column-reverse", "column-reverse", "column", "row"]}
+          alignItems="flex-end"
+          mr={[2]}
+        >
           <Checkbox
+            mt={[5, 0]}
+            fontSize={["xs", "md"]}
             isChecked={showOnlySelf}
             onChange={(e) => setShowOnlySelf(e.target.checked)}
-            
           >
             Show Only My Products
           </Checkbox>
-          <Box minW="300px" mx={3}>
+
+          <Box minW={["200px", "280px"]}>
             <Select
               value={currentEcosystem}
               onChange={(ecosystem) =>
@@ -140,8 +159,8 @@ const Products = () => {
               options={ecosystems}
             />
           </Box>
-        </Flex>
-      </Flex>
+        </Stack>
+      </Stack>
       <ActiveFilters
         appliedFilters={getAppliedFilters()}
         clearFilters={() => {

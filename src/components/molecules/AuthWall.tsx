@@ -52,10 +52,12 @@ const AuthWall = (props: AuthWallProps) => {
           padding: 0.7em 0;
         }
         .text {
+          font-family:"Lato";
           text-align: center;
-          font-size: 1.1rem;
+          font-size: 1.5rem;
           padding: 0.4em 0;
           color: #202649;
+         
         }
         @media print {
           .container {

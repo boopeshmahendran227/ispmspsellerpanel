@@ -4,8 +4,8 @@ import Chroma from "chroma-js";
 export const customTheme = {
   ...theme,
   fonts: {
-    body: "Lato, sans-serif",
-    heading: "Lato, serif",
+    body: "Lato, Roboto",
+    heading: "Lato",
     mono: "Menlo, monospace",
   },
   fontSizes: {

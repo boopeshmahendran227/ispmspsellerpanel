@@ -27,6 +27,7 @@ import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 import "../public/css/react_dates_overrides.css";
 import "react-popper-tooltip/dist/styles.css";
+import { Box } from "@chakra-ui/core";
 
 NProgress.configure({ showSpinner: false });
 
@@ -86,24 +87,23 @@ function MyApp(props) {
             <Layout>
               <main>
                 <TopNavBar />
-                <div className="sideNavBarContainer">
+                {/* <div className="sideNavBarContainer">
                   <SideNavBar />
-                </div>
+                </div> */}
                 <div className="bodyContainer">
                   <Component {...pageProps} />
                 </div>
                 <style jsx>{`
                   .sideNavBarContainer {
                     position: fixed;
-                    top: 0;
+                    top: 60px;
                     left: 0;
                     height: 100%;
-                    width: ${CSSConstants.sideNavBarWidth};
+                    width: 85px;
                     z-index: 1;
                   }
                   .bodyContainer {
-                    margin-left: calc(${CSSConstants.sideNavBarWidth} + 0.7em);
-                    margin-right: 0.7em;
+                    margin: 0 0rem;
                   }
                 `}</style>
               </main>

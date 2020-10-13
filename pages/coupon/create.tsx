@@ -89,7 +89,7 @@ const CreateCoupon = (props: CreateCouponProps) => {
     <Box
       maxW="700px"
       mx="auto"
-      my={10}
+      my={[1,10]}
       p={6}
       boxShadow="md"
       bg="foregroundColor"
@@ -160,7 +160,8 @@ const CreateCoupon = (props: CreateCouponProps) => {
         {({ setFieldValue, values, resetForm }) => (
           <Box>
             <Form>
-              <Grid templateColumns="200px 300px" alignItems="center">
+              <Grid templateColumns={["1fr","200px 300px"]}
+              alignItems="center">
                 <InputLabel label="Coupon Code" />
                 <Box position="relative">
                   <FieldInput name="couponCode" />
@@ -176,7 +177,7 @@ const CreateCoupon = (props: CreateCouponProps) => {
                   )}
                 </Box>
                 <InputLabel label="Coupon Discount Type" />
-                <Box className="discountTypeValuesContainer">
+                <Box >
                   <Box>
                     <RadioButton
                       label="Fixed Amount"

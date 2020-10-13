@@ -27,10 +27,10 @@ const Home = (): JSX.Element => {
   const [period, setPeriod] = useState(filter[0]);
 
   return (
-    <Box my={2} mx={3} maxW="1400px" m="auto" className="container">
+    <Box my={[2]} mx={[2, 3]} maxW={["", "1400px"]}>
       <PageHeaderContainer>
         <PageHeader>Analytic Overview</PageHeader>
-        <Box maxW="150px" w="100%" className="selectContainer">
+        <Box maxW={["120px", "150px"]} w="100%">
           <Select
             value={period}
             options={filter}

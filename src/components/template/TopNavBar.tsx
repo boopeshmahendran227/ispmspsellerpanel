@@ -7,7 +7,7 @@ import { getUnreadNotificationCount } from "../../selectors/notification";
 import NotificationActions from "../../actions/notification";
 import LoginActions from "../../actions/login";
 import Logo from "../atoms/Logo";
-import { Box, Flex, Link } from "@chakra-ui/core";
+import { Box, Flex, Link, Text } from "@chakra-ui/core";
 
 interface StateProps {
   unreadNotificationCount: number;
@@ -41,10 +41,10 @@ const TopNavBar = (props: TopNavBarProps) => {
   };
 
   return (
-    <Box height={"60px"} className="container">
+    <Box height={"60px"} fontSize={["sm", "sm", "md"]}>
       <Flex
         height="60px"
-        px={5}
+        px={[1, 5]}
         py={2}
         position="fixed"
         top="0"
@@ -60,13 +60,10 @@ const TopNavBar = (props: TopNavBarProps) => {
           <Logo />
         </Box>
         <Link
-          fontSize="md"
-          mx={4}
+          mx={[1, 4]}
           position="relative"
           cursor="pointer"
-          key={
-            props.unreadNotificationCount
-          } /* Retrigger animation when count changes */
+          key={props.unreadNotificationCount}
           onClick={handleNotificationClick}
         >
           <i className="fas fa-bell"></i>
@@ -92,13 +89,14 @@ const TopNavBar = (props: TopNavBarProps) => {
         </Link>
         <Box>
           <i className="far fa-clock" aria-hidden={true}></i>
-          <Box as="span" display="inline-block" className="time">
+          <Box as="span" display="inline-block">
             {time.format("MMM D, hh:mm a")}
           </Box>
         </Box>
-        <Box mx={3}>
-          <Link onClick={handleLogout}>
-            <i className="fas fa-sign-out-alt" aria-hidden={true}></i> Logout
+        <Box mx={[1, 3]} fontSize={["1.1rem", "inherit"]}>
+          <Link onClick={handleLogout} cursor="pointer">
+            <i className="fas fa-sign-out-alt" aria-hidden={true}></i>{" "}
+            <Text display={["none", "inline-block"]}>Logout</Text>
           </Link>
         </Box>
         <NotificationBar

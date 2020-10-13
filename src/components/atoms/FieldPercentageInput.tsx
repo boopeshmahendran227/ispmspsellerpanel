@@ -27,11 +27,16 @@ const FieldPercentageInput = (props: FieldPercentageInputProps) => {
       {({ field, form }) => (
         <FormControl
           isInvalid={form.errors[props.name] && form.touched[props.name]}
-          p="0.3em 0"
+          py={[1,3]}
         >
           <InputGroup>
             <InputRightElement children="%" />
-            <Input {...field} onBlur={(e) => handleBlur(e, field.name)} />
+            <Input
+              {...field}
+              onBlur={(e) => handleBlur(e, field.name)}
+              minW="80px"
+              paddingLeft={[1]}
+            />
           </InputGroup>
           <ErrorMessage component={ValidationErrorMsg} name={props.name} />
         </FormControl>
