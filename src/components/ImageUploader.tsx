@@ -1,4 +1,7 @@
-import ImageUploading, { ImageType } from "./ImageUploading";
+import ImageUploading, {
+  ImageListType,
+  ImageType,
+} from "react-images-uploading";
 import styled, { css } from "styled-components";
 import CSSConstants from "../constants/CSSConstants";
 import EditButton from "./atoms/EditButton";
@@ -8,13 +11,14 @@ import { useLightbox } from "simple-react-lightbox";
 import { Maximize2 } from "react-feather";
 import UIActions from "../actions/ui";
 import { connect } from "react-redux";
-import { FileDrop } from "react-file-drop";
 import { useState } from "react";
 import ImageUploadErrorContainer from "./ImageUploadErrorContainer";
 import { ErrorsType } from "react-images-uploading";
 import SectionCard from "./SectionCard";
 import SectionHeader from "./atoms/SectionHeader";
 import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
+import api from "../../src/api";
+import Loader from "components/Loader";
 
 const MAX_NUMBER = 10;
 const MAX_MB_FILESIZE = 5 * 1024 * 1024; // 5Mb
@@ -111,32 +115,19 @@ const ButtonContainer = styled.div`
 interface ImageProps {
   image: ImageType;
   onClick: (image: string) => void;
-  showSureModal: (
-    header: string,
-    message: string,
-    callback: () => void
-  ) => void;
+  onEdit: () => void;
+  onDelete: () => void;
 }
 
 const Image = (props: ImageProps): JSX.Element => {
   const { image } = props;
   return (
-    <ImageContainer onClick={() => props.onClick(image.dataURL)}>
+    <ImageContainer onClick={() => props.onClick(image.dataURL as string)}>
       <StyledImg src={image.dataURL} />
       <StyledImageOverlay>
         <ButtonContainer>
-          <EditButton onClick={image.onUpdate} color="#fff" size="1.2rem" />
-          <DeleteButton
-            onClick={() =>
-              props.showSureModal(
-                "Delete Image",
-                "Are you sure you want to delete this image?",
-                image.onRemove
-              )
-            }
-            color="#fff"
-            size="1.2rem"
-          />
+          <EditButton onClick={props.onEdit} color="#fff" size="1.2rem" />
+          <DeleteButton onClick={props.onDelete} color="#fff" size="1.2rem" />
         </ButtonContainer>
         <ExpandIconContainer>
           <Maximize2 />
@@ -210,15 +201,58 @@ interface DispatchProps {
   ) => void;
 }
 
-type ImageUploaderProps = DispatchProps;
+interface ImageUploadInterface {
+  setFieldValue: (addUpdateIndex: number, images, res) => void;
+  onImageEdit: (addUpdateIndex: number) => void;
+  onImageDelete: (imageList) => void;
+  onDeleteAll: () => void;
+}
+
+type ImageUploaderProps = DispatchProps & ImageUploadInterface;
 
 const ImageUploader = (props: ImageUploaderProps): JSX.Element => {
-  const onChange = (imageList) => {
+  const [images, setImages] = useState([]);
+  const [isUploading, setIsUploading] = useState(false);
+
+  const imageUpload = async (images: ImageListType, addUpdateIndex) => {
+    const formData = new FormData();
+    formData.append("file", images[addUpdateIndex[0]].file as File);
+    const res = await api("/users/image/mpl", {
+      method: "POST",
+      data: formData,
+      headers: { "content-Type": "multipart/form-data" },
+    });
+
+    return res;
+  };
+
+  const onChange = async (
+    imageList: ImageListType,
+    addUpdateIndex: number[] | undefined
+  ) => {
     setErrorStrings([]);
-    console.log(imageList);
+    setImages(imageList as never[]);
+
+    if (imageList.length === 0) {
+      return;
+    }
+    if (!addUpdateIndex) {
+      return;
+    }
+
+    if (imageList.length > 0) {
+      setIsUploading(true);
+      const res = await imageUpload(imageList, addUpdateIndex);
+
+      props.setFieldValue(addUpdateIndex[0], imageList, res);
+      setIsUploading(false);
+    }
   };
 
   const onError = (errors: ErrorsType) => {
+    if (errors == null) {
+      return;
+    }
     const errorStrings: string[] = [];
 
     if (errors.acceptType) {
@@ -254,30 +288,24 @@ const ImageUploader = (props: ImageUploaderProps): JSX.Element => {
 
   return (
     <SectionCard>
-      {/* <ImageUploading
+      <ImageUploading
         onChange={onChange}
         maxNumber={MAX_NUMBER}
         multiple
         maxFileSize={MAX_MB_FILESIZE}
         acceptType={ACCEPT_TYPES}
         onError={onError}
+        value={images}
       >
-        {({ imageList, onImageUpload, onImageRemoveAll, addFiles }) => (
-          <FileDrop
-            onFrameDragEnter={() => setShowDropbox(true)}
-            onFrameDragLeave={() => setShowDropbox(false)}
-            onFrameDrop={() => {
-              setShowDropbox(false);
-              setIsDropboxActive(false);
-            }}
-            onDragOver={() => setIsDropboxActive(true)}
-            onDragLeave={() => setIsDropboxActive(false)}
-            onDrop={(files: FileList) => {
-              addFiles(files);
-              setShowDropbox(false);
-              setIsDropboxActive(false);
-            }}
-          >
+        {({
+          imageList,
+          onImageUpload,
+          onImageRemoveAll,
+          onImageUpdate,
+          onImageRemove,
+          dragProps,
+        }) => (
+          <div>
             <Dropbox show={showDropbox} active={isDropboxActive}>
               Drop Images here
             </Dropbox>
@@ -286,15 +314,13 @@ const ImageUploader = (props: ImageUploaderProps): JSX.Element => {
                 <SectionHeader>Images</SectionHeader>
               </SectionHeaderContainer>
 
-              {imageList.length > 0 && (
+              {imageList.length > 0 && !isUploading && (
                 <RemoveAllButton
-                  onClick={() =>
-                    props.showSureModal(
-                      "Delete Images",
-                      "Are you sure you want to delete all images?",
-                      onImageRemoveAll
-                    )
-                  }
+                  type="button"
+                  onClick={() => {
+                    onImageRemoveAll();
+                    props.onDeleteAll();
+                  }}
                 >
                   Delete All
                 </RemoveAllButton>
@@ -305,23 +331,40 @@ const ImageUploader = (props: ImageUploaderProps): JSX.Element => {
               onClose={() => setErrorStrings([])}
             />
             <Lightbox images={imageList} />
-            <FlexContainer>
-              {imageList.map((image: ImageType, index) => (
-                <Image
-                  key={image.key}
-                  image={image}
-                  onClick={() => openLightbox(index)}
-                  showSureModal={props.showSureModal}
-                />
-              ))}
-              <AddImageButton onClick={onImageUpload}>
-                <AddImageHeader>Add Images</AddImageHeader>
-                <AddImageSubHeader>or drop images to upload</AddImageSubHeader>
-              </AddImageButton>
-            </FlexContainer>
-          </FileDrop>
+            {isUploading ? (
+              <Loader />
+            ) : (
+              <FlexContainer>
+                {imageList.map((image: ImageType, index) => (
+                  <Image
+                    key={image.key}
+                    image={image}
+                    onClick={() => openLightbox(index)}
+                    onEdit={() => {
+                      onImageUpdate(index);
+                      props.onImageEdit(index);
+                    }}
+                    onDelete={() => {
+                      onImageRemove(index);
+                      props.onImageDelete(index);
+                    }}
+                  />
+                ))}
+                <AddImageButton
+                  {...dragProps}
+                  type="button"
+                  onClick={onImageUpload}
+                >
+                  <AddImageHeader>Add Images</AddImageHeader>
+                  <AddImageSubHeader>
+                    or drop images to upload
+                  </AddImageSubHeader>
+                </AddImageButton>
+              </FlexContainer>
+            )}
+          </div>
         )}
-      </ImageUploading> */}
+      </ImageUploading>
     </SectionCard>
   );
 };

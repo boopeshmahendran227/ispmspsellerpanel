@@ -5,7 +5,7 @@ import PageHeader from "components/PageHeader";
 import WithAuth from "components/WithAuth";
 import { useRouter } from "next/router";
 import SkuList from "components/SkuList";
-import { Formik, Form } from "formik";
+import { Formik, ErrorMessage, Form } from "formik";
 import SkuProductInfo from "components/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/atoms/SectionHeader";
@@ -27,6 +27,8 @@ import SkuInventoryInputContainer from "components/SkuInventoryInputContainer";
 import SkuPricingInputContainer from "components/SkuPricingInputContainer";
 import FieldNumInput from "components/FieldNumInput";
 import FieldPercentageInput from "components/FieldPercentageInput";
+import ImageUploader from "components/ImageUploader";
+import ValidationErrorMsg from "components/ValidationErrorMsg";
 
 interface DispatchProps {
   addSku: (sku: AddSkuInterface) => void;
@@ -35,6 +37,7 @@ interface DispatchProps {
 type SkuProps = DispatchProps;
 
 const validationSchema = Yup.object({
+  imageUrls: Yup.array().of(Yup.string()).required("Image is required"),
   specialDiscount: Yup.number(),
   specialDiscountPercentage: Yup.number().max(100),
   skuId: Yup.string().required(),
@@ -122,8 +125,8 @@ const Sku = (props: SkuProps) => {
   const handleSubmit = (values: InputInterface) => {
     props.addSku({
       ...values,
+      imageRelativePaths: values.imageUrls.map((imageurl) => imageurl.url),
       productId: product.id,
-      imageRelativePaths: [],
       attributeValueIds: values.attributes.map((attribute) => ({
         attributeId: attribute.attributeId,
         attributeName: attribute.attributeName,
@@ -158,6 +161,7 @@ const Sku = (props: SkuProps) => {
             initialValues={
               skuToCopyFrom
                 ? {
+                    imageUrls: skuToCopyFrom.imageRelativePaths,
                     skuId: skuToCopyFrom.skuId,
                     price: skuToCopyFrom.price,
                     boughtPrice: skuToCopyFrom.boughtPrice,
@@ -191,6 +195,7 @@ const Sku = (props: SkuProps) => {
                     })),
                   }
                 : {
+                    imageUrls: [],
                     skuId: "",
                     price: 0,
                     boughtPrice: 0,
@@ -218,7 +223,7 @@ const Sku = (props: SkuProps) => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {({ errors }) => (
+            {({ setFieldValue, values }) => (
               <Form>
                 <FlexColumnContainer>
                   <SectionCard>
@@ -243,6 +248,53 @@ const Sku = (props: SkuProps) => {
                       </>
                     ))}
                   </SectionCard>
+                  <ImageUploader
+                    onDeleteAll={() => setFieldValue("imageUrls", [])}
+                    onImageDelete={(index) =>
+                      setFieldValue(
+                        "imageUrls",
+                        values.imageUrls.filter(
+                          (imageUrl) => imageUrl.index !== index
+                        )
+                      )
+                    }
+                    onImageEdit={(addUpdateIndex) => {
+                      setFieldValue(
+                        "imageUrls",
+                        values.imageUrls.filter(
+                          (imageUrl) => imageUrl.index !== addUpdateIndex
+                        )
+                      );
+                    }}
+                    setFieldValue={(addUpdateIndex, imageList, res) => {
+                      if (values.imageUrls.length > 0) {
+                        setFieldValue("imageUrls", [
+                          ...values.imageUrls,
+                          {
+                            index: addUpdateIndex,
+                            dataURL: imageList[addUpdateIndex].dataURL,
+                            isUploaded: true,
+                            url: res,
+                            name: imageList[addUpdateIndex].file.name,
+                          },
+                        ]);
+                      } else {
+                        setFieldValue("imageUrls", [
+                          {
+                            index: addUpdateIndex,
+                            dataURL: imageList[addUpdateIndex].dataURL,
+                            isUploaded: true,
+                            url: res,
+                            name: imageList[addUpdateIndex].file.name,
+                          },
+                        ]);
+                      }
+                    }}
+                  />
+                  <ErrorMessage
+                    component={ValidationErrorMsg}
+                    name={"imageUrls"}
+                  />
                   <SkuPricingInputContainer />
                   <SectionCard>
                     <SectionHeader>Special Discount</SectionHeader>
