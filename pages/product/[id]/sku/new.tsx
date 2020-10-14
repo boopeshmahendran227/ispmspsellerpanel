@@ -195,7 +195,15 @@ const Sku = (props: SkuProps) => {
                     })),
                   }
                 : {
-                    imageUrls: [],
+                    imageUrls: [
+                      {
+                        index: "",
+                        dataURL: "",
+                        isUploaded: "",
+                        url: "",
+                        name: "",
+                      },
+                    ],
                     skuId: "",
                     price: 0,
                     boughtPrice: 0,

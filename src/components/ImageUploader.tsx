@@ -193,14 +193,6 @@ const Dropbox = styled.div<DropboxProps>`
     `}
 `;
 
-interface DispatchProps {
-  showSureModal: (
-    header: string,
-    message: string,
-    callback: () => void
-  ) => void;
-}
-
 interface ImageUploadInterface {
   setFieldValue: (addUpdateIndex: number, images, res) => void;
   onImageEdit: (addUpdateIndex: number) => void;
@@ -208,7 +200,7 @@ interface ImageUploadInterface {
   onDeleteAll: () => void;
 }
 
-type ImageUploaderProps = DispatchProps & ImageUploadInterface;
+type ImageUploaderProps = ImageUploadInterface;
 
 const ImageUploader = (props: ImageUploaderProps): JSX.Element => {
   const [images, setImages] = useState([]);
@@ -369,11 +361,4 @@ const ImageUploader = (props: ImageUploaderProps): JSX.Element => {
   );
 };
 
-const mapDispatchToProps: DispatchProps = {
-  showSureModal: UIActions.showSureModal,
-};
-
-export default connect<null, DispatchProps>(
-  null,
-  mapDispatchToProps
-)(ImageUploader);
+export default ImageUploader;
