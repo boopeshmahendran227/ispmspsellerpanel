@@ -6,7 +6,7 @@ import PageHeader from "components/PageHeader";
 import WithAuth from "components/WithAuth";
 import { useRouter } from "next/router";
 import SkuList from "components/SkuList";
-import { Formik, Form } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import SkuProductInfo from "components/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/atoms/SectionHeader";
@@ -28,6 +28,9 @@ import SkuInventoryInputContainer from "components/SkuInventoryInputContainer";
 import SkuPricingInputContainer from "components/SkuPricingInputContainer";
 import FieldNumInput from "components/FieldNumInput";
 import FieldPercentageInput from "components/FieldPercentageInput";
+import ValidationErrorMsg from "components/ValidationErrorMsg";
+import { getProductImageUrl } from "utils/url";
+import SkuImageUploader from "components/SkuImageUploader";
 
 interface DispatchProps {
   updateSku: (sku: UpdateSkuInterface) => void;
@@ -36,6 +39,15 @@ interface DispatchProps {
 type SkuProps = DispatchProps;
 
 const validationSchema = Yup.object({
+  images: Yup.array()
+    .of(
+      Yup.object({
+        index: Yup.number(),
+        dataURL: Yup.string(),
+        url: Yup.string(),
+      }).defined()
+    )
+    .defined(),
   specialDiscount: Yup.number().required(),
   specialDiscountPercentage: Yup.number().required().max(100),
   skuDetailId: Yup.number().required().defined(),
@@ -109,7 +121,12 @@ const Sku = (props: SkuProps): JSX.Element => {
   const attributes = product.attributeValues;
 
   const handleSubmit = (values: InputInterface) => {
-    props.updateSku(values);
+    const imageUrl = values.images.map((image) => image.url);
+    const filteredValues = _.omit(values, "images");
+    props.updateSku({
+      ...filteredValues,
+      imageRelativePaths: imageUrl,
+    });
   };
 
   return (
@@ -136,6 +153,15 @@ const Sku = (props: SkuProps): JSX.Element => {
         <div className="formContainer">
           <Formik
             initialValues={{
+              images: currentSku.imageRelativePaths.map(
+                (imageRelativePath, index) => {
+                  return {
+                    index: index,
+                    dataURL: getProductImageUrl(imageRelativePath),
+                    url: imageRelativePath,
+                  };
+                }
+              ),
               skuDetailId: currentSku.skuDetailId,
               price: currentSku.price,
               boughtPrice: currentSku.boughtPrice,
@@ -171,7 +197,7 @@ const Sku = (props: SkuProps): JSX.Element => {
             enableReinitialize={true}
             onSubmit={handleSubmit}
           >
-            {() => (
+            {({ setFieldValue, values }) => (
               <Form>
                 <FlexColumnContainer>
                   <SectionCard>
@@ -190,7 +216,18 @@ const Sku = (props: SkuProps): JSX.Element => {
                       </Fragment>
                     ))}
                   </SectionCard>
-                  {/* <ImageUploader /> */}
+                  <SkuImageUploader
+                    initialValues={values.images}
+                    images={values.images}
+                    onImageAdd={(values) => setFieldValue("images", values)}
+                    onImageDelete={(value) => setFieldValue("images", value)}
+                    onImageEdit={(value) => setFieldValue("images", value)}
+                    onImageDeleteAll={(value) => setFieldValue("images", value)}
+                  />
+                  <ErrorMessage
+                    component={ValidationErrorMsg}
+                    name={"images"}
+                  />
                   <SkuPricingInputContainer />
                   <SectionCard>
                     <SectionHeader>Special Discount</SectionHeader>

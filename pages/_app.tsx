@@ -25,6 +25,7 @@ import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 import "../public/css/react_dates_overrides.css";
 import "react-popper-tooltip/dist/styles.css";
+import SimpleReactLightBox from "simple-react-lightbox";
 
 NProgress.configure({ showSpinner: false });
 
@@ -83,7 +84,9 @@ function MyApp(props) {
                 <SideNavBar />
               </div>
               <div className="bodyContainer">
-                <Component {...pageProps} />
+                <SimpleReactLightBox>
+                  <Component {...pageProps} />
+                </SimpleReactLightBox>
               </div>
               <style jsx>{`
                 .sideNavBarContainer {

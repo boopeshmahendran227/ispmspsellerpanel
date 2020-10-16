@@ -29,6 +29,8 @@ import FieldNumInput from "components/FieldNumInput";
 import FieldPercentageInput from "components/FieldPercentageInput";
 import ImageUploader from "components/ImageUploader";
 import ValidationErrorMsg from "components/ValidationErrorMsg";
+import { getProductImageUrl } from "utils/url";
+import SkuImageUploader from "components/SkuImageUploader";
 
 interface DispatchProps {
   addSku: (sku: AddSkuInterface) => void;
@@ -37,7 +39,16 @@ interface DispatchProps {
 type SkuProps = DispatchProps;
 
 const validationSchema = Yup.object({
-  imageUrls: Yup.array().of(Yup.string()).required("Image is required"),
+  images: Yup.array()
+    .of(
+      Yup.object({
+        index: Yup.number(),
+        isUploaded: Yup.boolean(),
+        url: Yup.string(),
+        name: Yup.string(),
+      }).defined()
+    )
+    .defined(),
   specialDiscount: Yup.number(),
   specialDiscountPercentage: Yup.number().max(100),
   skuId: Yup.string().required(),
@@ -123,11 +134,14 @@ const Sku = (props: SkuProps) => {
   const attributes = product.attributeValues;
 
   const handleSubmit = (values: InputInterface) => {
+    const imageUrls = values.images.map((image) => image.url);
+    const filteredValues = _.omit(values, "images");
+
     props.addSku({
-      ...values,
-      imageRelativePaths: values.imageUrls.map((imageurl) => imageurl.url),
+      ...filteredValues,
+      imageRelativePaths: imageUrls,
       productId: product.id,
-      attributeValueIds: values.attributes.map((attribute) => ({
+      attributeValueIds: filteredValues.attributes.map((attribute) => ({
         attributeId: attribute.attributeId,
         attributeName: attribute.attributeName,
         valueId: attribute.value.value,
@@ -161,7 +175,15 @@ const Sku = (props: SkuProps) => {
             initialValues={
               skuToCopyFrom
                 ? {
-                    imageUrls: skuToCopyFrom.imageRelativePaths,
+                    images: skuToCopyFrom.imageRelativePaths.map(
+                      (imageRelativePath, index) => {
+                        return {
+                          index: index,
+                          dataURL: getProductImageUrl(imageRelativePath),
+                          url: imageRelativePath,
+                        };
+                      }
+                    ),
                     skuId: skuToCopyFrom.skuId,
                     price: skuToCopyFrom.price,
                     boughtPrice: skuToCopyFrom.boughtPrice,
@@ -195,15 +217,7 @@ const Sku = (props: SkuProps) => {
                     })),
                   }
                 : {
-                    imageUrls: [
-                      {
-                        index: "",
-                        dataURL: "",
-                        isUploaded: "",
-                        url: "",
-                        name: "",
-                      },
-                    ],
+                    images: [],
                     skuId: "",
                     price: 0,
                     boughtPrice: 0,
@@ -256,52 +270,17 @@ const Sku = (props: SkuProps) => {
                       </>
                     ))}
                   </SectionCard>
-                  <ImageUploader
-                    onDeleteAll={() => setFieldValue("imageUrls", [])}
-                    onImageDelete={(index) =>
-                      setFieldValue(
-                        "imageUrls",
-                        values.imageUrls.filter(
-                          (imageUrl) => imageUrl.index !== index
-                        )
-                      )
-                    }
-                    onImageEdit={(addUpdateIndex) => {
-                      setFieldValue(
-                        "imageUrls",
-                        values.imageUrls.filter(
-                          (imageUrl) => imageUrl.index !== addUpdateIndex
-                        )
-                      );
-                    }}
-                    setFieldValue={(addUpdateIndex, imageList, res) => {
-                      if (values.imageUrls.length > 0) {
-                        setFieldValue("imageUrls", [
-                          ...values.imageUrls,
-                          {
-                            index: addUpdateIndex,
-                            dataURL: imageList[addUpdateIndex].dataURL,
-                            isUploaded: true,
-                            url: res,
-                            name: imageList[addUpdateIndex].file.name,
-                          },
-                        ]);
-                      } else {
-                        setFieldValue("imageUrls", [
-                          {
-                            index: addUpdateIndex,
-                            dataURL: imageList[addUpdateIndex].dataURL,
-                            isUploaded: true,
-                            url: res,
-                            name: imageList[addUpdateIndex].file.name,
-                          },
-                        ]);
-                      }
-                    }}
+                  <SkuImageUploader
+                    initialValues={skuIdToCopyFrom ? values.images : []}
+                    images={values.images}
+                    onImageAdd={(values) => setFieldValue("images", values)}
+                    onImageDelete={(value) => setFieldValue("images", value)}
+                    onImageEdit={(value) => setFieldValue("images", value)}
+                    onImageDeleteAll={(value) => setFieldValue("images", value)}
                   />
                   <ErrorMessage
                     component={ValidationErrorMsg}
-                    name={"imageUrls"}
+                    name={"images"}
                   />
                   <SkuPricingInputContainer />
                   <SectionCard>

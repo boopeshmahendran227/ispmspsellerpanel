@@ -36,6 +36,8 @@ import FAQInput from "components/FAQInput";
 import TierPriceInput from "components/TierpriceInput";
 import Checkbox from "components/atoms/Checkbox";
 import { CategoryInterface } from "types/category";
+import AddImageInput from "components/ProductSkusImageUploader";
+import _ from "lodash";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -87,7 +89,23 @@ const AddProduct = (props: AddProductProps) => {
   }
 
   const onSubmit = (values: ProductInputInterface) => {
-    props.addProduct(values);
+    const filteredSkuValues = values.skus.map((sku) => {
+      const imageUrls = sku.images?.map((image) => image.url);
+      const filteredSku = _.omit(sku, "images");
+      return {
+        ...filteredSku,
+        imageRelativePaths: imageUrls,
+      };
+    });
+
+    const filteredValues = _.omit(values, "skus");
+
+    const filteredProduct: ProductInputInterface = {
+      ...filteredValues,
+      skus: filteredSkuValues as ProductSkuDetail[],
+    };
+
+    props.addProduct(filteredProduct);
   };
 
   return (
@@ -204,6 +222,18 @@ const AddProduct = (props: AddProductProps) => {
                 />
               </div>
               <SkuInputTable />
+              <AddImageInput
+                skus={values.skus}
+                setFieldValue={(index, values) =>
+                  setFieldValue(
+                    index,
+                    values.map((value) => value)
+                  )
+                }
+                onImageDelete={(index, value) => setFieldValue(index, value)}
+                onImageEdit={(index, value) => setFieldValue(index, value)}
+                onImageDeleteAll={(index, value) => setFieldValue(index, value)}
+              />
               <TierPriceInput />
               <FAQInput />
               <SpecificationInput />

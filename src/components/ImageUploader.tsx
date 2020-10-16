@@ -2,19 +2,16 @@ import ImageUploading, {
   ImageListType,
   ImageType,
 } from "react-images-uploading";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import CSSConstants from "../constants/CSSConstants";
 import EditButton from "./atoms/EditButton";
 import DeleteButton from "./atoms/DeleteButton";
 import Lightbox from "./Lightbox";
 import { useLightbox } from "simple-react-lightbox";
 import { Maximize2 } from "react-feather";
-import UIActions from "../actions/ui";
-import { connect } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ImageUploadErrorContainer from "./ImageUploadErrorContainer";
 import { ErrorsType } from "react-images-uploading";
-import SectionCard from "./SectionCard";
 import SectionHeader from "./atoms/SectionHeader";
 import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
 import api from "../../src/api";
@@ -158,57 +155,28 @@ const Container = styled.div`
   position: relative;
 `;
 
-interface DropboxProps {
-  show: boolean;
-  active: boolean;
-}
-
-const Dropbox = styled.div<DropboxProps>`
-  border: 2px dashed ${CSSConstants.borderColor};
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  font-size: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: ${CSSConstants.secondaryTextColor};
-  background: #fff;
-  pointer-events: none;
-  opacity: 0;
-  transition: all 0.2s;
-  z-index: 1;
-  ${(props) =>
-    props.show &&
-    css`
-      opacity: 1;
-    `}
-  ${(props) =>
-    props.active &&
-    css`
-      border: 2px dashed ${CSSConstants.secondaryColor};
-      color: ${CSSConstants.secondaryColor};
-    `}
-`;
-
 interface ImageUploadInterface {
   setFieldValue: (addUpdateIndex: number, images, res) => void;
   onImageEdit: (addUpdateIndex: number) => void;
   onImageDelete: (imageList) => void;
   onDeleteAll: () => void;
+  setInitialValue: { dataURL: string }[] | [];
 }
 
 type ImageUploaderProps = ImageUploadInterface;
 
 const ImageUploader = (props: ImageUploaderProps): JSX.Element => {
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState(props.setInitialValue);
   const [isUploading, setIsUploading] = useState(false);
+  useEffect(() => {
+    setImages(props.setInitialValue);
+  }, props.setInitialValue);
 
   const imageUpload = async (images: ImageListType, addUpdateIndex) => {
     const formData = new FormData();
+
     formData.append("file", images[addUpdateIndex[0]].file as File);
+
     const res = await api("/users/image/mpl", {
       method: "POST",
       data: formData,
@@ -235,7 +203,6 @@ const ImageUploader = (props: ImageUploaderProps): JSX.Element => {
     if (imageList.length > 0) {
       setIsUploading(true);
       const res = await imageUpload(imageList, addUpdateIndex);
-
       props.setFieldValue(addUpdateIndex[0], imageList, res);
       setIsUploading(false);
     }
@@ -274,90 +241,80 @@ const ImageUploader = (props: ImageUploaderProps): JSX.Element => {
   };
 
   const { openLightbox } = useLightbox();
-  const [showDropbox, setShowDropbox] = useState(false);
-  const [isDropboxActive, setIsDropboxActive] = useState(false);
   const [errorStrings, setErrorStrings] = useState<string[]>([]);
 
   return (
-    <SectionCard>
-      <ImageUploading
-        onChange={onChange}
-        maxNumber={MAX_NUMBER}
-        multiple
-        maxFileSize={MAX_MB_FILESIZE}
-        acceptType={ACCEPT_TYPES}
-        onError={onError}
-        value={images}
-      >
-        {({
-          imageList,
-          onImageUpload,
-          onImageRemoveAll,
-          onImageUpdate,
-          onImageRemove,
-          dragProps,
-        }) => (
-          <div>
-            <Dropbox show={showDropbox} active={isDropboxActive}>
-              Drop Images here
-            </Dropbox>
-            <HeaderContainer>
-              <SectionHeaderContainer>
-                <SectionHeader>Images</SectionHeader>
-              </SectionHeaderContainer>
-
-              {imageList.length > 0 && !isUploading && (
-                <RemoveAllButton
-                  type="button"
-                  onClick={() => {
-                    onImageRemoveAll();
-                    props.onDeleteAll();
-                  }}
-                >
-                  Delete All
-                </RemoveAllButton>
-              )}
-            </HeaderContainer>
-            <ImageUploadErrorContainer
-              errorStrings={errorStrings}
-              onClose={() => setErrorStrings([])}
-            />
-            <Lightbox images={imageList} />
-            {isUploading ? (
-              <Loader />
-            ) : (
-              <FlexContainer>
-                {imageList.map((image: ImageType, index) => (
-                  <Image
-                    key={image.key}
-                    image={image}
-                    onClick={() => openLightbox(index)}
-                    onEdit={() => {
-                      onImageUpdate(index);
-                      props.onImageEdit(index);
-                    }}
-                    onDelete={() => {
-                      onImageRemove(index);
-                      props.onImageDelete(index);
-                    }}
-                  />
-                ))}
-                <AddImageButton
-                  {...dragProps}
-                  type="button"
-                  onClick={onImageUpload}
-                >
-                  <AddImageHeader>Add Images</AddImageHeader>
-                  <AddImageSubHeader>
-                    or drop images to upload
-                  </AddImageSubHeader>
-                </AddImageButton>
-              </FlexContainer>
+    <ImageUploading
+      onChange={onChange}
+      maxNumber={MAX_NUMBER}
+      multiple
+      maxFileSize={MAX_MB_FILESIZE}
+      acceptType={ACCEPT_TYPES}
+      onError={onError}
+      value={images}
+    >
+      {({
+        imageList,
+        onImageUpload,
+        onImageRemoveAll,
+        onImageUpdate,
+        onImageRemove,
+        dragProps,
+      }) => (
+        <div>
+          <HeaderContainer>
+            <SectionHeaderContainer>
+              <SectionHeader>Images</SectionHeader>
+            </SectionHeaderContainer>
+            {imageList.length > 0 && !isUploading && (
+              <RemoveAllButton
+                type="button"
+                onClick={() => {
+                  onImageRemoveAll();
+                  props.onDeleteAll();
+                }}
+              >
+                Delete All
+              </RemoveAllButton>
             )}
-          </div>
-        )}
-      </ImageUploading>
-    </SectionCard>
+          </HeaderContainer>
+          <ImageUploadErrorContainer
+            errorStrings={errorStrings}
+            onClose={() => setErrorStrings([])}
+          />
+          <Lightbox images={imageList} />
+          {isUploading ? (
+            <Loader />
+          ) : (
+            <FlexContainer>
+              {imageList.map((image: ImageType, index) => (
+                <Image
+                  key={image.key}
+                  image={image}
+                  onClick={() => openLightbox(index)}
+                  onEdit={() => {
+                    onImageUpdate(index);
+                    props.onImageEdit(index);
+                  }}
+                  onDelete={() => {
+                    onImageRemove(index);
+                    props.onImageDelete(index);
+                  }}
+                />
+              ))}
+              <AddImageButton
+                {...dragProps}
+                type="button"
+                onClick={onImageUpload}
+              >
+                <AddImageHeader>Add Images</AddImageHeader>
+                <AddImageSubHeader>or drop images to upload</AddImageSubHeader>
+              </AddImageButton>
+            </FlexContainer>
+          )}
+        </div>
+      )}
+    </ImageUploading>
   );
 };
 
