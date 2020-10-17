@@ -6,13 +6,12 @@ import PageHeader from "components/PageHeader";
 import WithAuth from "components/WithAuth";
 import { useRouter } from "next/router";
 import SkuList from "components/SkuList";
-import { Formik, Form } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import SkuProductInfo from "components/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/atoms/SectionHeader";
 import SectionCard from "components/SectionCard";
-import ImageUploader from "components/ImageUploader";
-import { ProductDetailInterface } from "types/product";
+import { EditImageInterface, ProductDetailInterface } from "types/product";
 import _ from "lodash";
 import FieldSelect from "components/FieldSelect";
 import FieldEcosystemMultiInput from "components/FieldEcosystemMultiInput";
@@ -28,6 +27,9 @@ import SkuInventoryInputContainer from "components/SkuInventoryInputContainer";
 import SkuPricingInputContainer from "components/SkuPricingInputContainer";
 import FieldNumInput from "components/FieldNumInput";
 import FieldPercentageInput from "components/FieldPercentageInput";
+import ValidationErrorMsg from "components/ValidationErrorMsg";
+import { getProductImageUrl } from "utils/url";
+import ImageUploader from "components/ImageUploader";
 
 interface DispatchProps {
   updateSku: (sku: UpdateSkuInterface) => void;
@@ -36,6 +38,17 @@ interface DispatchProps {
 type SkuProps = DispatchProps;
 
 const validationSchema = Yup.object({
+  images: Yup.array()
+    .of(
+      Yup.object({
+        dataURL: Yup.string(),
+        url: Yup.string(),
+        isUploading: Yup.boolean(),
+        isUploadSuccess: Yup.boolean(),
+      }).defined()
+    )
+    .defined()
+    .min(1),
   specialDiscount: Yup.number().required(),
   specialDiscountPercentage: Yup.number().required().max(100),
   skuDetailId: Yup.number().required().defined(),
@@ -109,7 +122,12 @@ const Sku = (props: SkuProps): JSX.Element => {
   const attributes = product.attributeValues;
 
   const handleSubmit = (values: InputInterface) => {
-    props.updateSku(values);
+    const imageUrl = values.images.map((image) => image.url);
+    const filteredValues = _.omit(values, "images");
+    props.updateSku({
+      ...filteredValues,
+      imageRelativePaths: imageUrl as string[],
+    });
   };
 
   return (
@@ -136,6 +154,14 @@ const Sku = (props: SkuProps): JSX.Element => {
         <div className="formContainer">
           <Formik
             initialValues={{
+              images: currentSku.imageRelativePaths.map((imageRelativePath) => {
+                return {
+                  dataURL: getProductImageUrl(imageRelativePath),
+                  url: imageRelativePath,
+                  isUploading: false,
+                  isUploadSuccess: true,
+                };
+              }),
               skuDetailId: currentSku.skuDetailId,
               price: currentSku.price,
               boughtPrice: currentSku.boughtPrice,
@@ -171,7 +197,7 @@ const Sku = (props: SkuProps): JSX.Element => {
             enableReinitialize={true}
             onSubmit={handleSubmit}
           >
-            {() => (
+            {({ setFieldValue, values }) => (
               <Form>
                 <FlexColumnContainer>
                   <SectionCard>
@@ -190,7 +216,16 @@ const Sku = (props: SkuProps): JSX.Element => {
                       </Fragment>
                     ))}
                   </SectionCard>
-                  {/* <ImageUploader /> */}
+                  <SectionCard>
+                    <ImageUploader
+                      value={values.images as EditImageInterface[]}
+                      onChange={(value) => setFieldValue("images", value)}
+                    />
+                  </SectionCard>
+                  <ErrorMessage
+                    component={ValidationErrorMsg}
+                    name={"images"}
+                  />
                   <SkuPricingInputContainer />
                   <SectionCard>
                     <SectionHeader>Special Discount</SectionHeader>
@@ -216,7 +251,12 @@ const Sku = (props: SkuProps): JSX.Element => {
                   </SectionCard>
                   <SkuDimensionsInputContainer />
                 </FlexColumnContainer>
-                <Button isSubmitButton={true}>Save</Button>
+                <Button
+                  disabled={values.images.some((image) => image.isUploading)}
+                  isSubmitButton={true}
+                >
+                  Save
+                </Button>
               </Form>
             )}
           </Formik>

@@ -37,6 +37,7 @@ export interface AttributeValueID {
 }
 
 export interface UpdateSkuInterface {
+  imageRelativePaths:string[];
   skuDetailId: number;
   price: number;
   boughtPrice: number;

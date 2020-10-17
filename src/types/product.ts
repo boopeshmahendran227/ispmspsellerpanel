@@ -9,6 +9,7 @@ import {
   CLONE_PRODUCT,
   UPDATE_TIER_PRICE_REQUEST,
 } from "../constants/ActionTypes";
+import { ImageType } from "react-images-uploading";
 
 interface AddAttributeAction {
   type: typeof ADD_ATTRIBUTE_REQUEST;
@@ -214,6 +215,12 @@ export interface SelectedAttributeValuesMap {
   [key: number]: AttributeValueInterface[];
 }
 
+export interface EditImageInterface extends ImageType {
+  url: string | null;
+  isUploading: boolean;
+  isUploadSuccess: boolean;
+}
+
 export interface ProductSkuDetail {
   skuId: string;
   price: number;
@@ -229,6 +236,7 @@ export interface ProductSkuDetail {
   externalId: string | null;
   specialDiscount: number;
   specialDiscountPercentage: number;
+  images: EditImageInterface[];
 }
 
 export interface ProductAttributeValueId {
@@ -291,40 +299,51 @@ export const ProductSchema = Yup.object().shape({
     .moreThan(Yup.ref("minPrice"), "Max price must be greater than min price"),
   skus: Yup.array()
     .of(
-      Yup.object().shape({
-        skuId: Yup.string().required(),
-        price: Yup.number()
-          .typeError("Price must be a number")
-          .positive("Price must be greater than 0")
-          .required(),
-        boughtPrice: Yup.number()
-          .typeError("Bought Price must be a number")
-          .positive("Bought Price must be greater than 0")
-          .required(),
-        qty: Yup.number()
-          .typeError("Qty must be a number")
-          .positive("Qty must be greater than 0")
-          .required(),
-        length: Yup.number().nullable(),
-        width: Yup.number().nullable(),
-        height: Yup.number().nullable(),
-        weight: Yup.number().nullable(),
-        barCodeIdentifier: Yup.string().nullable(),
-        externalId: Yup.string().nullable(),
-        specialDiscount: Yup.number().lessThan(
-          Yup.ref("price"),
-          "Discount must be less than price."
-        ),
-        specialDiscountPercentage: Yup.number()
-          .max(100)
-          .typeError(
-            "Special discount percentage must be less than or equal to 100"
+      Yup.object()
+        .shape({
+          skuId: Yup.string().required(),
+          price: Yup.number()
+            .typeError("Price must be a number")
+            .positive("Price must be greater than 0")
+            .required(),
+          boughtPrice: Yup.number()
+            .typeError("Bought Price must be a number")
+            .positive("Bought Price must be greater than 0")
+            .required(),
+          qty: Yup.number()
+            .typeError("Qty must be a number")
+            .positive("Qty must be greater than 0")
+            .required(),
+          length: Yup.number().nullable(),
+          width: Yup.number().nullable(),
+          height: Yup.number().nullable(),
+          weight: Yup.number().nullable(),
+          barCodeIdentifier: Yup.string().nullable(),
+          externalId: Yup.string().nullable(),
+          specialDiscount: Yup.number().lessThan(
+            Yup.ref("price"),
+            "Discount must be less than price."
           ),
-        imageRelativePaths: Yup.array()
-          .of(Yup.string())
-          .min(1, "Each sku should contain atleast one image"),
-      })
+          specialDiscountPercentage: Yup.number()
+            .max(100)
+            .typeError(
+              "Special discount percentage must be less than or equal to 100"
+            ),
+          images: Yup.array()
+            .of(
+              Yup.object({
+                dataURL: Yup.string(),
+                index: Yup.number(),
+                url: Yup.string(),
+              }).defined()
+            )
+            .defined()
+            .min(1, "Each sku should contain atleast one image")
+            .required(),
+        })
+        .defined()
     )
+    .defined()
     .min(1, "Atlease one sku is required"),
   tierPrices: Yup.array().of(
     Yup.object().shape({
