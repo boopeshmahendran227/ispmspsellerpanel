@@ -42,6 +42,7 @@ const getSkus = createSelector(
           qty: 0,
           attributeValueIds,
           imageRelativePaths: [],
+          images: [],
           length: null,
           width: null,
           height: null,

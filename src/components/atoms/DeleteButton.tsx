@@ -14,7 +14,7 @@ const DeleteButton = (props: DeleteButtonProps): JSX.Element => {
   };
 
   return (
-    <button onClick={onClick}>
+    <button onClick={onClick} type="button">
       <Trash2
         color={props.color ?? CSSConstants.dangerColor}
         size={props.size}
