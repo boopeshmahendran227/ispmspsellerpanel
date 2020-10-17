@@ -13,7 +13,7 @@ import {
 import { RootState } from "../../src/reducers";
 import ProductActions from "actions/product";
 import { connect } from "react-redux";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import useSWR from "swr";
 import Loader from "components/Loader";
 import AttributeModal from "components/AttributeModal";
@@ -38,6 +38,10 @@ import Checkbox from "components/atoms/Checkbox";
 import { CategoryInterface } from "types/category";
 import AddImageInput from "components/ProductSkusImageUploader";
 import _ from "lodash";
+import SectionCard from "components/SectionCard";
+import SectionHeader from "components/atoms/SectionHeader";
+import ImageUploader from "components/ImageUploader";
+import ValidationErrorMsg from "components/ValidationErrorMsg";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -222,18 +226,35 @@ const AddProduct = (props: AddProductProps) => {
                 />
               </div>
               <SkuInputTable />
-              <AddImageInput
-                skus={values.skus}
-                setFieldValue={(index, values) =>
-                  setFieldValue(
-                    index,
-                    values.map((value) => value)
-                  )
-                }
-                onImageDelete={(index, value) => setFieldValue(index, value)}
-                onImageEdit={(index, value) => setFieldValue(index, value)}
-                onImageDeleteAll={(index, value) => setFieldValue(index, value)}
-              />
+              <AddImageInput />
+              {values.skus.map((sku, index) => (
+                <div className="imageUploadContainer">
+                  <SectionCard>
+                    <SectionHeader>
+                      SKU Id: {sku.skuId}(
+                      {sku.attributeValueIds
+                        .map(
+                          (attributeValueId) =>
+                            attributeValueId.attributeName +
+                            ":" +
+                            attributeValueId.value
+                        )
+                        .join(", ")}
+                      )
+                    </SectionHeader>
+                    <ImageUploader
+                      value={values.skus[index].images}
+                      onChange={(images) => {
+                        setFieldValue(`skus.${index}.images`, images);
+                      }}
+                    />
+                    <ErrorMessage
+                      component={ValidationErrorMsg}
+                      name={`skus.${index}.images`}
+                    />
+                  </SectionCard>
+                </div>
+              ))}
               <TierPriceInput />
               <FAQInput />
               <SpecificationInput />
@@ -278,6 +299,9 @@ const AddProduct = (props: AddProductProps) => {
         .buttonContainer {
           text-align: center;
           font-size: 1.2rem;
+          margin-bottom: 1em;
+        }
+        .imageUploadContainer {
           margin-bottom: 1em;
         }
       `}</style>

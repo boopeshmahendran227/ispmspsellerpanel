@@ -9,6 +9,7 @@ import {
   CLONE_PRODUCT,
   UPDATE_TIER_PRICE_REQUEST,
 } from "../constants/ActionTypes";
+import { ImageType } from "react-images-uploading";
 
 interface AddAttributeAction {
   type: typeof ADD_ATTRIBUTE_REQUEST;
@@ -214,6 +215,12 @@ export interface SelectedAttributeValuesMap {
   [key: number]: AttributeValueInterface[];
 }
 
+export interface EditImageInterface extends ImageType {
+  url: string;
+  isUploading: boolean;
+  isUploadSuccess: boolean;
+}
+
 export interface ProductSkuDetail {
   skuId: string;
   price: number;
@@ -221,7 +228,6 @@ export interface ProductSkuDetail {
   qty: number;
   attributeValueIds: ProductAttributeValueId[];
   imageRelativePaths: string[];
-  images?: { dataURL: string; index: number; url: string }[];
   length: number | null;
   width: number | null;
   height: number | null;
@@ -230,6 +236,7 @@ export interface ProductSkuDetail {
   externalId: string | null;
   specialDiscount: number;
   specialDiscountPercentage: number;
+  images: EditImageInterface[];
 }
 
 export interface ProductAttributeValueId {

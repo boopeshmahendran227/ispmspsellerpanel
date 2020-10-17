@@ -11,7 +11,6 @@ import SkuProductInfo from "components/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/atoms/SectionHeader";
 import SectionCard from "components/SectionCard";
-import ImageUploader from "components/ImageUploader";
 import { ProductDetailInterface } from "types/product";
 import _ from "lodash";
 import FieldSelect from "components/FieldSelect";
@@ -30,7 +29,7 @@ import FieldNumInput from "components/FieldNumInput";
 import FieldPercentageInput from "components/FieldPercentageInput";
 import ValidationErrorMsg from "components/ValidationErrorMsg";
 import { getProductImageUrl } from "utils/url";
-import SkuImageUploader from "components/SkuImageUploader";
+import ImageUploader from "components/ImageUploader";
 
 interface DispatchProps {
   updateSku: (sku: UpdateSkuInterface) => void;
@@ -153,15 +152,14 @@ const Sku = (props: SkuProps): JSX.Element => {
         <div className="formContainer">
           <Formik
             initialValues={{
-              images: currentSku.imageRelativePaths.map(
-                (imageRelativePath, index) => {
-                  return {
-                    index: index,
-                    dataURL: getProductImageUrl(imageRelativePath),
-                    url: imageRelativePath,
-                  };
-                }
-              ),
+              images: currentSku.imageRelativePaths.map((imageRelativePath) => {
+                return {
+                  dataURL: getProductImageUrl(imageRelativePath),
+                  url: imageRelativePath,
+                  isUploading: false,
+                  isUploadSuccess: true,
+                };
+              }),
               skuDetailId: currentSku.skuDetailId,
               price: currentSku.price,
               boughtPrice: currentSku.boughtPrice,
@@ -216,14 +214,12 @@ const Sku = (props: SkuProps): JSX.Element => {
                       </Fragment>
                     ))}
                   </SectionCard>
-                  <SkuImageUploader
-                    initialValues={values.images}
-                    images={values.images}
-                    onImageAdd={(values) => setFieldValue("images", values)}
-                    onImageDelete={(value) => setFieldValue("images", value)}
-                    onImageEdit={(value) => setFieldValue("images", value)}
-                    onImageDeleteAll={(value) => setFieldValue("images", value)}
-                  />
+                  <SectionCard>
+                    <ImageUploader
+                      value={values.images}
+                      onChange={(value) => setFieldValue("images", value)}
+                    />
+                  </SectionCard>
                   <ErrorMessage
                     component={ValidationErrorMsg}
                     name={"images"}

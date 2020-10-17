@@ -9,13 +9,14 @@ import DeleteButton from "./atoms/DeleteButton";
 import Lightbox from "./Lightbox";
 import { useLightbox } from "simple-react-lightbox";
 import { Maximize2 } from "react-feather";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ImageUploadErrorContainer from "./ImageUploadErrorContainer";
 import { ErrorsType } from "react-images-uploading";
 import SectionHeader from "./atoms/SectionHeader";
 import SectionHeaderContainer from "./atoms/SectionHeaderContainer";
 import api from "../../src/api";
 import Loader from "components/Loader";
+import { EditImageInterface } from "types/product";
 
 const MAX_NUMBER = 10;
 const MAX_MB_FILESIZE = 5 * 1024 * 1024; // 5Mb
@@ -105,6 +106,18 @@ const ExpandIconContainer = styled.div`
   color: white;
 `;
 
+const LoadingOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const ButtonContainer = styled.div`
   padding: 0.5em 0;
 `;
@@ -121,6 +134,11 @@ const Image = (props: ImageProps): JSX.Element => {
   return (
     <ImageContainer onClick={() => props.onClick(image.dataURL as string)}>
       <StyledImg src={image.dataURL} />
+      {image.isUploading && (
+        <LoadingOverlay>
+          <Loader />
+        </LoadingOverlay>
+      )}
       <StyledImageOverlay>
         <ButtonContainer>
           <EditButton onClick={props.onEdit} color="#fff" size="1.2rem" />
@@ -147,65 +165,75 @@ const HeaderContainer = styled.div`
   margin-bottom: 1.2em;
 `;
 
-const Container = styled.div`
-  width: 820px;
-  margin: 2em auto;
-  padding: 1em;
-  border: 1px solid #f0f0f0;
-  position: relative;
-`;
-
 interface ImageUploadInterface {
-  setFieldValue: (addUpdateIndex: number, images, res) => void;
-  onImageEdit: (addUpdateIndex: number) => void;
-  onImageDelete: (imageList) => void;
-  onDeleteAll: () => void;
-  setInitialValue: { dataURL: string }[] | [];
+  value: EditImageInterface[];
+  onChange: (images: EditImageInterface[]) => void;
 }
 
 type ImageUploaderProps = ImageUploadInterface;
 
 const ImageUploader = (props: ImageUploaderProps): JSX.Element => {
-  const [images, setImages] = useState(props.setInitialValue);
-  const [isUploading, setIsUploading] = useState(false);
-  useEffect(() => {
-    setImages(props.setInitialValue);
-  }, props.setInitialValue);
-
-  const imageUpload = async (images: ImageListType, addUpdateIndex) => {
-    const formData = new FormData();
-
-    formData.append("file", images[addUpdateIndex[0]].file as File);
-
-    const res = await api("/users/image/mpl", {
-      method: "POST",
-      data: formData,
-      headers: { "content-Type": "multipart/form-data" },
-    });
-
-    return res;
-  };
+  const { value } = props;
 
   const onChange = async (
     imageList: ImageListType,
     addUpdateIndex: number[] | undefined
   ) => {
     setErrorStrings([]);
-    setImages(imageList as never[]);
 
-    if (imageList.length === 0) {
-      return;
-    }
     if (!addUpdateIndex) {
+      props.onChange(imageList as EditImageInterface[]);
       return;
     }
 
-    if (imageList.length > 0) {
-      setIsUploading(true);
-      const res = await imageUpload(imageList, addUpdateIndex);
-      props.setFieldValue(addUpdateIndex[0], imageList, res);
-      setIsUploading(false);
-    }
+    let newImagesList;
+
+    newImagesList = [...value];
+    addUpdateIndex.forEach((index) => {
+      newImagesList[index] = {
+        ...imageList[index],
+        isUploading: true,
+        isUploadSuccess: false,
+      };
+    });
+    props.onChange(newImagesList as EditImageInterface[]);
+
+    const results = await Promise.all(
+      addUpdateIndex.map(async (index) => {
+        const formData = new FormData();
+
+        formData.append("file", imageList[index].file as File);
+
+        return api("/users/image/mpl", {
+          method: "POST",
+          data: formData,
+          headers: { "content-Type": "multipart/form-data" },
+        })
+          .then((url) => {
+            return {
+              url,
+              isSuccess: true,
+            };
+          })
+          .catch(() => {
+            return {
+              url: null,
+              isSuccess: false,
+            };
+          });
+      })
+    );
+
+    newImagesList = [...value];
+    addUpdateIndex.forEach((updatedIndex, index) => {
+      newImagesList[updatedIndex] = {
+        ...imageList[updatedIndex],
+        url: results[index].url,
+        isUploading: false,
+        isUploadSuccess: results[index].isSuccess,
+      };
+    });
+    props.onChange(newImagesList as EditImageInterface[]);
   };
 
   const onError = (errors: ErrorsType) => {
@@ -251,7 +279,7 @@ const ImageUploader = (props: ImageUploaderProps): JSX.Element => {
       maxFileSize={MAX_MB_FILESIZE}
       acceptType={ACCEPT_TYPES}
       onError={onError}
-      value={images}
+      value={props.value}
     >
       {({
         imageList,
@@ -266,12 +294,11 @@ const ImageUploader = (props: ImageUploaderProps): JSX.Element => {
             <SectionHeaderContainer>
               <SectionHeader>Images</SectionHeader>
             </SectionHeaderContainer>
-            {imageList.length > 0 && !isUploading && (
+            {imageList.length > 0 && (
               <RemoveAllButton
                 type="button"
                 onClick={() => {
                   onImageRemoveAll();
-                  props.onDeleteAll();
                 }}
               >
                 Delete All
@@ -283,35 +310,29 @@ const ImageUploader = (props: ImageUploaderProps): JSX.Element => {
             onClose={() => setErrorStrings([])}
           />
           <Lightbox images={imageList} />
-          {isUploading ? (
-            <Loader />
-          ) : (
-            <FlexContainer>
-              {imageList.map((image: ImageType, index) => (
-                <Image
-                  key={image.key}
-                  image={image}
-                  onClick={() => openLightbox(index)}
-                  onEdit={() => {
-                    onImageUpdate(index);
-                    props.onImageEdit(index);
-                  }}
-                  onDelete={() => {
-                    onImageRemove(index);
-                    props.onImageDelete(index);
-                  }}
-                />
-              ))}
-              <AddImageButton
-                {...dragProps}
-                type="button"
-                onClick={onImageUpload}
-              >
-                <AddImageHeader>Add Images</AddImageHeader>
-                <AddImageSubHeader>or drop images to upload</AddImageSubHeader>
-              </AddImageButton>
-            </FlexContainer>
-          )}
+          <FlexContainer>
+            {imageList.map((image: EditImageInterface, index) => (
+              <Image
+                key={image.key}
+                image={image}
+                onClick={() => openLightbox(index)}
+                onEdit={() => {
+                  onImageUpdate(index);
+                }}
+                onDelete={() => {
+                  onImageRemove(index);
+                }}
+              />
+            ))}
+            <AddImageButton
+              {...dragProps}
+              type="button"
+              onClick={onImageUpload}
+            >
+              <AddImageHeader>Add Images</AddImageHeader>
+              <AddImageSubHeader>or drop images to upload</AddImageSubHeader>
+            </AddImageButton>
+          </FlexContainer>
         </div>
       )}
     </ImageUploading>

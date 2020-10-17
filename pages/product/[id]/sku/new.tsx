@@ -30,7 +30,6 @@ import FieldPercentageInput from "components/FieldPercentageInput";
 import ImageUploader from "components/ImageUploader";
 import ValidationErrorMsg from "components/ValidationErrorMsg";
 import { getProductImageUrl } from "utils/url";
-import SkuImageUploader from "components/SkuImageUploader";
 
 interface DispatchProps {
   addSku: (sku: AddSkuInterface) => void;
@@ -176,11 +175,12 @@ const Sku = (props: SkuProps) => {
               skuToCopyFrom
                 ? {
                     images: skuToCopyFrom.imageRelativePaths.map(
-                      (imageRelativePath, index) => {
+                      (imageRelativePath) => {
                         return {
-                          index: index,
                           dataURL: getProductImageUrl(imageRelativePath),
                           url: imageRelativePath,
+                          isUploading: false,
+                          isUploadSuccess: true,
                         };
                       }
                     ),
@@ -270,14 +270,12 @@ const Sku = (props: SkuProps) => {
                       </>
                     ))}
                   </SectionCard>
-                  <SkuImageUploader
-                    initialValues={skuIdToCopyFrom ? values.images : []}
-                    images={values.images}
-                    onImageAdd={(values) => setFieldValue("images", values)}
-                    onImageDelete={(value) => setFieldValue("images", value)}
-                    onImageEdit={(value) => setFieldValue("images", value)}
-                    onImageDeleteAll={(value) => setFieldValue("images", value)}
-                  />
+                  <SectionCard>
+                    <ImageUploader
+                      value={values.images}
+                      onChange={(images) => setFieldValue("images", images)}
+                    />
+                  </SectionCard>
                   <ErrorMessage
                     component={ValidationErrorMsg}
                     name={"images"}
