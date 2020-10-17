@@ -257,10 +257,19 @@ const AddProduct = (props: AddProductProps) => {
               <FAQInput />
               <SpecificationInput />
               <div className="buttonContainer">
-                <Button type={ButtonType.success} isSubmitButton={true}>
+                <Button
+                  disabled={values.skus.some((sku) =>
+                    sku.images.some((image) => image.isUploading)
+                  )}
+                  type={ButtonType.success}
+                  isSubmitButton={true}
+                >
                   Submit
                 </Button>
                 <Button
+                  disabled={values.skus.some((sku) =>
+                    sku.images.some((image) => image.isUploading)
+                  )}
                   onClick={resetForm}
                   type={ButtonType.success}
                   outlined={true}
