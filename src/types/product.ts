@@ -216,7 +216,7 @@ export interface SelectedAttributeValuesMap {
 }
 
 export interface EditImageInterface extends ImageType {
-  url: string;
+  url: string | null;
   isUploading: boolean;
   isUploadSuccess: boolean;
 }

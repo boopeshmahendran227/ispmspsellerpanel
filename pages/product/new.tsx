@@ -36,7 +36,6 @@ import FAQInput from "components/FAQInput";
 import TierPriceInput from "components/TierpriceInput";
 import Checkbox from "components/atoms/Checkbox";
 import { CategoryInterface } from "types/category";
-import AddImageInput from "components/ProductSkusImageUploader";
 import _ from "lodash";
 import SectionCard from "components/SectionCard";
 import SectionHeader from "components/atoms/SectionHeader";
@@ -226,7 +225,6 @@ const AddProduct = (props: AddProductProps) => {
                 />
               </div>
               <SkuInputTable />
-              <AddImageInput />
               {values.skus.map((sku, index) => (
                 <div className="imageUploadContainer">
                   <SectionCard>

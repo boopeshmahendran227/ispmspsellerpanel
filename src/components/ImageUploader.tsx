@@ -175,6 +175,22 @@ type ImageUploaderProps = ImageUploadInterface;
 const ImageUploader = (props: ImageUploaderProps): JSX.Element => {
   const { value } = props;
 
+  const setInitUploadState = (
+    imageList: ImageListType,
+    addUpdateIndex: number[]
+  ) => {
+    const newImagesList = [...value];
+    addUpdateIndex.forEach((index) => {
+      newImagesList[index] = {
+        ...imageList[index],
+        url: null,
+        isUploading: true,
+        isUploadSuccess: false,
+      };
+    });
+    props.onChange(newImagesList as EditImageInterface[]);
+  };
+
   const onChange = async (
     imageList: ImageListType,
     addUpdateIndex: number[] | undefined
@@ -186,17 +202,7 @@ const ImageUploader = (props: ImageUploaderProps): JSX.Element => {
       return;
     }
 
-    let newImagesList;
-
-    newImagesList = [...value];
-    addUpdateIndex.forEach((index) => {
-      newImagesList[index] = {
-        ...imageList[index],
-        isUploading: true,
-        isUploadSuccess: false,
-      };
-    });
-    props.onChange(newImagesList as EditImageInterface[]);
+    setInitUploadState(imageList, addUpdateIndex);
 
     const results = await Promise.all(
       addUpdateIndex.map(async (index) => {
@@ -224,7 +230,8 @@ const ImageUploader = (props: ImageUploaderProps): JSX.Element => {
       })
     );
 
-    newImagesList = [...value];
+    // Set url and status after upload
+    const newImagesList = [...value];
     addUpdateIndex.forEach((updatedIndex, index) => {
       newImagesList[updatedIndex] = {
         ...imageList[updatedIndex],
