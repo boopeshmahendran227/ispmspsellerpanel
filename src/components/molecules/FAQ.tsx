@@ -1,13 +1,9 @@
 import { FAQInterface } from "../../types/product";
 import SectionCard from "../atoms/SectionCard";
 import SectionHeader from "components/atoms/SectionHeader";
-import styled from "styled-components";
 import SectionHeaderContainer from "components/atoms/SectionHeaderContainer";
 import { Box, PseudoBox } from "@chakra-ui/core";
 
-// const QAContainer = styled.div`
-//   margin: 0.6em 0;
-// `;
 
 const Question = (props) => (
   <PseudoBox my={2} fontWeight="bold" _before={{ content: "Q: " }}>

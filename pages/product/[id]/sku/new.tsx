@@ -251,16 +251,16 @@ const Sku = (props: SkuProps) => {
                     </SectionCard>
                   </Box>
                   <Box>
-                  <SectionCard>
-                    <ImageUploader
-                      value={values.images as EditImageInterface[]}
-                      onChange={(images) => setFieldValue("images", images)}
+                    <SectionCard>
+                      <ImageUploader
+                        value={values.images as EditImageInterface[]}
+                        onChange={(images) => setFieldValue("images", images)}
+                      />
+                    </SectionCard>
+                    <ErrorMessage
+                      component={ValidationErrorMsg}
+                      name={"images"}
                     />
-                  </SectionCard>
-                  <ErrorMessage
-                    component={ValidationErrorMsg}
-                    name={"images"}
-                  />
                   </Box>
                   <Box>
                     <SkuPricingInputContainer />
@@ -300,7 +300,9 @@ const Sku = (props: SkuProps) => {
                     (image) => image.isUploading === true
                   )}
                   isSubmitButton={true}
-                >Save</Button>
+                >
+                  Save
+                </Button>
               </Form>
             )}
           </Formik>
@@ -317,8 +319,3 @@ const mapDispatchToProps: DispatchProps = {
 export default WithAuth(
   connect<null, DispatchProps>(null, mapDispatchToProps)(Sku)
 );
-
-
-
-
-                

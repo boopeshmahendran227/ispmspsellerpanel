@@ -65,7 +65,7 @@ const AttributeModal = (props: AttributeModalProps) => {
       <ModalOverlay />
       <ModalContent borderRadius={10}>
         <ModalHeader>Create New Attribute</ModalHeader>
-        <ModalCloseButton />{" "}
+        <ModalCloseButton />
         <ModalBody>
           <Formik
             initialValues={{

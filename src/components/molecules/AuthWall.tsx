@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Logo from "../atoms/Logo";
 import { LoginState } from "../../types/login";
 import Loader from "../atoms/Loader";
-import classNames from "classnames";
+import { Flex, Box } from "@chakra-ui/core";
 
 interface StateProps {
   loginState: LoginState;
@@ -15,57 +15,33 @@ type AuthWallProps = StateProps;
 const AuthWall = (props: AuthWallProps) => {
   const { loginState } = props;
 
-  const classes = classNames({
-    container: true,
-    show: loginState !== LoginState.LoggedIn,
-  });
-
   return (
-    <div className={classes}>
-      <section className="centerContainer">
-        <div className="logoContainer">
+    <Flex
+      position="fixed"
+      top={0}
+      left={0}
+      height="full"
+      width="full"
+      alignItems="center"
+      justify="center"
+      bg="white"
+      zIndex={1001}
+      transform={
+        loginState !== LoginState.LoggedIn
+          ? "translateY(0%)"
+          : "translateY(-102%)"
+      }
+      pointerEvents="none"
+      transition="transform 0.23s cubic-bezier(0, 0, 0.3, 1)"
+    >
+      <Box className="centerContainer">
+        <Box py={2} px={0}>
           <Logo />
-        </div>
+        </Box>
         <Loader height="auto" />
-        <div className="text">Checking Authentication...</div>
-      </section>
-      <style jsx>{`
-        .container {
-          position: fixed;
-          top: 0;
-          left: 0;
-          height: 100%;
-          width: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: white;
-          z-index: 10001;
-          transform: translateY(-102%);
-          pointer-events: none;
-          transition: transform 0.23s cubic-bezier(0, 0, 0.3, 1);
-        }
-        .container.show {
-          transform: translateY(0%);
-        }
-        .logoContainer {
-          padding: 0.7em 0;
-        }
-        .text {
-          font-family:"Lato";
-          text-align: center;
-          font-size: 1.5rem;
-          padding: 0.4em 0;
-          color: #202649;
-         
-        }
-        @media print {
-          .container {
-            display: none;
-          }
-        }
-      `}</style>
-    </div>
+        <Box fontSize={["sm", "lg"]}>Checking Authentication...</Box>
+      </Box>
+    </Flex>
   );
 };
 
