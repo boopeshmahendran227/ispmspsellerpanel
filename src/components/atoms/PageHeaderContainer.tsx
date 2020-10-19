@@ -5,7 +5,7 @@ interface PageHeaderContainerProps {
 }
 
 const PageHeaderContainer = styled.div<PageHeaderContainerProps>`
-  padding: 0.3em 0.2em;
+  padding: 0.2em 0.2em;
   display: flex;
   justify-content: space-between;
   align-items: center;
