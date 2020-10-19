@@ -25,7 +25,7 @@ const Products = () => {
   const [searchText, setSearchText] = useState("");
   const [selectedEcosystemId, setSelectedEcosystemId] = useState("");
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
-  const [showOnlySelf, setShowOnlySelf] = useState(false);
+  const [showOnlySelf, setShowOnlySelf] = useState(true);
 
   const params = useMemo(
     () => ({
