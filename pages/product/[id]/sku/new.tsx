@@ -11,7 +11,7 @@ import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/atoms/SectionHeader";
 import SectionCard from "components/SectionCard";
 import _ from "lodash";
-import { ProductDetailInterface } from "types/product";
+import { EditImageInterface, ProductDetailInterface } from "types/product";
 import FieldSelect from "components/FieldSelect";
 import { AddSkuInterface } from "types/sku";
 import * as Yup from "yup";
@@ -41,13 +41,13 @@ const validationSchema = Yup.object({
   images: Yup.array()
     .of(
       Yup.object({
-        index: Yup.number(),
-        isUploaded: Yup.boolean(),
         url: Yup.string(),
-        name: Yup.string(),
+        isUploading: Yup.boolean(),
+        isUploadSuccess: Yup.boolean(),
       }).defined()
     )
-    .defined(),
+    .defined()
+    .min(1),
   specialDiscount: Yup.number(),
   specialDiscountPercentage: Yup.number().max(100),
   skuId: Yup.string().required(),
@@ -138,7 +138,7 @@ const Sku = (props: SkuProps) => {
 
     props.addSku({
       ...filteredValues,
-      imageRelativePaths: imageUrls,
+      imageRelativePaths: imageUrls as string[],
       productId: product.id,
       attributeValueIds: filteredValues.attributes.map((attribute) => ({
         attributeId: attribute.attributeId,
@@ -272,7 +272,7 @@ const Sku = (props: SkuProps) => {
                   </SectionCard>
                   <SectionCard>
                     <ImageUploader
-                      value={values.images}
+                      value={values.images as EditImageInterface[]}
                       onChange={(images) => setFieldValue("images", images)}
                     />
                   </SectionCard>
@@ -305,7 +305,14 @@ const Sku = (props: SkuProps) => {
                   </SectionCard>
                   <SkuDimensionsInputContainer />
                 </FlexColumnContainer>
-                <Button isSubmitButton={true}>Save</Button>
+                <Button
+                  disabled={values.images.some(
+                    (image) => image.isUploading === true
+                  )}
+                  isSubmitButton={true}
+                >
+                  Save
+                </Button>
               </Form>
             )}
           </Formik>

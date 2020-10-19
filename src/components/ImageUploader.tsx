@@ -8,7 +8,7 @@ import EditButton from "./atoms/EditButton";
 import DeleteButton from "./atoms/DeleteButton";
 import Lightbox from "./Lightbox";
 import { useLightbox } from "simple-react-lightbox";
-import { Maximize2 } from "react-feather";
+import { Maximize2, AlertTriangle } from "react-feather";
 import { useState } from "react";
 import ImageUploadErrorContainer from "./ImageUploadErrorContainer";
 import { ErrorsType } from "react-images-uploading";
@@ -139,11 +139,18 @@ const Image = (props: ImageProps): JSX.Element => {
           <Loader />
         </LoadingOverlay>
       )}
+      {!image.isUploadSuccess && !image.isUploading && (
+        <LoadingOverlay>
+          <AlertTriangle />
+        </LoadingOverlay>
+      )}
       <StyledImageOverlay>
-        <ButtonContainer>
-          <EditButton onClick={props.onEdit} color="#fff" size="1.2rem" />
-          <DeleteButton onClick={props.onDelete} color="#fff" size="1.2rem" />
-        </ButtonContainer>
+        {!image.isUploading && (
+          <ButtonContainer>
+            <EditButton onClick={props.onEdit} color="#fff" size="1.2rem" />
+            <DeleteButton onClick={props.onDelete} color="#fff" size="1.2rem" />
+          </ButtonContainer>
+        )}
         <ExpandIconContainer>
           <Maximize2 />
         </ExpandIconContainer>

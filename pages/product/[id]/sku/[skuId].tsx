@@ -11,7 +11,7 @@ import SkuProductInfo from "components/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/atoms/SectionHeader";
 import SectionCard from "components/SectionCard";
-import { ProductDetailInterface } from "types/product";
+import { EditImageInterface, ProductDetailInterface } from "types/product";
 import _ from "lodash";
 import FieldSelect from "components/FieldSelect";
 import FieldEcosystemMultiInput from "components/FieldEcosystemMultiInput";
@@ -41,12 +41,14 @@ const validationSchema = Yup.object({
   images: Yup.array()
     .of(
       Yup.object({
-        index: Yup.number(),
         dataURL: Yup.string(),
         url: Yup.string(),
+        isUploading: Yup.boolean(),
+        isUploadSuccess: Yup.boolean(),
       }).defined()
     )
-    .defined(),
+    .defined()
+    .min(1),
   specialDiscount: Yup.number().required(),
   specialDiscountPercentage: Yup.number().required().max(100),
   skuDetailId: Yup.number().required().defined(),
@@ -124,7 +126,7 @@ const Sku = (props: SkuProps): JSX.Element => {
     const filteredValues = _.omit(values, "images");
     props.updateSku({
       ...filteredValues,
-      imageRelativePaths: imageUrl,
+      imageRelativePaths: imageUrl as string[],
     });
   };
 
@@ -216,7 +218,7 @@ const Sku = (props: SkuProps): JSX.Element => {
                   </SectionCard>
                   <SectionCard>
                     <ImageUploader
-                      value={values.images}
+                      value={values.images as EditImageInterface[]}
                       onChange={(value) => setFieldValue("images", value)}
                     />
                   </SectionCard>
@@ -249,7 +251,12 @@ const Sku = (props: SkuProps): JSX.Element => {
                   </SectionCard>
                   <SkuDimensionsInputContainer />
                 </FlexColumnContainer>
-                <Button isSubmitButton={true}>Save</Button>
+                <Button
+                  disabled={values.images.some((image) => image.isUploading)}
+                  isSubmitButton={true}
+                >
+                  Save
+                </Button>
               </Form>
             )}
           </Formik>
