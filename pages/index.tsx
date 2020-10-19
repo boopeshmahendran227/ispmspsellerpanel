@@ -28,7 +28,7 @@ const Home = (): JSX.Element => {
   const [period, setPeriod] = useState(filter[0]);
 
   return (
-    <Box my={[2]} mx={[2, 3]} maxW={["", "1400px"]}>
+    <Box my={[2]} mx={[2, 3]} maxW={"1400px"}>
       <QuickLinksContainer />
       <PageHeaderContainer>
         <PageHeader>Analytic Overview</PageHeader>
