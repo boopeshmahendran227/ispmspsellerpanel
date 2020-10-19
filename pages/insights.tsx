@@ -8,7 +8,6 @@ import moment from "moment";
 import { SummaryInterface } from "types/insights";
 import { formatPrice } from "utils/misc";
 import RoundedIcon from "components/atoms/RoundedIcon";
-import CSSConstants from "../src/constants/CSSConstants";
 import { Box, Heading, Stack } from "@chakra-ui/core";
 
 const startDate = moment().subtract(7, "days").startOf("day");
@@ -45,7 +44,7 @@ const Insight = () => {
                 icon={
                   <i className="fa fa-shopping-cart" aria-hidden="true"></i>
                 }
-                color={CSSConstants.secondaryColor}
+                color="secondaryColorVariant"
               />
             }
             value={summary.totalOrderCount}
@@ -57,7 +56,7 @@ const Insight = () => {
             icon={
               <RoundedIcon
                 icon={<i className="fas fa-users"></i>}
-                color={CSSConstants.dangerColor}
+                color="dangerColorVariant"
               />
             }
             value={summary.totalCustomers}
@@ -69,7 +68,7 @@ const Insight = () => {
             icon={
               <RoundedIcon
                 icon={<i className="fas fa-comments-dollar"></i>}
-                color={CSSConstants.warningColor}
+                color="warningColorVariant"
               />
             }
             value={summary.totalQuotes}
@@ -81,7 +80,7 @@ const Insight = () => {
             icon={
               <RoundedIcon
                 icon={<i className="fas fa-money-bill"></i>}
-                color={CSSConstants.successColor}
+                color="successColorVariant"
               />
             }
             value={formatPrice(summary.totalRevenue)}
@@ -93,7 +92,7 @@ const Insight = () => {
             icon={
               <RoundedIcon
                 icon={<i className="fas fa-store"></i>}
-                color={CSSConstants.primaryColor}
+                color="primaryColorVariant"
               />
             }
             value={ecosystemData.length}

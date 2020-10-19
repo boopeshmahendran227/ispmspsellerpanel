@@ -1,5 +1,4 @@
 import * as React from "react";
-import CSSConstants from "../../constants/CSSConstants";
 import { ShowroomVisitInterface } from "../../types/showroomVisit";
 import { convertTo12hour } from "utils/misc";
 import { getCustomerInfo } from "utils/customer";
@@ -13,16 +12,18 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
   const { showroomVisit } = props;
 
   return (
-    <Grid templateColumns="auto 1fr" gap={3} my={2}>
-      <Box
-        color="secondaryTextColor"
-        fontWeight="bold"
-        textAlign="center"
-        className="timing"
-      >
-        <div className="startTime">
-          {convertTo12hour(showroomVisit.startTime)}
-        </div>
+    <Grid templateColumns="auto 1fr" gap={3} my={1}>
+      <Box color="secondaryTextColor" fontWeight="bold" textAlign="center">
+        <Box>{convertTo12hour(showroomVisit.startTime)}</Box>
+        <Box
+          w={2}
+          h={2}
+          mx="auto"
+          border="2px"
+          borderRadius="full"
+          borderColor="primaryColor"
+        />
+
         <Divider
           bg="none"
           borderLeft="1px"
@@ -32,33 +33,43 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
           h={5}
           mx="auto"
           my={1}
+          w={0}
+          orientation="vertical"
         />
-        <div className="endTime">{convertTo12hour(showroomVisit.endTime)}</div>
+        <Box
+          w={2}
+          h={2}
+          mx="auto"
+          border="2px"
+          borderRadius="full"
+          borderColor="primaryColor"
+        />
+
+        <Box>{convertTo12hour(showroomVisit.endTime)}</Box>
       </Box>
       <Flex
-        py={3}
+        my={2}
         px={2}
         borderLeft="4px"
-        roundedTopLeft={3}
-        roundedBottomRight={3}
+        roundedRight="lg"
         borderColor="primaryColor"
         alignItems="center"
+        bg="lightPrimaryColorVariant.50"
       >
-        <Box className="info">
-          <Box className="customer">
-            <Box as="span" fontWeight="bold" className="customerName">
+        <Box>
+          <Box>
+            <Box as="span" fontWeight="bold">
               Customer {getCustomerInfo(showroomVisit)}
             </Box>{" "}
             has booked
             <br /> a visit for{" "}
-            <Box as="span" fontWeight="bold" className="showroomName">
+            <Box as="span" fontWeight="bold">
               {showroomVisit.showroomDetails.name}
             </Box>
           </Box>
         </Box>
         <Box
-          py={1}
-          px={3}
+          px={1}
           color={"primaryColor"}
           fontWeight="bold"
           textTransform="uppercase"
@@ -67,28 +78,6 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
           Booked
         </Box>
       </Flex>
-      <style jsx>{`
-        .startTime::after,
-        .endTime::before {
-          content: "";
-          display: block;
-          width: 0.3rem;
-          height: 0.3rem;
-          margin: auto;
-          border-radius: 100%;
-          border: 2px solid ${CSSConstants.primaryColor};
-        }
-        hr {
-          width: 0;
-          padding: 0;
-          background: none;
-          border: none;
-          border-left: 1px dashed ${CSSConstants.primaryColor};
-          border-right: 1px dashed ${CSSConstants.primaryColor};
-          height: 2.3rem;
-          margin: 3px auto;
-        }
-      `}</style>
     </Grid>
   );
 };
