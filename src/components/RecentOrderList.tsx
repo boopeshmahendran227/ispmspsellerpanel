@@ -153,7 +153,7 @@ const RecentOrderList = (props: RecentOrderListProps): JSX.Element => {
   };
 
   return (
-    <div className="container">
+    <div id="recentOrders" className="container">
       <SortableTable
         initialSortData={{
           index: 8,

@@ -5,6 +5,7 @@ import { SelectOptionInterface } from "types/product";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageHeader from "components/PageHeader";
 import AnalyticsContainer from "components/AnalyticsContainer";
+import QuickLinksContainer from "components/QuickLinksContainer";
 import { PeriodState } from "types/insights";
 
 const filter: SelectOptionInterface[] = [
@@ -27,6 +28,7 @@ const Home = (): JSX.Element => {
 
   return (
     <div className="container">
+      <QuickLinksContainer />
       <PageHeaderContainer>
         <PageHeader>Analytic Overview</PageHeader>
         <div className="selectContainer">
