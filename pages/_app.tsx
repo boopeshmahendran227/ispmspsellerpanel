@@ -19,7 +19,7 @@ import { isLoggedIn } from "utils/login";
 import { LoginState } from "types/login";
 import CSSConstants from "../src/constants/CSSConstants";
 
-import { ThemeProvider, CSSReset } from "@chakra-ui/core";
+import { ThemeProvider, CSSReset, Box } from "@chakra-ui/core";
 import { customTheme } from "../src/theme/theme";
 // Add all third-party CSS here
 import "@fortawesome/fontawesome-free/css/all.css";
@@ -27,7 +27,7 @@ import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 import "../public/css/react_dates_overrides.css";
 import "react-popper-tooltip/dist/styles.css";
-import { Box } from "@chakra-ui/core";
+import SimpleReactLightBox from "simple-react-lightbox";
 
 NProgress.configure({ showSpinner: false });
 
@@ -91,7 +91,9 @@ function MyApp(props) {
                   <SideNavBar />
                 </div> */}
                 <div className="bodyContainer">
-                  <Component {...pageProps} />
+                  <SimpleReactLightBox>
+                    <Component {...pageProps} />
+                  </SimpleReactLightBox>
                 </div>
                 <style jsx>{`
                   .sideNavBarContainer {

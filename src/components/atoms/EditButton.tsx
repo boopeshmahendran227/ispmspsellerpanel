@@ -14,7 +14,7 @@ const EditButton = (props: EditButtonProps): JSX.Element => {
   };
 
   return (
-    <button onClick={onClick}>
+    <button onClick={onClick} type="button">
       <Edit2
         color={props.color ?? CSSConstants.primaryColor}
         size={props.size}

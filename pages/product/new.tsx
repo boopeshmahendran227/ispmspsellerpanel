@@ -12,7 +12,7 @@ import {
 import { RootState } from "../../src/reducers";
 import ProductActions from "actions/product";
 import { connect } from "react-redux";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import useSWR from "swr";
 import Loader from "components/atoms/Loader";
 import AttributeModal from "components/molecules/AttributeModal";
@@ -34,7 +34,13 @@ import listOfCountries from "../../src/data/listOfCountries";
 import FAQInput from "components/molecules/FAQInput";
 import TierPriceInput from "components/molecules/TierpriceInput";
 import { CategoryInterface } from "types/category";
-import { Grid, Box, Button, ButtonGroup,Checkbox } from "@chakra-ui/core";
+import _ from "lodash";
+import SectionCard from "components/atoms/SectionCard";
+import SectionHeader from "components/atoms/SectionHeader";
+import ImageUploader from "components/molecules/ImageUploader";
+import ValidationErrorMsg from "components/atoms/ValidationErrorMsg";
+import { Grid, Box,Checkbox,ButtonGroup } from "@chakra-ui/core";
+import Button, { ButtonType } from "components/atoms/Button"
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -86,7 +92,23 @@ const AddProduct = (props: AddProductProps) => {
   }
 
   const onSubmit = (values: ProductInputInterface) => {
-    props.addProduct(values);
+    const filteredSkuValues = values.skus.map((sku) => {
+      const imageUrls = sku.images?.map((image) => image.url);
+      const filteredSku = _.omit(sku, "images");
+      return {
+        ...filteredSku,
+        imageRelativePaths: imageUrls,
+      };
+    });
+
+    const filteredValues = _.omit(values, "skus");
+
+    const filteredProduct: ProductInputInterface = {
+      ...filteredValues,
+      skus: filteredSkuValues as ProductSkuDetail[],
+    };
+
+    props.addProduct(filteredProduct);
   };
 
   return (
@@ -210,29 +232,54 @@ const AddProduct = (props: AddProductProps) => {
                 />
               </Grid>
               <SkuInputTable />
+              {values.skus.map((sku, index) => (
+                <div className="imageUploadContainer">
+                  <SectionCard>
+                    <SectionHeader>
+                      SKU Id: {sku.skuId}(
+                      {sku.attributeValueIds
+                        .map(
+                          (attributeValueId) =>
+                            attributeValueId.attributeName +
+                            ":" +
+                            attributeValueId.value
+                        )
+                        .join(", ")}
+                      )
+                    </SectionHeader>
+                    <ImageUploader
+                      value={values.skus[index].images}
+                      onChange={(images) => {
+                        setFieldValue(`skus.${index}.images`, images);
+                      }}
+                    />
+                    <ErrorMessage
+                      component={ValidationErrorMsg}
+                      name={`skus.${index}.images`}
+                    />
+                  </SectionCard>
+                </div>
+              ))}
               <TierPriceInput />
               <FAQInput />
               <SpecificationInput />
-              <ButtonGroup
-                spacing={4}
-                textAlign="center"
-                m="auto"
-                mb={10}
-                width="full"
-              >
+             <ButtonGroup>
                 <Button
-                  size="lg"
-                  type="submit"
-                  variantColor="successColorVariant"
+                  disabled={values.skus.some((sku) =>
+                    sku.images.some((image) => image.isUploading)
+                  )}
+                  type={ButtonType.success}
+                  isSubmitButton={true}
                 >
                   Submit
                 </Button>
                 <Button
-                  size="lg"
-                  onClick={() => resetForm}
-                  type="reset"
-                  variant="outline"
-                  variantColor="sucessColorVariant"
+                  disabled={values.skus.some((sku) =>
+                    sku.images.some((image) => image.isUploading)
+                  )}
+                  onClick={resetForm}
+                  type={ButtonType.success}
+                  outlined={true}
                 >
                   Clear
                 </Button>

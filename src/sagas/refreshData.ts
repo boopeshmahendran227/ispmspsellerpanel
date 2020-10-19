@@ -8,6 +8,7 @@ import {
   ADD_SKU_SUCCESS,
   UPDATE_SKU_SUCCESS,
   UPDATE_TIER_PRICE_SUCCESS,
+  UPDATE_SETTINGS_SUCCESS,
 } from "../constants/ActionTypes";
 import { take, all, call } from "redux-saga/effects";
 import { mutate, cache } from "swr";
@@ -61,6 +62,13 @@ function* refreshInvoice() {
   }
 }
 
+function* refreshSettings() {
+  while (true) {
+    yield take(UPDATE_SETTINGS_SUCCESS);
+    yield call(mutate, `/seller/marketplaceconfig`);
+  }
+}
+
 export default function* () {
   yield all([
     refreshOrder(),
@@ -68,5 +76,6 @@ export default function* () {
     refreshAttributes(),
     refreshInvoice(),
     refreshProduct(),
+    refreshSettings(),
   ]);
 }

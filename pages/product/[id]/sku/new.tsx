@@ -5,13 +5,13 @@ import PageHeader from "components/atoms/PageHeader";
 import WithAuth from "components/atoms/WithAuth";
 import { useRouter } from "next/router";
 import SkuList from "components/molecules/SkuList";
-import { Formik, Form } from "formik";
+import { Formik, ErrorMessage, Form } from "formik";
 import SkuProductInfo from "components/atoms/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/atoms/SectionHeader";
 import SectionCard from "components/atoms/SectionCard";
 import _ from "lodash";
-import { ProductDetailInterface } from "types/product";
+import { EditImageInterface, ProductDetailInterface } from "types/product";
 import FieldSelect from "components/molecules/FieldSelect";
 import { AddSkuInterface } from "types/sku";
 import * as Yup from "yup";
@@ -23,11 +23,13 @@ import { EcosystemResponseInterface } from "types/business";
 import SkuDimensionsInputContainer from "components/molecules/SkuDimensionsInputContainer";
 import SkuInventoryInputContainer from "components/molecules/SkuInventoryInputContainer";
 import SkuPricingInputContainer from "components/molecules/SkuPricingInputContainer";
-import React from "react";
 import FieldNumInput from "components/atoms/FieldNumInput";
 import FieldPercentageInput from "components/atoms/FieldPercentageInput";
-import { Box, Grid, FormLabel, Stack, Button } from "@chakra-ui/core";
-
+import ImageUploader from "components/molecules/ImageUploader";
+import ValidationErrorMsg from "components/atoms/ValidationErrorMsg";
+import { getProductImageUrl } from "utils/url";
+import { Box, Grid, FormLabel, Stack } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
 interface DispatchProps {
   addSku: (sku: AddSkuInterface) => void;
 }
@@ -35,6 +37,16 @@ interface DispatchProps {
 type SkuProps = DispatchProps;
 
 const validationSchema = Yup.object({
+  images: Yup.array()
+    .of(
+      Yup.object({
+        url: Yup.string(),
+        isUploading: Yup.boolean(),
+        isUploadSuccess: Yup.boolean(),
+      }).defined()
+    )
+    .defined()
+    .min(1),
   specialDiscount: Yup.number(),
   specialDiscountPercentage: Yup.number().max(100),
   skuId: Yup.string().required(),
@@ -97,11 +109,14 @@ const Sku = (props: SkuProps) => {
   const attributes = product.attributeValues;
 
   const handleSubmit = (values: InputInterface) => {
+    const imageUrls = values.images.map((image) => image.url);
+    const filteredValues = _.omit(values, "images");
+
     props.addSku({
-      ...values,
+      ...filteredValues,
+      imageRelativePaths: imageUrls as string[],
       productId: product.id,
-      imageRelativePaths: [],
-      attributeValueIds: values.attributes.map((attribute) => ({
+      attributeValueIds: filteredValues.attributes.map((attribute) => ({
         attributeId: attribute.attributeId,
         attributeName: attribute.attributeName,
         valueId: attribute.value.value,
@@ -135,6 +150,16 @@ const Sku = (props: SkuProps) => {
             initialValues={
               skuToCopyFrom
                 ? {
+                    images: skuToCopyFrom.imageRelativePaths.map(
+                      (imageRelativePath) => {
+                        return {
+                          dataURL: getProductImageUrl(imageRelativePath),
+                          url: imageRelativePath,
+                          isUploading: false,
+                          isUploadSuccess: true,
+                        };
+                      }
+                    ),
                     skuId: skuToCopyFrom.skuId,
                     price: skuToCopyFrom.price,
                     boughtPrice: skuToCopyFrom.boughtPrice,
@@ -168,6 +193,7 @@ const Sku = (props: SkuProps) => {
                     })),
                   }
                 : {
+                    images: [],
                     skuId: "",
                     price: 0,
                     boughtPrice: 0,
@@ -195,7 +221,7 @@ const Sku = (props: SkuProps) => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {({ errors }) => (
+            {({ setFieldValue, values }) => (
               <Form>
                 <Stack spacing={5}>
                   <Box>
@@ -223,6 +249,18 @@ const Sku = (props: SkuProps) => {
                         </>
                       ))}
                     </SectionCard>
+                  </Box>
+                  <Box>
+                  <SectionCard>
+                    <ImageUploader
+                      value={values.images as EditImageInterface[]}
+                      onChange={(images) => setFieldValue("images", images)}
+                    />
+                  </SectionCard>
+                  <ErrorMessage
+                    component={ValidationErrorMsg}
+                    name={"images"}
+                  />
                   </Box>
                   <Box>
                     <SkuPricingInputContainer />
@@ -257,9 +295,12 @@ const Sku = (props: SkuProps) => {
                     <SkuDimensionsInputContainer />
                   </Box>
                 </Stack>
-                <Button variantColor="primaryColorVariant" type="submit">
-                  Save
-                </Button>
+                <Button
+                  disabled={values.images.some(
+                    (image) => image.isUploading === true
+                  )}
+                  isSubmitButton={true}
+                >Save</Button>
               </Form>
             )}
           </Formik>
@@ -276,3 +317,8 @@ const mapDispatchToProps: DispatchProps = {
 export default WithAuth(
   connect<null, DispatchProps>(null, mapDispatchToProps)(Sku)
 );
+
+
+
+
+                

@@ -29,10 +29,6 @@ const getTableHeaders = () => {
       valueFunc: (sku: ProductSkuDetail) => null,
     },
     {
-      name: "Image",
-      valueFunc: (sku: ProductSkuDetail) => null,
-    },
-    {
       name: "Price",
       valueFunc: (sku: ProductSkuDetail) => sku.price,
     },
@@ -96,40 +92,6 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
                     attributeValueId.value
                 )
                 .join(", ")}
-            </td>
-            <td>
-              <FieldArray
-                name={`skus.${skuIndex}.imageRelativePaths`}
-                render={(arrayHelpers) => {
-                  const images = sku.imageRelativePaths;
-                  return (
-                    <div className="imageInputContainer">
-                      {images.map((image, index) => (
-                        <div key={index} className="imageInputField">
-                          <FieldInput
-                            name={`skus.${skuIndex}.imageRelativePaths.${index}`}
-                          />
-                          {index > 0 && (
-                            <button
-                              type="button"
-                              onClick={() => arrayHelpers.remove(index)}
-                            >
-                              <i className="fa fa-trash" />
-                            </button>
-                          )}
-                        </div>
-                      ))}
-                      <a onClick={() => arrayHelpers.push("")}>
-                        {images.length === 0 ? "+ Add" : "Add another"}
-                      </a>
-                      <ErrorMessage
-                        component={ValidationErrorMsg}
-                        name={`skus.${skuIndex}.imageRelativePaths`}
-                      />
-                    </div>
-                  );
-                }}
-              />
             </td>
             <td>
               <FieldPriceInput name={`skus.${skuIndex}.price`} />
@@ -196,7 +158,9 @@ const SkuInputTable = (props: SkuInputTableProps) => {
         <Divider borderColor="borderColor.500" />
       </SectionHeaderContainer>
       <Box>
-        <Button variantColor="primaryColorVariant" onClick={props.showSkuModal}>Generate Variants</Button>
+        <Button variantColor="primaryColorVariant" onClick={props.showSkuModal}>
+          Generate Variants
+        </Button>
       </Box>
       {skus.length > 0 && (
         <SortableTable

@@ -6,12 +6,12 @@ import PageHeader from "components/atoms/PageHeader";
 import WithAuth from "components/atoms/WithAuth";
 import { useRouter } from "next/router";
 import SkuList from "components/molecules/SkuList";
-import { Formik, Form } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import SkuProductInfo from "components/atoms/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/atoms/SectionHeader";
 import SectionCard from "components/atoms/SectionCard";
-import { ProductDetailInterface } from "types/product";
+import { EditImageInterface, ProductDetailInterface } from "types/product";
 import _ from "lodash";
 import FieldSelect from "components/molecules/FieldSelect";
 import FieldEcosystemMultiInput from "components/molecules/FieldEcosystemMultiInput";
@@ -21,12 +21,16 @@ import SkuActions from "actions/sku";
 import { UpdateSkuInterface } from "types/sku";
 import Button from "components/atoms/Button";
 import * as Yup from "yup";
+import styled from "styled-components";
 import SkuDimensionsInputContainer from "components/molecules/SkuDimensionsInputContainer";
 import SkuInventoryInputContainer from "components/molecules/SkuInventoryInputContainer";
 import SkuPricingInputContainer from "components/molecules/SkuPricingInputContainer";
-import { Box, Text, Stack, Grid, FormLabel } from "@chakra-ui/core";
 import FieldNumInput from "components/atoms/FieldNumInput";
 import FieldPercentageInput from "components/atoms/FieldPercentageInput";
+import ValidationErrorMsg from "components/atoms/ValidationErrorMsg";
+import { getProductImageUrl } from "utils/url";
+import ImageUploader from "components/molecules/ImageUploader";
+import { Box, Text, Stack, Grid, FormLabel } from "@chakra-ui/core";
 
 interface DispatchProps {
   updateSku: (sku: UpdateSkuInterface) => void;
@@ -35,6 +39,17 @@ interface DispatchProps {
 type SkuProps = DispatchProps;
 
 const validationSchema = Yup.object({
+  images: Yup.array()
+    .of(
+      Yup.object({
+        dataURL: Yup.string(),
+        url: Yup.string(),
+        isUploading: Yup.boolean(),
+        isUploadSuccess: Yup.boolean(),
+      }).defined()
+    )
+    .defined()
+    .min(1),
   specialDiscount: Yup.number().required(),
   specialDiscountPercentage: Yup.number().required().max(100),
   skuDetailId: Yup.number().required().defined(),
@@ -85,7 +100,12 @@ const Sku = (props: SkuProps): JSX.Element => {
   const attributes = product.attributeValues;
 
   const handleSubmit = (values: InputInterface) => {
-    props.updateSku(values);
+    const imageUrl = values.images.map((image) => image.url);
+    const filteredValues = _.omit(values, "images");
+    props.updateSku({
+      ...filteredValues,
+      imageRelativePaths: imageUrl as string[],
+    });
   };
 
   return (
@@ -112,6 +132,14 @@ const Sku = (props: SkuProps): JSX.Element => {
         <Box flex="1" mb={3} ml={3}>
           <Formik
             initialValues={{
+              images: currentSku.imageRelativePaths.map((imageRelativePath) => {
+                return {
+                  dataURL: getProductImageUrl(imageRelativePath),
+                  url: imageRelativePath,
+                  isUploading: false,
+                  isUploadSuccess: true,
+                };
+              }),
               skuDetailId: currentSku.skuDetailId,
               price: currentSku.price,
               boughtPrice: currentSku.boughtPrice,
@@ -147,7 +175,7 @@ const Sku = (props: SkuProps): JSX.Element => {
             enableReinitialize={true}
             onSubmit={handleSubmit}
           >
-            {() => (
+            {({ setFieldValue, values }) => (
               <Form>
                 <Stack>
                   <SectionCard>
@@ -166,7 +194,16 @@ const Sku = (props: SkuProps): JSX.Element => {
                       </Fragment>
                     ))}
                   </SectionCard>
-                  {/* <ImageUploader /> */}
+                  <SectionCard>
+                    <ImageUploader
+                      value={values.images as EditImageInterface[]}
+                      onChange={(value) => setFieldValue("images", value)}
+                    />
+                  </SectionCard>
+                  <ErrorMessage
+                    component={ValidationErrorMsg}
+                    name={"images"}
+                  />
                   <SkuPricingInputContainer />
                   <SectionCard>
                     <SectionHeader>Special Discount</SectionHeader>

@@ -25,7 +25,8 @@ const getApiUrl = (route) => {
     route.includes("/auth/logout") ||
     route.includes("/auth/verify/token/seller") ||
     route.includes("/businesses/business") ||
-    route.includes("/businesses/ecosystems/all")
+    route.includes("/businesses/ecosystems/all") ||
+    route.includes("/users/image/mpl")
   ) {
     return istakapazaApiUrl + route;
   }
