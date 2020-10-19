@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { Box, Flex } from "@chakra-ui/core";
 
 interface MetricCardProps {

@@ -149,6 +149,11 @@ const SortableTable = (props: SortableTableProps): JSX.Element => {
         .sortableTable :global(tr) {
           text-align: center !important;
         }
+        @media only screen and (max-width: 550px) {
+          .sortableTableContainer {
+            font-size:10px;
+          }
+        }
       `}</style>
     </div>
   );

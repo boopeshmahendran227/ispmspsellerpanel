@@ -87,9 +87,9 @@ function MyApp(props) {
             <Layout>
               <main>
                 <TopNavBar />
-                {/* <div className="sideNavBarContainer">
+                <div className="sideNavBarContainer">
                   <SideNavBar />
-                </div> */}
+                </div>
                 <div className="bodyContainer">
                   <SimpleReactLightBox>
                     <Component {...pageProps} />
@@ -105,7 +105,17 @@ function MyApp(props) {
                     z-index: 1;
                   }
                   .bodyContainer {
-                    margin: 0 0rem;
+                   margin-left:85px;
+                  }
+                  @media only screen and (max-width: 550px) {
+                    .bodyContainer{
+                      margin-left:0px;
+                    }
+                    .sideNavBarContainer{
+                    
+                      top: 60px;
+                    left: -500px;
+                    }
                   }
                 `}</style>
               </main>
