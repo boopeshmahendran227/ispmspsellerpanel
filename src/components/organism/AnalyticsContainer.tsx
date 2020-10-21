@@ -16,6 +16,7 @@ import { EcosystemResponseInterface } from "types/business";
 import PageError from "components/atoms/PageError";
 import Loader from "components/atoms/Loader";
 import moment from "moment";
+import { Heading, Box, Grid, Divider } from "@chakra-ui/core";
 
 const roundOff = (num: number) => {
   const length = num.toString().length;
@@ -101,190 +102,130 @@ const AnalyticsContainer = (props: AnalyticsContainerProps): JSX.Element => {
 
   const orders: OrderInterface[] = orderData.results;
 
+  interface CardProps {
+    title: string;
+    gridColumn: string | string[];
+    children: React.ReactNode;
+  }
+
+  const Card = (props: CardProps) => {
+    const { title, gridColumn, children } = props;
+    return (
+      <Box
+        bg="white"
+        borderRadius={8}
+        gridColumn={gridColumn}
+        boxShadow="md"
+        p={2}
+      >
+        <Heading size="md" p={4}>
+          {title}
+          <Divider />
+        </Heading>
+        <Box>{children}</Box>
+      </Box>
+    );
+  };
+
   return (
-    <div>
-      <div className="gridContainer">
-        <div className="cardContainer1">
-          <MetricCard
-            title="Orders"
-            icon={
-              <RoundedIcon
-                icon={
-                  <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-                }
-                color="secondaryColorVariant"
-              />
-            }
-            value={summary.totalOrderCount}
-          />
-        </div>
-        <div className="cardContainer2">
-          <MetricCard
-            title="Customers"
-            icon={
-              <RoundedIcon
-                icon={<i className="fas fa-users"></i>}
-                color="warningColorVariant"
-              />
-            }
-            value={summary.totalCustomers}
-          />
-        </div>
-        <div className="cardContainer3">
-          <MetricCard
-            title="Quotes"
-            icon={
-              <RoundedIcon
-                icon={<i className="fas fa-comments-dollar"></i>}
-                color="dangerColorVariant"
-              />
-            }
-            value={summary.totalQuotes}
-          />
-        </div>
-        <div className="cardContainer4">
-          <MetricCard
-            title="Revenue"
-            icon={
-              <RoundedIcon
-                icon={<i className="fas fa-money-bill"></i>}
-                color="successColorVariant"
-              />
-            }
-            value={formatPrice(summary.totalRevenue)}
-          />
-        </div>
-        <div className="cardContainer5">
-          <MetricCard
-            title="Ecosystems"
-            icon={
-              <RoundedIcon
-                icon={<i className="fas fa-store"></i>}
-                color="primaryColorVariant"
-              />
-            }
-            value={ecosystemData.length}
-          />
-        </div>
-        <div className="lineChartContainer">
-          <div className="cardTitle">Revenue (Last 6 months)</div>
-          <div className="lineChart">
-            <RevenueLineChart
-              revenueData={monthlySales}
-              interval={roundOff(
-                Math.round(
-                  monthlySales
-                    .map((item) => item.revenue)
-                    .reduce((a, b) => (a > b ? a : b)) / 4
-                )
-              )}
+    <Grid
+      templateColumns={[
+        "repeat(2,1fr)",
+        "repeat(2,1fr)",
+        "repeat(2,1fr)",
+        "repeat(5,1fr)",
+      ]}
+      gap={3}
+    >
+      <Box>
+        <MetricCard
+          title="Orders"
+          icon={
+            <RoundedIcon
+              icon={<i className="fa fa-shopping-cart" aria-hidden="true"></i>}
+              color="secondaryColorVariant"
             />
-          </div>
-        </div>
-        <div className="pieChartContainer">
-          <div className="cardTitle">Orders</div>
-          <div className="pieChart">
-            <OrderCountPieChart data={summary} />
-          </div>
-        </div>
-        <div className="topSoldContainer">
-          <div className="cardTitle">Top Sold Products</div>
-          <TopSold data={topSelling} />
-        </div>
-        <div className="recentOrderContainer">
-          <div className="cardTitle"> Recent Orders</div>
-          <RecentOrderList orders={orders}></RecentOrderList>
-        </div>
-      </div>
-      <style jsx>{`
-        .gridContainer {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-          grid-template-areas:
-            "header header header header header"
-            "metric1 metric2 metric3 metric4 metric5"
-            "pieChart pieChart lineChart lineChart lineChart"
-            "recent recent recent topSold topSold";
-          grid-gap: 1.7em;
-          margin-top: -1.7em;
-          margin-bottom: 1em;
-        }
-        @media only screen and (max-width: 550px) {
-          .gridContainer {
-            display: grid;
-            grid-template-columns: auto auto;
-            grid-template-rows: 0.5fr 0.5fr 0.5fr auto auto auto auto;
-            grid-template-areas:
-              " header header "
-              "metric1 metric2"
-              "metric3 metric4"
-              "metric5 metric5"
-              "pieChart pieChart "
-              "lineChart lineChart "
-              "recent recent "
-              "topSold topSold";
-            grid-row-gap: 1em;
-            margin-bottom: 1em;
-            margin-right: 2em;
           }
-        }
-        .cardContainer1 {
-          grid-area: metric1;
-        }
-        .cardContainer2 {
-          grid-area: metric2;
-        }
-        .cardContainer3 {
-          grid-area: metric3;
-        }
-        .cardContainer4 {
-          grid-area: metric4;
-        }
-        .cardContainer5 {
-          grid-area: metric5;
-        }
-        .cardTitle {
-          padding: 0.8em 1.1em;
-          font-size: 1.5rem;
-          font-weight: bold;
-          border-bottom: 1px solid #f0f0f0;
-        }
-        .lineChartContainer {
-          grid-area: lineChart;
-          background: ${CSSConstants.foregroundColor};
-          box-shadow: 0 0 20px #00000014;
-          border-radius: 1em;
-        }
-        .lineChart {
-          background: ${CSSConstants.foregroundColor};
-          height: 250px;
-          border-radius: 1em;
-        }
-        .pieChartContainer {
-          grid-area: pieChart;
-          background: ${CSSConstants.foregroundColor};
-          box-shadow: 0 0 20px #00000014;
-          border-radius: 1em;
-        }
-        .pieChart {
-          background: ${CSSConstants.foregroundColor};
-          height: 250px;
-          border-radius: 1em;
-        }
-        .recentOrderContainer {
-          grid-area: recent;
-          background: ${CSSConstants.foregroundColor};
-          box-shadow: 0 0 20px #00000014;
-          border-radius: 1em;
-        }
-        .topSoldContainer {
-          grid-area: topSold;
-          background: ${CSSConstants.foregroundColor};
-          box-shadow: 0 0 20px #00000014;
-          border-radius: 1em;
-        }
-      `}</style>
-    </div>
+          value={summary.totalOrderCount}
+        />
+      </Box>
+      <Box>
+        <MetricCard
+          title="Customers"
+          icon={
+            <RoundedIcon
+              icon={<i className="fas fa-users"></i>}
+              color="warningColorVariant"
+            />
+          }
+          value={summary.totalCustomers}
+        />
+      </Box>
+      <Box>
+        <MetricCard
+          title="Quotes"
+          icon={
+            <RoundedIcon
+              icon={<i className="fas fa-comments-dollar"></i>}
+              color="dangerColorVariant"
+            />
+          }
+          value={summary.totalQuotes}
+        />
+      </Box>
+      <Box>
+        <MetricCard
+          title="Revenue"
+          icon={
+            <RoundedIcon
+              icon={<i className="fas fa-money-bill"></i>}
+              color="successColorVariant"
+            />
+          }
+          value={formatPrice(summary.totalRevenue)}
+        />
+      </Box>
+      <Box>
+        <MetricCard
+          title="Ecosystems"
+          icon={
+            <RoundedIcon
+              icon={<i className="fas fa-store"></i>}
+              color="primaryColorVariant"
+            />
+          }
+          value={ecosystemData.length}
+        />
+      </Box>
+      <Card title="Orders" gridColumn="1/3">
+        <Box h="250px">
+          <OrderCountPieChart data={summary} />
+        </Box>
+      </Card>
+      <Card
+        title="Revenue (Last 6 months)"
+        gridColumn={["1/3", "1/3", "1/3", "3/6"]}
+      >
+        <Box h="250px">
+          <RevenueLineChart
+            revenueData={monthlySales}
+            interval={roundOff(
+              Math.round(
+                monthlySales
+                  .map((item) => item.revenue)
+                  .reduce((a, b) => (a > b ? a : b)) / 4
+              )
+            )}
+          />
+        </Box>
+      </Card>
+      <Card title="Recent Orders" gridColumn={["1/3", "1/3", "1/3", "1/4"]}>
+        <RecentOrderList orders={orders} />
+      </Card>
+      <Card title="Top Sold Products" gridColumn={["1/3", "1/3", "1/3", "4/6"]}>
+        <TopSold data={topSelling} />
+      </Card>
+    </Grid>
   );
 };
 

@@ -5,7 +5,7 @@ import { SelectOptionInterface } from "types/product";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageHeader from "components/atoms/PageHeader";
 import AnalyticsContainer from "components/organism/AnalyticsContainer";
-import QuickLinksContainer from "components/QuickLinksContainer";
+import QuickLinksContainer from "components/atoms/QuickLinksContainer";
 import { PeriodState } from "types/insights";
 import { Box } from "@chakra-ui/core";
 

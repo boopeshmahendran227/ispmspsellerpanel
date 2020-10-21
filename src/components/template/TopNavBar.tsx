@@ -7,7 +7,10 @@ import { getUnreadNotificationCount } from "../../selectors/notification";
 import NotificationActions from "../../actions/notification";
 import LoginActions from "../../actions/login";
 import Logo from "../atoms/Logo";
+import MobileSideNavBar from "./MobileSideNavBar";
 import { Box, Flex, Link, Text } from "@chakra-ui/core";
+import MobileMediaQuery from "components/atoms/MobileMediaQuery";
+import DesktopMediaQuery from "components/atoms/DesktopMediaQuery";
 
 interface StateProps {
   unreadNotificationCount: number;
@@ -41,10 +44,10 @@ const TopNavBar = (props: TopNavBarProps) => {
   };
 
   return (
-    <Box height={"60px"} fontSize={["sm", "sm", "md"]}>
+    <Box fontSize={["sm", "sm", "md"]}>
       <Flex
         height="60px"
-        px={[1, 5]}
+        px={[1, 2, 3, 5]}
         py={2}
         position="fixed"
         top="0"
@@ -54,9 +57,15 @@ const TopNavBar = (props: TopNavBarProps) => {
         right="0"
         bg="foregroundColor"
         boxShadow="md"
-        className="fixedContainer"
       >
-        <Box flex="1" className="logoContainer">
+        <Box mr={2}>
+          <MobileMediaQuery>
+            <Box>
+              <MobileSideNavBar handleLogout={handleLogout} />
+            </Box>
+          </MobileMediaQuery>
+        </Box>
+        <Box flex="1">
           <Logo />
         </Box>
         <Link
@@ -87,18 +96,22 @@ const TopNavBar = (props: TopNavBarProps) => {
             </Box>
           )}
         </Link>
-        <Box>
-          <i className="far fa-clock" aria-hidden={true}></i>
-          <Box as="span" display="inline-block">
-            {time.format("MMM D, hh:mm a")}
+        <DesktopMediaQuery>
+          <Box>
+            <Box>
+              <i className="far fa-clock" aria-hidden={true}></i>
+              <Box as="span" display="inline-block">
+                {time.format("MMM D, hh:mm a")}
+              </Box>
+            </Box>
           </Box>
-        </Box>
-        <Box mx={[1, 3]} fontSize={["1.1rem", "inherit"]}>
-          <Link onClick={handleLogout} cursor="pointer">
-            <i className="fas fa-sign-out-alt" aria-hidden={true}></i>{" "}
-            <Text display={["none", "inline-block"]}>Logout</Text>
-          </Link>
-        </Box>
+          <Box mx={3} fontSize={"inherit"}>
+            <Link onClick={handleLogout} cursor="pointer">
+              <i className="fas fa-sign-out-alt" aria-hidden={true}></i>
+              <Text display="inline-block">Logout</Text>
+            </Link>
+          </Box>
+        </DesktopMediaQuery>
         <NotificationBar
           open={notificationBarOpen}
           onClose={() => setNotificationBarOpen(false)}

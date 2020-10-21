@@ -151,7 +151,7 @@ const SortableTable = (props: SortableTableProps): JSX.Element => {
         }
         @media only screen and (max-width: 550px) {
           .sortableTableContainer {
-            font-size:10px;
+            font-size: 10px !important;
           }
         }
       `}</style>

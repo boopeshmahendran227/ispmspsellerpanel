@@ -11,10 +11,10 @@ const RoundedIcon = (props: RoundedIconProps): JSX.Element => {
 
   return (
     <Box
-      fontSize={["sm","xl"]}
+      fontSize={["sm", "sm", "sm", "xl"]}
       p={2}
-      width={["40px", "70px"]}
-      height={["40px", "70px"]}
+      width={["40px", "40px", "50px", "70px"]}
+      height={["40px", "40px", "50px", "70px"]}
       position="relative"
       borderRadius="50%"
       bg={`${color}.100`}

@@ -18,6 +18,7 @@ import {
   getColor,
   getOrderStatusText,
 } from "utils/order";
+import { Box } from "@chakra-ui/core";
 
 const getTableHeaders = () => {
   return [
@@ -156,7 +157,7 @@ const RecentOrderList = (props: RecentOrderListProps): JSX.Element => {
   };
 
   return (
-    <div id="recentOrders" className="container">
+    <Box overflow="auto" maxH="500px">
       <SortableTable
         initialSortData={{
           index: 8,
@@ -167,13 +168,7 @@ const RecentOrderList = (props: RecentOrderListProps): JSX.Element => {
         emptyMsg="There are no recent orders"
         body={renderTableBody}
       />
-      <style jsx>{`
-        .container {
-          max-height: 500px;
-          overflow: auto;
-        }
-      `}</style>
-    </div>
+    </Box>
   );
 };
 export default RecentOrderList;

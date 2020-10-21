@@ -1,6 +1,14 @@
 import Link from "next/link";
-import RoundedIcon from "./atoms/RoundedIcon";
-import { Box, PseudoBox, Heading } from "@chakra-ui/core";
+import RoundedIcon from "./RoundedIcon";
+import {
+  Box,
+  PseudoBox,
+  Heading,
+  Flex,
+  Divider,
+  Stack,
+  Grid,
+} from "@chakra-ui/core";
 
 interface LinkInterface {
   icon: React.ReactNode;
@@ -10,16 +18,13 @@ interface LinkInterface {
 
 const links: LinkInterface[] = [
   {
-    icon: <RoundedIcon icon={<i className="fa fa-plus" />} color={"#e53935"} />,
+    icon: <RoundedIcon icon={<i className="fa fa-plus" />} color={"red"} />,
     linkText: "Add Product",
     href: "/product/new",
   },
   {
     icon: (
-      <RoundedIcon
-        icon={<i className="fas fa-warehouse" />}
-        color={"#8E24AA"}
-      />
+      <RoundedIcon icon={<i className="fas fa-warehouse" />} color={"purple"} />
     ),
     linkText: "My Products",
     href: "/product",
@@ -28,7 +33,7 @@ const links: LinkInterface[] = [
     icon: (
       <RoundedIcon
         icon={<i className="fa fa-history" aria-hidden="true" />}
-        color={"#039BE5"}
+        color={"blue"}
       />
     ),
     linkText: "Recent Orders",
@@ -38,7 +43,7 @@ const links: LinkInterface[] = [
     icon: (
       <RoundedIcon
         icon={<i className="fa fa-shopping-cart" aria-hidden="true"></i>}
-        color={"#43A047"}
+        color={"green"}
       />
     ),
     linkText: "All Orders",
@@ -48,7 +53,7 @@ const links: LinkInterface[] = [
     icon: (
       <RoundedIcon
         icon={<i className="fas fa-file-invoice"></i>}
-        color={"#FFB300"}
+        color={"yellow"}
       />
     ),
     linkText: "Invoices",
@@ -58,7 +63,7 @@ const links: LinkInterface[] = [
     icon: (
       <RoundedIcon
         icon={<i className="fas fa-clipboard-list"></i>}
-        color={"#3949AB"}
+        color={"primaryColorVariant"}
       />
     ),
     linkText: "Quotes",
@@ -66,14 +71,14 @@ const links: LinkInterface[] = [
   },
   {
     icon: (
-      <RoundedIcon icon={<i className="fas fa-users"></i>} color={"#00897B"} />
+      <RoundedIcon icon={<i className="fas fa-users"></i>} color={"teal"} />
     ),
     linkText: "Customers",
     href: "/customer",
   },
   {
     icon: (
-      <RoundedIcon icon={<i className="fas fa-cog"></i>} color={"#F4511E"} />
+      <RoundedIcon icon={<i className="fas fa-cog"></i>} color={"orange"} />
     ),
     linkText: "Settings",
     href: "/settings",
@@ -89,26 +94,11 @@ const IconLink = (props: IconLinkProps): JSX.Element => {
 
   return (
     <Link href={link.href}>
-      <PseudoBox
-        _hover={{ textDecoration: "underline", color: "secondaryColor" }}
-        display="inline-flex"
-        flexDirection="column"
-        alignItems="center"
-        cursor="pointer"
-        textAlign="center"
-        my={1}
-        mx={3}
-        w="120px"
-      >
-        <Box>{link.icon}</Box>
-        <PseudoBox
-          _hover={{ color: "secondaryColor" }}
-          mt={1}
-          fontSize="md"
-          color="secondaryTextColor"
-        >
-          {link.linkText}
-        </PseudoBox>
+      <PseudoBox>
+        <Stack spacing={3}>
+          <Box mx="auto">{link.icon}</Box>
+          <Box>{link.linkText}</Box>
+        </Stack>
       </PseudoBox>
     </Link>
   );
@@ -121,16 +111,29 @@ const QuickLinksContainer = (): JSX.Element => {
       borderRadius={10}
       w="100%"
       marginTop={5}
-      className="card"
+      p={3}
+      bg="white"
     >
       <Heading px={3} py={3} size="md">
         Quick Links
       </Heading>
-      <Box textAlign="center">
+      <Divider />
+      <Grid
+        templateColumns={[
+          "repeat(4,1fr)",
+          "repeat(4,1fr)",
+          "repeat(4,1fr)",
+          "repeat(8,1fr)",
+        ]}
+        gap={[2, 2, 2, 1]}
+        textAlign="center"
+        p={2}
+        fontSize={["xs", "sm", "md"]}
+      >
         {links.map((link) => (
           <IconLink link={link} />
         ))}
-      </Box>
+      </Grid>
     </Box>
   );
 };
