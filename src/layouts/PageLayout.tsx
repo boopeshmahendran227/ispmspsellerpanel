@@ -1,20 +1,13 @@
+import { Grid } from "@chakra-ui/core";
+
 interface PageLayoutProps {
   children: React.ReactNode;
 }
 
 const PageLayout = (props: PageLayoutProps) => (
-  <div className="container">
+  <Grid gridRowGap={3} w="100%;" maxW=" 1170px" m="auto">
     {props.children}
-    <style jsx>{`
-      .container {
-        display: grid;
-        grid-row-gap: 1.2em;
-        width: 100%;
-        max-width: 1170px;
-        margin: auto;
-      }
-    `}</style>
-  </div>
+  </Grid>
 );
 
 export default PageLayout;

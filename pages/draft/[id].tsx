@@ -1,26 +1,16 @@
 import { DraftResponseInterface } from "types/draft";
 import useSWR from "swr";
-import Loader from "components/Loader";
-import SkuTable from "components/SkuTable";
+import Loader from "components/atoms/Loader";
+import SkuTable from "components/molecules/SkuTable";
 import { useRouter } from "next/router";
-import Specification from "components/Specification";
-import TierPrice from "components/TierPrice";
-import FAQ from "components/FAQ";
-import CSSConstants from "../../src/constants/CSSConstants";
-import PageError from "components/PageError";
-import WithAuth from "components/WithAuth";
-import ProductMainInfo from "components/ProductMainInfo";
-import ProductPriceDetails from "components/ProductPriceDetails";
-import styled from "styled-components";
-
-const FlexContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  & > div {
-    margin-bottom: 1.5em;
-  }
-`;
+import Specification from "components/molecules/Specification";
+import TierPrice from "components/molecules/TierPrice";
+import FAQ from "components/molecules/FAQ";
+import PageError from "components/atoms/PageError";
+import WithAuth from "components/atoms/WithAuth";
+import ProductMainInfo from "components/molecules/ProductMainInfo";
+import ProductPriceDetails from "components/molecules/ProductPriceDetails";
+import { Box, Heading, Stack } from "@chakra-ui/core";
 
 const Draft = () => {
   const router = useRouter();
@@ -38,22 +28,38 @@ const Draft = () => {
   }
 
   return (
-    <div className="container">
-      <header>
-        <span className="name">Draft #{draft.id}</span>
-        <span className="status">{draft.status}</span>
-      </header>
-      <FlexContainer>
-        <ProductMainInfo
-          name={draft.name}
-          brand={draft.brandName}
-          shortDescription={draft.shortDescription}
-          longDescription={draft.longDescription}
-        />
-        <ProductPriceDetails
-          minPrice={draft.minPrice}
-          maxPrice={draft.maxPrice}
-        />
+    <Box p={2}>
+      <Heading size="md" my={5} textTransform="uppercase">
+        <Box as="span">Draft #{draft.id}</Box>
+        <Box
+          as="span"
+          borderRadius={2}
+          display="inline-block"
+          background="primaryColor"
+          px={4}
+          py={2}
+          color="white"
+          my={3}
+          textTransform="initial"
+        >
+          {draft.status}
+        </Box>
+      </Heading>
+      <Stack spacing={3}>
+        <Box>
+          <ProductMainInfo
+            name={draft.name}
+            brand={draft.brandName}
+            shortDescription={draft.shortDescription}
+            longDescription={draft.longDescription}
+          />
+        </Box>
+        <Box>
+          <ProductPriceDetails
+            minPrice={draft.minPrice}
+            maxPrice={draft.maxPrice}
+          />
+        </Box>
         <SkuTable
           attributeValues={draft.attributeValues}
           skus={draft.skuDetails}
@@ -61,28 +67,8 @@ const Draft = () => {
         <Specification specification={draft.specification} />
         <TierPrice tierPrice={draft.tierPrice} />
         <FAQ faqs={draft.faqs} />
-      </FlexContainer>
-      <style jsx>{`
-        .container {
-          padding: 0.8em;
-        }
-        header {
-          font-size: 1.4rem;
-          margin: 0.7em 0;
-          text-transform: uppercase;
-        }
-        .status {
-          border-radius: 2em;
-          display: inline-block;
-          background: ${CSSConstants.primaryColor};
-          padding: 0.2em 0.5em;
-          color: white;
-          margin: 0 0.3em;
-          font-size: 1rem;
-          text-transform: initial;
-        }
-      `}</style>
-    </div>
+      </Stack>
+    </Box>
   );
 };
 

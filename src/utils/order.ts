@@ -22,7 +22,7 @@ const getColor = (status: OrderStatus) => {
 
   return CSSConstants.secondaryTextColor;
 };
-
+ 
 const getOrderStatusText = (status: OrderStatus) => {
   switch (status) {
     case OrderStatus.PaymentSuccess:
@@ -55,9 +55,9 @@ const getPaymentText = (paymentMode: PaymentMode) => {
 const getPaymentModeColor = (paymentMode: PaymentMode) => {
   switch (paymentMode) {
     case PaymentMode.Cash:
-      return CSSConstants.warningColor;
+      return "warningColorVariant";
     case PaymentMode.Online:
-      return CSSConstants.successColor;
+      return "successColorVariant";
   }
   return CSSConstants.primaryColor;
 };

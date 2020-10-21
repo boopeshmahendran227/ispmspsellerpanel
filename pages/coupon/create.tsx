@@ -1,34 +1,33 @@
 import { useState } from "react";
 import useSWR from "swr";
 import { Formik, Form } from "formik";
-import Button, { ButtonType } from "components/atoms/Button";
-import InputLabel from "components/InputLabel";
+import InputLabel from "components/atoms/InputLabel";
 import CouponActions from "actions/coupon";
 import { connect } from "react-redux";
-import WithAuth from "components/WithAuth";
+import WithAuth from "components/atoms/WithAuth";
 import {
   CouponInputInterface,
   CouponType,
   CouponRequestInterface,
 } from "types/coupon";
-import RadioButton from "components/RadioButton";
-import FieldPriceInput from "components/FieldPriceInput";
-import FieldPercentageInput from "components/FieldPercentageInput";
-import FieldDatePicker from "components/FieldDatePicker";
+import RadioButton from "components/atoms/RadioButton";
+import FieldPriceInput from "components/atoms/FieldPriceInput";
+import FieldPercentageInput from "components/atoms/FieldPercentageInput";
+import FieldDatePicker from "components/molecules/FieldDatePicker";
 import moment from "moment";
 import BackLink from "components/atoms/BackLink";
-import PageError from "components/PageError";
-import CSSConstants from "../../src/constants/CSSConstants";
+import PageError from "components/atoms/PageError";
 import {
   EcosystemResponseInterface,
   EcosystemDataInterface,
 } from "types/business";
-import Loader from "components/Loader";
+import Loader from "components/atoms/Loader";
 import { SelectOptionInterface } from "types/product";
 import EcosystemOption from "components/atoms/EcosystemOption";
-import FieldSelect from "components/FieldSelect";
-import FieldInput from "components/FieldInput";
+import FieldSelect from "components/molecules/FieldSelect";
+import FieldInput from "components/atoms/FieldInput";
 import api from "../../src/api";
+import { Box, Heading, Grid, Button, ButtonGroup } from "@chakra-ui/core";
 
 interface DispatchProps {
   createCoupon: (couponData: CouponRequestInterface) => void;
@@ -87,9 +86,25 @@ const CreateCoupon = (props: CreateCouponProps) => {
   };
 
   return (
-    <div className="container">
+    <Box
+      maxW="700px"
+      mx="auto"
+      my={[1,10]}
+      p={6}
+      boxShadow="md"
+      bg="foregroundColor"
+    >
       <BackLink href="/coupon">Back to Coupons</BackLink>
-      <header>Create Coupon</header>
+      <Heading
+        size="xl"
+        mt={3}
+        mb={4}
+        fontWeight="bold"
+        fontSize="xl"
+        textTransform="uppercase"
+      >
+        Create Coupon
+      </Heading>
       <Formik
         initialValues={{
           couponCode: "",
@@ -143,21 +158,27 @@ const CreateCoupon = (props: CreateCouponProps) => {
         onSubmit={onSubmit}
       >
         {({ setFieldValue, values, resetForm }) => (
-          <div className="formContainer">
+          <Box>
             <Form>
-              <div className="gridContainer">
+              <Grid templateColumns={["1fr","200px 300px"]}
+              alignItems="center">
                 <InputLabel label="Coupon Code" />
-                <div className="inputContainer">
+                <Box position="relative">
                   <FieldInput name="couponCode" />
                   {isCheckingCouponCode && (
-                    <div className="couponLoader">
-                      <Loader loaderWidth="1rem" width="1rem" height="1rem" />
-                    </div>
+                    <Box
+                      position="absolute"
+                      top="50%"
+                      right="5%"
+                      transform="translateY(-50%)"
+                    >
+                      <Loader size="xs" loaderWidth="2px" />
+                    </Box>
                   )}
-                </div>
+                </Box>
                 <InputLabel label="Coupon Discount Type" />
-                <div className="discountTypeValuesContainer">
-                  <div>
+                <Box >
+                  <Box>
                     <RadioButton
                       label="Fixed Amount"
                       value={""}
@@ -166,8 +187,8 @@ const CreateCoupon = (props: CreateCouponProps) => {
                         setFieldValue("type", CouponType.FixedAmount)
                       }
                     />
-                  </div>
-                  <div>
+                  </Box>
+                  <Box>
                     <RadioButton
                       label="Percentage"
                       value={""}
@@ -176,89 +197,45 @@ const CreateCoupon = (props: CreateCouponProps) => {
                         setFieldValue("type", CouponType.Percentage)
                       }
                     />
-                  </div>
-                </div>
+                  </Box>
+                </Box>
                 <InputLabel label="Discount Value" />
                 {values.type === CouponType.FixedAmount ? (
                   <FieldPriceInput name="discountValue" />
                 ) : (
                   <FieldPercentageInput name="discountPercentage" />
                 )}
-                <InputLabel label="Ecosystem" />
-                <FieldSelect name="ecosystem" options={ecosystems} />
                 <InputLabel label="Minimum Order Amount" />
                 <FieldPriceInput name="minimumOrderAmount" />
+                <InputLabel label="Ecosystem" />
+                <FieldSelect name="ecosystem" options={ecosystems} />
                 <InputLabel label="Valid From" />
                 <FieldDatePicker name="startDate" />
                 <InputLabel label="Valid Till" />
                 <FieldDatePicker name="endDate" />
-              </div>
-              <div className="buttonContainer">
+              </Grid>
+              <ButtonGroup spacing={4}>
                 <Button
-                  disabled={isCheckingCouponCode}
-                  type={ButtonType.success}
-                  isSubmitButton={true}
+                  isDisabled={isCheckingCouponCode}
+                  type="submit"
+                  variantColor="successColorVariant"
                 >
                   Submit
                 </Button>
                 <Button
-                  type={ButtonType.danger}
-                  onClick={resetForm}
-                  outlined={true}
+                  variant="outline"
+                  onClick={() => resetForm}
+                  type="reset"
+                  variantColor="dangerColorVariant"
                 >
                   Clear
                 </Button>
-              </div>
+              </ButtonGroup>
             </Form>
-          </div>
+          </Box>
         )}
       </Formik>
-      <style jsx>{`
-        .container {
-          max-width: 700px;
-          margin: 2em auto;
-          padding: 1.3em;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-            0 1px 2px rgba(0, 0, 0, 0.24);
-          background: ${CSSConstants.foregroundColor};
-        }
-        .inputContainer {
-          position: relative;
-        }
-        .couponLoader {
-          position: absolute;
-          top: 50%;
-          right: 5%;
-          transform: translateY(-50%);
-        }
-        header {
-          margin-top: 0.5em;
-          margin-bottom: 1em;
-          font-weight: bold;
-          font-size: 1.3rem;
-          text-transform: uppercase;
-        }
-        .addValueButtonContainer {
-          font-size: 0.9rem;
-        }
-        .gridContainer {
-          display: grid;
-          grid-template-columns: 200px 300px;
-          align-items: center;
-        }
-        .categoriesLabel {
-          font-weight: bold;
-          font-size: 1.2rem;
-          padding: 0.3em;
-          margin-bottom: 0.7em;
-        }
-        .buttonContainer {
-          padding-top: 1em;
-          padding-bottom: 0.4em;
-          font-size: 1.1rem;
-        }
-      `}</style>
-    </div>
+    </Box>
   );
 };
 

@@ -1,17 +1,17 @@
 import CSSConstants from "../../src/constants/CSSConstants";
-import SortableTable from "components/SortableTable";
+import SortableTable from "components/atoms/SortableTable";
 import useSWR from "swr";
-import Loader from "components/Loader";
+import Loader from "components/atoms/Loader";
 import { CouponInterface } from "types/coupon";
-import PageError from "components/PageError";
+import PageError from "components/atoms/PageError";
 import { formatPrice } from "utils/misc";
-import Button from "components/atoms/Button";
-import PageHeader from "components/PageHeader";
-import WithAuth from "components/WithAuth";
+import PageHeader from "components/atoms/PageHeader";
+import WithAuth from "components/atoms/WithAuth";
 import Link from "next/link";
 import moment from "moment";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageContainer from "components/atoms/PageContainer";
+import { Button } from "@chakra-ui/core";
 
 const getTableHeaders = () => {
   return [
@@ -88,7 +88,7 @@ const Coupons = (): JSX.Element => {
       <PageHeaderContainer>
         <PageHeader>Seller Coupons</PageHeader>
         <Link href="/coupon/create">
-          <Button>Create New Coupon</Button>
+          <Button variantColor="primaryColorVariant">Create New Coupon</Button>
         </Link>
       </PageHeaderContainer>
       <SortableTable

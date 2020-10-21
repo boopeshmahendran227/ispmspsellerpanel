@@ -1,9 +1,12 @@
-import styled from "styled-components";
 
-const SectionHeader = styled.div`
-  font-weight: bold;
-  font-size: 1.3rem;
-  margin-bottom: 1em;
-`;
+import { Box } from "@chakra-ui/core";
 
+interface SectionHeaderInterface {
+  children: React.ReactNode;
+}
+const SectionHeader = (props: SectionHeaderInterface) => (
+  <Box fontWeight="bold" fontSize="lg" mb={1}>
+    {props.children}
+  </Box>
+);
 export default SectionHeader;

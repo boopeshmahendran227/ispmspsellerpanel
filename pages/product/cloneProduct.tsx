@@ -1,22 +1,21 @@
 import React from "react";
-import PageContainer from "components/atoms/PageContainer";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
-import PageHeader from "components/PageHeader";
+import PageHeader from "components/atoms/PageHeader";
 import { Formik, Form } from "formik";
-import FieldInput from "components/FieldInput";
-import FieldSelect from "components/FieldSelect";
-import InputLabel from "components/InputLabel";
+import FieldInput from "components/atoms/FieldInput";
+import FieldSelect from "components/molecules/FieldSelect";
+import InputLabel from "components/atoms/InputLabel";
 import * as Yup from "yup";
-import Button, { ButtonType } from "components/atoms/Button";
 import EcosystemOption from "components/atoms/EcosystemOption";
 import useSWR from "swr";
 import { EcosystemResponseInterface } from "types/business";
-import PageError from "components/PageError";
-import Loader from "components/Loader";
+import PageError from "components/atoms/PageError";
+import Loader from "components/atoms/Loader";
 import { SelectOptionInterface, ProductCloneInterface } from "types/product";
 import ProductActions from "actions/product";
-import WithAuth from "components/WithAuth";
+import WithAuth from "components/atoms/WithAuth";
 import { connect } from "react-redux";
+import { Box, Grid, Button } from "@chakra-ui/core";
 
 interface DispatchProps {
   cloneProduct: (product: ProductCloneInterface) => void;
@@ -77,10 +76,18 @@ const CloneProduct = (props: CloneProductProps) => {
   );
 
   return (
-    <PageContainer>
+    <Box
+      maxW="600px"
+      mx="auto"
+      my={[1, 10]}
+      p={6}
+      boxShadow="md"
+      bg="foregroundColor"
+    >
       <PageHeaderContainer>
         <PageHeader>Product Clone</PageHeader>
       </PageHeaderContainer>
+
       <Formik
         initialValues={{
           currentEcosystem: null,
@@ -92,7 +99,7 @@ const CloneProduct = (props: CloneProductProps) => {
       >
         {({ values }) => (
           <Form>
-            <div className="gridContainer">
+            <Grid templateColumns={["1fr", " 200px 300px"]} alignItems="center">
               <InputLabel label="Current Ecosystem" />
               <FieldSelect
                 name="currentEcosystem"
@@ -103,29 +110,16 @@ const CloneProduct = (props: CloneProductProps) => {
               <FieldInput name="sellerId" />
               <InputLabel label="Target Ecosystem" />
               <FieldSelect name="targetEcosystem" options={targetEcosystems} />
-            </div>
-            <div className="buttonContainer">
-              <Button type={ButtonType.success} isSubmitButton={true}>
+            </Grid>
+            <Box pt={1} pb={1} fontSize="md" textAlign="right">
+              <Button type="submit"  variantColor="successColorVariant">
                 Submit
               </Button>
-            </div>
+            </Box>
           </Form>
         )}
       </Formik>
-      <style jsx>{`
-        .gridContainer {
-          display: grid;
-          grid-template-columns: 200px 300px;
-          align-items: center;
-        }
-        .buttonContainer {
-          padding-top: 1em;
-          padding-bottom: 0.4em;
-          font-size: 1.1rem;
-          margin-left: 400px;
-        }
-      `}</style>
-    </PageContainer>
+    </Box>
   );
 };
 

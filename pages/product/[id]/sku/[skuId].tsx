@@ -1,20 +1,20 @@
 import { Fragment } from "react";
 import useSWR from "swr";
-import Loader from "components/Loader";
-import PageError from "components/PageError";
-import PageHeader from "components/PageHeader";
-import WithAuth from "components/WithAuth";
+import Loader from "components/atoms/Loader";
+import PageError from "components/atoms/PageError";
+import PageHeader from "components/atoms/PageHeader";
+import WithAuth from "components/atoms/WithAuth";
 import { useRouter } from "next/router";
-import SkuList from "components/SkuList";
+import SkuList from "components/molecules/SkuList";
 import { Formik, Form, ErrorMessage } from "formik";
-import SkuProductInfo from "components/SkuProductInfo";
+import SkuProductInfo from "components/atoms/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/atoms/SectionHeader";
-import SectionCard from "components/SectionCard";
+import SectionCard from "components/atoms/SectionCard";
 import { EditImageInterface, ProductDetailInterface } from "types/product";
 import _ from "lodash";
-import FieldSelect from "components/FieldSelect";
-import FieldEcosystemMultiInput from "components/FieldEcosystemMultiInput";
+import FieldSelect from "components/molecules/FieldSelect";
+import FieldEcosystemMultiInput from "components/molecules/FieldEcosystemMultiInput";
 import { EcosystemResponseInterface } from "types/business";
 import { connect } from "react-redux";
 import SkuActions from "actions/sku";
@@ -22,14 +22,15 @@ import { UpdateSkuInterface } from "types/sku";
 import Button from "components/atoms/Button";
 import * as Yup from "yup";
 import styled from "styled-components";
-import SkuDimensionsInputContainer from "components/SkuDimensionsInputContainer";
-import SkuInventoryInputContainer from "components/SkuInventoryInputContainer";
-import SkuPricingInputContainer from "components/SkuPricingInputContainer";
-import FieldNumInput from "components/FieldNumInput";
-import FieldPercentageInput from "components/FieldPercentageInput";
-import ValidationErrorMsg from "components/ValidationErrorMsg";
+import SkuDimensionsInputContainer from "components/molecules/SkuDimensionsInputContainer";
+import SkuInventoryInputContainer from "components/molecules/SkuInventoryInputContainer";
+import SkuPricingInputContainer from "components/molecules/SkuPricingInputContainer";
+import FieldNumInput from "components/atoms/FieldNumInput";
+import FieldPercentageInput from "components/atoms/FieldPercentageInput";
+import ValidationErrorMsg from "components/atoms/ValidationErrorMsg";
 import { getProductImageUrl } from "utils/url";
-import ImageUploader from "components/ImageUploader";
+import ImageUploader from "components/molecules/ImageUploader";
+import { Box, Text, Stack, Grid, FormLabel } from "@chakra-ui/core";
 
 interface DispatchProps {
   updateSku: (sku: UpdateSkuInterface) => void;
@@ -68,29 +69,6 @@ const validationSchema = Yup.object({
 }).defined();
 
 type InputInterface = Yup.InferType<typeof validationSchema>;
-
-const FlexRowContainer = styled.div`
-  display: flex;
-
-  & > div {
-    margin-right: 0.6em;
-  }
-`;
-
-const FlexColumnContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  & > div {
-    margin-bottom: 1.5em;
-  }
-`;
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 1em;
-`;
 
 const Sku = (props: SkuProps): JSX.Element => {
   const router = useRouter();
@@ -131,15 +109,15 @@ const Sku = (props: SkuProps): JSX.Element => {
   };
 
   return (
-    <div className="container">
-      <div className="headerContainer">
+    <Box maxW="900px" m="auto">
+      <Box my={3}>
         <BackLink href="/product/[id]" as={`/product/${product.id}`}>
           Back to Product
         </BackLink>
         <PageHeader>{currentSkuId}</PageHeader>
-      </div>
-      <FlexRowContainer>
-        <div>
+      </Box>
+      <Stack direction="row" spacing={3}>
+        <Box>
           <SkuProductInfo
             productId={product.id}
             productName={product.name}
@@ -150,8 +128,8 @@ const Sku = (props: SkuProps): JSX.Element => {
             skus={product.skuDetails}
             currentSkuId={currentSkuId}
           />
-        </div>
-        <div className="formContainer">
+        </Box>
+        <Box flex="1" mb={3} ml={3}>
           <Formik
             initialValues={{
               images: currentSku.imageRelativePaths.map((imageRelativePath) => {
@@ -199,7 +177,7 @@ const Sku = (props: SkuProps): JSX.Element => {
           >
             {({ setFieldValue, values }) => (
               <Form>
-                <FlexColumnContainer>
+                <Stack>
                   <SectionCard>
                     <SectionHeader>Options</SectionHeader>
                     {attributes.map((attribute, index) => (
@@ -229,61 +207,37 @@ const Sku = (props: SkuProps): JSX.Element => {
                   <SkuPricingInputContainer />
                   <SectionCard>
                     <SectionHeader>Special Discount</SectionHeader>
-                    <Grid>
-                      <div>
-                        <label>Special Discount Price</label>
+                    <Grid templateColumns="1fr 1fr" gap={2}>
+                      <Box>
+                        <FormLabel>Special Discount Price</FormLabel>
                         <FieldNumInput name="specialDiscount" />
-                      </div>
-                      <div>
-                        <label>Special Discount Percentage</label>
+                      </Box>
+                      <Box>
+                        <FormLabel>Special Discount Percentage</FormLabel>
                         <FieldPercentageInput name="specialDiscountPercentage" />
-                      </div>
+                      </Box>
                     </Grid>
                   </SectionCard>
                   <SkuInventoryInputContainer />
                   <SectionCard>
                     <SectionHeader>Visibility</SectionHeader>
-                    <label>Ecosystem</label>
+                    <Text mt={1} display="inline-block">
+                      Ecosystem
+                    </Text>
                     <FieldEcosystemMultiInput
                       name="ecosystemIds"
                       ecosystemData={ecosystemData}
                     />
                   </SectionCard>
                   <SkuDimensionsInputContainer />
-                </FlexColumnContainer>
-                <Button
-                  disabled={values.images.some((image) => image.isUploading)}
-                  isSubmitButton={true}
-                >
-                  Save
-                </Button>
+                </Stack>
+                <Button isSubmitButton={true}>Save</Button>
               </Form>
             )}
           </Formik>
-        </div>
-      </FlexRowContainer>
-      <style jsx>{`
-        .container {
-          max-width: 900px;
-          margin: auto;
-        }
-        .headerContainer {
-          margin: 1.3em 0;
-        }
-        .flexContainer {
-          display: flex;
-        }
-        .formContainer {
-          flex: 1;
-          margin-bottom: 1em;
-          margin-left: 1em;
-        }
-        label {
-          margin-top: 0.3em;
-          display: inline-block;
-        }
-      `}</style>
-    </div>
+        </Box>
+      </Stack>
+    </Box>
   );
 };
 
