@@ -44,9 +44,8 @@ const TopNavBar = (props: TopNavBarProps) => {
   };
 
   return (
-    <Box fontSize={["sm", "sm", "md"]}>
+    <Box fontSize={["sm", "sm", "md"]} height="60px">
       <Flex
-        height="60px"
         px={[1, 2, 3, 5]}
         py={2}
         position="fixed"
