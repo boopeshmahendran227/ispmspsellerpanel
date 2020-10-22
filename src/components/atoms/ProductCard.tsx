@@ -1,6 +1,6 @@
 import RelativeImg from "./RelativeImg";
 import { Fragment } from "react";
-import { Flex, Grid, Box, Text, Heading } from "@chakra-ui/core";
+import { Flex, Grid, Box, Heading } from "@chakra-ui/core";
 
 interface MetaInfo {
   key: string;
@@ -15,26 +15,27 @@ interface ProductCardProps {
 
 const ProductCard = (props: ProductCardProps) => {
   const { metaInfo } = props;
+
   return (
     <Flex textAlign="initial">
-      <Box w="5rem" textAlign="center" p="0.5em" pl="0">
+      <Box w={["4rem", "5rem"]} textAlign="center" p={1} pl="0">
         <RelativeImg src={props.image}></RelativeImg>
       </Box>
       <Box>
         <Heading
           fontWeight="semibold"
-          fontSize="md"
-          maxW="150px"
+          fontSize={["sm", null, "md"]}
+          maxW={["100px", "150px", "250px"]}
           color="primaryTextColor"
         >
           {props.name}
         </Heading>
         <Grid
-          mt="0.5em"
+          mt={1}
           color="secondaryTextColor"
-          fontSize="0.9rem"
+          fontSize={["xs", null, "sm"]}
           templateColumns="80px 1fr"
-          gridRowGap="0.1em"
+          gridRowGap={1}
         >
           {Array.isArray(metaInfo) &&
             metaInfo.map((obj, index) => (

@@ -17,8 +17,7 @@ import LoadingScreen from "components/atoms/LoadingScreen";
 import UpdateQuoteModal from "components/molecules/UpdateQuoteModal";
 import { isLoggedIn } from "utils/login";
 import { LoginState } from "types/login";
-import CSSConstants from "../src/constants/CSSConstants";
-
+import SimpleReactLightBox from "simple-react-lightbox";
 import { ThemeProvider, CSSReset, Box } from "@chakra-ui/core";
 import { customTheme } from "../src/theme/theme";
 // Add all third-party CSS here
@@ -27,7 +26,6 @@ import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 import "../public/css/react_dates_overrides.css";
 import "react-popper-tooltip/dist/styles.css";
-import SimpleReactLightBox from "simple-react-lightbox";
 
 NProgress.configure({ showSpinner: false });
 
@@ -85,40 +83,23 @@ function MyApp(props) {
             <ReasonModal />
             <SureModal />
             <Layout>
-              <main>
-                <TopNavBar />
-                <div className="sideNavBarContainer">
-                  <SideNavBar />
-                </div>
-                <div className="bodyContainer">
-                  <SimpleReactLightBox>
-                    <Component {...pageProps} />
-                  </SimpleReactLightBox>
-                </div>
-                <style jsx>{`
-                  .sideNavBarContainer {
-                    position: fixed;
-                    top: 60px;
-                    left: 0;
-                    height: 100%;
-                    width: 85px;
-                    z-index: 1;
-                  }
-                  .bodyContainer {
-                   margin-left:85px;
-                  }
-                  @media only screen and (max-width: 550px) {
-                    .bodyContainer{
-                      margin-left:0px;
-                    }
-                    .sideNavBarContainer{
-                    
-                      top: 60px;
-                    left: -500px;
-                    }
-                  }
-                `}</style>
-              </main>
+              <TopNavBar />
+              <Box
+                position="fixed"
+                top="60px"
+                left={0}
+                height="100%"
+                width="85px"
+                zIndex={1}
+                display={["none", null, null, "block"]}
+              >
+                <SideNavBar />
+              </Box>
+              <Box ml={["0px", null, null, "85px"]}>
+                <SimpleReactLightBox>
+                  <Component {...pageProps} />
+                </SimpleReactLightBox>
+              </Box>
             </Layout>
           </ToastProvider>
         </Provider>

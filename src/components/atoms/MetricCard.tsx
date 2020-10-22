@@ -17,13 +17,15 @@ const MetricCard = (props: MetricCardProps) => {
       w="100%"
       borderRadius={8}
     >
-      <Flex alignItems="center" h="100%" padding={5}>
+      <Flex alignItems="center" h="100%" padding={[3, 4, 3, null, 5]}>
         <Box mr={3}>{icon}</Box>
         <Box>
-          <Box fontSize="lg">{props.value}</Box>
+          <Box fontSize={["sm", null, null, "xs", "md"]} fontWeight="bold">
+            {props.value}
+          </Box>
           <Box
             textTransform="capitalize"
-            fontSize="md"
+            fontSize={["sm", "md"]}
             mt={1}
             color="secondaryTextColor"
           >

@@ -72,7 +72,7 @@ const OrderCountPieChart = (props: PieChartProps) => {
         CSSConstants.primaryColor,
       ].map((color) => Chroma(color).alpha(0.8))}
       theme={{
-        labels: { text: { fontSize: "17px" } },
+        labels: { text: { fontSize: "10px" } },
       }}
       borderWidth={1}
       borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
@@ -82,10 +82,10 @@ const OrderCountPieChart = (props: PieChartProps) => {
       radialLabelsLinkColor={CSSConstants.borderColor}
       legends={[
         {
-          anchor: "bottom-right",
+          anchor: "bottom-left",
           direction: "column",
-          translateY: 50,
-          translateX: 70,
+          translateY: 80,
+          translateX: 0,
           itemWidth: 120,
           itemHeight: 20,
           itemTextColor: CSSConstants.primaryTextColor,
