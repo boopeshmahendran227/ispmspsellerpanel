@@ -15,6 +15,7 @@ import SettingActions from "actions/settings";
 import { connect } from "react-redux";
 import * as Yup from "yup";
 import { SelectOptionInterface } from "types/product";
+import { Box, FormLabel } from "@chakra-ui/core";
 
 const validationSchema = Yup.object({
   restrictedPaymentModes: Yup.array()
@@ -72,7 +73,7 @@ const Settings = (props: SettingsProps): JSX.Element => {
   };
 
   return (
-    <div className="container">
+    <Box maxW="600px" m={[2, "auto"]}>
       <PageHeaderContainer>
         <PageHeader>Settings</PageHeader>
       </PageHeaderContainer>
@@ -95,25 +96,19 @@ const Settings = (props: SettingsProps): JSX.Element => {
           <Form>
             <SectionCard>
               <SectionHeader>Payment & Shipping</SectionHeader>
-              <label>Restricted Payment Modes</label>
+              <FormLabel>Restricted Payment Modes</FormLabel>
               <FieldMultiSelect
                 name="restrictedPaymentModes"
                 options={paymentModeOptions}
               />
-              <label>Shipment Mode</label>
+              <FormLabel>Shipment Mode</FormLabel>
               <FieldSelect name="shipmentMode" options={shipmentModeOptions} />
-              <Button isSubmitButton={true}>Save</Button>
+              <Button type="submit">Save</Button>
             </SectionCard>
           </Form>
         )}
       </Formik>
-      <style jsx>{`
-        .container {
-          max-width: 600px;
-          margin: auto;
-        }
-      `}</style>
-    </div>
+    </Box>
   );
 };
 

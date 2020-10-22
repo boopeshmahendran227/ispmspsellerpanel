@@ -11,7 +11,8 @@ import Link from "next/link";
 import moment from "moment";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageContainer from "components/atoms/PageContainer";
-import { Button } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
+
 
 const getTableHeaders = () => {
   return [
@@ -88,7 +89,7 @@ const Coupons = (): JSX.Element => {
       <PageHeaderContainer>
         <PageHeader>Seller Coupons</PageHeader>
         <Link href="/coupon/create">
-          <Button variantColor="primaryColorVariant">Create New Coupon</Button>
+          <Button>Create New Coupon</Button>
         </Link>
       </PageHeaderContainer>
       <SortableTable

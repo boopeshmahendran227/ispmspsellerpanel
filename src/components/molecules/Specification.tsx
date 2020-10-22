@@ -17,12 +17,12 @@ const Specification = (props: SpecificationProps) => {
       <SectionHeaderContainer>
         <SectionHeader>Specification</SectionHeader>
       </SectionHeaderContainer>
-      <Box>
+      <Box fontSize={["sm", "md"]}>
         {specification.itemGroups.map((group) => (
           <Box>
             <Heading size="sm">{group.name}</Heading>
             {group.items.length > 0 && (
-              <Grid my={2} templateColumns="200px 1fr">
+              <Grid my={2} templateColumns={["150px 1fr", "200px 1fr"]}>
                 {group.items.map((item, itemIndex) => (
                   <Fragment key={itemIndex}>
                     <Box color="secondaryTextColor">{item.key}</Box>

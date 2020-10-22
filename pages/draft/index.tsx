@@ -14,7 +14,8 @@ import Loader from "components/atoms/Loader";
 import PageContainer from "components/atoms/PageContainer";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageBodyContainer from "components/atoms/PageBodyContainer";
-import { Box, Button } from "@chakra-ui/core";
+import { Box } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
 
 const Drafts = () => {
   const getTableHeaders = () => {
@@ -94,7 +95,7 @@ const Drafts = () => {
         <PageHeader>Product Drafts</PageHeader>
         <Box>
           <Link href="/product/new">
-            <Button variantColor="primaryColorVariant">Add Product</Button>
+            <Button>Add Product</Button>
           </Link>
         </Box>
       </PageHeaderContainer>

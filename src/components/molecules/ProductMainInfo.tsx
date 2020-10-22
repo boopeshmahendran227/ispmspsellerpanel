@@ -18,7 +18,11 @@ const ProductMainInfo = (props: ProductMainInfoProps): JSX.Element => {
       <SectionHeaderContainer>
         <SectionHeader>Main Details</SectionHeader>
       </SectionHeaderContainer>
-      <Grid templateColumns="200px 1fr" gap={2}>
+      <Grid
+        templateColumns={["150px 1fr", "200px 1fr"]}
+        gap={[1, 2]}
+        fontSize={["sm", "md"]}
+      >
         <Box fontWeight="bold">Name</Box>
         <Box>{name}</Box>
         <Box fontWeight="bold">Brand</Box>
@@ -26,7 +30,7 @@ const ProductMainInfo = (props: ProductMainInfoProps): JSX.Element => {
         <Box fontWeight="bold">Short Description</Box>
         <Box>{shortDescription}</Box>
         <Box fontWeight="bold">Long Description</Box>
-        <Box>{longDescription}</Box>
+        <Box wordBreak="break-all">{longDescription}</Box>
       </Grid>
     </SectionCard>
   );

@@ -5,7 +5,8 @@ import {
   FormControl,
   Input,
   InputGroup,
-  InputLeftElement,Box
+  InputLeftElement,
+  Box,
 } from "@chakra-ui/core";
 
 interface FieldPriceInputProps {
@@ -38,17 +39,14 @@ const FieldPriceInput = (props: FieldPriceInputProps) => {
           py={[1, 3]}
         >
           <InputGroup>
-          
-            <InputLeftElement size={"sm"} children="₹"/>
-          
+            <InputLeftElement size={"sm"} children="₹" />
             <Input
               {...field}
               value={isFocused ? field.value : field.value?.toLocaleString()}
               onBlur={(e) => handleBlur(e, field.name)}
               onFocus={handleFocus}
               minW="100px"
-              paddingRight={[0, 1]}
-              paddingLeft={[5]}
+              pr={1}
             />
           </InputGroup>
           <ErrorMessage component={ValidationErrorMsg} name={props.name} />

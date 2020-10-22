@@ -2,7 +2,7 @@ import { SingleDatePicker } from "react-dates";
 import moment from "moment";
 import Button from "./Button";
 import { useState } from "react";
-import { Box } from "@chakra-ui/core";
+import { Stack, Box } from "@chakra-ui/core";
 
 interface DatePickerProps {
   onChange: (date: moment.Moment) => void;
@@ -25,22 +25,24 @@ const presets = [
 const DatePicker = (props: DatePickerProps) => {
   const renderDatePresets = () => {
     return (
-      <Box p="0.6em">
+      <Stack isInline spacing={3} m={3} mb={5} p={2}>
         {presets.map(({ text, value }) => {
           const isActive = value.isSame(props.value, "date");
 
           return (
-            <Button
-              outlined={!isActive}
-              onClick={() => {
-                props.onChange(value);
-              }}
-            >
-              {text}
-            </Button>
+            <Box>
+              <Button
+                variant={!isActive ? "outline" : "solid"}
+                onClick={() => {
+                  props.onChange(value);
+                }}
+              >
+                {text}
+              </Button>
+            </Box>
           );
         })}
-      </Box>
+      </Stack>
     );
   };
 

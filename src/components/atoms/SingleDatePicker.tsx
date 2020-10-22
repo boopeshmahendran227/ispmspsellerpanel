@@ -24,13 +24,13 @@ const presets = [
 const SingleDatePicker = (props: SingleDatePickerProps) => {
   const renderDatePresets = () => {
     return (
-      <Box p="0.6em">
+      <Box p={2}>
         {presets.map(({ text, value }) => {
           const isActive = value.isSame(props.value, "date");
 
           return (
             <Button
-              outlined={!isActive}
+              variant={!isActive ? "outline" : "solid"}
               onClick={() => {
                 props.onChange(value);
               }}
