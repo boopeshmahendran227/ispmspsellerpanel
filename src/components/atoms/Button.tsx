@@ -21,6 +21,7 @@ const Button = (props: ButtonProps) => {
     <>
       <DesktopMediaQuery>
         <ChakraButton
+          _focus={{ border: "none" }}
           size="md"
           variantColor={variantColor}
           type={type}
