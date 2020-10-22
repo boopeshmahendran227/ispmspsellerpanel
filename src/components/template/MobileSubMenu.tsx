@@ -40,7 +40,6 @@ const MobileSubMenu = (props: MobileSubMenuProps) => {
           alignItems="baseline"
         >
           <Box px={2}>{subMenuIcon}</Box>
-
           <Box>{subMenuName}</Box>
         </Flex>
         {open ? <ChevronUp /> : <ChevronDown />}

@@ -16,7 +16,7 @@ import { EcosystemResponseInterface } from "types/business";
 import PageError from "components/atoms/PageError";
 import Loader from "components/atoms/Loader";
 import moment from "moment";
-import { Heading, Box, Grid, Divider } from "@chakra-ui/core";
+import { Heading, Box, SimpleGrid, Divider } from "@chakra-ui/core";
 
 const roundOff = (num: number) => {
   const length = num.toString().length;
@@ -128,15 +128,7 @@ const AnalyticsContainer = (props: AnalyticsContainerProps): JSX.Element => {
   };
 
   return (
-    <Grid
-      templateColumns={[
-        "repeat(2,1fr)",
-        "repeat(2,1fr)",
-        "repeat(2,1fr)",
-        "repeat(5,1fr)",
-      ]}
-      gap={3}
-    >
+    <SimpleGrid columns={[2, null, null, 5]} spacing={3}>
       <Box>
         <MetricCard
           title="Orders"
@@ -225,7 +217,7 @@ const AnalyticsContainer = (props: AnalyticsContainerProps): JSX.Element => {
       <Card title="Top Sold Products" gridColumn={["1/3", "1/3", "1/3", "4/6"]}>
         <TopSold data={topSelling} />
       </Card>
-    </Grid>
+    </SimpleGrid>
   );
 };
 

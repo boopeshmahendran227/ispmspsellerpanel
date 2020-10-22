@@ -4,10 +4,9 @@ import {
   Box,
   PseudoBox,
   Heading,
-  Flex,
   Divider,
   Stack,
-  Grid,
+  SimpleGrid,
 } from "@chakra-ui/core";
 
 interface LinkInterface {
@@ -118,14 +117,9 @@ const QuickLinksContainer = (): JSX.Element => {
         Quick Links
       </Heading>
       <Divider />
-      <Grid
-        templateColumns={[
-          "repeat(4,1fr)",
-          "repeat(4,1fr)",
-          "repeat(4,1fr)",
-          "repeat(8,1fr)",
-        ]}
-        gap={[2, 2, 2, 1]}
+      <SimpleGrid
+        columns={[4, null, null, 8]}
+        spacing={[2, null, null, 1]}
         textAlign="center"
         p={2}
         fontSize={["xs", "sm", "md"]}
@@ -133,7 +127,7 @@ const QuickLinksContainer = (): JSX.Element => {
         {links.map((link) => (
           <IconLink link={link} />
         ))}
-      </Grid>
+      </SimpleGrid>
     </Box>
   );
 };

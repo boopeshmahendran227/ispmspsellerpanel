@@ -91,11 +91,11 @@ function MyApp(props) {
                 height="100%"
                 width="85px"
                 zIndex={1}
-                display={["none", "none", "none", "block"]}
+                display={["none", null, null, "block"]}
               >
                 <SideNavBar />
               </Box>
-              <Box ml={["0", "0", "0", "85px"]}>
+              <Box ml={["0px", null, null, "85px"]}>
                 <SimpleReactLightBox>
                   <Component {...pageProps} />
                 </SimpleReactLightBox>
