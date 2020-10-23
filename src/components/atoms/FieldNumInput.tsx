@@ -21,12 +21,13 @@ const FieldNumInput = (props: FieldNumInputProps) => {
       {({ field, form }) => (
         <FormControl
           isInvalid={form.errors[props.name] && form.touched[props.name]}
-          py={[1,3]}
+          py={[1, 3]}
         >
           <Input
             {...field}
             onBlur={(e) => handleBlur(e, field.name)}
-            minW="60px" px={[0, 1]}
+            minW="60px"
+            px={1}
           />
           <ErrorMessage component={ValidationErrorMsg} name={props.name} />
         </FormControl>

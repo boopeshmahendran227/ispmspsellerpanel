@@ -4,10 +4,10 @@ import {
   useFormikContext,
   ArrayHelpers,
 } from "formik";
-import CSSConstants from "../../constants/CSSConstants";
 import _ from "lodash";
 import ValidationErrorMsg from "../atoms/ValidationErrorMsg";
-import { Button, Box } from "@chakra-ui/core";
+import { Box, IconButton } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
 
 interface FieldEditableArrayProps {
   headers: string[];
@@ -43,23 +43,24 @@ const FieldEditableArray = (props: FieldEditableArrayProps) => {
                 {dataList.map((item, index) => (
                   <tr key={index}>
                     {props.renderInputRow(index)}
-                    <td className="deleteContainer">
-                      <button
+                    <td>
+                      <IconButton
+                        p={0}
+                        _hover={{ bg: "none" }}
+                        _focus={{ bg: "none" }}
+                        aria-label="Delete"
+                        icon="delete"
                         type="button"
+                        bg="none"
                         onClick={() => handleDelete(arrayHelpers, index)}
-                      >
-                        <i className="fa fa-trash" aria-hidden="true"></i>
-                      </button>
+                      />
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
             <Box>
-              <Button
-                variantColor="primaryColorVariant"
-                onClick={() => props.onAdd(arrayHelpers)}
-              >
+              <Button onClick={() => props.onAdd(arrayHelpers)}>
                 {dataList.length === 0
                   ? `Add ${props.label}`
                   : `Add one more ${props.label}`}
@@ -67,11 +68,6 @@ const FieldEditableArray = (props: FieldEditableArrayProps) => {
             </Box>
             <ErrorMessage component={ValidationErrorMsg} name={props.name} />
           </Box>
-          <style jsx>{`
-            .fa-trash:hover {
-              color: ${CSSConstants.warningColor};
-            }
-          `}</style>
         </Box>
       )}
     />

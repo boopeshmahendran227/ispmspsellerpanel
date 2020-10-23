@@ -12,7 +12,7 @@ interface ButtonProps {
   isDisabled: boolean;
   isLoading: boolean;
   children: React.ReactNode;
-  onClick?: () => void;
+  onClick?: (e?: any) => void;
 }
 
 const Button = (props: ButtonProps) => {

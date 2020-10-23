@@ -3,7 +3,7 @@ import FieldInput from "../atoms/FieldInput";
 import FieldEditableArray from "./FieldEditableArray";
 import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
 import SectionHeader from "../atoms/SectionHeader";
-import { Box, Grid, Divider } from "@chakra-ui/core";
+import { Box, SimpleGrid, Divider } from "@chakra-ui/core";
 
 const SpecificationInput = () => {
   const handleAddSpecGroup = (arrayHelpers) => {
@@ -31,12 +31,12 @@ const SpecificationInput = () => {
         headers={[]}
         renderInputRow={(groupIndex) => (
           <Box ml={3} className="specGroupContainer">
-            <Grid templateColumns="200px 200px" alignItems="center">
+            <SimpleGrid columns={[1, 2]} alignItems="center">
               <InputLabel label="Group name" />
               <FieldInput
                 name={`specification.itemGroups.${groupIndex}.name`}
               />
-            </Grid>
+            </SimpleGrid>
             <FieldEditableArray
               headers={["S.no", "Key", "Value"]}
               name={`specification.itemGroups.${groupIndex}.items`}

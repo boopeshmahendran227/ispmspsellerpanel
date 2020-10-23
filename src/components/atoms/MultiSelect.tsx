@@ -1,5 +1,6 @@
 import Select from "react-select";
 import { SelectOptionInterface } from "../../types/product";
+import { Box } from "@chakra-ui/core";
 
 interface MultiSelectProps {
   value: SelectOptionInterface[];
@@ -9,7 +10,7 @@ interface MultiSelectProps {
 
 const MultiSelect = (props: MultiSelectProps) => {
   return (
-    <div className="container">
+    <Box my={1}>
       <Select
         value={props.value}
         onChange={(values: SelectOptionInterface[]) =>
@@ -18,12 +19,7 @@ const MultiSelect = (props: MultiSelectProps) => {
         isMulti={true}
         options={props.options}
       />
-      <style jsx>{`
-        .container {
-          margin: 0.9em 0;
-        }
-      `}</style>
-    </div>
+    </Box>
   );
 };
 

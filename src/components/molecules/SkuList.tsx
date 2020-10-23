@@ -18,7 +18,7 @@ const SkuList = (props: SkuListProps): JSX.Element | null => {
 
   return (
     <Box
-      w="300px"
+      w={["100%", null, "300px"]}
       bg="foregroundColor"
       my={3}
       border="1px"

@@ -24,9 +24,9 @@ import {
   ModalBody,
   ModalCloseButton,
   Box,
-  Button,
-  ButtonGroup,
+  Stack,
 } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
 
 interface StateProps {
   selectedAttributes: SelectedAttribute[];
@@ -123,7 +123,7 @@ const SkuModal = (props: SkuModalProps) => {
   }, [props.open]);
 
   return (
-    <Modal isOpen={open} onClose={onClose} size={["xs","lg"]}>
+    <Modal isOpen={open} onClose={onClose} size={["xs", "lg"]}>
       <ModalOverlay />
       <ModalContent borderRadius={10}>
         <ModalHeader>Create SKUs</ModalHeader>
@@ -131,34 +131,36 @@ const SkuModal = (props: SkuModalProps) => {
         <ModalBody p={5}>
           <Box>{steps[currentStep]}</Box>
           <Box textAlign="center">
-            <ButtonGroup spacing={3}>
-              <Button
-                onClick={() => setCurrentStep(currentStep - 1)}
-                isDisabled={getBackButtonDisabled()}
-                variant="outline"
-                variantColor="primaryColorVariant"
-              >
-                Back
-              </Button>
-              {currentStep === 0 && (
+            <Stack isInline spacing={3} justify="center">
+              <Box>
                 <Button
+                  onClick={() => setCurrentStep(currentStep - 1)}
+                  isDisabled={getBackButtonDisabled()}
+                  variant="outline"
                   variantColor="primaryColorVariant"
-                  onClick={() => setCurrentStep(currentStep + 1)}
-                  isDisabled={getNextButtonDisabled()}
                 >
-                  Next
+                  Back
                 </Button>
-              )}
-              {currentStep === 1 && (
-                <Button
-                  variantColor="primaryColorVariant"
-                  onClick={handleGenerate}
-                  isDisabled={getCreateDisabled()}
-                >
-                  Create
-                </Button>
-              )}
-            </ButtonGroup>
+              </Box>
+              <Box>
+                {currentStep === 0 && (
+                  <Button
+                    onClick={() => setCurrentStep(currentStep + 1)}
+                    isDisabled={getNextButtonDisabled()}
+                  >
+                    Next
+                  </Button>
+                )}
+                {currentStep === 1 && (
+                  <Button
+                    onClick={handleGenerate}
+                    isDisabled={getCreateDisabled()}
+                  >
+                    Create
+                  </Button>
+                )}
+              </Box>
+            </Stack>
           </Box>
         </ModalBody>
       </ModalContent>

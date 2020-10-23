@@ -21,8 +21,10 @@ import {
   ModalBody,
   ModalCloseButton,
   Grid,
-  Button,
 } from "@chakra-ui/core";
+
+import Button from "components/atoms/Button";
+
 interface StateProps {
   open: boolean;
 }
@@ -61,7 +63,12 @@ const AttributeModal = (props: AttributeModalProps) => {
   };
 
   return (
-    <Modal isOpen={open} onClose={onClose} size="lg" scrollBehavior="inside">
+    <Modal
+      isOpen={open}
+      onClose={onClose}
+      size={["md", "lg"]}
+      scrollBehavior="inside"
+    >
       <ModalOverlay />
       <ModalContent borderRadius={10}>
         <ModalHeader>Create New Attribute</ModalHeader>
@@ -116,9 +123,7 @@ const AttributeModal = (props: AttributeModalProps) => {
                     label="Value"
                   />
                 </Grid>
-                <Button type="submit" variantColor="primaryColorVariant">
-                  Submit
-                </Button>
+                <Button type="submit">Submit</Button>
               </Form>
             )}
           </Formik>

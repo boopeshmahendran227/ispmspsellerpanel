@@ -39,8 +39,8 @@ import SectionCard from "components/atoms/SectionCard";
 import SectionHeader from "components/atoms/SectionHeader";
 import ImageUploader from "components/molecules/ImageUploader";
 import ValidationErrorMsg from "components/atoms/ValidationErrorMsg";
-import { Grid, Box,Checkbox,ButtonGroup } from "@chakra-ui/core";
-import Button, { ButtonType } from "components/atoms/Button"
+import { Grid, Box, Checkbox, Stack } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -112,7 +112,7 @@ const AddProduct = (props: AddProductProps) => {
   };
 
   return (
-    <Box px={2}>
+    <Box p={2} mb={3}>
       <PageHeader>Add Product</PageHeader>
       <Box maxW="1200px" m="auto">
         <Formik
@@ -145,7 +145,7 @@ const AddProduct = (props: AddProductProps) => {
             <Form>
               <SkuModal />
               <Grid
-                templateColumns={["1fr","200px 1fr"]}
+                templateColumns={["1fr", "200px 1fr"]}
                 alignItems="center"
                 fontSize="md"
                 maxW=" 700px"
@@ -233,7 +233,7 @@ const AddProduct = (props: AddProductProps) => {
               </Grid>
               <SkuInputTable />
               {values.skus.map((sku, index) => (
-                <div className="imageUploadContainer">
+                <Box mb={2}>
                   <SectionCard>
                     <SectionHeader>
                       SKU Id: {sku.skuId}(
@@ -258,32 +258,36 @@ const AddProduct = (props: AddProductProps) => {
                       name={`skus.${index}.images`}
                     />
                   </SectionCard>
-                </div>
+                </Box>
               ))}
               <TierPriceInput />
               <FAQInput />
               <SpecificationInput />
-             <ButtonGroup>
-                <Button
-                  disabled={values.skus.some((sku) =>
-                    sku.images.some((image) => image.isUploading)
-                  )}
-                  type={ButtonType.success}
-                  isSubmitButton={true}
-                >
-                  Submit
-                </Button>
-                <Button
-                  disabled={values.skus.some((sku) =>
-                    sku.images.some((image) => image.isUploading)
-                  )}
-                  onClick={resetForm}
-                  type={ButtonType.success}
-                  outlined={true}
-                >
-                  Clear
-                </Button>
-              </ButtonGroup>
+              <Stack spacing={3} isInline justify="center">
+                <Box>
+                  <Button
+                    isDisabled={values.skus.some((sku) =>
+                      sku.images.some((image) => image.isUploading)
+                    )}
+                    type="submit"
+                    variantColor="successColorVariant"
+                  >
+                    Submit
+                  </Button>
+                </Box>
+                <Box>
+                  <Button
+                    isDisabled={values.skus.some((sku) =>
+                      sku.images.some((image) => image.isUploading)
+                    )}
+                    onClick={resetForm}
+                    variant="outline"
+                    variantColor="dangerColorVariant"
+                  >
+                    Clear
+                  </Button>
+                </Box>
+              </Stack>
             </Form>
           )}
         </Formik>
