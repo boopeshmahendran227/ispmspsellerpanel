@@ -30,7 +30,7 @@ const ProductMainInfo = (props: ProductMainInfoProps): JSX.Element => {
         <Box fontWeight="bold">Short Description</Box>
         <Box>{shortDescription}</Box>
         <Box fontWeight="bold">Long Description</Box>
-        <Box wordBreak="break-all">{longDescription}</Box>
+        <Box>{longDescription}</Box>
       </Grid>
     </SectionCard>
   );
