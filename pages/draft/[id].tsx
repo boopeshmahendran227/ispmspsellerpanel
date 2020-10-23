@@ -10,7 +10,7 @@ import PageError from "components/atoms/PageError";
 import WithAuth from "components/atoms/WithAuth";
 import ProductMainInfo from "components/molecules/ProductMainInfo";
 import ProductPriceDetails from "components/molecules/ProductPriceDetails";
-import { Box, Heading, Stack } from "@chakra-ui/core";
+import { Box, Heading, Stack, Tag } from "@chakra-ui/core";
 
 const Draft = () => {
   const router = useRouter();
@@ -29,22 +29,21 @@ const Draft = () => {
 
   return (
     <Box p={2}>
-      <Heading size="md" my={5} textTransform="uppercase">
-        <Box as="span">Draft #{draft.id}</Box>
-        <Box
-          as="span"
-          borderRadius={2}
-          display="inline-block"
-          background="primaryColor"
-          px={4}
-          py={2}
-          color="white"
-          my={3}
-          textTransform="initial"
-        >
-          {draft.status}
+      <Stack spacing={3} isInline alignItems="baseline">
+        <Heading size="md" my={5} textTransform="uppercase">
+          <Box as="span">Draft #{draft.id}</Box>
+        </Heading>
+        <Box>
+          <Tag
+            variant="solid"
+            rounded="full"
+            size="sm"
+            variantColor="primaryColorVariant"
+          >
+            {draft.status}
+          </Tag>
         </Box>
-      </Heading>
+      </Stack>
       <Stack spacing={3}>
         <Box>
           <ProductMainInfo
@@ -60,13 +59,21 @@ const Draft = () => {
             maxPrice={draft.maxPrice}
           />
         </Box>
-        <SkuTable
-          attributeValues={draft.attributeValues}
-          skus={draft.skuDetails}
-        />
-        <Specification specification={draft.specification} />
-        <TierPrice tierPrice={draft.tierPrice} />
-        <FAQ faqs={draft.faqs} />
+        <Box>
+          <SkuTable
+            attributeValues={draft.attributeValues}
+            skus={draft.skuDetails}
+          />
+        </Box>
+        <Box>
+          <Specification specification={draft.specification} />
+        </Box>
+        <Box>
+          <TierPrice tierPrice={draft.tierPrice} />
+        </Box>
+        <Box>
+          <FAQ faqs={draft.faqs} />
+        </Box>
       </Stack>
     </Box>
   );

@@ -27,7 +27,8 @@ import EcosystemOption from "components/atoms/EcosystemOption";
 import FieldSelect from "components/molecules/FieldSelect";
 import FieldInput from "components/atoms/FieldInput";
 import api from "../../src/api";
-import { Box, Heading, Grid, Button, ButtonGroup } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
+import { Box, Heading, SimpleGrid, Stack } from "@chakra-ui/core";
 
 interface DispatchProps {
   createCoupon: (couponData: CouponRequestInterface) => void;
@@ -88,8 +89,8 @@ const CreateCoupon = (props: CreateCouponProps) => {
   return (
     <Box
       maxW="700px"
-      mx="auto"
-      my={[1,10]}
+      mx={[2, "auto"]}
+      my={[1, 10]}
       p={6}
       boxShadow="md"
       bg="foregroundColor"
@@ -158,17 +159,16 @@ const CreateCoupon = (props: CreateCouponProps) => {
         onSubmit={onSubmit}
       >
         {({ setFieldValue, values, resetForm }) => (
-          <Box>
+          <Box mx="auto">
             <Form>
-              <Grid templateColumns={["1fr","200px 300px"]}
-              alignItems="center">
+              <SimpleGrid columns={[1, 2]} alignItems="center">
                 <InputLabel label="Coupon Code" />
                 <Box position="relative">
                   <FieldInput name="couponCode" />
                   {isCheckingCouponCode && (
                     <Box
                       position="absolute"
-                      top="50%"
+                      top="60%"
                       right="5%"
                       transform="translateY(-50%)"
                     >
@@ -177,7 +177,7 @@ const CreateCoupon = (props: CreateCouponProps) => {
                   )}
                 </Box>
                 <InputLabel label="Coupon Discount Type" />
-                <Box >
+                <Box>
                   <Box>
                     <RadioButton
                       label="Fixed Amount"
@@ -213,24 +213,28 @@ const CreateCoupon = (props: CreateCouponProps) => {
                 <FieldDatePicker name="startDate" />
                 <InputLabel label="Valid Till" />
                 <FieldDatePicker name="endDate" />
-              </Grid>
-              <ButtonGroup spacing={4}>
-                <Button
-                  isDisabled={isCheckingCouponCode}
-                  type="submit"
-                  variantColor="successColorVariant"
-                >
-                  Submit
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => resetForm}
-                  type="reset"
-                  variantColor="dangerColorVariant"
-                >
-                  Clear
-                </Button>
-              </ButtonGroup>
+              </SimpleGrid>
+              <Stack isInline spacing={4} justify="center">
+                <Box>
+                  <Button
+                    isDisabled={isCheckingCouponCode}
+                    type="submit"
+                    variantColor="successColorVariant"
+                  >
+                    Submit
+                  </Button>
+                </Box>
+                <Box>
+                  <Button
+                    variant="outline"
+                    onClick={() => resetForm}
+                    type="reset"
+                    variantColor="dangerColorVariant"
+                  >
+                    Clear
+                  </Button>
+                </Box>
+              </Stack>
             </Form>
           </Box>
         )}

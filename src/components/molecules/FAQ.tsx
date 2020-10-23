@@ -2,18 +2,15 @@ import { FAQInterface } from "../../types/product";
 import SectionCard from "../atoms/SectionCard";
 import SectionHeader from "components/atoms/SectionHeader";
 import SectionHeaderContainer from "components/atoms/SectionHeaderContainer";
-import { Box, PseudoBox } from "@chakra-ui/core";
-
+import { Box } from "@chakra-ui/core";
 
 const Question = (props) => (
-  <PseudoBox my={2} fontWeight="bold" _before={{ content: "Q: " }}>
+  <Box my={2} fontWeight="bold" fontSize={["sm", "md"]}>
     {props.children}
-  </PseudoBox>
+  </Box>
 );
 
-const Answer = (props) => (
-  <PseudoBox _before={{ content: "A: " }}>{props.children}</PseudoBox>
-);
+const Answer = (props) => <Box fontSize={["sm", "md"]}>{props.children}</Box>;
 
 interface FAQProps {
   faqs: FAQInterface[];
@@ -34,8 +31,8 @@ const FAQ = (props: FAQProps) => {
       <Box>
         {faqs.map((item) => (
           <Box my={2}>
-            <Question>{item.question}</Question>
-            <Answer>{item.question}</Answer>
+            <Question>Q: {item.question}</Question>
+            <Answer>A: {item.question}</Answer>
           </Box>
         ))}
       </Box>

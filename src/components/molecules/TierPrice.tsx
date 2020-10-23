@@ -20,7 +20,7 @@ const TierPrice = (props: TierPriceProps) => {
       <SectionHeaderContainer>
         <SectionHeader>Tier Price</SectionHeader>
       </SectionHeaderContainer>
-      <List spacing={3}>
+      <List spacing={3} fontSize={["sm", "md"]}>
         {tierPrice.map((item, index) => (
           <ListItem key={index}>
             Buy {item.minQty} Nos at {item.discountPercentage}% off

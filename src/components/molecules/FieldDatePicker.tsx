@@ -11,7 +11,7 @@ const FieldDatePicker = (props: FieldDatePickerProps) => {
   return (
     <Field name={props.name}>
       {({ field }) => (
-        <Box as="span" my={2} className="container">
+        <Box my={2} w="100%" borderRadius={10}>
           <DatePicker
             value={field.value}
             onChange={(value) => {
