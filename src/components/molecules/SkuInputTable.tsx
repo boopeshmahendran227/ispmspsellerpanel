@@ -10,7 +10,8 @@ import FieldPriceInput from "../atoms/FieldPriceInput";
 import FieldPercentageInput from "../atoms/FieldPercentageInput";
 import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
 import SectionHeader from "../atoms/SectionHeader";
-import { Box, Divider, Button } from "@chakra-ui/core";
+import { Box, Divider } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
 
 interface DispatchProps {
   showSkuModal: () => void;
@@ -79,7 +80,7 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
   return (
     <FieldArray
       name="skus"
-      render={(arrayHelpers) =>
+      render={() =>
         skus.map((sku, skuIndex) => (
           <tr>
             <td>{sku.skuId}</td>
@@ -158,9 +159,7 @@ const SkuInputTable = (props: SkuInputTableProps) => {
         <Divider borderColor="borderColor.500" />
       </SectionHeaderContainer>
       <Box>
-        <Button variantColor="primaryColorVariant" onClick={props.showSkuModal}>
-          Generate Variants
-        </Button>
+        <Button onClick={props.showSkuModal}>Generate Variants</Button>
       </Box>
       {skus.length > 0 && (
         <SortableTable

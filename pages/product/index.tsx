@@ -19,7 +19,8 @@ import EcosystemOption from "components/atoms/EcosystemOption";
 import Select from "components/atoms/Select";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageContainer from "components/atoms/PageContainer";
-import { Flex, Box, Checkbox, Button, Stack } from "@chakra-ui/core";
+import { Box, Checkbox, Stack } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
 
 const Products = () => {
   const [searchText, setSearchText] = useState("");
@@ -111,24 +112,19 @@ const Products = () => {
         <Stack direction="row" spacing={[5, 3]}>
           <Box>
             <Link href="/product/new">
-              <Button variantColor="primaryColorVariant">Add Product</Button>
+              <Button>Add Product</Button>
             </Link>
           </Box>
           <Box>
             <Link href="/product/cloneProduct">
-              <Button
-                variantColor="primaryColorVariant"
-               
-              >
-                Clone Products
-              </Button>
+              <Button>Clone Products</Button>
             </Link>
           </Box>
         </Stack>
       </PageHeaderContainer>
       <Stack
         spacing={3}
-        my={5}
+        my={3}
         flexDirection={["column", "row"]}
         justify="space-between"
       >
@@ -143,13 +139,13 @@ const Products = () => {
         >
           <Checkbox
             mt={[5, 0]}
+            mr={2}
             fontSize={["xs", "md"]}
             isChecked={showOnlySelf}
             onChange={(e) => setShowOnlySelf(e.target.checked)}
           >
             Show Only My Products
           </Checkbox>
-
           <Box minW={["200px", "280px"]}>
             <Select
               value={currentEcosystem}

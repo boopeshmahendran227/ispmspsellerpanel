@@ -49,7 +49,7 @@ const SelectAttributeValues = (props: SelectAttributeValuesProps) => {
   return (
     <Box>
       <PageHeader>Step 2: Select Attribute Values </PageHeader>
-      <Text>
+      <Text fontSize={["xs", "sm", "md"]}>
         Select values from each attribute to include in the product. Each unique
         combination of values creates a unique Product SKUs
       </Text>
@@ -65,8 +65,8 @@ const SelectAttributeValues = (props: SelectAttributeValuesProps) => {
         const attributeValues = attribute.values || [];
 
         return (
-          <Box p={2} my={5}>
-            <Heading as="h3" fontSize="lg" fontWeight="bold">
+          <Box p={2} my={[2, 5]}>
+            <Heading size="md" fontWeight="bold">
               {attribute.name}
             </Heading>
             <MultiSelect

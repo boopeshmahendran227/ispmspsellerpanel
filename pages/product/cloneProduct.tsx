@@ -15,7 +15,8 @@ import { SelectOptionInterface, ProductCloneInterface } from "types/product";
 import ProductActions from "actions/product";
 import WithAuth from "components/atoms/WithAuth";
 import { connect } from "react-redux";
-import { Box, Grid, Button } from "@chakra-ui/core";
+import { Box, SimpleGrid } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
 
 interface DispatchProps {
   cloneProduct: (product: ProductCloneInterface) => void;
@@ -78,7 +79,7 @@ const CloneProduct = (props: CloneProductProps) => {
   return (
     <Box
       maxW="600px"
-      mx="auto"
+      mx={[2, "auto"]}
       my={[1, 10]}
       p={6}
       boxShadow="md"
@@ -87,7 +88,6 @@ const CloneProduct = (props: CloneProductProps) => {
       <PageHeaderContainer>
         <PageHeader>Product Clone</PageHeader>
       </PageHeaderContainer>
-
       <Formik
         initialValues={{
           currentEcosystem: null,
@@ -97,22 +97,21 @@ const CloneProduct = (props: CloneProductProps) => {
         onSubmit={onSubmit}
         validationSchema={ProductSchema}
       >
-        {({ values }) => (
+        {() => (
           <Form>
-            <Grid templateColumns={["1fr", " 200px 300px"]} alignItems="center">
+            <SimpleGrid columns={[1, 2]} alignItems="center">
               <InputLabel label="Current Ecosystem" />
               <FieldSelect
                 name="currentEcosystem"
                 options={currentEcosystems}
               />
-
               <InputLabel label="Seller Id" />
               <FieldInput name="sellerId" />
               <InputLabel label="Target Ecosystem" />
               <FieldSelect name="targetEcosystem" options={targetEcosystems} />
-            </Grid>
+            </SimpleGrid>
             <Box pt={1} pb={1} fontSize="md" textAlign="right">
-              <Button type="submit"  variantColor="successColorVariant">
+              <Button type="submit" variantColor="successColorVariant">
                 Submit
               </Button>
             </Box>

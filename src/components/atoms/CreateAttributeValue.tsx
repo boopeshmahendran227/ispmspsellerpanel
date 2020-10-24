@@ -1,7 +1,8 @@
 import ProductActions from "../../actions/product";
 import { connect } from "react-redux";
 import { useState } from "react";
-import { Flex, Input, Button, Link } from "@chakra-ui/core";
+import { Flex, Input, Link } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
 
 interface DispatchProps {
   addAttributeValue: (attributeId: number, value: string) => void;
@@ -40,9 +41,7 @@ const CreateAttributeValue = (props: CreateAttributeValueProps) => {
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
-          <Button variantColor="primaryColorVariant" onClick={handleAdd}>
-            Add
-          </Button>
+          <Button onClick={handleAdd}>Add</Button>
         </Flex>
       )}
     </Flex>
