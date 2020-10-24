@@ -67,7 +67,7 @@ const Orders = () => {
       <DeliveryCodeModal />
       <PageHeaderContainer>
         <PageHeader>Order Details</PageHeader>
-        <Box minW={["200px"]}>
+        <Box minW={["250px"]}>
           <Select
             value={currentEcosystem}
             onChange={(ecosystem) =>

@@ -19,7 +19,8 @@ import SectionCard from "components/atoms/SectionCard";
 import * as Yup from "yup";
 import ProductActions from "actions/product";
 import { connect } from "react-redux";
-import { Box, Grid, Stack, Button } from "@chakra-ui/core";
+import { Box, SimpleGrid, Stack } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
 
 interface DispatchProps {
   updateTierPrice: (
@@ -73,12 +74,12 @@ const Product = (props: ProductProps) => {
   }
 
   return (
-    <Box maxW="900px" margin="auto">
+    <Box maxW="900px" mx={[2, "auto"]} p={[1, 3]}>
       <Box my={3}>
         <BackLink href="/product">Products</BackLink>
         <PageHeader>{product.name}</PageHeader>
       </Box>
-      <Grid templateColumns="2fr 1fr" gridGap={2}>
+      <SimpleGrid columns={[1, null, null, 2]} spacing={2}>
         <Stack spacing={3}>
           <Box>
             <ProductMainInfo
@@ -106,9 +107,7 @@ const Product = (props: ProductProps) => {
                 {() => (
                   <Form>
                     <TierPriceInput />
-                    <Button type="submit" variantColor="primaryColorVariant">
-                      SAVE
-                    </Button>
+                    <Button type="submit">SAVE</Button>
                   </Form>
                 )}
               </Formik>
@@ -124,14 +123,20 @@ const Product = (props: ProductProps) => {
             />
           </Box>
         </Stack>
-        <Stack>
-          <ProductAvailability
-            ecosystems={product.visibilityInfo.ecosystemDetail}
-          />
-          <TierPrice tierPrice={product.tierPrice} />
-          <FAQ faqs={product.faqs} />
+        <Stack spacing={3}>
+          <Box>
+            <ProductAvailability
+              ecosystems={product.visibilityInfo.ecosystemDetail}
+            />
+          </Box>
+          <Box>
+            <TierPrice tierPrice={product.tierPrice} />
+          </Box>
+          <Box>
+            <FAQ faqs={product.faqs} />
+          </Box>
         </Stack>
-      </Grid>
+      </SimpleGrid>
       {/* <Specification specification={product.specification} /> */}
     </Box>
   );

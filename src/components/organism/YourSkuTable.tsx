@@ -5,12 +5,7 @@ import Link from "next/link";
 import { ProductDetailSkuDetail } from "types/product";
 import YourSkuMini from "components/molecules/YourSkuMini";
 import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
-import styled from "styled-components";
-
-const FlexContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
+import { Flex } from "@chakra-ui/core";
 
 interface YourVariantsTableProps {
   productId: number;
@@ -29,7 +24,7 @@ const YourVariantsTable = (
   return (
     <SectionCard>
       <SectionHeaderContainer>
-        <FlexContainer>
+        <Flex justify="space-between" w="100%">
           <SectionHeader>Your Variants</SectionHeader>
           <Link
             href="/product/[id]/sku/new"
@@ -37,7 +32,7 @@ const YourVariantsTable = (
           >
             <Button>Add New Variant</Button>
           </Link>
-        </FlexContainer>
+        </Flex>
       </SectionHeaderContainer>
       {skus.map((sku) => (
         <YourSkuMini key={sku.skuId} productId={productId} sku={sku} />

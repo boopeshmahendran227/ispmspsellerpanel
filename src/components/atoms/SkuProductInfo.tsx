@@ -13,10 +13,10 @@ const SkuProductInfo = (props: SkuProductInfoProps): JSX.Element => {
   const { productId, productName, image } = props;
 
   return (
-    <Box w="300px">
+    <Box w={["100%", null, "300px"]}>
       <Card>
-        <Flex>
-          <Box w="50px" h="50px" m="1em">
+        <Flex justify="space-between">
+          <Box w="50px" h="50px" m={2}>
             <RelativeImg src={image} />
           </Box>
           <Box>
@@ -25,7 +25,7 @@ const SkuProductInfo = (props: SkuProductInfoProps): JSX.Element => {
               <Link href="/product/[id]" as={`/product/${productId}`}>
                 <ChakraLink
                   display="inline-block"
-                  m="0.6em 0"
+                  my={2}
                   color="secondaryColor"
                   textDecoration="none"
                 >
