@@ -1,7 +1,7 @@
 import { ProductDetailQuoteInterface } from "../../types/quote";
 import { formatPrice } from "utils/misc";
 import ProductCard from "../atoms/ProductCard";
-import { Flex, Box, Stack } from "@chakra-ui/core";
+import { Flex, Box, Stack, Grid } from "@chakra-ui/core";
 
 interface QuoteProductProps {
   productDetail: ProductDetailQuoteInterface;
@@ -11,7 +11,12 @@ const QuoteProduct = (props: QuoteProductProps) => {
   const { productDetail } = props;
 
   return (
-    <Flex m="0.5em" p="0.5em" justify="space-between">
+    <Grid
+      m={1}
+      p={1}
+      gridTemplateColumns={["1fr", "1fr 0.5fr 0.5fr"]}
+      gap={[2, 3]}
+    >
       <Box>
         <ProductCard
           name={productDetail.productDetails.name}
@@ -45,8 +50,8 @@ const QuoteProduct = (props: QuoteProductProps) => {
           ]}
         />
       </Box>
-      <Box fontSize="0.9rem" lineHeight="1.4">
-        <Box fontSize="1.1rem" color="warningColor">
+      <Box fontSize={["sm"]} lineHeight="1.4" textAlign={["center", "left"]}>
+        <Box fontSize={["md"]} color="warningColor">
           Requested Quote
         </Box>
         <Box>
@@ -54,8 +59,8 @@ const QuoteProduct = (props: QuoteProductProps) => {
           {productDetail.qty} = {formatPrice(productDetail.price)}
         </Box>
       </Box>
-      <Box fontSize="0.9rem" lineHeight="1.4">
-        <Box fontSize="1.1rem" color="successColor">
+      <Box fontSize={["sm"]} lineHeight="1.4" textAlign={["center", "left"]}>
+        <Box fontSize={["md"]} color="successColor">
           Responded Quote
         </Box>
         <Box>
@@ -73,7 +78,7 @@ const QuoteProduct = (props: QuoteProductProps) => {
           )}
         </Box>
       </Box>
-    </Flex>
+    </Grid>
   );
 };
 

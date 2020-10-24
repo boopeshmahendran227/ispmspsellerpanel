@@ -12,10 +12,10 @@ const OrderInformation = (props: OrderInformationProps) => {
   return (
     <Box p={3} border="1px solid #ccc" bg="white">
       <Stack spacing={3}>
-        <Heading fontWeight="bold" fontSize="lg">
+        <Heading fontWeight="bold" size={"md"}>
           Order Information (#{order.id})
         </Heading>
-        <Heading size="md">Order Summary</Heading>
+        <Heading size={"sm"}>Order Summary</Heading>
         <Box>
           <OrderSummary order={order} />
         </Box>

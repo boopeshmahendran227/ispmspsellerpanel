@@ -38,14 +38,19 @@ const SureModal = (props: SureModalProps) => {
   };
 
   return (
-    <Modal isOpen={props.data.open} onClose={props.onCancelClicked} isCentered>
+    <Modal
+      isOpen={props.data.open}
+      onClose={props.onCancelClicked}
+      size="sm"
+      isCentered
+    >
       <ModalOverlay />
       <ModalContent borderRadius={10}>
-        <ModalHeader>{props.data.header}</ModalHeader>
+        <ModalHeader fontSize={["md", "xl"]}>{props.data.header}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Box>{props.data.body}</Box>
-          <Box color="dangerColor" my={2}>
+          <Box color="dangerColor" my={2} fontSize={["xs", "md"]}>
             (Note: This action is irreversible)
           </Box>
           <ButtonGroup textAlign="center" spacing={3} my={3}>

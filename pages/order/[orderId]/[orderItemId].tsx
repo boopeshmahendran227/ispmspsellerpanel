@@ -22,15 +22,8 @@ import WithAuth from "components/atoms/WithAuth";
 import DeliveryCodeModal from "components/molecules/DeliveryCodeModal";
 import { transformOrderItem } from "../../../src/transformers/orderItem";
 import BackLink from "components/atoms/BackLink";
-import {
-  Box,
-  Heading,
-  Grid,
-  Divider,
-  Stack,
-  Tag,
-  Button,
-} from "@chakra-ui/core";
+import { Box, Heading, Grid, Divider, Stack, Tag, Flex } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
 
 interface DispatchProps {
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
@@ -50,7 +43,11 @@ const Name = (props) => (
   </Box>
 );
 
-const Value = (props) => <Box  py={2} px={4}>{props.children}</Box>;
+const Value = (props) => (
+  <Box py={2} px={4}>
+    {props.children}
+  </Box>
+);
 
 type OrderProps = DispatchProps;
 
@@ -82,17 +79,21 @@ const Order = (props: OrderProps) => {
   );
 
   return (
-    <Box my={10} mx="auto" maxW="1100px">
+    <Box
+      my={10}
+      mx={[2, "auto"]}
+      maxW={["800px", null, "700px", "800px", "1100px"]}
+    >
       <DeliveryCodeModal />
       <BackLink href="/order">Back to Orders</BackLink>
-      <Stack isInline spacing={3} my={4} align="baseline">
-        <Heading size="lg">
+      <Flex my={4} align="baseline" direction={["column", "row"]}>
+        <Heading size="lg" mx={2}>
           <Box as="span">
             #{order.id}-{orderItem.id}
           </Box>
           <Box
             as="span"
-            fontSize="md"
+            fontSize={["sm", "md"]}
             color="secondaryTextColor"
             fontWeight="normal"
           >
@@ -104,34 +105,33 @@ const Order = (props: OrderProps) => {
         </Heading>
         <Box>
           <Tag
+            m={2}
             variant="solid"
             rounded="full"
-            size="md"
+            fontSize={["xs", "md"]}
             variantColor="primaryColorVariant"
           >
             {getOrderStatusText(orderItem.orderItemStatus)}
           </Tag>
+          <Tag
+            m={2}
+            variant="solid"
+            rounded="full"
+            fontSize={["xs", "md"]}
+            variantColor={getPaymentModeColor(
+              orderItem.order.paymentSplits[0].paymentMode
+            )}
+          >
+            {getPaymentText(orderItem.order.paymentSplits[0].paymentMode)}
+          </Tag>
         </Box>
-        <Tag
-          variant="solid"
-          rounded="full"
-          size="md"
-          variantColor={getPaymentModeColor(
-            orderItem.order.paymentSplits[0].paymentMode
-          )}
-        >
-          {getPaymentText(orderItem.order.paymentSplits[0].paymentMode)}
-        </Tag>
-      </Stack>
-      <Button
-        my={5}
-        variantColor="primaryColorVariant"
-        size="md"
-        onClick={() => window.open(`/invoice/${orderItem.id}`)}
-      >
-        View Invoice
-      </Button>
-      <Grid templateColumns="1fr 300px" gap={5}>
+      </Flex>
+      <Box my={2}>
+        <Button onClick={() => window.open(`/invoice/${orderItem.id}`)}>
+          View Invoice
+        </Button>
+      </Box>
+      <Grid templateColumns={["1fr", null, null, "1fr 300px"]} gap={5}>
         <Box flex="1">
           <OrderItemDetail
             orderItem={orderItem}
@@ -149,7 +149,7 @@ const Order = (props: OrderProps) => {
             <ShippingInformationContainer orderItem={orderItem} />
           </Box>
         </Box>
-        <Stack spacing={4}>
+        <Stack spacing={4} fontSize={["sm", "md"]}>
           <Box bg="foregroundColor" border="1px" borderColor="#ccc">
             <Heading size="md" my={4} mx={3}>
               Customer Information

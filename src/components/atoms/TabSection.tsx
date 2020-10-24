@@ -11,18 +11,20 @@ const TabSection = (props: TabSectionProps) => {
   const [tabIndex, setTabIndex] = useState(0);
 
   return (
-    <Tabs onChange={(index) => setTabIndex(index)}>
-      <TabList>
-        {props.headingList.map((heading) => (
-          <Tab fontSize={["xs","md"]}>{heading}</Tab>
-        ))}
-      </TabList>
-      <TabPanels>
-        {props.contentList.map((content) => (
-          <TabPanel>{content}</TabPanel>
-        ))}
-      </TabPanels>
-    </Tabs>
+    <Box overflowX="auto">
+      <Tabs onChange={(index) => setTabIndex(index)}>
+        <TabList>
+          {props.headingList.map((heading) => (
+            <Tab fontSize={["xs", "md"]}>{heading}</Tab>
+          ))}
+        </TabList>
+        <TabPanels fontSize={["xs", "md"]}>
+          {props.contentList.map((content) => (
+            <TabPanel>{content}</TabPanel>
+          ))}
+        </TabPanels>
+      </Tabs>
+    </Box>
   );
 };
 
