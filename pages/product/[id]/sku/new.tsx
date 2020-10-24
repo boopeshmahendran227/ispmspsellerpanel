@@ -126,15 +126,15 @@ const Sku = (props: SkuProps) => {
   };
 
   return (
-    <Box maxW="900px" m="auto">
+    <Box maxW="900px" m={[2, null, null, "auto"]}>
       <Box my={3}>
         <BackLink href="/product/[id]" as={`/product/${product.id}`}>
           Back to Product
         </BackLink>
         <PageHeader>Add New Variant</PageHeader>
       </Box>
-      <Stack direction="row" spacing={3}>
-        <Box>
+      <Grid gridTemplateColumns={["1fr", "0.5fr 1fr"]} gap={3}>
+        <Box mx="full">
           <SkuProductInfo
             productId={product.id}
             productName={product.name}
@@ -145,7 +145,7 @@ const Sku = (props: SkuProps) => {
           />
           <SkuList productId={product.id} skus={product.skuDetails} />
         </Box>
-        <Box flex={1} mb={3} ml={3}>
+        <Box flex={1} mb={3}>
           <Formik
             initialValues={
               skuToCopyFrom
@@ -223,7 +223,7 @@ const Sku = (props: SkuProps) => {
           >
             {({ setFieldValue, values }) => (
               <Form>
-                <Stack spacing={5}>
+                <Stack spacing={[3, 5]}>
                   <Box>
                     <SectionCard>
                       <SectionHeader>Sku Details</SectionHeader>
@@ -295,19 +295,21 @@ const Sku = (props: SkuProps) => {
                     <SkuDimensionsInputContainer />
                   </Box>
                 </Stack>
-                <Button
-                  disabled={values.images.some(
-                    (image) => image.isUploading === true
-                  )}
-                  isSubmitButton={true}
-                >
-                  Save
-                </Button>
+                <Box mt={3}>
+                  <Button
+                    isDisabled={values.images.some(
+                      (image) => image.isUploading === true
+                    )}
+                    type="submit"
+                  >
+                    Save
+                  </Button>
+                </Box>
               </Form>
             )}
           </Formik>
         </Box>
-      </Stack>
+      </Grid>
     </Box>
   );
 };

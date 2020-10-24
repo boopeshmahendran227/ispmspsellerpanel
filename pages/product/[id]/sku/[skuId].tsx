@@ -21,7 +21,6 @@ import SkuActions from "actions/sku";
 import { UpdateSkuInterface } from "types/sku";
 import Button from "components/atoms/Button";
 import * as Yup from "yup";
-import styled from "styled-components";
 import SkuDimensionsInputContainer from "components/molecules/SkuDimensionsInputContainer";
 import SkuInventoryInputContainer from "components/molecules/SkuInventoryInputContainer";
 import SkuPricingInputContainer from "components/molecules/SkuPricingInputContainer";
@@ -30,7 +29,7 @@ import FieldPercentageInput from "components/atoms/FieldPercentageInput";
 import ValidationErrorMsg from "components/atoms/ValidationErrorMsg";
 import { getProductImageUrl } from "utils/url";
 import ImageUploader from "components/molecules/ImageUploader";
-import { Box, Text, Stack, Grid, FormLabel } from "@chakra-ui/core";
+import { Box, Text, Stack, SimpleGrid, Grid, FormLabel } from "@chakra-ui/core";
 
 interface DispatchProps {
   updateSku: (sku: UpdateSkuInterface) => void;
@@ -109,15 +108,15 @@ const Sku = (props: SkuProps): JSX.Element => {
   };
 
   return (
-    <Box maxW="900px" m="auto">
+    <Box maxW="900px" m={[2, null, null, "auto"]}>
       <Box my={3}>
         <BackLink href="/product/[id]" as={`/product/${product.id}`}>
           Back to Product
         </BackLink>
         <PageHeader>{currentSkuId}</PageHeader>
       </Box>
-      <Stack direction="row" spacing={3}>
-        <Box>
+      <Grid gridTemplateColumns={["1fr", "0.5fr 1fr"]} gap={3}>
+        <Box w="full">
           <SkuProductInfo
             productId={product.id}
             productName={product.name}
@@ -129,7 +128,7 @@ const Sku = (props: SkuProps): JSX.Element => {
             currentSkuId={currentSkuId}
           />
         </Box>
-        <Box flex="1" mb={3} ml={3}>
+        <Box flex="1" mb={3}>
           <Formik
             initialValues={{
               images: currentSku.imageRelativePaths.map((imageRelativePath) => {
@@ -177,66 +176,89 @@ const Sku = (props: SkuProps): JSX.Element => {
           >
             {({ setFieldValue, values }) => (
               <Form>
-                <Stack>
-                  <SectionCard>
-                    <SectionHeader>Options</SectionHeader>
-                    {attributes.map((attribute, index) => (
-                      <Fragment key={index}>
-                        <label>{attribute.attributeName}</label>
-                        <FieldSelect
-                          disabled={true}
-                          name={`attributes.${index}.value`}
-                          options={attribute.attributeValues.map((value) => ({
-                            value: value.valueId,
-                            label: value.value,
-                          }))}
-                        />
-                      </Fragment>
-                    ))}
-                  </SectionCard>
-                  <SectionCard>
-                    <ImageUploader
-                      value={values.images as EditImageInterface[]}
-                      onChange={(value) => setFieldValue("images", value)}
-                    />
-                  </SectionCard>
-                  <ErrorMessage
-                    component={ValidationErrorMsg}
-                    name={"images"}
-                  />
-                  <SkuPricingInputContainer />
-                  <SectionCard>
-                    <SectionHeader>Special Discount</SectionHeader>
-                    <Grid templateColumns="1fr 1fr" gap={2}>
-                      <Box>
-                        <FormLabel>Special Discount Price</FormLabel>
-                        <FieldNumInput name="specialDiscount" />
-                      </Box>
-                      <Box>
-                        <FormLabel>Special Discount Percentage</FormLabel>
-                        <FieldPercentageInput name="specialDiscountPercentage" />
-                      </Box>
-                    </Grid>
-                  </SectionCard>
-                  <SkuInventoryInputContainer />
-                  <SectionCard>
-                    <SectionHeader>Visibility</SectionHeader>
-                    <Text mt={1} display="inline-block">
-                      Ecosystem
-                    </Text>
-                    <FieldEcosystemMultiInput
-                      name="ecosystemIds"
-                      ecosystemData={ecosystemData}
-                    />
-                  </SectionCard>
-                  <SkuDimensionsInputContainer />
+                <Stack spacing={[3, 5]}>
+                  <Box>
+                    <SectionCard>
+                      <SectionHeader>Options</SectionHeader>
+                      {attributes.map((attribute, index) => (
+                        <Fragment key={index}>
+                          <FormLabel>{attribute.attributeName}</FormLabel>
+                          <FieldSelect
+                            disabled={true}
+                            name={`attributes.${index}.value`}
+                            options={attribute.attributeValues.map((value) => ({
+                              value: value.valueId,
+                              label: value.value,
+                            }))}
+                          />
+                        </Fragment>
+                      ))}
+                    </SectionCard>
+                  </Box>
+                  <Box>
+                    <SectionCard>
+                      <ImageUploader
+                        value={values.images as EditImageInterface[]}
+                        onChange={(value) => setFieldValue("images", value)}
+                      />
+                      <ErrorMessage
+                        component={ValidationErrorMsg}
+                        name={"images"}
+                      />
+                    </SectionCard>
+                  </Box>
+                  <Box>
+                    <SkuPricingInputContainer />
+                  </Box>
+                  <Box>
+                    <SectionCard>
+                      <SectionHeader>Special Discount</SectionHeader>
+                      <SimpleGrid columns={2} spacing={2}>
+                        <Box>
+                          <FormLabel>Special Discount Price</FormLabel>
+                          <FieldNumInput name="specialDiscount" />
+                        </Box>
+                        <Box>
+                          <FormLabel>Special Discount Percentage</FormLabel>
+                          <FieldPercentageInput name="specialDiscountPercentage" />
+                        </Box>
+                      </SimpleGrid>
+                    </SectionCard>
+                  </Box>
+                  <Box>
+                    <SkuInventoryInputContainer />
+                  </Box>
+                  <Box>
+                    <SectionCard>
+                      <SectionHeader>Visibility</SectionHeader>
+                      <Text mt={1} display="inline-block">
+                        Ecosystem
+                      </Text>
+                      <FieldEcosystemMultiInput
+                        name="ecosystemIds"
+                        ecosystemData={ecosystemData}
+                      />
+                    </SectionCard>
+                  </Box>
+                  <Box>
+                    <SkuDimensionsInputContainer />
+                  </Box>
                 </Stack>
-                <Button isSubmitButton={true}>Save</Button>
+                <Box my={3}>
+                  <Button
+                    isDisabled={values.images.some(
+                      (image) => image.isUploading
+                    )}
+                    type="submit"
+                  >
+                    Save
+                  </Button>
+                </Box>
               </Form>
             )}
           </Formik>
         </Box>
-      </Stack>
+      </Grid>
     </Box>
   );
 };
