@@ -279,18 +279,16 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
       mb={3}
       p={3}
     >
-      <Box textAlign="right" p={3} fontSize={["md", "lg"]} color={color}>
+      <Box textAlign="right" p={3} fontSize={["sm", "md", "lg"]} color={color}>
         <Box as="span">{orderText}</Box>
         <Box as="span">
           {" "}
           {moment
-
             .utc(latestStatus.createdDateTime)
             .local()
             .format("MMM DD YYYY")}
         </Box>
       </Box>
-
       <Box pt={1} px={1}>
         <Box>
           <ProductCard
