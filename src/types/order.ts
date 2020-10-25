@@ -16,6 +16,14 @@ import { ProductAttributeValue } from "./product";
 import { OrderDiscountInterface } from "../types/discount";
 import { PaymentMode } from "./invoice";
 
+export enum OrderStatusFilter {
+  AllOrderItems,
+  OpenOrderItems,
+  DeliveredOrderItems,
+  CancelledOrderItems,
+  ReturnedOrderItems,
+}
+
 export enum OrderStatus {
   Created = "Created",
   PaymentSuccess = "PaymentSuccess",

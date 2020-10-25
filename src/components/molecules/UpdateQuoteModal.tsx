@@ -19,10 +19,10 @@ import {
   ModalBody,
   ModalCloseButton,
   Box,
-  Button,
-  ButtonGroup,
-  Grid,
+  SimpleGrid,
+  Stack,
 } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
 
 interface StateProps {
   open: boolean;
@@ -78,12 +78,12 @@ const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
   };
 
   return (
-    <Modal isOpen={props.open} onClose={props.onClose}>
+    <Modal isOpen={props.open} onClose={props.onClose} size={["xs", "md"]}>
       <ModalOverlay />
-      <ModalContent borderRadius="16px">
-        <ModalHeader>Update Quote</ModalHeader>
+      <ModalContent borderRadius={10} p={3}>
+        <ModalHeader fontSize={["md", "lg"]}>Update Quote</ModalHeader>
         <ModalCloseButton />
-        <ModalBody p="1em">
+        <ModalBody>
           <Formik
             initialValues={{
               quoteItems: currentQuote.productDetails.map(
@@ -135,10 +135,7 @@ const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
                                   },
                                 ]}
                               />
-                              <Grid
-                                templateColumns="200px 1fr"
-                                margin="0.3em 0"
-                              >
+                              <SimpleGrid columns={[1, 2]} alignItems="center">
                                 <InputLabel label="Updated Total Quote Value" />
                                 <FieldPriceInput
                                   name={`quoteItems[${index}].finalTotalPrice`}
@@ -151,7 +148,7 @@ const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
                             )})
                               `}
                                 />
-                              </Grid>
+                              </SimpleGrid>
                             </Box>
                           )
                         )}
@@ -159,44 +156,26 @@ const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
                     )}
                   />
                 </Box>
-                <ButtonGroup>
-                  <Button type="submit" variantColor="primaryColorVariant">
-                    Update Quote and notify customer
-                  </Button>
-                  <Button
-                    variant="outline"
-                    variantColor="successColorVariant"
-                    onClick={handleCancelClicked}
-                  >
-                    Cancel
-                  </Button>
-                </ButtonGroup>
+                <Stack spacing={3} mt={3}>
+                  <Box>
+                    <Button type="submit">
+                      Update Quote and notify customer
+                    </Button>
+                  </Box>
+                  <Box>
+                    <Button
+                      variant="outline"
+                      variantColor="dangerColorVariant"
+                      onClick={handleCancelClicked}
+                    >
+                      Cancel
+                    </Button>
+                  </Box>
+                </Stack>
               </Form>
             )}
           </Formik>
         </ModalBody>
-
-        {/* <style jsx>{`
-        header {
-          margin: 1em 0;
-          font-weight: bold;
-          font-size: 1.3rem;
-          text-transform: uppercase;
-        }
-        .container {
-          margin: 1em;
-          min-width: 450px;
-        }
-        .buttonContainer {
-          margin-top: 1em;
-          text-align: right;
-        }
-        .gridContainer {
-          display: grid;
-          grid-template-columns: 200px 1fr;
-          margin: 0.3em 0;
-        }
-      `}</style> */}
       </ModalContent>
     </Modal>
   );

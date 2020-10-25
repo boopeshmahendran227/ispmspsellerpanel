@@ -11,11 +11,15 @@ const OrderSummary = (props: OrderSummaryProps) => {
   const { order } = props;
 
   return (
-    <Grid templateColumns="100px 100px" fontSize="md" fontWeight="normal">
+    <Grid
+      templateColumns="100px 100px"
+      fontSize={["sm", "md"]}
+      fontWeight="normal"
+    >
       <Box as="span" my={2} fontWeight="bold">
         Sub Total
       </Box>
-      <Box as="span" textAlign="right">
+      <Box as="span" my={2} textAlign="right">
         {formatPrice(
           _.chain(order.items)
             .map((item) => item.discountedPrice)

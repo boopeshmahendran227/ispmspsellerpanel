@@ -13,9 +13,9 @@ import {
   ModalBody,
   ModalCloseButton,
   Box,
-  Button,
   Heading,
 } from "@chakra-ui/core";
+import Button from "../atoms/Button";
 
 interface StateProps {
   open: boolean;
@@ -35,7 +35,12 @@ const DeliveryCodeModal = (props: DeliveryCodeModalProps) => {
   };
 
   return (
-    <Modal isOpen={props.open} onClose={props.onCancel} size="sm" isCentered>
+    <Modal
+      isOpen={props.open}
+      onClose={props.onCancel}
+      size={["xs", "sm"]}
+      isCentered
+    >
       <ModalOverlay />
       <ModalContent borderRadius={10}>
         <ModalHeader>Delivery Code</ModalHeader>
@@ -58,9 +63,7 @@ const DeliveryCodeModal = (props: DeliveryCodeModalProps) => {
               <Form>
                 <FieldInput name="deliveryCode" />
                 <Box textAlign="center" my={3}>
-                  <Button type="submit" variantColor="primaryColorVariant">
-                    Submit
-                  </Button>
+                  <Button type="submit">Submit</Button>
                 </Box>
               </Form>
             )}

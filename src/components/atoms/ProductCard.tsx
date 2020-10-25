@@ -33,8 +33,8 @@ const ProductCard = (props: ProductCardProps) => {
         <Grid
           mt={1}
           color="secondaryTextColor"
-          fontSize={["xs", null, "sm"]}
-          templateColumns="80px 1fr"
+          fontSize={["xs", null, null, "sm"]}
+          templateColumns="90px 1fr"
           gridRowGap={1}
         >
           {Array.isArray(metaInfo) &&

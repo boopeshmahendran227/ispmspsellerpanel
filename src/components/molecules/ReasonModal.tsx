@@ -14,9 +14,9 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
-  Button,
   Box,
 } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
 
 interface StateProps {
   data: ReasonModalData;
@@ -38,14 +38,18 @@ const ReasonModal = (props: ReasonModalProps) => {
     <Modal
       isOpen={props.data.open}
       onClose={props.onCancel}
-      size="md"
+      size={["xs", "md"]}
       isCentered
     >
       <ModalOverlay />
-      <ModalContent borderRadius={10}>
-        <ModalHeader>{props.data.header}</ModalHeader>
+      <ModalContent borderRadius={10} px={2}>
+        <ModalHeader fontSize="lg" px={1}>
+          {props.data.header}
+        </ModalHeader>
         <ModalCloseButton />
-        <ModalHeader fontSize="md">{props.data.subHeader}</ModalHeader>
+        <ModalHeader fontSize="md" px={1}>
+          {props.data.subHeader}
+        </ModalHeader>
         <ModalBody>
           <Formik
             initialValues={{
@@ -83,9 +87,7 @@ const ReasonModal = (props: ReasonModalProps) => {
                   )}
                 </Field>
                 <Box my={3}>
-                  <Button type="submit" variantColor="primaryColorVariant">
-                    Submit
-                  </Button>
+                  <Button type="submit">Submit</Button>
                 </Box>
               </Form>
             )}

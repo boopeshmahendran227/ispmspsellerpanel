@@ -1,6 +1,7 @@
 import {
   OrderInterface,
   OrderStatus,
+  OrderStatusFilter,
   TransformedOrderItemInterface,
 } from "types/order";
 import OrderActions from "actions/order";
@@ -29,7 +30,12 @@ import ProductOrdersContainer from "components/molecules/ProductOrdersContainer"
 import Loader from "components/atoms/Loader";
 import { transformOrderItem } from "../../transformers/orderItem";
 import _ from "lodash";
-import { Button, ButtonGroup } from "@chakra-ui/core";
+import { Box, Button, ButtonGroup } from "@chakra-ui/core";
+import MobileMediaQuery from "components/atoms/MobileMediaQuery";
+import DesktopMediaQuery from "components/atoms/DesktopMediaQuery";
+import Select from "components/atoms/Select";
+import { useState } from "react";
+import { SelectOptionInterface } from "types/product";
 
 interface OwnProps {
   orderData: PaginatedDataInterface<OrderInterface>;
@@ -51,7 +57,32 @@ interface DispatchProps {
 
 type OrdersContainerProps = OwnProps & DispatchProps;
 
+const statusFilters: SelectOptionInterface[] = [
+  {
+    value: OrderStatusFilter.AllOrderItems,
+    label: "All Orders",
+  },
+  {
+    value: OrderStatusFilter.OpenOrderItems,
+    label: "Open Orders",
+  },
+  {
+    value: OrderStatusFilter.DeliveredOrderItems,
+    label: "Delivered Orders",
+  },
+  {
+    value: OrderStatusFilter.CancelledOrderItems,
+    label: "Cancelled Orders ",
+  },
+  {
+    value: OrderStatusFilter.ReturnedOrderItems,
+    label: "returned Orders",
+  },
+];
+
 const OrdersContainer = (props: OrdersContainerProps) => {
+  const [filter, setFilter] = useState(statusFilters[0]);
+
   const getTableHeaders = () => {
     return [
       {
@@ -114,13 +145,16 @@ const OrdersContainer = (props: OrdersContainerProps) => {
           <ButtonGroup spacing={3}>
             <Button
               size="sm"
+              fontSize={["xs", "md"]}
               variantColor="successColorVariant"
               onClick={(e) => handleClick(e, props.markAsProcessing)}
             >
               Mark as Processing
             </Button>
             <Button
+              mt={[2, null, null, null, 0]}
               size="sm"
+              fontSize={["xs", "md"]}
               variantColor="dangerColorVariant"
               variant="outline"
               onClick={(e) => handleClick(e, props.cancelOrderItem)}
@@ -134,6 +168,7 @@ const OrdersContainer = (props: OrdersContainerProps) => {
           return (
             <ButtonGroup spacing={3}>
               <Button
+                fontSize={["xs", "md"]}
                 variantColor="successColorVariant"
                 onClick={(e) =>
                   handleClick(e, props.markPackageReadyForCollection)
@@ -143,6 +178,8 @@ const OrdersContainer = (props: OrdersContainerProps) => {
                 Mark Package Ready For Collection
               </Button>
               <Button
+                mt={[2, null, null, null, 0]}
+                fontSize={["xs", "md"]}
                 size="sm"
                 variantColor="dangerColorVariant"
                 variant="outline"
@@ -156,6 +193,7 @@ const OrdersContainer = (props: OrdersContainerProps) => {
         return (
           <ButtonGroup spacing={3}>
             <Button
+              fontSize={["xs", "md"]}
               variantColor="successColorVariant"
               onClick={(e) => handleClick(e, props.markAsShipping)}
               size="sm"
@@ -163,6 +201,8 @@ const OrdersContainer = (props: OrdersContainerProps) => {
               Mark as Shipping
             </Button>
             <Button
+              mt={[2, null, null, null, 0]}
+              fontSize={["xs", "md"]}
               size="sm"
               variantColor="dangerColorVariant"
               variant="outline"
@@ -176,6 +216,7 @@ const OrdersContainer = (props: OrdersContainerProps) => {
         return (
           <ButtonGroup spacing={3}>
             <Button
+              fontSize={["xs", "md"]}
               variantColor="successColorVariant"
               onClick={(e) => handleClick(e, props.markAsShippingComplete)}
               my={2}
@@ -184,6 +225,8 @@ const OrdersContainer = (props: OrdersContainerProps) => {
               Mark as Delivered & Cash Received
             </Button>
             <Button
+              mt={[2, null, null, null, 0]}
+              fontSize={["xs", "md"]}
               size="sm"
               variantColor="dangerColorVariant"
               variant="outline"
@@ -198,13 +241,16 @@ const OrdersContainer = (props: OrdersContainerProps) => {
           <ButtonGroup spacing={3}>
             <Button
               size="sm"
+              fontSize={["xs", "md"]}
               variantColor="successColorVariant"
               onClick={(e) => handleClick(e, props.markAsShippingComplete)}
             >
               Mark as Delivered
             </Button>
             <Button
+              mt={[2, null, null, null, 0]}
               size="sm"
+              fontSize={["xs", "md"]}
               onClick={(e) => handleClick(e, props.cancelOrderItem)}
               variantColor="dangerColorVariant"
               variant="outline"
@@ -218,13 +264,16 @@ const OrdersContainer = (props: OrdersContainerProps) => {
           <ButtonGroup spacing={3}>
             <Button
               size="sm"
+              fontSize={["xs", "md"]}
               onClick={(e) => handleClick(e, props.approveCancelOrderItem)}
               variantColor="successColorVariant"
             >
               Approve Cancel Request
             </Button>
             <Button
+              mt={[2, null, null, null, 0]}
               size="sm"
+              fontSize={["xs", "md"]}
               onClick={(e) => handleClick(e, props.rejectCancelOrderItem)}
               variantColor="dangerColorVariant"
               variant="outline"
@@ -238,13 +287,16 @@ const OrdersContainer = (props: OrdersContainerProps) => {
           <ButtonGroup spacing={3}>
             <Button
               size="sm"
+              fontSize={["xs", "md"]}
               onClick={(e) => handleClick(e, props.approveReturnOrderItem)}
               variantColor="successColorVariant"
             >
               Approve Return Request
             </Button>
             <Button
+              mt={[2, null, null, null, 0]}
               size="sm"
+              fontSize={["xs", "md"]}
               onClick={(e) => handleClick(e, props.rejectReturnOrderItem)}
               variantColor="dangerColorVariant"
               variant="outline"
@@ -371,73 +423,113 @@ const OrdersContainer = (props: OrdersContainerProps) => {
     isReturnedOrderStatus(orderItem.orderItemStatus)
   );
 
+  const getTableData = (filter) => {
+    switch (filter) {
+      case OrderStatusFilter.AllOrderItems:
+        return orderItems;
+      case OrderStatusFilter.CancelledOrderItems:
+        return cancelledOrderItems;
+      case OrderStatusFilter.OpenOrderItems:
+        return openOrderItems;
+      case OrderStatusFilter.DeliveredOrderItems:
+        return cancelledOrderItems;
+      case OrderStatusFilter.ReturnedOrderItems:
+        return returnedOrderItems;
+    }
+    return orderItems;
+  };
+
   return (
     <>
-      <TabSection
-        headingList={[
-          `All Orders (${orderItems.length})`,
-          `Open Orders (${openOrderItems.length})`,
-          `Delivered Orders (${deliveredOrderItems.length})`,
-          `Cancelled Orders (${cancelledOrderItems.length})`,
-          `Returned Orders (${returnedOrderItems.length})`,
-          `Orders By Products`,
-        ]}
-        contentList={[
-          <SortableTable
-            initialSortData={{
-              index: 1,
-              isAsc: false,
-            }}
-            headers={getTableHeaders()}
-            data={orderItems}
-            emptyMsg="There are no orders"
-            body={renderTableBody}
-          />,
-          <SortableTable
-            initialSortData={{
-              index: 1,
-              isAsc: false,
-            }}
-            headers={getTableHeaders()}
-            data={openOrderItems}
-            emptyMsg="There are no open orders"
-            body={renderTableBody}
-          />,
-          <SortableTable
-            initialSortData={{
-              index: 1,
-              isAsc: false,
-            }}
-            headers={getTableHeaders()}
-            data={deliveredOrderItems}
-            emptyMsg="There are no delivered orders"
-            body={renderTableBody}
-          />,
-          <SortableTable
-            initialSortData={{
-              index: 1,
-              isAsc: false,
-            }}
-            headers={getTableHeaders()}
-            data={cancelledOrderItems}
-            emptyMsg="There are no cancelled orders"
-            body={renderTableBody}
-          />,
-          <SortableTable
-            initialSortData={{
-              index: 1,
-              isAsc: false,
-            }}
-            headers={getTableHeaders()}
-            data={returnedOrderItems}
-            emptyMsg="There are no returned orders"
-            body={renderTableBody}
-          />,
-          <ProductOrdersContainer
-            selectedEcosystemId={props.selectedEcosystemId}
-          />,
-        ]}
-      />
+      <MobileMediaQuery>
+        <Box maxW="250px" mb={2} p={2}>
+          <Select
+            value={filter}
+            options={statusFilters}
+            onChange={(value) => setFilter(value)}
+          />
+          <Box my={2}>
+            {`Total ${filter.label}(${getTableData(filter.value).length})`}
+          </Box>
+        </Box>
+        <SortableTable
+          initialSortData={{
+            index: 2,
+            isAsc: false,
+          }}
+          headers={getTableHeaders()}
+          data={getTableData(filter.value)}
+          emptyMsg={"There are no orders in selected category"}
+          body={renderTableBody}
+        />
+      </MobileMediaQuery>
+      <DesktopMediaQuery>
+        <TabSection
+          headingList={[
+            `All Orders (${orderItems.length})`,
+            `Open Orders (${openOrderItems.length})`,
+            `Delivered Orders (${deliveredOrderItems.length})`,
+            `Cancelled Orders (${cancelledOrderItems.length})`,
+            `Returned Orders (${returnedOrderItems.length})`,
+            `Orders By Products`,
+          ]}
+          contentList={[
+            <SortableTable
+              initialSortData={{
+                index: 1,
+                isAsc: false,
+              }}
+              headers={getTableHeaders()}
+              data={orderItems}
+              emptyMsg="There are no orders"
+              body={renderTableBody}
+            />,
+            <SortableTable
+              initialSortData={{
+                index: 1,
+                isAsc: false,
+              }}
+              headers={getTableHeaders()}
+              data={openOrderItems}
+              emptyMsg="There are no open orders"
+              body={renderTableBody}
+            />,
+            <SortableTable
+              initialSortData={{
+                index: 1,
+                isAsc: false,
+              }}
+              headers={getTableHeaders()}
+              data={deliveredOrderItems}
+              emptyMsg="There are no delivered orders"
+              body={renderTableBody}
+            />,
+            <SortableTable
+              initialSortData={{
+                index: 1,
+                isAsc: false,
+              }}
+              headers={getTableHeaders()}
+              data={cancelledOrderItems}
+              emptyMsg="There are no cancelled orders"
+              body={renderTableBody}
+            />,
+            <SortableTable
+              initialSortData={{
+                index: 1,
+                isAsc: false,
+              }}
+              headers={getTableHeaders()}
+              data={returnedOrderItems}
+              emptyMsg="There are no returned orders"
+              body={renderTableBody}
+            />,
+            <ProductOrdersContainer
+              selectedEcosystemId={props.selectedEcosystemId}
+            />,
+          ]}
+        />
+      </DesktopMediaQuery>
       <Pagination data={orderData} onChange={props.setCurrentPageNumber} />
     </>
   );

@@ -127,14 +127,9 @@ const RecentOrderList = (props: RecentOrderListProps): JSX.Element => {
           >
             {getPaymentText(orderItem.order.paymentSplits[0].paymentMode)}
           </td>
-          <td
-            style={{
-              color: getColor(orderItem.orderItemStatus),
-            }}
-            className="status"
-          >
+          <Box as="td" color={getColor(orderItem.orderItemStatus)}>
             {getOrderStatusText(orderItem.orderItemStatus)}
-          </td>
+          </Box>
           <td>
             {moment
               .utc(orderItem.createdDateTime)

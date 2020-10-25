@@ -15,7 +15,13 @@ import CreditActions from "actions/credit";
 import PageContainer from "components/atoms/PageContainer";
 import PageBodyContainer from "components/atoms/PageBodyContainer";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
-import { Button } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
+import { useState } from "react";
+import { SelectOptionInterface } from "types/product";
+import Select from "components/atoms/Select";
+import MobileMediaQuery from "components/atoms/MobileMediaQuery";
+import DesktopMediaQuery from "components/atoms/DesktopMediaQuery";
+import { Box } from "@chakra-ui/core";
 
 interface DispatchProps {
   updateCredits: (invoice: InvoiceInterface) => void;
@@ -23,7 +29,35 @@ interface DispatchProps {
 
 type CustomerInvoiceProps = DispatchProps;
 
+enum InvoiceStatusFilter {
+  AllInvoices,
+  PendingInvoices,
+  PaidInvoices,
+  CancelledInvoices,
+}
+
+const statusFilters: SelectOptionInterface[] = [
+  {
+    value: InvoiceStatusFilter.AllInvoices,
+    label: "All invoices",
+  },
+  {
+    value: InvoiceStatusFilter.PendingInvoices,
+    label: "Pending Invoices",
+  },
+  {
+    value: InvoiceStatusFilter.PaidInvoices,
+    label: "Paid invoices",
+  },
+  {
+    value: InvoiceStatusFilter.CancelledInvoices,
+    label: "Cancelled invoices",
+  },
+];
+
 const CustomerInvoice = (props: CustomerInvoiceProps) => {
+  const [filter, setFilter] = useState<SelectOptionInterface>(statusFilters[0]);
+
   const swr = useSWR("/invoice");
   const invoiceList: InvoiceInterface[] = swr.data;
   const error = swr.error;
@@ -128,6 +162,20 @@ const CustomerInvoice = (props: CustomerInvoiceProps) => {
     ));
   };
 
+  const getTableData = (filter) => {
+    switch (filter) {
+      case InvoiceStatusFilter.AllInvoices:
+        return invoiceList;
+      case InvoiceStatusFilter.PendingInvoices:
+        return pendingInvoices;
+      case InvoiceStatusFilter.PaidInvoices:
+        return paidInvoices;
+      case InvoiceStatusFilter.CancelledInvoices:
+        return cancelledInvoices;
+    }
+    return invoiceList;
+  };
+
   return (
     <PageContainer>
       <UpdateCreditsModal />
@@ -135,56 +183,80 @@ const CustomerInvoice = (props: CustomerInvoiceProps) => {
         <PageHeader>Invoices</PageHeader>
       </PageHeaderContainer>
       <PageBodyContainer>
-        <TabSection
-          headingList={[
-            `All Invoices (${invoiceList.length})`,
-            `Pending Invoices (${pendingInvoices.length})`,
-            `Paid Invoices (${paidInvoices.length})`,
-            `Cancelled Invoices (${cancelledInvoices.length})`,
-          ]}
-          contentList={[
-            <SortableTable
-              initialSortData={{
-                index: 2,
-                isAsc: false,
-              }}
-              headers={getTableHeaders()}
-              data={invoiceList}
-              emptyMsg="There are no invoices"
-              body={renderTableBody}
-            />,
-            <SortableTable
-              initialSortData={{
-                index: 2,
-                isAsc: false,
-              }}
-              headers={getTableHeaders()}
-              data={pendingInvoices}
-              emptyMsg="There are no pending invoices"
-              body={renderTableBody}
-            />,
-            <SortableTable
-              initialSortData={{
-                index: 2,
-                isAsc: false,
-              }}
-              headers={getTableHeaders()}
-              data={paidInvoices}
-              emptyMsg="There are no paid invoices"
-              body={renderTableBody}
-            />,
-            <SortableTable
-              initialSortData={{
-                index: 2,
-                isAsc: false,
-              }}
-              headers={getTableHeaders()}
-              data={cancelledInvoices}
-              emptyMsg="There are no cancelled invoices"
-              body={renderTableBody}
-            />,
-          ]}
-        />
+        <DesktopMediaQuery>
+          <TabSection
+            headingList={[
+              `All Invoices (${invoiceList.length})`,
+              `Pending Invoices (${pendingInvoices.length})`,
+              `Paid Invoices (${paidInvoices.length})`,
+              `Cancelled Invoices (${cancelledInvoices.length})`,
+            ]}
+            contentList={[
+              <SortableTable
+                initialSortData={{
+                  index: 2,
+                  isAsc: false,
+                }}
+                headers={getTableHeaders()}
+                data={invoiceList}
+                emptyMsg="There are no invoices"
+                body={renderTableBody}
+              />,
+              <SortableTable
+                initialSortData={{
+                  index: 2,
+                  isAsc: false,
+                }}
+                headers={getTableHeaders()}
+                data={pendingInvoices}
+                emptyMsg="There are no pending invoices"
+                body={renderTableBody}
+              />,
+              <SortableTable
+                initialSortData={{
+                  index: 2,
+                  isAsc: false,
+                }}
+                headers={getTableHeaders()}
+                data={paidInvoices}
+                emptyMsg="There are no paid invoices"
+                body={renderTableBody}
+              />,
+              <SortableTable
+                initialSortData={{
+                  index: 2,
+                  isAsc: false,
+                }}
+                headers={getTableHeaders()}
+                data={cancelledInvoices}
+                emptyMsg="There are no cancelled invoices"
+                body={renderTableBody}
+              />,
+            ]}
+          />
+        </DesktopMediaQuery>
+        <MobileMediaQuery>
+          <Box maxW="250px" mb={2} p={2}>
+            <Select
+              value={filter}
+              options={statusFilters}
+              onChange={(value) => setFilter(value)}
+            />
+            <Box my={2}>
+              {`Total ${filter.label}(${getTableData(filter.value).length})`}
+            </Box>
+          </Box>
+          <SortableTable
+            initialSortData={{
+              index: 2,
+              isAsc: false,
+            }}
+            headers={getTableHeaders()}
+            data={getTableData(filter.value)}
+            emptyMsg="There are no invoices in Selected Category"
+            body={renderTableBody}
+          />
+        </MobileMediaQuery>
       </PageBodyContainer>
     </PageContainer>
   );

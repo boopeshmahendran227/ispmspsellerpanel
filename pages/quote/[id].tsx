@@ -46,9 +46,9 @@ const Quote = (props: QuoteProps) => {
   }
 
   return (
-    <Box my={1} mx="auto" maxW="1100px">
+    <Box my={1} maxW="1100px" mx={[2, null, null, null, "auto"]}>
       <BackLink href="/quote">Back to Quotes</BackLink>
-      <Stack isInline spacing={3} my={4} align="baseline">
+      <Stack flexDirection={["column", "row"]} my={4} align="baseline">
         <Heading size="lg">
           <Box as="span">#{quote.id}</Box>
           <Box
@@ -63,7 +63,7 @@ const Quote = (props: QuoteProps) => {
               .format("MMMM Do YYYY h:mm a")}
           </Box>{" "}
         </Heading>
-        <Box>
+        <Box mx={2}>
           <Tag
             variant="solid"
             rounded="full"
@@ -74,7 +74,7 @@ const Quote = (props: QuoteProps) => {
           </Tag>
         </Box>
       </Stack>
-      <Grid templateColumns="1fr 300px" gap={3}>
+      <Grid templateColumns={["1fr", null, null, "1fr 300px"]} gap={3}>
         <Flex flex="1">
           <QuoteItemDetail
             quote={quote}
@@ -94,7 +94,7 @@ const Quote = (props: QuoteProps) => {
             {Boolean(quote.customerPhone) && (
               <>
                 <Name>Phone</Name>
-                <Value className="value">{quote.customerPhone}</Value>
+                <Value>{quote.customerPhone}</Value>
               </>
             )}
           </Box>

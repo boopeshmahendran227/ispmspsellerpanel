@@ -7,8 +7,9 @@ import { getQuoteStatusText, getColor } from "utils/quote";
 import _ from "lodash";
 import moment from "moment";
 import QuoteProduct from "./QuoteProduct";
-import { Button, Box, Divider, ButtonGroup } from "@chakra-ui/core";
+import { Box, Divider, Stack } from "@chakra-ui/core";
 import React from "react";
+import Button from "components/atoms/Button";
 
 interface QuoteItemDetailProps {
   quote: QuoteDetailInterface;
@@ -28,21 +29,26 @@ const QuoteItemDetail = (props: QuoteItemDetailProps) => {
     switch (quote.status) {
       case QuoteStatus.SellerResponsePending:
         return (
-          <ButtonGroup spacing={3}>
-            <Button
-              variantColor="successColorVariant"
-              onClick={(e) => handleClick(e, props.updateQuote)}
-            >
-              Respond To Quote
-            </Button>
-            <Button
-              variant="outline"
-              variantColor="dangerColorVariant"
-              onClick={(e) => handleClick(e, props.rejectQuote)}
-            >
-              Reject Quote
-            </Button>
-          </ButtonGroup>
+          <Stack isInline spacing={[1, 3]} mx="auto">
+            <Box>
+              <Button
+                variantColor="successColorVariant"
+                onClick={(e) => handleClick(e, props.updateQuote)}
+              >
+                Respond To Quote
+              </Button>
+            </Box>
+            <Box>
+              {" "}
+              <Button
+                variant="outline"
+                variantColor="dangerColorVariant"
+                onClick={(e) => handleClick(e, props.rejectQuote)}
+              >
+                Reject Quote
+              </Button>
+            </Box>
+          </Stack>
         );
     }
     return null;
@@ -64,19 +70,17 @@ const QuoteItemDetail = (props: QuoteItemDetailProps) => {
       m="auto"
       mb={3}
     >
-      <Box textAlign="right" p={3} fontSize="lg" color={color}>
+      <Box textAlign="right" p={[2, 3]} fontSize={["md", "lg"]} color={color}>
         <Box as="span">{statusText}</Box>
         <Box as="span">
-          {" "}
           {moment
-
             .utc(latestStatus.createdDateTime)
             .local()
             .format("MMM DD YYYY")}
         </Box>
       </Box>
 
-      <Box pt={5} px={1}>
+      <Box pt={[2, 5]} px={1}>
         {quote.productDetails.map((productDetail) => (
           <QuoteProduct key={productDetail.id} productDetail={productDetail} />
         ))}
@@ -85,7 +89,7 @@ const QuoteItemDetail = (props: QuoteItemDetailProps) => {
       {Boolean(buttons) && (
         <>
           <Divider borderColor={color} />
-          <Box mt={3} p={2} textAlign="right">
+          <Box mt={3} p={2} textAlign={["left", "right"]}>
             {buttons}
           </Box>
         </>
