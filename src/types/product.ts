@@ -148,7 +148,7 @@ interface AttributeValue {
 }
 
 export interface SelectOptionInterface {
-  value: number | string | any[] | [];
+  value: number | string;
   label: React.ReactNode;
 }
 

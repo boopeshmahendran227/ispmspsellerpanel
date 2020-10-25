@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import CSSConstants from "../../src/constants/CSSConstants";
 import TabSection from "components/atoms/TabSection";
 import SortableTable from "components/atoms/SortableTable";
-import { QuoteInterface, QuoteStatus } from "types/quote";
+import { QuoteInterface, QuotesStatusFilter, QuoteStatus } from "types/quote";
 import { getQuoteStatusText } from "utils/quote";
 import useSWR from "swr";
 import Loader from "components/atoms/Loader";
@@ -59,11 +59,35 @@ const getTotalQty = (quote: QuoteInterface) =>
     0
   );
 
+const statusFilter: SelectOptionInterface[] = [
+  {
+    value: QuotesStatusFilter.AllQuotes,
+    label: "All Quotes",
+  },
+  {
+    value: QuotesStatusFilter.OpenQuotes,
+    label: "Open Quotes",
+  },
+  {
+    value: QuotesStatusFilter.ConvertedQuotes,
+    label: "Converted Quotes",
+  },
+  {
+    value: QuotesStatusFilter.RejectedQuotes,
+    label: "Rejected Quotes",
+  },
+  {
+    value: QuotesStatusFilter.RespondedQuotes,
+    label: "Responded Quotes",
+  },
+  {
+    value: QuotesStatusFilter.ExpiredQuotes,
+    label: "Expired Quotes",
+  },
+];
+
 const Quotes = (props: QuotesProps) => {
-  const [type, setType] = useState<SelectOptionInterface>({
-    value: [],
-    label: "select",
-  });
+  const [filter, setFilter] = useState<SelectOptionInterface>(statusFilter[0]);
 
   const getTableHeaders = () => {
     return [
@@ -266,20 +290,24 @@ const Quotes = (props: QuotesProps) => {
     (quote) => quote.status === QuoteStatus.Expired
   );
 
-  const filter: SelectOptionInterface[] = [
-    {
-      value: quotes,
-      label: `All Quotes (${quotes.length})`,
-    },
-    {
-      value: respondedQuotes,
-      label: `RespondedQuotes(${respondedQuotes.length})`,
-    },
-    {
-      value: expiredQuotes,
-      label: `ExpiredQuotes (${expiredQuotes.length})`,
-    },
-  ];
+  const getTableData = (filter) => {
+    switch (filter) {
+      case QuotesStatusFilter.AllQuotes:
+        return quotes;
+      case QuotesStatusFilter.OpenQuotes:
+        return openQuotes;
+      case QuotesStatusFilter.RespondedQuotes:
+        return respondedQuotes;
+      case QuotesStatusFilter.ConvertedQuotes:
+        return convertedQuotes;
+      case QuotesStatusFilter.RejectedQuotes:
+        return rejectedQuotes;
+      case QuotesStatusFilter.ExpiredQuotes:
+        return expiredQuotes;
+    }
+    return quotes;
+  };
+
   return (
     <PageContainer>
       <PageHeaderContainer>
@@ -287,12 +315,15 @@ const Quotes = (props: QuotesProps) => {
       </PageHeaderContainer>
       <PageBodyContainer>
         <MobileMediaQuery>
-          <Box maxW="250px" mb={3} p={2}>
+          <Box maxW="250px" mb={2} p={2}>
             <Select
-              value={type}
-              options={filter}
-              onChange={(value) => setType(value)}
+              value={filter}
+              options={statusFilter}
+              onChange={(value) => setFilter(value)}
             />
+            <Box my={2}>
+              {`Total ${filter.label}(${getTableData(filter.value).length})`}
+            </Box>
           </Box>
           <SortableTable
             initialSortData={{
@@ -300,7 +331,7 @@ const Quotes = (props: QuotesProps) => {
               isAsc: false,
             }}
             headers={getTableHeaders()}
-            data={type.value as QuoteInterface[]}
+            data={getTableData(filter.value)}
             emptyMsg={"There are no Quotes in selected category"}
             body={renderTableBody}
           />

@@ -1,6 +1,7 @@
 import {
   OrderInterface,
   OrderStatus,
+  OrderStatusFilter,
   TransformedOrderItemInterface,
 } from "types/order";
 import OrderActions from "actions/order";
@@ -56,11 +57,32 @@ interface DispatchProps {
 
 type OrdersContainerProps = OwnProps & DispatchProps;
 
+const statusFilters: SelectOptionInterface[] = [
+  {
+    value: OrderStatusFilter.AllOrderItems,
+    label: "All Orders",
+  },
+  {
+    value: OrderStatusFilter.OpenOrderItems,
+    label: "Open Orders",
+  },
+  {
+    value: OrderStatusFilter.DeliveredOrderItems,
+    label: "Delivered Orders",
+  },
+  {
+    value: OrderStatusFilter.CancelledOrderItems,
+    label: "Cancelled Orders ",
+  },
+  {
+    value: OrderStatusFilter.ReturnedOrderItems,
+    label: "returned Orders",
+  },
+];
+
 const OrdersContainer = (props: OrdersContainerProps) => {
-  const [type, setType] = useState<SelectOptionInterface>({
-    value: [],
-    label: "select",
-  });
+  const [filter, setFilter] = useState(statusFilters[0]);
+
   const getTableHeaders = () => {
     return [
       {
@@ -400,39 +422,35 @@ const OrdersContainer = (props: OrdersContainerProps) => {
   const returnedOrderItems = orderItems.filter((orderItem) =>
     isReturnedOrderStatus(orderItem.orderItemStatus)
   );
-  
-  const filter: SelectOptionInterface[] = [
-    {
-      value: orderItems,
-      label: `All Orders (${orderItems.length})`,
-    },
-    {
-      value: openOrderItems,
-      label: `Open Orders (${openOrderItems.length})`,
-    },
-    {
-      value: deliveredOrderItems,
-      label: `Delivered Orders (${deliveredOrderItems.length})`,
-    },
-    {
-      value: cancelledOrderItems,
-      label: `Cancelled Orders (${cancelledOrderItems.length})`,
-    },
-    {
-      value: returnedOrderItems,
-      label: `returned Orders (${returnedOrderItems.length})`,
-    },
-  ];
+
+  const getTableData = (filter) => {
+    switch (filter) {
+      case OrderStatusFilter.AllOrderItems:
+        return orderItems;
+      case OrderStatusFilter.CancelledOrderItems:
+        return cancelledOrderItems;
+      case OrderStatusFilter.OpenOrderItems:
+        return openOrderItems;
+      case OrderStatusFilter.DeliveredOrderItems:
+        return cancelledOrderItems;
+      case OrderStatusFilter.ReturnedOrderItems:
+        return returnedOrderItems;
+    }
+    return orderItems;
+  };
 
   return (
     <>
       <MobileMediaQuery>
-        <Box maxW="250px" mb={3} p={2}>
+        <Box maxW="250px" mb={2} p={2}>
           <Select
-            value={type}
-            options={filter}
-            onChange={(value) => setType(value)}
+            value={filter}
+            options={statusFilters}
+            onChange={(value) => setFilter(value)}
           />
+          <Box my={2}>
+            {`Total ${filter.label}(${getTableData(filter.value).length})`}
+          </Box>
         </Box>
         <SortableTable
           initialSortData={{
@@ -440,7 +458,7 @@ const OrdersContainer = (props: OrdersContainerProps) => {
             isAsc: false,
           }}
           headers={getTableHeaders()}
-          data={type.value as TransformedOrderItemInterface[]}
+          data={getTableData(filter.value)}
           emptyMsg={"There are no orders in selected category"}
           body={renderTableBody}
         />

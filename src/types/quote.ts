@@ -6,6 +6,15 @@ import {
   REJECT_QUOTE,
 } from "../constants/ActionTypes";
 
+export enum QuotesStatusFilter {
+  AllQuotes,
+  OpenQuotes,
+  RespondedQuotes,
+  ConvertedQuotes,
+  RejectedQuotes,
+  ExpiredQuotes,
+}
+
 export interface ProductDetailQuoteInterface {
   id: number;
   productId: number;

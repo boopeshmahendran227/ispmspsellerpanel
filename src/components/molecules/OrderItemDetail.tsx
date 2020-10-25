@@ -315,7 +315,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
           columns={3}
           maxW="420px"
           ml="auto"
-          mt={[1, null, null, null, "-2rem"]}
+          mt={[1, null, null, null, -5]}
           fontSize="sm"
         >
           <Box>
