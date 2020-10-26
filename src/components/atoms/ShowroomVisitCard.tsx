@@ -12,12 +12,17 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
   const { showroomVisit } = props;
 
   return (
-    <Grid templateColumns="auto 1fr" gap={3} my={1}>
+    <Grid
+      templateColumns="auto 1fr"
+      gap={[1, 3]}
+      my={1}
+      fontSize={["sm", "md"]}
+    >
       <Box color="secondaryTextColor" fontWeight="bold" textAlign="center">
         <Box>{convertTo12hour(showroomVisit.startTime)}</Box>
         <Box
-          w={2}
-          h={2}
+          w={[1, 2]}
+          h={[1, 2]}
           mx="auto"
           border="2px"
           borderRadius="full"
@@ -30,15 +35,15 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
           borderRight="1px"
           borderStyle="dashed"
           borderColor="primaryColor"
-          h={5}
+          h={[4, 5]}
           mx="auto"
           my={1}
           w={0}
           orientation="vertical"
         />
         <Box
-          w={2}
-          h={2}
+          w={[1, 2]}
+          h={[1, 2]}
           mx="auto"
           border="2px"
           borderRadius="full"
@@ -48,8 +53,8 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
         <Box>{convertTo12hour(showroomVisit.endTime)}</Box>
       </Box>
       <Flex
-        my={2}
-        px={2}
+        my={[1, 2]}
+        px={[1, 2]}
         borderLeft="4px"
         roundedRight="lg"
         borderColor="primaryColor"

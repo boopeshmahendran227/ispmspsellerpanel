@@ -12,7 +12,7 @@ import Loader from "components/atoms/Loader";
 import ShowroomVisitsContainer from "components/molecules/ShowroomVisitsContainer";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageHeader from "components/atoms/PageHeader";
-import { Box, Grid, Heading, Divider } from "@chakra-ui/core";
+import { Box, Grid, Heading, Divider, Stack } from "@chakra-ui/core";
 
 const ShowroomVisits = () => {
   const [showroomFilter, setShowroomFilter] = useState(null);
@@ -47,7 +47,13 @@ const ShowroomVisits = () => {
   };
 
   return (
-    <Grid templateColumns="1fr auto" gap={2} p={5} maxW="1200px" m="auto">
+    <Grid
+      templateColumns={["1fr", "1fr auto"]}
+      gap={2}
+      p={[1, 5]}
+      maxW="1200px"
+      m="auto"
+    >
       <Box>
         <PageHeaderContainer>
           <PageHeader>Showroom Visits</PageHeader>
@@ -57,14 +63,11 @@ const ShowroomVisits = () => {
           dateFilter={dateFilter}
         />
       </Box>
-      <Box>
-        <SingleDatePicker onChange={handleDateChange} value={dateFilter} />
-        <Box
-          bg="white"
-          boxShadow="md"
-          borderRadius="md"
-          className="showroomFilterContainer"
-        >
+      <Stack spacing={3} m="auto">
+        <Box>
+          <SingleDatePicker onChange={handleDateChange} value={dateFilter} />
+        </Box>
+        <Box bg="white" boxShadow="md" borderRadius="md" mt={[2, 0]}>
           <Heading size="sm" py={2} px={4}>
             Showrooms
           </Heading>
@@ -78,20 +81,23 @@ const ShowroomVisits = () => {
                 onChange={handleShowroomChange}
               />
             </Box>
-            {showrooms.map((showroom, index) => (
-              <Box key={index}>
-                <RadioButton
-                  key={index}
-                  label={showroom.name}
-                  value={showroom.id}
-                  checked={showroomFilter === showroom.id}
-                  onChange={handleShowroomChange}
-                />
-              </Box>
-            ))}
+            <Box>
+              {" "}
+              {showrooms.map((showroom, index) => (
+                <Box key={index}>
+                  <RadioButton
+                    key={index}
+                    label={showroom.name}
+                    value={showroom.id}
+                    checked={showroomFilter === showroom.id}
+                    onChange={handleShowroomChange}
+                  />
+                </Box>
+              ))}
+            </Box>
           </Box>
         </Box>
-      </Box>
+      </Stack>
     </Grid>
   );
 };

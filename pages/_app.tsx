@@ -59,7 +59,7 @@ function MyApp(props) {
   // We don't need navbar for invoice page
   if (["/invoice"].some((str) => router.pathname.includes(str))) {
     return (
-      <ThemeProvider>
+      <ThemeProvider theme={customTheme}>
         <CSSReset />
         <SWRConfig value={swrConfigData}>
           <Provider store={store}>
