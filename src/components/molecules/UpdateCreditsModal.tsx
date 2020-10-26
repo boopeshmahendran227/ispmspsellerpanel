@@ -13,7 +13,8 @@ import FieldSelect from "./FieldSelect";
 import FieldInput from "../atoms/FieldInput";
 import {
   Box,
-  Grid,
+  Stack,
+  SimpleGrid,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -61,7 +62,7 @@ const UpdateCreditsModal = (props: UpdateCreditsModalProps) => {
     // Return empty modal
     return (
       <Modal isOpen={props.open} onClose={props.onClose}>
-        <div></div>
+        <Box></Box>
       </Modal>
     );
   }
@@ -82,14 +83,14 @@ const UpdateCreditsModal = (props: UpdateCreditsModalProps) => {
   };
 
   return (
-    <Modal isOpen={props.open} onClose={props.onClose} size="md">
+    <Modal isOpen={props.open} onClose={props.onClose} size={["xs", "md"]}>
       <ModalOverlay />
-      <ModalContent borderRadius="16px">
-        <ModalHeader>
+      <ModalContent borderRadius={10} p={3}>
+        <ModalHeader fontSize={["md", "lg"]}>
           Record Credit Payment For Invoice #{currentInvoice.invoiceId}
         </ModalHeader>
         <ModalCloseButton />
-        <ModalBody p="1em">
+        <ModalBody>
           <Formik
             initialValues={{
               creditsPaid: 0,
@@ -110,20 +111,28 @@ const UpdateCreditsModal = (props: UpdateCreditsModalProps) => {
           >
             {() => (
               <Form>
-                <Grid templateColumns="200px 300px" alignItems="center">
+                <SimpleGrid columns={[1, 2]} alignItems="center">
                   <InputLabel label="Paid Credits" />
                   <FieldPriceInput name="creditsPaid" />
                   <InputLabel label="Payment Mode" />
                   <FieldSelect name="paymentMode" options={paymentOptions} />
                   <InputLabel label="Payment Reference Id" />
                   <FieldInput name="paymentReferenceId" />
-                </Grid>
-                <Box mt="1em" textAlign="right">
-                  <Button isSubmitButton={true}>Update Pending Credits</Button>
-                  <Button outlined={true} onClick={handleCancelClicked}>
-                    Cancel
-                  </Button>
-                </Box>
+                </SimpleGrid>
+                <Stack spacing={3} isInline mt={3}>
+                  <Box>
+                    <Button type="submit">Update Pending Credits</Button>
+                  </Box>
+                  <Box>
+                    <Button
+                      variant="outline"
+                      variantColor="dangerColorVariant"
+                      onClick={handleCancelClicked}
+                    >
+                      Cancel
+                    </Button>
+                  </Box>
+                </Stack>
               </Form>
             )}
           </Formik>

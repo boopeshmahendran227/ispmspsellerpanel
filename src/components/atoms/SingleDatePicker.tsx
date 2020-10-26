@@ -29,14 +29,16 @@ const SingleDatePicker = (props: SingleDatePickerProps) => {
           const isActive = value.isSame(props.value, "date");
 
           return (
-            <Button
-              variant={!isActive ? "outline" : "solid"}
-              onClick={() => {
-                props.onChange(value);
-              }}
-            >
-              {text}
-            </Button>
+            <Box display="inline-block" mx={2}>
+              <Button
+                variant={!isActive ? "outline" : "solid"}
+                onClick={() => {
+                  props.onChange(value);
+                }}
+              >
+                {text}
+              </Button>
+            </Box>
           );
         })}
       </Box>

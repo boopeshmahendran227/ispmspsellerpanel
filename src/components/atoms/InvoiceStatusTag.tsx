@@ -1,7 +1,7 @@
 import CSSConstants from "../../constants/CSSConstants";
 import Chroma from "chroma-js";
 import { InvoiceStatus } from "../../types/invoice";
-import { Tag, TagLabel, Box } from "@chakra-ui/core";
+import { Tag, TagLabel, Box, Text } from "@chakra-ui/core";
 
 const getCurrentColor = (status: InvoiceStatus) => {
   switch (status) {
@@ -29,17 +29,22 @@ const InvoiceStatusTag = (props: InvoiceStatusTagProps) => {
   const currentColor = getCurrentColor(status);
 
   return (
-    <Tag
-      variant="subtle"
-      rounded="full"
-      size="lg"
-      variantColor={currentColor}
-      fontWeight="bold"
-      py={1}px={2}
-      m={2}
-    >
-      {status === InvoiceStatus.Paid ? "Paid / COD" : status}
-    </Tag>
+    <Box minW="100px">
+      <Tag
+        variant="subtle"
+        rounded="full"
+        size={"sm"}
+        variantColor={currentColor}
+        fontWeight="bold"
+        py={1}
+        px={2}
+        m={[1, 2]}
+      >
+        <Text fontSize={["xs", null, null, null, "md"]}>
+          {status === InvoiceStatus.Paid ? "Paid / COD" : status}
+        </Text>
+      </Tag>
+    </Box>
   );
 };
 

@@ -11,7 +11,7 @@ interface TestDriveCardProps {
 const TestDriveCard = (props: TestDriveCardProps) => {
   const { testdrive } = props;
   return (
-    <Flex boxShadow="sm" my={2}>
+    <Flex boxShadow="sm" my={2} fontSize={["sm", "md"]}>
       <Box w="100px" h="100px" mr={2}>
         <RelativeImg src={testdrive.images[0]} />
       </Box>
