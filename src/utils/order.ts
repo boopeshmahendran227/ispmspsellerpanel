@@ -8,19 +8,19 @@ const getColor = (status: OrderStatus) => {
     case OrderStatus.PaymentSuccess:
     case OrderStatus.PaymentOnDelivery:
     case OrderStatus.PackageReadyForCollection:
-      return CSSConstants.secondaryTextColor;
+      return "secondaryTextColor";
     case OrderStatus.Shipping:
     case OrderStatus.ShippingCompleted:
-      return CSSConstants.successColor;
+      return "successColor";
     case OrderStatus.CancelRequested:
     case OrderStatus.CancelCompleted:
-      return CSSConstants.dangerColor;
+      return "dangerColor";
     case OrderStatus.ReturnRequested:
     case OrderStatus.ReturnCompleted:
-      return CSSConstants.warningColor;
+      return "warningColor";
   }
 
-  return CSSConstants.secondaryTextColor;
+  return "secondaryTextColor";
 };
 
 const getOrderStatusText = (status: OrderStatus) => {
@@ -55,9 +55,9 @@ const getPaymentText = (paymentMode: PaymentMode) => {
 const getPaymentModeColor = (paymentMode: PaymentMode) => {
   switch (paymentMode) {
     case PaymentMode.Cash:
-      return CSSConstants.warningColor;
+      return "warningColorVariant";
     case PaymentMode.Online:
-      return CSSConstants.successColor;
+      return "successColorVariant";
   }
   return CSSConstants.primaryColor;
 };

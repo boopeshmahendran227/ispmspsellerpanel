@@ -1,16 +1,28 @@
 import moment from "moment";
-import CSSConstants from "../../src/constants/CSSConstants";
 import useSWR from "swr";
 import { useRouter } from "next/router";
-import Loader from "components/Loader";
+import Loader from "components/atoms/Loader";
 import { connect } from "react-redux";
 import { QuoteInterface, QuoteDetailInterface } from "types/quote";
 import { getQuoteStatusText } from "utils/quote";
-import QuoteItemDetail from "components/QuoteItemDetail";
+import QuoteItemDetail from "components/molecules/QuoteItemDetail";
 import QuoteActions from "actions/quote";
-import PageError from "components/PageError";
-import WithAuth from "components/WithAuth";
+import PageError from "components/atoms/PageError";
+import WithAuth from "components/atoms/WithAuth";
 import BackLink from "components/atoms/BackLink";
+import { Box, Grid, Stack, Heading, Tag, Flex, Divider } from "@chakra-ui/core";
+
+const Name = (props) => (
+  <Box fontWeight="bold" py={2} px={4} mt={2}>
+    {props.children}
+  </Box>
+);
+
+const Value = (props) => (
+  <Box py={2} px={4}>
+    {props.children}
+  </Box>
+);
 
 interface DispatchProps {
   rejectQuote: (quote: QuoteInterface) => void;
@@ -34,106 +46,61 @@ const Quote = (props: QuoteProps) => {
   }
 
   return (
-    <div className="container">
+    <Box my={1} maxW="1100px" mx={[2, null, null, null, "auto"]}>
       <BackLink href="/quote">Back to Quotes</BackLink>
-      <header>
-        <span className="id">#{quote.id}</span>{" "}
-        <span className="time">
-          {moment
-            .utc(quote.createdDateTime)
-            .local()
-            .format("MMMM Do YYYY h:mm a")}
-        </span>{" "}
-        <span className="status">{getQuoteStatusText(quote.status)}</span>
-      </header>
-      <div className="flexContainer">
-        <div className="col1">
-          <section className="itemContainer">
-            <QuoteItemDetail
-              quote={quote}
-              rejectQuote={props.rejectQuote}
-              updateQuote={props.updateQuote}
-            />
-          </section>
-        </div>
-        <div className="col2">
-          <section className="customerContainer">
-            <div className="header">Customer Information</div>
-            <div className="row">
-              <div className="name">Name</div>
-              <div className="value">
-                {quote.customerName || "Name Not Available"}
-              </div>
-            </div>
+      <Stack flexDirection={["column", "row"]} my={4} align="baseline">
+        <Heading size="lg">
+          <Box as="span">#{quote.id}</Box>
+          <Box
+            as="span"
+            fontSize="md"
+            color="secondaryTextColor"
+            fontWeight="normal"
+          >
+            {moment
+              .utc(quote.createdDateTime)
+              .local()
+              .format("MMMM Do YYYY h:mm a")}
+          </Box>{" "}
+        </Heading>
+        <Box mx={2}>
+          <Tag
+            variant="solid"
+            rounded="full"
+            size="md"
+            variantColor="primaryColorVariant"
+          >
+            {getQuoteStatusText(quote.status)}{" "}
+          </Tag>
+        </Box>
+      </Stack>
+      <Grid templateColumns={["1fr", null, null, "1fr 300px"]} gap={3}>
+        <Flex flex="1">
+          <QuoteItemDetail
+            quote={quote}
+            rejectQuote={props.rejectQuote}
+            updateQuote={props.updateQuote}
+          />
+        </Flex>
+        <Box>
+          <Box bg="foregroundColor" border="1px solid #ccc">
+            <Heading size="md" my={4} mx={3}>
+              Customer Information
+            </Heading>
+
+            <Name>Name</Name>
+            <Value>{quote.customerName || "Name Not Available"}</Value>
+            <Divider />
             {Boolean(quote.customerPhone) && (
-              <div className="row">
-                <div className="name">Phone</div>
-                <div className="value">{quote.customerPhone}</div>
-              </div>
+              <>
+                <Name>Phone</Name>
+                <Value>{quote.customerPhone}</Value>
+              </>
             )}
-          </section>
-        </div>
-      </div>
-      <style jsx>{`
-        .container {
-          margin: 1em auto;
-          max-width: 1100px;
-        }
-        .flexContainer {
-          display: grid;
-          grid-template-columns: 1fr 300px;
-          grid-gap: 1em;
-        }
-        .col1 {
-          flex: 1;
-        }
-        header .id {
-          font-size: 1.6rem;
-        }
-        header {
-          margin: 1em 0;
-        }
-        .time {
-          color: ${CSSConstants.secondaryTextColor};
-        }
-        .status {
-          border-radius: 2em;
-          display: inline-block;
-          background: ${CSSConstants.primaryColor};
-          padding: 0.2em 0.5em;
-          color: white;
-          margin: 0 0.3em;
-        }
-        .customerContainer {
-          background: ${CSSConstants.foregroundColor};
-          border: ${CSSConstants.borderStyle};
-        }
-        .customerContainer .header {
-          font-size: 1.3rem;
-          padding: 0.3em 0.8em;
-          margin: 0.4em 0;
-        }
-        .row {
-          border-bottom: ${CSSConstants.borderStyle};
-        }
-        .name {
-          padding: 0.8em;
-          margin-top: 0.4em;
-          font-weight: bold;
-        }
-        .value {
-          padding-bottom: 0.4em;
-          padding-left: 0.8em;
-          padding-right: 0.8em;
-        }
-        .backBtn {
-          display: inline-block;
-          cursor: pointer;
-          margin: 1em 0;
-          font-size: 1.1rem;
-        }
-      `}</style>
-    </div>
+          </Box>
+        </Box>
+      </Grid>
+    </Box>
   );
 };
 

@@ -1,20 +1,21 @@
 import CSSConstants from "../../src/constants/CSSConstants";
 import Link from "next/link";
-import SortableTable from "components/SortableTable";
-import RelativeImg from "components/RelativeImg";
-import Pagination from "components/Pagination";
-import Button from "components/atoms/Button";
+import SortableTable from "components/atoms/SortableTable";
+import RelativeImg from "components/atoms/RelativeImg";
+import Pagination from "components/atoms/Pagination";
 import { DraftMiniInterface } from "types/draft";
 import { PaginatedDataInterface } from "types/pagination";
-import PageHeader from "components/PageHeader";
-import WithAuth from "components/WithAuth";
+import PageHeader from "components/atoms/PageHeader";
+import WithAuth from "components/atoms/WithAuth";
 import useSWR from "swr";
 import { useState } from "react";
-import PageError from "components/PageError";
-import Loader from "components/Loader";
+import PageError from "components/atoms/PageError";
+import Loader from "components/atoms/Loader";
 import PageContainer from "components/atoms/PageContainer";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageBodyContainer from "components/atoms/PageBodyContainer";
+import { Box } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
 
 const Drafts = () => {
   const getTableHeaders = () => {
@@ -52,21 +53,15 @@ const Drafts = () => {
         <tr>
           <td>{product.id}</td>
           <td>
-            <div className="imageContainer">
+            <Box display="inline-flex" w="5rem" h="5rem" alignItems="center">
               <RelativeImg src={product.imageRelativePaths[0]} />
-            </div>
+            </Box>
           </td>
           <td>{product.name}</td>
           <td>{product.averageRating}</td>
           <td>{product.shortDescription}</td>
           <td>{product.status}</td>
           <style jsx>{`
-            .imageContainer {
-              display: inline-flex;
-              width: 5rem;
-              height: 5rem;
-              align-items: center;
-            }
             tr:hover {
               background-color: ${CSSConstants.hoverColor} !important;
               cursor: pointer;
@@ -98,11 +93,11 @@ const Drafts = () => {
     <PageContainer>
       <PageHeaderContainer>
         <PageHeader>Product Drafts</PageHeader>
-        <div>
+        <Box>
           <Link href="/product/new">
             <Button>Add Product</Button>
           </Link>
-        </div>
+        </Box>
       </PageHeaderContainer>
       <PageBodyContainer>
         <SortableTable

@@ -3,29 +3,29 @@ import NProgress from "nprogress";
 import { Provider } from "react-redux";
 import withRedux from "next-redux-wrapper";
 import withReduxSaga from "next-redux-saga";
-import ToastProvider from "components/ToastProvider";
+import ToastProvider from "components/molecules/ToastProvider";
 import { initializeStore } from "../src/store";
 import Router, { withRouter } from "next/router";
 import useSWR, { SWRConfig } from "swr";
 import api from "../src/api";
-import SureModal from "components/SureModal";
-import ReasonModal from "components/ReasonModal";
-import SideNavBar from "components/SideNavBar";
-import TopNavBar from "components/TopNavBar";
+import SureModal from "components/atoms/SureModal";
+import ReasonModal from "components/molecules/ReasonModal";
+import SideNavBar from "components/template/SideNavBar";
+import TopNavBar from "components/template/TopNavBar";
 import LoginActions from "actions/login";
-import LoadingScreen from "components/LoadingScreen";
-import UpdateQuoteModal from "components/UpdateQuoteModal";
+import LoadingScreen from "components/atoms/LoadingScreen";
+import UpdateQuoteModal from "components/molecules/UpdateQuoteModal";
 import { isLoggedIn } from "utils/login";
 import { LoginState } from "types/login";
-import CSSConstants from "../src/constants/CSSConstants";
-
+import SimpleReactLightBox from "simple-react-lightbox";
+import { ThemeProvider, CSSReset, Box } from "@chakra-ui/core";
+import { customTheme } from "../src/theme/theme";
 // Add all third-party CSS here
 import "@fortawesome/fontawesome-free/css/all.css";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 import "../public/css/react_dates_overrides.css";
 import "react-popper-tooltip/dist/styles.css";
-import SimpleReactLightBox from "simple-react-lightbox";
 
 NProgress.configure({ showSpinner: false });
 
@@ -59,54 +59,52 @@ function MyApp(props) {
   // We don't need navbar for invoice page
   if (["/invoice"].some((str) => router.pathname.includes(str))) {
     return (
-      <SWRConfig value={swrConfigData}>
-        <Provider store={store}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </Provider>
-      </SWRConfig>
+      <ThemeProvider theme={customTheme}>
+        <CSSReset />
+        <SWRConfig value={swrConfigData}>
+          <Provider store={store}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </Provider>
+        </SWRConfig>
+      </ThemeProvider>
     );
   }
 
   return (
-    <SWRConfig value={swrConfigData}>
-      <Provider store={store}>
-        <ToastProvider>
-          <LoadingScreen />
-          <UpdateQuoteModal />
-          <ReasonModal />
-          <SureModal />
-          <Layout>
-            <main>
+    <ThemeProvider theme={customTheme}>
+      <CSSReset />
+      <SWRConfig value={swrConfigData}>
+        <Provider store={store}>
+          <ToastProvider>
+            <LoadingScreen />
+            <UpdateQuoteModal />
+            <ReasonModal />
+            <SureModal />
+            <Layout>
               <TopNavBar />
-              <div className="sideNavBarContainer">
+              <Box
+                position="fixed"
+                top="60px"
+                left={0}
+                height="100%"
+                width="85px"
+                zIndex={1}
+                display={["none", null, null, "block"]}
+              >
                 <SideNavBar />
-              </div>
-              <div className="bodyContainer">
+              </Box>
+              <Box ml={["0px", null, null, "85px"]}>
                 <SimpleReactLightBox>
                   <Component {...pageProps} />
                 </SimpleReactLightBox>
-              </div>
-              <style jsx>{`
-                .sideNavBarContainer {
-                  position: fixed;
-                  top: 0;
-                  left: 0;
-                  height: 100%;
-                  width: ${CSSConstants.sideNavBarWidth};
-                  z-index: 1;
-                }
-                .bodyContainer {
-                  margin-left: calc(${CSSConstants.sideNavBarWidth} + 0.7em);
-                  margin-right: 0.7em;
-                }
-              `}</style>
-            </main>
-          </Layout>
-        </ToastProvider>
-      </Provider>
-    </SWRConfig>
+              </Box>
+            </Layout>
+          </ToastProvider>
+        </Provider>
+      </SWRConfig>
+    </ThemeProvider>
   );
 }
 

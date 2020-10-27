@@ -1,36 +1,35 @@
 import useSWR from "swr";
-import Loader from "components/Loader";
-import PageError from "components/PageError";
-import PageHeader from "components/PageHeader";
-import WithAuth from "components/WithAuth";
+import Loader from "components/atoms/Loader";
+import PageError from "components/atoms/PageError";
+import PageHeader from "components/atoms/PageHeader";
+import WithAuth from "components/atoms/WithAuth";
 import { useRouter } from "next/router";
-import SkuList from "components/SkuList";
+import SkuList from "components/molecules/SkuList";
 import { Formik, ErrorMessage, Form } from "formik";
-import SkuProductInfo from "components/SkuProductInfo";
+import SkuProductInfo from "components/atoms/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/atoms/SectionHeader";
-import SectionCard from "components/SectionCard";
+import SectionCard from "components/atoms/SectionCard";
 import _ from "lodash";
 import { EditImageInterface, ProductDetailInterface } from "types/product";
-import FieldSelect from "components/FieldSelect";
+import FieldSelect from "components/molecules/FieldSelect";
 import { AddSkuInterface } from "types/sku";
 import * as Yup from "yup";
 import { connect } from "react-redux";
 import SkuActions from "actions/sku";
-import styled from "styled-components";
-import Button from "components/atoms/Button";
-import FieldEcosystemMultiInput from "components/FieldEcosystemMultiInput";
-import FieldInput from "components/FieldInput";
+import FieldEcosystemMultiInput from "components/molecules/FieldEcosystemMultiInput";
+import FieldInput from "components/atoms/FieldInput";
 import { EcosystemResponseInterface } from "types/business";
-import SkuDimensionsInputContainer from "components/SkuDimensionsInputContainer";
-import SkuInventoryInputContainer from "components/SkuInventoryInputContainer";
-import SkuPricingInputContainer from "components/SkuPricingInputContainer";
-import FieldNumInput from "components/FieldNumInput";
-import FieldPercentageInput from "components/FieldPercentageInput";
-import ImageUploader from "components/ImageUploader";
-import ValidationErrorMsg from "components/ValidationErrorMsg";
+import SkuDimensionsInputContainer from "components/molecules/SkuDimensionsInputContainer";
+import SkuInventoryInputContainer from "components/molecules/SkuInventoryInputContainer";
+import SkuPricingInputContainer from "components/molecules/SkuPricingInputContainer";
+import FieldNumInput from "components/atoms/FieldNumInput";
+import FieldPercentageInput from "components/atoms/FieldPercentageInput";
+import ImageUploader from "components/molecules/ImageUploader";
+import ValidationErrorMsg from "components/atoms/ValidationErrorMsg";
 import { getProductImageUrl } from "utils/url";
-
+import { Box, Grid, FormLabel, Stack } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
 interface DispatchProps {
   addSku: (sku: AddSkuInterface) => void;
 }
@@ -80,29 +79,6 @@ const validationSchema = Yup.object({
 
 type InputInterface = Yup.InferType<typeof validationSchema>;
 
-const FlexRowContainer = styled.div`
-  display: flex;
-
-  & > div {
-    margin-right: 0.6em;
-  }
-`;
-
-const FlexColumnContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  & > div {
-    margin-bottom: 1.5em;
-  }
-`;
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 1em;
-`;
-
 const Sku = (props: SkuProps) => {
   const router = useRouter();
   const productSWR = useSWR(`/product/seller/${router.query.id}`);
@@ -150,15 +126,15 @@ const Sku = (props: SkuProps) => {
   };
 
   return (
-    <div className="container">
-      <div className="headerContainer">
+    <Box maxW="900px" m={[2, null, null, "auto"]}>
+      <Box my={3}>
         <BackLink href="/product/[id]" as={`/product/${product.id}`}>
           Back to Product
         </BackLink>
         <PageHeader>Add New Variant</PageHeader>
-      </div>
-      <FlexRowContainer>
-        <div>
+      </Box>
+      <Grid gridTemplateColumns={["1fr", "0.5fr 1fr"]} gap={3}>
+        <Box mx="full">
           <SkuProductInfo
             productId={product.id}
             productName={product.name}
@@ -168,8 +144,8 @@ const Sku = (props: SkuProps) => {
             }
           />
           <SkuList productId={product.id} skus={product.skuDetails} />
-        </div>
-        <div className="formContainer">
+        </Box>
+        <Box flex={1} mb={3}>
           <Formik
             initialValues={
               skuToCopyFrom
@@ -247,99 +223,94 @@ const Sku = (props: SkuProps) => {
           >
             {({ setFieldValue, values }) => (
               <Form>
-                <FlexColumnContainer>
-                  <SectionCard>
-                    <SectionHeader>Sku Details</SectionHeader>
-                    <div>
-                      <label>Sku Id</label>
-                      <FieldInput name="skuId" />
-                    </div>
-                  </SectionCard>
-                  <SectionCard>
-                    <SectionHeader>Options</SectionHeader>
-                    {attributes.map((attribute, index) => (
-                      <>
-                        <label>{attribute.attributeName}</label>
-                        <FieldSelect
-                          name={`attributes.${index}.value`}
-                          options={attribute.attributeValues.map((value) => ({
-                            value: value.valueId,
-                            label: value.value,
-                          }))}
-                        />
-                      </>
-                    ))}
-                  </SectionCard>
-                  <SectionCard>
-                    <ImageUploader
-                      value={values.images as EditImageInterface[]}
-                      onChange={(images) => setFieldValue("images", images)}
+                <Stack spacing={[3, 5]}>
+                  <Box>
+                    <SectionCard>
+                      <SectionHeader>Sku Details</SectionHeader>
+                      <Box>
+                        <FormLabel>Sku Id</FormLabel>
+                        <FieldInput name="skuId" />
+                      </Box>
+                    </SectionCard>
+                  </Box>
+                  <Box>
+                    <SectionCard>
+                      <SectionHeader>Options</SectionHeader>
+                      {attributes.map((attribute, index) => (
+                        <>
+                          <FormLabel>{attribute.attributeName}</FormLabel>
+                          <FieldSelect
+                            name={`attributes.${index}.value`}
+                            options={attribute.attributeValues.map((value) => ({
+                              value: value.valueId,
+                              label: value.value,
+                            }))}
+                          />
+                        </>
+                      ))}
+                    </SectionCard>
+                  </Box>
+                  <Box>
+                    <SectionCard>
+                      <ImageUploader
+                        value={values.images as EditImageInterface[]}
+                        onChange={(images) => setFieldValue("images", images)}
+                      />
+                    </SectionCard>
+                    <ErrorMessage
+                      component={ValidationErrorMsg}
+                      name={"images"}
                     />
-                  </SectionCard>
-                  <ErrorMessage
-                    component={ValidationErrorMsg}
-                    name={"images"}
-                  />
-                  <SkuPricingInputContainer />
-                  <SectionCard>
-                    <SectionHeader>Special Discount</SectionHeader>
-                    <Grid>
-                      <div>
-                        <label>Special Discount Price</label>
-                        <FieldNumInput name="specialDiscount" />
-                      </div>
-                      <div>
-                        <label>Special Discount Percentage</label>
-                        <FieldPercentageInput name="specialDiscountPercentage" />
-                      </div>
-                    </Grid>
-                  </SectionCard>
-                  <SkuInventoryInputContainer />
-                  <SectionCard>
-                    <SectionHeader>Visibility</SectionHeader>
-                    <label>Ecosystem</label>
-                    <FieldEcosystemMultiInput
-                      name="ecosystemIds"
-                      ecosystemData={ecosystemData}
-                    />
-                  </SectionCard>
-                  <SkuDimensionsInputContainer />
-                </FlexColumnContainer>
-                <Button
-                  disabled={values.images.some(
-                    (image) => image.isUploading === true
-                  )}
-                  isSubmitButton={true}
-                >
-                  Save
-                </Button>
+                  </Box>
+                  <Box>
+                    <SkuPricingInputContainer />
+                  </Box>
+                  <Box>
+                    <SectionCard>
+                      <SectionHeader>Special Discount</SectionHeader>
+                      <Grid templateColumns="1fr 1fr" gap={2}>
+                        <Box>
+                          <FormLabel>Special Discount Price</FormLabel>
+                          <FieldNumInput name="specialDiscount" />
+                        </Box>
+                        <Box>
+                          <FormLabel>Special Discount Percentage</FormLabel>
+                          <FieldPercentageInput name="specialDiscountPercentage" />
+                        </Box>
+                      </Grid>
+                    </SectionCard>
+                  </Box>
+                  <Box>
+                    <SkuInventoryInputContainer />
+                    <SectionCard>
+                      <SectionHeader>Visibility</SectionHeader>
+                      <FormLabel>Ecosystem</FormLabel>
+                      <FieldEcosystemMultiInput
+                        name="ecosystemIds"
+                        ecosystemData={ecosystemData}
+                      />
+                    </SectionCard>
+                  </Box>
+                  <Box>
+                    <SkuDimensionsInputContainer />
+                  </Box>
+                </Stack>
+                <Box mt={3}>
+                  <Button
+                    isDisabled={values.images.some(
+                      (image) => image.isUploading === true
+                    )}
+                    type="submit"
+                  >
+                    Save
+                  </Button>
+                </Box>
               </Form>
             )}
           </Formik>
-        </div>
-      </FlexRowContainer>
-      <style jsx>{`
-        .container {
-          max-width: 900px;
-          margin: auto;
-        }
-        .headerContainer {
-          margin: 1.3em 0;
-        }
-        .flexContainer {
-          display: flex;
-        }
-        .formContainer {
-          flex: 1;
-          margin-bottom: 1em;
-          margin-left: 1em;
-        }
-        label {
-          margin-top: 0.3em;
-          display: inline-block;
-        }
-      `}</style>
-    </div>
+        </Box>
+      </Grid>
+    </Box>
   );
 };
 

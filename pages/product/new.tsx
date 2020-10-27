@@ -1,7 +1,6 @@
-import Button, { ButtonType } from "components/atoms/Button";
-import FieldInput from "components/FieldInput";
-import FieldSelect from "components/FieldSelect";
-import FieldMultiSelect from "components/FieldMultiSelect";
+import FieldInput from "components/atoms/FieldInput";
+import FieldSelect from "components/molecules/FieldSelect";
+import FieldMultiSelect from "components/molecules/FieldMultiSelect";
 import {
   ProductSchema,
   BrandInterface,
@@ -15,32 +14,33 @@ import ProductActions from "actions/product";
 import { connect } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import useSWR from "swr";
-import Loader from "components/Loader";
-import AttributeModal from "components/AttributeModal";
-import SkuModal from "components/SkuModal";
-import SpecificationInput from "components/SpecificationInput";
-import InputLabel from "components/InputLabel";
+import Loader from "components/atoms/Loader";
+import AttributeModal from "components/molecules/AttributeModal";
+import SkuModal from "components/molecules/SkuModal";
+import SpecificationInput from "components/molecules/SpecificationInput";
+import InputLabel from "components/atoms/InputLabel";
 import { getSkus } from "../../src/selectors/product";
-import SkuInputTable from "components/SkuInputTable";
-import FieldTextArea from "components/FieldTextArea";
+import SkuInputTable from "components/molecules/SkuInputTable";
+import FieldTextArea from "components/atoms/FieldTextArea";
 import { useRef, useEffect } from "react";
-import PageError from "components/PageError";
-import Tooltip from "components/Tooltip";
-import PageHeader from "components/PageHeader";
+import PageError from "components/atoms/PageError";
+import Tooltip from "components/atoms/Tooltip";
+import PageHeader from "components/atoms/PageHeader";
 import { EcosystemResponseInterface } from "types/business";
-import FieldEcosystemMultiInput from "components/FieldEcosystemMultiInput";
-import WithAuth from "components/WithAuth";
-import FieldPriceInput from "components/FieldPriceInput";
+import FieldEcosystemMultiInput from "components/molecules/FieldEcosystemMultiInput";
+import WithAuth from "components/atoms/WithAuth";
+import FieldPriceInput from "components/atoms/FieldPriceInput";
 import listOfCountries from "../../src/data/listOfCountries";
-import FAQInput from "components/FAQInput";
-import TierPriceInput from "components/TierpriceInput";
-import Checkbox from "components/atoms/Checkbox";
+import FAQInput from "components/molecules/FAQInput";
+import TierPriceInput from "components/molecules/TierpriceInput";
 import { CategoryInterface } from "types/category";
 import _ from "lodash";
-import SectionCard from "components/SectionCard";
+import SectionCard from "components/atoms/SectionCard";
 import SectionHeader from "components/atoms/SectionHeader";
-import ImageUploader from "components/ImageUploader";
-import ValidationErrorMsg from "components/ValidationErrorMsg";
+import ImageUploader from "components/molecules/ImageUploader";
+import ValidationErrorMsg from "components/atoms/ValidationErrorMsg";
+import { Grid, Box, Checkbox, Stack } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
 
 interface StateProps {
   skus: ProductSkuDetail[];
@@ -112,9 +112,9 @@ const AddProduct = (props: AddProductProps) => {
   };
 
   return (
-    <div className="container">
+    <Box p={2} mb={3}>
       <PageHeader>Add Product</PageHeader>
-      <div className="formContainer">
+      <Box maxW="1200px" m="auto">
         <Formik
           innerRef={formikRef}
           initialValues={{
@@ -144,12 +144,18 @@ const AddProduct = (props: AddProductProps) => {
           {({ resetForm, values, setFieldValue }) => (
             <Form>
               <SkuModal />
-              <div className="gridContainer">
+              <Grid
+                templateColumns={["1fr", "200px 1fr"]}
+                alignItems="center"
+                fontSize="md"
+                maxW=" 700px"
+                margin="auto"
+              >
                 <InputLabel label="Is Active" />
                 <Field name="isActive">
                   {({ field }) => (
                     <Checkbox
-                      checked={values.isActive}
+                      isChecked={values.isActive}
                       onChange={(e) =>
                         setFieldValue("isActive", e.target.checked)
                       }
@@ -164,6 +170,15 @@ const AddProduct = (props: AddProductProps) => {
                 <FieldTextArea name="longDescription" />
                 <InputLabel label="HSN Code" />
                 <FieldInput name="hsnCode" />
+                <InputLabel label="Min Price" />
+                <Tooltip
+                  trigger="focus"
+                  tooltip="Minimum price after all discounts"
+                >
+                  <FieldPriceInput name="minPrice" />
+                </Tooltip>
+                <InputLabel label="Max Price" />
+                <FieldPriceInput name="maxPrice" />
                 <InputLabel label="Main Category" />
                 <FieldSelect
                   name="defaultCategory"
@@ -206,15 +221,7 @@ const AddProduct = (props: AddProductProps) => {
                     label: country,
                   }))}
                 />
-                <InputLabel label="Min Price" />
-                <Tooltip
-                  trigger="focus"
-                  tooltip="Minimum price after all discounts"
-                >
-                  <FieldPriceInput name="minPrice" />
-                </Tooltip>
-                <InputLabel label="Max Price" />
-                <FieldPriceInput name="maxPrice" />
+
                 <InputLabel label="Tax Group" />
                 <FieldSelect
                   name="taxGroup"
@@ -223,10 +230,10 @@ const AddProduct = (props: AddProductProps) => {
                     label: taxGroup.description,
                   }))}
                 />
-              </div>
+              </Grid>
               <SkuInputTable />
               {values.skus.map((sku, index) => (
-                <div className="imageUploadContainer">
+                <Box mb={2}>
                   <SectionCard>
                     <SectionHeader>
                       SKU Id: {sku.skuId}(
@@ -251,68 +258,42 @@ const AddProduct = (props: AddProductProps) => {
                       name={`skus.${index}.images`}
                     />
                   </SectionCard>
-                </div>
+                </Box>
               ))}
               <TierPriceInput />
               <FAQInput />
               <SpecificationInput />
-              <div className="buttonContainer">
-                <Button
-                  disabled={values.skus.some((sku) =>
-                    sku.images.some((image) => image.isUploading)
-                  )}
-                  type={ButtonType.success}
-                  isSubmitButton={true}
-                >
-                  Submit
-                </Button>
-                <Button
-                  disabled={values.skus.some((sku) =>
-                    sku.images.some((image) => image.isUploading)
-                  )}
-                  onClick={resetForm}
-                  type={ButtonType.success}
-                  outlined={true}
-                >
-                  Clear
-                </Button>
-              </div>
+              <Stack spacing={3} isInline justify="center">
+                <Box>
+                  <Button
+                    isDisabled={values.skus.some((sku) =>
+                      sku.images.some((image) => image.isUploading)
+                    )}
+                    type="submit"
+                    variantColor="successColorVariant"
+                  >
+                    Submit
+                  </Button>
+                </Box>
+                <Box>
+                  <Button
+                    isDisabled={values.skus.some((sku) =>
+                      sku.images.some((image) => image.isUploading)
+                    )}
+                    onClick={resetForm}
+                    variant="outline"
+                    variantColor="dangerColorVariant"
+                  >
+                    Clear
+                  </Button>
+                </Box>
+              </Stack>
             </Form>
           )}
         </Formik>
         <AttributeModal categories={categories} />
-      </div>
-      <style jsx>{`
-        .container {
-          padding: 0 1em;
-        }
-        header {
-          font-size: 1.4rem;
-          margin: 1em;
-          text-transform: uppercase;
-        }
-        .gridContainer {
-          display: grid;
-          grid-template-columns: 200px 1fr;
-          align-items: center;
-          font-size: 1.1rem;
-          max-width: 700px;
-          margin: auto;
-        }
-        .formContainer {
-          max-width: 1200px;
-          margin: auto;
-        }
-        .buttonContainer {
-          text-align: center;
-          font-size: 1.2rem;
-          margin-bottom: 1em;
-        }
-        .imageUploadContainer {
-          margin-bottom: 1em;
-        }
-      `}</style>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

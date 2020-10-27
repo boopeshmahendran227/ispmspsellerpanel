@@ -1,24 +1,25 @@
 import { OrderInterface } from "types/order";
-import Select from "components/Select";
+import Select from "components/atoms/Select";
 import { PaginatedDataInterface } from "types/pagination";
-import PageHeader from "components/PageHeader";
+import PageHeader from "components/atoms/PageHeader";
 import { SelectOptionInterface } from "types/product";
-import DeliveryCodeModal from "components/DeliveryCodeModal";
+import DeliveryCodeModal from "components/molecules/DeliveryCodeModal";
 import useSWR from "swr";
 import {
   EcosystemDataInterface,
   EcosystemResponseInterface,
 } from "types/business";
-import PageError from "components/PageError";
-import Loader from "components/Loader";
+import PageError from "components/atoms/PageError";
+import Loader from "components/atoms/Loader";
 import EcosystemOption from "components/atoms/EcosystemOption";
-import WithAuth from "components/WithAuth";
+import WithAuth from "components/atoms/WithAuth";
 import { useState } from "react";
 import _ from "lodash";
-import OrdersContainer from "components/OrdersContainer";
+import OrdersContainer from "components/molecules/OrdersContainer";
 import PageContainer from "components/atoms/PageContainer";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageBodyContainer from "components/atoms/PageBodyContainer";
+import { Box } from "@chakra-ui/core";
 
 const Orders = () => {
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
@@ -66,7 +67,7 @@ const Orders = () => {
       <DeliveryCodeModal />
       <PageHeaderContainer>
         <PageHeader>Order Details</PageHeader>
-        <div className="filterContainer">
+        <Box minW={["250px"]}>
           <Select
             value={currentEcosystem}
             onChange={(ecosystem) =>
@@ -74,7 +75,7 @@ const Orders = () => {
             }
             options={ecosystems}
           />
-        </div>
+        </Box>
       </PageHeaderContainer>
       <PageBodyContainer>
         <OrdersContainer
@@ -83,11 +84,6 @@ const Orders = () => {
           selectedEcosystemId={selectedEcosystemId}
         />
       </PageBodyContainer>
-      <style jsx>{`
-        .filterContainer {
-          min-width: 300px;
-        }
-      `}</style>
     </PageContainer>
   );
 };

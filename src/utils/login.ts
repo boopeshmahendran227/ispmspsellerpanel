@@ -5,8 +5,7 @@ const istakapazaApiUrl = getIstakapazaApiUrl();
 
 // Should be called only on client side
 const redirectToLogin = () => {
-  window.location.href =
-    istakapazaApiUrl + "/#/login?redirect_uri=" + window.location.href;
+   istakapazaApiUrl + "/#/login?redirect_uri=" + window.location.href;
 };
 
 // Should be called only on client side

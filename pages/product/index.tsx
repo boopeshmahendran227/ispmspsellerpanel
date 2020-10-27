@@ -1,43 +1,26 @@
 import Link from "next/link";
 import { ProductMiniInterface, SelectOptionInterface } from "types/product";
 import { useState, useEffect } from "react";
-import SearchBar from "components/SearchBar";
-import ActiveFilters from "components/ActiveFilters";
+import SearchBar from "components/molecules/SearchBar";
+import ActiveFilters from "components/atoms/ActiveFilters";
 import { PaginatedDataInterface } from "types/pagination";
-import Button from "components/atoms/Button";
-import WithAuth from "components/WithAuth";
+import WithAuth from "components/atoms/WithAuth";
 import useSWR from "swr";
 import { useMemo } from "react";
-import PageError from "components/PageError";
-import ProductsContainer from "components/ProductsContainer";
-import PageHeader from "components/PageHeader";
+import PageError from "components/atoms/PageError";
+import ProductsContainer from "components/molecules/ProductsContainer";
+import PageHeader from "components/atoms/PageHeader";
 import {
   EcosystemResponseInterface,
   EcosystemDataInterface,
 } from "types/business";
-import Loader from "components/Loader";
+import Loader from "components/atoms/Loader";
 import EcosystemOption from "components/atoms/EcosystemOption";
-import Select from "components/Select";
-import Checkbox from "components/atoms/Checkbox";
-import styled from "styled-components";
+import Select from "components/atoms/Select";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageContainer from "components/atoms/PageContainer";
-
-const FlexContainer = styled.div`
-  margin: 0.5em 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const FilterSection = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const EcosystemFilterContainer = styled.div`
-  min-width: 300px;
-`;
+import { Box, Checkbox, Stack } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
 
 const Products = () => {
   const [searchText, setSearchText] = useState("");
@@ -125,25 +108,45 @@ const Products = () => {
   return (
     <PageContainer>
       <PageHeaderContainer>
-        <PageHeader>Products</PageHeader>
-        <div>
-          <Link href="/product/new">
-            <Button>Add Product</Button>
-          </Link>
-          <Link href="/product/cloneProduct">
-            <Button>Clone Products</Button>
-          </Link>
-        </div>
+        <PageHeader>Products </PageHeader>
+        <Stack direction="row" spacing={[5, 3]}>
+          <Box>
+            <Link href="/product/new">
+              <Button>Add Product</Button>
+            </Link>
+          </Box>
+          <Box>
+            <Link href="/product/cloneProduct">
+              <Button>Clone Products</Button>
+            </Link>
+          </Box>
+        </Stack>
       </PageHeaderContainer>
-      <FlexContainer>
-        <SearchBar searchText={searchText} searchByText={setSearchText} />
-        <FilterSection>
+      <Stack
+        spacing={3}
+        my={3}
+        flexDirection={["column", "row"]}
+        justify="space-between"
+      >
+        <Box textAlign="center">
+          <SearchBar searchText={searchText} searchByText={setSearchText} />
+        </Box>
+        <Stack
+          spacing={3}
+          flexDirection={["column-reverse", "column-reverse", "column", "row"]}
+          alignItems="flex-end"
+          mr={[2]}
+        >
           <Checkbox
-            checked={showOnlySelf}
+            mt={[5, 0]}
+            mr={2}
+            fontSize={["xs", "md"]}
+            isChecked={showOnlySelf}
             onChange={(e) => setShowOnlySelf(e.target.checked)}
-            label="Show Only My Products"
-          />
-          <EcosystemFilterContainer>
+          >
+            Show Only My Products
+          </Checkbox>
+          <Box minW={["200px", "280px"]}>
             <Select
               value={currentEcosystem}
               onChange={(ecosystem) =>
@@ -151,9 +154,9 @@ const Products = () => {
               }
               options={ecosystems}
             />
-          </EcosystemFilterContainer>
-        </FilterSection>
-      </FlexContainer>
+          </Box>
+        </Stack>
+      </Stack>
       <ActiveFilters
         appliedFilters={getAppliedFilters()}
         clearFilters={() => {

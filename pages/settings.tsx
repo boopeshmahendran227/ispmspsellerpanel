@@ -1,20 +1,21 @@
-import PageHeader from "components/PageHeader";
+import PageHeader from "components/atoms/PageHeader";
 import { Formik, Form } from "formik";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import useSWR from "swr";
-import FieldMultiSelect from "components/FieldMultiSelect";
-import FieldSelect from "components/FieldSelect";
+import FieldMultiSelect from "components/molecules/FieldMultiSelect";
+import FieldSelect from "components/molecules/FieldSelect";
 import { PaymentMode } from "types/invoice";
 import { ShipmentMode, SettingsInterface } from "types/settings";
-import SectionCard from "components/SectionCard";
+import SectionCard from "components/atoms/SectionCard";
 import SectionHeader from "components/atoms/SectionHeader";
 import Button from "components/atoms/Button";
-import PageError from "components/PageError";
-import Loader from "components/Loader";
+import PageError from "components/atoms/PageError";
+import Loader from "components/atoms/Loader";
 import SettingActions from "actions/settings";
 import { connect } from "react-redux";
 import * as Yup from "yup";
 import { SelectOptionInterface } from "types/product";
+import { Box, FormLabel } from "@chakra-ui/core";
 
 const validationSchema = Yup.object({
   restrictedPaymentModes: Yup.array()
@@ -72,7 +73,7 @@ const Settings = (props: SettingsProps): JSX.Element => {
   };
 
   return (
-    <div className="container">
+    <Box maxW="600px" m={[2, "auto"]}>
       <PageHeaderContainer>
         <PageHeader>Settings</PageHeader>
       </PageHeaderContainer>
@@ -95,25 +96,19 @@ const Settings = (props: SettingsProps): JSX.Element => {
           <Form>
             <SectionCard>
               <SectionHeader>Payment & Shipping</SectionHeader>
-              <label>Restricted Payment Modes</label>
+              <FormLabel>Restricted Payment Modes</FormLabel>
               <FieldMultiSelect
                 name="restrictedPaymentModes"
                 options={paymentModeOptions}
               />
-              <label>Shipment Mode</label>
+              <FormLabel>Shipment Mode</FormLabel>
               <FieldSelect name="shipmentMode" options={shipmentModeOptions} />
-              <Button isSubmitButton={true}>Save</Button>
+              <Button type="submit">Save</Button>
             </SectionCard>
           </Form>
         )}
       </Formik>
-      <style jsx>{`
-        .container {
-          max-width: 600px;
-          margin: auto;
-        }
-      `}</style>
-    </div>
+    </Box>
   );
 };
 

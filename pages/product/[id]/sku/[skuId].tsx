@@ -1,35 +1,35 @@
 import { Fragment } from "react";
 import useSWR from "swr";
-import Loader from "components/Loader";
-import PageError from "components/PageError";
-import PageHeader from "components/PageHeader";
-import WithAuth from "components/WithAuth";
+import Loader from "components/atoms/Loader";
+import PageError from "components/atoms/PageError";
+import PageHeader from "components/atoms/PageHeader";
+import WithAuth from "components/atoms/WithAuth";
 import { useRouter } from "next/router";
-import SkuList from "components/SkuList";
+import SkuList from "components/molecules/SkuList";
 import { Formik, Form, ErrorMessage } from "formik";
-import SkuProductInfo from "components/SkuProductInfo";
+import SkuProductInfo from "components/atoms/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/atoms/SectionHeader";
-import SectionCard from "components/SectionCard";
+import SectionCard from "components/atoms/SectionCard";
 import { EditImageInterface, ProductDetailInterface } from "types/product";
 import _ from "lodash";
-import FieldSelect from "components/FieldSelect";
-import FieldEcosystemMultiInput from "components/FieldEcosystemMultiInput";
+import FieldSelect from "components/molecules/FieldSelect";
+import FieldEcosystemMultiInput from "components/molecules/FieldEcosystemMultiInput";
 import { EcosystemResponseInterface } from "types/business";
 import { connect } from "react-redux";
 import SkuActions from "actions/sku";
 import { UpdateSkuInterface } from "types/sku";
 import Button from "components/atoms/Button";
 import * as Yup from "yup";
-import styled from "styled-components";
-import SkuDimensionsInputContainer from "components/SkuDimensionsInputContainer";
-import SkuInventoryInputContainer from "components/SkuInventoryInputContainer";
-import SkuPricingInputContainer from "components/SkuPricingInputContainer";
-import FieldNumInput from "components/FieldNumInput";
-import FieldPercentageInput from "components/FieldPercentageInput";
-import ValidationErrorMsg from "components/ValidationErrorMsg";
+import SkuDimensionsInputContainer from "components/molecules/SkuDimensionsInputContainer";
+import SkuInventoryInputContainer from "components/molecules/SkuInventoryInputContainer";
+import SkuPricingInputContainer from "components/molecules/SkuPricingInputContainer";
+import FieldNumInput from "components/atoms/FieldNumInput";
+import FieldPercentageInput from "components/atoms/FieldPercentageInput";
+import ValidationErrorMsg from "components/atoms/ValidationErrorMsg";
 import { getProductImageUrl } from "utils/url";
-import ImageUploader from "components/ImageUploader";
+import ImageUploader from "components/molecules/ImageUploader";
+import { Box, Text, Stack, SimpleGrid, Grid, FormLabel } from "@chakra-ui/core";
 
 interface DispatchProps {
   updateSku: (sku: UpdateSkuInterface) => void;
@@ -68,29 +68,6 @@ const validationSchema = Yup.object({
 }).defined();
 
 type InputInterface = Yup.InferType<typeof validationSchema>;
-
-const FlexRowContainer = styled.div`
-  display: flex;
-
-  & > div {
-    margin-right: 0.6em;
-  }
-`;
-
-const FlexColumnContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  & > div {
-    margin-bottom: 1.5em;
-  }
-`;
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 1em;
-`;
 
 const Sku = (props: SkuProps): JSX.Element => {
   const router = useRouter();
@@ -131,15 +108,15 @@ const Sku = (props: SkuProps): JSX.Element => {
   };
 
   return (
-    <div className="container">
-      <div className="headerContainer">
+    <Box maxW="900px" m={[2, null, null, "auto"]}>
+      <Box my={3}>
         <BackLink href="/product/[id]" as={`/product/${product.id}`}>
           Back to Product
         </BackLink>
         <PageHeader>{currentSkuId}</PageHeader>
-      </div>
-      <FlexRowContainer>
-        <div>
+      </Box>
+      <Grid gridTemplateColumns={["1fr", "0.5fr 1fr"]} gap={3}>
+        <Box w="full">
           <SkuProductInfo
             productId={product.id}
             productName={product.name}
@@ -150,8 +127,8 @@ const Sku = (props: SkuProps): JSX.Element => {
             skus={product.skuDetails}
             currentSkuId={currentSkuId}
           />
-        </div>
-        <div className="formContainer">
+        </Box>
+        <Box flex="1" mb={3}>
           <Formik
             initialValues={{
               images: currentSku.imageRelativePaths.map((imageRelativePath) => {
@@ -199,91 +176,90 @@ const Sku = (props: SkuProps): JSX.Element => {
           >
             {({ setFieldValue, values }) => (
               <Form>
-                <FlexColumnContainer>
-                  <SectionCard>
-                    <SectionHeader>Options</SectionHeader>
-                    {attributes.map((attribute, index) => (
-                      <Fragment key={index}>
-                        <label>{attribute.attributeName}</label>
-                        <FieldSelect
-                          disabled={true}
-                          name={`attributes.${index}.value`}
-                          options={attribute.attributeValues.map((value) => ({
-                            value: value.valueId,
-                            label: value.value,
-                          }))}
-                        />
-                      </Fragment>
-                    ))}
-                  </SectionCard>
-                  <SectionCard>
-                    <ImageUploader
-                      value={values.images as EditImageInterface[]}
-                      onChange={(value) => setFieldValue("images", value)}
-                    />
-                  </SectionCard>
-                  <ErrorMessage
-                    component={ValidationErrorMsg}
-                    name={"images"}
-                  />
-                  <SkuPricingInputContainer />
-                  <SectionCard>
-                    <SectionHeader>Special Discount</SectionHeader>
-                    <Grid>
-                      <div>
-                        <label>Special Discount Price</label>
-                        <FieldNumInput name="specialDiscount" />
-                      </div>
-                      <div>
-                        <label>Special Discount Percentage</label>
-                        <FieldPercentageInput name="specialDiscountPercentage" />
-                      </div>
-                    </Grid>
-                  </SectionCard>
-                  <SkuInventoryInputContainer />
-                  <SectionCard>
-                    <SectionHeader>Visibility</SectionHeader>
-                    <label>Ecosystem</label>
-                    <FieldEcosystemMultiInput
-                      name="ecosystemIds"
-                      ecosystemData={ecosystemData}
-                    />
-                  </SectionCard>
-                  <SkuDimensionsInputContainer />
-                </FlexColumnContainer>
-                <Button
-                  disabled={values.images.some((image) => image.isUploading)}
-                  isSubmitButton={true}
-                >
-                  Save
-                </Button>
+                <Stack spacing={[3, 5]}>
+                  <Box>
+                    <SectionCard>
+                      <SectionHeader>Options</SectionHeader>
+                      {attributes.map((attribute, index) => (
+                        <Fragment key={index}>
+                          <FormLabel>{attribute.attributeName}</FormLabel>
+                          <FieldSelect
+                            disabled={true}
+                            name={`attributes.${index}.value`}
+                            options={attribute.attributeValues.map((value) => ({
+                              value: value.valueId,
+                              label: value.value,
+                            }))}
+                          />
+                        </Fragment>
+                      ))}
+                    </SectionCard>
+                  </Box>
+                  <Box>
+                    <SectionCard>
+                      <ImageUploader
+                        value={values.images as EditImageInterface[]}
+                        onChange={(value) => setFieldValue("images", value)}
+                      />
+                      <ErrorMessage
+                        component={ValidationErrorMsg}
+                        name={"images"}
+                      />
+                    </SectionCard>
+                  </Box>
+                  <Box>
+                    <SkuPricingInputContainer />
+                  </Box>
+                  <Box>
+                    <SectionCard>
+                      <SectionHeader>Special Discount</SectionHeader>
+                      <SimpleGrid columns={2} spacing={2}>
+                        <Box>
+                          <FormLabel>Special Discount Price</FormLabel>
+                          <FieldNumInput name="specialDiscount" />
+                        </Box>
+                        <Box>
+                          <FormLabel>Special Discount Percentage</FormLabel>
+                          <FieldPercentageInput name="specialDiscountPercentage" />
+                        </Box>
+                      </SimpleGrid>
+                    </SectionCard>
+                  </Box>
+                  <Box>
+                    <SkuInventoryInputContainer />
+                  </Box>
+                  <Box>
+                    <SectionCard>
+                      <SectionHeader>Visibility</SectionHeader>
+                      <Text mt={1} display="inline-block">
+                        Ecosystem
+                      </Text>
+                      <FieldEcosystemMultiInput
+                        name="ecosystemIds"
+                        ecosystemData={ecosystemData}
+                      />
+                    </SectionCard>
+                  </Box>
+                  <Box>
+                    <SkuDimensionsInputContainer />
+                  </Box>
+                </Stack>
+                <Box my={3}>
+                  <Button
+                    isDisabled={values.images.some(
+                      (image) => image.isUploading
+                    )}
+                    type="submit"
+                  >
+                    Save
+                  </Button>
+                </Box>
               </Form>
             )}
           </Formik>
-        </div>
-      </FlexRowContainer>
-      <style jsx>{`
-        .container {
-          max-width: 900px;
-          margin: auto;
-        }
-        .headerContainer {
-          margin: 1.3em 0;
-        }
-        .flexContainer {
-          display: flex;
-        }
-        .formContainer {
-          flex: 1;
-          margin-bottom: 1em;
-          margin-left: 1em;
-        }
-        label {
-          margin-top: 0.3em;
-          display: inline-block;
-        }
-      `}</style>
-    </div>
+        </Box>
+      </Grid>
+    </Box>
   );
 };
 

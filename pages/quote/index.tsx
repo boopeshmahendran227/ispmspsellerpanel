@@ -1,25 +1,30 @@
 import { connect } from "react-redux";
 import CSSConstants from "../../src/constants/CSSConstants";
-import TabSection from "components/TabSection";
-import SortableTable from "components/SortableTable";
-import { QuoteInterface, QuoteStatus } from "types/quote";
+import TabSection from "components/atoms/TabSection";
+import SortableTable from "components/atoms/SortableTable";
+import { QuoteInterface, QuotesStatusFilter, QuoteStatus } from "types/quote";
 import { getQuoteStatusText } from "utils/quote";
 import useSWR from "swr";
-import Loader from "components/Loader";
+import Loader from "components/atoms/Loader";
 import Link from "next/link";
-import ProductCard from "components/ProductCard";
+import ProductCard from "components/atoms/ProductCard";
 import moment from "moment";
-import Button, { ButtonType } from "components/atoms/Button";
 import QuoteActions from "actions/quote";
 import { formatPrice } from "utils/misc";
 import { getColor } from "utils/quote";
-import PageError from "components/PageError";
+import PageError from "components/atoms/PageError";
 import { getCustomerInfo } from "utils/customer";
-import WithAuth from "components/WithAuth";
+import WithAuth from "components/atoms/WithAuth";
 import PageContainer from "components/atoms/PageContainer";
-import PageHeader from "components/PageHeader";
+import PageHeader from "components/atoms/PageHeader";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageBodyContainer from "components/atoms/PageBodyContainer";
+import { Box, Button, ButtonGroup } from "@chakra-ui/core";
+import MobileMediaQuery from "components/atoms/MobileMediaQuery";
+import DesktopMediaQuery from "components/atoms/DesktopMediaQuery";
+import Select from "components/atoms/Select";
+import { useState } from "react";
+import { SelectOptionInterface } from "types/product";
 
 interface DispatchProps {
   updateQuote: (quote: QuoteInterface) => void;
@@ -54,7 +59,36 @@ const getTotalQty = (quote: QuoteInterface) =>
     0
   );
 
+const statusFilter: SelectOptionInterface[] = [
+  {
+    value: QuotesStatusFilter.AllQuotes,
+    label: "All Quotes",
+  },
+  {
+    value: QuotesStatusFilter.OpenQuotes,
+    label: "Open Quotes",
+  },
+  {
+    value: QuotesStatusFilter.ConvertedQuotes,
+    label: "Converted Quotes",
+  },
+  {
+    value: QuotesStatusFilter.RejectedQuotes,
+    label: "Rejected Quotes",
+  },
+  {
+    value: QuotesStatusFilter.RespondedQuotes,
+    label: "Responded Quotes",
+  },
+  {
+    value: QuotesStatusFilter.ExpiredQuotes,
+    label: "Expired Quotes",
+  },
+];
+
 const Quotes = (props: QuotesProps) => {
+  const [filter, setFilter] = useState<SelectOptionInterface>(statusFilter[0]);
+
   const getTableHeaders = () => {
     return [
       {
@@ -109,21 +143,24 @@ const Quotes = (props: QuotesProps) => {
     switch (quote.status) {
       case QuoteStatus.SellerResponsePending:
         return (
-          <>
+          <ButtonGroup spacing={1}>
             <Button
-              type={ButtonType.success}
+              my={2}
+              size="sm"
+              variantColor="successColorVariant"
               onClick={(e) => handleClick(e, props.updateQuote)}
             >
               Respond To Quote
             </Button>
             <Button
-              type={ButtonType.danger}
+              size="sm"
+              variantColor="dangerColorVariant"
+              variant="outline"
               onClick={(e) => handleClick(e, props.rejectQuote)}
-              outlined={true}
             >
               Reject Quote
             </Button>
-          </>
+          </ButtonGroup>
         );
     }
     return null;
@@ -253,84 +290,126 @@ const Quotes = (props: QuotesProps) => {
     (quote) => quote.status === QuoteStatus.Expired
   );
 
+  const getTableData = (filter) => {
+    switch (filter) {
+      case QuotesStatusFilter.AllQuotes:
+        return quotes;
+      case QuotesStatusFilter.OpenQuotes:
+        return openQuotes;
+      case QuotesStatusFilter.RespondedQuotes:
+        return respondedQuotes;
+      case QuotesStatusFilter.ConvertedQuotes:
+        return convertedQuotes;
+      case QuotesStatusFilter.RejectedQuotes:
+        return rejectedQuotes;
+      case QuotesStatusFilter.ExpiredQuotes:
+        return expiredQuotes;
+    }
+    return quotes;
+  };
+
   return (
     <PageContainer>
       <PageHeaderContainer>
         <PageHeader>Quotes</PageHeader>
       </PageHeaderContainer>
       <PageBodyContainer>
-        <TabSection
-          headingList={[
-            `All Quotes (${quotes.length})`,
-            `Open Quotes (${openQuotes.length})`,
-            `Responded Quotes (${respondedQuotes.length})`,
-            `Converted Quotes (${convertedQuotes.length})`,
-            `Rejected Quotes (${rejectedQuotes.length})`,
-            `Expired Quotes (${expiredQuotes.length})`,
-          ]}
-          contentList={[
-            <SortableTable
-              initialSortData={{
-                index: 1,
-                isAsc: false,
-              }}
-              headers={getTableHeaders()}
-              data={quotes}
-              emptyMsg="There are no quotes"
-              body={renderTableBody}
-            />,
-            <SortableTable
-              initialSortData={{
-                index: 1,
-                isAsc: false,
-              }}
-              headers={getTableHeaders()}
-              data={openQuotes}
-              emptyMsg="There are no open quotes"
-              body={renderTableBody}
-            />,
-            <SortableTable
-              initialSortData={{
-                index: 1,
-                isAsc: false,
-              }}
-              headers={getTableHeaders()}
-              data={respondedQuotes}
-              emptyMsg="There are no responded quotes"
-              body={renderTableBody}
-            />,
-            <SortableTable
-              initialSortData={{
-                index: 1,
-                isAsc: false,
-              }}
-              headers={getTableHeaders()}
-              data={convertedQuotes}
-              emptyMsg="There are no converted quotes"
-              body={renderTableBody}
-            />,
-            <SortableTable
-              initialSortData={{
-                index: 1,
-                isAsc: false,
-              }}
-              headers={getTableHeaders()}
-              data={rejectedQuotes}
-              emptyMsg="There are no rejected quotes"
-              body={renderTableBody}
-            />,
-            <SortableTable
-              initialSortData={{
-                index: 1,
-                isAsc: false,
-              }}
-              headers={getTableHeaders()}
-              data={expiredQuotes}
-              emptyMsg="There are no expired quotes"
-              body={renderTableBody}
-            />,
-          ]}
-        />
+        <MobileMediaQuery>
+          <Box maxW="250px" mb={2} p={2}>
+            <Select
+              value={filter}
+              options={statusFilter}
+              onChange={(value) => setFilter(value)}
+            />
+            <Box my={2}>
+              {`Total ${filter.label}(${getTableData(filter.value).length})`}
+            </Box>
+          </Box>
+          <SortableTable
+            initialSortData={{
+              index: 2,
+              isAsc: false,
+            }}
+            headers={getTableHeaders()}
+            data={getTableData(filter.value)}
+            emptyMsg={"There are no Quotes in selected category"}
+            body={renderTableBody}
+          />
+        </MobileMediaQuery>
+        <DesktopMediaQuery>
+          <TabSection
+            headingList={[
+              `All Quotes (${quotes.length})`,
+              `Open Quotes (${openQuotes.length})`,
+              `Responded Quotes (${respondedQuotes.length})`,
+              `Converted Quotes (${convertedQuotes.length})`,
+              `Rejected Quotes (${rejectedQuotes.length})`,
+              `Expired Quotes (${expiredQuotes.length})`,
+            ]}
+            contentList={[
+              <SortableTable
+                initialSortData={{
+                  index: 1,
+                  isAsc: false,
+                }}
+                headers={getTableHeaders()}
+                data={quotes}
+                emptyMsg="There are no quotes"
+                body={renderTableBody}
+              />,
+              <SortableTable
+                initialSortData={{
+                  index: 1,
+                  isAsc: false,
+                }}
+                headers={getTableHeaders()}
+                data={openQuotes}
+                emptyMsg="There are no open quotes"
+                body={renderTableBody}
+              />,
+              <SortableTable
+                initialSortData={{
+                  index: 1,
+                  isAsc: false,
+                }}
+                headers={getTableHeaders()}
+                data={respondedQuotes}
+                emptyMsg="There are no responded quotes"
+                body={renderTableBody}
+              />,
+              <SortableTable
+                initialSortData={{
+                  index: 1,
+                  isAsc: false,
+                }}
+                headers={getTableHeaders()}
+                data={convertedQuotes}
+                emptyMsg="There are no converted quotes"
+                body={renderTableBody}
+              />,
+              <SortableTable
+                initialSortData={{
+                  index: 1,
+                  isAsc: false,
+                }}
+                headers={getTableHeaders()}
+                data={rejectedQuotes}
+                emptyMsg="There are no rejected quotes"
+                body={renderTableBody}
+              />,
+              <SortableTable
+                initialSortData={{
+                  index: 1,
+                  isAsc: false,
+                }}
+                headers={getTableHeaders()}
+                data={expiredQuotes}
+                emptyMsg="There are no expired quotes"
+                body={renderTableBody}
+              />,
+            ]}
+          />
+        </DesktopMediaQuery>
       </PageBodyContainer>
     </PageContainer>
   );

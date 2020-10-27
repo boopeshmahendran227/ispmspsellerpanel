@@ -1,7 +1,5 @@
-import styled from "styled-components";
+import { Box } from "@chakra-ui/core";
 
-const SectionHeaderContainer = styled.div`
-  margin-bottom: 1.1em;
-`;
+const SectionHeaderContainer = (props) => <Box mb={3}> {props.children}</Box>;
 
 export default SectionHeaderContainer;

@@ -33,7 +33,6 @@ const Layout = (props: LayoutProps) => {
         body {
           padding: 0;
           margin: 0;
-          font-size: 15px;
           background: ${CSSConstants.backgroundColor};
           font-family: "Lato", sans-serif;
           -webkit-tap-highlight-color: rgba(
@@ -61,38 +60,12 @@ const Layout = (props: LayoutProps) => {
             0px 4px 5px 0px rgba(0, 0, 0, 0.14),
             0px 1px 10px 0px rgba(0, 0, 0, 0.12);
         }
-        input,
-        textarea {
-          padding: 0.8em;
-          margin: 0.5em 0;
-          background: #ffffff;
-          font-size: 0.8rem;
-          border: 1px solid ${CSSConstants.borderColor};
-          transition: border 0.3s;
-        }
-        input:focus,
-        textarea:focus {
-          outline: none;
-          border: 1px solid ${CSSConstants.primaryColor};
-        }
-        input::placeholder {
-          text-align: center;
-        }
-        input::-ms-input-placeholder {
-          text-align: center;
-        }
         table {
           border-collapse: collapse;
         }
         td,
         th {
           padding: 0.35em;
-        }
-        @media only screen and (max-width: 1000px) {
-          html,
-          body {
-            font-size: 14px;
-          }
         }
       `}</style>
     </div>
