@@ -46,6 +46,9 @@ import {
   UPDATE_SETTINGS_REQUEST,
   UPDATE_SETTINGS_SUCCESS,
   UPDATE_SETTINGS_FAILURE,
+  SEND_BULKSMS_REQUEST,
+  SEND_BULKSMS_SUCCESS,
+  SEND_BULKSMS_FAILURE,
 } from "../constants/ActionTypes";
 
 const openActionItems = [
@@ -64,6 +67,7 @@ const openActionItems = [
   CLONE_PRODUCT_REQUEST,
   UPDATE_TIER_PRICE_REQUEST,
   UPDATE_SETTINGS_REQUEST,
+  SEND_BULKSMS_REQUEST,
 ];
 
 const closeActions = [
@@ -97,6 +101,8 @@ const closeActions = [
   UPDATE_TIER_PRICE_FAILURE,
   UPDATE_SETTINGS_SUCCESS,
   UPDATE_SETTINGS_FAILURE,
+  SEND_BULKSMS_SUCCESS,
+  SEND_BULKSMS_FAILURE,
 ];
 
 function* watchLoadingScreenShow() {

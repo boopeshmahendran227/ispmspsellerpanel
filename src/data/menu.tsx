@@ -116,7 +116,7 @@ const menuTree: MenuTreeItem[] = [
         href: "/bulkSms",
       },
     ],
-    icon: <i className="fa fa-ellipsis-h" aria-hidden="true"></i>,
+    icon: <i className="fas fa-bullhorn" aria-hidden="true"></i>,
     matchFunc: (path) => path.includes("/bulkSms"),
   },
 ];

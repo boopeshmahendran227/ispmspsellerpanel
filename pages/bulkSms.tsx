@@ -1,47 +1,95 @@
 import {
-  Grid,
+  SimpleGrid,
   Box,
   Heading,
   Stack,
-  IconButton,
-  Input,
   Tag,
   TagLabel,
-  TagCloseButton,
-  Divider,
+  FormLabel,
+  Flex,
+  TagIcon,
 } from "@chakra-ui/core";
+import WithAuth from "components/atoms/WithAuth";
+import { connect } from "react-redux";
 import Button from "components/atoms/Button";
 import FieldTextArea from "components/atoms/FieldTextArea";
-import InputLabel from "components/atoms/InputLabel";
-import AddCustomerModal from "components/molecules/AddCustomerModal";
+import Loader from "components/atoms/Loader";
+import PageError from "components/atoms/PageError";
+import RecipientInputBox from "components/atoms/RecipientInputBox";
+import ValidationErrorMsg from "components/atoms/ValidationErrorMsg";
 import FieldDatePicker from "components/molecules/FieldDatePicker";
-import { Formik, Form } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import moment from "moment";
-import React, { useState } from "react";
+import useSWR from "swr";
+import {
+  BulkSmsGroup,
+  BulkSmsRequestInterface,
+  RecipientType,
+} from "types/bulkSms";
+import * as Yup from "yup";
+import BulkSmsAction from "actions/bulkSms";
 
-enum RecipientType {
-  ExistingUser,
-  Group,
-  NonExistingUser,
+interface DispatchProps {
+  sendBulkSms: (bulkSmsData: BulkSmsRequestInterface) => void;
 }
 
-const BulkSms = () => {
-  const [addCustomerModal, setAddCustomerModal] = useState(false);
+const validationSchema = Yup.object().shape({
+  recipients: Yup.array()
+    .of(
+      Yup.object().shape({
+        name: Yup.string().required(),
+        phoneNumber: Yup.string().required(),
+        id: Yup.string().required(),
+        recipientType: Yup.mixed()
+          .oneOf([
+            RecipientType.ExistingUser,
+            RecipientType.Group,
+            RecipientType.NonExistingUser,
+          ])
+          .required(),
+      })
+    )
+    .required()
+    .nullable(),
+  message: Yup.string().required().nullable(),
+  scheduledDate: Yup.date().required().nullable(),
+});
 
-  const [searchText, setSearchText] = useState("");
-  const onSubmit = () => {};
-  const sug = [
-    {
-      name: "name",
-      number: "984888888",
-      recipientType: RecipientType.ExistingUser,
-    },
-    {
-      name: "data",
-      number: "7894545445",
-      recipientType: RecipientType.ExistingUser,
-    },
-  ];
+type InputInterface = Yup.InferType<typeof validationSchema>;
+
+const BulkSms = (props: DispatchProps) => {
+  const groupsSwr = useSWR("/bulksms/groups");
+  const error = groupsSwr.error;
+  const groups: BulkSmsGroup[] = groupsSwr.data;
+
+  if (error) {
+    return <PageError statusCode={error.response?.status} />;
+  }
+
+  if (!groups) {
+    return <Loader />;
+  }
+
+  const onSubmit = (values) => {
+    props.sendBulkSms({
+      messageToSend: values.message,
+      scheduledDate: values.scheduledDate.format(),
+      groupIds: values.recipients
+        .filter((recipient) => recipient.recipientType === RecipientType.Group)
+        .map((group) => group.id),
+      mobileNos: values.recipients
+        .filter(
+          (recipient) =>
+            recipient.recipientType === RecipientType.NonExistingUser
+        )
+        .map((nonExistingUser) => nonExistingUser.phoneNumber),
+      customerIds: values.recipients
+        .filter(
+          (recipient) => recipient.recipientType === RecipientType.ExistingUser
+        )
+        .map((existingUser) => existingUser.phoneNumber),
+    });
+  };
 
   return (
     <Box
@@ -64,126 +112,65 @@ const BulkSms = () => {
       </Heading>
       <Formik
         initialValues={{
-          to: [
-            {
-              name: "All",
-              number: "10",
-              recipientType: RecipientType.Group,
-            },
-          ],
-          scheduleDate: moment(),
+          recipients: [],
+          scheduledDate: moment(),
           message: "",
         }}
         onSubmit={onSubmit}
+        validationSchema={validationSchema}
       >
-        {({ values, setFieldValue, resetForm }) => (
+        {({ values, setFieldValue, resetForm, errors }) => (
           <Form>
-            <AddCustomerModal
-              open={addCustomerModal}
-              onClose={() => setAddCustomerModal(false)}
-            />
-            <Grid templateColumns={["1fr", "300px 1fr"]}>
-              <InputLabel label="To" />
-              <Box
-                border="1px"
-                borderColor="#ccc"
-                minH="20vh"
-                w="100%"
-                p={2}
-                borderRadius={5}
-              >
-                {values.to.map((tag, index) => (
+            <SimpleGrid columns={1}>
+              <Flex wrap="wrap">
+                {groups.map((group) => (
                   <Tag
-                    size={"sm"}
                     m={1}
-                    key={index}
-                    rounded="full"
-                    variant="solid"
-                    fontSize={["xs", "sm"]}
-                    variantColor={
-                      tag.recipientType === RecipientType.NonExistingUser
-                        ? "red"
-                        : "blue"
-                    }
+                    size={"sm"}
+                    cursor="pointer"
+                    variantColor="blue"
+                    onClick={() => {
+                      if (
+                        values.recipients.some(
+                          (recipient) => recipient.id === group.groupId
+                        )
+                      ) {
+                        return;
+                      }
+                      setFieldValue("recipients", [
+                        ...values.recipients,
+                        {
+                          name: group.groupName,
+                          phoneNumber: group.noOfRecipients,
+                          id: group.groupId,
+                          recipientType: RecipientType.Group,
+                        },
+                      ]);
+                    }}
                   >
-                    <TagLabel>{`${tag.name}(${tag.number})`}</TagLabel>
-                    <TagCloseButton
-                      onClick={() => {
-                        setFieldValue(
-                          "to",
-                          values.to.filter((val) => val.number !== tag.number)
-                        );
-                      }}
-                    />
+                    <TagIcon icon="add" size="12px" />
+                    <TagLabel>
+                      {group.groupName} ({group.noOfRecipients})
+                    </TagLabel>
                   </Tag>
                 ))}
-
-                <Input
-                  variant="unstyled"
-                  name="search"
-                  placeholder="Add Recipients"
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
+              </Flex>
+              <FormLabel>To</FormLabel>
+              <Box>
+                <RecipientInputBox
+                  recipients={values.recipients}
+                  onChange={(values) => setFieldValue("recipients", values)}
                 />
-
-                <Box
-                  boxShadow={searchText === "" ? "none" : "md"}
-                  mx={2}
-                  fontSize="md"
-                  px={1}
-                >
-                  {sug.length > 0 &&
-                  sug.some((sug) => sug.name === searchText) ? (
-                    sug.map((su) => (
-                      <Box
-                        onClick={() => {
-                          if (values.to.some((t) => t.name === su.name)) {
-                            return;
-                          }
-                          setFieldValue("to", [...values.to, su]);
-                          setSearchText("");
-                        }}
-                      >
-                        <Box as="span">{su.name}</Box>
-                        <Box as="span">{su.number}</Box>
-                        <Divider />
-                      </Box>
-                    ))
-                  ) : (
-                    <Box
-                      onClick={() => {
-                        if (searchText.length === 10) {
-                          setFieldValue("to", [
-                            ...values.to,
-                            {
-                              name: "unknown",
-                              number: searchText,
-                              recipientType: RecipientType.NonExistingUser,
-                            },
-                          ]);
-                          setSearchText("");
-                        }
-                      }}
-                    >
-                      {searchText}
-                    </Box>
-                  )}
-                </Box>
+                <ErrorMessage
+                  component={ValidationErrorMsg}
+                  name={"recipients"}
+                />
               </Box>
-              {console.log(values.to)}
-              {/* <Stack isInline alignItems="center" spacing={3}>
-                <Box>
-                  <FieldTextArea name="to" />
-                </Box>
-                <Box cursor="pointer">
-                  <Users onClick={() => setAddCustomerModal(true)} />
-                </Box>
-              </Stack> */}
-              <InputLabel label="Message" />
+              <FormLabel>Message</FormLabel>
               <FieldTextArea name="message" />
-              <InputLabel label="Schedule Delivery Date" />
-              <FieldDatePicker name="scheduleDate" />
-            </Grid>
+              <FormLabel>Deliver By</FormLabel>
+              <FieldDatePicker name="scheduledDate" />
+            </SimpleGrid>
             <Stack isInline spacing={4} justify={["center", "flex-end"]} mt={2}>
               <Box>
                 <Button type="submit" variantColor="successColorVariant">
@@ -208,4 +195,10 @@ const BulkSms = () => {
   );
 };
 
-export default BulkSms;
+const mapDispatchToProps: DispatchProps = {
+  sendBulkSms: BulkSmsAction.sendBulkSms,
+};
+
+export default WithAuth(
+  connect<null, DispatchProps>(null, mapDispatchToProps)(BulkSms)
+);
