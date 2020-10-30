@@ -1,33 +1,16 @@
-import {
-  SimpleGrid,
-  Box,
-  Heading,
-  Stack,
-  Tag,
-  TagLabel,
-  FormLabel,
-  Flex,
-  TagIcon,
-} from "@chakra-ui/core";
+import { SimpleGrid, Box, Heading, Stack, FormLabel } from "@chakra-ui/core";
 import WithAuth from "components/atoms/WithAuth";
 import { connect } from "react-redux";
 import Button from "components/atoms/Button";
 import FieldTextArea from "components/atoms/FieldTextArea";
-import Loader from "components/atoms/Loader";
-import PageError from "components/atoms/PageError";
-import RecipientInputBox from "components/atoms/RecipientInputBox";
 import ValidationErrorMsg from "components/atoms/ValidationErrorMsg";
 import FieldDatePicker from "components/molecules/FieldDatePicker";
 import { Formik, Form, ErrorMessage } from "formik";
 import moment from "moment";
-import useSWR from "swr";
-import {
-  BulkSmsGroup,
-  BulkSmsRequestInterface,
-  RecipientType,
-} from "types/bulkSms";
+import { BulkSmsRequestInterface, RecipientType } from "types/bulkSms";
 import * as Yup from "yup";
 import BulkSmsAction from "actions/bulkSms";
+import RecipientInputBox from "components/atoms/RecipientInputBox";
 
 interface DispatchProps {
   sendBulkSms: (bulkSmsData: BulkSmsRequestInterface) => void;
@@ -65,18 +48,6 @@ const validationSchema = Yup.object().shape({
 type InputInterface = Yup.InferType<typeof validationSchema>;
 
 const BulkSms = (props: DispatchProps) => {
-  const groupsSwr = useSWR("/bulksms/groups");
-  const error = groupsSwr.error;
-  const groups: BulkSmsGroup[] = groupsSwr.data;
-
-  if (error) {
-    return <PageError statusCode={error.response?.status} />;
-  }
-
-  if (!groups) {
-    return <Loader />;
-  }
-
   const onSubmit = (values) => {
     props.sendBulkSms({
       totalNumberOfRecipients:
@@ -115,7 +86,7 @@ const BulkSms = (props: DispatchProps) => {
       maxW="700px"
       mx={[2, "auto"]}
       my={[1, 8]}
-      p={6}
+      p={5}
       pb={4}
       boxShadow="md"
       bg="foregroundColor"
@@ -123,7 +94,7 @@ const BulkSms = (props: DispatchProps) => {
       <Heading
         size="xl"
         mt={3}
-        mb={4}
+        mb={10}
         fontWeight="bold"
         fontSize="xl"
         textTransform="uppercase"
@@ -142,41 +113,8 @@ const BulkSms = (props: DispatchProps) => {
         {({ values, setFieldValue, resetForm }) => (
           <Form>
             <SimpleGrid columns={1} spacing={3}>
-              <Flex wrap="wrap">
-                {groups.map((group) => (
-                  <Tag
-                    m={1}
-                    size={"sm"}
-                    cursor="pointer"
-                    variantColor="blue"
-                    onClick={() => {
-                      if (
-                        values.recipients.some(
-                          (recipient) => recipient.id === group.groupId
-                        )
-                      ) {
-                        return;
-                      }
-                      setFieldValue("recipients", [
-                        ...values.recipients,
-                        {
-                          name: group.groupName,
-                          id: group.groupId,
-                          recipientType: RecipientType.Group,
-                          numberOfRecipients: group.noOfRecipients,
-                        },
-                      ]);
-                    }}
-                  >
-                    <TagIcon icon="add" size="12px" />
-                    <TagLabel>
-                      {group.groupName} ({group.noOfRecipients})
-                    </TagLabel>
-                  </Tag>
-                ))}
-              </Flex>
               <Box>
-                <FormLabel p={0}>To:</FormLabel>
+                <FormLabel fontWeight="bold">To:</FormLabel>
                 <RecipientInputBox
                   recipients={values.recipients}
                   onChange={(values) => setFieldValue("recipients", values)}
@@ -187,8 +125,11 @@ const BulkSms = (props: DispatchProps) => {
                 />
               </Box>
               <Box>
-                <FormLabel p={0}>Message:</FormLabel>
-                <FieldTextArea name="message" />
+                <FormLabel fontWeight="bold">Message:</FormLabel>
+                <FieldTextArea
+                  name="message"
+                  placeholder="Enter your Message..."
+                />
                 <Box
                   textAlign="right"
                   fontSize={12}
@@ -200,7 +141,7 @@ const BulkSms = (props: DispatchProps) => {
                 </Box>
               </Box>
               <Box>
-                <FormLabel p={0}>Deliver By:</FormLabel>
+                <FormLabel fontWeight="bold">Deliver By:</FormLabel>
                 <FieldDatePicker name="scheduledDate" />
               </Box>
             </SimpleGrid>

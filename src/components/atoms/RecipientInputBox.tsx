@@ -8,16 +8,20 @@ import {
   ListItem,
   CloseButton,
   Avatar,
+  Flex,
+  TagIcon,
 } from "@chakra-ui/core";
 import { useRef, useState } from "react";
 import useSWR from "swr";
 import {
+  BulkSmsGroup,
   RecipientType,
   SuggestedUserInterface,
   User,
   UserGroup,
 } from "types/bulkSms";
 import Loader from "./Loader";
+import { capitalizeFirstLetter } from "utils/misc";
 
 interface RecipientInputBoxProps {
   recipients: (User | UserGroup)[];
@@ -27,7 +31,11 @@ interface RecipientInputBoxProps {
 const RecipientInputBox = (props: RecipientInputBoxProps) => {
   const searchInput = useRef(null);
   const [searchText, setSearchText] = useState("");
-  const suggestionsSWR = useSWR(`/bulksms?searchText=${searchText}`);
+  const groupsSwr = useSWR("/bulksms/groups");
+  const groups: BulkSmsGroup[] = groupsSwr.data;
+  const suggestionsSWR = useSWR(
+    searchText ? `/bulksms?searchText=${searchText}` : null
+  );
   const suggestions: SuggestedUserInterface[] = suggestionsSWR.data;
 
   const handleFocus = () => {
@@ -40,6 +48,51 @@ const RecipientInputBox = (props: RecipientInputBoxProps) => {
 
   return (
     <>
+      {groups && (
+        <Flex wrap="wrap" mt={0} justify="flex-end">
+          {groups.map((group) => (
+            <Tag
+              mx={1}
+              p={1}
+              mb={2}
+              size={"sm"}
+              cursor="pointer"
+              variantColor="primaryColorVariant"
+              variant={
+                recipients.some((recipient) => group.groupId === recipient.id)
+                  ? "solid"
+                  : "outline"
+              }
+              onClick={() => {
+                if (
+                  recipients.some((recipient) => recipient.id === group.groupId)
+                ) {
+                  onChange(
+                    recipients.filter(
+                      (recipient) => group.groupId !== recipient.id
+                    )
+                  );
+                  return;
+                }
+                onChange([
+                  ...recipients,
+                  {
+                    name: group.groupName,
+                    id: group.groupId,
+                    recipientType: RecipientType.Group,
+                    numberOfRecipients: group.noOfRecipients,
+                  },
+                ]);
+              }}
+            >
+              <TagIcon icon="add" size="12px" />
+              <TagLabel>
+                {group.groupName} ({group.noOfRecipients})
+              </TagLabel>
+            </Tag>
+          ))}
+        </Flex>
+      )}
       <Box
         onClick={handleFocus}
         border="1px"
@@ -54,16 +107,16 @@ const RecipientInputBox = (props: RecipientInputBoxProps) => {
             key={index}
             size={"sm"}
             m={1}
-            rounded="full"
             variant="solid"
+            rounded="full"
             fontSize={["xs", "sm"]}
             variantColor={
               recipient.recipientType === RecipientType.NonExistingUser
-                ? "red"
-                : "blue"
+                ? "dangerColorVariant"
+                : "primaryColorVariant"
             }
           >
-            <TagLabel>{`${recipient.name} (${
+            <TagLabel>{`${capitalizeFirstLetter(recipient.name)} (${
               recipient.recipientType === RecipientType.Group
                 ? recipient.numberOfRecipients
                 : (recipient as User).phoneNumber
@@ -86,7 +139,7 @@ const RecipientInputBox = (props: RecipientInputBoxProps) => {
             ref={searchInput}
             variant="unstyled"
             name="search"
-            placeholder="Add Recipients"
+            placeholder="Search by customer name or number"
             autoComplete="off"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
@@ -99,7 +152,7 @@ const RecipientInputBox = (props: RecipientInputBoxProps) => {
             cursor="pointer"
             overflowY="auto"
           >
-            {!suggestions ? (
+            {!searchText || !suggestions ? (
               suggestionsSWR.isValidating ? (
                 <Loader size="sm" height="35px" loaderWidth="2px" />
               ) : null
@@ -109,6 +162,19 @@ const RecipientInputBox = (props: RecipientInputBoxProps) => {
                   searchText.match(/^[0-9]{10}$/)) && (
                   <ListItem my={1} px={2} py={1} _hover={{ bg: "gray.50" }}>
                     <Stack
+                      opacity={
+                        recipients
+                          .filter(
+                            (recipient) =>
+                              recipient.recipientType !== RecipientType.Group
+                          )
+                          .some(
+                            (recipient) =>
+                              (recipient as User).phoneNumber === searchText
+                          )
+                          ? 0.5
+                          : 1
+                      }
                       onClick={() => {
                         if (
                           recipients.some((recipient) => {
@@ -133,9 +199,9 @@ const RecipientInputBox = (props: RecipientInputBoxProps) => {
                         setSearchText("");
                       }}
                       isInline
-                      spacing={1}
+                      spacing={3}
                     >
-                      <Avatar name={searchText} size="sm" />
+                      <Avatar name={searchText} size="md" />
                       <Box fontWeight="bold">{searchText}</Box>
                     </Stack>
                   </ListItem>
@@ -143,9 +209,8 @@ const RecipientInputBox = (props: RecipientInputBoxProps) => {
                 {suggestions.map((suggestedUser, index) => (
                   <ListItem
                     _hover={{ bg: "gray.50" }}
-                    my={1}
-                    px={2}
-                    py={1}
+                    my={2}
+                    p={2}
                     key={index}
                     onClick={() => {
                       if (
@@ -167,8 +232,19 @@ const RecipientInputBox = (props: RecipientInputBoxProps) => {
                       setSearchText("");
                     }}
                   >
-                    <Stack isInline spacing={1} alignItems="center">
-                      <Avatar name={suggestedUser.name} size="sm" />
+                    <Stack
+                      isInline
+                      spacing={3}
+                      alignItems="center"
+                      opacity={
+                        recipients.some(
+                          (recipient) => recipient.id === suggestedUser.id
+                        )
+                          ? 0.5
+                          : 1
+                      }
+                    >
+                      <Avatar name={suggestedUser.name} size={"md"} />
                       <Box>
                         <Box fontWeight="bold" fontSize="md">
                           {suggestedUser.name}
@@ -190,7 +266,7 @@ const RecipientInputBox = (props: RecipientInputBoxProps) => {
         my={1}
         mr={1}
       >
-        Total Recipients:
+        Total Recipients:{" "}
         {recipients
           .filter(
             (recipient) => recipient.recipientType === RecipientType.Group
