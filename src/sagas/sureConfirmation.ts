@@ -17,6 +17,8 @@ import {
   MARK_PACKAGE_READY_FOR_COLLECTION_REQUEST,
   CLONE_PRODUCT,
   CLONE_PRODUCT_REQUEST,
+  SEND_BULKSMS,
+  SEND_BULKSMS_REQUEST,
 } from "../constants/ActionTypes";
 import { take, all, put, race, call } from "redux-saga/effects";
 import UIActions from "../actions/ui";
@@ -137,6 +139,18 @@ function* rejectQuote() {
   }
 }
 
+function* bulkSms() {
+  while (true) {
+    const action = yield take(SEND_BULKSMS);
+    yield put(
+      UIActions.showSureModal(
+        "Confirm Bulk Sms",
+        `Are you sure you want to send Bulk Sms`
+      )
+    );
+    yield call(handleSure, action, SEND_BULKSMS_REQUEST);
+  }
+}
 export default function* () {
   yield all([
     approveCancelOrderItem(),
@@ -147,5 +161,6 @@ export default function* () {
     markPackageReadyForCollection(),
     rejectQuote(),
     cloneProduct(),
+    bulkSms(),
   ]);
 }

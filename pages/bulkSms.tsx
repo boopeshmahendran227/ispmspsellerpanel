@@ -49,10 +49,9 @@ const validationSchema = Yup.object().shape({
           .required(),
       })
     )
-    .required()
-    .nullable(),
-  message: Yup.string().required().nullable(),
-  scheduledDate: Yup.date().required().nullable(),
+    .required(),
+  message: Yup.string().required(),
+  scheduledDate: Yup.date().required(),
 });
 
 type InputInterface = Yup.InferType<typeof validationSchema>;
@@ -97,6 +96,7 @@ const BulkSms = (props: DispatchProps) => {
       mx={[2, "auto"]}
       my={[1, 8]}
       p={6}
+      pb={4}
       boxShadow="md"
       bg="foregroundColor"
     >
@@ -121,7 +121,7 @@ const BulkSms = (props: DispatchProps) => {
       >
         {({ values, setFieldValue, resetForm, errors }) => (
           <Form>
-            <SimpleGrid columns={1}>
+            <SimpleGrid columns={1} spacing={3}>
               <Flex wrap="wrap">
                 {groups.map((group) => (
                   <Tag
@@ -155,23 +155,59 @@ const BulkSms = (props: DispatchProps) => {
                   </Tag>
                 ))}
               </Flex>
-              <FormLabel>To</FormLabel>
               <Box>
+                <FormLabel p={0}>To:</FormLabel>
                 <RecipientInputBox
                   recipients={values.recipients}
                   onChange={(values) => setFieldValue("recipients", values)}
                 />
+                <Box
+                  textAlign="right"
+                  fontSize={12}
+                  color={"secondaryTextColor"}
+                  my={1}
+                  mr={1}
+                >
+                  Total Recipients:
+                  {values.recipients
+                    .filter(
+                      (recipents) =>
+                        recipents.recipientType === RecipientType.Group
+                    )
+                    .reduce(
+                      (total, currentNumber) =>
+                        total + currentNumber.phoneNumber,
+                      0
+                    ) +
+                    values.recipients.filter(
+                      (recipents) =>
+                        recipents.recipientType !== RecipientType.Group
+                    ).length}
+                </Box>
                 <ErrorMessage
                   component={ValidationErrorMsg}
                   name={"recipients"}
                 />
               </Box>
-              <FormLabel>Message</FormLabel>
-              <FieldTextArea name="message" />
-              <FormLabel>Deliver By</FormLabel>
-              <FieldDatePicker name="scheduledDate" />
+              <Box>
+                <FormLabel p={0}>Message:</FormLabel>
+                <FieldTextArea name="message" />
+                <Box
+                  textAlign="right"
+                  fontSize={12}
+                  color={"secondaryTextColor"}
+                  my={1}
+                  mr={1}
+                >
+                  Characters: {values.message.length}
+                </Box>
+              </Box>
+              <Box>
+                <FormLabel p={0}>Deliver By:</FormLabel>
+                <FieldDatePicker name="scheduledDate" />
+              </Box>
             </SimpleGrid>
-            <Stack isInline spacing={4} justify={["center", "flex-end"]} mt={2}>
+            <Stack isInline spacing={4} justify={["center", "flex-end"]} mt={5}>
               <Box>
                 <Button type="submit" variantColor="successColorVariant">
                   Submit

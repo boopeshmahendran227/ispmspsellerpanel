@@ -1,4 +1,4 @@
-import { SEND_BULKSMS_REQUEST } from "src/constants/ActionTypes";
+import { SEND_BULKSMS } from "src/constants/ActionTypes";
 
 export enum RecipientType {
   ExistingUser,
@@ -34,6 +34,6 @@ export interface RecipientInterface {
 }
 
 export interface sendBulkSmsAction {
-  type: typeof SEND_BULKSMS_REQUEST;
+  type: typeof SEND_BULKSMS;
   bulkSmsData: BulkSmsRequestInterface;
 }

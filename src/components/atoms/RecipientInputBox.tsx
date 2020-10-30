@@ -4,10 +4,10 @@ import {
   Input,
   Tag,
   TagLabel,
-  TagCloseButton,
-  Divider,
   List,
   ListItem,
+  CloseButton,
+  Avatar,
 } from "@chakra-ui/core";
 import { useRef, useState } from "react";
 import useSWR from "swr";
@@ -17,8 +17,6 @@ import {
   SuggestedUserInterface,
 } from "types/bulkSms";
 import Loader from "./Loader";
-import { User, Phone } from "react-feather";
-import RoundedIcon from "components/atoms/RoundedIcon";
 
 interface RecipientInputBoxProps {
   recipients: RecipientInterface[];
@@ -64,7 +62,11 @@ const RecipientInputBox = (props: RecipientInputBoxProps) => {
           }
         >
           <TagLabel>{`${recipient.name}(${recipient.phoneNumber})`}</TagLabel>
-          <TagCloseButton
+          <CloseButton
+            _hover={{ bg: "none" }}
+            _focus={{ bg: "none" }}
+            size="sm"
+            type="button"
             onClick={() => {
               onChange(recipients.filter((value) => value.id !== recipient.id));
             }}
@@ -86,7 +88,6 @@ const RecipientInputBox = (props: RecipientInputBoxProps) => {
           bg="white"
           boxShadow={searchText === "" ? "none" : "md"}
           fontSize="md"
-          p={1}
           cursor="pointer"
           overflowY="auto"
         >
@@ -98,9 +99,8 @@ const RecipientInputBox = (props: RecipientInputBoxProps) => {
             <List>
               {(searchText.match(/^[+][91]{2}[0-9]{10}$/) ||
                 searchText.match(/^[0-9]{10}$/)) && (
-                <ListItem>
+                <ListItem my={1} _hover={{ bg: "secondaryTextColor" }}>
                   <Stack
-                    my={1}
                     onClick={() => {
                       if (
                         recipients.some(
@@ -123,19 +123,17 @@ const RecipientInputBox = (props: RecipientInputBoxProps) => {
                     isInline
                     spacing={1}
                   >
-                    <RoundedIcon
-                      icon={<Phone />}
-                      color="dangerColorVariant"
-                      size="40px"
-                    />
-                    <Box ml={2} fontWeight="bold">
-                      {searchText}
-                    </Box>
+                    <Avatar size="sm" />
+                    <Box fontWeight="bold">{searchText}</Box>
                   </Stack>
                 </ListItem>
               )}
               {suggestions.map((suggestedUser, index) => (
                 <ListItem
+                  _hover={{ bg: "gray.50" }}
+                  my={1}
+                  px={2}
+                  py={1}
                   key={index}
                   onClick={() => {
                     if (
@@ -157,20 +155,15 @@ const RecipientInputBox = (props: RecipientInputBoxProps) => {
                     setSearchText("");
                   }}
                 >
-                  <Stack isInline spacing={1}>
-                    <RoundedIcon
-                      icon={<User />}
-                      color="successColorVariant"
-                      size="40px"
-                    />
-                    <Box ml={2}>
+                  <Stack isInline spacing={1} alignItems="center">
+                    <Avatar size="sm" />
+                    <Box>
                       <Box fontWeight="bold" fontSize="md">
                         {suggestedUser.name}
                       </Box>
                       <Box>{suggestedUser.phoneNumber}</Box>
                     </Box>
                   </Stack>
-                  <Divider />
                 </ListItem>
               ))}
             </List>
