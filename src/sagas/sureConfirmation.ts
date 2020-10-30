@@ -144,8 +144,8 @@ function* bulkSms() {
     const action = yield take(SEND_BULKSMS);
     yield put(
       UIActions.showSureModal(
-        "Confirm Bulk Sms",
-        `Are you sure you want to send Bulk Sms`
+        "Confirm Bulk SMS",
+        `Are you sure you want to send Bulk SMS`
       )
     );
     yield call(handleSure, action, SEND_BULKSMS_REQUEST);

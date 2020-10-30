@@ -145,7 +145,7 @@ export const toasts = {
   },
   [SEND_BULKSMS_FAILURE]: {
     type: ToastType.error,
-    msg: "Bulk SMS request failed. Please try again",
+    msg: "Your Bulk SMS request failed. Please try again",
   },
 };
 
