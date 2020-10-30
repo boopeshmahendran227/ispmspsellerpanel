@@ -10,7 +10,6 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
-  Grid,
   Button,
   Box,
   ButtonGroup,
@@ -47,7 +46,10 @@ const SureModal = (props: SureModalProps) => {
       <ModalOverlay />
       <ModalContent borderRadius={10}>
         <ModalHeader fontSize={["md", "xl"]}>{props.data.header}</ModalHeader>
-        <ModalCloseButton />
+        <ModalCloseButton
+          _focus={{ border: "none" }}
+          _hover={{ color: "dangerColorVariant.500" }}
+        />
         <ModalBody>
           <Box>{props.data.body}</Box>
           <Box color="dangerColor" my={2} fontSize={["xs", "md"]}>
@@ -60,7 +62,11 @@ const SureModal = (props: SureModalProps) => {
             >
               Yes, Sure
             </Button>
-            <Button variant="outline" onClick={handleCancelClicked}>
+            <Button
+              variant="outline"
+              variantColor="dangerColorVariant"
+              onClick={handleCancelClicked}
+            >
               No, Close
             </Button>
           </ButtonGroup>

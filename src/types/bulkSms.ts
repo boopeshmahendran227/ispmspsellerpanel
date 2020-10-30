@@ -24,13 +24,21 @@ export interface BulkSmsRequestInterface {
   mobileNos: string[];
   scheduledDate: string;
   groupIds: string[];
+  totalNumberOfRecipients: number;
 }
 
-export interface RecipientInterface {
+export interface User {
   name: string;
   phoneNumber: string;
   id: string;
-  recipientType: RecipientType;
+  recipientType: RecipientType.ExistingUser | RecipientType.NonExistingUser;
+}
+
+export interface UserGroup {
+  name: string;
+  id: string;
+  recipientType: RecipientType.Group;
+  numberOfRecipients: number;
 }
 
 export interface sendBulkSmsAction {

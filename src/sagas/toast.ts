@@ -141,7 +141,7 @@ export const toasts = {
   },
   [SEND_BULKSMS_SUCCESS]: {
     type: ToastType.success,
-    msg: "Your Message will be sent successfully to selected receipients",
+    msg: "Your Message will be sent successfully to selected recipients",
   },
   [SEND_BULKSMS_FAILURE]: {
     type: ToastType.error,

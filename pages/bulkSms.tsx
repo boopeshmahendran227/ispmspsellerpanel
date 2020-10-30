@@ -38,7 +38,7 @@ const validationSchema = Yup.object().shape({
     .of(
       Yup.object().shape({
         name: Yup.string().required(),
-        phoneNumber: Yup.string().required(),
+
         id: Yup.string().required(),
         recipientType: Yup.mixed()
           .oneOf([
@@ -47,6 +47,14 @@ const validationSchema = Yup.object().shape({
             RecipientType.NonExistingUser,
           ])
           .required(),
+        phoneNumber: Yup.string().when("recipientType", {
+          is: RecipientType.ExistingUser | RecipientType.NonExistingUser,
+          then: Yup.string().required(),
+        }),
+        numberOfRecipients: Yup.number().when("recipientType", {
+          is: RecipientType.Group,
+          then: Yup.number().required(),
+        }),
       })
     )
     .required(),
@@ -71,6 +79,18 @@ const BulkSms = (props: DispatchProps) => {
 
   const onSubmit = (values) => {
     props.sendBulkSms({
+      totalNumberOfRecipients:
+        values.recipients
+          .filter(
+            (recipients) => recipients.recipientType === RecipientType.Group
+          )
+          .reduce(
+            (total, currentNumber) => total + currentNumber.numberOfRecipients,
+            0
+          ) +
+        values.recipients.filter(
+          (recipient) => recipient.recipientType !== RecipientType.Group
+        ).length,
       messageToSend: values.message,
       scheduledDate: values.scheduledDate.format(),
       groupIds: values.recipients
@@ -86,7 +106,7 @@ const BulkSms = (props: DispatchProps) => {
         .filter(
           (recipient) => recipient.recipientType === RecipientType.ExistingUser
         )
-        .map((existingUser) => existingUser.phoneNumber),
+        .map((existingUser) => existingUser.id),
     });
   };
 
@@ -119,7 +139,7 @@ const BulkSms = (props: DispatchProps) => {
         onSubmit={onSubmit}
         validationSchema={validationSchema}
       >
-        {({ values, setFieldValue, resetForm, errors }) => (
+        {({ values, setFieldValue, resetForm }) => (
           <Form>
             <SimpleGrid columns={1} spacing={3}>
               <Flex wrap="wrap">
@@ -141,9 +161,9 @@ const BulkSms = (props: DispatchProps) => {
                         ...values.recipients,
                         {
                           name: group.groupName,
-                          phoneNumber: group.noOfRecipients,
                           id: group.groupId,
                           recipientType: RecipientType.Group,
+                          numberOfRecipients: group.noOfRecipients,
                         },
                       ]);
                     }}
@@ -161,29 +181,6 @@ const BulkSms = (props: DispatchProps) => {
                   recipients={values.recipients}
                   onChange={(values) => setFieldValue("recipients", values)}
                 />
-                <Box
-                  textAlign="right"
-                  fontSize={12}
-                  color={"secondaryTextColor"}
-                  my={1}
-                  mr={1}
-                >
-                  Total Recipients:
-                  {values.recipients
-                    .filter(
-                      (recipents) =>
-                        recipents.recipientType === RecipientType.Group
-                    )
-                    .reduce(
-                      (total, currentNumber) =>
-                        total + currentNumber.phoneNumber,
-                      0
-                    ) +
-                    values.recipients.filter(
-                      (recipents) =>
-                        recipents.recipientType !== RecipientType.Group
-                    ).length}
-                </Box>
                 <ErrorMessage
                   component={ValidationErrorMsg}
                   name={"recipients"}
@@ -216,7 +213,7 @@ const BulkSms = (props: DispatchProps) => {
               <Box>
                 <Button
                   variant="outline"
-                  onClick={() => resetForm}
+                  onClick={resetForm}
                   type="reset"
                   variantColor="dangerColorVariant"
                 >
