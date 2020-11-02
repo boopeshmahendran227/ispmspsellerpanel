@@ -25,6 +25,8 @@ import {
   UPDATE_TIER_PRICE_FAILURE,
   UPDATE_SETTINGS_SUCCESS,
   UPDATE_SETTINGS_FAILURE,
+  SEND_BULKSMS_FAILURE,
+  SEND_BULKSMS_SUCCESS,
 } from "../constants/ActionTypes";
 import { put, take } from "redux-saga/effects";
 import ToastActions from "../actions/toast";
@@ -136,6 +138,14 @@ export const toasts = {
   [UPDATE_SETTINGS_FAILURE]: {
     type: ToastType.error,
     msg: "Settings updation failed",
+  },
+  [SEND_BULKSMS_SUCCESS]: {
+    type: ToastType.success,
+    msg: "Your Message will be sent successfully to selected recipients",
+  },
+  [SEND_BULKSMS_FAILURE]: {
+    type: ToastType.error,
+    msg: "Your Bulk SMS request failed. Please try again",
   },
 };
 

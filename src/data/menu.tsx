@@ -92,6 +92,18 @@ const menuTree: MenuTreeItem[] = [
     matchFunc: (path) => path.includes("/settings"),
   },
   {
+    name: "Marketing",
+    hasSubMenu: true,
+    subMenuItems: [
+      {
+        name: "Bulk Sms",
+        href: "/bulkSms",
+      },
+    ],
+    icon: <i className="fas fa-bullhorn" aria-hidden="true"></i>,
+    matchFunc: (path) => path.includes("/bulkSms"),
+  },
+  {
     name: "Others",
     hasSubMenu: true,
     subMenuItems: [

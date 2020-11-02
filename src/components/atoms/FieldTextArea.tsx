@@ -4,6 +4,7 @@ import { FormControl, Textarea } from "@chakra-ui/core";
 
 interface FieldTextAreaProps {
   name: string;
+  placeholder?: string;
 }
 
 const FieldTextArea = (props: FieldTextAreaProps) => {
@@ -12,14 +13,24 @@ const FieldTextArea = (props: FieldTextAreaProps) => {
       {({ field, form }) => (
         <FormControl
           isInvalid={form.errors[props.name] && form.touched[props.name]}
-          py={3}
         >
-          <Textarea rows={6} cols={40} {...field} resize="vertical" />
+          <Textarea
+            rows={6}
+            cols={40}
+            {...field}
+            resize="vertical"
+            p={1}
+            placeholder={props.placeholder}
+          />
           <ErrorMessage component={ValidationErrorMsg} name={props.name} />
         </FormControl>
       )}
     </Field>
   );
+};
+
+FieldTextArea.defaultProps = {
+  placeholder: "",
 };
 
 export default FieldTextArea;
