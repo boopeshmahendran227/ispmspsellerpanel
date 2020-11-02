@@ -15,7 +15,7 @@ import { SelectOptionInterface, ProductCloneInterface } from "types/product";
 import ProductActions from "actions/product";
 import WithAuth from "components/atoms/WithAuth";
 import { connect } from "react-redux";
-import { Box, SimpleGrid } from "@chakra-ui/core";
+import { Box, SimpleGrid, Heading, Stack } from "@chakra-ui/core";
 import Button from "components/atoms/Button";
 
 interface DispatchProps {
@@ -77,17 +77,19 @@ const CloneProduct = (props: CloneProductProps) => {
   );
 
   return (
-    <Box
+    <Stack
       maxW="600px"
       mx={[2, "auto"]}
       my={[1, 10]}
-      p={6}
+      p={4}
       boxShadow="md"
       bg="foregroundColor"
+      shouldWrapChildren
+      spacing={5}
     >
-      <PageHeaderContainer>
-        <PageHeader>Product Clone</PageHeader>
-      </PageHeaderContainer>
+      <Heading size="md" mb={5}>
+        Product Clone
+      </Heading>
       <Formik
         initialValues={{
           currentEcosystem: null,
@@ -118,7 +120,7 @@ const CloneProduct = (props: CloneProductProps) => {
           </Form>
         )}
       </Formik>
-    </Box>
+    </Stack>
   );
 };
 

@@ -2,7 +2,6 @@ import { Fragment } from "react";
 import useSWR from "swr";
 import Loader from "components/atoms/Loader";
 import PageError from "components/atoms/PageError";
-import PageHeader from "components/atoms/PageHeader";
 import WithAuth from "components/atoms/WithAuth";
 import { useRouter } from "next/router";
 import SkuList from "components/molecules/SkuList";
@@ -29,7 +28,15 @@ import FieldPercentageInput from "components/atoms/FieldPercentageInput";
 import ValidationErrorMsg from "components/atoms/ValidationErrorMsg";
 import { getProductImageUrl } from "utils/url";
 import ImageUploader from "components/molecules/ImageUploader";
-import { Box, Text, Stack, SimpleGrid, Grid, FormLabel } from "@chakra-ui/core";
+import {
+  Box,
+  Text,
+  Stack,
+  SimpleGrid,
+  Grid,
+  FormLabel,
+  Heading,
+} from "@chakra-ui/core";
 
 interface DispatchProps {
   updateSku: (sku: UpdateSkuInterface) => void;
@@ -109,11 +116,11 @@ const Sku = (props: SkuProps): JSX.Element => {
 
   return (
     <Box maxW="900px" m={[2, null, null, "auto"]}>
-      <Box my={3}>
+      <Box my={4}>
         <BackLink href="/product/[id]" as={`/product/${product.id}`}>
           Back to Product
         </BackLink>
-        <PageHeader>{currentSkuId}</PageHeader>
+        <Heading size="md"my={2}>{currentSkuId}</Heading>
       </Box>
       <Grid gridTemplateColumns={["1fr", "0.5fr 1fr"]} gap={3}>
         <Box w="full">

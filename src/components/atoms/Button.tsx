@@ -1,6 +1,3 @@
-import CSSConstants from "../../constants/CSSConstants";
-import classNames from "classnames";
-import Chroma from "chroma-js";
 import { Button as ChakraButton } from "@chakra-ui/core";
 import MobileMediaQuery from "components/atoms/MobileMediaQuery";
 import DesktopMediaQuery from "components/atoms/DesktopMediaQuery";
@@ -21,8 +18,10 @@ const Button = (props: ButtonProps) => {
     <>
       <DesktopMediaQuery>
         <ChakraButton
-          _focus={{ border: "none" }}
-          size="md"
+          _focus={{ boxShadow: "none" }}
+          size="sm"
+          fontWeight="normal"
+          letterSpacing="wider"
           variantColor={variantColor}
           type={type}
           variant={variant}
@@ -35,9 +34,11 @@ const Button = (props: ButtonProps) => {
       </DesktopMediaQuery>
       <MobileMediaQuery>
         <ChakraButton
-          _focus={{ border: "none" }}
+          _focus={{ boxShadow: "none" }}
           size="sm"
           fontSize="xs"
+          fontWeight="normal"
+          letterSpacing="widest"
           variantColor={variantColor}
           type={type}
           variant={variant}

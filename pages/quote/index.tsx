@@ -19,7 +19,8 @@ import PageContainer from "components/atoms/PageContainer";
 import PageHeader from "components/atoms/PageHeader";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageBodyContainer from "components/atoms/PageBodyContainer";
-import { Box, Button, ButtonGroup } from "@chakra-ui/core";
+import { Box, Stack } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
 import MobileMediaQuery from "components/atoms/MobileMediaQuery";
 import DesktopMediaQuery from "components/atoms/DesktopMediaQuery";
 import Select from "components/atoms/Select";
@@ -143,24 +144,21 @@ const Quotes = (props: QuotesProps) => {
     switch (quote.status) {
       case QuoteStatus.SellerResponsePending:
         return (
-          <ButtonGroup spacing={1}>
+          <Stack spacing={3} shouldWrapChildren>
             <Button
-              my={2}
-              size="sm"
               variantColor="successColorVariant"
               onClick={(e) => handleClick(e, props.updateQuote)}
             >
               Respond To Quote
             </Button>
             <Button
-              size="sm"
               variantColor="dangerColorVariant"
               variant="outline"
               onClick={(e) => handleClick(e, props.rejectQuote)}
             >
               Reject Quote
             </Button>
-          </ButtonGroup>
+          </Stack>
         );
     }
     return null;

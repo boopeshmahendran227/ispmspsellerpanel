@@ -46,8 +46,9 @@ const FieldEditableArray = (props: FieldEditableArrayProps) => {
                     <td>
                       <IconButton
                         p={0}
-                        _hover={{ bg: "none" }}
-                        _focus={{ bg: "none" }}
+                        _hover={{ bg: "none", color: "dangerColorVariant.500" }}
+                        _active={{ bg: "none" }}
+                        _focus={{ boxShadow: "none" }}
                         aria-label="Delete"
                         icon="delete"
                         type="button"

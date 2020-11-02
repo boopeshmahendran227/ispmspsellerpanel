@@ -1,6 +1,5 @@
 import { Flex, Spinner } from "@chakra-ui/core";
 import * as React from "react";
-import CSSConstants from "../../constants/CSSConstants";
 interface LoaderProps {
   width: string;
   height: string;
@@ -14,7 +13,7 @@ const Loader = (props: LoaderProps) => {
       <Spinner
         size={props.size}
         thickness={props.loaderWidth}
-        color={CSSConstants.primaryColor}
+        color="primaryColor"
       />
     </Flex>
   );

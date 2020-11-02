@@ -28,7 +28,7 @@ const Draft = () => {
   }
 
   return (
-    <Box p={2}>
+    <Box py={2} px={4}>
       <Stack spacing={3} isInline alignItems="baseline">
         <Heading size="md" my={5} textTransform="uppercase">
           <Box as="span">Draft #{draft.id}</Box>

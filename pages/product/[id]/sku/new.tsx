@@ -28,7 +28,7 @@ import FieldPercentageInput from "components/atoms/FieldPercentageInput";
 import ImageUploader from "components/molecules/ImageUploader";
 import ValidationErrorMsg from "components/atoms/ValidationErrorMsg";
 import { getProductImageUrl } from "utils/url";
-import { Box, Grid, FormLabel, Stack } from "@chakra-ui/core";
+import { Box, Grid, FormLabel, Stack, Heading } from "@chakra-ui/core";
 import Button from "components/atoms/Button";
 interface DispatchProps {
   addSku: (sku: AddSkuInterface) => void;
@@ -127,11 +127,13 @@ const Sku = (props: SkuProps) => {
 
   return (
     <Box maxW="900px" m={[2, null, null, "auto"]}>
-      <Box my={3}>
+      <Box my={4}>
         <BackLink href="/product/[id]" as={`/product/${product.id}`}>
           Back to Product
         </BackLink>
-        <PageHeader>Add New Variant</PageHeader>
+        <Heading size="md" my={2}>
+          Add New Variant
+        </Heading>
       </Box>
       <Grid gridTemplateColumns={["1fr", "0.5fr 1fr"]} gap={3}>
         <Box mx="full">

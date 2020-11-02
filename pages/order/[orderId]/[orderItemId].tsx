@@ -80,14 +80,14 @@ const Order = (props: OrderProps) => {
 
   return (
     <Box
-      my={10}
+      my={6}
       mx={[2, "auto"]}
       maxW={["800px", null, "700px", "800px", "1100px"]}
     >
       <DeliveryCodeModal />
       <BackLink href="/order">Back to Orders</BackLink>
-      <Flex my={4} align="baseline" direction={["column", "row"]}>
-        <Heading size="lg" mx={2}>
+      <Flex my={3} align="baseline" direction={["column", "row"]}>
+        <Heading size="md" mx={2}>
           <Box as="span">
             #{order.id}-{orderItem.id}
           </Box>
@@ -106,9 +106,9 @@ const Order = (props: OrderProps) => {
         <Box>
           <Tag
             m={2}
+            size="sm"
             variant="solid"
             rounded="full"
-            fontSize={["xs", "md"]}
             variantColor="primaryColorVariant"
           >
             {getOrderStatusText(orderItem.orderItemStatus)}
@@ -116,8 +116,8 @@ const Order = (props: OrderProps) => {
           <Tag
             m={2}
             variant="solid"
+            size={"sm"}
             rounded="full"
-            fontSize={["xs", "md"]}
             variantColor={getPaymentModeColor(
               orderItem.order.paymentSplits[0].paymentMode
             )}

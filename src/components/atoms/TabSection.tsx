@@ -12,15 +12,33 @@ const TabSection = (props: TabSectionProps) => {
 
   return (
     <Box overflowX="auto">
-      <Tabs onChange={(index) => setTabIndex(index)}>
-        <TabList>
-          {props.headingList.map((heading) => (
-            <Tab fontSize={["xs", "md"]}>{heading}</Tab>
+      <Tabs
+        onChange={(index) => setTabIndex(index)}
+        variantColor="secondaryColorVariant"
+        isFitted
+      >
+        <TabList px={2}>
+          {props.headingList.map((heading, index) => (
+            <Tab
+              key={index}
+              py={4}
+              _focus={{ boxShadow: "none" }}
+              _active={{ bg: "none" }}
+              fontSize={["xs", "md"]}
+              _selected={{
+                fontWeight: "bold",
+                borderBottom: "3px solid",
+                borderColor: "primaryColorVariant.500",
+                color: "primaryColorVariant.500",
+              }}
+            >
+              {heading}
+            </Tab>
           ))}
         </TabList>
         <TabPanels fontSize={["xs", "md"]}>
-          {props.contentList.map((content) => (
-            <TabPanel>{content}</TabPanel>
+          {props.contentList.map((content, index) => (
+            <TabPanel key={index}>{content}</TabPanel>
           ))}
         </TabPanels>
       </Tabs>

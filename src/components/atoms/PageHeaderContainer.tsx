@@ -5,11 +5,9 @@ interface PageHeaderContainerProps {
 
 const PageHeaderContainer = (props: PageHeaderContainerProps) => (
   <Flex
-    px={1}
-    py={1}
+    p={1}
     justify="space-between"
     align={["flex-start", "center"]}
-    mb={1}
     direction={["column", "row"]}
   >
     {props.children}

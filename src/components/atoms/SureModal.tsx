@@ -10,11 +10,11 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
-  Button,
+  Stack,
   Box,
-  ButtonGroup,
 } from "@chakra-ui/core";
 import React from "react";
+import Button from "components/atoms/Button";
 
 interface StateProps {
   data: SureModalData;
@@ -47,15 +47,22 @@ const SureModal = (props: SureModalProps) => {
       <ModalContent borderRadius={10}>
         <ModalHeader fontSize={["md", "xl"]}>{props.data.header}</ModalHeader>
         <ModalCloseButton
-          _focus={{ border: "none" }}
-          _hover={{ color: "dangerColorVariant.500" }}
+          _focus={{ boxShadow: "none" }}
+          _hover={{ color: "dangerColorVariant.500",transform: "rotate(90deg)"}}
+          size="lg"
         />
         <ModalBody>
           <Box>{props.data.body}</Box>
           <Box color="dangerColor" my={2} fontSize={["xs", "md"]}>
             (Note: This action is irreversible)
           </Box>
-          <ButtonGroup textAlign="center" spacing={3} my={3}>
+          <Stack
+            isInline
+            shouldWrapChildren
+            textAlign="center"
+            spacing={3}
+            my={3}
+          >
             <Button
               variantColor="primaryColorVariant"
               onClick={handleSureClicked}
@@ -69,7 +76,7 @@ const SureModal = (props: SureModalProps) => {
             >
               No, Close
             </Button>
-          </ButtonGroup>
+          </Stack>
         </ModalBody>
       </ModalContent>
     </Modal>

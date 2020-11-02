@@ -24,6 +24,7 @@ const YourSkuMini = (props: YourSkuMiniProps): JSX.Element => {
         cursor="pointer"
         borderBottom="1px solid #f0f0f0"
         w="full"
+        p={3}
       >
         <Box>
           <Flex>

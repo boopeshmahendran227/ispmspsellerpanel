@@ -46,17 +46,18 @@ const Quote = (props: QuoteProps) => {
   }
 
   return (
-    <Box my={1} maxW="1100px" mx={[2, null, null, null, "auto"]}>
+    <Box my={3} maxW="1100px" mx={[2, null, null, null, "auto"]}>
       <BackLink href="/quote">Back to Quotes</BackLink>
       <Stack flexDirection={["column", "row"]} my={4} align="baseline">
-        <Heading size="lg">
-          <Box as="span">#{quote.id}</Box>
+        <Heading size="md">
+          <Box as="span">#{quote.id} </Box>
           <Box
             as="span"
             fontSize="md"
             color="secondaryTextColor"
             fontWeight="normal"
           >
+            {" "}
             {moment
               .utc(quote.createdDateTime)
               .local()
@@ -75,19 +76,16 @@ const Quote = (props: QuoteProps) => {
         </Box>
       </Stack>
       <Grid templateColumns={["1fr", null, null, "1fr 300px"]} gap={3}>
-        <Flex flex="1">
-          <QuoteItemDetail
-            quote={quote}
-            rejectQuote={props.rejectQuote}
-            updateQuote={props.updateQuote}
-          />
-        </Flex>
+        <QuoteItemDetail
+          quote={quote}
+          rejectQuote={props.rejectQuote}
+          updateQuote={props.updateQuote}
+        />
         <Box>
           <Box bg="foregroundColor" border="1px solid #ccc">
             <Heading size="md" my={4} mx={3}>
               Customer Information
             </Heading>
-
             <Name>Name</Name>
             <Value>{quote.customerName || "Name Not Available"}</Value>
             <Divider />

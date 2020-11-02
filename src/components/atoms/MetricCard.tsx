@@ -20,7 +20,7 @@ const MetricCard = (props: MetricCardProps) => {
       <Flex alignItems="center" h="100%" padding={[3, 4, 3, null, 5]}>
         <Box mr={3}>{icon}</Box>
         <Box>
-          <Box fontSize={["sm", null, null, "xs", "md"]} fontWeight="bold">
+          <Box fontSize={["sm", null, null, "xs", "lg"]} fontWeight="bold">
             {props.value}
           </Box>
           <Box

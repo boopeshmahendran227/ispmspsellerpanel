@@ -93,8 +93,12 @@ const IconLink = (props: IconLinkProps): JSX.Element => {
 
   return (
     <Link href={link.href}>
-      <PseudoBox>
-        <Stack spacing={3}>
+      <PseudoBox
+        _hover={{ color: "secondaryColor", textDecoration: "underline" }}
+        color="secondaryTextColor"
+        fontWeight="medium"
+      >
+        <Stack spacing={3} px={2}>
           <Box mx="auto">{link.icon}</Box>
           <Box>{link.linkText}</Box>
         </Stack>
@@ -107,7 +111,7 @@ const QuickLinksContainer = (): JSX.Element => {
   return (
     <Box
       boxShadow="0 0 20px #00000014"
-      borderRadius={10}
+      borderRadius={15}
       w="100%"
       marginTop={5}
       p={3}
@@ -123,6 +127,7 @@ const QuickLinksContainer = (): JSX.Element => {
         textAlign="center"
         p={2}
         fontSize={["xs", "sm", "md"]}
+        cursor="pointer"
       >
         {links.map((link) => (
           <IconLink link={link} />

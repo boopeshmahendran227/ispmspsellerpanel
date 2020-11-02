@@ -29,7 +29,7 @@ interface RecipientInputBoxProps {
 }
 
 const RecipientInputBox = (props: RecipientInputBoxProps) => {
-  const searchInput = useRef(null);
+  const searchInput = useRef<HTMLInputElement>(null);
   const [searchText, setSearchText] = useState("");
   const groupsSwr = useSWR("/bulksms/groups");
   const groups: BulkSmsGroup[] = groupsSwr.data;
@@ -39,7 +39,7 @@ const RecipientInputBox = (props: RecipientInputBoxProps) => {
   const suggestions: SuggestedUserInterface[] = suggestionsSWR.data;
 
   const handleFocus = () => {
-    if (searchInput.current !== null) {
+    if (searchInput.current) {
       return searchInput.current.focus();
     }
   };

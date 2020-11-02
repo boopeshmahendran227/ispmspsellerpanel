@@ -20,7 +20,7 @@ const ProductMainInfo = (props: ProductMainInfoProps): JSX.Element => {
       </SectionHeaderContainer>
       <Grid
         templateColumns={["150px 1fr", "200px 1fr"]}
-        gap={[1, 2]}
+        gap={1}
         fontSize={["sm", "md"]}
       >
         <Box fontWeight="bold">Name</Box>

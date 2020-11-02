@@ -14,7 +14,7 @@ const ActiveFilters = (props: ActiveFiltersProps) => {
 
   return (
     <Flex align="center" p={1} fontSize={["xs", "md"]}>
-      <Heading size="sm">Active Filters:</Heading>
+      <Box>Active Filters:</Box>
       {appliedFilters.map((filter) => (
         <Box m={2} fontWeight="bold">
           {filter}

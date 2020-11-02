@@ -8,7 +8,7 @@ import NotificationActions from "../../actions/notification";
 import LoginActions from "../../actions/login";
 import Logo from "../atoms/Logo";
 import MobileSideNavBar from "./MobileSideNavBar";
-import { Box, Flex, Link, Text } from "@chakra-ui/core";
+import { Box, Flex, Link, Text, Stack } from "@chakra-ui/core";
 import MobileMediaQuery from "components/atoms/MobileMediaQuery";
 import DesktopMediaQuery from "components/atoms/DesktopMediaQuery";
 
@@ -46,16 +46,16 @@ const TopNavBar = (props: TopNavBarProps) => {
   return (
     <Box fontSize={["sm", null, "md"]} height="60px">
       <Flex
-        px={[1, 2, 3, 5]}
+        px={[1, 3]}
         py={2}
         position="fixed"
         top="0"
         left="0"
         zIndex={10}
-        alignItems="center"
         right="0"
         bg="foregroundColor"
         boxShadow="md"
+        alignItems="center"
       >
         <Box mr={2}>
           <MobileMediaQuery>
@@ -99,17 +99,24 @@ const TopNavBar = (props: TopNavBarProps) => {
           <Box>
             <Box>
               <i className="far fa-clock" aria-hidden={true}></i>
-              <Box as="span" display="inline-block">
+              <Box as="span" display="inline-block" mx={1}>
                 {time.format("MMM D, hh:mm a")}
               </Box>
             </Box>
           </Box>
-          <Box mx={3} fontSize={"inherit"}>
-            <Link onClick={handleLogout} cursor="pointer">
+          <Link onClick={handleLogout} cursor="pointer">
+            <Stack
+              mx={2}
+              fontSize={"inherit"}
+              isInline
+              alignItems="baseline"
+              spacing={1}
+              shouldWrapChildren
+            >
               <i className="fas fa-sign-out-alt" aria-hidden={true}></i>
               <Text display="inline-block">Logout</Text>
-            </Link>
-          </Box>
+            </Stack>
+          </Link>
         </DesktopMediaQuery>
         <NotificationBar
           open={notificationBarOpen}

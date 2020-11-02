@@ -30,7 +30,8 @@ import ProductOrdersContainer from "components/molecules/ProductOrdersContainer"
 import Loader from "components/atoms/Loader";
 import { transformOrderItem } from "../../transformers/orderItem";
 import _ from "lodash";
-import { Box, Button, ButtonGroup } from "@chakra-ui/core";
+import { Box, Stack } from "@chakra-ui/core";
+import Button from "components/atoms/Button";
 import MobileMediaQuery from "components/atoms/MobileMediaQuery";
 import DesktopMediaQuery from "components/atoms/DesktopMediaQuery";
 import Select from "components/atoms/Select";
@@ -142,168 +143,132 @@ const OrdersContainer = (props: OrdersContainerProps) => {
       case OrderStatus.PaymentSuccess:
       case OrderStatus.PaymentOnDelivery:
         return (
-          <ButtonGroup spacing={3}>
+          <Stack spacing={3} shouldWrapChildren>
             <Button
-              size="sm"
-              fontSize={["xs", "md"]}
               variantColor="successColorVariant"
               onClick={(e) => handleClick(e, props.markAsProcessing)}
             >
               Mark as Processing
             </Button>
             <Button
-              mt={[2, null, null, null, 0]}
-              size="sm"
-              fontSize={["xs", "md"]}
               variantColor="dangerColorVariant"
               variant="outline"
               onClick={(e) => handleClick(e, props.cancelOrderItem)}
             >
               Cancel Order
             </Button>
-          </ButtonGroup>
+          </Stack>
         );
       case OrderStatus.SellerProcessing:
         if (orderItem.isSelfPickup) {
           return (
-            <ButtonGroup spacing={3}>
+            <Stack spacing={3} shouldWrapChildren>
               <Button
-                fontSize={["xs", "md"]}
                 variantColor="successColorVariant"
                 onClick={(e) =>
                   handleClick(e, props.markPackageReadyForCollection)
                 }
-                size="sm"
               >
                 Mark Package Ready For Collection
               </Button>
               <Button
-                mt={[2, null, null, null, 0]}
-                fontSize={["xs", "md"]}
-                size="sm"
                 variantColor="dangerColorVariant"
                 variant="outline"
                 onClick={(e) => handleClick(e, props.cancelOrderItem)}
               >
                 Cancel Order
               </Button>
-            </ButtonGroup>
+            </Stack>
           );
         }
         return (
-          <ButtonGroup spacing={3}>
+          <Stack spacing={3} shouldWrapChildren>
             <Button
-              fontSize={["xs", "md"]}
               variantColor="successColorVariant"
               onClick={(e) => handleClick(e, props.markAsShipping)}
-              size="sm"
             >
               Mark as Shipping
             </Button>
             <Button
-              mt={[2, null, null, null, 0]}
-              fontSize={["xs", "md"]}
-              size="sm"
               variantColor="dangerColorVariant"
               variant="outline"
               onClick={(e) => handleClick(e, props.cancelOrderItem)}
             >
               Cancel Order
             </Button>
-          </ButtonGroup>
+          </Stack>
         );
       case OrderStatus.PackageReadyForCollection:
         return (
-          <ButtonGroup spacing={3}>
+          <Stack spacing={3} shouldWrapChildren>
             <Button
-              fontSize={["xs", "md"]}
               variantColor="successColorVariant"
               onClick={(e) => handleClick(e, props.markAsShippingComplete)}
-              my={2}
-              size="sm"
             >
               Mark as Delivered & Cash Received
             </Button>
             <Button
-              mt={[2, null, null, null, 0]}
-              fontSize={["xs", "md"]}
-              size="sm"
               variantColor="dangerColorVariant"
               variant="outline"
               onClick={(e) => handleClick(e, props.cancelOrderItem)}
             >
               Cancel Order
             </Button>
-          </ButtonGroup>
+          </Stack>
         );
       case OrderStatus.Shipping:
         return (
-          <ButtonGroup spacing={3}>
+          <Stack spacing={3} shouldWrapChildren>
             <Button
-              size="sm"
-              fontSize={["xs", "md"]}
               variantColor="successColorVariant"
               onClick={(e) => handleClick(e, props.markAsShippingComplete)}
             >
               Mark as Delivered
             </Button>
             <Button
-              mt={[2, null, null, null, 0]}
-              size="sm"
-              fontSize={["xs", "md"]}
               onClick={(e) => handleClick(e, props.cancelOrderItem)}
               variantColor="dangerColorVariant"
               variant="outline"
             >
               Cancel Order
             </Button>
-          </ButtonGroup>
+          </Stack>
         );
       case OrderStatus.CancelRequested:
         return (
-          <ButtonGroup spacing={3}>
+          <Stack spacing={3} shouldWrapChildren>
             <Button
-              size="sm"
-              fontSize={["xs", "md"]}
               onClick={(e) => handleClick(e, props.approveCancelOrderItem)}
               variantColor="successColorVariant"
             >
               Approve Cancel Request
             </Button>
             <Button
-              mt={[2, null, null, null, 0]}
-              size="sm"
-              fontSize={["xs", "md"]}
               onClick={(e) => handleClick(e, props.rejectCancelOrderItem)}
               variantColor="dangerColorVariant"
               variant="outline"
             >
               Reject Cancel Request
             </Button>
-          </ButtonGroup>
+          </Stack>
         );
       case OrderStatus.ReturnRequested:
         return (
-          <ButtonGroup spacing={3}>
+          <Stack spacing={3} shouldWrapChildren>
             <Button
-              size="sm"
-              fontSize={["xs", "md"]}
               onClick={(e) => handleClick(e, props.approveReturnOrderItem)}
               variantColor="successColorVariant"
             >
               Approve Return Request
             </Button>
             <Button
-              mt={[2, null, null, null, 0]}
-              size="sm"
-              fontSize={["xs", "md"]}
               onClick={(e) => handleClick(e, props.rejectReturnOrderItem)}
               variantColor="dangerColorVariant"
               variant="outline"
             >
               Reject Return Request
             </Button>
-          </ButtonGroup>
+          </Stack>
         );
     }
     return null;

@@ -39,7 +39,7 @@ const SideNavBar = () => {
       bg="primaryColor"
       color="white"
       boxShadow="md"
-      fontSize="sm"
+      fontSize="xs"
     >
       <Box w="full">
         <List styleType="none">
@@ -51,11 +51,11 @@ const SideNavBar = () => {
                   _hover={{ bg: "lightPrimaryColor" }}
                   display="flex"
                   flexDirection="column"
+                  justifyContent="space-between"
                   textAlign="center"
                   w="full"
-                  fontSize="lg"
-                  fontWeight="400"
-                  py={4}
+                  fontWeight="thin"
+                  py={3}
                   px={1}
                   transition="all 0.3s"
                   bg={index === activeIndex ? "lightPrimaryColor" : ""}
@@ -66,8 +66,8 @@ const SideNavBar = () => {
                     )
                   }
                 >
-                  {item.icon}
-                  <Box as="span" fontSize="md">
+                  <Box fontSize="lg">{item.icon}</Box>
+                  <Box as="span" fontSize="sm">
                     {item.name}
                   </Box>
                 </PseudoBox>
@@ -79,18 +79,18 @@ const SideNavBar = () => {
                     display="flex"
                     flexDirection="column"
                     textAlign="center"
+                    justifyContent="space-between"
                     w="full"
-                    fontSize="lg"
                     fontWeight="400"
-                    py={4}
+                    py={3}
                     px={1}
                     transition="all 0.3s"
                     bg={index === activeIndex ? "lightPrimaryColor" : ""}
                     borderLeft={index === activeIndex ? "2px solid white" : ""}
                     onClick={() => setCurrentOpenIndex(null)}
                   >
-                    {item.icon}
-                    <Box as="span" fontSize="md">
+                    <Box fontSize="lg">{item.icon}</Box>
+                    <Box as="span" fontSize="sm">
                       {item.name}
                     </Box>
                   </PseudoBox>

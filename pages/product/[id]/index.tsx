@@ -19,7 +19,7 @@ import SectionCard from "components/atoms/SectionCard";
 import * as Yup from "yup";
 import ProductActions from "actions/product";
 import { connect } from "react-redux";
-import { Box, SimpleGrid, Stack } from "@chakra-ui/core";
+import { Box, SimpleGrid, Stack, Heading, Grid } from "@chakra-ui/core";
 import Button from "components/atoms/Button";
 
 interface DispatchProps {
@@ -74,12 +74,12 @@ const Product = (props: ProductProps) => {
   }
 
   return (
-    <Box maxW="900px" mx={[2, "auto"]} p={[1, 3]}>
+    <Stack maxW="900px" mx={[2, "auto"]} p={[1, 3]} spacing={2}>
       <Box my={3}>
         <BackLink href="/product">Products</BackLink>
-        <PageHeader>{product.name}</PageHeader>
+        <Heading size="md">{product.name}</Heading>
       </Box>
-      <SimpleGrid columns={[1, null, null, 2]} spacing={2}>
+      <Grid templateColumns={["1fr", null, null, "1fr 300px"]} gap={2} my={5}>
         <Stack spacing={3}>
           <Box>
             <ProductMainInfo
@@ -136,9 +136,9 @@ const Product = (props: ProductProps) => {
             <FAQ faqs={product.faqs} />
           </Box>
         </Stack>
-      </SimpleGrid>
+      </Grid>
       {/* <Specification specification={product.specification} /> */}
-    </Box>
+    </Stack>
   );
 };
 

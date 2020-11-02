@@ -38,6 +38,7 @@ const Pagination = (props: PaginationProps) => {
     return (
       <Box display="inline-block" mx={1} key={i}>
         <Button
+          _focus={{ boxShadow: "none" }}
           variantColor={value === i ? "primaryColorVariant" : ""}
           color={value === i ? "white" : ""}
           type="button"
@@ -54,6 +55,8 @@ const Pagination = (props: PaginationProps) => {
   return (
     <Box w="100%" textAlign="center" my={3}>
       <Button
+        _focus={{ boxShadow: "none" }}
+        _hover={{ borderColor: "primaryColorVariant.500" }}
         variant="outline"
         type="button"
         fontWeight="500"
@@ -64,6 +67,8 @@ const Pagination = (props: PaginationProps) => {
       </Button>
       <Box display="inline-block">{pages}</Box>
       <Button
+        _hover={{ borderColor: "primaryColorVariant.500" }}
+        _focus={{ boxShadow: "none" }}
         variant="outline"
         type="button"
         fontWeight="500"
