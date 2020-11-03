@@ -15,7 +15,7 @@ const NotificationCard = (props: NotificationCardProps) => {
       bg="white"
       templateColumns="50px auto"
       borderBottom="1px"
-      borderColor="borderColor"
+      borderColor="borderColor.500"
       boxShadow="md"
     >
       <Box fontSize="md">

@@ -89,7 +89,7 @@ const BulkSms = (props: DispatchProps) => {
       p={5}
       pb={4}
       boxShadow="md"
-      bg="foregroundColor"
+      bg="foregroundColor.500"
     >
       <Heading
         size="xl"
@@ -99,7 +99,7 @@ const BulkSms = (props: DispatchProps) => {
         fontSize="xl"
         textTransform="uppercase"
       >
-        Bulk SMS
+        Send SMS
       </Heading>
       <Formik
         initialValues={{
@@ -133,7 +133,7 @@ const BulkSms = (props: DispatchProps) => {
                 <Box
                   textAlign="right"
                   fontSize={12}
-                  color={"secondaryTextColor"}
+                  color={"secondaryTextColor.500"}
                   my={1}
                   mr={1}
                 >

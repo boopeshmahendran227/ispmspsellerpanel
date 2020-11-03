@@ -51,7 +51,7 @@ const QuoteProduct = (props: QuoteProductProps) => {
         />
       </Box>
       <Box fontSize={["sm"]} lineHeight="1.4" textAlign={["center", "left"]}>
-        <Box fontSize={["md"]} color="warningColor">
+        <Box fontSize={["md"]} color="warningColor.500">
           Requested Quote
         </Box>
         <Box>
@@ -60,7 +60,7 @@ const QuoteProduct = (props: QuoteProductProps) => {
         </Box>
       </Box>
       <Box fontSize={["sm"]} lineHeight="1.4" textAlign={["center", "left"]}>
-        <Box fontSize={["md"]} color="successColor">
+        <Box fontSize={["md"]} color="successColor.500">
           Responded Quote
         </Box>
         <Box>

@@ -124,7 +124,6 @@ const Products = () => {
       </PageHeaderContainer>
       <Stack
         spacing={2}
-      
         flexDirection={["column", "row"]}
         justify="space-between"
       >

@@ -64,7 +64,7 @@ const QuoteItemDetail = (props: QuoteItemDetailProps) => {
   return (
     <Box
       border="1px"
-      bg="foregroundColor"
+      bg="foregroundColor.500"
       borderColor={color}
       maxW=" 1000px"
       w="100%"

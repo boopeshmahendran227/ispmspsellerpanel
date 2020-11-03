@@ -34,12 +34,14 @@ const AuthWall = (props: AuthWallProps) => {
       pointerEvents="none"
       transition="transform 0.23s cubic-bezier(0, 0, 0.3, 1)"
     >
-      <Box className="centerContainer">
+      <Box>
         <Box py={2} px={0}>
           <Logo />
         </Box>
         <Loader height="auto" />
-        <Box fontSize={["sm", "lg"]}>Checking Authentication...</Box>
+        <Box fontSize={["sm", "md"]} textAlign="center">
+          Checking Authentication...
+        </Box>
       </Box>
     </Flex>
   );

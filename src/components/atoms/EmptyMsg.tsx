@@ -8,13 +8,13 @@ interface EmptyMsgProps {
 const EmptyMsg = (props: EmptyMsgProps) => {
   return (
     <Box p={2} textAlign="center">
-      <Box fontSize="xl" color="secondaryTextColor" opacity={0.7}>
+      <Box fontSize="xl" color="secondaryTextColor.500" opacity={0.7}>
         {props.icon}
       </Box>
       <Heading
         size="sm"
         fontWeight="semibold"
-        color="secondaryTextColor"
+        color="secondaryTextColor.500"
         dangerouslySetInnerHTML={{ __html: props.msg }}
       />
     </Box>

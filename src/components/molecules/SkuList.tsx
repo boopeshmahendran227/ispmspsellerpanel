@@ -19,12 +19,12 @@ const SkuList = (props: SkuListProps): JSX.Element | null => {
   return (
     <Box
       w={["100%", null, "300px"]}
-      bg="foregroundColor"
+      bg="foregroundColor.500"
       my={3}
       border="1px"
-      borderColor="borderColor"
+      borderColor="borderColor.500"
     >
-      <Heading size="md" bg="hoverColor" py={2} px={1}>
+      <Heading size="md" bg="hoverColor.500" py={2} px={1}>
         Your Variants
       </Heading>
       <Box maxH="300px" overflowY="auto">
@@ -37,10 +37,10 @@ const SkuList = (props: SkuListProps): JSX.Element | null => {
             <Flex
               p={1}
               borderTop="1px"
-              borderTopColor="borderColor"
+              borderTopColor="borderColor.500"
               cursor="pointer"
               transition="all 0.3s"
-              bg={props.currentSkuId === sku.skuId ? "secondaryColor" : ""}
+              bg={props.currentSkuId === sku.skuId ? "secondaryColor.500" : ""}
               color={props.currentSkuId === sku.skuId ? "white" : ""}
             >
               <Box w="50px" h="50px" m={1}>

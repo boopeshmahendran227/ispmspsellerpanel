@@ -94,8 +94,8 @@ const IconLink = (props: IconLinkProps): JSX.Element => {
   return (
     <Link href={link.href}>
       <PseudoBox
-        _hover={{ color: "secondaryColor", textDecoration: "underline" }}
-        color="secondaryTextColor"
+        _hover={{ color: "secondaryColor.500", textDecoration: "underline" }}
+        color="secondaryTextColor.500"
         fontWeight="medium"
       >
         <Stack spacing={3} px={2}>

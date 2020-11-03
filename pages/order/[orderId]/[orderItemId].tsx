@@ -38,16 +38,12 @@ interface DispatchProps {
 }
 
 const Name = (props) => (
-  <Box fontWeight="bold" py={2} px={4} mt={2}>
+  <Box fontWeight="bold" py={1} px={3} mt={1}>
     {props.children}
   </Box>
 );
 
-const Value = (props) => (
-  <Box py={2} px={4}>
-    {props.children}
-  </Box>
-);
+const Value = (props) => <Box px={3}>{props.children}</Box>;
 
 type OrderProps = DispatchProps;
 
@@ -94,7 +90,7 @@ const Order = (props: OrderProps) => {
           <Box
             as="span"
             fontSize={["sm", "md"]}
-            color="secondaryTextColor"
+            color="secondaryTextColor.500"
             fontWeight="normal"
           >
             {moment
@@ -131,7 +127,7 @@ const Order = (props: OrderProps) => {
           View Invoice
         </Button>
       </Box>
-      <Grid templateColumns={["1fr", null, null, "1fr 300px"]} gap={5}>
+      <Grid templateColumns={["1fr", null, null, "1fr 300px"]} gap={4}>
         <Box flex="1">
           <OrderItemDetail
             orderItem={orderItem}
@@ -149,11 +145,15 @@ const Order = (props: OrderProps) => {
             <ShippingInformationContainer orderItem={orderItem} />
           </Box>
         </Box>
-        <Stack spacing={4} fontSize={["sm", "md"]}>
-          <Box bg="foregroundColor" border="1px" borderColor="#ccc">
-            <Heading size="md" my={4} mx={3}>
+        <Stack spacing={8} fontSize={["sm", "md"]}>
+          <Box
+            bg="foregroundColor.500"
+            border="1px"
+            borderColor="borderColor.500"
+          >
+            <Box fontSize="lg" fontWeight="bold" my={3} mx={3}>
               Customer Information
-            </Heading>
+            </Box>
             <Name>Name</Name>
             <Value>{order.customerName || "Name Not Available"}</Value>
             <Divider />

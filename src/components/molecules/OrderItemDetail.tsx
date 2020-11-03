@@ -271,7 +271,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
   return (
     <Box
       border="1px"
-      bg="foregroundColor"
+      bg="foregroundColor.500"
       borderColor={color}
       maxW=" 1000px"
       w="100%"
@@ -302,7 +302,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
           />
           <Grid
             templateColumns={["1fr 1fr", "100px 100px"]}
-            color="secondaryTextColor"
+            color="secondaryTextColor.500"
           >
             <Box fontWeight="bold">Product Id: </Box>
             <Box>{orderItem.productId}</Box>
@@ -354,7 +354,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
               Net Price
             </Box>
           </Key>
-          <Box py={2}>{formatPrice(orderItem.discountedPrice)}</Box>
+          <Box py={2} fontWeight="bold">{formatPrice(orderItem.discountedPrice)}</Box>
           <Box></Box>
         </SimpleGrid>
       </Box>

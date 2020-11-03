@@ -13,16 +13,12 @@ import BackLink from "components/atoms/BackLink";
 import { Box, Grid, Stack, Heading, Tag, Flex, Divider } from "@chakra-ui/core";
 
 const Name = (props) => (
-  <Box fontWeight="bold" py={2} px={4} mt={2}>
+  <Box fontWeight="bold" py={1} px={3} mt={1}>
     {props.children}
   </Box>
 );
 
-const Value = (props) => (
-  <Box py={2} px={4}>
-    {props.children}
-  </Box>
-);
+const Value = (props) => <Box px={3}>{props.children}</Box>;
 
 interface DispatchProps {
   rejectQuote: (quote: QuoteInterface) => void;
@@ -54,7 +50,7 @@ const Quote = (props: QuoteProps) => {
           <Box
             as="span"
             fontSize="md"
-            color="secondaryTextColor"
+            color="secondaryTextColor.500"
             fontWeight="normal"
           >
             {" "}
@@ -75,17 +71,17 @@ const Quote = (props: QuoteProps) => {
           </Tag>
         </Box>
       </Stack>
-      <Grid templateColumns={["1fr", null, null, "1fr 300px"]} gap={3}>
+      <Grid templateColumns={["1fr", null, null, "1fr 300px"]} gap={4}>
         <QuoteItemDetail
           quote={quote}
           rejectQuote={props.rejectQuote}
           updateQuote={props.updateQuote}
         />
         <Box>
-          <Box bg="foregroundColor" border="1px solid #ccc">
-            <Heading size="md" my={4} mx={3}>
+          <Box bg="foregroundColor.500" border="1px solid #ccc">
+            <Box fontSize="lg" fontWeight="bold" my={3} mx={3}>
               Customer Information
-            </Heading>
+            </Box>
             <Name>Name</Name>
             <Value>{quote.customerName || "Name Not Available"}</Value>
             <Divider />

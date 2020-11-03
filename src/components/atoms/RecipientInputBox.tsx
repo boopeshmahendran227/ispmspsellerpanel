@@ -96,7 +96,7 @@ const RecipientInputBox = (props: RecipientInputBoxProps) => {
       <Box
         onClick={handleFocus}
         border="1px"
-        borderColor="#ccc"
+        borderColor="borderColor.500"
         minH="20vh"
         w="100%"
         p={2}
@@ -262,7 +262,7 @@ const RecipientInputBox = (props: RecipientInputBoxProps) => {
       <Box
         textAlign="right"
         fontSize={12}
-        color={"secondaryTextColor"}
+        color={"secondaryTextColor.500"}
         my={1}
         mr={1}
       >

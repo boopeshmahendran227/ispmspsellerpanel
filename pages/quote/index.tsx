@@ -225,9 +225,9 @@ const Quotes = (props: QuotesProps) => {
               <span className="notRespondedMsg">Not yet Responded</span>
             )}
           </td>
-          <td style={{ color: getColor(quote.status) }}>
+          <Box as="td" color={getColor(quote.status)}>
             {getQuoteStatusText(quote.status)}
-          </td>
+          </Box>
           <td>
             {moment
               .utc(quote.createdDateTime)

@@ -13,7 +13,7 @@ const Loader = (props: LoaderProps) => {
       <Spinner
         size={props.size}
         thickness={props.loaderWidth}
-        color="primaryColor"
+        color="primaryColorVariant.500"
       />
     </Flex>
   );

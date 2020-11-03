@@ -53,7 +53,7 @@ const TopNavBar = (props: TopNavBarProps) => {
         left="0"
         zIndex={10}
         right="0"
-        bg="foregroundColor"
+        bg="foregroundColor.500"
         boxShadow="md"
         alignItems="center"
       >
@@ -83,7 +83,7 @@ const TopNavBar = (props: TopNavBarProps) => {
               right="0"
               borderRadius="full"
               bg="dangerColor"
-              color="foregroundColor"
+              color="foregroundColor.500"
               w={2}
               h={2}
               lineHeight={2}

@@ -83,7 +83,7 @@ const CloneProduct = (props: CloneProductProps) => {
       my={[1, 10]}
       p={4}
       boxShadow="md"
-      bg="foregroundColor"
+      bg="foregroundColor.500"
       shouldWrapChildren
       spacing={5}
     >

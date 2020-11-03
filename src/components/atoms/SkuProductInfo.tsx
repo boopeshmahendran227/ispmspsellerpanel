@@ -26,7 +26,7 @@ const SkuProductInfo = (props: SkuProductInfoProps): JSX.Element => {
                 <ChakraLink
                   display="inline-block"
                   my={2}
-                  color="secondaryColor"
+                  color="secondaryColor.500"
                   textDecoration="none"
                 >
                   Back to product

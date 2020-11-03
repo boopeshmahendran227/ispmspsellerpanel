@@ -55,7 +55,7 @@ const MobileSideNavBar = (props: MobileSideNavBarProps) => {
                     <Link href={item.href}>
                       <PseudoBox
                         as="a"
-                        _hover={{ bg: "secondaryTextColor" }}
+                        _hover={{ bg: "secondaryTextColor.500" }}
                         display="flex"
                         flexDirection="row"
                         w="full"

@@ -93,7 +93,7 @@ const CreateCoupon = (props: CreateCouponProps) => {
       my={[1, 8]}
       p={4}
       boxShadow="md"
-      bg="foregroundColor"
+      bg="foregroundColor.500"
     >
       <BackLink href="/coupon">Back to Coupons</BackLink>
       <Heading

@@ -12,7 +12,7 @@ const MetricCard = (props: MetricCardProps) => {
   return (
     <Box
       display="inline-block"
-      bg="foregroundColor"
+      bg="foregroundColor.500"
       boxShadow="md"
       w="100%"
       borderRadius={8}
@@ -27,7 +27,7 @@ const MetricCard = (props: MetricCardProps) => {
             textTransform="capitalize"
             fontSize={["sm", "md"]}
             mt={1}
-            color="secondaryTextColor"
+            color="secondaryTextColor.500"
           >
             {props.title}
           </Box>

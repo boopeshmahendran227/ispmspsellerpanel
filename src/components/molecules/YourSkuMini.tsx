@@ -38,7 +38,7 @@ const YourSkuMini = (props: YourSkuMiniProps): JSX.Element => {
               <Box
                 fontSize={["xs", "sm", "md"]}
                 mt={1}
-                color="secondaryTextColor"
+                color="secondaryTextColor.500"
               >
                 {sku.attributeValueIds.map(
                   (attributeValueId: AttributeValueID) => (
@@ -55,7 +55,7 @@ const YourSkuMini = (props: YourSkuMiniProps): JSX.Element => {
         </Box>
         <Box w="80px" fontSize={["sm", "md"]} textAlign="right">
           <Box>{formatPrice(sku.price)}</Box>
-          <Box color="secondaryTextColor">Qty: {sku.qty}</Box>
+          <Box color="secondaryTextColor.500">Qty: {sku.qty}</Box>
           <Button onClick={() => null}>Edit</Button>
         </Box>
       </Flex>

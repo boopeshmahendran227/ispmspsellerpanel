@@ -36,7 +36,7 @@ const SideNavBar = () => {
       left="0"
       w="100%"
       h="100%"
-      bg="primaryColor"
+      bg="primaryColorVariant.500"
       color="white"
       boxShadow="md"
       fontSize="xs"
@@ -48,7 +48,7 @@ const SideNavBar = () => {
               {item.hasSubMenu ? (
                 <PseudoBox
                   as="a"
-                  _hover={{ bg: "lightPrimaryColor" }}
+                  _hover={{ bg: "lightPrimaryColorVariant.500" }}
                   display="flex"
                   flexDirection="column"
                   justifyContent="space-between"
@@ -58,7 +58,7 @@ const SideNavBar = () => {
                   py={3}
                   px={1}
                   transition="all 0.3s"
-                  bg={index === activeIndex ? "lightPrimaryColor" : ""}
+                  bg={index === activeIndex ? "lightPrimaryColorVariant.500" : ""}
                   borderLeft={index === activeIndex ? "2px solid white" : ""}
                   onClick={() =>
                     setCurrentOpenIndex(
@@ -75,7 +75,7 @@ const SideNavBar = () => {
                 <Link href={item.href} key={index}>
                   <PseudoBox
                     as="a"
-                    _hover={{ bg: "lightPrimaryColor" }}
+                    _hover={{ bg: "lightPrimaryColorVariant.500" }}
                     display="flex"
                     flexDirection="column"
                     textAlign="center"
@@ -85,7 +85,7 @@ const SideNavBar = () => {
                     py={3}
                     px={1}
                     transition="all 0.3s"
-                    bg={index === activeIndex ? "lightPrimaryColor" : ""}
+                    bg={index === activeIndex ? "lightPrimaryColorVariant.500" : ""}
                     borderLeft={index === activeIndex ? "2px solid white" : ""}
                     onClick={() => setCurrentOpenIndex(null)}
                   >
