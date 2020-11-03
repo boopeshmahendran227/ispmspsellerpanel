@@ -301,7 +301,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
             )}
           />
           <Grid
-            templateColumns={["1fr 1fr", "100px 100px"]}
+            templateColumns={["1fr 1fr", "100px 120px"]}
             color="secondaryTextColor.500"
           >
             <Box fontWeight="bold">Product Id: </Box>
