@@ -145,11 +145,12 @@ const Order = (props: OrderProps) => {
             <ShippingInformationContainer orderItem={orderItem} />
           </Box>
         </Box>
-        <Stack spacing={8} fontSize={["sm", "md"]}>
+        <Stack spacing={8} fontSize={["sm", "md"]} pb={2}>
           <Box
             bg="foregroundColor.500"
             border="1px"
             borderColor="borderColor.500"
+            pb={3}
           >
             <Box fontSize="lg" fontWeight="bold" my={3} mx={3}>
               Customer Information
