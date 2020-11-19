@@ -13,9 +13,9 @@ const BackLink = (props: BackLinkProps): JSX.Element => {
       <PseudoBox
         as="a"
         display="block"
-        color="secondaryTextColor"
+        color="secondaryTextColor.500"
         transition="all 0.3s"
-        _hover={{ color: "primaryTextColor" }}
+        _hover={{ color: "primaryTextColor.500" }}
       >
         <i className="icon fas fa-chevron-left" /> {props.children}
       </PseudoBox>

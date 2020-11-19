@@ -15,18 +15,18 @@ const SkuProductInfo = (props: SkuProductInfoProps): JSX.Element => {
   return (
     <Box w={["100%", null, "300px"]}>
       <Card>
-        <Flex justify="space-between">
+        <Flex>
           <Box w="50px" h="50px" m={2}>
             <RelativeImg src={image} />
           </Box>
           <Box>
-            <Heading size="md">{productName}</Heading>
+            <Heading size="sm">{productName}</Heading>
             <Box>
               <Link href="/product/[id]" as={`/product/${productId}`}>
                 <ChakraLink
                   display="inline-block"
                   my={2}
-                  color="secondaryColor"
+                  color="secondaryColor.500"
                   textDecoration="none"
                 >
                   Back to product

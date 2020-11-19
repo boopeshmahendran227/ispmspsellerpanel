@@ -123,8 +123,7 @@ const Products = () => {
         </Stack>
       </PageHeaderContainer>
       <Stack
-        spacing={3}
-        my={3}
+        spacing={2}
         flexDirection={["column", "row"]}
         justify="space-between"
       >
@@ -146,7 +145,7 @@ const Products = () => {
           >
             Show Only My Products
           </Checkbox>
-          <Box minW={["200px", "280px"]}>
+          <Box minW={["200px", "320px"]}>
             <Select
               value={currentEcosystem}
               onChange={(ecosystem) =>

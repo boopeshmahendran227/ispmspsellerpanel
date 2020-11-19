@@ -38,16 +38,12 @@ interface DispatchProps {
 }
 
 const Name = (props) => (
-  <Box fontWeight="bold" py={2} px={4} mt={2}>
+  <Box fontWeight="bold" py={1} px={3} mt={1}>
     {props.children}
   </Box>
 );
 
-const Value = (props) => (
-  <Box py={2} px={4}>
-    {props.children}
-  </Box>
-);
+const Value = (props) => <Box px={3}>{props.children}</Box>;
 
 type OrderProps = DispatchProps;
 
@@ -80,21 +76,21 @@ const Order = (props: OrderProps) => {
 
   return (
     <Box
-      my={10}
+      my={6}
       mx={[2, "auto"]}
       maxW={["800px", null, "700px", "800px", "1100px"]}
     >
       <DeliveryCodeModal />
       <BackLink href="/order">Back to Orders</BackLink>
-      <Flex my={4} align="baseline" direction={["column", "row"]}>
-        <Heading size="lg" mx={2}>
+      <Flex my={3} align="baseline" direction={["column", "row"]}>
+        <Heading size="md" mx={2}>
           <Box as="span">
             #{order.id}-{orderItem.id}
           </Box>
           <Box
             as="span"
             fontSize={["sm", "md"]}
-            color="secondaryTextColor"
+            color="secondaryTextColor.500"
             fontWeight="normal"
           >
             {moment
@@ -106,9 +102,9 @@ const Order = (props: OrderProps) => {
         <Box>
           <Tag
             m={2}
+            size="sm"
             variant="solid"
             rounded="full"
-            fontSize={["xs", "md"]}
             variantColor="primaryColorVariant"
           >
             {getOrderStatusText(orderItem.orderItemStatus)}
@@ -116,8 +112,8 @@ const Order = (props: OrderProps) => {
           <Tag
             m={2}
             variant="solid"
+            size={"sm"}
             rounded="full"
-            fontSize={["xs", "md"]}
             variantColor={getPaymentModeColor(
               orderItem.order.paymentSplits[0].paymentMode
             )}
@@ -131,7 +127,7 @@ const Order = (props: OrderProps) => {
           View Invoice
         </Button>
       </Box>
-      <Grid templateColumns={["1fr", null, null, "1fr 300px"]} gap={5}>
+      <Grid templateColumns={["1fr", null, null, "1fr 300px"]} gap={4}>
         <Box flex="1">
           <OrderItemDetail
             orderItem={orderItem}
@@ -149,11 +145,16 @@ const Order = (props: OrderProps) => {
             <ShippingInformationContainer orderItem={orderItem} />
           </Box>
         </Box>
-        <Stack spacing={4} fontSize={["sm", "md"]}>
-          <Box bg="foregroundColor" border="1px" borderColor="#ccc">
-            <Heading size="md" my={4} mx={3}>
+        <Stack spacing={8} fontSize={["sm", "md"]} pb={2}>
+          <Box
+            bg="foregroundColor.500"
+            border="1px"
+            borderColor="borderColor.500"
+            pb={3}
+          >
+            <Box fontSize="lg" fontWeight="bold" my={3} mx={3}>
               Customer Information
-            </Heading>
+            </Box>
             <Name>Name</Name>
             <Value>{order.customerName || "Name Not Available"}</Value>
             <Divider />

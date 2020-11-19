@@ -8,7 +8,7 @@ const InputLabel = (props: InputLabelProps) => {
   return (
     <FormLabel
       textAlign={["left", "right"]}
-      color="secondaryTextColor"
+      color="secondaryTextColor.500"
       minW="200px"
     >
       {props.label}:

@@ -36,10 +36,10 @@ const OrderSummary = (props: OrderSummaryProps) => {
       </Box>
       {order.discountSplits.map((discount) => (
         <>
-          <Box as="span" fontWeight="bold" color="successColor">
+          <Box as="span" fontWeight="bold" color="successColor.500">
             {discount.discountType}
           </Box>
-          <Box as="span" textAlign="right" color="successColor">
+          <Box as="span" textAlign="right" color="successColor.500">
             - {formatPrice(discount.discountAmount)}
           </Box>
         </>

@@ -46,7 +46,14 @@ const ReasonModal = (props: ReasonModalProps) => {
         <ModalHeader fontSize="lg" px={1}>
           {props.data.header}
         </ModalHeader>
-        <ModalCloseButton />
+        <ModalCloseButton
+          _focus={{ boxShadow: "none" }}
+          _hover={{
+            color: "dangerColorVariant.500",
+            transform: "rotate(90deg)",
+          }}
+          size="lg"
+        />
         <ModalHeader fontSize="md" px={1}>
           {props.data.subHeader}
         </ModalHeader>

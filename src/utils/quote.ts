@@ -22,16 +22,16 @@ const getQuoteStatusText = (status: QuoteStatus) => {
 const getColor = (status: QuoteStatus) => {
   switch (status) {
     case QuoteStatus.Created:
-      return CSSConstants.secondaryTextColor;
+      return "secondaryTextColor.500";
     case QuoteStatus.SellerResponsePending:
-      return CSSConstants.secondaryTextColor;
+      return "secondaryTextColor.500";
     case QuoteStatus.SellerResponded:
-      return CSSConstants.successColor;
+      return "successColor.500";
     case QuoteStatus.Converted:
-      return CSSConstants.successColor;
+      return "successColor.500";
     case QuoteStatus.SellerRejected:
     case QuoteStatus.Rejected:
-      return CSSConstants.dangerColor;
+      return "dangerColor.500";
   }
 };
 

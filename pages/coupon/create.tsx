@@ -90,10 +90,10 @@ const CreateCoupon = (props: CreateCouponProps) => {
     <Box
       maxW="700px"
       mx={[2, "auto"]}
-      my={[1, 10]}
-      p={6}
+      my={[1, 8]}
+      p={4}
       boxShadow="md"
-      bg="foregroundColor"
+      bg="foregroundColor.500"
     >
       <BackLink href="/coupon">Back to Coupons</BackLink>
       <Heading
@@ -210,30 +210,36 @@ const CreateCoupon = (props: CreateCouponProps) => {
                 <InputLabel label="Ecosystem" />
                 <FieldSelect name="ecosystem" options={ecosystems} />
                 <InputLabel label="Valid From" />
-                <FieldDatePicker name="startDate" />
+                <Box py={3}>
+                  <FieldDatePicker name="startDate" />
+                </Box>
                 <InputLabel label="Valid Till" />
-                <FieldDatePicker name="endDate" />
+                <Box py={3}>
+                  <FieldDatePicker name="endDate" />
+                </Box>
               </SimpleGrid>
-              <Stack isInline spacing={4} justify="center">
-                <Box>
-                  <Button
-                    isDisabled={isCheckingCouponCode}
-                    type="submit"
-                    variantColor="successColorVariant"
-                  >
-                    Submit
-                  </Button>
-                </Box>
-                <Box>
-                  <Button
-                    variant="outline"
-                    onClick={() => resetForm}
-                    type="reset"
-                    variantColor="dangerColorVariant"
-                  >
-                    Clear
-                  </Button>
-                </Box>
+              <Stack
+                isInline
+                spacing={4}
+                justify="center"
+                shouldWrapChildren
+                my={2}
+              >
+                <Button
+                  isDisabled={isCheckingCouponCode}
+                  type="submit"
+                  variantColor="successColorVariant"
+                >
+                  Submit
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => resetForm}
+                  type="reset"
+                  variantColor="dangerColorVariant"
+                >
+                  Clear
+                </Button>
               </Stack>
             </Form>
           </Box>

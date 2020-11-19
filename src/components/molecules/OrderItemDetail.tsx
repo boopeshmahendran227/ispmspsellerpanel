@@ -31,7 +31,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
       case OrderStatus.PaymentSuccess:
       case OrderStatus.PaymentOnDelivery:
         return (
-          <Stack isInline spacing={3}>
+          <Stack isInline spacing={3} justify="flex-end">
             <Box>
               <Button
                 variantColor="successColorVariant"
@@ -65,7 +65,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
       case OrderStatus.SellerProcessing:
         if (orderItem.isSelfPickup) {
           return (
-            <Stack isInline spacing={3}>
+            <Stack isInline spacing={3}  justify="flex-end">
               <Box>
                 <Button
                   variantColor="successColorVariant"
@@ -97,7 +97,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
           );
         }
         return (
-          <Stack isInline spacing={3}>
+          <Stack isInline spacing={3}  justify="flex-end">
             <Box>
               <Button
                 variantColor="successColorVariant"
@@ -129,7 +129,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
         );
       case OrderStatus.PackageReadyForCollection:
         return (
-          <Stack isInline spacing={3}>
+          <Stack isInline spacing={3}  justify="flex-end">
             <Box>
               <Button
                 variantColor="successColorVariant"
@@ -161,7 +161,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
         );
       case OrderStatus.Shipping:
         return (
-          <Stack isInline spacing={3}>
+          <Stack isInline spacing={3}  justify="flex-end">
             <Box>
               <Button
                 variantColor="successColorVariant"
@@ -193,7 +193,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
         );
       case OrderStatus.CancelRequested:
         return (
-          <Stack isInline spacing={3}>
+          <Stack isInline spacing={3}  justify="flex-end">
             <Box>
               <Button
                 onClick={() =>
@@ -225,7 +225,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
         );
       case OrderStatus.ReturnRequested:
         return (
-          <Stack isInline spacing={3}>
+          <Stack isInline spacing={3}  justify="flex-end">
             <Box>
               <Button
                 onClick={() =>
@@ -271,15 +271,14 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
   return (
     <Box
       border="1px"
-      bg="foregroundColor"
+      bg="foregroundColor.500"
       borderColor={color}
       maxW=" 1000px"
       w="100%"
       m="auto"
-      mb={3}
-      p={3}
+      pt={3}
     >
-      <Box textAlign="right" p={3} fontSize={["sm", "md", "lg"]} color={color}>
+      <Box textAlign="right" px={3} fontSize={["sm", "md", "lg"]} color={color}>
         <Box as="span">{orderText}</Box>
         <Box as="span">
           {" "}
@@ -289,7 +288,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
             .format("MMM DD YYYY")}
         </Box>
       </Box>
-      <Box pt={1} px={1}>
+      <Box p={3} mt={-8}>
         <Box>
           <ProductCard
             name={orderItem.productSnapshot.productName}
@@ -302,8 +301,8 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
             )}
           />
           <Grid
-            templateColumns={["1fr 1fr", "100px 100px"]}
-            color="secondaryTextColor"
+            templateColumns={["1fr 1fr", "100px 120px"]}
+            color="secondaryTextColor.500"
           >
             <Box fontWeight="bold">Product Id: </Box>
             <Box>{orderItem.productId}</Box>
@@ -355,13 +354,12 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
               Net Price
             </Box>
           </Key>
-
-          <Box py={2}>{formatPrice(orderItem.discountedPrice)}</Box>
+          <Box py={2} fontWeight="bold">{formatPrice(orderItem.discountedPrice)}</Box>
           <Box></Box>
         </SimpleGrid>
       </Box>
       {Boolean(buttons) && (
-        <Box mt={2} borderTop="1px" borderColor={color} p={2} textAlign="right">
+        <Box mt={2} borderTop="1px" borderColor={color} p={3} >
           {buttons}
         </Box>
       )}

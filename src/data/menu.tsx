@@ -96,7 +96,7 @@ const menuTree: MenuTreeItem[] = [
     hasSubMenu: true,
     subMenuItems: [
       {
-        name: "Bulk Sms",
+        name: "Send SMS",
         href: "/bulkSms",
       },
     ],

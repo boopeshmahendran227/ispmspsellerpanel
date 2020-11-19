@@ -146,7 +146,7 @@ const Invoice = () => {
                     color={
                       item.orderItemStatus === OrderStatus.CancelCompleted
                         ? "dangerColor"
-                        : "primaryTextColor"
+                        : "primaryTextColor.500"
                     }
                     textDecoration={
                       item.orderItemStatus === OrderStatus.CancelCompleted
@@ -221,7 +221,7 @@ const Invoice = () => {
                 <td>{formatPrice(shippingFee)}</td>
               </tr>
               {order.discountSplits.map((discount, index) => (
-                <Box as="tr" key={index} color={"successColor"}>
+                <Box as="tr" key={index} color={"successColor.500"}>
                   <td>{discount.discountType}</td>
                   <td>- {formatPrice(discount.discountAmount)}</td>
                 </Box>
@@ -264,7 +264,7 @@ const Invoice = () => {
             <Box
               textAlign="center"
               textTransform="uppercase"
-              color="secondaryTextColor"
+              color="secondaryTextColor.500"
               mt={"-0.3em"}
             >
               (Credit Not Settled)

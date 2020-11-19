@@ -20,7 +20,7 @@ const OtherSkuMini = (props: OtherSkuMiniProps): JSX.Element => {
         </Box>
         <Box>
           <Box fontWeight="bold">{sku.skuId}</Box>
-          <Box mt="0.4em" color="secondaryTextColor">
+          <Box mt="0.4em" color="secondaryTextColor.500">
             {sku.attributeValueIds.map((attributeValueId: AttributeValueID) => (
               <Box mt="0.2em" key={attributeValueId.attributeId}>
                 {attributeValueId.attributeName + ": " + attributeValueId.value}

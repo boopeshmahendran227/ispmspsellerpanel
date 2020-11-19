@@ -36,11 +36,12 @@ const InvoiceStatusTag = (props: InvoiceStatusTagProps) => {
         size={"sm"}
         variantColor={currentColor}
         fontWeight="bold"
+        px={4}
         py={1}
-        px={2}
         m={[1, 2]}
+        color={`${currentColor}.500`}
       >
-        <Text fontSize={["xs", null, null, null, "md"]}>
+        <Text fontSize={["xs", null, null, null, "sm"]}>
           {status === InvoiceStatus.Paid ? "Paid / COD" : status}
         </Text>
       </Tag>

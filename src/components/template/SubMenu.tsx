@@ -30,7 +30,7 @@ const SubMenu = (props: SubMenuProps) => {
       left="0"
       w="200px"
       minH="500px"
-      bg={"lightPrimaryColor"}
+      bg={"lightPrimaryColorVariant.500"}
       p={4}
       pt={6}
       zIndex={-1}
@@ -43,7 +43,7 @@ const SubMenu = (props: SubMenuProps) => {
           : " transform 0.13s cubic-bezier(0, 0, 0.3, 1)"
       }
     >
-      <Heading size="md" pl={2}>
+      <Heading size="sm" letterSpacing="wide" pl={2}>
         {props.header}
       </Heading>
       <IconButton
@@ -54,7 +54,7 @@ const SubMenu = (props: SubMenuProps) => {
         position="absolute"
         top={5}
         right={2}
-        variantColor="primaryColor"
+        variantColor="primaryColorVariant.500"
       />
       <List styleType="none" mt={6}>
         {items.map((item, index) => (
@@ -62,7 +62,7 @@ const SubMenu = (props: SubMenuProps) => {
             <Link href={item.href}>
               <ChakraLink
                 display="inline-block"
-                _hover={{ bg: "primaryColor" }}
+                _hover={{ bg: "primaryColorVariant.500" }}
                 p={2}
                 w="100%"
                 fontSize="md"

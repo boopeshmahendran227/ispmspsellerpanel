@@ -21,11 +21,11 @@ const ShippingInformationContainer = (
   }
 
   return (
-    <Box border="1px" borderColor="borderColor" p={3} my={5} bg="white">
+    <Box border="1px" borderColor="borderColor.500" p={3} my={5} bg="white">
       <Flex align="baseline" fontSize={["xs", "sm"]}>
         <Heading size="md">Shipping Information</Heading>
         <Link
-          color="secondaryColor"
+          color="secondaryColor.500"
           display="inline-block"
           mx={2}
           textDecoration="underline"
@@ -34,7 +34,7 @@ const ShippingInformationContainer = (
           Download Shipping Label
         </Link>
         <Link
-          color="secondaryColor"
+          color="secondaryColor.500"
           display="inline-block"
           mx={2}
           textDecoration="underline"
@@ -44,13 +44,13 @@ const ShippingInformationContainer = (
         </Link>
       </Flex>
       <SimpleGrid columns={2} spacing={3} fontSize={["sm", "md"]} my={2}>
-        <Box color="secondaryTextColor">Provider Name:</Box>
+        <Box color="secondaryTextColor.500">Provider Name:</Box>
         <Box>{orderItem.shipment.providerName}</Box>
-        <Box color="secondaryTextColor">Tracking Code:</Box>
+        <Box color="secondaryTextColor.500">Tracking Code:</Box>
         <Box>AWB-{orderItem.shipment.shiprocketResponse?.awb_code}</Box>
-        <Box color="secondaryTextColor">Pickup Token Number:</Box>
+        <Box color="secondaryTextColor.500">Pickup Token Number:</Box>
         <Box>{orderItem.shipment.shiprocketResponse?.pickup_token_number}</Box>
-        <Box color="secondaryTextColor">Pickup Scheduled Date:</Box>
+        <Box color="secondaryTextColor.500">Pickup Scheduled Date:</Box>
         <Box>
           {moment(
             orderItem.shipment.shiprocketResponse?.pickup_scheduled_date

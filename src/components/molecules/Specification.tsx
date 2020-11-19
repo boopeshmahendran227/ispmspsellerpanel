@@ -25,7 +25,7 @@ const Specification = (props: SpecificationProps) => {
               <Grid my={2} templateColumns={["150px 1fr", "200px 1fr"]}>
                 {group.items.map((item, itemIndex) => (
                   <Fragment key={itemIndex}>
-                    <Box color="secondaryTextColor">{item.key}</Box>
+                    <Box color="secondaryTextColor.500">{item.key}</Box>
                     <Box>{item.value}</Box>
                   </Fragment>
                 ))}

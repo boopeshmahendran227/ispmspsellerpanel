@@ -12,7 +12,7 @@ const MetricCard = (props: MetricCardProps) => {
   return (
     <Box
       display="inline-block"
-      bg="foregroundColor"
+      bg="foregroundColor.500"
       boxShadow="md"
       w="100%"
       borderRadius={8}
@@ -20,14 +20,14 @@ const MetricCard = (props: MetricCardProps) => {
       <Flex alignItems="center" h="100%" padding={[3, 4, 3, null, 5]}>
         <Box mr={3}>{icon}</Box>
         <Box>
-          <Box fontSize={["sm", null, null, "xs", "md"]} fontWeight="bold">
+          <Box fontSize={["sm", null, null, "xs", "lg"]} fontWeight="bold">
             {props.value}
           </Box>
           <Box
             textTransform="capitalize"
             fontSize={["sm", "md"]}
             mt={1}
-            color="secondaryTextColor"
+            color="secondaryTextColor.500"
           >
             {props.title}
           </Box>

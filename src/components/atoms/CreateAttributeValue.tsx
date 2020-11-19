@@ -26,7 +26,7 @@ const CreateAttributeValue = (props: CreateAttributeValueProps) => {
   return (
     <Flex alignItems="center">
       <Link
-        color={showInput ? "primaryTextColor" : "primaryColor"}
+        color={showInput ? "primaryTextColor.500" : "primaryColorVariant.500"}
         fontWeight={showInput ? "bold" : "normal"}
         cursor="default"
         onClick={() => setShowInput(true)}

@@ -7,9 +7,9 @@ interface CardProps {
 const Card = (props: CardProps): JSX.Element => {
   return (
     <Box
-      bg="foregroundColor"
+      bg="foregroundColor.500"
       border="1px"
-      borderColor="borderColor"
+      borderColor="borderColor.500"
       py={3}
       px={[2, 3]}
     >

@@ -29,25 +29,26 @@ const QuoteItemDetail = (props: QuoteItemDetailProps) => {
     switch (quote.status) {
       case QuoteStatus.SellerResponsePending:
         return (
-          <Stack isInline spacing={[1, 3]} mx="auto">
-            <Box>
-              <Button
-                variantColor="successColorVariant"
-                onClick={(e) => handleClick(e, props.updateQuote)}
-              >
-                Respond To Quote
-              </Button>
-            </Box>
-            <Box>
-              {" "}
-              <Button
-                variant="outline"
-                variantColor="dangerColorVariant"
-                onClick={(e) => handleClick(e, props.rejectQuote)}
-              >
-                Reject Quote
-              </Button>
-            </Box>
+          <Stack
+            isInline
+            spacing={[1, 3]}
+            mx="auto"
+            shouldWrapChildren
+            justify="flex-end"
+          >
+            <Button
+              variantColor="successColorVariant"
+              onClick={(e) => handleClick(e, props.updateQuote)}
+            >
+              Respond To Quote
+            </Button>
+            <Button
+              variant="outline"
+              variantColor="dangerColorVariant"
+              onClick={(e) => handleClick(e, props.rejectQuote)}
+            >
+              Reject Quote
+            </Button>
           </Stack>
         );
     }
@@ -63,7 +64,7 @@ const QuoteItemDetail = (props: QuoteItemDetailProps) => {
   return (
     <Box
       border="1px"
-      bg="foregroundColor"
+      bg="foregroundColor.500"
       borderColor={color}
       maxW=" 1000px"
       w="100%"
@@ -71,7 +72,7 @@ const QuoteItemDetail = (props: QuoteItemDetailProps) => {
       mb={3}
     >
       <Box textAlign="right" p={[2, 3]} fontSize={["md", "lg"]} color={color}>
-        <Box as="span">{statusText}</Box>
+        <Box as="span">{statusText} </Box>
         <Box as="span">
           {moment
             .utc(latestStatus.createdDateTime)
@@ -79,17 +80,14 @@ const QuoteItemDetail = (props: QuoteItemDetailProps) => {
             .format("MMM DD YYYY")}
         </Box>
       </Box>
-
-      <Box pt={[2, 5]} px={1}>
+      <Box pt={[2, 5]} px={3}>
         {quote.productDetails.map((productDetail) => (
           <QuoteProduct key={productDetail.id} productDetail={productDetail} />
         ))}
       </Box>
-
       {Boolean(buttons) && (
         <>
-          <Divider borderColor={color} />
-          <Box mt={3} p={2} textAlign={["left", "right"]}>
+          <Box mt={2} borderTop="1px" borderColor={color} p={3}>
             {buttons}
           </Box>
         </>

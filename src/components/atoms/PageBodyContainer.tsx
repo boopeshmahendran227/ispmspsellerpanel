@@ -7,7 +7,7 @@ interface PageBodyContainerProps {
 const PageBodyContainer = (props: PageBodyContainerProps) => (
   <Box
     pb={1}
-    bg="foregroundColor"
+    bg="foregroundColor.500"
     boxShadow="md"
   >
     {props.children}

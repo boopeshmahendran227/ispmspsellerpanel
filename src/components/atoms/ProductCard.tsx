@@ -26,13 +26,13 @@ const ProductCard = (props: ProductCardProps) => {
           fontWeight="semibold"
           fontSize={["sm", null, "md"]}
           maxW={["100px", "150px", "250px"]}
-          color="primaryTextColor"
+          color="primaryTextColor.500"
         >
           {props.name}
         </Heading>
         <Grid
           mt={1}
-          color="secondaryTextColor"
+          color="secondaryTextColor.500"
           fontSize={["xs", null, null, "sm"]}
           templateColumns="90px 1fr"
           gridRowGap={1}

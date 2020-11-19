@@ -8,19 +8,19 @@ const getColor = (status: OrderStatus) => {
     case OrderStatus.PaymentSuccess:
     case OrderStatus.PaymentOnDelivery:
     case OrderStatus.PackageReadyForCollection:
-      return "secondaryTextColor";
+      return "secondaryTextColor.500";
     case OrderStatus.Shipping:
     case OrderStatus.ShippingCompleted:
-      return "successColor";
+      return "successColor.500";
     case OrderStatus.CancelRequested:
     case OrderStatus.CancelCompleted:
-      return "dangerColor";
+      return "dangerColor.500";
     case OrderStatus.ReturnRequested:
     case OrderStatus.ReturnCompleted:
-      return "warningColor";
+      return "warningColor.500";
   }
 
-  return "secondaryTextColor";
+  return "secondaryTextColor.500";
 };
 
 const getOrderStatusText = (status: OrderStatus) => {

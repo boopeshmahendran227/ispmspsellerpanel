@@ -18,7 +18,7 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
       my={1}
       fontSize={["sm", "md"]}
     >
-      <Box color="secondaryTextColor" fontWeight="bold" textAlign="center">
+      <Box color="secondaryTextColor.500" fontWeight="bold" textAlign="center">
         <Box>{convertTo12hour(showroomVisit.startTime)}</Box>
         <Box
           w={[1, 2]}
@@ -26,7 +26,7 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
           mx="auto"
           border="2px"
           borderRadius="full"
-          borderColor="primaryColor"
+          borderColor="primaryColorVariant.500"
         />
 
         <Divider
@@ -34,7 +34,7 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
           borderLeft="1px"
           borderRight="1px"
           borderStyle="dashed"
-          borderColor="primaryColor"
+          borderColor="primaryColorVariant.500"
           h={[4, 5]}
           mx="auto"
           my={1}
@@ -47,7 +47,7 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
           mx="auto"
           border="2px"
           borderRadius="full"
-          borderColor="primaryColor"
+          borderColor="primaryColorVariant.500"
         />
 
         <Box>{convertTo12hour(showroomVisit.endTime)}</Box>
@@ -57,7 +57,7 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
         px={[1, 2]}
         borderLeft="4px"
         roundedRight="lg"
-        borderColor="primaryColor"
+        borderColor="primaryColorVariant.500"
         alignItems="center"
         bg="lightPrimaryColorVariant.50"
       >
@@ -75,7 +75,7 @@ const ShowroomVisitCard = (props: ShowroomVisitCardProps) => {
         </Box>
         <Box
           px={1}
-          color={"primaryColor"}
+          color={"primaryColorVariant.500"}
           fontWeight="bold"
           textTransform="uppercase"
           ml="auto"

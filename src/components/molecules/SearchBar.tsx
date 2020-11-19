@@ -33,7 +33,7 @@ const SearchBar = (props: SearchBarProps) => {
       fontSize="md"
       boxShadow="sm"
       pl={2}
-      minW={"250px"}
+      minW={["250px","300px"]}
       width="100%"
       textAlign="center"
     >

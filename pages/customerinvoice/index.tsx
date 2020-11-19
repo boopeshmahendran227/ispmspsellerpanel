@@ -21,7 +21,7 @@ import { SelectOptionInterface } from "types/product";
 import Select from "components/atoms/Select";
 import MobileMediaQuery from "components/atoms/MobileMediaQuery";
 import DesktopMediaQuery from "components/atoms/DesktopMediaQuery";
-import { Box } from "@chakra-ui/core";
+import { Box, Heading } from "@chakra-ui/core";
 
 interface DispatchProps {
   updateCredits: (invoice: InvoiceInterface) => void;
@@ -179,9 +179,9 @@ const CustomerInvoice = (props: CustomerInvoiceProps) => {
   return (
     <PageContainer>
       <UpdateCreditsModal />
-      <PageHeaderContainer>
-        <PageHeader>Invoices</PageHeader>
-      </PageHeaderContainer>
+      <Heading size="md" my={4}>
+        Invoices
+      </Heading>
       <PageBodyContainer>
         <DesktopMediaQuery>
           <TabSection

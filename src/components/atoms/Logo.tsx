@@ -14,10 +14,11 @@ const Logo = () => {
         <Image h={["1.1rem", "2.2rem"]} className="logo" src={LogoIcon} />
         &nbsp;
         <Box
-          as="span"
-          fontSize={["1rem", "1.9rem"]}
-          fontWeight="500"
+          fontSize={["1rem", "1.8rem"]}
+          fontWeight="thin"
           fontFamily="Roboto"
+          alignSelf="bottom"
+          mt={1}
         >
           Sellers
         </Box>

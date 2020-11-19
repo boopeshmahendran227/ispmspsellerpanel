@@ -4,7 +4,7 @@ interface PageContainerProps {
 }
 
 const PageContainer = (props: PageContainerProps) => (
-  <Box mx={[1, 5]} my={[1, 4]}>
+  <Box mx={[1, null,null, 6, 8]} my={[1, 3]}>
     {props.children}
   </Box>
 );

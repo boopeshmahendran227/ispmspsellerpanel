@@ -28,8 +28,13 @@ const LoadingScreen = (props: LoadingScreenProps) => {
       <DrawerOverlay />
       <DrawerContent background="rgba(255, 255, 255, 0.8)">
         <DrawerBody>
-          <Flex direction="column" h="100%" justify="center">
-            <Loader />
+          <Flex
+            direction="column"
+            h="100%"
+            justify="center"
+            alignItems="center"
+          >
+            <Loader height="80px" />
             <Box textAlign="center" color="primaryColor">
               Processing...Please wait
             </Box>
