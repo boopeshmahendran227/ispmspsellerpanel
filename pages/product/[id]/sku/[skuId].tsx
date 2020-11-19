@@ -120,7 +120,9 @@ const Sku = (props: SkuProps): JSX.Element => {
         <BackLink href="/product/[id]" as={`/product/${product.id}`}>
           Back to Product
         </BackLink>
-        <Heading size="md"my={2}>{currentSkuId}</Heading>
+        <Heading size="md" my={2}>
+          {currentSkuId}
+        </Heading>
       </Box>
       <Grid gridTemplateColumns={["1fr", "0.5fr 1fr"]} gap={3}>
         <Box w="full">
