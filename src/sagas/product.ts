@@ -14,6 +14,9 @@ import {
   UPDATE_TIER_PRICE_SUCCESS,
   UPDATE_TIER_PRICE_FAILURE,
   UPDATE_TIER_PRICE_REQUEST,
+  UPDATE_ALL_PRODUCTS_STATUS_FAILURE,
+  UPDATE_ALL_PRODUCTS_STATUS_REQUEST,
+  UPDATE_ALL_PRODUCTS_STATUS_SUCCESS,
 } from "../constants/ActionTypes";
 import { takeEvery, all, call, put, select } from "redux-saga/effects";
 import api from "../api";
@@ -27,6 +30,7 @@ import {
 } from "../types/product";
 import { getSelectedAttributeValues } from "../selectors/product";
 import _ from "lodash";
+import UpdateAllProductsStatusModal from "components/molecules/UpdateAllProductsStatusModal";
 
 function* addProduct(action) {
   try {
@@ -147,6 +151,20 @@ function* addAttributeValue(action) {
   }
 }
 
+function* updateAllProductsStatus(action) {
+  try {
+    yield call(api, "/product/skustatus", {
+      method: "PUT",
+      data: {
+        disableAll: !action.productStatus,
+      },
+    });
+    yield put({ type: UPDATE_ALL_PRODUCTS_STATUS_SUCCESS });
+  } catch (err) {
+    yield put({ type: UPDATE_ALL_PRODUCTS_STATUS_FAILURE });
+  }
+}
+
 function* watchAddProduct() {
   yield takeEvery(ADD_PRODUCT_REQUEST, addProduct);
 }
@@ -166,6 +184,10 @@ function* watchUpdateTierPrice() {
   yield takeEvery(UPDATE_TIER_PRICE_REQUEST, updateTierPrice);
 }
 
+function* watchUpdateAllProductsStatus() {
+  yield takeEvery(UPDATE_ALL_PRODUCTS_STATUS_REQUEST, updateAllProductsStatus);
+}
+
 export default function* () {
   yield all([
     watchAddProduct(),
@@ -173,5 +195,6 @@ export default function* () {
     watchAddAttributeValue(),
     watchCloneProduct(),
     watchUpdateTierPrice(),
+    watchUpdateAllProductsStatus(),
   ]);
 }

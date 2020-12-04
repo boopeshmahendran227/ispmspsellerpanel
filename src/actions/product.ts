@@ -7,6 +7,7 @@ import {
   INIT_PRODUCT_CREATE,
   CLONE_PRODUCT,
   UPDATE_TIER_PRICE_REQUEST,
+  UPDATE_ALL_PRODUCTS_STATUS_REQUEST,
 } from "../constants/ActionTypes";
 import {
   AddAttributeInterface,
@@ -85,6 +86,13 @@ const updateTierPrice = (
   };
 };
 
+const updateAllProductsStatus = (productStatus: boolean): ProductActionType => {
+  return {
+    type: UPDATE_ALL_PRODUCTS_STATUS_REQUEST,
+    productStatus,
+  };
+};
+
 export default {
   addAttribute,
   addAttributeValue,
@@ -94,4 +102,5 @@ export default {
   initProductCreate,
   cloneProduct,
   updateTierPrice,
+  updateAllProductsStatus,
 };
