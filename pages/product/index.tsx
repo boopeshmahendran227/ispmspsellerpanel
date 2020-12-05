@@ -113,6 +113,11 @@ const Products = () => {
         open={productStatusModal}
         onClose={() => setProductStatusModal(false)}
       />
+      <Box mt={10} mb={5}>
+        <Button onClick={() => setProductStatusModal(true)}>
+          Disable / Enable all of your products
+        </Button>
+      </Box>
       <PageHeaderContainer>
         <PageHeader>Products </PageHeader>
         <Stack direction="row" spacing={[5, 3]}>
@@ -128,11 +133,6 @@ const Products = () => {
           </Box>
         </Stack>
       </PageHeaderContainer>
-      <Box textAlign="right">
-        <Button onClick={() => setProductStatusModal(true)}>
-          Disable / Enable all my products
-        </Button>
-      </Box>
       <Stack
         spacing={2}
         flexDirection={["column", "row"]}

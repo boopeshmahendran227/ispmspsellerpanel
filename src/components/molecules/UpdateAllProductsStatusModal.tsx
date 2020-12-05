@@ -37,7 +37,7 @@ const UpdateAllProductsStatusModal = (
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Text color="dangerColor.500">
+          <Text>
             Are you sure you want to disable or enable all your products?
           </Text>
           <Formik
@@ -52,7 +52,7 @@ const UpdateAllProductsStatusModal = (
               <Form>
                 <Box mt={5}>
                   <RadioButton
-                    label="Disable all products"
+                    label="Disable all my products"
                     value={""}
                     checked={!values.productStatus}
                     onChange={(value) => setFieldValue("productStatus", false)}
@@ -60,7 +60,7 @@ const UpdateAllProductsStatusModal = (
                 </Box>
                 <Box mt={2}>
                   <RadioButton
-                    label="Enable all products"
+                    label="Enable all my products"
                     value={""}
                     checked={values.productStatus}
                     onChange={(value) => setFieldValue("productStatus", true)}
@@ -69,8 +69,8 @@ const UpdateAllProductsStatusModal = (
                 <Box textAlign="right" mt={5}>
                   <Button type="submit">
                     {values.productStatus
-                      ? "Enable all products"
-                      : "Disable all products"}
+                      ? "Enable all my products"
+                      : "Disable all my products"}
                   </Button>
                 </Box>
               </Form>
