@@ -9,6 +9,7 @@ import {
   UPDATE_SKU_SUCCESS,
   UPDATE_TIER_PRICE_SUCCESS,
   UPDATE_SETTINGS_SUCCESS,
+  UPDATE_ALL_PRODUCTS_STATUS_SUCCESS,
 } from "../constants/ActionTypes";
 import { take, all, call } from "redux-saga/effects";
 import { mutate, cache } from "swr";
@@ -31,6 +32,7 @@ function* refreshProduct() {
       ADD_SKU_SUCCESS,
       UPDATE_SKU_SUCCESS,
       UPDATE_TIER_PRICE_SUCCESS,
+      UPDATE_ALL_PRODUCTS_STATUS_SUCCESS,
     ]);
     yield all(
       cache

@@ -8,6 +8,7 @@ import {
   INIT_PRODUCT_CREATE,
   CLONE_PRODUCT,
   UPDATE_TIER_PRICE_REQUEST,
+  UPDATE_ALL_PRODUCTS_STATUS_REQUEST,
 } from "../constants/ActionTypes";
 import { ImageType } from "react-images-uploading";
 
@@ -51,6 +52,10 @@ export interface UpdateTierPriceAction {
   productId: number;
   tierPrices: TierPriceInterface[];
 }
+interface UpdateAllProductsStatusAction {
+  type: typeof UPDATE_ALL_PRODUCTS_STATUS_REQUEST;
+  productStatus: boolean;
+}
 
 export type ProductActionType =
   | InitProductCreateAction
@@ -60,7 +65,8 @@ export type ProductActionType =
   | SetSelectedAttributeValuesAction
   | AddProductAction
   | CloneProductAction
-  | UpdateTierPriceAction;
+  | UpdateTierPriceAction
+  | UpdateAllProductsStatusAction;
 
 export interface ProductCloneInterface {
   currentEcosystem: SelectOptionInterface;

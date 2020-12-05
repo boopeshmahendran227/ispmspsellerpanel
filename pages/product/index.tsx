@@ -21,8 +21,10 @@ import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageContainer from "components/atoms/PageContainer";
 import { Box, Checkbox, Stack } from "@chakra-ui/core";
 import Button from "components/atoms/Button";
+import UpdateAllProductsStatusModal from "components/molecules/UpdateAllProductsStatusModal";
 
 const Products = () => {
+  const [productStatusModal, setProductStatusModal] = useState<boolean>(false);
   const [searchText, setSearchText] = useState("");
   const [selectedEcosystemId, setSelectedEcosystemId] = useState("");
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
@@ -107,6 +109,15 @@ const Products = () => {
 
   return (
     <PageContainer>
+      <UpdateAllProductsStatusModal
+        open={productStatusModal}
+        onClose={() => setProductStatusModal(false)}
+      />
+      <Box mt={10} mb={5}>
+        <Button onClick={() => setProductStatusModal(true)}>
+          Disable / Enable all of your products
+        </Button>
+      </Box>
       <PageHeaderContainer>
         <PageHeader>Products </PageHeader>
         <Stack direction="row" spacing={[5, 3]}>
