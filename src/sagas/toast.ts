@@ -151,11 +151,11 @@ export const toasts = {
   },
   [UPDATE_ALL_PRODUCTS_STATUS_FAILURE]: {
     type: ToastType.error,
-    msg: "All products status updation failed. Please try again",
+    msg: "All of your products status updation failed. Please try again",
   },
   [UPDATE_ALL_PRODUCTS_STATUS_SUCCESS]: {
     type: ToastType.success,
-    msg: "All products status updated sucessfully",
+    msg: "All of your products status updated sucessfully",
   },
 };
 

@@ -45,7 +45,8 @@ const UpdateAllProductsStatusModal = (
               productStatus: true,
             }}
             onSubmit={(value) => {
-              props.productStatus(value.productStatus), props.onClose();
+              props.productStatus(value.productStatus);
+              props.onClose();
             }}
           >
             {({ values, setFieldValue }) => (
