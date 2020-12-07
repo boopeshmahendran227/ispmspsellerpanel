@@ -301,17 +301,7 @@ const Sku = (props: SkuProps) => {
                       <SimpleGrid columns={2} my={2}>
                         <Box>Visible</Box>
                         <Box textAlign="right">
-                          <Field
-                            type="checkbox"
-                            as={(props) => (
-                              <Switch
-                                onChange={props.onChange}
-                                isChecked={props.checked}
-                                {...props}
-                              />
-                            )}
-                            name={"isActive"}
-                          />
+                          <Field type="checkbox" name={"isActive"} />
                         </Box>
                       </SimpleGrid>
                       <FormLabel>Ecosystem</FormLabel>
