@@ -6,6 +6,7 @@ import Loader from "../atoms/Loader";
 import Link from "next/link";
 import { PaginatedDataInterface } from "../../types/pagination";
 import ProductCard from "../atoms/ProductCard";
+import { Box } from "@chakra-ui/core";
 
 interface ProductsContainerProps {
   productData: PaginatedDataInterface<ProductMiniInterface> | undefined;
@@ -37,7 +38,11 @@ const getTableHeaders = () => {
 const renderTableBody = (products: ProductMiniInterface[]) => {
   return products.map((product) => (
     <Link href="/product/[id]" as={`/product/${product.productId}`}>
-      <tr>
+      <Box
+        as="tr"
+        opacity={product.isActive ? 1 : 0.5}
+        bg={product.isActive ? "inherit" : "borderColor.100"}
+      >
         <td>{product.productId}</td>
         <td>
           <ProductCard
@@ -53,7 +58,7 @@ const renderTableBody = (products: ProductMiniInterface[]) => {
             cursor: pointer;
           }
         `}</style>
-      </tr>
+      </Box>
     </Link>
   ));
 };
