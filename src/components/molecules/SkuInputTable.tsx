@@ -1,6 +1,6 @@
 import SortableTable from "../atoms/SortableTable";
 import { ProductSkuDetail, ProductInputInterface } from "../../types/product";
-import { ErrorMessage, FieldArray, useFormikContext } from "formik";
+import { ErrorMessage, Field, FieldArray, useFormikContext } from "formik";
 import { connect } from "react-redux";
 import UIActions from "../../actions/ui";
 import FieldInput from "../atoms/FieldInput";
@@ -10,7 +10,7 @@ import FieldPriceInput from "../atoms/FieldPriceInput";
 import FieldPercentageInput from "../atoms/FieldPercentageInput";
 import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
 import SectionHeader from "../atoms/SectionHeader";
-import { Box, Divider } from "@chakra-ui/core";
+import { Box, Divider, Switch } from "@chakra-ui/core";
 import Button from "components/atoms/Button";
 
 interface DispatchProps {
@@ -73,6 +73,10 @@ const getTableHeaders = () => {
       name: "Special Discount Percentage",
       valueFunc: (sku: ProductSkuDetail) => sku.specialDiscountPercentage,
     },
+    {
+      name: "Visibility",
+      valueFunc: (sku: ProductSkuDetail) => sku.isActive,
+    },
   ];
 };
 
@@ -129,6 +133,19 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
                 name={`skus.${skuIndex}.specialDiscountPercentage`}
               />
             </td>
+            <td>
+              <Field
+                type="checkbox"
+                as={(props) => (
+                  <Switch
+                    onChange={props.onChange}
+                    isChecked={props.checked}
+                    {...props}
+                  />
+                )}
+                name={`skus.${skuIndex}.isActive`}
+              />
+            </td>
             <style jsx>{`
               .imageInputContainer a {
                 display: block;
@@ -146,9 +163,8 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
 };
 
 const SkuInputTable = (props: SkuInputTableProps) => {
-  const values: ProductInputInterface = useFormikContext<
-    ProductInputInterface
-  >().values;
+  const values: ProductInputInterface = useFormikContext<ProductInputInterface>()
+    .values;
 
   const skus = values.skus;
 

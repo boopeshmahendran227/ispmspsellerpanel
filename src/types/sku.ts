@@ -28,6 +28,7 @@ export interface AddSkuInterface {
   width: number | null;
   weight: number | null;
   minOrderQty: number | null;
+  isActive: boolean;
 }
 
 export interface AttributeValueID {
@@ -38,7 +39,7 @@ export interface AttributeValueID {
 }
 
 export interface UpdateSkuInterface {
-  imageRelativePaths:string[];
+  imageRelativePaths: string[];
   skuDetailId: number;
   price: number;
   boughtPrice: number;

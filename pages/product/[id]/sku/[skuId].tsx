@@ -5,7 +5,7 @@ import PageError from "components/atoms/PageError";
 import WithAuth from "components/atoms/WithAuth";
 import { useRouter } from "next/router";
 import SkuList from "components/molecules/SkuList";
-import { Formik, Form, ErrorMessage } from "formik";
+import { Formik, Form, ErrorMessage, Field } from "formik";
 import SkuProductInfo from "components/atoms/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/atoms/SectionHeader";
@@ -36,6 +36,7 @@ import {
   Grid,
   FormLabel,
   Heading,
+  Switch,
 } from "@chakra-ui/core";
 
 interface DispatchProps {
@@ -72,6 +73,7 @@ const validationSchema = Yup.object({
   ecosystemIds: Yup.array()
     .of(Yup.string().defined())
     .min(1, "Atleast one ecosystem is required"),
+  isActive: Yup.boolean(),
 }).defined();
 
 type InputInterface = Yup.InferType<typeof validationSchema>;
@@ -140,6 +142,7 @@ const Sku = (props: SkuProps): JSX.Element => {
         <Box flex="1" mb={3}>
           <Formik
             initialValues={{
+              isActive: currentSku.isActive,
               images: currentSku.imageRelativePaths.map((imageRelativePath) => {
                 return {
                   dataURL: getProductImageUrl(imageRelativePath),
@@ -240,6 +243,22 @@ const Sku = (props: SkuProps): JSX.Element => {
                   <Box>
                     <SectionCard>
                       <SectionHeader>Visibility</SectionHeader>
+                      <SimpleGrid columns={2} my={2}>
+                        <Box>Visible</Box>
+                        <Box textAlign="right">
+                          <Field
+                            type="checkbox"
+                            as={(props) => (
+                              <Switch
+                                onChange={props.onChange}
+                                isChecked={props.checked}
+                                {...props}
+                              />
+                            )}
+                            name={"isActive"}
+                          />
+                        </Box>
+                      </SimpleGrid>
                       <Text mt={1} display="inline-block">
                         Ecosystem
                       </Text>
