@@ -36,7 +36,6 @@ import {
   Grid,
   FormLabel,
   Heading,
-  Switch,
 } from "@chakra-ui/core";
 
 interface DispatchProps {

@@ -10,7 +10,7 @@ import FieldPriceInput from "../atoms/FieldPriceInput";
 import FieldPercentageInput from "../atoms/FieldPercentageInput";
 import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
 import SectionHeader from "../atoms/SectionHeader";
-import { Box, Divider, SimpleGrid, Switch } from "@chakra-ui/core";
+import { Box, Divider } from "@chakra-ui/core";
 import Button from "components/atoms/Button";
 
 interface DispatchProps {

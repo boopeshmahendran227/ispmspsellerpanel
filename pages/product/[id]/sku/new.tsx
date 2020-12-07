@@ -34,7 +34,6 @@ import {
   Stack,
   Heading,
   SimpleGrid,
-  Switch,
 } from "@chakra-ui/core";
 import Button from "components/atoms/Button";
 interface DispatchProps {
