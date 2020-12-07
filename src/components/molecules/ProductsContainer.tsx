@@ -41,7 +41,7 @@ const renderTableBody = (products: ProductMiniInterface[]) => {
       <Box
         as="tr"
         opacity={product.isActive ? 1 : 0.5}
-        bg={product.isActive ? "inhert" : "borderColor.100"}
+        bg={product.isActive ? "inherit" : "borderColor.100"}
       >
         <td>{product.productId}</td>
         <td>
