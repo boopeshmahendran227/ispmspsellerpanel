@@ -10,7 +10,7 @@ import FieldPriceInput from "../atoms/FieldPriceInput";
 import FieldPercentageInput from "../atoms/FieldPercentageInput";
 import SectionHeaderContainer from "../atoms/SectionHeaderContainer";
 import SectionHeader from "../atoms/SectionHeader";
-import { Box, Divider, Switch } from "@chakra-ui/core";
+import { Box, Divider, SimpleGrid, Switch } from "@chakra-ui/core";
 import Button from "components/atoms/Button";
 
 interface DispatchProps {
@@ -134,17 +134,7 @@ const renderTableBody = (skus: ProductSkuDetail[]) => {
               />
             </td>
             <td>
-              <Field
-                type="checkbox"
-                as={(props) => (
-                  <Switch
-                    onChange={props.onChange}
-                    isChecked={props.checked}
-                    {...props}
-                  />
-                )}
-                name={`skus.${skuIndex}.isActive`}
-              />
+              <Field type="checkbox" name={`skus.${skuIndex}.isActive`} />
             </td>
             <style jsx>{`
               .imageInputContainer a {
