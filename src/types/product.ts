@@ -139,6 +139,7 @@ export interface ProductDetailSkuDetail {
   externalId: string;
   barCodeIdentifier: string;
   minOrderQty: number;
+  isActive: boolean;
 }
 
 interface ProductAttributeInterface {
@@ -243,6 +244,7 @@ export interface ProductSkuDetail {
   specialDiscount: number;
   specialDiscountPercentage: number;
   images: EditImageInterface[];
+  isActive: boolean;
 }
 
 export interface ProductAttributeValueId {

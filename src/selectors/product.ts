@@ -51,6 +51,7 @@ const getSkus = createSelector(
           externalId: null,
           specialDiscount: 0,
           specialDiscountPercentage: 0,
+          isActive: true,
         };
       }
     );

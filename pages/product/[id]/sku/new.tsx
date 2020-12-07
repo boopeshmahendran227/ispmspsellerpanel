@@ -1,11 +1,10 @@
 import useSWR from "swr";
 import Loader from "components/atoms/Loader";
 import PageError from "components/atoms/PageError";
-import PageHeader from "components/atoms/PageHeader";
 import WithAuth from "components/atoms/WithAuth";
 import { useRouter } from "next/router";
 import SkuList from "components/molecules/SkuList";
-import { Formik, ErrorMessage, Form } from "formik";
+import { Formik, ErrorMessage, Form, Field } from "formik";
 import SkuProductInfo from "components/atoms/SkuProductInfo";
 import BackLink from "components/atoms/BackLink";
 import SectionHeader from "components/atoms/SectionHeader";
@@ -28,7 +27,14 @@ import FieldPercentageInput from "components/atoms/FieldPercentageInput";
 import ImageUploader from "components/molecules/ImageUploader";
 import ValidationErrorMsg from "components/atoms/ValidationErrorMsg";
 import { getProductImageUrl } from "utils/url";
-import { Box, Grid, FormLabel, Stack, Heading } from "@chakra-ui/core";
+import {
+  Box,
+  Grid,
+  FormLabel,
+  Stack,
+  Heading,
+  SimpleGrid,
+} from "@chakra-ui/core";
 import Button from "components/atoms/Button";
 interface DispatchProps {
   addSku: (sku: AddSkuInterface) => void;
@@ -75,6 +81,7 @@ const validationSchema = Yup.object({
   ecosystemIds: Yup.array()
     .of(Yup.string().defined())
     .min(1, "Atleast one ecosystem is required"),
+  isActive: Yup.boolean().defined(),
 }).defined();
 
 type InputInterface = Yup.InferType<typeof validationSchema>;
@@ -193,6 +200,7 @@ const Sku = (props: SkuProps) => {
                           )?.value || attribute.attributeValues[0].value,
                       },
                     })),
+                    isActive: true,
                   }
                 : {
                     images: [],
@@ -218,6 +226,7 @@ const Sku = (props: SkuProps) => {
                         label: attribute.attributeValues[0].value,
                       },
                     })),
+                    isActive: true,
                   }
             }
             validationSchema={validationSchema}
@@ -284,8 +293,16 @@ const Sku = (props: SkuProps) => {
                   </Box>
                   <Box>
                     <SkuInventoryInputContainer />
+                  </Box>
+                  <Box>
                     <SectionCard>
                       <SectionHeader>Visibility</SectionHeader>
+                      <SimpleGrid columns={2} my={2}>
+                        <Box>Visible</Box>
+                        <Box textAlign="right">
+                          <Field type="checkbox" name={"isActive"} />
+                        </Box>
+                      </SimpleGrid>
                       <FormLabel>Ecosystem</FormLabel>
                       <FieldEcosystemMultiInput
                         name="ecosystemIds"
