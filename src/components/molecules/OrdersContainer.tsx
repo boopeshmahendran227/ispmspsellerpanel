@@ -30,13 +30,14 @@ import ProductOrdersContainer from "components/molecules/ProductOrdersContainer"
 import Loader from "components/atoms/Loader";
 import { transformOrderItem } from "../../transformers/orderItem";
 import _ from "lodash";
-import { Box, Stack } from "@chakra-ui/core";
+import { Box, Flex } from "@chakra-ui/core";
 import Button from "components/atoms/Button";
 import MobileMediaQuery from "components/atoms/MobileMediaQuery";
 import DesktopMediaQuery from "components/atoms/DesktopMediaQuery";
 import Select from "components/atoms/Select";
 import { useState } from "react";
 import { SelectOptionInterface } from "types/product";
+import MobileOrderProductCard from "components/atoms/MobileOrderProductCard";
 
 interface OwnProps {
   orderData: PaginatedDataInterface<OrderInterface>;
@@ -143,132 +144,178 @@ const OrdersContainer = (props: OrdersContainerProps) => {
       case OrderStatus.PaymentSuccess:
       case OrderStatus.PaymentOnDelivery:
         return (
-          <Stack spacing={3} shouldWrapChildren>
-            <Button
-              variantColor="successColorVariant"
-              onClick={(e) => handleClick(e, props.markAsProcessing)}
-            >
-              Mark as Processing
-            </Button>
-            <Button
-              variantColor="dangerColorVariant"
-              variant="outline"
-              onClick={(e) => handleClick(e, props.cancelOrderItem)}
-            >
-              Cancel Order
-            </Button>
-          </Stack>
-        );
-      case OrderStatus.SellerProcessing:
-        if (orderItem.isSelfPickup) {
-          return (
-            <Stack spacing={3} shouldWrapChildren>
+          <Flex w="full" direction={["row", null, null, "column"]}>
+            <Box mr={2} mb={2} flex={1}>
               <Button
+                w="full"
                 variantColor="successColorVariant"
-                onClick={(e) =>
-                  handleClick(e, props.markPackageReadyForCollection)
-                }
+                onClick={(e) => handleClick(e, props.markAsProcessing)}
               >
-                Mark Package Ready For Collection
+                Mark as Processing
               </Button>
+            </Box>
+            <Box flex={1} mb={2}>
               <Button
+                w="full"
                 variantColor="dangerColorVariant"
                 variant="outline"
                 onClick={(e) => handleClick(e, props.cancelOrderItem)}
               >
                 Cancel Order
               </Button>
-            </Stack>
+            </Box>
+          </Flex>
+        );
+      case OrderStatus.SellerProcessing:
+        if (orderItem.isSelfPickup) {
+          return (
+            <Flex
+              w="full"
+              direction={["row", null, null, "column"]}
+              wrap="wrap"
+            >
+              <Box mr={2} mb={2} flex={1}>
+                <Button
+                  w="full"
+                  variantColor="successColorVariant"
+                  onClick={(e) =>
+                    handleClick(e, props.markPackageReadyForCollection)
+                  }
+                >
+                  Mark Package Ready For Collection
+                </Button>
+              </Box>
+              <Box flex={1}>
+                <Button
+                  w="full"
+                  variantColor="dangerColorVariant"
+                  variant="outline"
+                  onClick={(e) => handleClick(e, props.cancelOrderItem)}
+                >
+                  Cancel Order
+                </Button>
+              </Box>
+            </Flex>
           );
         }
         return (
-          <Stack spacing={3} shouldWrapChildren>
-            <Button
-              variantColor="successColorVariant"
-              onClick={(e) => handleClick(e, props.markAsShipping)}
-            >
-              Mark as Shipping
-            </Button>
-            <Button
-              variantColor="dangerColorVariant"
-              variant="outline"
-              onClick={(e) => handleClick(e, props.cancelOrderItem)}
-            >
-              Cancel Order
-            </Button>
-          </Stack>
+          <Flex w="full" direction={["row", null, null, "column"]}>
+            <Box mr={2} mb={2} flex={1}>
+              <Button
+                w="full"
+                variantColor="successColorVariant"
+                onClick={(e) => handleClick(e, props.markAsShipping)}
+              >
+                Mark as Shipping
+              </Button>
+            </Box>
+            <Box flex={1}>
+              <Button
+                w="full"
+                variantColor="dangerColorVariant"
+                variant="outline"
+                onClick={(e) => handleClick(e, props.cancelOrderItem)}
+              >
+                Cancel Order
+              </Button>
+            </Box>
+          </Flex>
         );
       case OrderStatus.PackageReadyForCollection:
         return (
-          <Stack spacing={3} shouldWrapChildren>
-            <Button
-              variantColor="successColorVariant"
-              onClick={(e) => handleClick(e, props.markAsShippingComplete)}
-            >
-              Mark as Delivered & Cash Received
-            </Button>
-            <Button
-              variantColor="dangerColorVariant"
-              variant="outline"
-              onClick={(e) => handleClick(e, props.cancelOrderItem)}
-            >
-              Cancel Order
-            </Button>
-          </Stack>
+          <Flex w="full" direction={["row", null, null, "column"]} wrap="wrap">
+            <Box mr={2} mb={2} flex={1}>
+              <Button
+                w="full"
+                variantColor="successColorVariant"
+                onClick={(e) => handleClick(e, props.markAsShippingComplete)}
+              >
+                Mark as Delivered & Cash Received
+              </Button>
+            </Box>
+            <Box flex={1}>
+              <Button
+                w="full"
+                variantColor="dangerColorVariant"
+                variant="outline"
+                onClick={(e) => handleClick(e, props.cancelOrderItem)}
+              >
+                Cancel Order
+              </Button>
+            </Box>
+          </Flex>
         );
       case OrderStatus.Shipping:
         return (
-          <Stack spacing={3} shouldWrapChildren>
-            <Button
-              variantColor="successColorVariant"
-              onClick={(e) => handleClick(e, props.markAsShippingComplete)}
-            >
-              Mark as Delivered
-            </Button>
-            <Button
-              onClick={(e) => handleClick(e, props.cancelOrderItem)}
-              variantColor="dangerColorVariant"
-              variant="outline"
-            >
-              Cancel Order
-            </Button>
-          </Stack>
+          <Flex w="full" direction={["row", null, null, "column"]} wrap="wrap">
+            <Box mr={2} mb={2} flex={1}>
+              <Button
+                w="full"
+                variantColor="successColorVariant"
+                onClick={(e) => handleClick(e, props.markAsShippingComplete)}
+              >
+                Mark as Delivered
+              </Button>
+            </Box>
+            <Box flex={1}>
+              <Button
+                w="full"
+                onClick={(e) => handleClick(e, props.cancelOrderItem)}
+                variantColor="dangerColorVariant"
+                variant="outline"
+              >
+                Cancel Order
+              </Button>
+            </Box>
+          </Flex>
         );
       case OrderStatus.CancelRequested:
         return (
-          <Stack spacing={3} shouldWrapChildren>
-            <Button
-              onClick={(e) => handleClick(e, props.approveCancelOrderItem)}
-              variantColor="successColorVariant"
-            >
-              Approve Cancel Request
-            </Button>
-            <Button
-              onClick={(e) => handleClick(e, props.rejectCancelOrderItem)}
-              variantColor="dangerColorVariant"
-              variant="outline"
-            >
-              Reject Cancel Request
-            </Button>
-          </Stack>
+          <Flex w="full" direction={["row", null, null, "column"]} wrap="wrap">
+            <Box mr={2} mb={2} flex={1}>
+              <Button
+                w="full"
+                onClick={(e) => handleClick(e, props.approveCancelOrderItem)}
+                variantColor="successColorVariant"
+              >
+                Approve Cancel Request
+              </Button>
+            </Box>
+            <Box flex={1}>
+              <Button
+                w="full"
+                onClick={(e) => handleClick(e, props.rejectCancelOrderItem)}
+                variantColor="dangerColorVariant"
+                variant="outline"
+              >
+                Reject Cancel Request
+              </Button>
+            </Box>
+          </Flex>
         );
       case OrderStatus.ReturnRequested:
         return (
-          <Stack spacing={3} shouldWrapChildren>
-            <Button
-              onClick={(e) => handleClick(e, props.approveReturnOrderItem)}
-              variantColor="successColorVariant"
-            >
-              Approve Return Request
-            </Button>
-            <Button
-              onClick={(e) => handleClick(e, props.rejectReturnOrderItem)}
-              variantColor="dangerColorVariant"
-              variant="outline"
-            >
-              Reject Return Request
-            </Button>
-          </Stack>
+          <Flex w="full" direction={["row", null, null, "column"]}>
+            <Box mr={[0, null, null, 2]} mb={2} flex={1}>
+              <Button
+                w="full"
+                onClick={(e) => handleClick(e, props.approveReturnOrderItem)}
+                variantColor="successColorVariant"
+              >
+                Approve Return Request
+              </Button>
+            </Box>
+            <Box flex={1}>
+              <Button
+                w="full"
+                onClick={(e) => handleClick(e, props.rejectReturnOrderItem)}
+                variantColor="dangerColorVariant"
+                variant="outline"
+              >
+                Reject Return Request
+              </Button>
+            </Box>
+          </Flex>
         );
     }
     return null;
@@ -397,7 +444,7 @@ const OrdersContainer = (props: OrdersContainerProps) => {
       case OrderStatusFilter.OpenOrderItems:
         return openOrderItems;
       case OrderStatusFilter.DeliveredOrderItems:
-        return cancelledOrderItems;
+        return deliveredOrderItems;
       case OrderStatusFilter.ReturnedOrderItems:
         return returnedOrderItems;
     }
@@ -413,20 +460,36 @@ const OrdersContainer = (props: OrdersContainerProps) => {
             options={statusFilters}
             onChange={(value) => setFilter(value)}
           />
-          <Box my={2}>
+          <Box mt={4} fontWeight="bold">
             {`Total ${filter.label}(${getTableData(filter.value).length})`}
           </Box>
         </Box>
-        <SortableTable
-          initialSortData={{
-            index: 2,
-            isAsc: false,
-          }}
-          headers={getTableHeaders()}
-          data={getTableData(filter.value)}
-          emptyMsg={"There are no orders in selected category"}
-          body={renderTableBody}
-        />
+        {getTableData(filter.value).map((orderItem) => (
+          <Link
+            key={orderItem.id}
+            href="/order/[orderId]/[orderItemId]"
+            as={`/order/${orderItem.order.id}/${orderItem.id}`}
+          >
+            <Box>
+              <MobileOrderProductCard
+                productImage={orderItem.productSnapshot.images[0]}
+                productName={orderItem.productSnapshot.productName}
+                orderId={orderItem.order.id}
+                orderItemId={orderItem.id}
+                createdDateTime={moment
+                  .utc(orderItem.createdDateTime)
+                  .local()
+                  .format("Do MMM YYYY")}
+                orderItemStatus={orderItem.orderItemStatus}
+                skuId={orderItem.skuId}
+                price={formatPrice(orderItem.discountedPrice)}
+                qty={orderItem.qty}
+                buttons={getButtons(orderItem)}
+                externalId={orderItem.productSnapshot.externalId}
+              />
+            </Box>
+          </Link>
+        ))}
       </MobileMediaQuery>
       <DesktopMediaQuery>
         <TabSection

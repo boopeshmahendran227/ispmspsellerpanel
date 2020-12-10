@@ -153,7 +153,7 @@ function* addAttributeValue(action) {
 
 function* updateAllProductsStatus(action) {
   try {
-    yield call(api, "/product/skustatus", {
+    yield call(api, "/product/sku/status", {
       method: "PUT",
       data: {
         disableAll: !action.productStatus,
