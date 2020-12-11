@@ -485,7 +485,6 @@ const OrdersContainer = (props: OrdersContainerProps) => {
                 price={formatPrice(orderItem.discountedPrice)}
                 qty={orderItem.qty}
                 buttons={getButtons(orderItem)}
-                externalId={orderItem.productSnapshot.externalId}
               />
             </Box>
           </Link>

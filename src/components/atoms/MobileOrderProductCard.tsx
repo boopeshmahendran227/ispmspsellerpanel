@@ -15,7 +15,6 @@ interface MobileProductCardInterface {
   qty: number;
   price: string;
   buttons: JSX.Element | null;
-  externalId: string;
 }
 
 const Key = (props) => (
