@@ -42,7 +42,7 @@ const MobileSubMenu = (props: MobileSubMenuProps) => {
           <Box px={2}>{subMenuIcon}</Box>
           <Box>{subMenuName}</Box>
         </Flex>
-        {open ? <ChevronUp /> : <ChevronDown />}
+        <Box alignSelf="center">{open ? <ChevronUp /> : <ChevronDown />}</Box>
       </Flex>
       <AnimateHeight duration={400} height={open ? "auto" : 0}>
         <Box w="full" cursor="pointer">

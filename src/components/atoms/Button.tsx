@@ -10,6 +10,7 @@ interface ButtonProps {
   isLoading: boolean;
   children: React.ReactNode;
   onClick?: (e?: any) => void;
+  w?: string;
 }
 
 const Button = (props: ButtonProps) => {
@@ -45,6 +46,7 @@ const Button = (props: ButtonProps) => {
           isDisabled={isDisabled}
           isLoading={isLoading}
           onClick={onClick}
+          w={props.w}
         >
           {props.children}
         </ChakraButton>
