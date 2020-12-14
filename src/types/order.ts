@@ -58,6 +58,7 @@ export interface OrderItemInterface {
   sellerName: string;
   actualPrice: number;
   actualUnitPrice: number;
+  actualUnitPriceWithoutTax: number;
   actualPriceWithoutTax: number;
   itemPrice: number;
   discountedPrice: number;
@@ -147,6 +148,7 @@ export interface OrderInterface {
   customerPhone: string;
   totalPrice: number;
   totalDiscount: number;
+  totalTax: number;
   items: OrderItemInterface[];
   paymentSplits: [
     {
