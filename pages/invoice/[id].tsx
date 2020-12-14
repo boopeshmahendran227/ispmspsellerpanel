@@ -209,24 +209,37 @@ const Invoice = () => {
                   </Box>
                 );
               })}
-            </tbody>
-          </Box>
-        </Box>
-        <Box as="section" py={2} pr={8} bg="gray.100">
-          <Box as="table" ml="auto">
-            <tbody>
-              <tr>
+              <Box as="tr" bg="gray.100">
+                <td />
+                <td />
+                <td />
+                <td />
+                <td />
+                <td />
+                <td />
                 <td>Total</td>
                 <td>{formatPrice(order.totalTax)}</td>
                 <td>{formatPrice(subTotal)}</td>
-              </tr>
-              <tr>
+              </Box>
+              <Box as="tr" bg="gray.100">
+                <td />
+                <td />
+                <td />
+                <td />
+                <td />
+                <td />
+                <td />
                 <td>Shipping Fee</td>
                 <td />
                 <td>{formatPrice(shippingFee)}</td>
-              </tr>
+              </Box>
               {order.discountSplits.map((discount, index) => (
-                <Box as="tr" key={index} color={"successColor.500"}>
+                <Box
+                  as="tr"
+                  key={index}
+                  color={"successColor.500"}
+                  bg="gray.100"
+                >
                   <td>{discount.discountType}</td>
                   <td>- {formatPrice(discount.discountAmount)}</td>
                 </Box>
