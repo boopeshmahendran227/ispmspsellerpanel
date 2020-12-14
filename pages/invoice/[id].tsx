@@ -24,7 +24,6 @@ const Invoice = () => {
   if (!invoice) {
     return <Loader />;
   }
-  console.log(invoice);
   const order = invoice.order;
   const shippingFee = order.items[0].metadata.shipmentFeePerSeller;
 
