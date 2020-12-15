@@ -1,11 +1,6 @@
 import moment from "moment";
 import _ from "lodash";
-import {
-  formatPrice,
-  formatAddress,
-  formatNumber,
-  valueToPercentage,
-} from "../../src/utils/misc";
+import { formatPrice, formatAddress, formatNumber } from "../../src/utils/misc";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import Loader from "components/atoms/Loader";
@@ -29,7 +24,6 @@ const Invoice = () => {
   if (!invoice) {
     return <Loader />;
   }
-
   const order = invoice.order;
   const shippingFee = order.items[0].metadata.shipmentFeePerSeller;
 
@@ -123,12 +117,14 @@ const Invoice = () => {
               <tr>
                 <th>S.No</th>
                 <th>Name</th>
+                <th>Unit price</th>
                 <th>Qty</th>
-                <th>MRP</th>
-                <th>Savings</th>
-                <th>Item Price</th>
-                <th>GST</th>
-                <th>Net Price</th>
+                <th>Discount</th>
+                <th>Net amount</th>
+                <th>Tax Rate</th>
+                <th>Tax Type</th>
+                <th>Tax Amount</th>
+                <th>Total amount</th>
               </tr>
             </Box>
             <tbody>
@@ -136,7 +132,7 @@ const Invoice = () => {
                 const productName = item.productSnapshot.productName;
                 const attributeValues = item.productSnapshot.attributeValues;
                 const tax = item.taxDetails.totalTaxPaid;
-                const mrp = item.actualPrice;
+                const mrp = item.actualUnitPriceWithoutTax;
                 const discount = item.totalDiscount;
                 const finalAmount = item.discountedPrice;
 
@@ -160,21 +156,20 @@ const Invoice = () => {
                       <Box fontWeight="bold">{productName}</Box>
                       <Box my={1}>
                         <Box>
-                          {attributeValues
-                            .map(
-                              (attributeValue) =>
-                                `${attributeValue.attributeName}: ${attributeValue.value}`
-                            )
-                            .join(" ")}
+                          {attributeValues.map((attributeValue) => (
+                            <Box key={attributeValue.attributeId}>
+                              {attributeValue.attributeName}:{" "}
+                              {attributeValue.value}
+                            </Box>
+                          ))}
                         </Box>
                         <Box>Seller: {item.sellerName}</Box>
                       </Box>
                     </Box>
-                    <td>{formatNumber(item.qty)}</td>
                     <td>{formatPrice(mrp)}</td>
+                    <td>{formatNumber(item.qty)}</td>
                     <td>
-                      {formatPrice(discount)} (
-                      {valueToPercentage(discount, mrp)}%)
+                      - {formatPrice(discount)}
                       {item.loanDetail && (
                         <Box maxW="180px" m="auto">
                           (
@@ -188,40 +183,63 @@ const Invoice = () => {
                     </td>
                     <td>{formatPrice(item.itemPrice)}</td>
                     <Box as="td" py={[1, 2]}>
-                      {formatPrice(tax)}
                       <Box p={[1, 3]}>
                         {item.taxDetails.taxSplits.map((taxSplit) => (
                           <Box key={taxSplit.taxId}>
-                            <Box as="span" className="name" fontWeight="bold">
-                              {taxSplit.taxName} ({taxSplit.taxPercentage}%) :
-                            </Box>
-                            <Box as="span">
-                              {formatPrice(taxSplit.taxAmountPaid)}
-                            </Box>
+                            {taxSplit.taxPercentage}%
                           </Box>
                         ))}
                       </Box>
                     </Box>
+                    <td>
+                      {item.taxDetails.taxSplits.map((taxSplit) => (
+                        <Box key={taxSplit.taxId} textAlign="center">
+                          {taxSplit.taxName}
+                        </Box>
+                      ))}
+                    </td>
+                    <td>
+                      {item.taxDetails.taxSplits.map((taxSplit) => (
+                        <Box key={taxSplit.taxId}>
+                          {formatPrice(taxSplit.taxAmountPaid)}
+                        </Box>
+                      ))}
+                    </td>
                     <td>{formatPrice(finalAmount)}</td>
                   </Box>
                 );
               })}
-            </tbody>
-          </Box>
-        </Box>
-        <Box as="section" py={2} px={3} bg="gray.100">
-          <Box as="table" ml="auto">
-            <tbody>
-              <tr>
+              <Box as="tr" bg="gray.100">
+                <td />
+                <td />
+                <td />
+                <td />
+                <td />
+                <td />
+                <td />
                 <td>Total</td>
+                <td>{formatPrice(order.totalTax)}</td>
                 <td>{formatPrice(subTotal)}</td>
-              </tr>
-              <tr>
+              </Box>
+              <Box as="tr" bg="gray.100">
+                <td />
+                <td />
+                <td />
+                <td />
+                <td />
+                <td />
+                <td />
                 <td>Shipping Fee</td>
+                <td />
                 <td>{formatPrice(shippingFee)}</td>
-              </tr>
+              </Box>
               {order.discountSplits.map((discount, index) => (
-                <Box as="tr" key={index} color={"successColor.500"}>
+                <Box
+                  as="tr"
+                  key={index}
+                  color={"successColor.500"}
+                  bg="gray.100"
+                >
                   <td>{discount.discountType}</td>
                   <td>- {formatPrice(discount.discountAmount)}</td>
                 </Box>
