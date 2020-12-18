@@ -1,6 +1,3 @@
-import CSSConstants from "../../constants/CSSConstants";
-import classNames from "classnames";
-import Chroma from "chroma-js";
 import _ from "lodash";
 import { PaginationDataInterface } from "../../types/pagination";
 import { Box, Button } from "@chakra-ui/core";
@@ -29,28 +26,24 @@ const Pagination = (props: PaginationProps) => {
     props.onChange(value - 1);
   };
 
-  const pages = _.range(low, high + 1).map((i) => {
-    const classes = classNames({
-      page: true,
-      active: value === i,
-    });
-
-    return (
-      <Box display="inline-block" mx={1} key={i}>
-        <Button
-          _focus={{ boxShadow: "none" }}
-          variantColor={value === i ? "primaryColorVariant" : ""}
-          color={value === i ? "white" : ""}
-          type="button"
-          size="xs"
-          transition="all 0.3s"
-          onClick={() => handleClick(i)}
-        >
-          {i}
-        </Button>
-      </Box>
-    );
-  });
+  const pages = _.range(low, high + 1).map((i) => (
+    <Box display="inline-block" mx={1} key={i}>
+      <Button
+        _focus={{ boxShadow: "none" }}
+        bg={value === i ? "primaryColorVariant.500" : "rgba(0,0,0,0)"}
+        _hover={{
+          bg: value === i ? "primaryColorVariant.800" : "rgba(0,0,0,0)",
+        }}
+        color={value === i ? "white" : ""}
+        type="button"
+        size="xs"
+        transition="all 0.3s"
+        onClick={() => handleClick(i)}
+      >
+        {i}
+      </Button>
+    </Box>
+  ));
 
   return (
     <Box w="100%" textAlign="center" my={3}>

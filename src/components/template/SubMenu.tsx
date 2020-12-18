@@ -54,7 +54,8 @@ const SubMenu = (props: SubMenuProps) => {
         position="absolute"
         top={5}
         right={2}
-        variantColor="primaryColorVariant.500"
+        _hover={{ bg: "none" }}
+        _active={{ bg: "none", boxShadow: "none" }}
       />
       <List styleType="none" mt={6}>
         {items.map((item, index) => (

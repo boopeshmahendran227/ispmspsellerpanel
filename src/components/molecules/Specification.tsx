@@ -18,8 +18,8 @@ const Specification = (props: SpecificationProps) => {
         <SectionHeader>Specification</SectionHeader>
       </SectionHeaderContainer>
       <Box fontSize={["sm", "md"]}>
-        {specification.itemGroups.map((group) => (
-          <Box>
+        {specification.itemGroups.map((group, index) => (
+          <Box key={index}>
             <Heading size="sm">{group.name}</Heading>
             {group.items.length > 0 && (
               <Grid my={2} templateColumns={["150px 1fr", "200px 1fr"]}>

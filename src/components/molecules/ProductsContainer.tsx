@@ -37,7 +37,11 @@ const getTableHeaders = () => {
 
 const renderTableBody = (products: ProductMiniInterface[]) => {
   return products.map((product) => (
-    <Link href="/product/[id]" as={`/product/${product.productId}`}>
+    <Link
+      href="/product/[id]"
+      as={`/product/${product.productId}`}
+      key={product.productId}
+    >
       <Box
         as="tr"
         opacity={product.isActive ? 1 : 0.5}

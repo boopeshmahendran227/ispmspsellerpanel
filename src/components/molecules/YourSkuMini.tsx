@@ -41,8 +41,8 @@ const YourSkuMini = (props: YourSkuMiniProps): JSX.Element => {
                 color="secondaryTextColor.500"
               >
                 {sku.attributeValueIds.map(
-                  (attributeValueId: AttributeValueID) => (
-                    <Box mt={1}>
+                  (attributeValueId: AttributeValueID, index) => (
+                    <Box mt={1} key={index}>
                       {attributeValueId.attributeName +
                         ": " +
                         attributeValueId.value}

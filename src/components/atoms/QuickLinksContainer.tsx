@@ -129,8 +129,8 @@ const QuickLinksContainer = (): JSX.Element => {
         fontSize={["xs", "sm", "md"]}
         cursor="pointer"
       >
-        {links.map((link) => (
-          <IconLink link={link} />
+        {links.map((link, index) => (
+          <IconLink link={link} key={index} />
         ))}
       </SimpleGrid>
     </Box>

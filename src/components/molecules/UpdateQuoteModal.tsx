@@ -107,7 +107,7 @@ const UpdateQuoteModal = (props: UpdateQuoteModalProps) => {
                       <Box>
                         {currentQuote.productDetails.map(
                           (productDetail, index) => (
-                            <Box>
+                            <Box key={productDetail.id}>
                               <ProductCard
                                 name={productDetail.productDetails.name}
                                 image={

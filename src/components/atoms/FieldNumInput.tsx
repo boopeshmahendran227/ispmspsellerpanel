@@ -21,7 +21,7 @@ const FieldNumInput = (props: FieldNumInputProps) => {
       {({ field, form }) => (
         <FormControl
           isInvalid={form.errors[props.name] && form.touched[props.name]}
-          py={[1, 3]}
+          pb={[1, 2]}
         >
           <Input
             {...field}

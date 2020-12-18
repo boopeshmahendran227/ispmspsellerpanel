@@ -27,7 +27,7 @@ const FieldPercentageInput = (props: FieldPercentageInputProps) => {
       {({ field, form }) => (
         <FormControl
           isInvalid={form.errors[props.name] && form.touched[props.name]}
-          py={[1, 3]}
+          pb={[1, 2]}
         >
           <InputGroup>
             <InputRightElement children="%" />

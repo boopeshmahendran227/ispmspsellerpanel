@@ -52,6 +52,7 @@ const RecipientInputBox = (props: RecipientInputBoxProps) => {
         <Flex wrap="wrap" mt={0} justify="flex-end">
           {groups.map((group) => (
             <Tag
+              key={group.groupId}
               mx={1}
               p={1}
               mb={2}
@@ -102,9 +103,9 @@ const RecipientInputBox = (props: RecipientInputBoxProps) => {
         p={2}
         borderRadius={5}
       >
-        {recipients.map((recipient, index) => (
+        {recipients.map((recipient) => (
           <Tag
-            key={index}
+            key={recipient.id}
             size={"sm"}
             m={1}
             variant="solid"
