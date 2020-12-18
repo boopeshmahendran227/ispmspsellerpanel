@@ -27,8 +27,8 @@ const Customers = () => {
   };
 
   const renderTableBody = (customers: CustomerInterface[]) => {
-    return customers.map((customer) => (
-      <tr>
+    return customers.map((customer, index) => (
+      <tr key={index}>
         <td>{customer.name}</td>
         <td>{customer.mobile}</td>
         <td>{customer.email}</td>

@@ -13,7 +13,6 @@ import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import PageContainer from "components/atoms/PageContainer";
 import Button from "components/atoms/Button";
 
-
 const getTableHeaders = () => {
   return [
     {
@@ -46,7 +45,7 @@ const getTableHeaders = () => {
 
 const renderTableBody = (coupons: CouponInterface[]) => {
   return coupons.map((coupon) => (
-    <tr>
+    <tr key={coupon.couponCode}>
       <td>{coupon.ecosystemName}</td>
       <td className="couponCode">{coupon.couponCode}</td>
       <td className="discount">

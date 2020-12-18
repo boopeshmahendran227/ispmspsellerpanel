@@ -29,8 +29,8 @@ const FAQ = (props: FAQProps) => {
         <SectionHeader>FAQs</SectionHeader>
       </SectionHeaderContainer>
       <Box>
-        {faqs.map((item) => (
-          <Box my={2}>
+        {faqs.map((item, index) => (
+          <Box my={2} key={index}>
             <Question>Q: {item.question}</Question>
             <Answer>A: {item.question}</Answer>
           </Box>

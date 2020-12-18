@@ -36,7 +36,9 @@ const FieldEditableArray = (props: FieldEditableArrayProps) => {
               <thead>
                 <tr>
                   {dataList.length > 0 &&
-                    props.headers.map((header) => <th>{header}</th>)}
+                    props.headers.map((header) => (
+                      <th key={header}>{header}</th>
+                    ))}
                 </tr>
               </thead>
               <tbody>

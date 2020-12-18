@@ -36,7 +36,7 @@ const FieldPriceInput = (props: FieldPriceInputProps) => {
       {({ field, form }) => (
         <FormControl
           isInvalid={form.errors[props.name] && form.touched[props.name]}
-          py={[1, 3]}
+          pb={[1, 2]}
         >
           <InputGroup>
             <InputLeftElement size={"sm"} children="₹" />

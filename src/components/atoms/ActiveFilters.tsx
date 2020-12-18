@@ -16,7 +16,7 @@ const ActiveFilters = (props: ActiveFiltersProps) => {
     <Flex align="center" p={1} fontSize={["xs", "md"]}>
       <Box>Active Filters:</Box>
       {appliedFilters.map((filter) => (
-        <Box m={2} fontWeight="bold">
+        <Box m={2} fontWeight="bold" key={filter}>
           {filter}
         </Box>
       ))}

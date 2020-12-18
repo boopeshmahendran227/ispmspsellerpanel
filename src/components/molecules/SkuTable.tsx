@@ -91,8 +91,8 @@ const renderTableBody = (
     return attribute?.value;
   };
 
-  return skus.map((sku) => (
-    <tr>
+  return skus.map((sku, index) => (
+    <tr key={index}>
       <td>{sku.skuId}</td>
       <td>
         {sku.attributeValueIds
@@ -106,8 +106,8 @@ const renderTableBody = (
       </td>
       <td>
         <div className="imageContainer">
-          {sku.imageRelativePaths.map((image) => (
-            <RelativeImg src={image} />
+          {sku.imageRelativePaths.map((image, index) => (
+            <RelativeImg src={image} key={index} />
           ))}
         </div>
       </td>
