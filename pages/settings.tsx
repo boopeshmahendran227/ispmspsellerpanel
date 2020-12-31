@@ -25,8 +25,7 @@ import FieldEditableArray from "components/molecules/FieldEditableArray";
 import FieldPercentageInput from "components/atoms/FieldPercentageInput";
 import { OrderStatus } from "types/settings";
 import _ from "lodash";
-import { config } from "react-transition-group";
-import { debug } from "console";
+
 
 const validationSchema = Yup.object({
   restrictedPaymentModes: Yup.array()
