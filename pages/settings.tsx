@@ -133,10 +133,9 @@ const Settings = (props: SettingsProps): JSX.Element => {
   ) => {
     const errors: any = {};
 
-    if (manufacturerConfig === []) {
+    if (manufacturerConfig.length === 0) {
       return errors;
     }
-
     const totalpaymentPercentage: number = manufacturerConfig
       .map((config) => config.advancePaymentPercentage)
       .reduce((accumulator, currentValue) => accumulator + currentValue);
