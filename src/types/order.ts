@@ -101,6 +101,7 @@ export interface OrderItemInterface {
   metadata: {
     deliveryCode?: string;
     shipmentFeePerSeller: number;
+    manufactureMetadata: ManufactureMetadata;
   };
   shipment: {
     id: number;
