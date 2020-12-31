@@ -1,7 +1,10 @@
 import {
+  ManufactureMetadata,
   OrderInterface,
   OrderStatus,
   OrderStatusFilter,
+  OrderType,
+  PayoutStatus,
   TransformedOrderItemInterface,
 } from "types/order";
 import OrderActions from "actions/order";
@@ -38,6 +41,7 @@ import Select from "components/atoms/Select";
 import { useState } from "react";
 import { SelectOptionInterface } from "types/product";
 import MobileOrderProductCard from "components/atoms/MobileOrderProductCard";
+import StatusBar, { StatusType } from "components/atoms/StatusBar";
 
 interface OwnProps {
   orderData: PaginatedDataInterface<OrderInterface>;
@@ -321,87 +325,160 @@ const OrdersContainer = (props: OrdersContainerProps) => {
     return null;
   };
 
-  const renderTableBody = (orderItems: TransformedOrderItemInterface[]) => {
-    return orderItems.map((orderItem) => (
-      <Link
-        key={orderItem.id}
-        href="/order/[orderId]/[orderItemId]"
-        as={`/order/${orderItem.order.id}/${orderItem.id}`}
-      >
-        <tr>
-          <td>{orderItem.order.id}</td>
-          <td>{orderItem.id}</td>
-          <td>{getCustomerInfo(orderItem.order)}</td>
-          <td>
-            <div className="productContainer">
-              <ProductCard
-                name={orderItem.productSnapshot.productName}
-                image={orderItem.productSnapshot.images[0]}
-                metaInfo={[
-                  ...orderItem.productSnapshot.attributeValues.map(
-                    (attributeValue) => ({
-                      key: attributeValue.attributeName,
-                      value: attributeValue.value,
-                    })
-                  ),
-                  {
-                    key: "Product Id",
-                    value: orderItem.productId,
-                  },
-                  {
-                    key: "Sku Id",
-                    value: orderItem.skuId,
-                  },
-                  {
-                    key: "External Id",
-                    value: orderItem.productSnapshot.externalId,
-                  },
-                ]}
+  const renderManufactureMetadata = (
+    manufactureMetadata: ManufactureMetadata
+  ) => {
+    const statusListMap = manufactureMetadata.payment.map(
+      (advancePaymentMetadata) => {
+        return {
+          status: advancePaymentMetadata.payoutStatus,
+          title: advancePaymentMetadata.orderStateStr,
+          type:
+            advancePaymentMetadata.payoutStatus === PayoutStatus.Paid
+              ? StatusType.success
+              : StatusType.warning,
+        };
+      }
+    );
+
+    return (
+      <tr>
+        <td colSpan={10}>
+          <Box p={3} mb={5}>
+            <Flex justify="space-between">
+              <Box fontWeight="bold" color="primaryTextColor.500">
+                Payment details
+              </Box>
+              <Box>
+                Total amount Paid:&nbsp;
+                <Box as="span" fontWeight="bold" color="primaryTextColor.500">
+                  {formatPrice(manufactureMetadata.amountPaid)}
+                </Box>
+              </Box>
+            </Flex>
+            <Flex justify="center">
+              <StatusBar
+                activeStatuses={[PayoutStatus.Paid]}
+                getStatusText={(orderStateStr) => {
+                  const metaData = manufactureMetadata.payment.filter(
+                    (data) => data.orderStateStr === orderStateStr
+                  )[0];
+                  const isPaid =
+                    manufactureMetadata.payment.filter(
+                      (data) => data.orderStateStr === orderStateStr
+                    )[0].payoutStatus === PayoutStatus.Paid;
+
+                  if (isPaid) {
+                    return (
+                      formatPrice(metaData.amountPaid) +
+                      " paid on " +
+                      moment
+                        .utc(metaData.createdTime)
+                        .local()
+                        .format("ddd Do, MMM")
+                    );
+                  }
+                  return "";
+                }}
+                statusListMap={statusListMap}
               />
-            </div>
-          </td>
-          <td>{formatPrice(orderItem.discountedPrice)}</td>
-          <td>{orderItem.qty}</td>
-          <td
-            style={{
-              color: getPaymentModeColor(
-                orderItem.order.paymentSplits[0].paymentMode
-              ),
-            }}
+            </Flex>
+          </Box>
+        </td>
+      </tr>
+    );
+  };
+
+  const renderTableBody = (orderItems: TransformedOrderItemInterface[]) => {
+    return orderItems.map((orderItem) => {
+      return (
+        <>
+          <Link
+            key={orderItem.id}
+            href="/order/[orderId]/[orderItemId]"
+            as={`/order/${orderItem.order.id}/${orderItem.id}`}
           >
-            {getPaymentText(orderItem.order.paymentSplits[0].paymentMode)}
-          </td>
-          <td
-            style={{
-              color: getColor(orderItem.orderItemStatus),
-            }}
-            className="status"
-          >
-            {getOrderStatusText(orderItem.orderItemStatus)}
-          </td>
-          <td>
-            {moment
-              .utc(orderItem.createdDateTime)
-              .local()
-              .format("MMMM Do YYYY, hh:mm A")}
-          </td>
-          <td className="actions">{getButtons(orderItem)}</td>
-          <style jsx>{`
-            .productContainer {
-              text-align: initial;
-              margin: 1.2em 0;
-            }
-            tr:hover {
-              background-color: ${CSSConstants.hoverColor} !important;
-              cursor: pointer;
-            }
-            .actions {
-              font-size: 0.9rem;
-            }
-          `}</style>
-        </tr>
-      </Link>
-    ));
+            <tr>
+              <td>{orderItem.order.id}</td>
+              <td>{orderItem.id}</td>
+              <td>{getCustomerInfo(orderItem.order)}</td>
+              <td>
+                <div className="productContainer">
+                  <ProductCard
+                    name={orderItem.productSnapshot.productName}
+                    image={orderItem.productSnapshot.images[0]}
+                    metaInfo={[
+                      ...orderItem.productSnapshot.attributeValues.map(
+                        (attributeValue) => ({
+                          key: attributeValue.attributeName,
+                          value: attributeValue.value,
+                        })
+                      ),
+                      {
+                        key: "Product Id",
+                        value: orderItem.productId,
+                      },
+                      {
+                        key: "Sku Id",
+                        value: orderItem.skuId,
+                      },
+                      {
+                        key: "External Id",
+                        value: orderItem.productSnapshot.externalId,
+                      },
+                    ]}
+                  />
+                </div>
+              </td>
+              <td>{formatPrice(orderItem.discountedPrice)}</td>
+              <td>{orderItem.qty}</td>
+              <td
+                style={{
+                  color: getPaymentModeColor(
+                    orderItem.order.paymentSplits[0].paymentMode
+                  ),
+                }}
+              >
+                {getPaymentText(orderItem.order.paymentSplits[0].paymentMode)}
+              </td>
+              <td
+                style={{
+                  color: getColor(orderItem.orderItemStatus),
+                }}
+                className="status"
+              >
+                {getOrderStatusText(orderItem.orderItemStatus)}
+              </td>
+              <td>
+                {moment
+                  .utc(orderItem.createdDateTime)
+                  .local()
+                  .format("MMMM Do YYYY, hh:mm A")}
+              </td>
+              <td className="actions">{getButtons(orderItem)}</td>
+              <style jsx>{`
+                .productContainer {
+                  text-align: initial;
+                  margin: 1.2em 0;
+                }
+                tr:hover {
+                  background-color: ${CSSConstants.hoverColor} !important;
+                  cursor: pointer;
+                }
+                .actions {
+                  font-size: 0.9rem;
+                }
+              `}</style>
+            </tr>
+          </Link>
+          {orderItem.order.orderType === OrderType.Manufacturing &&
+            renderManufactureMetadata(
+              orderItem.order?.orderMetadata
+                ?.manufactureMetadata as ManufactureMetadata
+            )}
+        </>
+      );
+    });
   };
 
   const orderData: PaginatedDataInterface<OrderInterface> = props.orderData;

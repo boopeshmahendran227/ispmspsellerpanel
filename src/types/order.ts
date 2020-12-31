@@ -15,6 +15,7 @@ import {
 import { ProductAttributeValue } from "./product";
 import { OrderDiscountInterface } from "../types/discount";
 import { PaymentMode } from "./invoice";
+import { StatusType } from "components/atoms/StatusBar";
 
 export enum OrderStatusFilter {
   AllOrderItems,
@@ -141,6 +142,34 @@ export interface AddressInterface {
   zipCode: string;
 }
 
+export enum PayoutStatus {
+  Created = "Created",
+  Processing = "Processing",
+  Paid = "Paid",
+  Error = "Error",
+  Hold = "Hold",
+}
+
+export interface AdvancePaymentMetadata {
+  amountPaid: number;
+  referenceId?: string;
+  payoutStatus: PayoutStatus;
+  orderStatus: number;
+  orderStateStr: string;
+  createdTime: string;
+  updatedTime: string;
+}
+
+export interface ManufactureMetadata {
+  amountPaid: number;
+  payment: AdvancePaymentMetadata[];
+}
+
+export enum OrderType {
+  Regular = "Regular",
+  Manufacturing = "Manufacturing",
+}
+
 export interface OrderInterface {
   id: number;
   customerId: string;
@@ -171,6 +200,14 @@ export interface OrderInterface {
     shipmentFee: number;
   };
   discountSplits: OrderDiscountInterface[];
+  orderType: OrderType;
+  orderMetadata?: {
+    quoteId: number;
+    shipmentFee: number;
+    isBusiness: boolean;
+    nbfcCreditSettled?: boolean;
+    manufactureMetadata: ManufactureMetadata;
+  };
 }
 
 export interface OrderDetailInterface extends OrderInterface {

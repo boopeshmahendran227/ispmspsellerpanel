@@ -18,7 +18,7 @@ const FieldSelect = (props: FieldSelectProps) => {
       {({ field, form }) => (
         <FormControl
           isInvalid={form.errors[props.name] && form.touched[props.name]}
-          py={3}
+          pb={3}
         >
           <Select
             disabled={props.disabled}

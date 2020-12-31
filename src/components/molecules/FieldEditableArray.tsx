@@ -30,7 +30,7 @@ const FieldEditableArray = (props: FieldEditableArrayProps) => {
     <FieldArray
       name={props.name}
       render={(arrayHelpers) => (
-        <Box my={3}>
+        <Box mb={3}>
           <Box>
             <table>
               <thead>
