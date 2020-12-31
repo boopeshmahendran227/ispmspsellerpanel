@@ -1,5 +1,5 @@
 import PageHeader from "components/atoms/PageHeader";
-import { Formik, Form, ArrayHelpers, FormikErrors } from "formik";
+import { Formik, Form, ArrayHelpers } from "formik";
 import PageHeaderContainer from "components/atoms/PageHeaderContainer";
 import useSWR from "swr";
 import FieldMultiSelect from "components/molecules/FieldMultiSelect";
@@ -25,6 +25,8 @@ import FieldEditableArray from "components/molecules/FieldEditableArray";
 import FieldPercentageInput from "components/atoms/FieldPercentageInput";
 import { OrderStatus } from "types/settings";
 import _ from "lodash";
+import { config } from "react-transition-group";
+import { debug } from "console";
 
 const validationSchema = Yup.object({
   restrictedPaymentModes: Yup.array()
@@ -130,9 +132,23 @@ const Settings = (props: SettingsProps): JSX.Element => {
     manufacturerConfig: ModifiedManufacturerConfig[]
   ) => {
     const errors: any = {};
+
+    if (manufacturerConfig === []) {
+      return errors;
+    }
+
     const totalpaymentPercentage: number = manufacturerConfig
       .map((config) => config.advancePaymentPercentage)
       .reduce((accumulator, currentValue) => accumulator + currentValue);
+
+    if (
+      manufacturerConfig.find((config) => config.advancePaymentPercentage === 0)
+    ) {
+      errors.manufacturerConfig = "payment percentage cannot be 0";
+    }
+    if (manufacturerConfig.find((config) => config.orderState.value === "")) {
+      errors.manufacturerConfig = "Order state cannot be empty";
+    }
 
     if (
       _.uniq(manufacturerConfig.map((config) => config.orderState.value))

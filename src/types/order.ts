@@ -15,7 +15,6 @@ import {
 import { ProductAttributeValue } from "./product";
 import { OrderDiscountInterface } from "../types/discount";
 import { PaymentMode } from "./invoice";
-import { StatusType } from "components/atoms/StatusBar";
 
 export enum OrderStatusFilter {
   AllOrderItems,
