@@ -143,7 +143,7 @@ const Settings = (props: SettingsProps): JSX.Element => {
     if (
       manufacturerConfig.find((config) => config.advancePaymentPercentage === 0)
     ) {
-      errors.manufacturerConfig = "payment percentage cannot be 0";
+      errors.manufacturerConfig = "Payment percentage cannot be 0";
     }
     if (manufacturerConfig.find((config) => config.orderState.value === "")) {
       errors.manufacturerConfig = "Order state cannot be empty";

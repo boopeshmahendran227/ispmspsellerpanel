@@ -197,6 +197,9 @@ export interface OrderInterface {
   metadata: {
     quoteId: number;
     shipmentFee: number;
+    isBusiness: boolean;
+    nbfcCreditSettled?: boolean;
+    manufactureMetadata?: ManufactureMetadata;
   };
   discountSplits: OrderDiscountInterface[];
   orderType: OrderType;

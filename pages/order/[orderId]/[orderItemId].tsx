@@ -7,7 +7,9 @@ import { formatAddress } from "utils/misc";
 import { connect } from "react-redux";
 import OrderActions from "actions/order";
 import {
+  ManufactureMetadata,
   OrderDetailInterface,
+  OrderType,
   TransformedOrderItemInterface,
 } from "types/order";
 import {
@@ -24,6 +26,7 @@ import { transformOrderItem } from "../../../src/transformers/orderItem";
 import BackLink from "components/atoms/BackLink";
 import { Box, Heading, Grid, Divider, Stack, Tag, Flex } from "@chakra-ui/core";
 import Button from "components/atoms/Button";
+import ManufactureOrderData from "components/molecules/ManufactureOrderData";
 
 interface DispatchProps {
   markAsShippingComplete: (orderId: number, orderItemId: number) => void;
@@ -141,6 +144,15 @@ const Order = (props: OrderProps) => {
             rejectReturnOrderItem={props.rejectReturnOrderItem}
             cancelOrderItem={props.cancelOrderItem}
           />
+          {order.orderType === OrderType.Manufacturing && (
+            <Box bg="white" border="1px" borderColor="borderColor.500" my={5}>
+              <ManufactureOrderData
+                manufactureMetadata={
+                  order.metadata.manufactureMetadata as ManufactureMetadata
+                }
+              />
+            </Box>
+          )}
           <Box>
             <ShippingInformationContainer orderItem={orderItem} />
           </Box>

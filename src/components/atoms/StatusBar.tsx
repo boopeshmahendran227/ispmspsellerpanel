@@ -69,7 +69,7 @@ const StatusBar = (props: StatusBarProps): JSX.Element => {
             <div className="statusText">{splitCamelCase(statusItem.title)}</div>
             <div className="statusCircle"></div>
             <div className="date">
-              <Text w="80px" mx="auto">
+              <Text w="90px" mx="auto" fontWeight="bold">
                 {statusText}
               </Text>
             </div>
@@ -94,7 +94,7 @@ const StatusBar = (props: StatusBarProps): JSX.Element => {
           font-size: 0.9rem;
           color: ${CSSConstants.secondaryTextColor};
           transition: all 0.3s;
-          width: ${activeLineLength + 8}px;
+          width: 160px;
         }
         .statusCircle {
           width: ${STATUS_CIRCLE_WIDTH}px;
