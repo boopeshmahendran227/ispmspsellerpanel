@@ -405,13 +405,12 @@ const OrdersContainer = (props: OrdersContainerProps) => {
               `}</style>
             </tr>
           </Link>
-          {orderItem.order.orderType === OrderType.Manufacturing && (
+          {orderItem.order?.orderMetadata?.manufactureMetadata && (
             <tr>
               <td colSpan={10}>
                 <ManufactureOrderData
                   manufactureMetadata={
-                    orderItem.order?.orderMetadata
-                      ?.manufactureMetadata as ManufactureMetadata
+                    orderItem.order?.orderMetadata?.manufactureMetadata
                   }
                 />
               </td>
@@ -505,8 +504,7 @@ const OrdersContainer = (props: OrdersContainerProps) => {
                 buttons={getButtons(orderItem)}
                 orderType={orderItem.order.orderType}
                 manufactureMetadata={
-                  orderItem.order?.orderMetadata
-                    ?.manufactureMetadata as ManufactureMetadata
+                  orderItem.order?.orderMetadata?.manufactureMetadata
                 }
               />
             </Box>

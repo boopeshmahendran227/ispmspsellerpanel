@@ -68,17 +68,16 @@ const MobileOrderProductCard = (props: MobileProductCardInterface) => {
           <Key>&nbsp; &nbsp;{props.price}</Key>
         </Box>
       </Flex>
-      {props.orderType === OrderType.Manufacturing && (
-        <Box overflowX="auto">
-          <Box w="500px" overflowX="auto">
-            <ManufactureOrderData
-              manufactureMetadata={
-                props.manufactureMetadata as ManufactureMetadata
-              }
-            />
+      {props.orderType === OrderType.Manufacturing &&
+        props.manufactureMetadata && (
+          <Box overflowX="auto">
+            <Box w="500px">
+              <ManufactureOrderData
+                manufactureMetadata={props.manufactureMetadata}
+              />
+            </Box>
           </Box>
-        </Box>
-      )}
+        )}
       <Text
         fontWeight="bold"
         color={getColor(props.orderItemStatus)}

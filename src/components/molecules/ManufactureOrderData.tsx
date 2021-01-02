@@ -9,6 +9,11 @@ const ManufactureOrderData = (props: {
   manufactureMetadata: ManufactureMetadata;
 }) => {
   const { manufactureMetadata } = props;
+
+  if (manufactureMetadata.payment.length === 0) {
+    return null;
+  }
+
   const statusListMap = manufactureMetadata.payment.map(
     (advancePaymentMetadata) => {
       return {
@@ -31,7 +36,7 @@ const ManufactureOrderData = (props: {
         <Box position="absolute" right={1} top={1}>
           Total amount Paid:&nbsp;
           <Box as="span" fontWeight="bold" color="primaryTextColor.500">
-            {formatPrice(manufactureMetadata.amountPaid)}
+            {formatPrice(manufactureMetadata?.amountPaid)}
           </Box>
         </Box>
       </Box>

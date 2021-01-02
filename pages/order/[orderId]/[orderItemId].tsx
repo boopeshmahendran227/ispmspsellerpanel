@@ -144,15 +144,19 @@ const Order = (props: OrderProps) => {
             rejectReturnOrderItem={props.rejectReturnOrderItem}
             cancelOrderItem={props.cancelOrderItem}
           />
-          {order.orderType === OrderType.Manufacturing && (
-            <Box bg="white" border="1px" borderColor="borderColor.500" my={5}>
-              <ManufactureOrderData
-                manufactureMetadata={
-                  order.metadata.manufactureMetadata as ManufactureMetadata
-                }
-              />
-            </Box>
-          )}
+          {order.orderType === OrderType.Manufacturing &&
+            order.metadata.manufactureMetadata && (
+              <Box
+                bg="white"
+                borderWidth="1px"
+                borderColor="borderColor.500"
+                my={5}
+              >
+                <ManufactureOrderData
+                  manufactureMetadata={order.metadata.manufactureMetadata}
+                />
+              </Box>
+            )}
           <Box>
             <ShippingInformationContainer orderItem={orderItem} />
           </Box>

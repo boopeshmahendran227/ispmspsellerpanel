@@ -23,9 +23,8 @@ import { Box, FormLabel, Stack } from "@chakra-ui/core";
 import React from "react";
 import FieldEditableArray from "components/molecules/FieldEditableArray";
 import FieldPercentageInput from "components/atoms/FieldPercentageInput";
-import { OrderStatus } from "types/settings";
+import { AdvancePaymentOrderStatus } from "types/settings";
 import _ from "lodash";
-
 
 const validationSchema = Yup.object({
   restrictedPaymentModes: Yup.array()
@@ -71,12 +70,18 @@ const shipmentModeOptions: SelectOptionInterface[] = [
 ];
 
 const orderStatusOptions: SelectOptionInterface[] = [
-  { value: OrderStatus.Created, label: "Created" },
-  { value: OrderStatus.SellerProcessing, label: "SellerProcessing" },
-  { value: OrderStatus.Shipping, label: "Shipping" },
-  { value: OrderStatus.ShippingCompleted, label: "ShippingCompleted" },
+  { value: AdvancePaymentOrderStatus.Created, label: "Created" },
   {
-    value: OrderStatus.PackageReadyForCollection,
+    value: AdvancePaymentOrderStatus.SellerProcessing,
+    label: "SellerProcessing",
+  },
+  { value: AdvancePaymentOrderStatus.Shipping, label: "Shipping" },
+  {
+    value: AdvancePaymentOrderStatus.ShippingCompleted,
+    label: "ShippingCompleted",
+  },
+  {
+    value: AdvancePaymentOrderStatus.PackageReadyForCollection,
     label: "PackageReadyForCollection",
   },
 ];
@@ -120,7 +125,7 @@ const Settings = (props: SettingsProps): JSX.Element => {
       restrictedPincodes: values.restrictedPincodes,
       manufacturerConfig: values.manufacturerConfig.map((config) => {
         return {
-          orderStateDto: config.orderState.value as OrderStatus,
+          orderStateDto: config.orderState.value as AdvancePaymentOrderStatus,
           advancePaymentPercentage: config.advancePaymentPercentage,
         };
       }),

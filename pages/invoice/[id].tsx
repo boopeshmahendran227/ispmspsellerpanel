@@ -220,12 +220,13 @@ const Invoice = () => {
                     {formatPrice(
                       order.items
                         .map(
-                          (item) => item.metadata.manufactureMetadata.amountPaid
+                          (item) =>
+                            item.metadata.manufactureMetadata?.amountPaid
                         )
                         .reduce(
                           (totalAmount, currentAmount) =>
-                            totalAmount + currentAmount
-                        )
+                            (totalAmount as number) + (currentAmount as number)
+                        ) as number
                     )}
                   </td>
                 )}

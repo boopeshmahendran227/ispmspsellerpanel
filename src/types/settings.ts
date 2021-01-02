@@ -6,7 +6,7 @@ export enum ShipmentMode {
   Shiprocket = "Shiprocket",
 }
 
-export enum OrderStatus {
+export enum AdvancePaymentOrderStatus {
   Created = "Created",
   SellerProcessing = "SellerProcessing",
   Shipping = "Shipping",
@@ -15,7 +15,7 @@ export enum OrderStatus {
 }
 
 export interface ManufacturerConfig {
-  orderStateDto: OrderStatus;
+  orderStateDto: AdvancePaymentOrderStatus;
   advancePaymentPercentage: number;
 }
 export interface SettingsInterface {
