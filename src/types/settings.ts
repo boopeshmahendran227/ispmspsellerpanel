@@ -6,9 +6,23 @@ export enum ShipmentMode {
   Shiprocket = "Shiprocket",
 }
 
+export enum AdvancePaymentOrderStatus {
+  Created = "Created",
+  SellerProcessing = "SellerProcessing",
+  Shipping = "Shipping",
+  ShippingCompleted = "ShippingCompleted",
+  PackageReadyForCollection = "PackageReadyForCollection",
+}
+
+export interface ManufacturerConfig {
+  orderStateDto: AdvancePaymentOrderStatus;
+  advancePaymentPercentage: number;
+}
 export interface SettingsInterface {
   restrictedPaymentModes: PaymentMode[];
   shipmentMode: ShipmentMode;
+  manufacturerConfig: ManufacturerConfig[];
+  restrictedPincodes: string[];
 }
 
 interface UpdateSettingsAction {

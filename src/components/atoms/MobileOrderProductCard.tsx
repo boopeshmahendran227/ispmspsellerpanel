@@ -1,6 +1,7 @@
 import { Box, Text, SimpleGrid, Flex, Image, Grid } from "@chakra-ui/core";
+import ManufactureOrderData from "components/molecules/ManufactureOrderData";
 import React from "react";
-import { OrderStatus } from "types/order";
+import { ManufactureMetadata, OrderStatus, OrderType } from "types/order";
 import { getColor, getOrderStatusText } from "utils/order";
 import { getProductImageUrl } from "utils/url";
 
@@ -14,7 +15,9 @@ interface MobileProductCardInterface {
   skuId: string;
   qty: number;
   price: string;
+  manufactureMetadata?: ManufactureMetadata;
   buttons: JSX.Element | null;
+  orderType: OrderType;
 }
 
 const Key = (props) => (
@@ -65,6 +68,16 @@ const MobileOrderProductCard = (props: MobileProductCardInterface) => {
           <Key>&nbsp; &nbsp;{props.price}</Key>
         </Box>
       </Flex>
+      {props.orderType === OrderType.Manufacturing &&
+        props.manufactureMetadata && (
+          <Box overflowX="auto">
+            <Box w="500px">
+              <ManufactureOrderData
+                manufactureMetadata={props.manufactureMetadata}
+              />
+            </Box>
+          </Box>
+        )}
       <Text
         fontWeight="bold"
         color={getColor(props.orderItemStatus)}

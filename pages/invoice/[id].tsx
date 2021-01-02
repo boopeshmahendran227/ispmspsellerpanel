@@ -4,7 +4,7 @@ import { formatPrice, formatAddress, formatNumber } from "../../src/utils/misc";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import Loader from "components/atoms/Loader";
-import { OrderItemInterface, OrderStatus } from "types/order";
+import { OrderItemInterface, OrderStatus, OrderType } from "types/order";
 import { InvoiceDetailInterface, InvoiceStatus } from "types/invoice";
 import WithAuth from "components/atoms/WithAuth";
 import PageError from "components/atoms/PageError";
@@ -33,6 +33,8 @@ const Invoice = () => {
     .value();
 
   const showWaterMark = invoice.invoiceStatus === InvoiceStatus.Pending;
+
+  const isManufactureOrder = order.orderType === OrderType.Manufacturing;
 
   return (
     <Flex
@@ -65,9 +67,9 @@ const Invoice = () => {
           <Box>
             <Grid templateColumns={["0.5fr 1fr", "80px 220px"]} className="row">
               <Box as="strong">GSTIN: </Box>
-              {invoice.businessDetails.gstin}
+              <Box>{invoice.businessDetails.gstin}</Box>
               <Box as="strong">TAN: </Box>
-              {invoice.businessDetails.tan}
+              <Box>{invoice.businessDetails.tan}</Box>
             </Grid>
           </Box>
         </Flex>
@@ -79,11 +81,10 @@ const Invoice = () => {
           className="section detailsSection"
         >
           <Box gridColumn={["1/3", null, null, "1/2"]}>
-            <SimpleGrid
-              columns={[4, null, null, 2]}
+            <Grid
+              templateColumns={["0.4fr 1fr 0.4fr 1fr ", "100px 160px"]}
               alignItems="center"
               maxWidth={["full"]}
-              spacing={[2, null, 0]}
             >
               <Box as="strong">Invoice No: </Box>
               {invoice.invoiceNumber}
@@ -98,7 +99,7 @@ const Invoice = () => {
               <Box>{invoice.businessDetails.pan}</Box>
               <Box as="strong">CIN: </Box>
               {invoice.businessDetails.cin}
-            </SimpleGrid>
+            </Grid>
           </Box>
           <Box py={2}>
             <Box as="strong">Billing Address: </Box>
@@ -210,25 +211,32 @@ const Invoice = () => {
                 );
               })}
               <Box as="tr" bg="gray.100">
-                <td />
-                <td />
-                <td />
-                <td />
-                <td />
-                <td />
-                <td />
+                {isManufactureOrder && (
+                  <td colSpan={3}>
+                    <Box as="span" fontSize="md" fontWeight="bold">
+                      Total advance amount paid :
+                    </Box>
+                    &nbsp;
+                    {formatPrice(
+                      order.items
+                        .map(
+                          (item) =>
+                            item.metadata.manufactureMetadata?.amountPaid
+                        )
+                        .reduce(
+                          (totalAmount, currentAmount) =>
+                            (totalAmount as number) + (currentAmount as number)
+                        ) as number
+                    )}
+                  </td>
+                )}
+                <td colSpan={isManufactureOrder ? 4 : 7} />
                 <td>Total</td>
                 <td>{formatPrice(order.totalTax)}</td>
                 <td>{formatPrice(subTotal)}</td>
               </Box>
               <Box as="tr" bg="gray.100">
-                <td />
-                <td />
-                <td />
-                <td />
-                <td />
-                <td />
-                <td />
+                <td colSpan={7} />
                 <td>Shipping Fee</td>
                 <td />
                 <td>{formatPrice(shippingFee)}</td>
@@ -240,7 +248,9 @@ const Invoice = () => {
                   color={"successColor.500"}
                   bg="gray.100"
                 >
+                  <td colSpan={7} />
                   <td>{discount.discountType}</td>
+                  <td />
                   <td>- {formatPrice(discount.discountAmount)}</td>
                 </Box>
               ))}
@@ -249,7 +259,7 @@ const Invoice = () => {
         </Box>
         <Box as="section" textAlign="right" py={2} px={3}>
           <Box>Net Total </Box>
-          <Box fontSize="xl">{formatPrice(order.totalPrice)}</Box>
+          <Box fontSize={["md", "xl"]}>{formatPrice(order.totalPrice)}</Box>
         </Box>
       </Box>
       <Box textAlign="center">

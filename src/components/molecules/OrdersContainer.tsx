@@ -1,7 +1,9 @@
 import {
+  ManufactureMetadata,
   OrderInterface,
   OrderStatus,
   OrderStatusFilter,
+  OrderType,
   TransformedOrderItemInterface,
 } from "types/order";
 import OrderActions from "actions/order";
@@ -35,9 +37,10 @@ import Button from "components/atoms/Button";
 import MobileMediaQuery from "components/atoms/MobileMediaQuery";
 import DesktopMediaQuery from "components/atoms/DesktopMediaQuery";
 import Select from "components/atoms/Select";
-import { useState } from "react";
+import React, { useState } from "react";
 import { SelectOptionInterface } from "types/product";
 import MobileOrderProductCard from "components/atoms/MobileOrderProductCard";
+import ManufactureOrderData from "./ManufactureOrderData";
 
 interface OwnProps {
   orderData: PaginatedDataInterface<OrderInterface>;
@@ -322,86 +325,100 @@ const OrdersContainer = (props: OrdersContainerProps) => {
   };
 
   const renderTableBody = (orderItems: TransformedOrderItemInterface[]) => {
-    return orderItems.map((orderItem) => (
-      <Link
-        key={orderItem.id}
-        href="/order/[orderId]/[orderItemId]"
-        as={`/order/${orderItem.order.id}/${orderItem.id}`}
-      >
-        <tr>
-          <td>{orderItem.order.id}</td>
-          <td>{orderItem.id}</td>
-          <td>{getCustomerInfo(orderItem.order)}</td>
-          <td>
-            <div className="productContainer">
-              <ProductCard
-                name={orderItem.productSnapshot.productName}
-                image={orderItem.productSnapshot.images[0]}
-                metaInfo={[
-                  ...orderItem.productSnapshot.attributeValues.map(
-                    (attributeValue) => ({
-                      key: attributeValue.attributeName,
-                      value: attributeValue.value,
-                    })
+    return orderItems.map((orderItem) => {
+      return (
+        <>
+          <Link
+            href="/order/[orderId]/[orderItemId]"
+            as={`/order/${orderItem.order.id}/${orderItem.id}`}
+          >
+            <tr>
+              <td>{orderItem.order.id}</td>
+              <td>{orderItem.id}</td>
+              <td>{getCustomerInfo(orderItem.order)}</td>
+              <td>
+                <div className="productContainer">
+                  <ProductCard
+                    name={orderItem.productSnapshot.productName}
+                    image={orderItem.productSnapshot.images[0]}
+                    metaInfo={[
+                      ...orderItem.productSnapshot.attributeValues.map(
+                        (attributeValue) => ({
+                          key: attributeValue.attributeName,
+                          value: attributeValue.value,
+                        })
+                      ),
+                      {
+                        key: "Product Id",
+                        value: orderItem.productId,
+                      },
+                      {
+                        key: "Sku Id",
+                        value: orderItem.skuId,
+                      },
+                      {
+                        key: "External Id",
+                        value: orderItem.productSnapshot.externalId,
+                      },
+                    ]}
+                  />
+                </div>
+              </td>
+              <td>{formatPrice(orderItem.discountedPrice)}</td>
+              <td>{orderItem.qty}</td>
+              <td
+                style={{
+                  color: getPaymentModeColor(
+                    orderItem.order.paymentSplits[0].paymentMode
                   ),
-                  {
-                    key: "Product Id",
-                    value: orderItem.productId,
-                  },
-                  {
-                    key: "Sku Id",
-                    value: orderItem.skuId,
-                  },
-                  {
-                    key: "External Id",
-                    value: orderItem.productSnapshot.externalId,
-                  },
-                ]}
-              />
-            </div>
-          </td>
-          <td>{formatPrice(orderItem.discountedPrice)}</td>
-          <td>{orderItem.qty}</td>
-          <td
-            style={{
-              color: getPaymentModeColor(
-                orderItem.order.paymentSplits[0].paymentMode
-              ),
-            }}
-          >
-            {getPaymentText(orderItem.order.paymentSplits[0].paymentMode)}
-          </td>
-          <td
-            style={{
-              color: getColor(orderItem.orderItemStatus),
-            }}
-            className="status"
-          >
-            {getOrderStatusText(orderItem.orderItemStatus)}
-          </td>
-          <td>
-            {moment
-              .utc(orderItem.createdDateTime)
-              .local()
-              .format("MMMM Do YYYY, hh:mm A")}
-          </td>
-          <td className="actions">{getButtons(orderItem)}</td>
-          <style jsx>{`
-            .productContainer {
-              text-align: initial;
-              margin: 1.2em 0;
-            }
-            tr:hover {
-              background-color: ${CSSConstants.hoverColor} !important;
-              cursor: pointer;
-            }
-            .actions {
-              font-size: 0.9rem;
-            }
-          `}</style>
-        </tr>
-      </Link>
-    ));
+                }}
+              >
+                {getPaymentText(orderItem.order.paymentSplits[0].paymentMode)}
+              </td>
+              <td
+                style={{
+                  color: getColor(orderItem.orderItemStatus),
+                }}
+                className="status"
+              >
+                {getOrderStatusText(orderItem.orderItemStatus)}
+              </td>
+              <td>
+                {moment
+                  .utc(orderItem.createdDateTime)
+                  .local()
+                  .format("MMMM Do YYYY, hh:mm A")}
+              </td>
+              <td className="actions">{getButtons(orderItem)}</td>
+              <style jsx>{`
+                .productContainer {
+                  text-align: initial;
+                  margin: 1.2em 0;
+                }
+                tr:hover {
+                  background-color: ${CSSConstants.hoverColor} !important;
+                  cursor: pointer;
+                }
+                .actions {
+                  font-size: 0.9rem;
+                }
+              `}</style>
+            </tr>
+          </Link>
+          {orderItem.order?.orderMetadata?.manufactureMetadata && (
+            <tr>
+              <td colSpan={10}>
+                <ManufactureOrderData
+                  manufactureMetadata={
+                    orderItem.order?.orderMetadata?.manufactureMetadata
+                  }
+                />
+              </td>
+            </tr>
+          )}
+        </>
+      );
+    });
   };
 
   const orderData: PaginatedDataInterface<OrderInterface> = props.orderData;
@@ -485,6 +502,10 @@ const OrdersContainer = (props: OrdersContainerProps) => {
                 price={formatPrice(orderItem.discountedPrice)}
                 qty={orderItem.qty}
                 buttons={getButtons(orderItem)}
+                orderType={orderItem.order.orderType}
+                manufactureMetadata={
+                  orderItem.order?.orderMetadata?.manufactureMetadata
+                }
               />
             </Box>
           </Link>

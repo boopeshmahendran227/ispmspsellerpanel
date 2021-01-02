@@ -101,6 +101,7 @@ export interface OrderItemInterface {
   metadata: {
     deliveryCode?: string;
     shipmentFeePerSeller: number;
+    manufactureMetadata?: ManufactureMetadata;
   };
   shipment: {
     id: number;
@@ -141,6 +142,34 @@ export interface AddressInterface {
   zipCode: string;
 }
 
+export enum PayoutStatus {
+  Created = "Created",
+  Processing = "Processing",
+  Paid = "Paid",
+  Error = "Error",
+  Hold = "Hold",
+}
+
+export interface AdvancePaymentMetadata {
+  amountPaid: number;
+  referenceId?: string;
+  payoutStatus: PayoutStatus;
+  orderStatus: number;
+  orderStateStr: string;
+  createdTime: string;
+  updatedTime: string;
+}
+
+export interface ManufactureMetadata {
+  amountPaid: number;
+  payment: AdvancePaymentMetadata[];
+}
+
+export enum OrderType {
+  Regular = "Regular",
+  Manufacturing = "Manufacturing",
+}
+
 export interface OrderInterface {
   id: number;
   customerId: string;
@@ -169,8 +198,19 @@ export interface OrderInterface {
   metadata: {
     quoteId: number;
     shipmentFee: number;
+    isBusiness: boolean;
+    nbfcCreditSettled?: boolean;
+    manufactureMetadata?: ManufactureMetadata;
   };
   discountSplits: OrderDiscountInterface[];
+  orderType: OrderType;
+  orderMetadata?: {
+    quoteId: number;
+    shipmentFee: number;
+    isBusiness: boolean;
+    nbfcCreditSettled?: boolean;
+    manufactureMetadata: ManufactureMetadata;
+  };
 }
 
 export interface OrderDetailInterface extends OrderInterface {

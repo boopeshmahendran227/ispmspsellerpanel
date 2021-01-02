@@ -17,8 +17,9 @@ const FieldMultiSelect = (props: FieldMultiSelectProps) => {
       {({ field, form }) => (
         <FormControl
           isInvalid={form.errors[props.name] && form.touched[props.name]}
+          pb={3}
         >
-          <Box className="selectContainer">
+          <Box>
             <MultiSelect
               value={field.value}
               onChange={(value) => {
