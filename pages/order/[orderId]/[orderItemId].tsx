@@ -145,7 +145,7 @@ const Order = (props: OrderProps) => {
             cancelOrderItem={props.cancelOrderItem}
           />
           {order.orderType === OrderType.Manufacturing &&
-            order.metadata.manufactureMetadata && (
+            orderItem.metadata.manufactureMetadata && (
               <Box
                 bg="white"
                 borderWidth="1px"
@@ -153,7 +153,7 @@ const Order = (props: OrderProps) => {
                 my={5}
               >
                 <ManufactureOrderData
-                  manufactureMetadata={order.metadata.manufactureMetadata}
+                  manufactureMetadata={orderItem.metadata.manufactureMetadata}
                 />
               </Box>
             )}
