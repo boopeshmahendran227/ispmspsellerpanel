@@ -29,12 +29,12 @@ const ManufactureOrderData = (props: {
 
   return (
     <Box p={3} mb={5}>
-      <Box mx="auto" position="relative" mb={4}>
+      <Box mx="auto" position="relative" mb={5}>
         <Box fontWeight="bold" color="primaryTextColor.500" fontSize="lg">
-          Payment details
+          Advance payment details
         </Box>
         <Box position="absolute" right={1} top={1}>
-          Total amount Paid:&nbsp;
+          Total Advance Amount Paid:&nbsp;
           <Box as="span" fontWeight="bold" color="primaryTextColor.500">
             {formatPrice(manufactureMetadata?.amountPaid)}
           </Box>

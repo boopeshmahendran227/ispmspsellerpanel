@@ -405,15 +405,18 @@ const OrdersContainer = (props: OrdersContainerProps) => {
               `}</style>
             </tr>
           </Link>
-          {orderItem.metadata?.manufactureMetadata && (
-            <tr>
-              <td colSpan={10}>
-                <ManufactureOrderData
-                  manufactureMetadata={orderItem.metadata?.manufactureMetadata}
-                />
-              </td>
-            </tr>
-          )}
+          {orderItem.metadata?.manufactureMetadata &&
+            orderItem.metadata?.manufactureMetadata.payment.length !== 0 && (
+              <tr>
+                <td colSpan={10}>
+                  <ManufactureOrderData
+                    manufactureMetadata={
+                      orderItem.metadata?.manufactureMetadata
+                    }
+                  />
+                </td>
+              </tr>
+            )}
         </>
       );
     });
