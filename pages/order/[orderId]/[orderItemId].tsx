@@ -145,7 +145,8 @@ const Order = (props: OrderProps) => {
             cancelOrderItem={props.cancelOrderItem}
           />
           {order.orderType === OrderType.Manufacturing &&
-            orderItem.metadata.manufactureMetadata && (
+            orderItem.metadata.manufactureMetadata &&
+            orderItem.metadata?.manufactureMetadata.payment.length !== 0 && (
               <Box
                 bg="white"
                 borderWidth="1px"
