@@ -15,7 +15,7 @@
     "@nivo/line": "^0.62.0",
     "@nivo/pie": "^0.62.0",
     "applicationinsights": "^1.8.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "axios-auth-refresh": "^2.2.6",
     "chroma-js": "^2.1.0",
     "classnames": "^2.2.6",
