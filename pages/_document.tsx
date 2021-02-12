@@ -42,6 +42,8 @@ class MyDocument extends Document<DocumentProps> {
       <Html lang="en">
         <Head>
           <link rel="shortcut icon" href="/favicon.svg" />
+          <link rel="manifest" href="/manifest.json" />
+          <meta name="theme-color" content="#0E2150" />
           <script
             type="text/javascript"
             dangerouslySetInnerHTML={{

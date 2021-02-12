@@ -7,6 +7,8 @@ const getConfig = () => {
         notificationApiUrl: "https://mplnotifydev.istakapaza.com",
         cdnUrl: "https://mpldev.cdn.istakapaza.com",
         appInsightsKey: "09aa067a-855b-4a40-8f4f-91c5fc0812be",
+        istakapazaToken:
+          "QlhIUzI0WC1IRko0QkFILUpXNktRTlQtNUM4QzhaNzo1ZjYzOTExMy04YmU0LTQ1YWEtOTcwZC0zYmQ3MmIxMGM0N2M=",
         defaultEcosystemId: "5f4df8de09b13b002dddd380",
       };
     case "dev":
@@ -16,6 +18,8 @@ const getConfig = () => {
         notificationApiUrl: "https://mplnotifydev.istakapaza.com",
         cdnUrl: "https://mpldev.cdn.istakapaza.com",
         appInsightsKey: "09aa067a-855b-4a40-8f4f-91c5fc0812be",
+        istakapazaToken:
+          "QlhIUzI0WC1IRko0QkFILUpXNktRTlQtNUM4QzhaNzo1ZjYzOTExMy04YmU0LTQ1YWEtOTcwZC0zYmQ3MmIxMGM0N2M=",
         defaultEcosystemId: "5f4df8de09b13b002dddd380",
       };
     case "stage":
@@ -25,6 +29,8 @@ const getConfig = () => {
         notificationApiUrl: "https://mplnotifysit.istakapaza.com",
         cdnUrl: "https://mpldev.cdn.istakapaza.com",
         appInsightsKey: "09aa067a-855b-4a40-8f4f-91c5fc0812be",
+        istakapazaToken:
+          "QlhIUzI0WC1IRko0QkFILUpXNktRTlQtNUM4QzhaNzo1ZjYzOTExMy04YmU0LTQ1YWEtOTcwZC0zYmQ3MmIxMGM0N2M=",
         defaultEcosystemId: "5f4df8de09b13b002dddd380",
       };
     case "prod":
@@ -34,13 +40,22 @@ const getConfig = () => {
         notificationApiUrl: "https://mplnotify.istakapaza.com",
         cdnUrl: "https://ispmpl.cdn.istakapaza.com",
         appInsightsKey: "d17a1f4b-6a85-4c33-98dc-e129cae29921",
+        istakapazaToken:
+          "M0owUkVZOC1RSjg0WEM2LUg0Tlo5N0YtWEdCUjhSNzoxYzgxODc3OS1iYzkwLTRlYjAtODkyYi1mNDlkZWMxNzg0NjA=",
         defaultEcosystemId: "5f548928e3262f002c208ee1",
       };
   }
 };
 
+const withPwa = require("next-pwa");
 const withImages = require("next-images");
 
-module.exports = withImages({
-  publicRuntimeConfig: getConfig(),
-});
+module.exports = withPwa(
+  withImages({
+    publicRuntimeConfig: getConfig(),
+    pwa: {
+      disable: process.env.ENV === "local",
+      dest: "public",
+    },
+  })
+);

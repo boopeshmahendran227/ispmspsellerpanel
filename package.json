@@ -20,12 +20,14 @@
     "chroma-js": "^2.1.0",
     "classnames": "^2.2.6",
     "emotion-theming": "^10.0.27",
+    "express": "^4.17.1",
     "formik": "^2.1.4",
     "hoist-non-react-statics": "^3.3.2",
     "lodash": "^4.17.15",
     "moment": "^2.25.3",
     "next": "^9.4.0",
     "next-images": "^1.4.0",
+    "next-pwa": "^5.0.5",
     "next-redux-saga": "^4.1.2",
     "next-redux-wrapper": "^5.0.0",
     "nivo": "^0.31.0",
@@ -69,9 +71,9 @@
     "typescript": "^3.9.2"
   },
   "scripts": {
-    "dev": "cross-env ENV=local next dev",
+    "dev": "cross-env ENV=local node server.js",
     "build": "cross-env ENV=prod next build",
-    "start": "next start -p 80",
+    "start": "PORT=80 node server.js",
     "test": "jest --coverage",
     "test:watch": "jest --watch"
   },

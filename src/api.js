@@ -18,7 +18,7 @@ const getAccessToken = (options) => {
 };
 
 module.exports = (route, options) => {
-  const headers = {};
+  const headers = (options && options.headers) || {};
 
   if (process.browser) {
     // NProgress.start();
@@ -29,7 +29,7 @@ module.exports = (route, options) => {
   // Use interceptor to inject the token to requests
   axios.interceptors.request.use((request) => {
     const token = getAccessToken(options);
-    if (token) {
+    if (token && !request.headers["Authorization"]) {
       request.headers["Authorization"] = `Bearer ${token}`;
     }
     return request;

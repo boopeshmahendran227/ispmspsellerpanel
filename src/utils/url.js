@@ -7,10 +7,15 @@ const {
   notificationApiUrl,
   cdnUrl,
   appInsightsKey,
+  istakapazaToken,
 } = publicRuntimeConfig;
 
 const getIstakapazaApiUrl = () => {
   return istakapazaApiUrl;
+};
+
+const getIstakapazaToken = () => {
+  return istakapazaToken;
 };
 
 const getApiUrl = (route) => {
@@ -26,6 +31,7 @@ const getApiUrl = (route) => {
     route.includes("/auth/verify/token/seller") ||
     route.includes("/businesses/business") ||
     route.includes("/businesses/ecosystems/all") ||
+    route.includes("/businesses/ecosystem") ||
     route.includes("/users/image/mpl")
   ) {
     return istakapazaApiUrl + route;
@@ -42,14 +48,15 @@ const getProductImageUrl = (relativePath) => {
   return encodeURI(cdnUrl + "/" + relativePath);
 };
 
-const getAppInsightsKey = (): string => {
+const getAppInsightsKey = () => {
   return appInsightsKey;
 };
 
-export {
+module.exports = {
   getProductUrl,
   getProductImageUrl,
   getApiUrl,
   getIstakapazaApiUrl,
   getAppInsightsKey,
+  getIstakapazaToken,
 };
