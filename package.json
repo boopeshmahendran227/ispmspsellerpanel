@@ -24,7 +24,7 @@
     "formik": "^2.1.4",
     "hoist-non-react-statics": "^3.3.2",
     "lodash": "^4.17.15",
-    "moment": "^2.25.3",
+    "moment": "^2.29.2",
     "next": "^9.4.0",
     "next-images": "^1.4.0",
     "next-pwa": "^5.0.5",
